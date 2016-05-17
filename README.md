@@ -3,8 +3,6 @@
 
 The SLD Editor is a Java desktop application developed by [SCISYS](http://www.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
 
-
-
 The application provides a toolset to improve workflow, the main features include:
 * Vector (point, line and polygon) symbol editing
 * Raster symbol editing
@@ -21,4 +19,4 @@ The application provides a toolset to improve workflow, the main features includ
 ## Background
 Background to the project can be found [here](http://uk.osgeo.org/foss4guk2016/abstracts.html#improving-open-source-gis-workflow-with-a-sld-editor).
 
-The project will be presented at [![FOSS4G UK 2016](http://uk.osgeo.org/foss4guk2016/images/foss4guk_2016_logo.png)](http://uk.osgeo.org/foss4guk2016/)
+The project will be presented on June 14th 2016 at [![FOSS4G UK 2016](http://uk.osgeo.org/foss4guk2016/images/foss4guk_2016_logo.png)](http://uk.osgeo.org/foss4guk2016/)
