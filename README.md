@@ -1,9 +1,11 @@
-<img src="/sldeditor-logo.png" width="353">
+<img src="/sldeditor-logo.png" height="92">
+<img src="http://www.scisys.co.uk/storage/template/img/logo-scisys.jpg" hspace="100">
 
-The SLD Editor is a Java desktop application that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
-The application provides a toolset to improve workflow.
+The SLD Editor is a Java desktop application developed by [SCISYS](http://www.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
 
-Main features include:
+
+
+The application provides a toolset to improve workflow, the main features include:
 * Vector (point, line and polygon) symbol editing
 * Raster symbol editing
 * Text symbol editing
