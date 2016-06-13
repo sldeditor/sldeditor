@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="line/sld/line_simpleline.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="Simple Line" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="SLD Cook Book: Simple Line" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+   <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.LineSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralDouble value="3.5" field="PERPENDICULAR_OFFSET" />
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralDouble value="3.4" field="STROKE_WIDTH"/>
+            <SetLiteralString value="bevel" field="STROKE_LINE_JOIN"/>
+            <SetLiteralString value="square" field="STROKE_LINE_CAP"/>
+            <SetLiteralDouble value="4.2" field="STROKE_OFFSET"/>
+            <SetLiteralString value="2.0 5.0 1.0" field="STROKE_DASH_ARRAY"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

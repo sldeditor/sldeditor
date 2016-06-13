@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="line/sld/line_simpleline.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="circle" field="STROKE_STYLE"/>
+            <!-- 
+            <SetLiteralDouble value="5.0" field="STROKE_SYMBOL_GAP"/>
+            <SetLiteralDouble value="2.1" field="STROKE_SYMBOL_INITIAL_GAP"/>
+            <SetLiteralString value="#563412" field="STROKE_FILL_COLOUR"/>
+            <SetLiteralDouble value="0.78" field="STROKE_FILL_OPACITY"/>
+             -->
+            <SetLiteralDouble value="5.0" field="STROKE_SYMBOL_SIZE"/>
+            <SetLiteralDouble value="271.3" field="STROKE_SYMBOL_ANGLE"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

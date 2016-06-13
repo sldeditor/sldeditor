@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<versions>
+    <VendorOption
+        class="com.sldeditor.common.vendoroption.GeoServerVendorOption">
+        <Version>2.0.2</Version>
+        <Version>2.4.0</Version>
+        <Version>2.4.1</Version>
+        <Version>2.4.2</Version>
+        <Version>2.8.0</Version>
+        <Version>2.8.1</Version>
+        <Version>2.8.2</Version>
+    </VendorOption>
+</versions>

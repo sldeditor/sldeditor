@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SLDXPath>
+    <Section prefix="StyledLayerDescriptor" sldtype="SLD" />
+    <Section prefix="NamedLayer[%d]" sldtype="LAYER">
+        <Field id="NAME" xpath="Name" />
+    </Section>
+    <Section prefix="UserStyle[%d]" sldtype="STYLE">
+        <Field id="TITLE" xpath="Title" />
+    </Section>
+    <Section prefix="FeatureTypeStyle[%d]" sldtype="FEATURETYPESTYLE">
+        <Field id="TITLE" xpath="Title" />
+    </Section>
+    <Section prefix="Rule[%d]" sldtype="RULE">
+        <Field id="NAME" xpath="Name" />
+        <Field id="TITLE" xpath="Title" />
+        <Field id="FILTER" xpath="ogc:Filter" />
+        <Field id="ELSE_FILTER" xpath="ElseFilter" />
+        <Field id="MINIMUM_SCALE" xpath="MinScaleDenominator" />
+        <Field id="MAXIMUM_SCALE" xpath="MaxScaleDenominator" />
+    </Section>
+    <Section prefix="*[%d]" sldtype="LINE_SYMBOLIZER">
+        <Field id="PERPENDICULAR_OFFSET" xpath="PerpendicularOffset" />
+    </Section>
+    <Section prefix="*[%d]" sldtype="POINT_SYMBOLIZER">
+    </Section>
+    <Section prefix="*[%d]" sldtype="POLYGON_SYMBOLIZER">
+    </Section>
+    <Section prefix="*[%d]" sldtype="TEXT_SYMBOLIZER">
+        <Field id="LABEL" xpath="Label" />
+        <Field id="FILL_COLOUR" xpath="Fill/CssParameter[@name=&quot;fill&quot;]" />
+        <Field id="OPACITY"
+            xpath="Fill/CssParameter[@name=&quot;fill-opacity&quot;]" />
+        <Field id="FONT_FAMILY"
+            xpath="Font/CssParameter[@name=&quot;font-family&quot;]" />
+        <Field id="FONT_STYLE"
+            xpath="Font/CssParameter[@name=&quot;font-style&quot;]" />
+        <Field id="FONT_WEIGHT"
+            xpath="Font/CssParameter[@name=&quot;font-weight&quot;]" />
+        <Field id="FONT_SIZE" xpath="Font/CssParameter[@name=&quot;font-size&quot;]" />
+        <Field id="HALO_COLOUR" xpath="Halo/Fill/CssParameter[@name=&quot;fill&quot;]" />
+        <Field id="HALO_RADIUS" xpath="Halo/Radius" />
+        <Field id="DISPLACEMENT_X"
+            xpath="LabelPlacement/PointPlacement/Displacement/DisplacementX" />
+        <Field id="DISPLACEMENT_Y"
+            xpath="LabelPlacement/PointPlacement/Displacement/DisplacementY" />
+        <Field id="ANCHOR_POINT_V"
+            xpath="LabelPlacement/PointPlacement/AnchorPoint/AnchorPointY" />
+        <Field id="ANCHOR_POINT_H"
+            xpath="LabelPlacement/PointPlacement/AnchorPoint/AnchorPointX" />
+        <Field id="ANGLE" xpath="LabelPlacement/PointPlacement/Rotation" />
+        <Field id="PERPENDICULAR_OFFSET"
+            xpath="LabelPlacement/LinePlacement/PerpendicularOffset" />
+        <Field id="INITIAL_GAP" xpath="LabelPlacement/LinePlacement/InitialGap" />
+        <Field id="GAP" xpath="LabelPlacement/LinePlacement/Gap" />
+        <Field id="REPEATED" xpath="LabelPlacement/LinePlacement/Repeated" />
+        <Field id="ALIGN" xpath="LabelPlacement/LinePlacement/Align" />
+        <Field id="GENERALISED_LINE" xpath="LabelPlacement/LinePlacement/GeneralisedLine" />
+
+        <!-- Vendor option - GeoServer - Labelling -->
+        <Field id="LABEL_ALLOW_OVERRUNS" xpath="VendorOption[@name=&quot;allowOverruns&quot;]" />
+        <Field id="LABEL_AUTO_WRAP" xpath="VendorOption[@name=&quot;autoWrap&quot;]" />
+        <Field id="LABEL_CONFLICT_RESOLUTION"
+            xpath="VendorOption[@name=&quot;conflictResolution&quot;]" />
+        <Field id="LABEL_FOLLOW_LINE" xpath="VendorOption[@name=&quot;followLine&quot;]" />
+        <Field id="LABEL_FORCE_LEFT_TO_RIGHT"
+            xpath="VendorOption[@name=&quot;forceLeftToRight&quot;]" />
+        <Field id="LABEL_GOODNESS_OF_FIT" xpath="VendorOption[@name=&quot;goodnessOfFit&quot;]" />
+        <Field id="LABEL_GRAPHIC_MARGIN" xpath="VendorOption[@name=&quot;graphic-margin&quot;]" />
+        <Field id="LABEL_GRAPHIC_RESIZE" xpath="VendorOption[@name=&quot;graphic-resize&quot;]" />
+        <Field id="LABEL_GROUP" xpath="VendorOption[@name=&quot;group&quot;]" />
+        <Field id="LABEL_LABEL_ALL_GROUP" xpath="VendorOption[@name=&quot;labelAllGroup&quot;]" />
+        <Field id="LABEL_LABEL_REPEAT" xpath="VendorOption[@name=&quot;repeat&quot;]" />
+        <Field id="LABEL_MAX_ANGLE_DELTA" xpath="VendorOption[@name=&quot;maxAngleDelta&quot;]" />
+        <Field id="LABEL_MAX_DISPLACEMENT"
+            xpath="VendorOption[@name=&quot;maxDisplacement&quot;]" />
+        <Field id="LABEL_MIN_GROUP_DISTANCE"
+            xpath="VendorOption[@name=&quot;minGroupDistance&quot;]" />
+        <Field id="LABEL_PARTIALS" xpath="VendorOption[@name=&quot;partials&quot;]" />
+        <Field id="LABEL_POLYGONALIGN" xpath="VendorOption[@name=&quot;polygonAlign&quot;]" />
+        <Field id="LABEL_SPACE_AROUND" xpath="VendorOption[@name=&quot;spaceAround&quot;]" />
+    </Section>
+    <Section prefix="*[%d]" sldtype="POINT_FILL">
+        <Field id="SYMBOL_TYPE" xpath="Graphic/Mark/WellKnownName" />
+        <Field id="FILL_COLOUR"
+            xpath="Graphic/Mark/Fill/CssParameter[@name=&quot;fill&quot;]" />
+        <Field id="OPACITY"
+            xpath="Graphic/Mark/Fill/CssParameter[@name=&quot;fill-opacity&quot;]" />
+        <Field id="SIZE" xpath="Graphic/Size" />
+        <Field id="ANGLE" xpath="Graphic/Rotation" />
+        <Field id="GAP" xpath="Graphic/Gap" />
+        <Field id="INITIAL_GAP" xpath="Graphic/InitialGap" />
+        <Field id="DISPLACEMENT_X" xpath="Graphic/Displacement/DisplacementX" />
+        <Field id="DISPLACEMENT_Y" xpath="Graphic/Displacement/DisplacementY" />
+        <Field id="ANCHOR_POINT_V" xpath="Graphic/AnchorPoint/AnchorPointY" />
+        <Field id="ANCHOR_POINT_H" xpath="Graphic/AnchorPoint/AnchorPointX" />
+        <Field id="EXTERNAL_GRAPHIC" xpath="Graphic/ExternalGraphic/OnlineResource/@href" />
+        <Field id="WKT" xpath="Graphic/Mark/WellKnownName" />
+        <Field id="TTF_SYMBOL" xpath="Graphic/Mark/WellKnownName" />
+        <Field id="WINDBARBS" xpath="Graphic/Mark/WellKnownName" />
+    </Section>
+    <Section prefix="*[%d]" sldtype="POLYGON_FILL">
+        <Field id="SYMBOL_TYPE" xpath="Fill/GraphicFill/Graphic/Mark/WellKnownName" />
+        <Field id="FILL_COLOUR"
+            xpath="Fill/GraphicFill/Graphic/Mark/Fill/CssParameter[@name=&quot;fill&quot;]" />
+        <Field id="OPACITY"
+            xpath="Fill/GraphicFill/Graphic/Mark/Fill/CssParameter[@name=&quot;fill-opacity&quot;]" />
+        <Field id="SIZE" xpath="Graphic/Size" />
+        <Field id="ANGLE" xpath="Graphic/Rotation" />
+        <Field id="GAP" xpath="Graphic/Gap" />
+        <Field id="INITIAL_GAP" xpath="Graphic/InitialGap" />
+        <Field id="DISPLACEMENT_X" xpath="Graphic/Displacement/DisplacementX" />
+        <Field id="DISPLACEMENT_Y" xpath="Graphic/Displacement/DisplacementY" />
+        <Field id="ANCHOR_POINT_V" xpath="Graphic/AnchorPoint/AnchorPointY" />
+        <Field id="ANCHOR_POINT_H" xpath="Graphic/AnchorPoint/AnchorPointX" />
+        <Field id="EXTERNAL_GRAPHIC" xpath="Graphic/ExternalGraphic/OnlineResource/@href" />
+        <Field id="WKT" xpath="Graphic/Mark/WellKnownName" />
+        <Field id="TTF_SYMBOL" xpath="Graphic/Mark/WellKnownName" />
+        <Field id="WINDBARBS" xpath="Graphic/Mark/WellKnownName" />
+
+        <!-- Vendor option - GeoServer - Random Fill -->
+        <Field id="RANDOM_FILL_ACTIVATE" xpath="VendorOption[@name=&quot;random&quot;]" />
+        <Field id="RANDOM_FILL_TILE_SIZE"
+            xpath="VendorOption[@name=&quot;random-tile-size&quot;]" />
+        <Field id="RANDOM_FILL_ROTATION"
+            xpath="VendorOption[@name=&quot;random-rotation&quot;]" />
+        <Field id="RANDOM_FILL_SYMBOL_COUNT"
+            xpath="VendorOption[@name=&quot;random-symbol-count&quot;]" />
+        <Field id="RANDOM_FILL_RANDOM_SEED" xpath="VendorOption[@name=&quot;random-seed&quot;]" />
+    </Section>
+    <Section prefix="*[%d]" sldtype="STROKE">
+        <Field id="STROKE_FILL_COLOUR" xpath="Stroke/CssParameter[@name=&quot;stroke&quot;]" />
+        <Field id="STROKE_FILL_OPACITY"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-opacity&quot;]" />
+        <Field id="STROKE_LINE_JOIN"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-linejoin&quot;]" />
+        <Field id="STROKE_LINE_CAP"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-linecap&quot;]" />
+        <Field id="STROKE_WIDTH"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-width&quot;]" />
+        <Field id="STROKE_OFFSET"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-dashoffset&quot;]" />
+        <Field id="STROKE_DASH_ARRAY"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-dasharray&quot;]" />
+        <Field id="STROKE_STROKE_COLOUR" xpath="Stroke/CssParameter[@name=&quot;stroke&quot;]" />
+        <Field id="STROKE_STROKE_OPACITY"
+            xpath="Stroke/CssParameter[@name=&quot;stroke-opacity&quot;]" />
+        <Field id="STROKE_STYLE"
+            xpath="Stroke/GraphicStroke/Graphic/Mark/WellKnownName" />
+        <Field id="STROKE_SYMBOL_ANGLE" xpath="Stroke/GraphicStroke/Graphic/Rotation" />
+        <Field id="STROKE_SYMBOL_SIZE" xpath="Stroke/GraphicStroke/Graphic/Size" />
+        <Field id="STROKE_SYMBOL_INITIAL_GAP" xpath="Stroke/GraphicStroke/Graphic/InitialGap" />
+        <Field id="STROKE_SYMBOL_GAP" xpath="Stroke/GraphicStroke/Graphic/Gap" />
+        <Field id="STROKE_SYMBOL_DISPLACEMENT_X"
+            xpath="Stroke/GraphicStroke/Graphic/Displacement/DisplacementX" />
+        <Field id="STROKE_SYMBOL_DISPLACEMENT_Y"
+            xpath="Stroke/GraphicStroke/Graphic/Displacement/DisplacementY" />
+        <Field id="STROKE_SYMBOL_ANCHOR_POINT_V"
+            xpath="Stroke/GraphicStroke/Graphic/AnchorPoint/AnchorPointY" />
+        <Field id="STROKE_SYMBOL_ANCHOR_POINT_H"
+            xpath="Stroke/GraphicStroke/Graphic/AnchorPoint/AnchorPointX" />
+    </Section>
+</SLDXPath>

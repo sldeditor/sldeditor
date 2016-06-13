@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_zoombasedpolygon.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Zoom-based polygon" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Zoom-based polygon" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Large" field="NAME"/>
+            <LiteralString value="1:100,000,000" field="MAXIMUM_SCALE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#0000CC" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#000000" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="7.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+        </Setup>
+        <FieldTests>
+            <Attribute attribute="name" field="LABEL"/>
+            <Attribute attribute="Arial" field="FONT_FAMILY"/>
+            <Attribute attribute="14.0" field="FONT_SIZE"/>
+            <Attribute attribute="normal" field="FONT_STYLE"/>
+            <Attribute attribute="bold" field="FONT_WEIGHT"/>
+            <Attribute attribute="0.5" field="ANCHOR_POINT_V"/>
+            <Attribute attribute="0.5" field="ANCHOR_POINT_H"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Medium" field="NAME"/>
+            <LiteralString value="1:100,000,000" field="MINIMUM_SCALE"/>
+            <LiteralString value="1:200,000,000" field="MAXIMUM_SCALE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#0000CC" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#000000" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="4.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Small" field="NAME"/>
+            <LiteralString value="1:200,000,000" field="MINIMUM_SCALE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#0000CC" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#000000" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="1.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

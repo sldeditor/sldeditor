@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="line/sld/line_dashdot.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Dash - symbol" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Dash/Symbol line" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#0000FF" field="STROKE_FILL_COLOUR"/>
+            <LiteralString value="10 10" field="STROKE_DASH_ARRAY"/>
+            <LiteralDouble value="0.0" field="STROKE_OFFSET"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="circle" field="STROKE_STYLE"/>
+            <LiteralString value="#000033" field="STROKE_STROKE_COLOUR"/>
+            <LiteralDouble value="1.0" field="STROKE_WIDTH"/>
+            <LiteralString value="5 15" field="STROKE_DASH_ARRAY"/>
+            <LiteralDouble value="7.5" field="STROKE_OFFSET"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="fillSymbol.paneltitle"
+    localisation="com.sldeditor.ui.detail.FillDetails">
+    <Group id="FILLSYMBOL" showLabel="false" option="false">
+        <FieldConfigSymbolType id="SYMBOL_TYPE"
+            label="fillSymbol.symbol" />
+        <FieldConfigDouble id="ANGLE" label="fillSymbol.angle" />
+        <FieldConfigDouble id="SIZE" label="fillSymbol.size" />
+        <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" />
+        <FieldConfigDouble id="INITIAL_GAP" label="fillSymbol.initialGap" />
+        <FieldConfigDouble id="GAP" label="fillSymbol.gap" />
+    </Group>
+    <Group id="ANCHORPOINT" label="fillSymbol.anchorPoint"
+        showLabel="true">
+        <FieldConfigSlider id="ANCHOR_POINT_H"
+            label="fillSymbol.anchorPoint.x" />
+        <FieldConfigSlider id="ANCHOR_POINT_V"
+            label="fillSymbol.anchorPoint.y" />
+    </Group>
+    <Group id="DISPLACEMENT" label="fillSymbol.displacement"
+        showLabel="true">
+        <FieldConfigDouble id="DISPLACEMENT_X"
+            label="fillSymbol.displacement.x" />
+        <FieldConfigDouble id="DISPLACEMENT_Y"
+            label="fillSymbol.displacement.y" />
+    </Group>
+    <Group id="FILL" label="fillSymbol.fill" showLabel="true"
+        option="true">
+        <FieldConfigColour id="FILL_COLOUR" label="fillSymbol.fill.colour" />
+    </Group>
+</PanelConfig>
+

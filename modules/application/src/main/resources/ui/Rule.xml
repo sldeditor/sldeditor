@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="rule.paneltitle"
+    localisation="com.sldeditor.ui.detail.RuleDetails">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="NAME" label="rule.name"
+            valueOnly="true" />
+        <FieldConfigString id="FILTER" label="rule.filter"
+            valueOnly="true" />
+        <FieldConfigString id="TITLE" label="rule.titleField"
+            valueOnly="true" />
+        <FieldConfigString id="DESCRIPTION" label="rule.description"
+            valueOnly="true" />
+        <FieldConfigBoolean id="ELSE_FILTER" label="rule.elseFilter"
+            valueOnly="true" />
+    </Group>
+    <Group id="SCALE" label="rule.scale" showLabel="true" option="true">
+        <FieldConfigString id="MINIMUM_SCALE" label="rule.scale.minimum" />
+        <FieldConfigString id="MAXIMUM_SCALE" label="rule.scale.maximum" />
+    </Group>
+</PanelConfig>

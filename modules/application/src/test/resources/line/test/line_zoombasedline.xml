@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="line/sld/line_zoombasedline.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Zoom-based line" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Zoom-based line" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Large" field="NAME"/>
+            <LiteralString value="1:180,000,000" field="MAXIMUM_SCALE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#009933" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="6.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Medium" field="NAME"/>
+            <LiteralString value="1:180,000,000" field="MINIMUM_SCALE"/>
+            <LiteralString value="1:360,000,000" field="MAXIMUM_SCALE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#009933" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="4.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Small" field="NAME"/>
+            <LiteralString value="1:360,000,000" field="MINIMUM_SCALE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#009933" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="2.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_rotatedsquare.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Rotated square" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="GeoServer SLD Cook Book: Rotated square" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="square" field="SYMBOL_TYPE"/>
+            <LiteralString value="#009900" field="FILL_COLOUR"/>
+            <LiteralDouble value="12.0" field="SIZE"/>
+            <LiteralDouble value="45.0" field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

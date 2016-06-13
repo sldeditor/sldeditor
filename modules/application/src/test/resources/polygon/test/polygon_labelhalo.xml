@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_labelhalo.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Label halo" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Label halo" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#40FF40" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="STROKE_STYLE"/>
+            <LiteralString value="#FFFFFF" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="2.0" field="STROKE_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+        </Setup>
+        <FieldTests>
+            <Attribute attribute="name" field="LABEL"/>
+            <LiteralDouble value="3.0" field="HALO_RADIUS"/>
+            <LiteralString value="#FFFFFF" field="HALO_COLOUR"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

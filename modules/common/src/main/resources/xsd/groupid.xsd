@@ -1,0 +1,49 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="GroupIdEnum" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="UNKNOWN" />
+            <xs:enumeration value="STANDARD" />
+            <xs:enumeration value="GENERAL" />
+            <xs:enumeration value="ANCHORPOINT" />
+            <xs:enumeration value="DISPLACEMENT" />
+            <xs:enumeration value="ROTATION" />
+            <xs:enumeration value="SCALE" />
+            <xs:enumeration value="FILL" />
+            <xs:enumeration value="FILLSYMBOL" />
+            <xs:enumeration value="STROKE" />
+            <xs:enumeration value="STROKESYMBOL" />
+            <xs:enumeration value="STROKEANCHORPOINT" />
+            <xs:enumeration value="STROKEDISPLACEMENT" />
+            <xs:enumeration value="FILLCOLOUR" />
+            <xs:enumeration value="STROKECOLOUR" />
+            <xs:enumeration value="FONT" />
+            <xs:enumeration value="HALO" />
+            <xs:enumeration value="PLACEMENT" />
+            <xs:enumeration value="POINTPLACEMENT" />
+            <xs:enumeration value="LINEPLACEMENT" />
+            <xs:enumeration value="HALO" />
+            <xs:enumeration value="VO_LABELLING" />
+            <xs:enumeration value="VO_RANDOMFILL" />
+
+            <xs:enumeration value="RASTER" />
+            <xs:enumeration value="RASTER_CONTRAST" />
+            <xs:enumeration value="RASTER_CHANNELSELECTION" />
+            <xs:enumeration value="RASTER_SHADEDRELIEF" />
+            <xs:enumeration value="RASTER_OVERLAP" />
+            <xs:enumeration value="RASTER_COLOURMAP" />
+
+            <xs:enumeration value="RASTER_CHANNELSELECTION" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_OPTION" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST" />
+            <xs:enumeration value="RASTER_GREY_CHANNEL_OPTION" />
+            <xs:enumeration value="RASTER_GREY_CHANNEL" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

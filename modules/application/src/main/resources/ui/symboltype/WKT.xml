@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDetails">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="WKT" valueOnly="true"
+            buttonText="..." />
+    </Group>
+</PanelConfig>

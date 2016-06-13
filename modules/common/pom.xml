@@ -1,0 +1,240 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- =========================================================== -->
+    <!-- Parent POM -->
+    <!-- =========================================================== -->
+    <parent>
+        <groupId>com.sldeditor</groupId>
+        <artifactId>sldeditor</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <!-- =========================================================== -->
+    <!-- Project Description -->
+    <!-- =========================================================== -->
+    <artifactId>se-common</artifactId>
+    <name>se-common</name>
+
+    <!-- =========================================================== -->
+    <!-- Developers and Contributors -->
+    <!-- =========================================================== -->
+    <developers>
+        <developer>
+            <name>Robert Ward</name>
+            <email>robert.ward@scisys.co.uk</email>
+            <organization>SCISYS</organization>
+            <organizationUrl>http://www.scisys.co.uk/</organizationUrl>
+            <timezone>Europe/London</timezone>
+            <roles>
+                <role>Architect</role>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- =========================================================== -->
+    <!-- Dependencies -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <dependency>
+            <!-- This is needed for geoserver-manager library -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-arcsde</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geometry</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-cql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-referencing</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-process</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-render</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-swing</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions</groupId>
+            <artifactId>geoserver-manager</artifactId>
+            <version>${geoserver_manager.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.jdatepicker</groupId>
+            <artifactId>jdatepicker</artifactId>
+            <version>${jdatepicker.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- =========================================================== -->
+            <!-- Generate JAXB classes from xsd -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <id>ui xsd xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/resources/xsd/paneldetails.xsd</source>
+                                <source>src/main/resources/xsd/symboltype.xsd</source>
+                                <source>src/main/resources/xsd/testvalue.xsd</source>
+                                <source>src/main/resources/xsd/testoutput.xsd</source>
+                            </sources>
+                            <packageName>com.sldeditor.common.xml.ui</packageName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>envvar xsd xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/resources/xsd/envvar.xsd</source>
+                            </sources>
+                            <packageName>com.sldeditor.common.xml.envvar</packageName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>filter xsd xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/resources/xsd/filter.xsd</source>
+                            </sources>
+                            <packageName>com.sldeditor.common.xml.filter</packageName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>loadextension xsd xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/resources/xsd/loadextension.xsd</source>
+                            </sources>
+                            <packageName>com.sldeditor.common.xml.loadextension</packageName>
+                            <outputDirectory>src/main/java</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Replace date/time string in generate JAXB classes with -->
+            <!-- constant string -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+                <version>1.3.8</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>src/main/java/com/sldeditor/common/xml/envvar/*.java</include>
+                        <include>src/main/java/com/sldeditor/common/xml/filter/*.java</include>
+                        <include>src/main/java/com/sldeditor/common/xml/ui/*.java</include>
+                        <include>src/main/java/com/sldeditor/common/xml/loadextension/*.java</include>
+                    </includes>
+                    <token>^// Generated on.*$</token>
+                    <value>// Generated on: [TEXT REMOVED by maven-replacer-plugin]</value>
+                    <regexFlags>
+                        <regexFlag>MULTILINE</regexFlag>
+                    </regexFlags>
+                </configuration>
+            </plugin>
+
+            <!-- =========================================================== -->
+            <!-- Create an empty extension class configuration file -->
+            <!-- =========================================================== -->
+            <!-- Hardcoded for now
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <mainClass>com.sldeditor.common.extension.ExtensionClassLoaderTool</mainClass>
+                            <arguments>
+                                <argument>${project.build.directory}/../../extension/base/src/main/resources</argument>
+                                <argument>create</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+             -->
+        </plugins>
+    </build>
+</project>

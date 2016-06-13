@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLSymbolTypeConfig>
+    <Symbolizer type="com.sldeditor.ui.detail.PointSymbolizerDetails">
+        <Value groupName="extshape://" separateGroup="true">
+            <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
+            <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
+            <Item id="extshape://triangleemicircle" label="Stationary Front (extshape://triangleemicircle)" />
+            <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
+            <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
+            <FieldList>
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="true" />
+                <Field id="ANCHOR_POINT_V" enabled="true" />
+                <Field id="DISPLACEMENT_X" enabled="true" />
+                <Field id="DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_WIDTH" enabled="true" />
+            </FieldList>
+        </Value>
+    </Symbolizer>
+    <Symbolizer type="org.geotools.styling.PolygonSymbolizerImpl">
+        <Value groupName="extshape://" separateGroup="true">
+            <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
+            <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
+            <Item id="extshape://triangleemicircle" label="Stationary Front (extshape://triangleemicircle)" />
+            <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
+            <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
+            <FieldList>
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="true" />
+                <Field id="ANCHOR_POINT_V" enabled="true" />
+                <Field id="DISPLACEMENT_X" enabled="true" />
+                <Field id="DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_WIDTH" enabled="true" />
+            </FieldList>
+        </Value>
+    </Symbolizer>
+    <Symbolizer type="com.sldeditor.ui.detail.StrokeDetails">
+        <Value groupName="extshape://" separateGroup="true">
+            <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
+            <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
+            <Item id="extshape://triangleemicircle" label="Stationary Front (extshape://triangleemicircle)" />
+            <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
+            <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
+            <FieldList>
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="true" />
+                <Field id="ANCHOR_POINT_V" enabled="true" />
+                <Field id="DISPLACEMENT_X" enabled="true" />
+                <Field id="DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_WIDTH" enabled="true" />
+            </FieldList>
+        </Value>
+    </Symbolizer>
+</XMLSymbolTypeConfig>
+	

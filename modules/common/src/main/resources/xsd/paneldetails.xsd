@@ -1,0 +1,218 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+    <xs:include schemaLocation="fieldid.xsd" />
+    <xs:include schemaLocation="groupid.xsd" />
+
+    <xs:element name="PanelConfig">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="Group" type="XMLGroupConfig" />
+                <xs:element name="MultiOptionGroup" type="XMLMultiOptionGroup" />
+            </xs:choice>
+            <xs:attribute type="xs:string" name="vendorOption"
+                use="optional" />
+            <xs:attribute type="xs:string" name="start"
+                use="optional" />
+            <xs:attribute type="xs:string" name="end" use="optional" />
+            <xs:attribute type="xs:string" name="panelTitle"
+                use="optional" />
+            <xs:attribute type="xs:string" name="localisation"
+                use="optional" />
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="XMLGroupConfig">
+        <xs:complexContent>
+            <xs:extension base="XMLGroupConfigData">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jaxb:property name="fieldList" />
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:element name="FieldConfigSymbolType"
+                        type="XMLFieldConfigSymbolType" />
+                    <xs:element name="FieldConfigDouble"
+                        type="XMLFieldConfigDouble" />
+                    <xs:element name="FieldConfigEnum" type="XMLFieldConfigEnum" />
+                    <xs:element name="FieldConfigString"
+                        type="XMLFieldConfigString" />
+                    <xs:element name="FieldConfigFunction"
+                        type="XMLFieldConfigFunction" />
+                    <xs:element name="FieldConfigSlider"
+                        type="XMLFieldConfigSlider" />
+                    <xs:element name="FieldConfigColour"
+                        type="XMLFieldConfigColour" />
+                    <xs:element name="FieldConfigBoolean"
+                        type="XMLFieldConfigBoolean" />
+                    <xs:element name="FieldConfigGeometry"
+                        type="XMLFieldConfigGeometry" />
+                    <xs:element name="FieldConfigColourMap"
+                        type="XMLFieldConfigColourMap" />
+                    <xs:element name="FieldConfigTransformation"
+                        type="XMLFieldConfigTransformation" />
+                    <xs:element name="FieldConfigInteger" type="XMLFieldConfigInteger" />
+                    <xs:element name="Group" type="XMLGroupConfig" />
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLGroupConfigData">
+        <xs:attribute type="GroupIdEnum" name="id" use="required" />
+        <xs:attribute type="xs:string" name="label" use="optional" />
+        <xs:attribute type="xs:boolean" name="showLabel"
+            use="optional" default="false" />
+        <xs:attribute type="xs:boolean" name="option" use="optional"
+            default="false" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigSymbolType">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigDouble">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:double" name="minValue" use="optional" default="0.0"/>
+                <xs:attribute type="xs:double" name="maxValue" use="optional" default="INF"/>
+                <xs:attribute type="xs:double" name="stepSize" use="optional" default="1.0"/>
+                <xs:attribute type="xs:int" name="noOfDecimalPlaces" use="optional" default="3"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigColourMap">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigTransformation">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:string" name="editButtonText" use="optional" />
+                <xs:attribute type="xs:string" name="clearButtonText" use="optional" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigEnum">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+                <xs:sequence>
+                    <xs:element name="ValueList"
+                        type="XMLFieldConfigEnumValueList" maxOccurs="1"
+                        minOccurs="1" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigEnumValueList">
+        <xs:sequence>
+            <xs:element name="Value" type="XMLFieldConfigEnumValue"
+                maxOccurs="unbounded" minOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigEnumValue">
+        <xs:sequence>
+            <xs:element name="Item" type="XMLFieldConfigEnumValueItem"
+                maxOccurs="unbounded" minOccurs="1" />
+            <xs:element name="FieldList" maxOccurs="1"
+                minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Field"
+                            type="XMLFieldConfigEnumValueField"
+                            maxOccurs="unbounded" minOccurs="0" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="groupName"
+            use="optional" />
+        <xs:attribute type="xs:boolean" name="separateGroup"
+            use="optional" default="false" />
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigEnumValueItem">
+        <xs:attribute type="xs:string" name="id" use="required" />
+        <xs:attribute type="xs:string" name="label" use="required" />
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigEnumValueField">
+        <xs:attribute type="FieldIdEnum" name="id" use="required" />
+        <xs:attribute type="xs:boolean" name="enabled" use="required" />
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigString">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:string" name="buttonText" use="optional" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigFunction">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:string" name="buttonText" use="optional" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigGeometry">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:string" name="buttonText" use="optional" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigSlider">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigColour">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigBoolean">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigInteger">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigData">
+        <xs:attribute type="FieldIdEnum" name="id" use="required" />
+        <xs:attribute type="xs:string" name="label" use="optional" />
+        <xs:attribute type="xs:boolean" name="valueOnly" use="optional" default="false" />
+        <xs:attribute type="xs:boolean" name="multiple" use="optional" default="false" />
+        <xs:attribute type="xs:string" name="default" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="XMLMultiOptionGroup">
+        <xs:sequence>
+            <xs:element name="OptionGroup" type="XMLOptionGroup"
+                maxOccurs="unbounded" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute type="GroupIdEnum" name="id" use="required" />
+        <xs:attribute type="xs:string" name="label" use="optional" />
+        <xs:attribute type="xs:boolean" name="showLabel"
+            use="optional" default="false" />
+        <xs:attribute type="xs:boolean" name="option" use="optional"
+            default="false" />
+    </xs:complexType>
+    <xs:complexType name="XMLOptionGroup">
+        <xs:sequence>
+            <xs:element name="Group" type="XMLGroupConfig"
+                maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute type="GroupIdEnum" name="id" use="required" />
+        <xs:attribute type="xs:string" name="label" use="optional" />
+        <xs:attribute type="xs:boolean" name="showLabel"
+            use="optional" default="false" />
+    </xs:complexType>
+
+</xs:schema>

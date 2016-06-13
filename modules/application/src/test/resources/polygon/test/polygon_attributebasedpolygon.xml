@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_attributebasedpolygon.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Attribute-based polygon" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Attribute-based polygon" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SmallPop" field="NAME"/>
+            <LiteralString value="Less Than 200,000" field="TITLE"/>
+            <Expression expression="[ pop &lt; 200000 ]" field="FILTER"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#66FF66" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails" enabled="false">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="MediumPop" field="NAME"/>
+            <LiteralString value="200,000 to 500,000" field="TITLE"/>
+            <Expression expression="[[ pop &gt;= 200000 ] AND [ pop &lt; 500000 ]]" field="FILTER"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#33CC33" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails" enabled="false">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="1"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RuleDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="LargePop" field="NAME"/>
+            <LiteralString value="Greater Than 500,000" field="TITLE"/>
+            <Expression expression="[ pop &gt; 500000 ]" field="FILTER"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="solid" field="SYMBOL_TYPE"/>
+            <LiteralString value="#009900" field="FILL_COLOUR"/>
+            <Disabled field="SIZE"/>
+            <Disabled field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails" enabled="false">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="2"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+    </PanelTests>
+</SldEditor_test>

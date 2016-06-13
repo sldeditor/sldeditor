@@ -1,0 +1,38 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+    <xs:element name="EnvironmentVariables">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="EnvVarTypeList" type="XMLEnvVarTypeList"
+                    maxOccurs="1" minOccurs="1" />
+                <xs:element name="BuiltInEnvVarList" type="XMLBuiltInEnvVarList"
+                    maxOccurs="1" minOccurs="1" />
+            </xs:sequence>
+
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="XMLEnvVarTypeList">
+        <xs:sequence>
+            <xs:element name="EnvVarType" type="XMLEnvVarType"
+                maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="XMLEnvVarType">
+        <xs:attribute name="name" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLBuiltInEnvVarList">
+        <xs:sequence>
+            <xs:element name="EnvVar" type="XMLEnvVar"
+                maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="XMLEnvVar">
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="type" type="xs:string" use="required" />
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,20 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+    <xs:include schemaLocation="paneldetails.xsd" />
+    <xs:element name="XMLSymbolTypeConfig">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Symbolizer" type="XMLSymbolizer"
+                    maxOccurs="unbounded" minOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="XMLSymbolizer">
+        <xs:sequence>
+            <xs:element name="Value" type="XMLFieldConfigEnumValue"
+                maxOccurs="unbounded" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="type" use="required" />
+    </xs:complexType>
+</xs:schema>

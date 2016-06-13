@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="stroke.paneltitle"
+    localisation="com.sldeditor.ui.detail.StrokeDetails">
+    <Group id="STROKE" label="stroke" showLabel="false" option="false">
+        <FieldConfigSymbolType id="STROKE_STYLE"
+            label="stroke.style" valueOnly="true" />
+        <FieldConfigDouble id="STROKE_WIDTH" label="stroke.width" />
+        <FieldConfigEnum id="STROKE_LINE_JOIN" label="stroke.lineJoin">
+            <ValueList>
+                <Value>
+                    <Item id="round" label="stroke.lineJoin.round" />
+                    <Item id="miter" label="stroke.lineJoin.miter" />
+                    <Item id="bevel" label="stroke.lineJoin.bevel" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigEnum id="STROKE_LINE_CAP" label="stroke.lineCap">
+            <ValueList>
+                <Value>
+                    <Item id="round" label="stroke.lineCap.round" />
+                    <Item id="butt" label="stroke.lineCap.butt" />
+                    <Item id="square" label="stroke.lineCap.square" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigDouble id="STROKE_OFFSET" label="stroke.dash.offset" />
+        <FieldConfigString id="STROKE_DASH_ARRAY"
+            label="stroke.dash.array" valueOnly="true" />
+    </Group>
+    <Group id="STROKESYMBOL" label="stroke.strokeSymbol"
+        showLabel="true" option="false">
+        <FieldConfigDouble id="STROKE_SYMBOL_ANGLE"
+            label="stroke.strokeSymbol.angle" />
+        <FieldConfigDouble id="STROKE_SYMBOL_SIZE"
+            label="stroke.strokeSymbol.size" />
+        <FieldConfigDouble id="STROKE_SYMBOL_INITIAL_GAP"
+            label="stroke.strokeSymbol.initialGap" />
+        <FieldConfigDouble id="STROKE_SYMBOL_GAP"
+            label="stroke.strokeSymbol.gap" />
+    </Group>
+    <Group id="STROKEANCHORPOINT" label="stroke.anchorPoint"
+        showLabel="true">
+        <FieldConfigSlider id="STROKE_SYMBOL_ANCHOR_POINT_H"
+            label="stroke.anchorPoint.x" />
+        <FieldConfigSlider id="STROKE_SYMBOL_ANCHOR_POINT_V"
+            label="stroke.anchorPoint.y" />
+    </Group>
+    <Group id="STROKEDISPLACEMENT" label="stroke.displacement"
+        showLabel="true">
+        <FieldConfigDouble id="STROKE_SYMBOL_DISPLACEMENT_X"
+            label="stroke.displacement.x" />
+        <FieldConfigDouble id="STROKE_SYMBOL_DISPLACEMENT_Y"
+            label="stroke.displacement.y" />
+    </Group>
+    <Group id="FILLCOLOUR" label="stroke.fillColour" showLabel="true"
+        option="true">
+        <FieldConfigColour id="STROKE_FILL_COLOUR"
+            label="stroke.fillColour.colour" />
+        <FieldConfigSlider id="STROKE_FILL_OPACITY"
+            label="stroke.fillColour.opacity" />
+    </Group>
+    <Group id="STROKECOLOUR" label="stroke.strokeColour"
+        showLabel="true" option="true">
+        <FieldConfigColour id="STROKE_STROKE_COLOUR"
+            label="stroke.strokeColour.colour" />
+        <FieldConfigSlider id="STROKE_STROKE_OPACITY"
+            label="stroke.strokeColour.opacity" />
+    </Group>
+</PanelConfig>

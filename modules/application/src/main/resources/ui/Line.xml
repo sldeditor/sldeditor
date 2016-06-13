@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="line.paneltitle">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="NAME" label="*standard.name"
+            valueOnly="true" />
+        <FieldConfigString id="TITLE" label="*standard.title"
+            valueOnly="true" />
+        <FieldConfigString id="DESCRIPTION" label="*standard.description"
+            valueOnly="true" />
+        <FieldConfigEnum id="UOM" label="*standard.UOM">
+            <ValueList>
+                <Value>
+                    <Item id="Map Units" label="*standard.UOM.mapUnits" />
+                    <Item id="pixel" label="*standard.UOM.pixels" />
+                    <Item id="metre" label="*standard.UOM.metre" />
+                    <Item id="foot" label="*standard.UOM.foot" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+    </Group>
+    <Group id="GENERAL" showLabel="false">
+        <FieldConfigDouble id="PERPENDICULAR_OFFSET"
+            label="line.general.perpendicularOffset" />
+    </Group>
+</PanelConfig>

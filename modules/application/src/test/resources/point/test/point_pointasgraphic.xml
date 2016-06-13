@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_pointasgraphic.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Point as graphic" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="GeoServer SLD Cook Book: Point as graphic" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="/smileyface.png" field="SYMBOL_TYPE"/>
+            <LiteralDouble value="32.0" field="SIZE"/>
+            <LiteralDouble value="0.0" field="ANGLE"/>
+            <LiteralDouble value="0.0" field="GAP"/>
+            <LiteralDouble value="0.0" field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

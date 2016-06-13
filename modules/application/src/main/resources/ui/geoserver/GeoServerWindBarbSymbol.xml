@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.WindBarbDetails">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigInteger id="WINDBARB_WINDSPEED"
+            label="Wind speed" valueOnly="false" />
+        <FieldConfigBoolean id="WINDBARB_NORTHERN_HEMISPHERE"
+            label="Nothern Hemisphere" valueOnly="true" default="true" />
+        <FieldConfigEnum id="WINDBARB_WINDSPEED_UNITS"
+            label="Units" valueOnly="true" default="m/s">
+            <ValueList>
+                <Value groupName="windbarbunits">
+                    <Item id="m/s" label="m/s" />
+                    <Item id="kts" label="Knots" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+    </Group>
+</PanelConfig>

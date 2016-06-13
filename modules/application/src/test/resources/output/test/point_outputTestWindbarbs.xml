@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_simplepoint.sld">
+	<PanelTests>
+		<Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+			<FeatureTypeStyle index="0" />
+			<Layer index="0" />
+			<Rule index="0" />
+			<Style index="0" />
+			<Symbolizer index="0" />
+			<SymbolizerDetail index="0" />
+		</Setup>
+		<FieldTests>
+			<SetLiteralString value="windbarb" field="SYMBOL_TYPE"
+				ignoreCheck="true" />
+			<SetLiteralString value="windbarbs://default(42)[m/s]"
+				field="WINDBARBS" />
+			<!-- Not supported <SetLiteralString value="windbarbs://default(&lt;ogc:PropertyName&gt;speed&lt;/ogc:PropertyName&gt;)[kts]?hemisphere=s" 
+				field="WINDBARBS"/> -->
+		</FieldTests>
+	</PanelTests>
+</SldEditor_test>
+

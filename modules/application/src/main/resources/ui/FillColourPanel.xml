@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLSymbolTypeConfig>
+    <Symbolizer type="com.sldeditor.ui.detail.PointSymbolizerDetails">
+        <Value>
+            <Item id="square" label="symbolType.square" />
+            <Item id="circle" label="symbolType.circle" />
+            <Item id="triangle" label="symbolType.triangle" />
+            <Item id="star" label="symbolType.star" />
+            <Item id="cross" label="symbolType.cross" />
+            <Item id="x" label="symbolType.x" />
+            <FieldList>
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="true" />
+                <Field id="ANCHOR_POINT_V" enabled="true" />
+                <Field id="DISPLACEMENT_X" enabled="true" />
+                <Field id="DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_WIDTH" enabled="true" />
+            </FieldList>
+        </Value>
+    </Symbolizer>
+    <Symbolizer type="org.geotools.styling.PolygonSymbolizerImpl">
+        <Value>
+            <Item id="none" label="symbolType.none" />
+            <FieldList>
+                <Field id="ANGLE" enabled="false" />
+                <Field id="SIZE" enabled="false" />
+                <Field id="OPACITY" enabled="false" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="false" />
+                <Field id="ANCHOR_POINT_V" enabled="false" />
+                <Field id="DISPLACEMENT_X" enabled="false" />
+                <Field id="DISPLACEMENT_Y" enabled="false" />
+                <Field id="FILL_COLOUR" enabled="false" />
+                <Field id="STROKE_FILL_COLOUR" enabled="false" />
+                <Field id="STROKE_FILL_OPACITY" enabled="false" />
+                <Field id="STROKE_WIDTH" enabled="false" />
+            </FieldList>
+        </Value>
+        <Value>
+            <Item id="solid" label="symbolType.solid" />
+            <FieldList>
+                <Field id="ANGLE" enabled="false" />
+                <Field id="SIZE" enabled="false" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="false" />
+                <Field id="ANCHOR_POINT_V" enabled="false" />
+                <Field id="DISPLACEMENT_X" enabled="false" />
+                <Field id="DISPLACEMENT_Y" enabled="false" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="false" />
+                <Field id="STROKE_FILL_OPACITY" enabled="false" />
+                <Field id="STROKE_WIDTH" enabled="false" />
+            </FieldList>
+        </Value>
+        <Value>
+            <Item id="square" label="symbolType.square" />
+            <Item id="circle" label="symbolType.circle" />
+            <Item id="triangle" label="symbolType.triangle" />
+            <Item id="star" label="symbolType.star" />
+            <Item id="cross" label="symbolType.cross" />
+            <Item id="x" label="symbolType.x" />
+            <FieldList>
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+                <Field id="ANCHOR_POINT_H" enabled="true" />
+                <Field id="ANCHOR_POINT_V" enabled="true" />
+                <Field id="DISPLACEMENT_X" enabled="true" />
+                <Field id="DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_WIDTH" enabled="true" />
+            </FieldList>
+        </Value>
+    </Symbolizer>
+    <Symbolizer type="com.sldeditor.ui.detail.StrokeDetails">
+        <Value>
+            <Item id="solid" label="symbolType.line" />
+            <FieldList>
+                <Field id="STROKE_STYLE" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_STROKE_COLOUR" enabled="false" />
+                <Field id="STROKE_STROKE_OPACITY" enabled="false" />
+                <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="STROKE_LINE_JOIN" enabled="true" />
+                <Field id="STROKE_LINE_CAP" enabled="true" />
+                <Field id="STROKE_DASH_ARRAY" enabled="true" />
+                <Field id="STROKE_OFFSET" enabled="true" />
+
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="false" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="false" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="false" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="false" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="false" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="false" />
+            </FieldList>
+        </Value>
+        <Value>
+            <Item id="square" label="symbolType.square" />
+            <Item id="circle" label="symbolType.circle" />
+            <Item id="triangle" label="symbolType.triangle" />
+            <Item id="star" label="symbolType.star" />
+            <Item id="cross" label="symbolType.cross" />
+            <Item id="x" label="symbolType.x" />
+            <FieldList>
+                <Field id="STROKE_STYLE" enabled="true" />
+                <Field id="STROKE_FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_STROKE_COLOUR" enabled="true" />
+                <Field id="STROKE_STROKE_OPACITY" enabled="true" />
+                <Field id="STROKE_WIDTH" enabled="false" />
+
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
+
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
+            </FieldList>
+        </Value>
+    </Symbolizer>
+</XMLSymbolTypeConfig>

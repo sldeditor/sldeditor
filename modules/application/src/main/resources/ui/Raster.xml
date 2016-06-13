@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="raster.paneltitle"
+    localisation="com.sldeditor.ui.detail.RasterSymbolizerDetails">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="NAME" label="*standard.name"
+            valueOnly="true" />
+        <FieldConfigString id="TITLE" label="*standard.title"
+            valueOnly="true" />
+        <FieldConfigString id="DESCRIPTION" label="*standard.description"
+            valueOnly="true" />
+        <FieldConfigEnum id="UOM" label="*standard.UOM">
+            <ValueList>
+                <Value>
+                    <Item id="" label="*standard.UOM.mapUnits" />
+                    <Item id="pixel" label="*standard.UOM.pixels" />
+                    <Item id="metre" label="*standard.UOM.metre" />
+                    <Item id="foot" label="*standard.UOM.foot" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+    </Group>
+    <Group id="RASTER" showLabel="false">
+        <FieldConfigSlider id="RASTER_OPACITY" label="raster.overallopacity" />
+    </Group>
+    <Group id="RASTER_CONTRAST" showLabel="true" label="raster.contrast"
+        option="true">
+        <FieldConfigSlider id="RASTER_CONTRAST_NORMALIZE"
+            label="raster.contrast.normalize" />
+        <FieldConfigSlider id="RASTER_CONTRAST_GAMMAVALUE"
+            label="raster.contrast.gammavalue" />
+    </Group>
+    <MultiOptionGroup id="RASTER_CHANNELSELECTION"
+        label="raster.channelselection" showLabel="true" option="true">
+        <OptionGroup id="RASTER_RGB_CHANNEL_OPTION" label="raster.rgb.channel.option"
+            showLabel="true">
+            <Group id="RASTER_RGB_CHANNEL_RED" label="raster.rgb.channel.red"
+                showLabel="true">
+                <FieldConfigString id="RASTER_RGB_RED_NAME"
+                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <Group id="RASTER_RGB_CHANNEL_RED_CONTRAST" label="raster.rgb.channel.constrast"
+                    showLabel="true">
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" label="raster.channel.constrast.method">
+                        <ValueList>
+                            <Value>
+                                <Item id="NONE" label="raster.channel.contrast.method.none" />
+                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
+                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
+                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
+                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
+                            </Value>
+                        </ValueList>
+                    </FieldConfigEnum>
+                </Group>
+            </Group>
+            <Group id="RASTER_RGB_CHANNEL_GREEN" label="raster.rgb.channel.green"
+                showLabel="true">
+                <FieldConfigString id="RASTER_RGB_GREEN_NAME"
+                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST" label="raster.rgb.channel.constrast"
+                    showLabel="true">
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" label="raster.channel.constrast.method">
+                        <ValueList>
+                            <Value>
+                                <Item id="NONE" label="raster.channel.contrast.method.none" />
+                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
+                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
+                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
+                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
+                            </Value>
+                        </ValueList>
+                    </FieldConfigEnum>
+                </Group>
+            </Group>
+            <Group id="RASTER_RGB_CHANNEL_BLUE" label="raster.rgb.channel.blue"
+                showLabel="true">
+                <FieldConfigString id="RASTER_RGB_BLUE_NAME"
+                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST" label="raster.rgb.channel.constrast"
+                    showLabel="true">
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" label="raster.channel.constrast.method">
+                        <ValueList>
+                            <Value>
+                                <Item id="NONE" label="raster.channel.contrast.method.none" />
+                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
+                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
+                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
+                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
+                            </Value>
+                        </ValueList>
+                    </FieldConfigEnum>
+                </Group>
+            </Group>
+        </OptionGroup>
+        <OptionGroup id="RASTER_GREY_CHANNEL_OPTION" label="raster.grey.channel.option"
+            showLabel="true">
+            <Group id="RASTER_GREY_CHANNEL" label="raster.rgb.channel.grey"
+                showLabel="true">
+                <FieldConfigString id="RASTER_RGB_GREY_NAME"
+                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST" label="raster.rgb.channel.constrast"
+                    showLabel="true">
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" label="raster.channel.constrast.method">
+                        <ValueList>
+                            <Value>
+                                <Item id="NONE" label="raster.channel.contrast.method.none" />
+                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
+                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
+                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
+                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
+                            </Value>
+                        </ValueList>
+                    </FieldConfigEnum>
+                </Group>
+            </Group>
+        </OptionGroup>
+    </MultiOptionGroup>
+    <Group id="RASTER_SHADEDRELIEF" showLabel="true"
+        label="raster.shadedrelief" option="true">
+        <FieldConfigBoolean id="RASTER_SHADEDRELIEF_BRIGHTNESS"
+            label="raster.shadedrelief.brightness" valueOnly="true" />
+        <FieldConfigDouble id="RASTER_SHADEDRELIEF_FACTOR"
+            label="raster.shadedrelief.factor" default="55.0" />
+    </Group>
+    <Group id="RASTER_OVERLAP" showLabel="true" label="raster.overlap"
+        option="true">
+        <FieldConfigEnum id="RASTER_OVERLAP_BEHAVIOR"
+            label="raster.overlap.behavior">
+            <ValueList>
+                <Value>
+                    <Item id="LATEST_ON_TOP" label="raster.overlap.latestOnTop" />
+                    <Item id="EARLIEST_ON_TOP" label="raster.overlap.earliestOnTop" />
+                    <Item id="AVERAGE" label="raster.overlap.average" />
+                    <Item id="RANDOM" label="raster.overlap.random" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+    </Group>
+    <Group id="RASTER_COLOURMAP" label="raster.colourmap"
+        showLabel="true">
+        <FieldConfigEnum id="RASTER_COLOURMAP_TYPE"
+            label="raster.colourmap.type">
+            <ValueList>
+                <Value>
+                    <Item id="1" label="raster.colourmap.type.ramp" />
+                    <Item id="2" label="raster.colourmap.type.intervals" />
+                    <Item id="3" label="raster.colourmap.type.values" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigColourMap id="RASTER_COLOURMAP" />
+    </Group>
+
+</PanelConfig>

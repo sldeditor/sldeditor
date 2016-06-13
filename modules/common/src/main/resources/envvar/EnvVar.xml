@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EnvironmentVariables>
+    <EnvVarTypeList>
+        <EnvVarType name="java.lang.String" />
+        <EnvVarType name="java.lang.Integer" />
+        <EnvVarType name="java.lang.Long" />
+        <EnvVarType name="java.lang.Double" />
+        <EnvVarType name="java.lang.Float" />
+        <EnvVarType name="java.lang.Boolean" />
+        <EnvVarType name="org.geotools.geometry.jts.ReferencedEnvelope" />
+        <EnvVarType name="com.vividsolutions.jts.geom.Geometry" />
+    </EnvVarTypeList>
+    <BuiltInEnvVarList>
+        <EnvVar name="wms_bbox"
+            type="org.geotools.geometry.jts.ReferencedEnvelope" />
+        <EnvVar name="wms_crs"
+            type="org.opengis.referencing.crs.CoordinateReferenceSystem" />
+        <EnvVar name="wms_srs" type="java.lang.String" />
+        <EnvVar name="wms_width" type="java.lang.Integer" />
+        <EnvVar name="wms_height" type="java.lang.Integer" />
+        <EnvVar name="wms_scale_denominator" type="java.lang.Integer" />
+        <EnvVar name="kmlOutputMode" type="com.vividsolutions.jts.geom.Geometry" />
+    </BuiltInEnvVarList>
+</EnvironmentVariables>

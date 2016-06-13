@@ -1,0 +1,53 @@
+{
+    "angle": 42.0,
+    "mapLevel": 0,
+    "breakCharacter": -1,
+    "case": 0,
+    "characterSpacing": 0.0,
+    "characterWidth": 100.0,
+    "rop2": 13,
+    "size": 8.0,
+    "direction": 0,
+    "flipAngle": 90.0,
+    "horizontalAlignment": 1,
+    "verticalAlignment": 3,
+    "leading": 0.0,
+    "margin": 5.0,
+    "maskSize": 2.0,
+    "maskStyle": 0,
+    "position": 0,
+    "xOffset": 0.0,
+    "yOffset": 0.0,
+    "shadowXOffset": 0.0,
+    "shadowYOffset": 0.0,
+    "text": "",
+    "wordSpacing": 100.0,
+    "CJKCharactersRotation": false,
+    "clip": false,
+    "kerning": true,
+    "rightToLeft": false,
+    "rotateWithTransform": true,
+    "typeSetting": true,
+    "font": {
+      "name": "Arial",
+      "bold": false,
+      "charset": 0,
+      "italic": false,
+      "size": 82500,
+      "strikeThrough": false,
+      "underline": false,
+      "weight": 400
+    },
+    "colour": {
+      "red": 0,
+      "green": 92,
+      "blue": 230,
+      "transparency": -1
+    },
+    "shadowColour": {
+      "red": 0,
+      "green": 0,
+      "blue": 0,
+      "transparency": -1
+    }
+  }

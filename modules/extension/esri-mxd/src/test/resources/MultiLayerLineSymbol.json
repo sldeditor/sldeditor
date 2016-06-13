@@ -1,0 +1,34 @@
+[
+    {
+      "line": {
+        "SimpleLineSymbol": {
+          "colour": {
+            "red": 130,
+            "green": 130,
+            "blue": 130,
+            "transparency": -1
+          },
+          "width": 0.4,
+          "mapLevel": 0,
+          "rop2": 13,
+          "style": 0
+        }
+      }
+    },
+    {
+      "line": {
+        "SimpleLineSymbol": {
+          "colour": {
+            "red": 255,
+            "green": 0,
+            "blue": 0,
+            "transparency": -1
+          },
+          "width": 1.4,
+          "mapLevel": 0,
+          "rop2": 13,
+          "style": 0
+        }
+      }
+    }
+]

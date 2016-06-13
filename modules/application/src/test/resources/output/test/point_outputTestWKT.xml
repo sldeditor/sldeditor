@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_simplepoint.sld">
+    <VendorOption>
+        <ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption</ClassType>
+        <Version>2.8.0</Version>
+    </VendorOption>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="wkt" field="SYMBOL_TYPE" ignoreCheck="true" />
+            <SetLiteralString value="wkt://POINT(30 10)" field="WKT"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

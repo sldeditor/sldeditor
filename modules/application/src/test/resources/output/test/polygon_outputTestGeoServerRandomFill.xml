@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_simplepolygonwithstroke.sld">
+    <VendorOption>
+        <ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption</ClassType>
+        <Version>2.4.2</Version>
+    </VendorOption>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0" />
+            <Layer index="0" />
+            <Rule index="0" />
+            <Style index="0" />
+            <Symbolizer index="0" />
+            <SymbolizerDetail index="0" />
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="grid" field="RANDOM_FILL_ACTIVATE" />
+            <SetLiteralInt value="12" field="RANDOM_FILL_TILE_SIZE" />
+            <SetLiteralString value="free" field="RANDOM_FILL_ROTATION" />
+            <SetLiteralInt value="34" field="RANDOM_FILL_SYMBOL_COUNT" />
+            <SetLiteralInt value="56" field="RANDOM_FILL_RANDOM_SEED" />
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

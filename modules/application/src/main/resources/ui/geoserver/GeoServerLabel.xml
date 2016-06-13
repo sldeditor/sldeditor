@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.4.1"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerLabelling">
+    <Group id="VO_LABELLING" label="geoserver.label" showLabel="true">
+        <FieldConfigBoolean id="LABEL_ALLOW_OVERRUNS"
+            label="geoserver.label.allowOverruns" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_ALLOW_OVERRUNS" />
+        <FieldConfigInteger id="LABEL_AUTO_WRAP"
+            label="geoserver.label.autowrap" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_AUTO_WRAP" />
+        <FieldConfigBoolean id="LABEL_CONFLICT_RESOLUTION"
+            label="geoserver.label.conflictResolution" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_CONFLICT_RESOLUTION" />
+        <FieldConfigBoolean id="LABEL_FOLLOW_LINE"
+            label="geoserver.label.followLine" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_FOLLOW_LINE" />
+        <FieldConfigBoolean id="LABEL_FORCE_LEFT_TO_RIGHT"
+            label="geoserver.label.forceLeftToRight" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_FORCE_LEFT_TO_RIGHT" />
+        <FieldConfigDouble id="LABEL_GOODNESS_OF_FIT"
+            label="geoserver.label.goodnessOfFit" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_GOODNESS_OF_FIT" />
+        <FieldConfigInteger id="LABEL_GRAPHIC_MARGIN"
+            label="geoserver.label.graphicMargin" valueOnly="true"
+            default="0" />
+        <FieldConfigEnum id="LABEL_GRAPHIC_RESIZE"
+            label="geoserver.label.graphicResize" valueOnly="true"
+            default="none">
+            <ValueList>
+                <Value>
+                    <Item id="none" label="geoserver.label.graphicResize.none" />
+                    <Item id="proportional"
+                        label="geoserver.label.graphicResize.proportional" />
+                    <Item id="stretch"
+                        label="geoserver.label.graphicResize.stretch" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigBoolean id="LABEL_GROUP"
+            label="geoserver.label.group" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_GROUP" />
+        <FieldConfigBoolean id="LABEL_LABEL_ALL_GROUP"
+            label="geoserver.label.labelAllGroup" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_LABEL_ALL_GROUP" />
+        <FieldConfigInteger id="LABEL_LABEL_REPEAT"
+            label="geoserver.label.labelRepeat" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_LABEL_REPEAT" />
+        <FieldConfigDouble id="LABEL_MAX_ANGLE_DELTA"
+            label="geoserver.label.maxAngleDelta" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_MAX_ANGLE_DELTA" />
+        <FieldConfigInteger id="LABEL_MAX_DISPLACEMENT"
+            label="geoserver.label.maxDisplacement" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_MAX_DISPLACEMENT" />
+        <FieldConfigInteger id="LABEL_MIN_GROUP_DISTANCE"
+            label="geoserver.label.minGroupDistance" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_MIN_GROUP_DISTANCE" />
+        <FieldConfigBoolean id="LABEL_PARTIALS"
+            label="geoserver.label.partials" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_PARTIALS" />
+        <FieldConfigEnum id="LABEL_POLYGONALIGN"
+            label="geoserver.label.polygonAlign" valueOnly="true"
+            default="manual">
+            <ValueList>
+                <Value>
+                    <Item id="manual" label="geoserver.label.polygonAlign.manual" />
+                    <Item id="ortho" label="geoserver.label.polygonAlign.ortho" />
+                    <Item id="mbr" label="geoserver.label.polygonAlign.mbr" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigInteger id="LABEL_SPACE_AROUND"
+            label="geoserver.label.spaceAround" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_SPACE_AROUND" />
+    </Group>
+</PanelConfig>

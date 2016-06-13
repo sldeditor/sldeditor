@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_pointwithrotatedlabel.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Point with rotated label" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="GeoServer SLD Cook Book: Point with rotated label" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="circle" field="SYMBOL_TYPE"/>
+            <LiteralString value="#FF0000" field="FILL_COLOUR"/>
+            <LiteralDouble value="6.0" field="SIZE"/>
+            <LiteralDouble value="0.0" field="ANGLE"/>
+            <Disabled field="GAP"/>
+            <Disabled field="INITIAL_GAP"/>
+            <LiteralDouble value="1.0" field="OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+        </Setup>
+        <FieldTests>
+            <Attribute attribute="name" field="LABEL"/>
+            <LiteralString value="Arial" field="FONT_FAMILY"/>
+            <LiteralDouble value="12.0" field="FONT_SIZE"/>
+            <LiteralString value="normal" field="FONT_STYLE"/>
+            <LiteralString value="bold" field="FONT_WEIGHT"/>
+            <LiteralString value="#990099" field="FILL_COLOUR"/>
+            <LiteralDouble value="0.5" field="ANCHOR_POINT_H"/>
+            <LiteralDouble value="0.0" field="ANCHOR_POINT_V"/>
+            <LiteralDouble value="0.0" field="DISPLACEMENT_X"/>
+            <LiteralDouble value="25.0" field="DISPLACEMENT_Y"/>
+            <LiteralDouble value="-45.0" field="ANGLE"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

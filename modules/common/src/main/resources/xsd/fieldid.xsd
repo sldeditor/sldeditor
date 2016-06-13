@@ -1,0 +1,122 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="FieldIdEnum" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="UNKNOWN" />
+            <xs:enumeration value="GEOMETRY" />
+            <xs:enumeration value="TITLE" />
+            <xs:enumeration value="SYMBOL_TYPE" />
+            <xs:enumeration value="SIZE" />
+            <xs:enumeration value="ANGLE" />
+            <xs:enumeration value="DISPLACEMENT_X" />
+            <xs:enumeration value="DISPLACEMENT_Y" />
+            <xs:enumeration value="ANCHOR_POINT_V" />
+            <xs:enumeration value="ANCHOR_POINT_H" />
+            <xs:enumeration value="GAP" />
+            <xs:enumeration value="INITIAL_GAP" />
+            <xs:enumeration value="OPACITY" />
+            <xs:enumeration value="FILTER" />
+            <xs:enumeration value="FILL_COLOUR" />
+            <xs:enumeration value="DEFAULT_STYLE" />
+            <xs:enumeration value="ELSE_FILTER" />
+            <xs:enumeration value="EXTERNAL_GRAPHIC" />
+            <xs:enumeration value="LABEL" />
+            <xs:enumeration value="DESCRIPTION" />
+            <xs:enumeration value="MINIMUM_SCALE" />
+            <xs:enumeration value="MAXIMUM_SCALE" />
+            <xs:enumeration value="UOM" />
+            <xs:enumeration value="NAME" />
+            <xs:enumeration value="STROKE_STYLE" />
+            <xs:enumeration value="STROKE_FILL_COLOUR" />
+            <xs:enumeration value="STROKE_FILL_OPACITY" />
+            <xs:enumeration value="STROKE_WIDTH" />
+            <xs:enumeration value="STROKE_LINE_JOIN" />
+            <xs:enumeration value="STROKE_LINE_CAP" />
+            <xs:enumeration value="STROKE_DASH_ARRAY" />
+            <xs:enumeration value="STROKE_OFFSET" />
+            <xs:enumeration value="STROKE_STROKE_COLOUR" />
+            <xs:enumeration value="STROKE_STROKE_OPACITY" />
+
+            <xs:enumeration value="STROKE_SYMBOL_SIZE" />
+            <xs:enumeration value="STROKE_SYMBOL_ANGLE" />
+            <xs:enumeration value="STROKE_SYMBOL_DISPLACEMENT_X" />
+            <xs:enumeration value="STROKE_SYMBOL_DISPLACEMENT_Y" />
+            <xs:enumeration value="STROKE_SYMBOL_ANCHOR_POINT_V" />
+            <xs:enumeration value="STROKE_SYMBOL_ANCHOR_POINT_H" />
+            <xs:enumeration value="STROKE_SYMBOL_GAP" />
+            <xs:enumeration value="STROKE_SYMBOL_INITIAL_GAP" />
+
+            <xs:enumeration value="FONT_FAMILY" />
+            <xs:enumeration value="FONT_STYLE" />
+            <xs:enumeration value="FONT_WEIGHT" />
+            <xs:enumeration value="FONT_SIZE" />
+            <xs:enumeration value="HALO_COLOUR" />
+            <xs:enumeration value="HALO_RADIUS" />
+
+            <xs:enumeration value="LABEL_ALLOW_OVERRUNS" />
+            <xs:enumeration value="LABEL_AUTO_WRAP" />
+            <xs:enumeration value="LABEL_CONFLICT_RESOLUTION" />
+            <xs:enumeration value="LABEL_FOLLOW_LINE" />
+            <xs:enumeration value="LABEL_FORCE_LEFT_TO_RIGHT" />
+            <xs:enumeration value="LABEL_GOODNESS_OF_FIT" />
+            <xs:enumeration value="LABEL_GRAPHIC_MARGIN" />
+            <xs:enumeration value="LABEL_GRAPHIC_RESIZE" />
+            <xs:enumeration value="LABEL_GROUP" />
+            <xs:enumeration value="LABEL_LABEL_ALL_GROUP" />
+            <xs:enumeration value="LABEL_LABEL_REPEAT" />
+            <xs:enumeration value="LABEL_MAX_ANGLE_DELTA" />
+            <xs:enumeration value="LABEL_MAX_DISPLACEMENT" />
+            <xs:enumeration value="LABEL_MIN_GROUP_DISTANCE" />
+            <xs:enumeration value="LABEL_PARTIALS" />
+            <xs:enumeration value="LABEL_POLYGONALIGN" />
+            <xs:enumeration value="LABEL_SPACE_AROUND" />
+
+            <xs:enumeration value="MAX_DISPLACEMENT" />
+            <xs:enumeration value="PERPENDICULAR_OFFSET" />
+            <xs:enumeration value="LABEL_PLACEMENT" />
+            <xs:enumeration value="ALIGN" />
+            <xs:enumeration value="REPEATED" />
+            <xs:enumeration value="GENERALISED_LINE" />
+            <xs:enumeration value="TRANSFORMATION" />
+            <xs:enumeration value="TTF_SYMBOL" />
+
+            <xs:enumeration value="RANDOM_FILL_ACTIVATE" />
+            <xs:enumeration value="RANDOM_FILL_TILE_SIZE" />
+            <xs:enumeration value="RANDOM_FILL_ROTATION" />
+            <xs:enumeration value="RANDOM_FILL_SYMBOL_COUNT" />
+            <xs:enumeration value="RANDOM_FILL_RANDOM_SEED" />
+
+            <xs:enumeration value="WINDBARBS" />
+            <xs:enumeration value="WINDBARB_WINDSPEED" />
+            <xs:enumeration value="WINDBARB_WINDSPEED_UNITS" />
+            <xs:enumeration value="WINDBARB_NORTHERN_HEMISPHERE" />
+
+            <xs:enumeration value="WKT" />
+
+            <xs:enumeration value="FUNCTION" />
+            <xs:enumeration value="RASTER_OPACITY" />
+            <xs:enumeration value="RASTER_CONTRAST_NORMALIZE" />
+            <xs:enumeration value="RASTER_CONTRAST_GAMMAVALUE" />
+            <xs:enumeration value="RASTER_OVERLAP_BEHAVIOR" />
+
+            <xs:enumeration value="RASTER_SHADEDRELIEF_BRIGHTNESS" />
+            <xs:enumeration value="RASTER_SHADEDRELIEF_FACTOR" />
+
+            <xs:enumeration value="RASTER_COLOURMAP_TYPE" />
+            <xs:enumeration value="RASTER_COLOURMAP" />
+
+            <xs:enumeration value="RASTER_RGB_RED_NAME" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_GREEN_NAME" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_BLUE_NAME" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_GREY_NAME" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

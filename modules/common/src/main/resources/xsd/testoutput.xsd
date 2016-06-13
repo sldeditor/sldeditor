@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:include schemaLocation="SLDTreeItem.xsd" />
+    <xs:include schemaLocation="fieldid.xsd" />
+
+    <xs:element name="SLDXPath">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Section" type="XMLTestSection"
+                    maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="XMLTestSection">
+        <xs:sequence>
+            <xs:element name="Field" type="XMLTestSectionField"
+                maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="prefix" use="required" />
+        <xs:attribute type="SelectedTreeItemEnum" name="sldtype"
+            use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLTestSectionField">
+        <xs:attribute type="FieldIdEnum" name="id" use="required" />
+        <xs:attribute type="xs:string" name="xpath" use="required" />
+    </xs:complexType>
+
+</xs:schema>

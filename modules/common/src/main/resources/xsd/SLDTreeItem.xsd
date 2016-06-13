@@ -1,0 +1,22 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="SelectedTreeItemEnum" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="UNKNOWN" />
+            <xs:enumeration value="SLD" />
+            <xs:enumeration value="LAYER" />
+            <xs:enumeration value="STYLE" />
+            <xs:enumeration value="FEATURETYPESTYLE" />
+            <xs:enumeration value="RULE" />
+            <xs:enumeration value="POINT_SYMBOLIZER" />
+            <xs:enumeration value="LINE_SYMBOLIZER" />
+            <xs:enumeration value="POLYGON_SYMBOLIZER" />
+            <xs:enumeration value="TEXT_SYMBOLIZER" />
+            <xs:enumeration value="RASTER_SYMBOLIZER" />
+            <xs:enumeration value="POINT_FILL" />
+            <xs:enumeration value="POLYGON_FILL" />
+            <xs:enumeration value="STROKE" />
+            <xs:enumeration value="STROKE_FILL" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

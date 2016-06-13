@@ -1,0 +1,248 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified" elementFormDefault="qualified"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+    <xs:include schemaLocation="fieldid.xsd" />
+    <xs:include schemaLocation="groupid.xsd" />
+
+    <xs:element name="SldEditor_test">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="VendorOption" type="XMLVendorOption"
+                    maxOccurs="unbounded" minOccurs="0" />
+                <xs:element name="PanelTests" type="XMLPanelTest"
+                    maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="testsldfile"
+                use="required" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="XMLVendorOption">
+        <xs:sequence>
+            <xs:element name="ClassType" type="xs:string" />
+            <xs:element name="Version" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="XMLPanelTest">
+        <xs:sequence>
+            <xs:element name="Setup" type="XMLSetup" />
+            <xs:element name="FieldTests" type="XMLFieldTest"
+                maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetup">
+        <xs:sequence>
+            <xs:element type="XMLIndex" name="FeatureTypeStyle"
+                maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Layer"
+                maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Rule"
+                maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Style"
+                maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Symbolizer"
+                maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="SymbolizerDetail"
+                maxOccurs="1" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="expectedPanel"
+            use="optional" />
+        <xs:attribute type="xs:boolean" name="enabled" use="optional"
+            default="true" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLIndex">
+        <xs:attribute type="xs:int" name="index" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldTest">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Disabled" type="XMLFieldDisabled" />
+            <xs:element name="LiteralString" type="XMLFieldLiteralString" />
+            <xs:element name="LiteralInt" type="XMLFieldLiteralInt" />
+            <xs:element name="LiteralDouble" type="XMLFieldLiteralDouble" />
+            <xs:element name="LiteralBool" type="XMLFieldLiteralBoolean" />
+            <xs:element name="Attribute" type="XMLFieldAttribute" />
+            <xs:element name="Expression" type="XMLFieldExpression" />
+            <xs:element name="SetLiteralString" type="XMLSetFieldLiteralString" />
+            <xs:element name="SetLiteralInt" type="XMLSetFieldLiteralInt" />
+            <xs:element name="SetLiteralDouble" type="XMLSetFieldLiteralDouble" />
+            <xs:element name="SetLiteralBool" type="XMLSetFieldLiteralBoolean" />
+            <xs:element name="SetAttribute" type="XMLSetFieldAttribute" />
+            <xs:element name="SetExpression" type="XMLSetFieldExpression" />
+            <xs:element name="SetMultiOptionGroup" type="XMLSetMultiOptionGroup" />
+            <xs:element name="SetGroup" type="XMLSetGroup" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetMultiOptionGroup">
+        <xs:attribute type="GroupIdEnum" name="multiOptionGroupId"
+            use="required" />
+        <xs:attribute type="GroupIdEnum" name="option" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetGroup">
+        <xs:attribute type="GroupIdEnum" name="groupId"
+            use="required" />
+        <xs:attribute type="xs:boolean" name="enable" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldBase">
+        <xs:attribute type="FieldIdEnum" name="field" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldDisabled">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldLiteralString">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldLiteralBase">
+                <xs:attribute name="value" type="xs:string" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldLiteralString">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="XMLSetFieldLiteralStringEx" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLSetFieldLiteralBase">
+                <xs:attribute name="value" type="xs:string" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldLiteralInt">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldLiteralBase">
+                <xs:attribute name="value" type="xs:int" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldLiteralInt">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="XMLSetFieldLiteralIntEx" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLSetFieldLiteralBase">
+                <xs:attribute name="value" type="xs:int" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldLiteralDouble">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldLiteralBase">
+                <xs:attribute name="value" type="xs:double" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldLiteralDouble">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="XMLSetFieldLiteralDoubleEx" />
+            </xs:appinfo>
+        </xs:annotation>
+
+        <xs:complexContent>
+            <xs:extension base="XMLSetFieldLiteralBase">
+                <xs:attribute name="value" type="xs:double" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldLiteralBoolean">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldLiteralBase">
+                <xs:attribute name="value" type="xs:boolean" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldLiteralBoolean">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="XMLSetFieldLiteralBooleanEx" />
+            </xs:appinfo>
+        </xs:annotation>
+
+        <xs:complexContent>
+            <xs:extension base="XMLSetFieldLiteralBase">
+                <xs:attribute name="value" type="xs:boolean" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldLiteralBase">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldLiteralBase">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase">
+                <xs:attribute name="ignoreCheck" type="xs:boolean"
+                    use="optional" default="false" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldExpression">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase">
+                <xs:attribute type="xs:string" name="expression"
+                    use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldExpression">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="XMLSetFieldExpressionEx" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase">
+                <xs:attribute type="xs:string" name="expression"
+                    use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldAttribute">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase">
+                <xs:attribute type="xs:string" name="attribute"
+                    use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLSetFieldAttribute">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="XMLSetFieldAttributeEx" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase">
+                <xs:attribute type="xs:string" name="attribute"
+                    use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

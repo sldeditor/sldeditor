@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_simplepoint.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="Simple Point" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="SLD Cook Book: Simple Point" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="triangle" field="SYMBOL_TYPE" />
+            <SetLiteralDouble value="42.0" field="SIZE"/>
+            <SetLiteralString value="#123456" field="FILL_COLOUR"/>
+            <SetLiteralDouble value="34.3" field="ANGLE"/>
+            <SetLiteralDouble value="0.25" field="OPACITY"/>
+            <SetLiteralDouble value="0.52" field="DISPLACEMENT_X"/>
+            <SetLiteralDouble value="0.19" field="DISPLACEMENT_Y"/>
+            <SetLiteralDouble value="0.98" field="ANCHOR_POINT_V"/>
+            <SetLiteralDouble value="0.71" field="ANCHOR_POINT_H"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

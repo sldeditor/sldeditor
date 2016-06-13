@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FilterConfig>
+    <Group name="FilterPanel.operators" help="FilterPanel.operatorsHelp">
+        <Function name="+" help="FilterPanel.additionOpHelp"
+            shortcut="true" />
+        <Function name="-" help="FilterPanel.subtractionOpHelp" />
+        <Function name="*" help="FilterPanel.multiplicationOpHelp" />
+        <Function name="/" help="FilterPanel.divisionOpHelp" />
+        <Function name="=" help="FilterPanel.equalityOpHelp" />
+        <Function name="!=" help="FilterPanel.inequalityOpHelp" />
+        <Function name="&lt;" help="FilterPanel.lessThanOpHelp" />
+        <Function name="&lt;=" help="FilterPanel.lessThanEqualOpHelp" />
+        <Function name="&gt;" help="FilterPanel.greaterThanOpHelp" />
+        <Function name="&gt;=" help="FilterPanel.greaterThanEqualOpHelp" />
+
+        <Function name="AND" help="FilterPanel.ANDOpHelp" />
+    </Group>
+    <Group name="FilterPanel.geometry" help="FilterPanel.geometryHelp">
+        <Function name="EQUALS"
+            functionString="EQUALS (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.equalsHelp" />
+        <Function name="DISJOINT"
+            functionString="DISJOINT (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.disjointHelp" />
+        <Function name="INTERSECTS"
+            functionString="INTERSECTS (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.intersectsHelp" />
+        <Function name="TOUCHES"
+            functionString="TOUCHES (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.touchesHelp" />
+        <Function name="CROSSES"
+            functionString="CROSSES (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.crossesHelp" />
+        <Function name="WITHIN"
+            functionString="WITHIN (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.withinHelp" />
+        <Function name="CONTAINS"
+            functionString="CONTAINS (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.containsHelp" />
+        <Function name="OVERLAPS"
+            functionString="OVERLAPS (&lt;attribute name&gt;, &lt;geometry literal&gt;)"
+            help="FilterPanel.overlapsHelp" />
+        <Function name="DWITHIN"
+            functionString="DWITHIN (&lt;attribute name&gt;, &lt;geometry literal&gt;, &lt;tolerance&gt;)"
+            help="FilterPanel.dwithinHelp" />
+        <Function name="BEYOND"
+            functionString="BEYOND (&lt;attribute name&gt;, &lt;geometry literal&gt;, &lt;tolerance&gt;)"
+            help="FilterPanel.beyondHelp" />
+        <Function name="BBOX"
+            functionString="BBOX(&lt;attribute&gt;, &lt;min X&gt;, &lt;min Y&gt;, &lt;max X&gt;, &lt;max Y&gt; [, &lt;crs&gt;] )"
+            help="FilterPanel.bboxHelp" />
+        <Function name="RELATE"
+            functionString="RELATE (&lt;attribute name&gt;, &lt;geometry literal&gt;, &lt;DE-9IM pattern&gt;)"
+            help="FilterPanel.relateHelp" />
+    </Group>
+    <Group name="FilterPanel.existence" help="FilterPanel.existenceHelp">
+        <Function name="EXISTS" functionString="EXISTS"
+            help="FilterPanel.existsHelp" />
+        <Function name="DOES-NOT-EXIST" functionString="DOES-NOT-EXIST"
+            help="FilterPanel.doesNotExistHelp" />
+    </Group>
+    <Group name="FilterPanel.text" help="FilterPanel.textHelp">
+        <Function name="LIKE" functionString="LIKE &lt;character pattern&gt;"
+            help="FilterPanel.likeHelp" />
+    </Group>
+    <Group name="FilterPanel.temporal" help="FilterPanel.temporalHelp">
+        <Function name="BEFORE" functionString="BEFORE &lt;date-time expression&gt;"
+            help="FilterPanel.beforeHelp" />
+        <Function name="BEFORE OR DURING" functionString="BEFORE OR DURING &lt;period&gt;"
+            help="FilterPanel.beforeDuringHelp" />
+        <Function name="DURING" functionString="DURING &lt;period&gt;"
+            help="FilterPanel.duringHelp" />
+        <Function name="DURING OR AFTER" functionString="DURING OR AFTER &lt;period&gt;"
+            help="FilterPanel.duringAfterHelp" />
+        <Function name="AFTER" functionString="AFTER &lt;date-time expression&gt;"
+            help="FilterPanel.afterHelp" />
+    </Group>
+    <Group name="FilterPanel.misc" help="FilterPanel.miscHelp">
+        <Function name="NULL" functionString="IS NULL"
+            help="FilterPanel.nullHelp" />
+        <Function name="BETWEEN"
+            functionString="BETWEEN &lt;literal&gt; AND &lt;literal&gt;"
+            help="FilterPanel.betweenHelp" />
+        <Function name="INCLUDE" functionString="INCLUDE"
+            help="FilterPanel.includeHelp" />
+        <Function name="EXCLUDE" functionString="EXCLUDE"
+            help="FilterPanel.excludeHelp" />
+    </Group>
+</FilterConfig>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="text.paneltitle"
+    localisation="com.sldeditor.ui.detail.TextSymbolizerDetails">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="NAME" label="*standard.name"
+            valueOnly="true" />
+        <FieldConfigString id="TITLE" label="*standard.title"
+            valueOnly="true" />
+        <FieldConfigString id="DESCRIPTION" label="*standard.description"
+            valueOnly="true" />
+        <FieldConfigEnum id="UOM" label="*standard.UOM">
+            <ValueList>
+                <Value>
+                    <Item id="" label="*standard.UOM.mapUnits" />
+                    <Item id="pixel" label="*standard.UOM.pixels" />
+                    <Item id="metre" label="*standard.UOM.metre" />
+                    <Item id="foot" label="*standard.UOM.foot" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+    </Group>
+    <Group id="GENERAL" showLabel="false">
+        <FieldConfigGeometry id="GEOMETRY" label="text.general.geometry" />
+        <FieldConfigString id="LABEL" label="text.general.label" />
+        <FieldConfigColour id="FILL_COLOUR" label="text.general.colour" />
+    </Group>
+    <Group id="FONT" label="text.font" showLabel="true" option="true">
+        <FieldConfigEnum id="FONT_FAMILY" label="text.font.family">
+            <ValueList>
+                <Value>
+                    <Item id="Serif" label="Serif" />
+                    <Item id="Arial" label="Arial" />
+                    <Item id="Helvetica" label="Helvetica" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigEnum id="FONT_STYLE" label="text.font.style">
+            <ValueList>
+                <Value>
+                    <Item id="normal" label="text.font.style.normal" />
+                    <Item id="italic" label="text.font.style.italic" />
+                    <Item id="opaque" label="text.font.style.opaque" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigEnum id="FONT_WEIGHT" label="text.font.weight">
+            <ValueList>
+                <Value>
+                    <Item id="normal" label="text.font.weight.normal" />
+                    <Item id="bold" label="text.font.weight.bold" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigDouble id="FONT_SIZE" label="text.font.size" />
+    </Group>
+    <Group id="HALO" label="text.halo" showLabel="true" option="true">
+        <FieldConfigColour id="HALO_COLOUR" label="text.halo.colour" />
+        <FieldConfigDouble id="HALO_RADIUS" label="text.halo.radius" />
+    </Group>
+    <MultiOptionGroup id="PLACEMENT" label="text.placement"
+        showLabel="true">
+        <OptionGroup id="POINTPLACEMENT" label="text.placement.point"
+            showLabel="true">
+            <Group id="ANCHORPOINT" label="text.placement.anchorPoint"
+                showLabel="true">
+                <FieldConfigSlider id="ANCHOR_POINT_H"
+                    label="text.placement.anchorPoint.x" />
+                <FieldConfigSlider id="ANCHOR_POINT_V"
+                    label="text.placement.anchorPoint.y" />
+            </Group>
+            <Group id="DISPLACEMENT" label="text.placement.displacement"
+                showLabel="true">
+                <FieldConfigDouble id="DISPLACEMENT_X"
+                    label="text.placement.displacement.x" />
+                <FieldConfigDouble id="DISPLACEMENT_Y"
+                    label="text.placement.displacement.y" />
+            </Group>
+            <Group id="ROTATION" label="text.rotation" showLabel="true">
+                <FieldConfigDouble id="ANGLE"
+                    label="text.rotation.angle" />
+            </Group>
+        </OptionGroup>
+        <OptionGroup id="LINEPLACEMENT" label="text.placement.line"
+            showLabel="true">
+            <Group id="LINEPLACEMENT" label="text.placement.linePlacement"
+                showLabel="true">
+                <FieldConfigDouble id="INITIAL_GAP"
+                    label="text.placement.linePlacement.initialGap" />
+                <FieldConfigDouble id="GAP"
+                    label="text.placement.linePlacement.gap" />
+                <FieldConfigDouble id="PERPENDICULAR_OFFSET"
+                    label="text.placement.linePlacement.perpendicularOffset" />
+                <FieldConfigBoolean id="ALIGN" label="Aligned" />
+                <FieldConfigBoolean id="GENERALISED_LINE"
+                    label="text.placement.linePlacement.generalisedLine" />
+                <FieldConfigBoolean id="REPEATED"
+                    label="text.placement.linePlacement.repeated" />
+            </Group>
+        </OptionGroup>
+    </MultiOptionGroup>
+</PanelConfig>

@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- =========================================================== -->
+    <!-- Parent POM -->
+    <!-- =========================================================== -->
+    <parent>
+        <groupId>com.sldeditor</groupId>
+        <artifactId>sldeditor</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
+
+    <!-- =========================================================== -->
+    <!-- Project Description -->
+    <!-- =========================================================== -->
+    <artifactId>se-extension</artifactId>
+    <name>se-extension</name>
+
+    <!-- =========================================================== -->
+    <!-- Developers and Contributors -->
+    <!-- =========================================================== -->
+    <developers>
+        <developer>
+            <name>Robert Ward</name>
+            <email>robert.ward@scisys.co.uk</email>
+            <organization>SCISYS</organization>
+            <organizationUrl>http://www.scisys.co.uk/</organizationUrl>
+            <timezone>Europe/London</timezone>
+            <roles>
+                <role>Architect</role>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- =========================================================== -->
+    <!-- Dependencies -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <dependency>
+            <groupId>com.sldeditor</groupId>
+            <artifactId>se-common</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-wps</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+    </dependencies>
+</project>

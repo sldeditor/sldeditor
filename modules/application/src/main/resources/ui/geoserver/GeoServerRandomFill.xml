@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.4.2"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.fill.VOGeoServerRandomFill">
+    <Group id="VO_RANDOMFILL" label="geoserver.randomFill"
+        showLabel="true">
+        <FieldConfigEnum id="RANDOM_FILL_ACTIVATE"
+            label="geoserver.randomFill.random" valueOnly="true"
+            default="none">
+            <ValueList>
+                <Value>
+                    <Item id="none" label="geoserver.randomFill.random.none" />
+                    <FieldList>
+                        <Field id="RANDOM_FILL_TILE_SIZE" enabled="false" />
+                        <Field id="RANDOM_FILL_ROTATION" enabled="false" />
+                        <Field id="RANDOM_FILL_SYMBOL_COUNT"
+                            enabled="false" />
+                        <Field id="RANDOM_FILL_RANDOM_SEED"
+                            enabled="false" />
+                    </FieldList>
+                </Value>
+                <Value>
+                    <Item id="free" label="geoserver.randomFill.random.free" />
+                    <Item id="grid" label="geoserver.randomFill.random.grid" />
+                    <FieldList>
+                        <Field id="RANDOM_FILL_TILE_SIZE" enabled="true" />
+                        <Field id="RANDOM_FILL_ROTATION" enabled="true" />
+                        <Field id="RANDOM_FILL_SYMBOL_COUNT"
+                            enabled="true" />
+                        <Field id="RANDOM_FILL_RANDOM_SEED"
+                            enabled="true" />
+                    </FieldList>
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigInteger id="RANDOM_FILL_TILE_SIZE"
+            label="geoserver.randomFill.tileSize" valueOnly="true"
+            default="256" />
+        <FieldConfigEnum id="RANDOM_FILL_ROTATION"
+            label="geoserver.randomFill.rotation" valueOnly="true"
+            default="none">
+            <ValueList>
+                <Value>
+                    <Item id="none" label="geoserver.randomFill.rotation.none" />
+                    <Item id="free" label="geoserver.randomFill.rotation.free" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigInteger id="RANDOM_FILL_SYMBOL_COUNT"
+            label="geoserver.randomFill.symbolCount" valueOnly="true"
+            default="16" />
+        <FieldConfigInteger id="RANDOM_FILL_RANDOM_SEED"
+            label="geoserver.randomFill.seed" valueOnly="true" default="0" />
+    </Group>
+</PanelConfig>

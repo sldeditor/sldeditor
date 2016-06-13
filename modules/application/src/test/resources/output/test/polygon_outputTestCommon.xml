@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_simplepolygonwithstroke.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="New Polygon" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="New Style : Polygon" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+   <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+        </Setup>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+        <FieldTests>
+            <SetLiteralDouble value="3.4" field="STROKE_WIDTH"/>
+            <SetLiteralString value="bevel" field="STROKE_LINE_JOIN"/>
+            <SetLiteralString value="square" field="STROKE_LINE_CAP"/>
+            <SetLiteralDouble value="4.2" field="STROKE_OFFSET"/>
+            <SetLiteralString value="2.0 5.0 1.0" field="STROKE_DASH_ARRAY"/>
+            <SetLiteralString value="#123456" field="STROKE_FILL_COLOUR"/>
+            <SetLiteralDouble value="0.42" field="STROKE_FILL_OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

@@ -1,0 +1,104 @@
+{
+  "mxd": "D:\\Test.mxd",
+  "layers": [
+    {
+      "name": "TEST_LAYER",
+      "maxScale": 25000.0,
+      "minScale": 0.0,
+      "definitionExpression": "",
+      "transparency": 0,
+      "renderer": {
+        "SimpleRenderer": {
+          "description": "",
+          "label": "Test Layer",
+          "rotationField": "",
+          "rotationType": 0,
+          "sizeExpression": "",
+          "sizeFlags": 0,
+          "transparencyField": "",
+          "graduatedSymbols": false,
+          "usesFilter": false,
+          "symbol": {
+            "SimpleFillSymbol": {
+              "mapLevel": 0,
+              "rop2": 13,
+              "style": 0,
+              "outline": {
+                "SimpleLineSymbol": {
+                  "colour": {
+                    "red": 255,
+                    "green": 0,
+                    "blue": 0,
+                    "transparency": -1
+                  },
+                  "width": 3.0,
+                  "mapLevel": 0,
+                  "rop2": 13,
+                  "style": 0
+                }
+              }
+            }
+          },
+          "symbolRotation3DExpressionsX": "",
+          "symbolRotation3DExpressionsY": "",
+          "symbolRotation3DExpressionsZ": "",
+          "symbolRotation3DFlags": 0,
+          "symbolRotation3DFlags2X": 0,
+          "symbolRotation3DFlags2Y": 0,
+          "symbolRotation3DFlags2Z": 0,
+          "symbolRotation3DRandomRangesMinRotationX": 0.0,
+          "symbolRotation3DRandomRangesMinRotationY": 0.0,
+          "symbolRotation3DRandomRangesMinRotationZ": 0.0,
+          "symbolRotation3DRandomRangesMaxRotationX": 360.0,
+          "symbolRotation3DRandomRangesMaxRotationY": 360.0,
+          "symbolRotation3DRandomRangesMaxRotationZ": 360.0,
+          "symbolRotation3DRotationTypeZ": 0
+        }
+      },
+      "fields": [
+        {
+          "field": "OBJECTID",
+          "type": "esriFieldTypeOID"
+        },
+        {
+          "field": "SHAPE",
+          "type": "esriFieldTypeGeometry"
+        },
+        {
+          "field": "APPLICATION_TYPE",
+          "type": "esriFieldTypeString"
+        },
+        {
+          "field": "RESPONSE_DATE",
+          "type": "esriFieldTypeDate"
+        },
+        {
+          "field": "SHAPE.AREA",
+          "type": "esriFieldTypeDouble",
+          "dp": 6
+        },
+        {
+          "field": "SHAPE.LEN",
+          "type": "esriFieldTypeDouble",
+          "dp": 6
+        }
+      ],
+      "dataSource": {
+        "type": 2,
+        "path": "Path to sde",
+        "properties": {
+          "INSTANCE": "SDE:ORACLE11G:/;LOCAL\u003dTEST",
+          "DBCLIENT": "oracle",
+          "DB_CONNECTION_PROPERTIES": "/",
+          "PROJECT_INSTANCE": "sde",
+          "ENVIRONMENT": "LOCAL\u003dTEST",
+          "IS_GEODATABASE": "true",
+          "AUTHENTICATION_MODE": "DBMS",
+          "USER": "GISVIEWER",
+          "CONNPROP-REV": "Rev1.0",
+          "VERSION": "SDE.DEFAULT"
+        }
+      }
+    }
+  ]
+}

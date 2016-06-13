@@ -1,0 +1,22 @@
+{
+  "angle": 5.6,
+  "mapLevel": 0,
+  "outlineSize": 1.1,
+  "rop2": 13,
+  "size": 14.0,
+  "style": 0,
+  "xOffset": 3.0,
+  "yOffset": 5.0,
+  "colour": {
+    "red": 255,
+    "green": 0,
+    "blue": 0,
+    "transparency": -1
+  },
+  "outlineColour": {
+    "red": 0,
+    "green": 255,
+    "blue": 0,
+    "transparency": -1
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "colour": {
+      "red": 168,
+      "green": 112,
+      "blue": 0,
+      "transparency": -1
+    },
+    "width": 1.0,
+    "mapLevel": 0,
+    "rop2": 13,
+    "cap": 0,
+    "join": 1,
+    "mitreLimit": 10.0,
+    "lineStartOffset": 3.0
+}

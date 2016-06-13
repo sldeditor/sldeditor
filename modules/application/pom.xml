@@ -1,0 +1,234 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- =========================================================== -->
+    <!-- Parent POM -->
+    <!-- =========================================================== -->
+    <parent>
+        <groupId>com.sldeditor</groupId>
+        <artifactId>sldeditor</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <!-- =========================================================== -->
+    <!-- Project Description -->
+    <!-- =========================================================== -->
+    <artifactId>se-app</artifactId>
+    <name>se-app</name>
+
+    <!-- =========================================================== -->
+    <!-- Developers and Contributors -->
+    <!-- =========================================================== -->
+    <developers>
+        <developer>
+            <name>Robert Ward</name>
+            <email>robert.ward@scisys.co.uk</email>
+            <organization>SCISYS</organization>
+            <organizationUrl>http://www.scisys.co.uk/</organizationUrl>
+            <timezone>Europe/London</timezone>
+            <roles>
+                <role>Architect</role>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- ======================================================= -->
+    <!-- This plugin's configuration is used to store Eclipse m2e -->
+    <!-- settings only. It has no influence on the Maven build -->
+    <!-- itself. -->
+    <!-- ======================================================= -->
+    <profiles>
+        <profile>
+            <id>only-eclipse</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-antrun-plugin</artifactId>
+                                                <versionRange>[1.6,)</versionRange>
+                                                <goals>
+                                                    <goal>run</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore></ignore>
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+    <!-- =========================================================== -->
+    <!-- Dependencies -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-render</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-cql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-svg</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-coverage</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-image</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geometry</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-process</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-process-feature</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dockingframes</groupId>
+            <artifactId>docking-frames-common</artifactId>
+            <version>1.1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sldeditor</groupId>
+            <artifactId>se-extension-esri-mxd</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <target>
+                                <delete file="${app.version.file}.java" />
+                                <copy file="${app.version.file}.txt"
+                                    tofile="${app.version.file}.java" />
+
+                                <replace file="${app.version.file}.java"
+                                    token="xx" value="${project.version}" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <!-- Clean up files that were generated by the shade plugin when the <finalName> was set -->
+                        <id>clean-files</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <delete>
+                                    <fileset dir="${sldeditor.dest.folder}" includes="original-*.jar" />
+                                    <fileset dir="${sldeditor.dest.folder}" includes="*-shaded.jar" />
+                                </delete>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <finalName>${app.name}</finalName>
+                    <outputDirectory>${sldeditor.dest.folder}</outputDirectory>
+                    <filters>
+                        <!-- Remove jar signatures, otherwise we get an error 
+                            when starting: Invalid signature file digest for Manifest main attributes -->
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/ECLIPSEF.RSA</exclude>
+                                <exclude>META-INF/ECLIPSEF.SF</exclude>
+                                <exclude>META-INF/eclipse.inf</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <Main-Class>${app.main.class}</Main-Class>
+                                <Specification-Title>Java Advanced Imaging Image I/O Tools</Specification-Title>
+                                <Specification-Version>1.1</Specification-Version>
+                                <Specification-Vendor>Sun Microsystems, Inc.</Specification-Vendor>
+                                <Implementation-Title>com.sun.media.imageio</Implementation-Title>
+                                <Implementation-Version>1.1</Implementation-Version>
+                                <Implementation-Vendor>Sun Microsystems, Inc.</Implementation-Vendor>
+                                <Extension-Name>com.sun.media.imageio</Extension-Name>
+                                <SplashScreen-Image>splash/splash.png</SplashScreen-Image>
+                            </manifestEntries>
+                        </transformer>
+                        <!-- This bit merges the various GeoTools META-INF/services files -->
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/registryFile.jai</resource>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/registryFile.jaiext</resource>
+                        </transformer>
+                    </transformers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

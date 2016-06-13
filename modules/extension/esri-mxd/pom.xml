@@ -1,0 +1,146 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- =========================================================== -->
+    <!-- Parent POM -->
+    <!-- =========================================================== -->
+    <parent>
+        <groupId>com.sldeditor</groupId>
+        <artifactId>sldeditor</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
+
+    <!-- =========================================================== -->
+    <!-- Project Description -->
+    <!-- =========================================================== -->
+    <artifactId>se-extension-esri-mxd</artifactId>
+    <name>se-extension-esri-mxd</name>
+
+    <!-- =========================================================== -->
+    <!-- Developers and Contributors -->
+    <!-- =========================================================== -->
+    <developers>
+        <developer>
+            <name>Robert Ward</name>
+            <email>robert.ward@scisys.co.uk</email>
+            <organization>SCISYS</organization>
+            <organizationUrl>http://www.scisys.co.uk/</organizationUrl>
+            <timezone>Europe/London</timezone>
+            <roles>
+                <role>Architect</role>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- =========================================================== -->
+    <!-- Dependencies -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geometry</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sldeditor</groupId>
+            <artifactId>se-extension</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <target>
+                                <copy verbose="true"
+                                    todir="${project.build.sourceDirectory}/../../../../import/esri-mxd/src/main/java/com/sldeditor/importdata/esri/keys">
+                                    <fileset
+                                        dir="${project.build.sourceDirectory}/java/com/sldeditor/importdata/esri/keys">
+                                        <exclude name="**/package-info.java" />
+                                    </fileset>
+                                </copy>
+                                <copy verbose="true"
+                                    todir="${project.build.sourceDirectory}/../../../../import/esri-mxd/src/main/java/com/sldeditor/importdata/esri/keys/label">
+                                    <fileset
+                                        dir="${project.build.sourceDirectory}/java/com/sldeditor/importdata/esri/keys/label">
+                                        <exclude name="**/package-info.java" />
+                                    </fileset>
+                                </copy>
+                                <copy verbose="true"
+                                    todir="${project.build.sourceDirectory}/../../../../import/esri-mxd/src/main/java/com/sldeditor/importdata/esri/keys/numberformat">
+                                    <fileset
+                                        dir="${project.build.sourceDirectory}/java/com/sldeditor/importdata/esri/keys/numberformat">
+                                        <exclude name="**/package-info.java" />
+                                    </fileset>
+                                </copy>
+                                <copy verbose="true"
+                                    todir="${project.build.sourceDirectory}/../../../../import/esri-mxd/src/main/java/com/sldeditor/importdata/esri/keys/renderer">
+                                    <fileset
+                                        dir="${project.build.sourceDirectory}/java/com/sldeditor/importdata/esri/keys/renderer">
+                                        <exclude name="**/package-info.java" />
+                                    </fileset>
+                                </copy>
+                                <copy verbose="true"
+                                    todir="${project.build.sourceDirectory}/../../../../import/esri-mxd/src/main/java/com/sldeditor/importdata/esri/keys/symbols">
+                                    <fileset
+                                        dir="${project.build.sourceDirectory}/java/com/sldeditor/importdata/esri/keys/symbols">
+                                        <exclude name="**/package-info.java" />
+                                    </fileset>
+                                </copy>
+                                <copy verbose="true"
+                                    todir="${project.build.sourceDirectory}/../../../../import/esri-mxd/src/main/java/com/sldeditor/importdata/esri/keys/textbackground">
+                                    <fileset
+                                        dir="${project.build.sourceDirectory}/java/com/sldeditor/importdata/esri/keys/textbackground">
+                                        <exclude name="**/package-info.java" />
+                                    </fileset>
+                                </copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Needs a bit more work, hardcoded for now
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <mainClass>com.sldeditor.common.extension.ExtensionClassLoaderTool</mainClass>
+                            <arguments>
+                                <argument>${project.build.directory}/../../../extension/base/src/main/resources</argument>
+                                <argument>${project.build.directory}/../src/main/resources</argument>
+                                <argument>EsriMXDExtensionClasses.xml</argument>
+                                <argument>${project.build.directory}/../../../extension/base/src/main/resources</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+                -->
+        </plugins>
+    </build>
+</project>

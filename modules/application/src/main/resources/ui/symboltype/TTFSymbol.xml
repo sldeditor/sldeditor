@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig localisation="com.sldeditor.ui.detail.config.symboltype.ttf.TTFDetails">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="TTF_SYMBOL" valueOnly="true"
+            buttonText="..." />
+    </Group>
+</PanelConfig>
