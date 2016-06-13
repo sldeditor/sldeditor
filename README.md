@@ -31,8 +31,8 @@ This application is distributed in the hope that it will be useful, but WITHOUT 
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 ## Documentation
-- [User Guide](http://esdch-svmapcode.scisys.co.uk/root/sldeditor/wikis/userguide)
-- [Developers Guide](http://esdch-svmapcode.scisys.co.uk/root/sldeditor/wikis/devguide)
+- [User Guide](https://github.com/robward-scisys/sldeditor/wiki/userguide)
+- [Developers Guide](https://github.com/robward-scisys/sldeditor/wiki/devguide)
  
 ## Building
-[Build documentation](http://esdch-svmapcode.scisys.co.uk/root/sldeditor/wikis/build)
+[Build documentation](https://github.com/robward-scisys/sldeditor/wiki/build)
