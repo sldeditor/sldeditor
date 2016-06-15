@@ -28,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -38,6 +39,7 @@ import com.sldeditor.common.console.ConsoleManager;
  *
  * @author Robert Ward (SCISYS)
  */
+@Ignore
 public class ConsoleManagerTest {
 
     /**
