@@ -28,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -39,7 +38,6 @@ import com.sldeditor.common.console.ConsoleManager;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
 public class ConsoleManagerTest {
 
     /**
@@ -61,16 +59,54 @@ public class ConsoleManagerTest {
     }
 
     /**
+     * Have to write all the messages to a file and then check them all.  If you do it individually 
+     * there is no guarantee log4j has written the log files and flushing doesn't seem to work.
+     * 
      * Test method for {@link com.sldeditor.common.console.ConsoleManager#error(java.lang.Object, java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.console.ConsoleManager#warn(java.lang.Object, java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.console.ConsoleManager#information(java.lang.Object, java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Object, java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Class<?>, java.lang.String)}.
      */
     @Test
-    public void testError() {
-        String errorMessage = "errorMessage";
-        ConsoleManager.getInstance().error(this, errorMessage);
+    public void testWarnErrorInfoException() {
+        String errorMessage1 = "errorMessage";
+        ConsoleManager.getInstance().error(this, errorMessage1);
 
-        int occurances = countOccurences("ERROR", errorMessage);
+        String infoMessage = "information message";
+        ConsoleManager.getInstance().information(this, infoMessage);
+
+        String exceptionMessage1 = "file not found 1";
+
+        Exception e = new FileNotFoundException(exceptionMessage1);
+
+        ConsoleManager.getInstance().exception(this, e);
+
+        String exceptionMessage2 = "file not found 2";
+
+        Exception e2 = new FileNotFoundException(exceptionMessage2);
+
+        ConsoleManager.getInstance().exception(ConsoleManagerTest.class, e2);
+
+        int occurances = countOccurences("INFO", infoMessage);
 
         assertEquals(occurances, 1);
+
+        occurances = countOccurences("ERROR", errorMessage1);
+
+        assertEquals(occurances, 1);
+        
+        occurances = countOccurences("ERROR", exceptionMessage1);
+
+        assertEquals(occurances, 1);
+
+        occurances = countOccurences("ERROR", exceptionMessage2);
+
+        assertEquals(occurances, 1);
+
+        occurances = countOccurences("ERROR", "Does not exist");
+
+        assertEquals(occurances, 0);
     }
 
     /**
@@ -81,6 +117,7 @@ public class ConsoleManagerTest {
      * @return the int
      */
     private int countOccurences(String prefix, String message) {
+
         File f = new File("consolemanagertest.log");
         int count = 0;
 
@@ -102,54 +139,8 @@ public class ConsoleManagerTest {
             e.printStackTrace();
         }
 
-        f.delete();
+        f.deleteOnExit();
 
         return count;
     }
-
-    /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleManager#information(java.lang.Object, java.lang.String)}.
-     */
-    @Test
-    public void testInformation() {
-        String errorMessage = "information message";
-        ConsoleManager.getInstance().information(this, errorMessage);
-
-        int occurances = countOccurences("INFO", errorMessage);
-
-        assertEquals(occurances, 1);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Class, java.lang.Exception)}.
-     */
-    @Test
-    public void testExceptionClassOfQException() {
-        String errorMessage = "file not found 1";
-
-        Exception e = new FileNotFoundException(errorMessage);
-
-        ConsoleManager.getInstance().exception(this, e);
-
-        int occurances = countOccurences("ERROR", errorMessage);
-
-        assertEquals(occurances, 1);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Object, java.lang.Exception)}.
-     */
-    @Test
-    public void testExceptionObjectException() {
-        String errorMessage = "file not found 2";
-
-        Exception e = new FileNotFoundException(errorMessage);
-
-        ConsoleManager.getInstance().exception(ConsoleManagerTest.class, e);
-
-        int occurances = countOccurences("ERROR", errorMessage);
-
-        assertEquals(occurances, 1);
-    }
-
 }
