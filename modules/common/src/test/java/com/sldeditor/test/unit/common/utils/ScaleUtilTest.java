@@ -18,7 +18,12 @@
  */
 package com.sldeditor.test.unit.common.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import org.geotools.styling.Rule;
 import org.junit.Test;
@@ -43,7 +48,24 @@ public class ScaleUtilTest {
         assertEquals("", ScaleUtil.getValue(Double.NEGATIVE_INFINITY));
         assertEquals("", ScaleUtil.getValue(Double.POSITIVE_INFINITY));
         assertEquals("1:500", ScaleUtil.getValue(500.0));
-        assertEquals("1:123,456,789", ScaleUtil.getValue(123456789.0));
+
+        assertEquals(getExpectedValue("1:123,456,789"), ScaleUtil.getValue(123456789.0));
+
+    }
+
+    /**
+     * Gets the expected value.
+     *
+     * @param expectedValue the expected value
+     * @return the expected value
+     */
+    private static String getExpectedValue(String expectedValue)
+    {
+        DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance();
+        DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
+        char sep = symbols.getGroupingSeparator();
+
+        return expectedValue.replace(',', sep);
     }
 
     /**
@@ -75,7 +97,7 @@ public class ScaleUtilTest {
         // Set both min and max scale denominator
         rule.setMinScaleDenominator(100.0);
         assertTrue(ScaleUtil.isPresent(rule));
-        
+
         // Set min scale denominator
         rule.setMaxScaleDenominator(0.0);
         assertTrue(ScaleUtil.isPresent(rule));
