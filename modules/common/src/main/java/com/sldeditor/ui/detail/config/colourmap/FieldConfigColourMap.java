@@ -53,7 +53,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigColourMap extends FieldConfigBase implements UndoActionInterface {
+public class FieldConfigColourMap extends FieldConfigBase implements UndoActionInterface, ColourMapModelUpdateInterface {
 
     /** The table. */
     private JTable table;
@@ -64,8 +64,8 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /** The old value obj. */
     private Object oldValueObj = null;
 
-    /** The model. */
-    private ColourMapModel model = new ColourMapModel();
+    /** The colour map data model. */
+    private ColourMapModel model = null;
 
     /** The add button. */
     private JButton addButton;
@@ -83,6 +83,8 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     public FieldConfigColourMap(Class<?> panelId, FieldId id, String label, boolean multipleFields) {
         super(panelId, id, label, true, multipleFields);
+
+        model = new ColourMapModel(this);
     }
 
     /**
@@ -395,5 +397,19 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     @Override
     public String getStringValue() {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.colourmap.ColourMapModelUpdateInterface#colourMapUpdated()
+     */
+    @Override
+    public void colourMapUpdated() {
+        ColorMap colourMap = model.getColourMap();
+
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, colourMap));
+
+        oldValueObj = colourMap;
+
+        valueUpdated();
     }
 }

@@ -104,7 +104,10 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
                 polygonSymbolizer.setUnitOfMeasure(standardData.unit);
 
                 polygonSymbolizer.setDisplacement(displacement);
-                polygonSymbolizer.setGeometry(geometryField);
+                if((geometryField != null) && !geometryField.toString().isEmpty())
+                {
+                    polygonSymbolizer.setGeometry(geometryField);
+                }
                 polygonSymbolizer.setPerpendicularOffset(perpendicularOffset);
 
                 this.fireUpdateSymbol();
