@@ -73,13 +73,21 @@ public class ColourMapModel extends AbstractTableModel {
     /** The column list. */
     private List<String> columnList = new ArrayList<String>();
 
+    /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+
+    /** The parent object to inform of any changes. */
+    private ColourMapModelUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new colour map model.
+     *
+     * @param parent the parent
      */
-    public ColourMapModel()
+    public ColourMapModel(ColourMapModelUpdateInterface parent)
     {
+        this.parentObj = parent;
+
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.number"));
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.label"));
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.colour"));
@@ -123,8 +131,8 @@ public class ColourMapModel extends AbstractTableModel {
         {
         case COL_NUMBER:
             return (rowIndex + 1);
-            case COL_LABEL:
-                return colourMapData.getLabel();
+        case COL_LABEL:
+            return colourMapData.getLabel();
         case COL_COLOUR:
             break;
         case COL_RGB:
@@ -176,10 +184,14 @@ public class ColourMapModel extends AbstractTableModel {
         switch(columnIndex)
         {
         case COL_COLOUR:
+        {
+            Color colour = (Color) aValue;
+            colourMapData.setColour(colour);
+        }
+        break;
+        case COL_LABEL:
+            colourMapData.setLabel((String) aValue);
             break;
-            case COL_LABEL:
-                colourMapData.setLabel((String) aValue);
-                break;
         case COL_RGB:
         {
             Color colour = ColourUtils.toColour((String) aValue);
@@ -198,6 +210,11 @@ public class ColourMapModel extends AbstractTableModel {
         }
 
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.colourMapUpdated();
+        }
     }
 
     /**
@@ -253,6 +270,7 @@ public class ColourMapModel extends AbstractTableModel {
      */
     public void setCellRenderer(JTable table) {
         table.getColumnModel().getColumn(COL_COLOUR).setCellRenderer(new ColourTableCellRenderer(this));
+        table.getColumnModel().getColumn(COL_COLOUR).setCellEditor(new ColourEditor(this));
         table.getColumnModel().getColumn(COL_QUANTITY).setCellEditor(new SpinnerEditor());
         table.getColumnModel().getColumn(COL_OPACITY).setCellEditor(new SpinnerEditor(0.0, 1.0, 0.01));
     }

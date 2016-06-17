@@ -121,7 +121,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The wms env var values. */
     private WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
 
-    /** The map panel. that contains the card layout containing map pane and 'no data source' panel. */
+    /** The map panel that contains the card layout containing map pane and 'no data source' panel. */
     private JPanel mapPanel;
 
     /**
@@ -130,11 +130,11 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     public MapRender()
     {
         setLayout(new BorderLayout());
-        
+
         JPanel mapRenderPanel = new JPanel();
 
         JPanel noDataSource = noDataSourcePanel();
-        
+
         mapPanel = new JPanel();
         CardLayout cardLayout = new CardLayout();
         mapPanel.setLayout(cardLayout);
@@ -253,6 +253,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
      */
     private void renderSymbol(Style style)
     {
+        MapContent existing = mapPane.getMapContent();
+        if(existing != null)
+        {
+            existing.dispose();
+        }
+
         MapContent mapContent = new MapContent();
 
         // Live with memory leak warnings at the moment.
@@ -261,21 +267,21 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         switch(geometryType)
         {
-            case RASTER:
-                mapContent.addLayer(new GridReaderLayer(gridCoverage, (org.geotools.styling.Style) style));
-                break;
-            case POINT:
-            case LINE:
-            case POLYGON:
-                try {
-                    wmsEnvVarValues.setMapBounds(featureList.getFeatures().getBounds());
-                } catch (IOException e) {
-                    ConsoleManager.getInstance().exception(MapRender.class, e);
-                }
-                mapContent.addLayer(new FeatureLayer(featureList, (org.geotools.styling.Style) style));
-                break;
-            default:
-                break;
+        case RASTER:
+            mapContent.addLayer(new GridReaderLayer(gridCoverage, (org.geotools.styling.Style) style));
+            break;
+        case POINT:
+        case LINE:
+        case POLYGON:
+            try {
+                wmsEnvVarValues.setMapBounds(featureList.getFeatures().getBounds());
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(MapRender.class, e);
+            }
+            mapContent.addLayer(new FeatureLayer(featureList, (org.geotools.styling.Style) style));
+            break;
+        default:
+            break;
         }
 
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
@@ -355,22 +361,22 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         switch(geometryType)
         {
-            case RASTER:
-            {
-                ReferencedEnvelope refEnv = ReferencedEnvelope.create(env, gridCoverage.getCoordinateReferenceSystem());
-                wmsEnvVarValues.setMapBounds(refEnv);
-            }
+        case RASTER:
+        {
+            ReferencedEnvelope refEnv = ReferencedEnvelope.create(env, gridCoverage.getCoordinateReferenceSystem());
+            wmsEnvVarValues.setMapBounds(refEnv);
+        }
+        break;
+        case POINT:
+        case LINE:
+        case POLYGON:
+        {
+            ReferencedEnvelope refEnv = ReferencedEnvelope.create(env, featureList.getSchema().getCoordinateReferenceSystem());
+            wmsEnvVarValues.setMapBounds(refEnv);
+        }
+        break;
+        default:
             break;
-            case POINT:
-            case LINE:
-            case POLYGON:
-            {
-                ReferencedEnvelope refEnv = ReferencedEnvelope.create(env, featureList.getSchema().getCoordinateReferenceSystem());
-                wmsEnvVarValues.setMapBounds(refEnv);
-            }
-            break;
-            default:
-                break;
         }
 
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
@@ -427,9 +433,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         JLabel label = new JLabel(Localisation.getString(MapRender.class, "MapRender.noDataSource"));
         label.setFont(new Font("Arial", Font.BOLD, 16));
         labelPanel.add(label);
-        
+
         labelPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
+
         panel.add(labelPanel, BorderLayout.CENTER);
 
         return panel;
@@ -444,7 +450,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         JMapPane internal_mapPane = new JMapPane();
         internal_mapPane.setBackground(PrefManager.getInstance().getPrefData().getBackgroundColour());
         internal_mapPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
+
         return internal_mapPane;
     }
 }

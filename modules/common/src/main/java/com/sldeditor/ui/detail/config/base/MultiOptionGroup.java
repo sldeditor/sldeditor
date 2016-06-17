@@ -92,6 +92,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
     private FieldPanel fieldPanel;
 
+    /** The multi option group enabled flag. */
+    private boolean multiOptionGroupEnabled = true;
+
     /**
      * Sets the label.
      *
@@ -172,6 +175,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
             groupTitle.setBounds(0, 0, GroupConfig.FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
             groupTitle.setOpaque(true);
             fieldPanel.add(groupTitle);
+            multiOptionGroupEnabled = false;
 
             groupTitle.addActionListener(new ActionListener(){
 
@@ -353,6 +357,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      */
     @Override
     public void enable(boolean enable) {
+        multiOptionGroupEnabled = enable;
         comboBox.setEnabled(enable);
 
         if(enable)
@@ -390,7 +395,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      */
     @Override
     public boolean isPanelEnabled() {
-        return true;
+        return multiOptionGroupEnabled;
     }
 
     /**

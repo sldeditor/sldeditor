@@ -101,7 +101,10 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
                 pointSymbolizer.setDescription(standardData.description);
                 pointSymbolizer.setUnitOfMeasure(standardData.unit);
 
-                pointSymbolizer.setGeometry(geometryField);
+                if((geometryField != null) && !geometryField.toString().isEmpty())
+                {
+                    pointSymbolizer.setGeometry(geometryField);
+                }
 
                 this.fireUpdateSymbol();
             }

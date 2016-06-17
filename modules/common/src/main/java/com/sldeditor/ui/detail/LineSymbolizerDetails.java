@@ -96,7 +96,11 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
                 lineSymbolizer.setDescription(standardData.description);
                 lineSymbolizer.setUnitOfMeasure(standardData.unit);
 
-                //          lineSymbolizer.setGeometry(geometryField);
+                if((geometryField != null) && (geometryField.toString() != null) && !geometryField.toString().isEmpty())
+                {
+                    lineSymbolizer.setGeometry(geometryField);
+                }
+
                 lineSymbolizer.setPerpendicularOffset(perpendicularOffset);
 
                 this.fireUpdateSymbol();
