@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.Font;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -141,6 +142,19 @@ public class FieldConfigPopulation {
         if(fieldConfig != null)
         {
             fieldConfig.populateField(colourMap);
+        }
+    }
+    /**
+     * Populate font field.
+     *
+     * @param fieldId the field id
+     * @param font the colour map
+     */
+    public void populateField(FieldIdEnum fieldId, Font font) {
+        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        if(fieldConfig != null)
+        {
+            fieldConfig.populateField(font);
         }
     }
 

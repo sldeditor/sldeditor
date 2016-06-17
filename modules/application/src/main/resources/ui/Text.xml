@@ -25,15 +25,7 @@
         <FieldConfigColour id="FILL_COLOUR" label="text.general.colour" />
     </Group>
     <Group id="FONT" label="text.font" showLabel="true" option="true">
-        <FieldConfigEnum id="FONT_FAMILY" label="text.font.family">
-            <ValueList>
-                <Value>
-                    <Item id="Serif" label="Serif" />
-                    <Item id="Arial" label="Arial" />
-                    <Item id="Helvetica" label="Helvetica" />
-                </Value>
-            </ValueList>
-        </FieldConfigEnum>
+        <FieldConfigFont id="FONT_FAMILY"/>
         <FieldConfigEnum id="FONT_STYLE" label="text.font.style">
             <ValueList>
                 <Value>
@@ -51,7 +43,8 @@
                 </Value>
             </ValueList>
         </FieldConfigEnum>
-        <FieldConfigDouble id="FONT_SIZE" label="text.font.size" />
+        <FieldConfigInteger id="FONT_SIZE" label="text.font.size" />
+        <FieldConfigFontPreview id="FONT_PREVIEW"/>
     </Group>
     <Group id="HALO" label="text.halo" showLabel="true" option="true">
         <FieldConfigColour id="HALO_COLOUR" label="text.halo.colour" />

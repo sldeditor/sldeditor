@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FieldConfigFunction" type="{}XMLFieldConfigFunction"/&gt;
  *         &lt;element name="FieldConfigSlider" type="{}XMLFieldConfigSlider"/&gt;
  *         &lt;element name="FieldConfigColour" type="{}XMLFieldConfigColour"/&gt;
+ *         &lt;element name="FieldConfigFont" type="{}XMLFieldConfigFont"/&gt;
+ *         &lt;element name="FieldConfigFontPreview" type="{}XMLFieldConfigFontPreview"/&gt;
  *         &lt;element name="FieldConfigBoolean" type="{}XMLFieldConfigBoolean"/&gt;
  *         &lt;element name="FieldConfigGeometry" type="{}XMLFieldConfigGeometry"/&gt;
  *         &lt;element name="FieldConfigColourMap" type="{}XMLFieldConfigColourMap"/&gt;
@@ -64,6 +66,8 @@ public class XMLGroupConfig
         @XmlElement(name = "FieldConfigFunction", type = XMLFieldConfigFunction.class),
         @XmlElement(name = "FieldConfigSlider", type = XMLFieldConfigSlider.class),
         @XmlElement(name = "FieldConfigColour", type = XMLFieldConfigColour.class),
+        @XmlElement(name = "FieldConfigFont", type = XMLFieldConfigFont.class),
+        @XmlElement(name = "FieldConfigFontPreview", type = XMLFieldConfigFontPreview.class),
         @XmlElement(name = "FieldConfigBoolean", type = XMLFieldConfigBoolean.class),
         @XmlElement(name = "FieldConfigGeometry", type = XMLFieldConfigGeometry.class),
         @XmlElement(name = "FieldConfigColourMap", type = XMLFieldConfigColourMap.class),
@@ -98,6 +102,8 @@ public class XMLGroupConfig
      * {@link XMLFieldConfigFunction }
      * {@link XMLFieldConfigSlider }
      * {@link XMLFieldConfigColour }
+     * {@link XMLFieldConfigFont }
+     * {@link XMLFieldConfigFontPreview }
      * {@link XMLFieldConfigBoolean }
      * {@link XMLFieldConfigGeometry }
      * {@link XMLFieldConfigColourMap }

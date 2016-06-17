@@ -157,7 +157,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                 ValueComboBox comboBox = (ValueComboBox) e.getSource();
                 if (comboBox.getSelectedItem() != null) {
 
-                    Object newValueObj = comboBox.getSelectedValue();
+                    Object newValueObj = comboBox.getSelectedValue().getKey();
 
                     if((oldValueObj == null) && comboBox.getItemCount() > 0)
                     {

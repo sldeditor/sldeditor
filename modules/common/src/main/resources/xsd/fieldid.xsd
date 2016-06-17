@@ -50,6 +50,7 @@
             <xs:enumeration value="FONT_STYLE" />
             <xs:enumeration value="FONT_WEIGHT" />
             <xs:enumeration value="FONT_SIZE" />
+            <xs:enumeration value="FONT_PREVIEW" />
             <xs:enumeration value="HALO_COLOUR" />
             <xs:enumeration value="HALO_RADIUS" />
 

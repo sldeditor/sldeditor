@@ -205,6 +205,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigFont }
+     * 
+     */
+    public XMLFieldConfigFont createXMLFieldConfigFont() {
+        return new XMLFieldConfigFont();
+    }
+
+    /**
+     * Create an instance of {@link XMLFieldConfigFontPreview }
+     * 
+     */
+    public XMLFieldConfigFontPreview createXMLFieldConfigFontPreview() {
+        return new XMLFieldConfigFontPreview();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigFunction }
      * 
      */

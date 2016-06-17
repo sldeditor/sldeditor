@@ -33,16 +33,17 @@
 
 			<!-- Font not created in sld until all font attributes are specified -->
 			<!-- Set all font attributes -->
+            <SetGroup groupId="FONT" enable="true"/>
 			<SetLiteralString value="Arial" field="FONT_FAMILY" ignoreCheck="true" />
 			<SetLiteralString value="italic" field="FONT_STYLE" ignoreCheck="true" />
 			<SetLiteralString value="bold" field="FONT_WEIGHT"  ignoreCheck="true" />
-			<SetLiteralDouble value="24.0" field="FONT_SIZE"    ignoreCheck="true" />
+			<SetLiteralInt value="24" field="FONT_SIZE" ignoreCheck="true" />
 
 			<!-- Check font attributes -->
 			<LiteralString value="Arial" field="FONT_FAMILY" />
 			<LiteralString value="italic" field="FONT_STYLE" />
 			<LiteralString value="bold" field="FONT_WEIGHT" />
-			<LiteralDouble value="24.0" field="FONT_SIZE" />
+			<LiteralInt value="24" field="FONT_SIZE" />
 
 			<!--  Halo -->
 			<SetLiteralDouble value="5.0" field="HALO_RADIUS" />

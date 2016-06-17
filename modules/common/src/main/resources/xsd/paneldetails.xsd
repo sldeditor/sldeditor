@@ -43,6 +43,10 @@
                         type="XMLFieldConfigSlider" />
                     <xs:element name="FieldConfigColour"
                         type="XMLFieldConfigColour" />
+                    <xs:element name="FieldConfigFont"
+                        type="XMLFieldConfigFont" />
+                    <xs:element name="FieldConfigFontPreview"
+                        type="XMLFieldConfigFontPreview" />
                     <xs:element name="FieldConfigBoolean"
                         type="XMLFieldConfigBoolean" />
                     <xs:element name="FieldConfigGeometry"
@@ -145,6 +149,16 @@
             <xs:extension base="XMLFieldConfigData">
                 <xs:attribute type="xs:string" name="buttonText" use="optional" />
             </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigFont">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="XMLFieldConfigFontPreview">
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData" />
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="XMLFieldConfigFunction">

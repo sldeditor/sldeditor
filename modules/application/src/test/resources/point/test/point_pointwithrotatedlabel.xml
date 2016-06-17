@@ -47,7 +47,7 @@
         <FieldTests>
             <Attribute attribute="name" field="LABEL"/>
             <LiteralString value="Arial" field="FONT_FAMILY"/>
-            <LiteralDouble value="12.0" field="FONT_SIZE"/>
+            <LiteralInt value="12" field="FONT_SIZE"/>
             <LiteralString value="normal" field="FONT_STYLE"/>
             <LiteralString value="bold" field="FONT_WEIGHT"/>
             <LiteralString value="#990099" field="FILL_COLOUR"/>

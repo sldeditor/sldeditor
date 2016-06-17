@@ -23,6 +23,7 @@ import java.util.Date;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.Font;
 import org.opengis.filter.Id;
 
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
@@ -106,6 +107,13 @@ public interface FieldConfigValuePopulateInterface {
     public void populateField(ProcessFunction value);
 
     /**
+     * Populate field.
+     *
+     * @param value the value
+     */
+    public void populateField(Font value);
+
+    /**
      * Gets the double value.
      *
      * @return the double value
@@ -154,4 +162,10 @@ public interface FieldConfigValuePopulateInterface {
      */
     public ProcessFunction getProcessFunction();
 
+    /**
+     * Gets the font.
+     *
+     * @return the font
+     */
+    public Font getFont();
 }
