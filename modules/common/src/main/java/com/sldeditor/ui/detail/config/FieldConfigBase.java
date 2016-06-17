@@ -36,6 +36,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
@@ -823,6 +824,16 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     }
 
     /**
+     * Populate font field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    public void populateField(Font value)
+    {
+        // Do nothing
+    }
+
+    /**
      * Sets the test value, overridden if necessary.
      *
      * @param fieldId the field id
@@ -919,6 +930,17 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public boolean getBooleanValue() {
         // Do nothing
         return false;
+    }
+
+    /**
+     * Gets the font value, overridden if necessary.
+     *
+     * @return the font
+     */
+    @Override
+    public Font getFont() {
+        // Do nothing
+        return null;
     }
 
     /**

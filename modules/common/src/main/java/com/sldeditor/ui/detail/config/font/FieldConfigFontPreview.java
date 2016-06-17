@@ -16,32 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.ui.detail.config;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.ArrayList;
-import java.util.List;
+package com.sldeditor.ui.detail.config.font;
 
 import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
+import org.geotools.styling.Font;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Literal;
 
 import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.MultipleFieldInterface;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigString wraps a text field GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigFontPreview wraps a text field GUI component showing a font preview.
  * <p>
  * Supports undo/redo functionality. 
  * <p>
@@ -49,22 +43,29 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigString extends FieldConfigBase implements UndoActionInterface {
+public class FieldConfigFontPreview extends FieldConfigBase implements UndoActionInterface {
 
     /** The text field. */
-    private JTextField textField;
+    private JTextArea textField;
 
     /** The default value. */
     private String defaultValue = "";
 
-    /** The old value obj. */
-    private Object oldValueObj = null;
+    /** The Constant sampleText. */
+    private static final String sampleText =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n" +
+                    "abcdefghijklmnopqrstuvwxyz\n" +
+                    "0123456789\n" +
+                    "The quick brown fox jumped over the lazy dog";
 
-    /** The button text. */
-    private String buttonText = null;
+    /** The Constant sampleTextLines. */
+    private static final int sampleTextLines = 4;
 
-    /** The button pressed listener list. */
-    private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
+    /** The Constant styles. */
+    private static final String[] styles = {"Normal", "Italic"};
+
+    /** The Constant weights. */
+    private static final String[] weights = {"Normal", "Bold"};
 
     /**
      * Instantiates a new field config string.
@@ -73,83 +74,49 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param buttonText the button text
      * @param multipleFields the multiple fields
      */
-    public FieldConfigString(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText, boolean multipleFields) {
+    public FieldConfigFontPreview(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleFields) {
         super(panelId, id, label, valueOnly, multipleFields);
-
-        this.buttonText = buttonText;
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentPanel the parent panel
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
-        final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        int height = getRowY(sampleTextLines);
+        int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
+        FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel(), parentPanel, parentBox);
 
-        textField = new JTextField();
-        textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(textField);
+        textField = new JTextArea();
+        textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
+        textField.setWrapStyleWord(true);
+        textField.setLineWrap(false);
+        textField.setText(sampleText);
+        textField.setRows(sampleTextLines);
+        JScrollPane scrollPane = new JScrollPane(textField);
+        scrollPane.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
+        fieldPanel.add(scrollPane);
+    }
 
-        textField.addFocusListener(new FocusListener() {
-            private String originalValue = "";
-
-            @Override
-            public void focusGained(FocusEvent e)
-            {
-                originalValue = textField.getText();
-            }
-
-            @Override
-            public void focusLost(FocusEvent e)
-            {
-                String newValueObj = textField.getText();
-
-                if(originalValue.compareTo(newValueObj) != 0)
-                {
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                    oldValueObj = originalValue;
-
-                    valueUpdated();
-                }
-
-            }});
-
-        if(buttonText != null)
-        {
-            final JButton buttonExternal = new JButton(buttonText);
-            buttonExternal.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    if(buttonPressedListenerList != null)
-                    {
-                        for(FieldConfigStringButtonInterface listener : buttonPressedListenerList)
-                        {
-                            listener.buttonPressed(buttonExternal);
-                        }
-                    }
-                }
-            });
-
-            int buttonWidth = 26;
-            int padding = 3;
-            buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0, buttonWidth, BasePanel.WIDGET_HEIGHT);
-            fieldPanel.add(buttonExternal);
-        }
-
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
-        }
+    /**
+     * Gets the row y.
+     *
+     * @param row the row
+     * @return the row y
+     */
+    private static int getRowY(int row)
+    {
+        return BasePanel.WIDGET_HEIGHT * row;
     }
 
     /**
@@ -194,13 +161,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     @Override
     protected Expression generateExpression()
     {
-        Expression expression = null;
-
-        if(this.textField != null)
-        {
-            expression = getFilterFactory().literal(textField.getText());
-        }
-        return expression;
+        return null;
     }
 
     /**
@@ -214,18 +175,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     @Override
     public boolean isEnabled()
     {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
-            return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(textField != null)
-            {
-                return textField.isEnabled();
-            }
-        }
-        return false;
+        return true;
     }
 
     /**
@@ -238,23 +188,6 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     public void revertToDefaultValue()
     {
         populateField(defaultValue);
-    }
-
-    /**
-     * Populate expression.
-     *
-     * @param objValue the obj value
-     * @param opacity the opacity
-     */
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)
-     */
-    @Override
-    public void populateExpression(Object objValue, Expression opacity)
-    {
-        String sValue = (String) objValue;
-
-        populateField(sValue);
     }
 
     /**
@@ -290,12 +223,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
-        {
-            String oldValue = (String)undoRedoObject.getOldValue();
-
-            textField.setText(oldValue);
-        }
+        // Do nothing
     }
 
     /**
@@ -306,27 +234,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
-        {
-            String newValue = (String)undoRedoObject.getNewValue();
-
-            textField.setText(newValue);
-        }
-    }
-
-    /**
-     * Adds the button pressed listener.
-     *
-     * @param listener the listener
-     */
-    public void addButtonPressedListener(FieldConfigStringButtonInterface listener) {
-
-        if(buttonPressedListenerList == null)
-        {
-            buttonPressedListenerList = new ArrayList<FieldConfigStringButtonInterface>();
-        }
-
-        buttonPressedListenerList.add(listener);
+        // Do nothing
     }
 
     /**
@@ -343,19 +251,65 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /**
      * Populate field.
      *
-     * @param value the value
+     * @param font the font
      */
     @Override
-    public void populateField(String value) {
-        if(textField != null)
+    public void populateField(Font font) {
+        if((textField != null) && (font != null))
         {
-            textField.setText(value);
+            int styleIndex = 0;
+            int weightIndex = 0;
+            String familyName = font.getFamily().get(0).toString();
+            String styleName = ((Literal) font.getStyle()).getValue().toString();
+            for (int index = 0; index < styles.length; index++) {
+                if (styles[index].equalsIgnoreCase(styleName)) {
+                    styleIndex = index;
+                    break;
+                }
+            }
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            String weightName = ((Literal) font.getWeight()).getValue().toString();
+            for (int index = 0; index < weights.length; index++) {
+                if (weights[index].equalsIgnoreCase(weightName)) {
+                    weightIndex = index;
+                    break;
+                }
+            }
 
-            oldValueObj = value;
+            StringBuilder sb = new StringBuilder(familyName);
+            if (weightIndex == 0) {
+                if (styleIndex == 0) {
+                    sb.append("-PLAIN-");
+                } else {
+                    sb.append("-ITALIC-");
+                }
+            } else {
+                if (styleIndex == 0) {
+                    sb.append("-BOLD-");
+                } else {
+                    sb.append("-BOLDITALIC-");
+                }
+            }
 
-            valueUpdated();
+            // Get font size
+            int size = 12;
+            Literal sizeExpression = (Literal) font.getSize();
+            Object obj = sizeExpression.getValue();
+            if(obj instanceof Number)
+            {
+                Number number = (Number) obj;
+                size = number.intValue();
+            }
+            else if(obj instanceof String)
+            {
+                size = Integer.valueOf((String)obj);
+            }
+
+            sb.append(size);
+
+            java.awt.Font sampleFont = java.awt.Font.decode(sb.toString());
+
+            textField.setFont(sampleFont);
         }
     }
 
@@ -367,11 +321,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigString copy = new FieldConfigString(fieldConfigBase.getPanelId(),
+        FieldConfigFontPreview copy = new FieldConfigFontPreview(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
                 fieldConfigBase.getLabel(),
                 fieldConfigBase.isValueOnly(),
-                this.buttonText,
                 fieldConfigBase.hasMultipleValues());
         return copy;
     }
@@ -398,5 +351,19 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         {
             textField.setVisible(visible);
         }
+    }
+
+    /**
+     * Populate expression.
+     *
+     * @param objValue the obj value
+     * @param opacity the opacity
+     */
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)
+     */
+    @Override
+    public void populateExpression(Object objValue, Expression opacity) {
+        // Do nothing
     }
 }

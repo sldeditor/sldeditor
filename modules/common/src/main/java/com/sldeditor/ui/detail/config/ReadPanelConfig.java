@@ -40,6 +40,8 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue.FieldList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueField;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueItem;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
+import com.sldeditor.common.xml.ui.XMLFieldConfigFont;
+import com.sldeditor.common.xml.ui.XMLFieldConfigFontPreview;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFunction;
 import com.sldeditor.common.xml.ui.XMLFieldConfigGeometry;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInteger;
@@ -56,6 +58,8 @@ import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
 import com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
+import com.sldeditor.ui.detail.config.font.FieldConfigFont;
+import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 
@@ -307,15 +311,25 @@ public class ReadPanelConfig implements PanelConfigInterface {
                 defaultFieldMap.put(id, defaultValueObj);
             }
         }
-        if(xmlFieldConfig instanceof XMLFieldConfigColourMap)
+        else if(xmlFieldConfig instanceof XMLFieldConfigColourMap)
         {
-            // XMLFieldConfigColourMap xmlColourMapFieldConfig = (XMLFieldConfigColourMap) xmlFieldConfig;
-
             FieldConfigColourMap stringConfig = new FieldConfigColourMap(panelId, id, label, multipleValues);
 
             groupConfig.addField(stringConfig);
         }
-        if(xmlFieldConfig instanceof XMLFieldConfigTransformation)
+        else if(xmlFieldConfig instanceof XMLFieldConfigFont)
+        {
+            FieldConfigFont fontConfig = new FieldConfigFont(panelId, id, label, valueOnly, multipleValues);
+
+            groupConfig.addField(fontConfig);
+        }
+        else if(xmlFieldConfig instanceof XMLFieldConfigFontPreview)
+        {
+            FieldConfigFontPreview fontPreviewConfig = new FieldConfigFontPreview(panelId, id, label, valueOnly, multipleValues);
+
+            groupConfig.addField(fontPreviewConfig);
+        }
+        else if(xmlFieldConfig instanceof XMLFieldConfigTransformation)
         {
             XMLFieldConfigTransformation xmlTransformationFieldConfig = (XMLFieldConfigTransformation) xmlFieldConfig;
 

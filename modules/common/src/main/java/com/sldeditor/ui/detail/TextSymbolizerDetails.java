@@ -186,19 +186,13 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
                 if(font != null)
                 {
-                    List<Expression> fontFamilyList = font.getFamily();
-                    if(fontFamilyList != null)
-                    {
-                        if(!fontFamilyList.isEmpty())
-                        {
-                            fieldConfigVisitor.populateField(FieldIdEnum.FONT_FAMILY, fontFamilyList.get(0));
-                        }
-                    }
+                    fieldConfigVisitor.populateField(FieldIdEnum.FONT_FAMILY, font);
 
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_WEIGHT, font.getWeight());
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_STYLE, font.getStyle());
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_SIZE, font.getSize());
                 }
+                fieldConfigVisitor.populateField(FieldIdEnum.FONT_PREVIEW, font);
 
                 // Fill
                 Fill fill = (FillImpl) textSymbolizer.getFill();
@@ -292,10 +286,6 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
         StandardData standardData = getStandardData();
 
-        Expression fontFamily = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_FAMILY);
-        Expression fontSize = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_SIZE);
-        Expression fontStyle = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_STYLE);
-        Expression fontWeight = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_WEIGHT);
         Expression label = fieldConfigVisitor.getExpression(FieldIdEnum.LABEL);
         Expression haloRadius = fieldConfigVisitor.getExpression(FieldIdEnum.HALO_RADIUS);
 
@@ -377,7 +367,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         Expression fillColour = fdmFillColour.getColourExpression();
         Expression fillColourOpacity = fdmFillColour.getColourOpacityExpression();
 
-        Fill fill = getStyleFactory().fill(null, fillColour, fillColourOpacity);
+        Fill fill = getStyleFactory().createFill(fillColour, fillColourOpacity);
 
         FieldConfigColour fdmHaloColour = (FieldConfigColour)fieldConfigManager.get(FieldIdEnum.HALO_COLOUR);
         Expression haloFillColour = fdmHaloColour.getColourExpression();
@@ -398,18 +388,10 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         //
         // Font
         //
-        List<Expression> fontFamilyList = new ArrayList<Expression>();
-        fontFamilyList.add(fontFamily);
+        Font font = extractFont();
 
-        Font font = null;
-        if((fontFamilyList == null) || (fontStyle == null) || (fontWeight == null) || (fontSize == null))
-        {
-            font = getStyleFactory().getDefaultFont();
-        }
-        else
-        {
-            font = (Font) getStyleFactory().font(fontFamilyList, fontStyle, fontWeight, fontSize);
-        }
+        // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
+        fieldConfigVisitor.populateField(FieldIdEnum.FONT_PREVIEW, font);
 
         TextSymbolizer textSymbolizer = (TextSymbolizer) getStyleFactory().textSymbolizer(standardData.name,
                 defaultGeometryField,
@@ -421,7 +403,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
                 halo,
                 fill);
 
-        if(geometryField != null)
+        if((geometryField != null) && !geometryField.toString().isEmpty())
         {
             textSymbolizer.setGeometry(geometryField);
         }
@@ -434,6 +416,32 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         SelectedSymbol.getInstance().replaceSymbolizer(textSymbolizer);
 
         this.fireUpdateSymbol();
+    }
+
+    /**
+     * Extract font.
+     *
+     * @return the font
+     */
+    private Font extractFont() {
+        Font font = null;
+        Expression fontFamily = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_FAMILY);
+        Expression fontSize = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_SIZE);
+        Expression fontStyle = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_STYLE);
+        Expression fontWeight = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_WEIGHT);
+
+        List<Expression> fontFamilyList = new ArrayList<Expression>();
+        fontFamilyList.add(fontFamily);
+
+        if((fontFamilyList == null) || (fontStyle == null) || (fontWeight == null) || (fontSize == null))
+        {
+            font = getStyleFactory().getDefaultFont();
+        }
+        else
+        {
+            font = (Font) getStyleFactory().font(fontFamilyList, fontStyle, fontWeight, fontSize);
+        }
+        return font;
     }
 
     /**

@@ -66,6 +66,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="FONT_STYLE"/&gt;
  *     &lt;enumeration value="FONT_WEIGHT"/&gt;
  *     &lt;enumeration value="FONT_SIZE"/&gt;
+ *     &lt;enumeration value="FONT_PREVIEW"/&gt;
  *     &lt;enumeration value="HALO_COLOUR"/&gt;
  *     &lt;enumeration value="HALO_RADIUS"/&gt;
  *     &lt;enumeration value="LABEL_ALLOW_OVERRUNS"/&gt;
@@ -179,6 +180,7 @@ public enum FieldIdEnum {
     FONT_STYLE,
     FONT_WEIGHT,
     FONT_SIZE,
+    FONT_PREVIEW,
     HALO_COLOUR,
     HALO_RADIUS,
     LABEL_ALLOW_OVERRUNS,
