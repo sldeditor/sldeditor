@@ -16,31 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.test.unit.common.output;
-
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Test;
-
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
 
 /**
- * The unit test for SLDWriterFactory.
- * <p>{@link com.sldeditor.common.output.impl.SLDWriterFactory}
- *
+ * Package containing tools to operate on YSLD file
+ * 
  * @author Robert Ward (SCISYS)
+ *
  */
-public class SLDWriterFactoryTest {
-
-    /**
-     * Test method for {@link com.sldeditor.common.output.impl.SLDWriterFactory#createWriter(java.lang.String)}.
-     */
-    @Test
-    public void testCreateSLDWriter() {
-        SLDWriterInterface writer = SLDWriterFactory.createWriter(null);
-        
-        assertNotNull(writer);
-    }
-
-}
+package com.sldeditor.tool.ysld;

@@ -146,7 +146,7 @@ public class RasterFileHandler implements FileHandlerInterface
     {
         if(sldData != null)
         {
-            return sldData.getLayerNameWithOutSuffix() + SLDEditorFile.getSLDFileExtension();
+            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
         }
 
         return "";

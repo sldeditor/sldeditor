@@ -56,6 +56,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -349,7 +350,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
                 for(VersionData versionData : vendorOptionList)
                 {
                     Element vendorOptionElement = doc.createElement(SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
-                    
+
                     VendorOptionVersion vendorOption = new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
                     vendorOptionElement.appendChild(doc.createTextNode(vendorOption.toString()));
                     root.appendChild(vendorOptionElement);
@@ -357,25 +358,33 @@ public class SLDEditorFileHandler implements FileHandlerInterface
             }
 
             // Write out the data source connector
-            sldData.getDataSourceProperties().encodeXML(doc, root, SLDEditorFileHandler.DATASOURCE_ELEMENT);
+            DataSourcePropertiesInterface dataSourceProperties = sldData.getDataSourceProperties();
+            if(dataSourceProperties != null)
+            {
+                dataSourceProperties.encodeXML(doc, root, SLDEditorFileHandler.DATASOURCE_ELEMENT);
+            }
 
             // Environment variables
             Element envVarListElement = doc.createElement(SLDEditorFileHandler.ENVVARLIST_ELEMENT);
             root.appendChild(envVarListElement);
-            for(EnvVar envVar : sldData.getEnvVarList())
+            List<EnvVar> envVarList = sldData.getEnvVarList();
+            if(envVarList != null)
             {
-                Element envVarElement = doc.createElement(SLDEditorFileHandler.ENVVAR_ELEMENT);
-
-                envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_NAME_ATTRIBUTE, envVar.getName());
-                envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_TYPE_ATTRIBUTE, envVar.getType().getName());
-
-                if(envVar.getValue() != null)
+                for(EnvVar envVar : envVarList)
                 {
-                    String value = envVar.getValue().toString();
-                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_VALUE_ATTRIBUTE, value);
-                }
+                    Element envVarElement = doc.createElement(SLDEditorFileHandler.ENVVAR_ELEMENT);
 
-                envVarListElement.appendChild(envVarElement);
+                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_NAME_ATTRIBUTE, envVar.getName());
+                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_TYPE_ATTRIBUTE, envVar.getType().getName());
+
+                    if(envVar.getValue() != null)
+                    {
+                        String value = envVar.getValue().toString();
+                        envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_VALUE_ATTRIBUTE, value);
+                    }
+
+                    envVarListElement.appendChild(envVarElement);
+                }
             }
 
             // Output the XML file contents
@@ -432,7 +441,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
     {
         if(sldData != null)
         {
-            return sldData.getLayerNameWithOutSuffix() + SLDEditorFile.getSLDFileExtension();
+            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
         }
 
         return "";

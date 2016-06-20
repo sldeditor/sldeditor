@@ -224,4 +224,15 @@ public class ExternalFilenames {
             return null;
         }
     }
+
+    /**
+     * Adds the file extension separator.
+     *
+     * @param fileExtension the file extension
+     * @return the string
+     */
+    public static String addFileExtensionSeparator(String fileExtension)
+    {
+        return "." + fileExtension;
+    }
 }

@@ -20,6 +20,7 @@ package com.sldeditor.extension.filesystem.geoserver;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,23 +44,23 @@ public class GeoServerReadProgressTest {
     class DummyProgressComplete implements GeoServerParseCompleteInterface
     {
         public boolean completed = false;
-        
+
         @Override
         public void populateComplete(GeoServerConnection connection,
                 Map<String, List<StyleWrapper>> styleMap,
                 Map<String, List<GeoServerLayer>> layerMap) {
-            
+            completed = true;
         }
-        
+
     }
-    
+
     /**
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#GeoServerReadProgress(com.sldeditor.common.filesystem.FileSystemInterface, com.sldeditor.extension.filesystem.geoserver.GeoServerParseCompleteInterface)}.
      */
     @Test
     public void testGeoServerReadProgress() {
         DummyProgressComplete complete = new DummyProgressComplete();
-        
+
         GeoServerReadProgress progress = new GeoServerReadProgress(null, complete);
 
         GeoServerOverallNode geoServerRootNode = new GeoServerOverallNode(null);
@@ -85,7 +86,7 @@ public class GeoServerReadProgressTest {
         assertFalse(complete.completed);
         progress.readLayersProgress(connection, 6, 5);
         assertFalse(complete.completed);
-        
+
         progress.readStylesProgress(null, 0, 0);
         progress.readStylesProgress(connection, 0, 3);
         progress.readStylesProgress(connection, 1, 3);
@@ -93,13 +94,13 @@ public class GeoServerReadProgressTest {
         progress.readStylesProgress(connection, 3, 3);
         progress.readStylesProgress(connection, 4, 3);
         assertFalse(complete.completed);
-        
-        Map<String, List<GeoServerLayer>> completedLayersMap = null;
-        Map<String, List<StyleWrapper>> completedStyleMap = null;
-        
+
+        Map<String, List<GeoServerLayer>> completedLayersMap = new HashMap<String, List<GeoServerLayer>>();
+        Map<String, List<StyleWrapper>> completedStyleMap = new HashMap<String, List<StyleWrapper>>();
+
         progress.readLayersComplete(connection, completedLayersMap);
-        progress.readStylesComplete(connection, completedStyleMap, true);
-        
+        progress.readStylesComplete(connection, completedStyleMap, false);
+
         assertTrue(complete.completed);
     }
 
@@ -162,7 +163,7 @@ public class GeoServerReadProgressTest {
      */
     @Test
     public void testUpdateConnection() {
-        
+
         GeoServerReadProgress progress = new GeoServerReadProgress(null, null);
 
         GeoServerOverallNode geoServerRootNode = new GeoServerOverallNode(null);
@@ -175,7 +176,7 @@ public class GeoServerReadProgressTest {
         progress.addNewConnectionNode(connection, node);
 
         progress.updateConnection(null, null);
-        
+
         GeoServerConnection newConnectionDetails = new GeoServerConnection();
         newConnectionDetails.setConnectionName("updated test connection 1");
         progress.updateConnection(connection, newConnectionDetails);

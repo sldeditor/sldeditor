@@ -31,6 +31,7 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
@@ -158,7 +159,7 @@ public class SLDEditorFileTest {
      */
     @Test
     public void testGetSLDFileExtension() {
-        assertEquals(".sld", SLDEditorFile.getSLDFileExtension());
+        assertEquals(".sld", ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension()));
     }
 
 }

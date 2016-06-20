@@ -209,7 +209,7 @@ public class MXDFileHandler implements FileHandlerInterface
         {
             return null;
         }
-        return sldData.getLayerNameWithOutSuffix() + SLDEditorFile.getSLDFileExtension();
+        return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
     }
 
     /**

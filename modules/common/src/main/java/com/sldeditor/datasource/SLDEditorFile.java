@@ -52,7 +52,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
 public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterface, EnvVarUpdateInterface, PrefUpdateVendorOptionInterface {
 
     /** The Constant SLD_FILE_EXTENSION. */
-    private static final String SLD_FILE_EXTENSION = ".sld";
+    private static final String SLD_FILE_EXTENSION = "sld";
 
     /** The instance. */
     private static SLDEditorFile instance = null;

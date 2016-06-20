@@ -33,6 +33,7 @@ import java.util.Map;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.data.GeoServerConnection;
@@ -153,6 +154,8 @@ public class GeoServerClientTest {
     }
 
     /**
+     * Only works if a default GeoServer instance is running
+     * 
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#initialise(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface, com.sldeditor.common.data.GeoServerConnection)}.
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#retrieveData()}.
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#connect()}.
@@ -164,6 +167,7 @@ public class GeoServerClientTest {
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#deleteStyle(com.sldeditor.common.data.StyleWrapper)}.
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#disconnect()}.
      */
+    @Ignore
     @Test
     public void testInitialiseWithValidConnection() {
         GeoServerClient client = new GeoServerClient();
@@ -220,7 +224,7 @@ public class GeoServerClientTest {
 
         styledLayer.setName("test point sld");
 
-        SLDWriterInterface sldWriter = SLDWriterFactory.createSLDWriter(null);
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
         String updatedSLDBody = sldWriter.encodeSLD(sld);
         assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
 

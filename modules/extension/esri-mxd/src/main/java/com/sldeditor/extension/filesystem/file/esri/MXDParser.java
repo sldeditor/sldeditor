@@ -300,7 +300,7 @@ public class MXDParser
 
         if(sldWriter  == null)
         {
-            sldWriter = SLDWriterFactory.createSLDWriter(null);
+            sldWriter = SLDWriterFactory.createWriter(null);
         }
 
         String sldContents = sldWriter.encodeSLD(sld);

@@ -177,7 +177,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     private JButton btnAddButton;
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = SLDWriterFactory.createSLDWriter(null);
+    private SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
     /**
      * Instantiates a new SLD tree.

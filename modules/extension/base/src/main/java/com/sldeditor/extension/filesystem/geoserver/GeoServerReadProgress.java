@@ -228,7 +228,10 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
                     populateStyles(connection, geoServerNode);
                     populateLayers(connection, geoServerNode);
 
-                    treeModel.reload(geoServerNode); //this notifies the listeners and changes the GUI
+                    if(treeModel != null)
+                    {
+                        treeModel.reload(geoServerNode); //this notifies the listeners and changes the GUI
+                    }
                 }
 
                 parseComplete.populateComplete(connection, geoServerStyleMap.get(connection), geoServerLayerMap.get(connection));
@@ -367,15 +370,18 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      */
     private DefaultMutableTreeNode getNode(DefaultMutableTreeNode parentNode, String nodeTitlePrefix)
     {
-        for(int index = 0; index < parentNode.getChildCount(); index ++)
+        if(parentNode != null)
         {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode)parentNode.getChildAt(index);
-            String nodeName = (String)node.getUserObject();
-            if(nodeName != null)
+            for(int index = 0; index < parentNode.getChildCount(); index ++)
             {
-                if(nodeName.startsWith(nodeTitlePrefix))
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)parentNode.getChildAt(index);
+                String nodeName = (String)node.getUserObject();
+                if(nodeName != null)
                 {
-                    return node;
+                    if(nodeName.startsWith(nodeTitlePrefix))
+                    {
+                        return node;
+                    }
                 }
             }
         }
@@ -458,6 +464,11 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
     {
         GeoServerNode geoServerNode = nodeMap.get(connection);
 
+        if(geoServerNode == null)
+        {
+            return;
+        }
+
         DefaultMutableTreeNode stylesNode = getNode(geoServerNode, PROGRESS_NODE_TITLE);
 
         if(stylesNode == null)
@@ -465,13 +476,16 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
             stylesNode = new DefaultMutableTreeNode(PROGRESS_NODE_TITLE);
             geoServerNode.add(stylesNode);
 
-            TreeNode[] nodes = treeModel.getPathToRoot(geoServerNode);
-            TreePath path = new TreePath(nodes);
-            tree.expandPath(path);
+            if(treeModel != null)
+            {
+                TreeNode[] nodes = treeModel.getPathToRoot(geoServerNode);
+                TreePath path = new TreePath(nodes);
+                tree.expandPath(path);
 
-            nodes = treeModel.getPathToRoot(stylesNode);
-            path = new TreePath(nodes);
-            tree.scrollPathToVisible(path);
+                nodes = treeModel.getPathToRoot(stylesNode);
+                path = new TreePath(nodes);
+                tree.scrollPathToVisible(path);
+            }
         }
 
         stylesNode.setUserObject(String.format("%s - %s %s", PROGRESS_NODE_TITLE, styleProgressText, layerProgressText));
@@ -547,7 +561,10 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
     {
         GeoServerNode node = nodeMap.get(connection);
 
-        treeModel.removeNodeFromParent(node);
+        if(treeModel != null)
+        {
+            treeModel.removeNodeFromParent(node);
+        }
 
         nodeMap.remove(connection);
     }

@@ -58,11 +58,13 @@ import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
 import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
+import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
 import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.legend.LegendTool;
 import com.sldeditor.tool.raster.RasterTool;
 import com.sldeditor.tool.scale.ScaleTool;
 import com.sldeditor.tool.vector.VectorTool;
+import com.sldeditor.tool.ysld.YSLDTool;
 
 /**
  * Class that makes the underlying file system appear as a file system!
@@ -95,6 +97,7 @@ public class FileSystemInput implements FileSystemInterface
         fileHandlerClassList.add(SLDEditorFileHandler.class.getName());
         fileHandlerClassList.add(RasterFileHandler.class.getName());
         fileHandlerClassList.add(VectorFileHandler.class.getName());
+        fileHandlerClassList.add(YSLDFileHandler.class.getName());
 
         ExtensionClassLoader.getExtensionToLoad(ExtensionTypeEnum.FILE_HANDLER, fileHandlerClassList);
 
@@ -121,6 +124,7 @@ public class FileSystemInput implements FileSystemInterface
             ToolManager.getInstance().registerTool(FileTreeNode.class, new ScaleTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new RasterTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new VectorTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
         }
 
         // Register any extension tools
@@ -351,7 +355,7 @@ public class FileSystemInput implements FileSystemInterface
             }
         }
 
-        return result1 && result2;
+        return result1 || result2;
     }
 
     /* (non-Javadoc)

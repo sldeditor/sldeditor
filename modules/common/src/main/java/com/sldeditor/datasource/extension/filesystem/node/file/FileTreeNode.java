@@ -369,6 +369,7 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
                 {
                     addFile(f.getName());
 
+                    sort(this);
                     FileSystemNodeManager.refreshNode(this);
                 }
                 catch (Throwable t) {

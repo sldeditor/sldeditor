@@ -65,7 +65,10 @@ public class ToolButton extends JButton {
         
         ImageIcon imageIcon = getResourceIcon(resourceString);
         this.setIcon(imageIcon);
-        this.setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        if(imageIcon != null)
+        {
+            this.setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        }
     }
     
     /**

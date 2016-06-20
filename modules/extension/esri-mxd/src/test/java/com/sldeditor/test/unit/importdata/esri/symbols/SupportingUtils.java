@@ -47,7 +47,7 @@ public class SupportingUtils {
 
         DefaultSymbols.createCompleteSymbolizer(sld, symbolizerList);
 
-        SLDWriterInterface sldWriter = SLDWriterFactory.createSLDWriter(null);
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
         String encodedSLD = sldWriter.encodeSLD(sld);
 

@@ -24,6 +24,7 @@ import java.util.List;
 import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 
@@ -75,8 +76,11 @@ public class SLDData implements SLDDataInterface
     /** The env var list. */
     private List<EnvVar> envVarList = null;
 
+    /** The original format. */
+    private SLDOutputFormatEnum originalFormat = SLDOutputFormatEnum.SLD;
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param style the style
      * @param sldContents the sld contents
@@ -285,7 +289,7 @@ public class SLDData implements SLDDataInterface
     }
 
     /**
-     * Returns the SLD file
+     * Returns the SLD file.
      *
      * @return the file
      */
@@ -340,6 +344,22 @@ public class SLDData implements SLDDataInterface
     @Override
     public List<EnvVar> getEnvVarList() {
         return envVarList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.SLDDataInterface#setOriginalFormat(com.sldeditor.common.output.SLDOutputFormatEnum)
+     */
+    @Override
+    public void setOriginalFormat(SLDOutputFormatEnum format) {
+        originalFormat = format;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.SLDDataInterface#getOriginalFormat()
+     */
+    @Override
+    public SLDOutputFormatEnum getOriginalFormat() {
+        return originalFormat;
     }
 
 }

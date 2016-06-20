@@ -649,7 +649,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public String getSLDString() {
         if(sldWriter == null)
         {
-            sldWriter = SLDWriterFactory.createSLDWriter(null);
+            sldWriter = SLDWriterFactory.createWriter(null);
         }
 
         String sldContents = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());

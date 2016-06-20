@@ -89,9 +89,9 @@ public class ExternalFilenamesTest {
         try {
             String absolutePathGraphicsFileURL = absolutePathGraphicsFile.toURI().toURL().toString();
             actualResult = ExternalFilenames.getFile(sldData, absolutePathGraphicsFileURL).getAbsolutePath();
-            
+
             String s = OSValidator.isWindows() ? "file:/" : "file:";
-            
+
             expectedResult = new File(absolutePathGraphicsFileURL.substring(s.length())).getAbsolutePath();
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -118,15 +118,15 @@ public class ExternalFilenamesTest {
         }
 
         String expectedFilename = "test.tst";
-        
+
         // Try it with no SLD file set
         assertNull(ExternalFilenames.getFile(sldData, expectedFilename));
 
         // Now set the SLD file
         sldData.setSLDFile(tempSLDFile);
-        
+
         String rootFolder = tempSLDFile.getParent();
-        
+
         String expectedResult = File.separator + expectedFilename;
         File file = new File(rootFolder + expectedResult);
         try {
@@ -174,4 +174,15 @@ public class ExternalFilenamesTest {
         assertEquals("", ExternalFilenames.getImageFormat(""));
     }
 
+    /**
+     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#addFileExtensionSeparator(java.lang.String)}.
+     */
+    @Test
+    public void testAddFileExtensionSeparator()
+    {
+        String testValue = "abcxyz";
+        String actual = ExternalFilenames.addFileExtensionSeparator(testValue);
+        
+        assertEquals("." + testValue , actual);
+    }
 }
