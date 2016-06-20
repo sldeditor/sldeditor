@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class SLDFileEditorHandlerTest {
      */
     @Test
     public void testGetFileExtension() {
-        assertEquals("sldeditor", new SLDEditorFileHandler().getFileExtensionList());
+        assertEquals(Arrays.asList("sldeditor"), new SLDEditorFileHandler().getFileExtensionList());
     }
 
     /**

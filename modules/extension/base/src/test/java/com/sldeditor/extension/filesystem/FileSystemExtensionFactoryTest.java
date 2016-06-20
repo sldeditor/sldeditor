@@ -177,20 +177,23 @@ public class FileSystemExtensionFactoryTest {
     @Test
     public void testGetFileExtensionList() {
         // Should return the default
-        assertEquals(2, FileSystemExtensionFactory.getFileExtensionList(null));
-        
+        List<FileSystemInterface> fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
+        assertEquals(2, fileExtensionList.size());
+
         List<FileSystemInterface> extList = new ArrayList<FileSystemInterface>();
         extList.add(new DummyExtension());
         FileSystemExtensionFactory.override(extList);
-        // Should return thewdummy extension
-        assertEquals(1, FileSystemExtensionFactory.getFileExtensionList(null));
+        // Should return the dummy extension
+        fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
+        assertEquals(1, fileExtensionList.size());
 
         extList.clear();
-        
+
         FileSystemExtensionFactory.override(extList);
-        
+
         // Should return the defaults
-        assertEquals(2, FileSystemExtensionFactory.getFileExtensionList(null));
-}
+        fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
+        assertEquals(2, fileExtensionList.size());
+    }
 
 }

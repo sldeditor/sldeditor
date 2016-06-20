@@ -260,7 +260,7 @@ public class ScaleSLDModel extends AbstractTableModel {
             {
                 if(sldWriter == null)
                 {
-                    sldWriter = SLDWriterFactory.createSLDWriter(null);
+                    sldWriter = SLDWriterFactory.createWriter(null);
                 }
 
                 data.updateScales(sldWriter);

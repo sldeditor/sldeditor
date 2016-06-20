@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 
@@ -179,5 +180,19 @@ public interface SLDDataInterface {
      * @return the env var list
      */
     List<EnvVar> getEnvVarList();
+
+    /**
+     * Sets the original format.
+     *
+     * @param format the new original format
+     */
+    void setOriginalFormat(SLDOutputFormatEnum format);
+
+    /**
+     * Gets the original format.
+     *
+     * @return the original format
+     */
+    SLDOutputFormatEnum getOriginalFormat();
 
 }

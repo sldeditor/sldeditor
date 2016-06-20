@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.extension.filesystem.file.sld;
+package com.sldeditor.extension.filesystem.file.ysld;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,27 +31,43 @@ import java.util.List;
 
 import javax.swing.tree.DefaultTreeModel;
 
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.ysld.Ysld;
+
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
+import com.sldeditor.common.output.SLDOutputFormatEnum;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.utils.ExternalFilenames;
-import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 
 /**
- * Class that handles reading/writing SLD files to the file system.
+ * Class that handles reading/writing YSLD files to the file system.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDFileHandler implements FileHandlerInterface
+public class YSLDFileHandler implements FileHandlerInterface
 {
+
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3122710411389246976L;
+    private static final long serialVersionUID = -2572421275144887604L;
+
+    /** The Constant YSLD_FILE_EXTENSION. */
+    private static final String YSLD_FILE_EXTENSION = "ysld";
+
+    /** The sld writer. */
+    private SLDWriterInterface sldWriter = null;
+
+    /** The ysld writer. */
+    private SLDWriterInterface ysldWriter = null;
 
     /* (non-Javadoc)
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
@@ -59,7 +75,7 @@ public class SLDFileHandler implements FileHandlerInterface
     @Override
     public List<String> getFileExtensionList()
     {
-        return Arrays.asList("sld");
+        return Arrays.asList(YSLD_FILE_EXTENSION);
     }
 
     /* (non-Javadoc)
@@ -149,7 +165,7 @@ public class SLDFileHandler implements FileHandlerInterface
     /**
      * Internal open file.
      *
-     * @param f the ffile
+     * @param f the file
      * @param list the list
      */
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
@@ -157,11 +173,22 @@ public class SLDFileHandler implements FileHandlerInterface
         {
             try
             {
-                String sldContents = readFile(f, Charset.defaultCharset());
+                String contents = readFile(f, Charset.defaultCharset());
+
+                StyledLayerDescriptor sld = Ysld.parse(contents);
+
+                // Convert YSLD to SLD string
+                if(sldWriter == null)
+                {
+                    sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
+                }
+
+                String sldContents = sldWriter.encodeSLD(sld);
 
                 SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
                 sldData.setSLDFile(f);
                 sldData.setReadOnly(false);
+                sldData.setOriginalFormat(SLDOutputFormatEnum.YSLD);
 
                 list.add(sldData);
             }
@@ -184,12 +211,17 @@ public class SLDFileHandler implements FileHandlerInterface
         }
 
         File fileToSave = sldData.getSLDFile();
-        String sldString = sldData.getSld();
+
+        if(ysldWriter == null)
+        {
+            ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
+        }
 
         BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter(fileToSave));
-            out.write(sldString);
+            String contents = ysldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            out.write(contents);
             out.close();
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
@@ -208,7 +240,7 @@ public class SLDFileHandler implements FileHandlerInterface
     {
         if(sldData != null)
         {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+            return sldData.getLayerNameWithOutSuffix() + "." + YSLDFileHandler.YSLD_FILE_EXTENSION;
         }
 
         return "";

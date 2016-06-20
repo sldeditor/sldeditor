@@ -23,6 +23,7 @@ import java.io.File;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.output.SLDOutputInterface;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -130,7 +131,7 @@ public class SLDEditorFileTest extends TestCase {
     }
 
     public void test_getSLDFileExtension_A$() throws Exception {
-        String actual = SLDEditorFile.getSLDFileExtension();
+        String actual = ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
         String expected = ".sld";
         assertEquals(expected, actual);
     }

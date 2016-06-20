@@ -18,25 +18,38 @@
  */
 package com.sldeditor.ui.sldtext;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.geotools.styling.StyledLayerDescriptor;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
+import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.render.RenderPanelFactory;
+import com.sldeditor.ui.widgets.ValueComboBox;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * Text area component that displays the SLD as xml.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTextArea implements SLDOutputInterface
+public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInterface
 {
     /** The sld source text area. */
     private JTextArea sldSourceTextArea;
@@ -44,8 +57,14 @@ public class SLDTextArea implements SLDOutputInterface
     /** The instance. */
     private static SLDTextArea instance = null;
 
-    /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    /** The combo box. */
+    private ValueComboBox comboBox;
+
+    /** The output format. */
+    private SLDOutputFormatEnum outputFormat = SLDOutputFormatEnum.SLD;
+
+    /** The displayed sld. */
+    private StyledLayerDescriptor displayedSld = null;
 
     /**
      * Gets the panel.
@@ -67,10 +86,10 @@ public class SLDTextArea implements SLDOutputInterface
      */
     private SLDTextArea()
     {
-        sldWriter = SLDWriterFactory.createSLDWriter(null);
-
         // Listen for changes in the SLD
         RenderPanelFactory.addSLDOutputListener(this);
+
+        SLDEditorFile.getInstance().addSLDEditorFileUpdateListener(this);
     }
 
     /**
@@ -81,8 +100,36 @@ public class SLDTextArea implements SLDOutputInterface
     private JPanel makeTextAreaPanel() {
 
         JPanel sldSourcePanel = new JPanel(false);
-        sldSourcePanel.setLayout(new GridLayout(1, 1));
+        sldSourcePanel.setLayout(new BorderLayout());
 
+        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+
+        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.SLD.name(), "SLD", VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.YSLD.name(), "YSLD", VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+
+        // Options panel
+        JPanel optionsPanel = new JPanel();
+
+        JLabel label = new JLabel(Localisation.getField(SLDTextArea.class, "SLDTextArea.format"));
+        optionsPanel.add(label);
+
+        comboBox = new ValueComboBox();
+        comboBox.initialiseSingle(dataList);
+        comboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ValueComboBox comboBox = (ValueComboBox) e.getSource();
+                if (comboBox.getSelectedItem() != null) {
+
+                    String name = comboBox.getSelectedValue().getKey();
+                    outputFormat = SLDOutputFormatEnum.valueOf(SLDOutputFormatEnum.class, name);
+                    outputText();
+                }
+            }
+        });
+        optionsPanel.add(comboBox);
+        sldSourcePanel.add(optionsPanel, BorderLayout.NORTH);
+
+        // Scroll pane
         JScrollPane scrollPane = new JScrollPane();
         sldSourcePanel.add(scrollPane);
         sldSourceTextArea = new JTextArea();
@@ -90,6 +137,8 @@ public class SLDTextArea implements SLDOutputInterface
         sldSourceTextArea.setEditable(false);
         sldSourceTextArea.setWrapStyleWord(true);
         sldSourceTextArea.setLineWrap(true);
+
+        sldSourcePanel.add(scrollPane, BorderLayout.CENTER);
         return sldSourcePanel;
     }
 
@@ -99,8 +148,37 @@ public class SLDTextArea implements SLDOutputInterface
     @Override
     public void updatedSLD(StyledLayerDescriptor sld)
     {
-        String encodedSLD = sldWriter.encodeSLD(sld);
+        displayedSld = sld;
+
+        outputText();
+    }
+
+    /**
+     * Output text.
+     */
+    private void outputText()
+    {
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(outputFormat);
+
+        String encodedSLD = sldWriter.encodeSLD(displayedSld);
         sldSourceTextArea.setText(encodedSLD);
+    }
+
+    /**
+     * Set the output format when a new file is loaded
+     */
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)
+     */
+    @Override
+    public void sldDataUpdated(SLDDataInterface sldData, boolean dataEditedFlag)
+    {
+        if(sldData != null)
+        {
+            outputFormat = sldData.getOriginalFormat();
+
+            comboBox.setSelectValueKey(outputFormat.name());
+        }
     }
 
 }

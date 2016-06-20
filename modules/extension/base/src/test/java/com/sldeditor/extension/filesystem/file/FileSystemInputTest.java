@@ -82,6 +82,7 @@ public class FileSystemInputTest {
             File parent = null;
             try {
                 parent = new File(url.toURI());
+                parent = parent.getParentFile();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
                 fail(e.getMessage());

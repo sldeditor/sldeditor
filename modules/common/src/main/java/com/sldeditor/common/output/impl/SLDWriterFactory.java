@@ -18,6 +18,7 @@
  */
 package com.sldeditor.common.output.impl;
 
+import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 
 /**
@@ -30,18 +31,44 @@ public class SLDWriterFactory {
     /** The sld writer impl. */
     private static SLDWriterImpl sldWriterImpl = null;
 
+    /** The ysld writer impl. */
+    private static YSLDWriterImpl ysldWriterImpl = null;
+
+    /** The default writer. */
+    private static SLDOutputFormatEnum defaultWriter = SLDOutputFormatEnum.SLD;
+
     /**
      * Creates a new SLDWriter object.
      *
      * @param hint the hint
      * @return the SLD writer interface
      */
-    public static SLDWriterInterface createSLDWriter(String hint)
+    public static SLDWriterInterface createWriter(SLDOutputFormatEnum hint)
     {
-        if(sldWriterImpl == null)
+        if(hint == null)
         {
-            sldWriterImpl = new SLDWriterImpl();
+            hint = defaultWriter;
         }
-        return sldWriterImpl;
+
+        switch(hint)
+        {
+            case YSLD:
+            {
+                if(ysldWriterImpl == null)
+                {
+                    ysldWriterImpl = new YSLDWriterImpl();
+                }
+                return ysldWriterImpl;
+            }
+            case SLD:
+            default:
+            {
+                if(sldWriterImpl == null)
+                {
+                    sldWriterImpl = new SLDWriterImpl();
+                }
+                return sldWriterImpl;
+            }
+        }
     }
 }

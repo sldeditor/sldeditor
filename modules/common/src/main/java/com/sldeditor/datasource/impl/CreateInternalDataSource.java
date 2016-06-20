@@ -96,7 +96,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
             if(sldWriter == null)
             {
-                sldWriter = SLDWriterFactory.createSLDWriter(null);
+                sldWriter = SLDWriterFactory.createWriter(null);
             }
 
             List<DataSourceFieldInterface> fieldList = sldData.getFieldList();

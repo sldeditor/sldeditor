@@ -41,6 +41,7 @@ import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
@@ -140,7 +141,7 @@ public class SaveSLDTool implements ToolInterface {
     private void saveAllSLDToFolder(File destinationFolder) {
         if(sldWriter == null)
         {
-            sldWriter = SLDWriterFactory.createSLDWriter(null);
+            sldWriter = SLDWriterFactory.createWriter(null);
         }
 
         if(!destinationFolder.exists())
@@ -160,7 +161,7 @@ public class SaveSLDTool implements ToolInterface {
             {
                 String sldString = sldWriter.encodeSLD(sld);
 
-                String sldFilename = layerName + SLDEditorFile.getSLDFileExtension();
+                String sldFilename = layerName + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
                 File fileToSave = new File(destinationFolder, sldFilename);
 
                 ConsoleManager.getInstance().information(this, Localisation.getField(SaveSLDTool.class, "SaveSLDTool.savingLayer") + " " + layerName);

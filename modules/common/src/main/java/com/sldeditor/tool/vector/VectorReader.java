@@ -49,7 +49,7 @@ import com.sldeditor.datasource.impl.GeometryTypeMapping;
 public class VectorReader implements VectorReaderInterface {
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = SLDWriterFactory.createSLDWriter(null);
+    private SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
     /**
      * Creates the vector sld.

@@ -155,7 +155,7 @@ public class NewSLDPanel extends JDialog {
 
             if(sldWriter == null)
             {
-                sldWriter = SLDWriterFactory.createSLDWriter(null);
+                sldWriter = SLDWriterFactory.createWriter(null);
             }
 
             newSLDList.add(new SLDData(new StyleWrapper(selected.getName()), sldWriter.encodeSLD(sld)));

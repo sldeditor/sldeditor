@@ -35,6 +35,7 @@ import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.NodeInterface;
@@ -117,7 +118,7 @@ public class GeoServerInputTest {
             assertFalse(input.save(sldData));
 
             // Check how many connections we have
-            assertEquals(2, input.getConnectionDetails().size());
+            assertEquals(3, input.getConnectionDetails().size());
         }
         catch (SecurityException e)
         {
@@ -155,6 +156,7 @@ public class GeoServerInputTest {
     /**
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#isConnected(com.sldeditor.common.data.GeoServerConnection)}.
      */
+    @Ignore
     @Test
     public void testIsConnected() {
         fail("Not yet implemented");
@@ -313,6 +315,11 @@ public class GeoServerInputTest {
         // Try null parameters
         input.updateConnectionDetails(null, null);
 
+        // Delete connection details
+        List<GeoServerConnection> listToDelete = new ArrayList<GeoServerConnection>();
+        listToDelete.add(connection1);
+        input.deleteConnections(listToDelete);
+        
         GeoServerConnection connection1Updated = new GeoServerConnection();
         connection1Updated.setConnectionName("update test connection 1");
         input.addNewConnection(connection1Updated);
@@ -373,7 +380,7 @@ public class GeoServerInputTest {
         input.deleteConnections(connectionList);
 
         actualStyleMap = input.getStyleMap(connection1);
-        assertTrue(actualStyleMap.isEmpty());
+        assertTrue(actualStyleMap == null);
 
         // Check the other connection wasn't deleted
         actualStyleMap = input.getStyleMap(connection2);

@@ -18,25 +18,27 @@
  */
 package com.sldeditor.common.output.impl;
 
-import javax.xml.transform.TransformerException;
+import java.io.IOException;
+import java.io.StringWriter;
 
-import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.ysld.Ysld;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.output.SLDWriterInterface;
 
 /**
- * Class that converts an SLD stored as a StyledLayerDescriptor to a SLD formatted string.
+ * Class that converts an SLD stored as a StyledLayerDescriptor to a YSLD formatted string.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDWriterImpl implements SLDWriterInterface {
+public class YSLDWriterImpl implements SLDWriterInterface {
 
     /**
      * Default constructor.
      */
-    public SLDWriterImpl()
+    public YSLDWriterImpl()
     {
     }
 
@@ -44,23 +46,20 @@ public class SLDWriterImpl implements SLDWriterInterface {
      * Encode sld to a string
      *
      * @param sld the sld
-     * @return the string
+     * @return the YSLD string
      */
     public String encodeSLD(StyledLayerDescriptor sld)
     {
-        String xml = "";
-
+        StringWriter out = new StringWriter();
         if(sld != null)
         {
-            SLDTransformer transformer = new SLDTransformer();
-            transformer.setIndentation(2);
             try {
-                xml = transformer.transform(sld);
-            } catch (TransformerException e) {
+                Ysld.encode(SelectedSymbol.getInstance().getSld(), out);
+            } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
 
-        return xml;
+        return out.toString();
     }
 }

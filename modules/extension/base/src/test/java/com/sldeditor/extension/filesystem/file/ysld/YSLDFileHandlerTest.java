@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.extension.filesystem.file.sld;
+package com.sldeditor.extension.filesystem.file.ysld;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -39,20 +39,20 @@ import com.sldeditor.common.data.SLDData;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 
 /**
- * Unit test for SLDFileHandler class.
- * <p>{@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler}
+ * Unit test for YSLDFileHandler class.
+ * <p>{@link com.sldeditor.extension.filesystem.file.sld.YSLDFileHandler}
  * 
  * @author Robert Ward (SCISYS)
  *
  */
-public class SLDFileHandlerTest {
+public class YSLDFileHandlerTest {
 
     /**
      * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtension() {
-        assertEquals(Arrays.asList("sld"), new SLDFileHandler().getFileExtensionList());
+        assertEquals(Arrays.asList("ysld"), new YSLDFileHandler().getFileExtensionList());
     }
 
     /**
@@ -60,7 +60,7 @@ public class SLDFileHandlerTest {
      */
     @Test
     public void testPopulate() {
-        assertFalse(new SLDFileHandler().populate(null, null, null));
+        assertFalse(new YSLDFileHandler().populate(null, null, null));
     }
 
     /**
@@ -68,9 +68,9 @@ public class SLDFileHandlerTest {
      */
     @Test
     public void testGetSLDContents() {
-        assertNull(new SLDFileHandler().getSLDContents(null));
+        assertNull(new YSLDFileHandler().getSLDContents(null));
 
-        URL url = SLDFileHandlerTest.class.getResource("/sld");
+        URL url = YSLDFileHandlerTest.class.getResource("/ysld");
 
         File parent = null;
         try {
@@ -81,9 +81,9 @@ public class SLDFileHandlerTest {
         }
 
         try {
-            FileTreeNode fileTreeNode = new FileTreeNode(parent, "point_attribute.sld");
+            FileTreeNode fileTreeNode = new FileTreeNode(parent, "point_simplepoint.ysld");
 
-            SLDFileHandler handler = new SLDFileHandler();
+            YSLDFileHandler handler = new YSLDFileHandler();
 
             List<SLDDataInterface> sldDataList = handler.getSLDContents(fileTreeNode);
 
@@ -94,7 +94,7 @@ public class SLDFileHandlerTest {
             assertEquals(null, handler.getSLDContents(folderTreeNode));
 
             // Changes where the file is to be saved to
-            File saveFile = File.createTempFile("test", ".sld");
+            File saveFile = File.createTempFile("test", ".ysld");
             saveFile.deleteOnExit();
 
             SLDData sldData = (SLDData) sldDataList.get(0);

@@ -69,7 +69,7 @@ public class RasterReader implements RasterReaderInterface {
     private static FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2(null);
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = SLDWriterFactory.createSLDWriter(null);
+    private SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
     /**
      * Creates the raster sld.
