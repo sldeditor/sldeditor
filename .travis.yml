@@ -1,0 +1,3 @@
+jdk : oraclejdk8
+language : java
+script : mvn clean test
