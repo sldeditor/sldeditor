@@ -3,4 +3,6 @@ language : java
 cache:
   directories:
   - $HOME/.m2
-script : mvn clean test
+script : mvn test
+after_success:
+  - mvn coveralls:report

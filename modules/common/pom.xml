@@ -215,31 +215,65 @@
             </plugin>
 
             <!-- =========================================================== -->
-            <!-- Create an empty extension class configuration file -->
+            <!-- Create code coverage statistics -->
             <!-- =========================================================== -->
-            <!-- Hardcoded for now
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.7.201606060606</version>
                 <executions>
+                    <!-- Prepares the property pointing to the JaCoCo runtime 
+                        agent which is passed as VM argument when Maven the Surefire plugin is executed. -->
                     <execution>
-                        <phase>prepare-package</phase>
+                        <id>pre-unit-test</id>
                         <goals>
-                            <goal>java</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>${project.build.directory}</workingDirectory>
-                            <mainClass>com.sldeditor.common.extension.ExtensionClassLoaderTool</mainClass>
-                            <arguments>
-                                <argument>${project.build.directory}/../../extension/base/src/main/resources</argument>
-                                <argument>create</argument>
-                            </arguments>
+                            <!-- Sets the path to the file which contains 
+                                the execution data. -->
+                            <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                            <!-- Sets the name of the property containing 
+                                the settings for JaCoCo runtime agent. -->
+                            <propertyName>jacoco.agent.argLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <!-- Ensures that the code coverage report for unit tests 
+                        is created after unit tests have been run. -->
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains 
+                                the execution data. -->
+                            <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage 
+                                report. -->
+                            <outputDirectory>${basedir}/target/coverage-reports/jacoco-unit</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.17</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <argLine>${jacoco.agent.argLine}</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
