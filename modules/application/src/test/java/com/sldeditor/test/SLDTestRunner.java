@@ -157,6 +157,7 @@ public class SLDTestRunner
         String newFont = getFontForOS();
         if(newFont.compareToIgnoreCase(DEFAULT_FONT) != 0)
         {
+			System.out.println("Changing default font : " + newFont);
             BufferedReader br = new BufferedReader(new FileReader(tempFile));
             try {
                 StringBuilder sb = new StringBuilder();
