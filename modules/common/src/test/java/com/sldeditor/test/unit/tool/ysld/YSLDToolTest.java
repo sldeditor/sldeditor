@@ -28,6 +28,7 @@ import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
@@ -72,11 +73,12 @@ public class YSLDToolTest {
             if(c instanceof ToolButton)
             {
                 ToolButton button = (ToolButton) c;
-                if(button.getToolTipText().compareTo("YSLDTool.exportToSLD") == 0)
+                String toolTipText = button.getToolTipText();
+                if(toolTipText.compareTo(Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD")) == 0)
                 {
                     toSLD = button;
                 }
-                else if(button.getToolTipText().compareTo("YSLDTool.exportToYSLD") == 0)
+                else if(toolTipText.compareTo(Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD")) == 0)
                 {
                     toYSLD = button;
                 }
@@ -125,7 +127,7 @@ public class YSLDToolTest {
 
         // Try with valid ysld file
         sldDataList = new ArrayList<SLDDataInterface>();
-        SLDData sldData3 = getSLDDataFile("/point/sld/point_simplepoint.ysld");
+        SLDData sldData3 = getSLDDataFile("/point/ysld/point_simplepoint.ysld");
         sldDataList.add(sldData3);
         tool.setSelectedItems(null, sldDataList);
 

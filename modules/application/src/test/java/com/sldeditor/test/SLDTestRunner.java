@@ -451,7 +451,6 @@ public class SLDTestRunner
 
                                                         expression = ff.literal(string.replace(File.separatorChar, '/'));
                                                     }
-                                                    
                                                     else if(fieldId.getFieldId() == FieldIdEnum.FONT_FAMILY)
                                                     {
                                                         // Handle the case where a font is not available on all operating systems
@@ -480,7 +479,15 @@ public class SLDTestRunner
                                                         }
                                                         else if(literalValue.getClass() == String.class)
                                                         {
-                                                            checkLiteralValue(outputText, expression, (String)literalValue);
+                                                            if(fieldId.getFieldId() == FieldIdEnum.FONT_FAMILY)
+                                                            {
+                                                                // Handle the case where a font is not available on all operating systems
+                                                                checkLiteralValue(outputText, expression, getFontForOS());
+                                                            }
+                                                            else
+                                                            {
+                                                                checkLiteralValue(outputText, expression, (String)literalValue);
+                                                            }
                                                         }
                                                     }
                                                 }
