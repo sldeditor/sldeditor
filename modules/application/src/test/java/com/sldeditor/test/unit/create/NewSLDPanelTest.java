@@ -25,7 +25,6 @@ import java.util.List;
 
 import javax.swing.ComboBoxModel;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.SLDDataInterface;
@@ -38,7 +37,6 @@ import com.sldeditor.create.NewSLDPanel;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
 public class NewSLDPanelTest {
 
     /**
