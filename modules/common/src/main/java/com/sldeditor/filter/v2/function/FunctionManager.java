@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.filter.function.RangedClassifier;
@@ -108,9 +109,11 @@ public class FunctionManager implements FunctionNameInterface {
         functionNameList = functionFactory.getFunctionNames();
         List<Class<?>> classList = new ArrayList<Class<?>>();
 
+        Logger logger = Logger.getLogger(getClass());
+
         for(FunctionName function : functionNameList)
         {
-            System.out.println(function.getName());
+            logger.debug(function.getName());
 
             functionNameMap.put(function.getName(), function);
             functionClassNameMap.put(function.getName(), function);
@@ -121,20 +124,20 @@ public class FunctionManager implements FunctionNameInterface {
                 {
                     classList.add(function.getArguments().get(index).getType());
                 }
-                System.out.println("\t" + function.getArgumentNames().get(index) + "\t" + function.getArguments().get(index).getType().getName() + "\t" + function.getArguments().get(index).getMinOccurs() + "\t" + function.getArguments().get(index).getMaxOccurs());
+                logger.debug("\t" + function.getArgumentNames().get(index) + "\t" + function.getArguments().get(index).getType().getName() + "\t" + function.getArguments().get(index).getMinOccurs() + "\t" + function.getArguments().get(index).getMaxOccurs());
             }
 
             if(!classList.contains(function.getReturn().getType()))
             {
                 classList.add(function.getReturn().getType());
             }
-            System.out.println("\tRet : " + function.getReturn().getType().getName());
+            logger.debug("\tRet : " + function.getReturn().getType().getName());
         }
 
-        System.out.println("\nClasses");
+        logger.debug("\nClasses");
         for(Class<?> className : classList)
         {
-            System.out.println(className.getName());
+            logger.debug(className.getName());
         }
 
         Class<?>[] allowedNumberTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class};

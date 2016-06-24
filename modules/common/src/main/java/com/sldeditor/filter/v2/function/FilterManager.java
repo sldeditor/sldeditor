@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.filter.function.RangedClassifier;
@@ -150,9 +151,11 @@ public class FilterManager implements FilterNameInterface {
 
         List<Class<?>> classList = new ArrayList<Class<?>>();
 
+        Logger logger = Logger.getLogger(getClass());
+
         for(FilterName function : filterNameList)
         {
-            System.out.println(function.getFilterName());
+            logger.debug(function.getFilterName());
 
             functionNameMap.put(function.getFilterName(), function);
 
@@ -162,20 +165,20 @@ public class FilterManager implements FilterNameInterface {
                 {
                     classList.add(parameter.getDataType());
                 }
-                System.out.println("\t" + parameter.getName() + "\t" + parameter.getDataType().getName());
+                logger.debug("\t" + parameter.getName() + "\t" + parameter.getDataType().getName());
             }
 
             if(!classList.contains(function.getReturnType()))
             {
                 classList.add(function.getReturnType());
             }
-            System.out.println("\tRet : " + function.getReturnType().getName());
+            logger.debug("\tRet : " + function.getReturnType().getName());
         }
 
-        System.out.println("\nClasses");
+        logger.debug("\nClasses");
         for(Class<?> className : classList)
         {
-            System.out.println(className.getName());
+            logger.debug(className.getName());
         }
 
         Class<?>[] allowedNumberTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class};
