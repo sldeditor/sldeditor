@@ -19,8 +19,11 @@
 package com.sldeditor.test;
 
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -37,6 +40,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.SLDEditor;
 import com.sldeditor.TreeSelectionData;
+import com.sldeditor.common.utils.OSValidator;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ParseXML;
@@ -79,6 +83,12 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class SLDTestRunner
 {
+
+    /** The Constant DEFAULT_FONT. */
+    private static final String DEFAULT_FONT = "Arial";
+
+    /** The Constant DEFAULT_UNIX_FONT. */
+    private static final String DEFAULT_UNIX_FONT = "Century Schoolbook L";
 
     /** The sld editor. */
     private SLDEditor sldEditor;
@@ -142,7 +152,48 @@ public class SLDTestRunner
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }
+
+        // Update the font for the operating system
+        String newFont = getFontForOS();
+        if(newFont.compareToIgnoreCase(DEFAULT_FONT) != 0)
+        {
+            BufferedReader br = new BufferedReader(new FileReader(tempFile));
+            try {
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+
+                while (line != null) {
+                    sb.append(line.replace(DEFAULT_FONT, newFont));
+                    sb.append("\n");
+                    line = br.readLine();
+                }
+                try {
+                    FileWriter fileWriter = new FileWriter(tempFile);
+                    fileWriter.write(sb.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } finally {
+                br.close();
+            }
+        }
         return tempFile;
+    }
+
+    /**
+     * Gets the font for the operating system.
+     *
+     * @return the new font
+     */
+    private static String getFontForOS() {
+        if(OSValidator.isUnix())
+        {
+            return DEFAULT_UNIX_FONT;
+        }
+        return DEFAULT_FONT;
     }
 
     /**
@@ -399,8 +450,18 @@ public class SLDTestRunner
 
                                                         expression = ff.literal(string.replace(File.separatorChar, '/'));
                                                     }
-                                                }
+                                                    
+                                                    else if(fieldId.getFieldId() == FieldIdEnum.FONT_FAMILY)
+                                                    {
+                                                        // Handle the case where a font is not available on all operating systems
+                                                        String string = expression.toString();
 
+                                                        if(string.compareToIgnoreCase(DEFAULT_FONT) != 0)
+                                                        {
+                                                            expression = ff.literal(getFontForOS());
+                                                        }
+                                                    }
+                                                }
                                                 if(expression != null)
                                                 {
                                                     if(testValue instanceof XMLFieldLiteralBase)

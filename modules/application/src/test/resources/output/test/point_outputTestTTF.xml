@@ -11,7 +11,9 @@
         </Setup>
         <FieldTests>
             <SetLiteralString value="ttf" field="SYMBOL_TYPE" ignoreCheck="true" />
+			<!-- Exclude for now until a TTF font that exists on all OS is found
             <SetLiteralString value="ttf://Webdings#0x0064" field="TTF_SYMBOL"/>
+			-->
         </FieldTests>
     </PanelTests>
 </SldEditor_test>
