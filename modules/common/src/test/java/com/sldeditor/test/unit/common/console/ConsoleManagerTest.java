@@ -90,23 +90,23 @@ public class ConsoleManagerTest {
 
         int occurances = countOccurences("INFO", infoMessage);
 
-        assertEquals(occurances, 1);
+        assertEquals(1, occurances);
 
         occurances = countOccurences("ERROR", errorMessage1);
 
-        assertEquals(occurances, 1);
+        assertEquals(1, occurances);
         
         occurances = countOccurences("ERROR", exceptionMessage1);
 
-        assertEquals(occurances, 1);
+        assertEquals(1, occurances);
 
         occurances = countOccurences("ERROR", exceptionMessage2);
 
-        assertEquals(occurances, 1);
+        assertEquals(1, occurances);
 
         occurances = countOccurences("ERROR", "Does not exist");
 
-        assertEquals(occurances, 0);
+        assertEquals(0, occurances);
     }
 
     /**
