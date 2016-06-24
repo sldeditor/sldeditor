@@ -129,6 +129,7 @@ public class SLDTestRunner
      */
     private SLDTestRunner()
     {
+        System.out.println("Operating system is : " + OSValidator.getOS());
         // Populate the list of fields that are colours
         colourFieldsList.add(FieldIdEnum.FILL_COLOUR);
         colourFieldsList.add(FieldIdEnum.STROKE_FILL_COLOUR);
@@ -157,7 +158,6 @@ public class SLDTestRunner
         String newFont = getFontForOS();
         if(newFont.compareToIgnoreCase(DEFAULT_FONT) != 0)
         {
-			System.out.println("Changing default font : " + newFont);
             BufferedReader br = new BufferedReader(new FileReader(tempFile));
             try {
                 StringBuilder sb = new StringBuilder();
@@ -460,6 +460,7 @@ public class SLDTestRunner
                                                         if(string.compareToIgnoreCase(DEFAULT_FONT) != 0)
                                                         {
                                                             expression = ff.literal(getFontForOS());
+                                                            System.out.println("Updated font family to test for : " + expression.toString());
                                                         }
                                                     }
                                                 }
