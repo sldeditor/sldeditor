@@ -28,6 +28,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -70,6 +72,8 @@ public class ConsoleManagerTest {
      */
     @Test
     public void testWarnErrorInfoException() {
+        Logger logger = Logger.getLogger(getClass());
+        logger.setLevel(Level.DEBUG);
         String errorMessage1 = "errorMessage";
         ConsoleManager.getInstance().error(this, errorMessage1);
 

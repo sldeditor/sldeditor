@@ -473,7 +473,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public void populateField(String key) {
         oldValueObj = key;
-        comboBox.setSelectedDataKey(key);
+        comboBox.setSelectedDataKey(key);        
     }
 
     /**

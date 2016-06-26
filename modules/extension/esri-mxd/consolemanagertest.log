@@ -1,9 +1,0 @@
-DEBUG com.sldeditor.common.xml.ParseXML: Reading : /extension/ExtensionClasses.xml
-DEBUG com.sldeditor.extension.filesystem.file.FileSystemInput: Added FileSystemInput extension : com.sldeditor.extension.filesystem.file.sld.SLDFileHandler
-DEBUG com.sldeditor.extension.filesystem.file.FileSystemInput: Added FileSystemInput extension : com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler
-DEBUG com.sldeditor.extension.filesystem.file.FileSystemInput: Added FileSystemInput extension : com.sldeditor.extension.filesystem.file.raster.RasterFileHandler
-DEBUG com.sldeditor.extension.filesystem.file.FileSystemInput: Added FileSystemInput extension : com.sldeditor.extension.filesystem.file.vector.VectorFileHandler
-DEBUG com.sldeditor.extension.filesystem.file.FileSystemInput: Added FileSystemInput extension : com.sldeditor.extension.filesystem.file.esri.MXDFileHandler
-DEBUG com.sldeditor.extension.filesystem.file.FileSystemInput: Added tool extension : com.sldeditor.extension.filesystem.file.esri.MXDTools
-ERROR com.sldeditor.common.localisation.Localisation: Missing resource : i18n/tool/SaveSLDTool
-ERROR com.sldeditor.common.localisation.Localisation: Missing resource : i18n/tool/SaveSLDTool

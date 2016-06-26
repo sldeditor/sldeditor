@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.sldcookbook;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,51 +30,59 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class SLDCookbookPolygon
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+
     @Test
     public void polygon_simplepolygon()
     {
-        SLDTestRunner.runTest("polygon", "polygon_simplepolygon.xml");
+        test.runTest("polygon", "polygon_simplepolygon.xml");
     }
     
     @Test
     public void polygon_simplepolygonwithstroke()
     {
-        SLDTestRunner.runTest("polygon", "polygon_simplepolygonwithstroke.xml");
+        test.runTest("polygon", "polygon_simplepolygonwithstroke.xml");
     }
 
     @Test
     public void polygon_transparentpolygon()
     {
-        SLDTestRunner.runTest("polygon", "polygon_transparentpolygon.xml");
+        test.runTest("polygon", "polygon_transparentpolygon.xml");
     }
 
     @Test
     public void polygon_hatchingfill()
     {
-        SLDTestRunner.runTest("polygon", "polygon_hatchingfill.xml");
+        test.runTest("polygon", "polygon_hatchingfill.xml");
     }
 
     @Test
     public void polygon_polygonwithdefaultlabel()
     {
-        SLDTestRunner.runTest("polygon", "polygon_polygonwithdefaultlabel.xml");
+        test.runTest("polygon", "polygon_polygonwithdefaultlabel.xml");
     }
 
     @Test
     public void polygon_labelhalo()
     {
-        SLDTestRunner.runTest("polygon", "polygon_labelhalo.xml");
+        test.runTest("polygon", "polygon_labelhalo.xml");
     }
     
     @Test
     public void polygon_attributebasedpolygon()
     {
-        SLDTestRunner.runTest("polygon", "polygon_attributebasedpolygon.xml");
+        test.runTest("polygon", "polygon_attributebasedpolygon.xml");
     }
     
     @Test
     public void polygon_zoombasedpolygon()
     {
-        SLDTestRunner.runTest("polygon", "polygon_zoombasedpolygon.xml");
+        test.runTest("polygon", "polygon_zoombasedpolygon.xml");
     }
 }

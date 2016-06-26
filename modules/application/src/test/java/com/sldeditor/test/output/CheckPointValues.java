@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.output;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,33 +30,41 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class CheckPointValues
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+    
     @Test
     public void point_outputTestCommon()
     {
-        SLDTestRunner.runTest("output", "point_outputTestCommon.xml");
+        test.runTest("output", "point_outputTestCommon.xml");
     }
 
     @Test
     public void point_outputTestExternalGraphic()
     {
-        SLDTestRunner.runTest("output", "point_outputTestExternalGraphic.xml");
+        test.runTest("output", "point_outputTestExternalGraphic.xml");
     }
 
     @Test
     public void point_outputTestTTF()
     {
-        SLDTestRunner.runTest("output", "point_outputTestTTF.xml");
+        test.runTest("output", "point_outputTestTTF.xml");
     }
 
     @Test
     public void point_outputTestWKT()
     {
-        SLDTestRunner.runTest("output", "point_outputTestWKT.xml");
+        test.runTest("output", "point_outputTestWKT.xml");
     }
 
     @Test
     public void point_outputTestWindBarbs()
     {
-        SLDTestRunner.runTest("output", "point_outputTestWindbarbs.xml");
+        test.runTest("output", "point_outputTestWindbarbs.xml");
     }
 }

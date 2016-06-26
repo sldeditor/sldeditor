@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.output;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,15 +30,23 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class CheckLineValues
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+    
     @Test
     public void line_outputTestCommon()
     {
-        SLDTestRunner.runTest("output", "line_outputTestCommon.xml");
+        test.runTest("output", "line_outputTestCommon.xml");
     }
 
     @Test
     public void line_outputTestSymbol()
     {
-        SLDTestRunner.runTest("output", "line_outputTestSymbol.xml");
+        test.runTest("output", "line_outputTestSymbol.xml");
     }
 }

@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.output;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,15 +30,23 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class CheckPolygonValues
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+    
     @Test
     public void polygon_outputTestCommon()
     {
-        SLDTestRunner.runTest("output", "polygon_outputTestCommon.xml");
+        test.runTest("output", "polygon_outputTestCommon.xml");
     }
 
     @Test
     public void polygon_outputTestGeoServerRandomFill()
     {
-        SLDTestRunner.runTest("output", "polygon_outputTestGeoServerRandomFill.xml");
+        test.runTest("output", "polygon_outputTestGeoServerRandomFill.xml");
     }
 }

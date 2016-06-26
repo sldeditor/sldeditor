@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.output;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,21 +30,29 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class CheckTextValues
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+    
     @Test
     public void text_outputTestCommon()
     {
-        SLDTestRunner.runTest("output", "text_outputTestCommon.xml");
+        test.runTest("output", "text_outputTestCommon.xml");
     }
     
     @Test
     public void text_outputTestLabelPlacement()
     {
-        SLDTestRunner.runTest("output", "text_outputTestLabelPlacement.xml");
+        test.runTest("output", "text_outputTestLabelPlacement.xml");
     }
 
     @Test
     public void text_outputTestGeoServerLabelling()
     {
-        SLDTestRunner.runTest("output", "text_outputTestGeoServerLabelling.xml");
+        test.runTest("output", "text_outputTestGeoServerLabelling.xml");
     }
 }

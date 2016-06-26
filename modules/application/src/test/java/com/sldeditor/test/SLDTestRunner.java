@@ -113,21 +113,9 @@ public class SLDTestRunner
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * Run test.
-     *
-     * @param folder the folder
-     * @param testConfig the test config
-     */
-    public static void runTest(String folder, String testConfig)
-    {
-        SLDTestRunner test = new SLDTestRunner();
-        test.internal_runTest(folder, testConfig);
-    }
-
-    /**
      * Instantiates a new SLD test runner.
      */
-    private SLDTestRunner()
+    public SLDTestRunner()
     {
         System.out.println("Operating system is : " + OSValidator.getOS());
         // Populate the list of fields that are colours
@@ -138,6 +126,8 @@ public class SLDTestRunner
 
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
+        
+        sldEditor = SLDEditor.createAndShowGUI(null, null, true);
     }
 
     /**
@@ -198,12 +188,12 @@ public class SLDTestRunner
     }
 
     /**
-     * Internal_run test.
+     * Run the test
      *
      * @param folder the folder
      * @param testConfig the test config
      */
-    private void internal_runTest(String folder, String testConfig)
+    public void runTest(String folder, String testConfig)
     {
         // read JSON file data as String
         String fullPath = "/" + folder + "/test/" + testConfig;
@@ -219,8 +209,6 @@ public class SLDTestRunner
         }
 
         System.out.println("Opening : " + testsldfile);
-
-        sldEditor = SLDEditor.createAndShowGUI(null, null, true);
 
         List<XMLVendorOption> xmlVendorOptionList = testSuite.getVendorOption();
         if((xmlVendorOptionList != null) && !xmlVendorOptionList.isEmpty())

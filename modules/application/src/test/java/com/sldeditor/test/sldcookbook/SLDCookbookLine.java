@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.sldcookbook;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,75 +30,83 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class SLDCookbookLine
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+
     @Test
     public void line_simpleline()
     {
-        SLDTestRunner.runTest("line", "line_simpleline.xml");
+        test.runTest("line", "line_simpleline.xml");
     }
     
     @Test
     public void line_attributebasedline()
     {
-        SLDTestRunner.runTest("line", "line_attributebasedline.xml");
+        test.runTest("line", "line_attributebasedline.xml");
     }
 
     @Test
     public void line_dashdot()
     {
-        SLDTestRunner.runTest("line", "line_dashdot.xml");
+        test.runTest("line", "line_dashdot.xml");
     }
 
     @Test
     public void line_dashedline()
     {
-        SLDTestRunner.runTest("line", "line_dashedline.xml");
+        test.runTest("line", "line_dashedline.xml");
     }
 
     @Test
     public void line_dashspace()
     {
-        SLDTestRunner.runTest("line", "line_dashspace.xml");
+        test.runTest("line", "line_dashspace.xml");
     }
 
     @Test
     public void line_labelfollowingline()
     {
-        SLDTestRunner.runTest("line", "line_labelfollowingline.xml");
+        test.runTest("line", "line_labelfollowingline.xml");
     }
     
     @Test
     public void line_linewithborder()
     {
-        SLDTestRunner.runTest("line", "line_linewithborder.xml");
+        test.runTest("line", "line_linewithborder.xml");
     }
 
     @Test
     public void line_linewithdefaultlabel()
     {
-        SLDTestRunner.runTest("line", "line_linewithdefaultlabel.xml");
+        test.runTest("line", "line_linewithdefaultlabel.xml");
     }
     
     @Test
     public void line_optimizedlabel()
     {
-        SLDTestRunner.runTest("line", "line_optimizedlabel.xml");
+        test.runTest("line", "line_optimizedlabel.xml");
     }
     
     @Test
     public void line_optimizedstyledlabel()
     {
-        SLDTestRunner.runTest("line", "line_optimizedstyledlabel.xml");
+        test.runTest("line", "line_optimizedstyledlabel.xml");
     }
     
     @Test
     public void line_railroad()
     {
-        SLDTestRunner.runTest("line", "line_railroad.xml");
+        test.runTest("line", "line_railroad.xml");
     }
     
     @Test
     public void line_zoombasedline()
     {
-        SLDTestRunner.runTest("line", "line_zoombasedline.xml");
+        test.runTest("line", "line_zoombasedline.xml");
     }
 }

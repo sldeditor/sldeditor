@@ -1207,6 +1207,8 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      */
     public boolean selectTreeItem(TreeSelectionData data)
     {
+        symbolTree.clearSelection();
+
         SelectedTreeItemEnum selectedTreeItemEnum = data.getSelection(); 
         int layerIndex = data.getLayerIndex();
         int styleIndex = data.getStyleIndex();

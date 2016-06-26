@@ -73,6 +73,7 @@ public class FileSystemNodeManager {
      */
     public static void showNodeInTree(URL url, boolean allowFiles)
     {
+        fileSystemTreeComponent.clearSelection();
         getTreePath(url, allowFiles, true);
     }
 

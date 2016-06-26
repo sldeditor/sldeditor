@@ -18,6 +18,7 @@
  */
 package com.sldeditor.test.sldcookbook;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sldeditor.test.SLDTestRunner;
@@ -29,57 +30,65 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class SLDCookbookPoint
 {
+    /** The test. */
+    private static SLDTestRunner test = null;
+
+    @BeforeClass
+    public static void setUpOnce() {
+        test = new SLDTestRunner();
+    }
+    
     @Test
     public void point_simplepoint()
     {
-        SLDTestRunner.runTest("point", "point_simplepoint.xml");
+        test.runTest("point", "point_simplepoint.xml");
     }
     
     @Test
     public void point_simplepointwithstroke()
     {
-        SLDTestRunner.runTest("point", "point_simplepointwithstroke.xml");
+        test.runTest("point", "point_simplepointwithstroke.xml");
     }
 
     @Test
     public void point_transparenttriangle()
     {
-        SLDTestRunner.runTest("point", "point_transparenttriangle.xml");
+        test.runTest("point", "point_transparenttriangle.xml");
     }
 
     @Test
     public void point_pointwithrotatedlabel()
     {
-        SLDTestRunner.runTest("point", "point_pointwithrotatedlabel.xml");
+        test.runTest("point", "point_pointwithrotatedlabel.xml");
     }
 
     @Test
     public void point_pointwithstyledlabel()
     {
-        SLDTestRunner.runTest("point", "point_pointwithstyledlabel.xml");
+        test.runTest("point", "point_pointwithstyledlabel.xml");
     }
 
     @Test
     public void point_pointasgraphic()
     {
-        SLDTestRunner.runTest("point", "point_pointasgraphic.xml");
+        test.runTest("point", "point_pointasgraphic.xml");
     }
 
     @Test
     public void point_rotatedsquare()
     {
-        SLDTestRunner.runTest("point", "point_rotatedsquare.xml");
+        test.runTest("point", "point_rotatedsquare.xml");
     }
     
     @Test
     public void point_attribute()
     {
-        SLDTestRunner.runTest("point", "point_attribute.xml");
+        test.runTest("point", "point_attribute.xml");
     }
     
     @Test
     public void point_zoom()
     {
-        SLDTestRunner.runTest("point", "point_zoom.xml");
+        test.runTest("point", "point_zoom.xml");
     }
 }

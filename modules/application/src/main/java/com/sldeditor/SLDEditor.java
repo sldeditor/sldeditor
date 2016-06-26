@@ -626,6 +626,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 sldDataList = extension.open(url);
             }
         }
+        
+        loadSLDString(false, false, sldDataList);
     }
 
     /**
