@@ -189,6 +189,9 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- =========================================================== -->
+            <!-- Generate code coverage statistics using jacoco              -->
+            <!-- =========================================================== -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -366,7 +369,8 @@
                         <include>src/main/java/com/sldeditor/common/xml/ui/*.java</include>
                     </includes>
                     <token>^// Generated on.*$</token>
-                    <value>// Generated on: [TEXT REMOVED by maven-replacer-plugin]</value>
+                    <value>// Generated on: [TEXT REMOVED by
+                        maven-replacer-plugin]</value>
                     <regexFlags>
                         <regexFlag>MULTILINE</regexFlag>
                     </regexFlags>
@@ -431,6 +435,19 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Using coveralls take the jacoco code coverage and upload to -->
+            <!-- https://coveralls.io/github/robward-scisys/sldeditor        -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.2.0</version>
+                <configuration>
+                    <jacocoReports>${basedir}/target/coverage-reports/jacoco-unit/jacoco.xml</jacocoReports>
+                    <sourceDirectories>${basedir}/src/main/java</sourceDirectories>
+                </configuration>
             </plugin>
         </plugins>
     </build>
