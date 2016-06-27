@@ -18,6 +18,10 @@
  */
 package com.sldeditor.test.sldcookbook;
 
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.SwingUtilities;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,8 +38,13 @@ public class SLDCookbookPoint
     private static SLDTestRunner test = null;
 
     @BeforeClass
-    public static void setUpOnce() {
-        test = new SLDTestRunner();
+    public static void setUpOnce() throws InvocationTargetException, InterruptedException {
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				test = new SLDTestRunner();
+			}
+		});
     }
     
     @Test
