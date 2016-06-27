@@ -369,8 +369,7 @@
                         <include>src/main/java/com/sldeditor/common/xml/ui/*.java</include>
                     </includes>
                     <token>^// Generated on.*$</token>
-                    <value>// Generated on: [TEXT REMOVED by
-                        maven-replacer-plugin]</value>
+                    <value>// Generated on: [TEXT REMOVED by maven-replacer-plugin]</value>
                     <regexFlags>
                         <regexFlag>MULTILINE</regexFlag>
                     </regexFlags>
