@@ -1,1 +1,0 @@
-"%AGSDESKTOPJAVA%"\java\jre\bin\java -Xss2m -Xmx512m -Djava.library.path="%AGSDESKTOPJAVA%\bin" -classpath "%AGSDESKTOPJAVA%\java\lib\arcobjects.jar";ImportMXD.jar com.sldeditor.importdata.esri.ImportMXD

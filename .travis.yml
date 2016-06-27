@@ -11,5 +11,6 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
-#after_success:
-#  - mvn coveralls:report
+after_success:
+  - cd modules/application
+  - mvn org.eluder.coveralls:coveralls-maven-plugin:report

@@ -7,7 +7,7 @@
     <!-- =========================================================== -->
     <groupId>com.sldeditor</groupId>
     <artifactId>sldeditor</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>SLDEditor</name>
     <packaging>pom</packaging>
 
@@ -47,7 +47,7 @@
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
 
         <app.name>SLDEditor</app.name>
-        <sldeditor.version>1.1.0</sldeditor.version>
+        <sldeditor.version>0.2.0-SNAPSHOT</sldeditor.version>
         <sldeditor.dest.folder>../../bin</sldeditor.dest.folder>
     </properties>
 
@@ -67,9 +67,6 @@
     <!-- Modules -->
     <!-- =========================================================== -->
     <modules>
-        <module>modules/common</module>
-        <module>modules/extension/base</module>
-        <module>modules/extension/esri-mxd</module>
         <module>modules/application</module>
     </modules>
 
@@ -118,21 +115,6 @@
             </build>
         </profile>
         <profile>
-            <!-- apparently there has to be an alternate profile, even if 
-                it doesn't do anything, in order to de-activate the above profile if -DhaveSDEJars=true 
-                is passed in -->
-            <id>haveEsriJars</id>
-            <activation>
-                <property>
-                    <name>haveEsriJars</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <modules>
-                <module>modules/import/esrimxd</module>
-            </modules>
-        </profile>
-        <profile>
             <id>UnitTests</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -142,6 +124,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.17</version>
                         <configuration>
                             <includes>
                                 <include>**/com/sldeditor/test/unit/**/*.java</include>
@@ -158,6 +141,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.17</version>
                         <configuration>
                             <includes>
                                 <include>**/com/sldeditor/test/sldcookbook/**/*.java</include>
@@ -241,18 +225,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.13</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>2.13</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.0.0</version>
                     <configuration>
@@ -266,11 +238,6 @@
                             </fileset>
                         </filesets>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.eluder.coveralls</groupId>
-                    <artifactId>coveralls-maven-plugin</artifactId>
-                    <version>3.1.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

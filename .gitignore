@@ -37,3 +37,6 @@ config.properties
 /bin/original-ImportMXD.jar
 /bin/se-import-esrimxd-0.1.0-shaded.jar
 /modules/common/consolemanagertest.log
+/modules/application/consolemanagertest.log
+/modules/import/bin/ExportSLD.jar
+/modules/import/bin/ImportMXD.jar
