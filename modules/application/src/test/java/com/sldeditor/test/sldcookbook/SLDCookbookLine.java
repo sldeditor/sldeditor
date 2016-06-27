@@ -34,88 +34,88 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class SLDCookbookLine
 {
-	/** The test. */
-	private static SLDTestRunner test = null;
+    /** The test. */
+    private static SLDTestRunner test = null;
 
-	@BeforeClass
+    @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-		SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-				test = new SLDTestRunner();
-			}
-		});
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                test = new SLDTestRunner();
+            }
+        });
     }
 
-	@Test
-	public void line_simpleline()
-	{
-		test.runTest("line", "line_simpleline.xml");
-	}
+    @Test
+    public void line_simpleline()
+    {
+        test.runTest("line", "line_simpleline.xml");
+    }
 
-	@Test
-	public void line_attributebasedline()
-	{
-		test.runTest("line", "line_attributebasedline.xml");
-	}
+    @Test
+    public void line_attributebasedline()
+    {
+        test.runTest("line", "line_attributebasedline.xml");
+    }
 
-	@Test
-	public void line_dashdot()
-	{
-		test.runTest("line", "line_dashdot.xml");
-	}
+    @Test
+    public void line_dashdot()
+    {
+        test.runTest("line", "line_dashdot.xml");
+    }
 
-	@Test
-	public void line_dashedline()
-	{
-		test.runTest("line", "line_dashedline.xml");
-	}
+    @Test
+    public void line_dashedline()
+    {
+        test.runTest("line", "line_dashedline.xml");
+    }
 
-	@Test
-	public void line_dashspace()
-	{
-		test.runTest("line", "line_dashspace.xml");
-	}
+    @Test
+    public void line_dashspace()
+    {
+        test.runTest("line", "line_dashspace.xml");
+    }
 
-	@Test
-	public void line_labelfollowingline()
-	{
-		test.runTest("line", "line_labelfollowingline.xml");
-	}
+    @Test
+    public void line_labelfollowingline()
+    {
+        test.runTest("line", "line_labelfollowingline.xml");
+    }
 
-	@Test
-	public void line_linewithborder()
-	{
-		test.runTest("line", "line_linewithborder.xml");
-	}
+    @Test
+    public void line_linewithborder()
+    {
+        test.runTest("line", "line_linewithborder.xml");
+    }
 
-	@Test
-	public void line_linewithdefaultlabel()
-	{
-		test.runTest("line", "line_linewithdefaultlabel.xml");
-	}
+    @Test
+    public void line_linewithdefaultlabel()
+    {
+        test.runTest("line", "line_linewithdefaultlabel.xml");
+    }
 
-	@Test
-	public void line_optimizedlabel()
-	{
-		test.runTest("line", "line_optimizedlabel.xml");
-	}
+    @Test
+    public void line_optimizedlabel()
+    {
+        test.runTest("line", "line_optimizedlabel.xml");
+    }
 
-	@Test
-	public void line_optimizedstyledlabel()
-	{
-		test.runTest("line", "line_optimizedstyledlabel.xml");
-	}
+    @Test
+    public void line_optimizedstyledlabel()
+    {
+        test.runTest("line", "line_optimizedstyledlabel.xml");
+    }
 
-	@Test
-	public void line_railroad()
-	{
-		test.runTest("line", "line_railroad.xml");
-	}
+    @Test
+    public void line_railroad()
+    {
+        test.runTest("line", "line_railroad.xml");
+    }
 
-	@Test
-	public void line_zoombasedline()
-	{
-		test.runTest("line", "line_zoombasedline.xml");
-	}
+    @Test
+    public void line_zoombasedline()
+    {
+        test.runTest("line", "line_zoombasedline.xml");
+    }
 }

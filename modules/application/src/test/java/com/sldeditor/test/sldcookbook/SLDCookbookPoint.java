@@ -39,20 +39,20 @@ public class SLDCookbookPoint
 
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-		SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-				test = new SLDTestRunner();
-			}
-		});
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                test = new SLDTestRunner();
+            }
+        });
     }
-    
+
     @Test
     public void point_simplepoint()
     {
         test.runTest("point", "point_simplepoint.xml");
     }
-    
+
     @Test
     public void point_simplepointwithstroke()
     {
@@ -88,13 +88,13 @@ public class SLDCookbookPoint
     {
         test.runTest("point", "point_rotatedsquare.xml");
     }
-    
+
     @Test
     public void point_attribute()
     {
         test.runTest("point", "point_attribute.xml");
     }
-    
+
     @Test
     public void point_zoom()
     {

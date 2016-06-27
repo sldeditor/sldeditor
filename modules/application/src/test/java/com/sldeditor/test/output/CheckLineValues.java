@@ -34,28 +34,28 @@ import com.sldeditor.test.SLDTestRunner;
  */
 public class CheckLineValues
 {
-	/** The test. */
-	private static SLDTestRunner test = null;
+    /** The test. */
+    private static SLDTestRunner test = null;
 
-	@BeforeClass
-	public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-		SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-				test = new SLDTestRunner();
-			}
-		});
-	}
+    @BeforeClass
+    public static void setUpOnce() throws InvocationTargetException, InterruptedException {
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                test = new SLDTestRunner();
+            }
+        });
+    }
 
-	@Test
-	public void line_outputTestCommon()
-	{
-		test.runTest("output", "line_outputTestCommon.xml");
-	}
+    @Test
+    public void line_outputTestCommon()
+    {
+        test.runTest("output", "line_outputTestCommon.xml");
+    }
 
-	@Test
-	public void line_outputTestSymbol()
-	{
-		test.runTest("output", "line_outputTestSymbol.xml");
-	}
+    @Test
+    public void line_outputTestSymbol()
+    {
+        test.runTest("output", "line_outputTestSymbol.xml");
+    }
 }

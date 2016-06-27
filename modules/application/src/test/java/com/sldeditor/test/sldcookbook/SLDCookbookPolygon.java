@@ -39,12 +39,12 @@ public class SLDCookbookPolygon
 
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-		SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-				test = new SLDTestRunner();
-			}
-		});
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                test = new SLDTestRunner();
+            }
+        });
     }
 
     @Test
@@ -52,7 +52,7 @@ public class SLDCookbookPolygon
     {
         test.runTest("polygon", "polygon_simplepolygon.xml");
     }
-    
+
     @Test
     public void polygon_simplepolygonwithstroke()
     {
@@ -82,13 +82,13 @@ public class SLDCookbookPolygon
     {
         test.runTest("polygon", "polygon_labelhalo.xml");
     }
-    
+
     @Test
     public void polygon_attributebasedpolygon()
     {
         test.runTest("polygon", "polygon_attributebasedpolygon.xml");
     }
-    
+
     @Test
     public void polygon_zoombasedpolygon()
     {

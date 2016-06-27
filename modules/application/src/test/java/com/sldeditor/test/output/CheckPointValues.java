@@ -38,15 +38,15 @@ public class CheckPointValues
     private static SLDTestRunner test = null;
 
     @BeforeClass
-	public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-		SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-				test = new SLDTestRunner();
-			}
-		});
-	}
-    
+    public static void setUpOnce() throws InvocationTargetException, InterruptedException {
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                test = new SLDTestRunner();
+            }
+        });
+    }
+
     @Test
     public void point_outputTestCommon()
     {
