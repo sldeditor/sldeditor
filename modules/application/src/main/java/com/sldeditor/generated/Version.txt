@@ -29,11 +29,12 @@ public class Version {
     /** The version taken from the maven pom. */
     public static String pomVersionString = "xx";
 
-    public static double getVersionNumber() {
-        String [] components = pomVersionString.split("\\.");
-
-        Double version = Double.valueOf(components[0] + "." + components[1]);
-
-        return version;
+    /**
+     * Gets the version number.
+     *
+     * @return the version number
+     */
+    public static String getVersionNumber() {
+        return pomVersionString;
     }
 }

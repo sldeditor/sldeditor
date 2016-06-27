@@ -16,7 +16,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -69,7 +68,7 @@ public class ImportMXD
 
         FileData fileData = null;
 
-        if((args.length == 2) || (args.length == 3))
+        if(args.length == 2)
         {
             fileData = new FileData();
             fileData.setInputFile(args[0]);
@@ -98,19 +97,9 @@ public class ImportMXD
                     logger.info("Created output folder : " + parentFolder.getAbsolutePath());
                 }
             }
-            
-            if(args.length == 3)
-            {
-                if(args[2].compareTo("-overwrite") == 0)
-                {
-                    fileData.setOverwrite(true);
-                }
-                else
-                {
-                    logger.info("Unknown option : " + args[2]);
-                }
-            }
-            
+
+            fileData.setOverwrite(true);
+
             List<String> errorMessages = new ArrayList<String>();
             boolean valid = fileData.isValid(true, errorMessages);
             
@@ -118,7 +107,7 @@ public class ImportMXD
             {
                 for(String errorMessage : errorMessages)
                 {
-                    Progress.error(ImportMXD.class, errorMessage);
+                    System.err.println(errorMessage);
                 }
                 fileData = null;
                 System.exit(2);
@@ -142,38 +131,6 @@ public class ImportMXD
             catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-
-            FileSelectionDialog dlg = new FileSelectionDialog();
-
-            boolean valid = false;
-
-            do
-            {
-                fileData = dlg.showDialog(fileData);
-
-                if(fileData != null)
-                {
-                    List<String> errorMessages = new ArrayList<String>();
-                    valid = fileData.isValid(false, errorMessages);
-                    
-                    if(!valid)
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        
-                        for(String errorMessage : errorMessages)
-                        {
-                            sb.append(errorMessage);
-                            sb.append("\n");
-                        }
-                        JOptionPane.showMessageDialog(null, sb.toString());
-                    }
-                }
-            } while((fileData != null) && !valid);
-
-            if(fileData != null)
-            {
-                Progress.createUI();
-            }
         }
 
         if(fileData != null)
@@ -193,7 +150,6 @@ public class ImportMXD
      */
     public static void processFile(FileData fileData) {
 
-        Progress.setInputFile(fileData.getInputFile().getName());
         EngineInitializer.initializeEngine();
 
         initializeArcGISLicenses();
@@ -224,7 +180,7 @@ public class ImportMXD
         // Get all the known conversion classes
         RegisterClasses.initialise(data);
 
-        Progress.info(getClass(), "Reading MXD : " + fileData.getInputFile().getAbsolutePath());
+        System.out.println("Reading MXD : " + fileData.getInputFile().getAbsolutePath());
 
         SystemWin sWin = new SystemWin();
         Pointer obj = sWin.getDesktopWindow();
@@ -232,7 +188,7 @@ public class ImportMXD
 
         try
         {
-            Progress.info(getClass(), "Opening mxd...");
+            System.out.println("Opening mxd...");
             IMapDocument mapDocument = new MapDocument();
 
             String password = null;
@@ -261,8 +217,6 @@ public class ImportMXD
                 total ++;
             }
 
-            Progress.setTotal(total);
-
             // Now work through all the layers
             layerEnum = iMap.getLayers(null, true);
 
@@ -270,7 +224,7 @@ public class ImportMXD
 
             ParseLayer parseLayer = new ParseLayer(data);
 
-            while((layer != null) && Progress.shouldContinue())
+            while(layer != null)
             {
                 parseLayer.convertLayer(count, total, jsonLayerlist, layer, (Map)iMap);
                 layer = layerEnum.next();
@@ -284,8 +238,7 @@ public class ImportMXD
 
             outputJSON(jsonMXDObject, fileData.getOutputFile());
 
-            Progress.info(getClass(), "Written JSON file : " + fileData.getOutputFile().getAbsolutePath());
-            Progress.finished();
+            System.out.println("Written JSON file : " + fileData.getOutputFile().getAbsolutePath());
         }
         catch (UnknownHostException e)
         {
@@ -346,7 +299,7 @@ public class ImportMXD
      * Initialise ArcGIS licenses.
      */
     private static void initializeArcGISLicenses() {
-        Progress.info(ImportMXD.class, "Initialise ArcGIS License");
+        System.out.println("Initialise ArcGIS License");
         try {
             aoInit = new AoInitialize();
 

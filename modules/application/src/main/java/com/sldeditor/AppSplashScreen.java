@@ -81,7 +81,7 @@ public class AppSplashScreen
      * @return the version string
      */
     public static String getVersionString() {
-        return String.format("Version : %3.1f", Version.getVersionNumber());
+        return String.format("Version : %s", Version.getVersionNumber());
     }
 
     /**

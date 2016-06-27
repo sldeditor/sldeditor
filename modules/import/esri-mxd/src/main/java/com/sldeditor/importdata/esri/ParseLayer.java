@@ -85,16 +85,15 @@ public class ParseLayer {
     public void convertLayer(int count, int total, JsonArray jsonLayerlist, ILayer layer, Map mxdMap) {
         if(layer == null)
         {
-            Progress.error(getClass(), "convertLayer() : layer == null");
+            System.err.println("convertLayer() : layer == null");
         }
 
         try {
-            Progress.setProgress(count);
-            Progress.info(getClass(), String.format("Reading layer (%d/%d) : %s", count, total, layer.getName()));
+            System.out.println(String.format("Reading layer (%d/%d) : %s", count, total, layer.getName()));
 
             if(layer instanceof GroupLayer)
             {
-                Progress.info(getClass(), "Group Layer");
+                System.out.println("Group Layer");
             }
             else if(layer instanceof FeatureLayer)
             {
@@ -158,7 +157,7 @@ public class ParseLayer {
             }
             else
             {
-                Progress.info(getClass(), "Unsupported layer : " + layer.getClass().getName());
+                System.out.println("Unsupported layer : " + layer.getClass().getName());
             }
 
         } catch (IOException e) {
@@ -295,9 +294,9 @@ public class ParseLayer {
             jsonDataSourceObject.add(DatasourceKeys.PROPERTIES, jsonDataSourcePropertiesObject);
 
         } catch (AutomationException e) {
-            Progress.warn(getClass(), "Failed to connect to layer's data source so fields were not read");
+            System.out.println("Failed to connect to layer's data source so fields were not read");
         } catch (IOException e) {
-            Progress.warn(getClass(), "Failed to connect to layer's data source so fields were not read");
+            System.out.println("Failed to connect to layer's data source so fields were not read");
         }
 
         return jsonDataSourceObject;

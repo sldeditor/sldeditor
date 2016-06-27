@@ -27,13 +27,14 @@ package com.sldeditor.generated;
 public class Version {
 
     /** The version taken from the maven pom. */
-    public static String pomVersionString = "0.1.0";
+    public static String pomVersionString = "0.2.0-SNAPSHOT";
 
-    public static double getVersionNumber() {
-        String [] components = pomVersionString.split("\\.");
-
-        Double version = Double.valueOf(components[0] + "." + components[1]);
-
-        return version;
+    /**
+     * Gets the version number.
+     *
+     * @return the version number
+     */
+    public static String getVersionNumber() {
+        return pomVersionString;
     }
 }

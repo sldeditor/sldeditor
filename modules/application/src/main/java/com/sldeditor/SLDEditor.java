@@ -321,7 +321,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return the string
      */
     private static String generateApplicationTitleString() {
-        return String.format("%s %1.1f \251%s %s", APP_NAME, 
+        return String.format("%s %s \251%s %s", APP_NAME, 
                 Version.getVersionNumber(), 
                 APP_COPYRIGHT_YEAR, APP_COMPANY);
     }
