@@ -444,7 +444,6 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.2.0</version>
                 <configuration>
-                <repoToken>pVSo0NmlpeSDDcKmRKTyA07EyXp209JPb</repoToken>
                     <jacocoReports>
                         <jacocoReport>${basedir}/target/coverage-reports/jacoco-unit/jacoco.xml</jacocoReport>
                     </jacocoReports>
