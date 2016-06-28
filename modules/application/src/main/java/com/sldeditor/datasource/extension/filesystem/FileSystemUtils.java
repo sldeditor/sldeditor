@@ -29,7 +29,7 @@ import com.sldeditor.common.utils.ExternalFilenames;
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemUtils {
-
+   
     /**
      * Checks if is file extension supported.
      *

@@ -95,16 +95,33 @@ public class VersionDataTest {
         VersionData versionData2 = VersionData.decode(getClass(), "1.2.3");
         VersionData versionData3 = VersionData.decode(getClass(), "1.2");
         VersionData versionData4 = VersionData.decode(getClass(), "8.2.3");
+        VersionData versionData5 = VersionData.decode(getClass(), "8.2.2");
+        VersionData versionData6 = VersionData.decode(getClass(), "8.2.4");
+        VersionData versionData7 = VersionData.decode(getClass(), "8.1.2");
+        VersionData versionData8 = VersionData.decode(getClass(), "8.3.4");
 
-        assertEquals(versionData1, versionData2);
+        assertTrue(versionData1.compareTo(versionData2) == 0);
         assertTrue(versionData1.equals(versionData2));
-        assertNotEquals(versionData1, versionData3);
+        assertTrue(versionData1.compareTo(versionData3) != 0);
         assertFalse(versionData1.equals(versionData3));
-        assertNotEquals(versionData1, versionData4);
+        assertTrue(versionData1.compareTo(versionData4) != 0);
         assertFalse(versionData1.equals(versionData4));
-        assertNotEquals(versionData3, versionData4);
+        assertTrue(versionData3.compareTo(versionData4) != 0);
         assertFalse(versionData3.equals(versionData4));
-    }
+        assertTrue(versionData4.compareTo(versionData5) != 0);
+        assertFalse(versionData4.equals(versionData5));
+        assertTrue(versionData4.compareTo(versionData6) != 0);
+        assertFalse(versionData4.equals(versionData6));
+        assertTrue(versionData4.compareTo(versionData7) != 0);
+        assertFalse(versionData4.equals(versionData7));
+        assertTrue(versionData4.compareTo(versionData8) != 0);
+        assertFalse(versionData4.equals(versionData8));
+
+        assertFalse(versionData4.equals(null));
+        assertFalse(versionData4.equals(new String()));
+        int hashCode = versionData4.hashCode();
+        assertTrue(hashCode > 0);
+}
 
     /**
      * Test method for {@link com.sldeditor.common.vendoroption.VersionData#getEarliestVersion(java.lang.Class)}.

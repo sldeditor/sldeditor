@@ -42,5 +42,6 @@ public class ExamplePolygonImplIOMTest {
         ExamplePolygonImplIOM example = new ExamplePolygonImplIOM();
 
         assertTrue(example.getPolygon() != null);
+        assertTrue(example.getPolygon() != null);
     }
 }
