@@ -76,7 +76,6 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param buttonText the button text
      * @param multipleFields the multiple fields
      */
     public FieldConfigFont(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleFields) {

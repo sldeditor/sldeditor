@@ -73,7 +73,10 @@ public class VectorFileHandler implements FileHandlerInterface
     @Override
     public boolean populate(FileSystemInterface inputInterface,  DefaultTreeModel treeModel, FileTreeNode node)
     {
-        node.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
+        if(node != null)
+        {
+            node.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
+        }
 
         return false;
     }

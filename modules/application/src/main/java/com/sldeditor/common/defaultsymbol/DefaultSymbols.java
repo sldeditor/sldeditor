@@ -286,30 +286,6 @@ public class DefaultSymbols {
     }
 
     /**
-     * Creates the complete polygon symbolizer.
-     *
-     * @param sld the source sld
-     * @param symbolizerList the symbolizer list
-     */
-    public static void createCompleteSymbolizer(StyledLayerDescriptor sld, List<Symbolizer> symbolizerList) {
-        Style style = createNewStyle();
-        NamedLayer namedLayer = createNewNamedLayer();
-        FeatureTypeStyle fts = createNewFeatureTypeStyle();
-        Rule rule = createNewRule();
-
-        fts.rules().add(rule);
-        style.featureTypeStyles().add(fts);
-        namedLayer.styles().add(style);
-        sld.layers().add(namedLayer);
-
-        PolygonSymbolizer polygon = createDefaultPolygonSymbolizer();
-        polygon.setFill(null);
-        polygon.setStroke(null);
-
-        rule.symbolizers().addAll(symbolizerList);
-    }
-
-    /**
      * Creates the default raster symbolizer.
      *
      * @return the raster symbolizer
