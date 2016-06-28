@@ -38,6 +38,8 @@ public class AllowedAttributeTypesTest {
     @Test
     public void testIsAllowed() {
 
+        assertFalse(AllowedAttributeTypes.isAllowed(Double.class, AllowedAttributeTypes.class));
+
         assertTrue(AllowedAttributeTypes.isAllowed(Integer.class, Double.class));
         assertTrue(AllowedAttributeTypes.isAllowed(String.class, String.class));
         assertFalse(AllowedAttributeTypes.isAllowed(String.class, Double.class));

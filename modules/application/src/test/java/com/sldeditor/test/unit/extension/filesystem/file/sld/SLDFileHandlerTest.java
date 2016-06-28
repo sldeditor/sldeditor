@@ -36,6 +36,7 @@ import org.junit.Test;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 
@@ -161,5 +162,21 @@ public class SLDFileHandlerTest {
             e.printStackTrace();
             fail(e.getMessage());
         }
+    }
+    
+    /**
+     * Supply a folder name and retrieve all the sld files in it
+     * 
+     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     */
+    @Test
+    public void testGetSLDName() {
+        SLDFileHandler handler = new SLDFileHandler();
+
+        assertTrue(handler.getSLDName(null).compareTo("") == 0);
+
+        SLDData sldData = new SLDData(new StyleWrapper("workspace", "layer.sld"), "sldContents");
+        String sldName = handler.getSLDName(sldData);
+        assertTrue(sldName.compareTo("layer.sld") == 0);
     }
 }
