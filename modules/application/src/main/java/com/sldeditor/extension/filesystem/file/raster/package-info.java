@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Allows raster files to be data sources.
+ * 
  * @author Robert Ward (SCISYS)
  *
  */

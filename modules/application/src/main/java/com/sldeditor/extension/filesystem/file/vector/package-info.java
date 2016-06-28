@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Allows vector files to be data sources.
+ * 
  * @author Robert Ward (SCISYS)
  *
  */
