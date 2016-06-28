@@ -311,15 +311,18 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
 
         // Populate data source properties panel
         DataSourcePropertiesInterface dataSourceProperties = dataSource.getDataConnectorProperties();
-        dataSourceProperties.populate();
-
-        // Set the combo box to display the correct data source connector panel
-        DataSourceConnectorInterface dsc = dataSourceProperties.getDataSourceConnector();
-
-        String displayName = dsc.getDisplayName();
-        if(dataSourceConnectorComboBox != null)
+        if(dataSourceProperties != null)
         {
-            dataSourceConnectorComboBox.setSelectedItem(displayName);
+            dataSourceProperties.populate();
+
+            // Set the combo box to display the correct data source connector panel
+            DataSourceConnectorInterface dsc = dataSourceProperties.getDataSourceConnector();
+
+            String displayName = dsc.getDisplayName();
+            if(dataSourceConnectorComboBox != null)
+            {
+                dataSourceConnectorComboBox.setSelectedItem(displayName);
+            }
         }
 
         // Populate table

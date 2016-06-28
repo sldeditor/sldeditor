@@ -4,8 +4,8 @@ cache:
   directories:
   - $HOME/.m2
 script : 
-  - mvn test
-  - mvn test -P IntegrationTests
+  - mvn clean test
+  - mvn clean test -P IntegrationTests
 
 before_script:
   - "export DISPLAY=:99.0"

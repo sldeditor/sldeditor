@@ -177,6 +177,9 @@ public class FileSystemExtensionFactoryTest {
      */
     @Test
     public void testGetFileExtensionList() {
+        // Put test class back into empty state
+        FileSystemExtensionFactory.override(null);
+
         // Should return the default
         List<FileSystemInterface> fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
         assertEquals(2, fileExtensionList.size());

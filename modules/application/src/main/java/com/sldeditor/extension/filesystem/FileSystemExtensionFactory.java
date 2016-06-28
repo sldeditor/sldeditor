@@ -57,6 +57,10 @@ public class FileSystemExtensionFactory {
         {
             extensionList = overrideExtensionList;
         }
+        else
+        {
+            extensionList.clear();
+        }
     }
 
     /**
