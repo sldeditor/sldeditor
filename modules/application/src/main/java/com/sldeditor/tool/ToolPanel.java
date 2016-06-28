@@ -69,7 +69,7 @@ public class ToolPanel extends JPanel
      * @param nodeTypeList the node type list
      * @param sldDataList the new selected items
      */
-    public void setSelectedItems(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
+    public synchronized void setSelectedItems(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
     {
         List<ToolInterface> consolidatedToolList = new ArrayList<ToolInterface>();
 
