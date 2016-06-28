@@ -18,6 +18,8 @@
  */
 
 /**
+ * Package contains font selection and preview fields.
+ * 
  * @author Robert Ward (SCISYS)
  *
  */
