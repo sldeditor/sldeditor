@@ -163,9 +163,9 @@ public class SLDFileHandlerTest {
             fail(e.getMessage());
         }
     }
-    
+
     /**
-     * Supply a folder name and retrieve all the sld files in it
+     * Check SLD name
      * 
      * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
