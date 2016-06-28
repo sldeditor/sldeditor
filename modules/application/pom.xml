@@ -196,6 +196,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.7.201606060606</version>
+	<configuration>
+		<excludes>
+			<exclude>com/sldeditor/common/xml/envvar/*.class</exclude>
+			<exclude>com/sldeditor/common/xml/filter/*.class</exclude>
+			<exclude>com/sldeditor/common/xml/ui/*.class</exclude>
+		</excludes>
+	</configuration>
                 <executions>
                     <!-- Prepares the property pointing to the JaCoCo runtime 
                         agent which is passed as VM argument when Maven the Surefire plugin is executed. -->
@@ -347,8 +354,8 @@
                 </executions>
             </plugin>
             <!-- =========================================================== -->
-            <!-- Replace date/time string in generate JAXB classes with -->
-            <!-- constant string -->
+            <!-- Replace date/time string in generate JAXB classes with      -->
+            <!-- constant string, stops getting lots of git commits.         -->
             <!-- =========================================================== -->
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
@@ -375,6 +382,9 @@
                     </regexFlags>
                 </configuration>
             </plugin>
+            <!-- =========================================================== -->
+            <!-- Generate single runnable jar                                -->
+            <!-- =========================================================== -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
