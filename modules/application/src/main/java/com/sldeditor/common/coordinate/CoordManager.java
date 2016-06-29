@@ -27,7 +27,6 @@ import java.util.Set;
 import org.geotools.factory.Hints;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
-import org.geotools.referencing.crs.DefaultProjectedCRS;
 import org.opengis.metadata.Identifier;
 import org.opengis.metadata.citation.Citation;
 import org.opengis.referencing.AuthorityFactory;
@@ -47,6 +46,8 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * @author Robert Ward (SCISYS)
  */
 public class CoordManager {
+
+    private static final String WGS84 = "EPSG:4326";
 
     /** The singleton instance. */
     private static CoordManager instance = null;
@@ -117,7 +118,7 @@ public class CoordManager {
                         String text = String.format("%s - %s", fullCode, descriptionText);
                         ValueComboBoxData value = new ValueComboBoxData(fullCode, text, vendorOptionVersion);
                         crsDataList.add(value);
-                        crsMap.put(String.format("%s:%s", authorityCode, descriptionText), value);
+                        crsMap.put(fullCode, value);
                     }
                 }
                 catch (NoSuchAuthorityCodeException e) {
@@ -137,15 +138,29 @@ public class CoordManager {
      * @return the CRS code
      */
     public String getCRSCode(CoordinateReferenceSystem coordinateReferenceSystem) {
-        DefaultProjectedCRS projectedCRS = (DefaultProjectedCRS) coordinateReferenceSystem;
+        ReferenceIdentifier identifier = null;
+        if(coordinateReferenceSystem != null)
+        {
+            Set<ReferenceIdentifier> indentifierList = coordinateReferenceSystem.getIdentifiers();
 
-        ReferenceIdentifier identifier = projectedCRS.getName();
+            if(indentifierList != null)
+            {
+                if(indentifierList.iterator().hasNext())
+                {
+                    identifier = indentifierList.iterator().next();
+                }
+            }
+        }
+
         String code = "";
 
-        ValueComboBoxData data = crsMap.get(identifier.toString());
-        if(data != null)
+        if(identifier != null)
         {
-            code = data.getKey();
+            ValueComboBoxData data = crsMap.get(identifier.toString());
+            if(data != null)
+            {
+                code = data.getKey();
+            }
         }
         return code;
     }
@@ -153,13 +168,13 @@ public class CoordManager {
     /**
      * Gets the WGS84 coordinate reference object.
      *
-     * @return the WG s84
+     * @return the WGS84 coordinate reference system
      */
     public CoordinateReferenceSystem getWGS84() {
         if(defaultCRS == null)
         {
             try {
-                defaultCRS = CRS.decode("EPSG:4326");
+                defaultCRS = CRS.decode(WGS84);
             }
             catch (NoSuchAuthorityCodeException e) {
                 ConsoleManager.getInstance().exception(this, e);
