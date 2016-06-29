@@ -63,10 +63,10 @@ public class DataSourceAttributeModel extends AbstractTableModel {
 
     /** The Constant FIELD_COLUMN_ID. */
     private static final int FIELD_COLUMN_ID = 0;
-    
+
     /** The Constant TYPE_COLUMN_ID. */
     private static final int TYPE_COLUMN_ID = 1;
-    
+
     /** The Constant VALUE_COLUMN_ID. */
     private static final int VALUE_COLUMN_ID = 2;
 
@@ -114,10 +114,13 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         valueList.clear();
         valueMap.clear();
 
-        for(DataSourceAttributeData data : attributeList)
+        if(attributeList != null)
         {
-            valueList.add(new DataSourceAttributeData(data));
-            valueMap.put(data.getName().getLocalPart(), data);          
+            for(DataSourceAttributeData data : attributeList)
+            {
+                valueList.add(data);
+                valueMap.put(data.getName().getLocalPart(), data);
+            }
         }
     }
 
@@ -145,14 +148,17 @@ public class DataSourceAttributeModel extends AbstractTableModel {
 
         for(int row = 0; row < this.getRowCount(); row++)
         {
-            Name name = (Name) this.getValueAt(row, 0);
+            Name name = (Name) this.getValueAt(row, FIELD_COLUMN_ID);
             Object objValue = this.getValueAt(row, VALUE_COLUMN_ID);
 
             DataSourceAttributeData existingData = valueMap.get(name.getLocalPart());
 
-            DataSourceAttributeData data = new DataSourceAttributeData(name, existingData.getType(), objValue);
+            if(existingData != null)
+            {
+                DataSourceAttributeData data = new DataSourceAttributeData(name, existingData.getType(), objValue);
 
-            attributeList.add(data);
+                attributeList.add(data);
+            }
         }
 
         return attributeList;
@@ -224,19 +230,23 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DataSourceAttributeData data = valueList.get(rowIndex);
-
-        switch(columnIndex)
+        if((rowIndex >= 0) && (rowIndex < valueList.size()))
         {
-        case FIELD_COLUMN_ID:
-            return data.getName();
-        case TYPE_COLUMN_ID:
-            return getTypeString(data.getType());
-        case VALUE_COLUMN_ID:
-            return data.getValue();
-        default:
-            return null;
+            DataSourceAttributeData data = valueList.get(rowIndex);
+
+            switch(columnIndex)
+            {
+            case FIELD_COLUMN_ID:
+                return data.getName();
+            case TYPE_COLUMN_ID:
+                return getTypeString(data.getType());
+            case VALUE_COLUMN_ID:
+                return data.getValue();
+            default:
+                break;
+            }
         }
+        return null;
     }
 
     /**
@@ -251,7 +261,14 @@ public class DataSourceAttributeModel extends AbstractTableModel {
 
         if(key == null)
         {
-            ConsoleManager.getInstance().error(DataSourceAttributeModel.class, "Unknown field type class : " + fieldType.getName());
+            if(fieldType == null)
+            {
+                ConsoleManager.getInstance().error(DataSourceAttributeModel.class, "Unknown field type class");
+            }
+            else
+            {
+                ConsoleManager.getInstance().error(DataSourceAttributeModel.class, "Unknown field type class : " + fieldType.getName());
+            }
         }
 
         return key;
@@ -269,22 +286,31 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        DataSourceAttributeData data = valueList.get(row);
-        switch(col)
+        if((row >= 0) && (row < valueList.size()))
         {
-        case FIELD_COLUMN_ID:
-            data.setName(new NameImpl((String)value));
+            DataSourceAttributeData data = valueList.get(row);
+            switch(col)
+            {
+            case FIELD_COLUMN_ID:
+            {
+                valueMap.remove(data.getName().getLocalPart());
+                data.setName(new NameImpl((String)value));
+                valueMap.put(data.getName().getLocalPart(), data);
+                valueList.remove(row);
+                valueList.add(row, data);
+            }
             break;
-        case TYPE_COLUMN_ID:
-            data.setType(getTypeClass((String)value));
-            break;
-        case VALUE_COLUMN_ID:
-            data.setValue(value);
-            break;
-        default:
-            break;
+            case TYPE_COLUMN_ID:
+                data.setType(getTypeClass((String)value));
+                break;
+            case VALUE_COLUMN_ID:
+                data.setValue(value);
+                break;
+            default:
+                break;
+            }
+            fireTableCellUpdated(row, col);
         }
-        fireTableCellUpdated(row, col);
     }
 
     /**
@@ -373,12 +399,15 @@ public class DataSourceAttributeModel extends AbstractTableModel {
             int index = selectedRowIndexes.length - 1;
             while(index >= 0)
             {
-                DataSourceAttributeData data = valueList.remove(selectedRowIndexes[index]);
-                if(data != null)
+                int rowIndex = selectedRowIndexes[index];
+                if((rowIndex >= 0) && (rowIndex < valueList.size()))
                 {
-                    valueMap.remove(data.getName().getLocalPart());
+                    DataSourceAttributeData data = valueList.remove(rowIndex);
+                    if(data != null)
+                    {
+                        valueMap.remove(data.getName().getLocalPart());
+                    }
                 }
-
                 index --;
             }
         }
