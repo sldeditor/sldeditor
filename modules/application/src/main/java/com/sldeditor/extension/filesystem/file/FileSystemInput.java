@@ -138,12 +138,14 @@ public class FileSystemInput implements FileSystemInterface
         {
             if(rootNode != null)
             {
+                boolean prePopulateFirstLevelFolders = false;
+
                 for(File f : File.listRoots())
                 {
                     String driveLetter = f.getPath();
 
                     FileTreeNode fileSystemRootNode = new FileTreeNode(new File(driveLetter), "");
-                    fileSystemRootNode.populateDirectories(true);
+                    fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
 
                     rootNode.add(fileSystemRootNode);
                 }
