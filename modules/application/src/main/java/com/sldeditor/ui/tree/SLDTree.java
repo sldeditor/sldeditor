@@ -189,13 +189,19 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         this.renderList = renderList;
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-        dataSource.addListener(this);
-
-        for(RenderSymbolInterface render : renderList)
+        if(dataSource != null)
         {
-            if(render instanceof DataSourceUpdatedInterface)
+            dataSource.addListener(this);
+        }
+
+        if(renderList != null)
+        {
+            for(RenderSymbolInterface render : renderList)
             {
-                dataSource.addListener(render);
+                if(render instanceof DataSourceUpdatedInterface)
+                {
+                    dataSource.addListener(render);
+                }
             }
         }
 
