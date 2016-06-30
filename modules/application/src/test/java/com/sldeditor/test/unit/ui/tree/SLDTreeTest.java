@@ -19,6 +19,8 @@
 
 package com.sldeditor.test.unit.ui.tree;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
@@ -33,10 +35,23 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.ui.detail.EmptyPanel;
+import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
+import com.sldeditor.ui.detail.LineSymbolizerDetails;
+import com.sldeditor.ui.detail.NamedLayerDetails;
+import com.sldeditor.ui.detail.PointSymbolizerDetails;
+import com.sldeditor.ui.detail.PolygonSymbolizerDetails;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
+import com.sldeditor.ui.detail.RuleDetails;
+import com.sldeditor.ui.detail.StyleDetails;
+import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
+import com.sldeditor.ui.detail.TextSymbolizerDetails;
+import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.tree.SLDTree;
 
 /**
@@ -49,14 +64,14 @@ import com.sldeditor.ui.tree.SLDTree;
 public class SLDTreeTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)} using null values.
      */
     @Test
-    public void testSLDTree() {
+    public void testSLDTreeNull() {
         List<RenderSymbolInterface> renderList = null;
         SLDTree tree1 = new SLDTree(renderList);
 
-        URL url = SLDTreeTest.class.getResource("/polygon/sld/polygon_attribute.sld");
+        URL url = SLDTreeTest.class.getResource("/polygon/sld/polygon_attributebasedpolygon.sld");
 
         String sldContents = readFile(new File(url.getFile()).getAbsolutePath());
 
@@ -65,8 +80,122 @@ public class SLDTreeTest {
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
         SelectedSymbol.getInstance().setSld(sld);
+        
+        tree1.populateSLD();
+        
+        // Nothing selected at this stage
+        tree1.leafSelected();
+        PopulateDetailsInterface panel = tree1.getSelectedSymbolPanel();
+        assertNull(panel);
+
+        // Select top level node
+        tree1.selectFirstSymbol();
+
+        tree1.leafSelected();
+        
+        panel = tree1.getSelectedSymbolPanel();
+        assertNull(panel);
     }
 
+    /**
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)} using values.
+     */
+    @Test
+    public void testSLDTree() {
+        List<RenderSymbolInterface> renderList = null;
+        SLDTree tree1 = new SLDTree(renderList);
+
+        URL url = SLDTreeTest.class.getResource("/polygon/sld/polygon_attributebasedpolygon.sld");
+
+        String sldContents = readFile(new File(url.getFile()).getAbsolutePath());
+
+        SLDData sldData = new SLDData(null, sldContents);
+
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+
+        SelectedSymbol.getInstance().setSld(sld);
+        
+        
+        SymbolizerDetailsPanel symbolizerSelectedPanel = new SymbolizerDetailsPanel(null, null);
+        tree1.addSymbolSelectedListener(symbolizerSelectedPanel);
+        tree1.populateSLD();
+        
+        // Nothing selected at this stage
+        tree1.leafSelected();
+        PopulateDetailsInterface panel = tree1.getSelectedSymbolPanel();
+        assertNull(panel);
+
+        // Select top level node
+        tree1.selectFirstSymbol();
+
+        tree1.leafSelected();
+
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(EmptyPanel.class, panel.getClass());
+
+        // Select layer
+        TreeSelectionData selectedTreeData = new TreeSelectionData();
+        selectedTreeData.setLayerIndex(0);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(NamedLayerDetails.class, panel.getClass());
+
+        // Select style
+        selectedTreeData.setStyleIndex(0);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(StyleDetails.class, panel.getClass());
+
+        // Select feature type style
+        selectedTreeData.setFeatureTypeStyleIndex(0);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(FeatureTypeStyleDetails.class, panel.getClass());
+
+        // Select rule
+        selectedTreeData.setRuleIndex(0);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(RuleDetails.class, panel.getClass());
+
+        // Select polygon symbolizer
+        selectedTreeData.setSelectedPanel(PolygonSymbolizerDetails.class);
+        selectedTreeData.setSymbolizerIndex(0);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(PolygonSymbolizerDetails.class, panel.getClass());
+
+        // Select line symbolizer
+        selectedTreeData.setSelectedPanel(LineSymbolizerDetails.class);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(LineSymbolizerDetails.class, panel.getClass());
+
+        // Select point symbolizer
+        selectedTreeData.setSelectedPanel(PointSymbolizerDetails.class);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(PointSymbolizerDetails.class, panel.getClass());
+
+        // Select text symbolizer
+        selectedTreeData.setSelectedPanel(TextSymbolizerDetails.class);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(TextSymbolizerDetails.class, panel.getClass());
+
+        // Select raster symbolizer
+        selectedTreeData.setSelectedPanel(RasterSymbolizerDetails.class);
+        tree1.selectTreeItem(selectedTreeData);
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(RasterSymbolizerDetails.class, panel.getClass());
+    }
+
+    /**
+     * Read file.
+     *
+     * @param fileName the file name
+     * @return the string
+     */
     private static String readFile(String fileName) 
     {
         StringBuilder sb = new StringBuilder();

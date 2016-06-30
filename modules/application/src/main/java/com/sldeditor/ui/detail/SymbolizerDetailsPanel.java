@@ -109,9 +109,12 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
             {
                 BasePanel panel = (BasePanel) panelInterface;
 
-                for(RenderSymbolInterface renderer : rendererList)
+                if(rendererList != null)
                 {
-                    panel.addRenderer(renderer);
+                    for(RenderSymbolInterface renderer : rendererList)
+                    {
+                        panel.addRenderer(renderer);
+                    }
                 }
                 panel.addTreeUpdate(sldTree);
             }
@@ -202,7 +205,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
                 }
             }
         }
-        
+
         return null;
     }
 
@@ -252,7 +255,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      * @param mergedData the merged data
      */
     public void mergeFieldDataManager(GraphicPanelFieldManager mergedData) {
-        
+
         for(String key : panelMap.keySet())
         {
             List<PopulateDetailsInterface> panelList = panelMap.get(key);

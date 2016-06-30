@@ -1352,25 +1352,31 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         PopulateDetailsInterface panel = null;
         TreePath path = symbolTree.getSelectionPath();
 
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-
-        if(lastNode != null)
+        if(path != null)
         {
-            Object nodeInfo = lastNode.getUserObject();
-            if(nodeInfo != null)
+            DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+
+            if(lastNode != null)
             {
-                Class<?> classSelected = nodeInfo.getClass();
-                String key = classSelected.toString();
-
-                Class<?> parentClass = null;
-                if(lastNode.getParent() != null)
+                Object nodeInfo = lastNode.getUserObject();
+                if(nodeInfo != null)
                 {
-                    DefaultMutableTreeNode parent = (DefaultMutableTreeNode) lastNode.getParent();
+                    Class<?> classSelected = nodeInfo.getClass();
+                    String key = classSelected.toString();
 
-                    parentClass = parent.getUserObject().getClass();
+                    Class<?> parentClass = null;
+                    if(lastNode.getParent() != null)
+                    {
+                        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) lastNode.getParent();
+
+                        parentClass = parent.getUserObject().getClass();
+                    }
+
+                    if(displayPanel != null)
+                    {
+                        panel = displayPanel.getPanel(parentClass, key);
+                    }
                 }
-
-                panel = displayPanel.getPanel(parentClass, key);
             }
         }
 
@@ -1412,9 +1418,12 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                     Controller.getInstance().setPopulating(false);
                 }
 
-                for(RenderSymbolInterface render : renderList)
+                if(renderList != null)
                 {
-                    render.renderSymbol();
+                    for(RenderSymbolInterface render : renderList)
+                    {
+                        render.renderSymbol();
+                    }
                 }
             }
         }
