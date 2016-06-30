@@ -125,4 +125,16 @@ public class GeoServerLayerTest {
         assertEquals(connection, layer.getConnection());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#GeoServerLayer()}.
+     */
+    @Test
+    public void testGeoServerLayer() {
+        String layerWorkspace = "workspace";
+        String layerName = "layer";
+        GeoServerLayer layer = new GeoServerLayer(layerWorkspace, layerName);
+
+        assertTrue(layer.getLayerWorkspace().compareTo(layerWorkspace) == 0);
+        assertTrue(layer.getLayerName().compareTo(layerName) == 0);
+    }
 }

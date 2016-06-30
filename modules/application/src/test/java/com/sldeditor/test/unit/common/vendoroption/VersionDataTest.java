@@ -119,8 +119,9 @@ public class VersionDataTest {
 
         assertFalse(versionData4.equals(null));
         assertFalse(versionData4.equals(new String()));
-        int hashCode = versionData4.hashCode();
-        assertTrue(hashCode > 0);
+
+        assertTrue(versionData1.hashCode() == versionData2.hashCode());
+        assertFalse(versionData1.hashCode() == versionData4.hashCode());
 }
 
     /**

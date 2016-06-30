@@ -371,11 +371,11 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + majorNumber;
-        result = prime * result + minorNumber;
-        result = prime * result + pointNumber;
-        result = prime * result + ((vendorOptionType == null) ? 0 : vendorOptionType.hashCode());
-        result = prime * result + ((versionString == null) ? 0 : versionString.hashCode());
+        result = prime * (result + majorNumber);
+        result = prime * (result + minorNumber);
+        result = prime * (result + pointNumber);
+        result = prime * (result + ((vendorOptionType == null) ? 0 : vendorOptionType.hashCode()));
+        result = prime * (result + ((versionString == null) ? 0 : versionString.hashCode()));
         return result;
     }
 
