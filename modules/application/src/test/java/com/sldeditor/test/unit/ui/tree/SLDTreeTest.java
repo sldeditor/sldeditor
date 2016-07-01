@@ -20,7 +20,9 @@
 package com.sldeditor.test.unit.ui.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
@@ -32,7 +34,6 @@ import java.net.URL;
 import java.util.List;
 
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.TreeSelectionData;
@@ -40,19 +41,24 @@ import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.EmptyPanel;
 import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
 import com.sldeditor.ui.detail.LineSymbolizerDetails;
 import com.sldeditor.ui.detail.NamedLayerDetails;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.PointSymbolizerDetails;
+import com.sldeditor.ui.detail.PolygonFillDetails;
 import com.sldeditor.ui.detail.PolygonSymbolizerDetails;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.RuleDetails;
+import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.StyleDetails;
 import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
 import com.sldeditor.ui.detail.TextSymbolizerDetails;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.ui.tree.UpdateTreeStructureInterface;
 
 /**
  * The unit test for SLDTree.
@@ -60,7 +66,6 @@ import com.sldeditor.ui.tree.SLDTree;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
 public class SLDTreeTest {
 
     /**
@@ -99,13 +104,18 @@ public class SLDTreeTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)} using values.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#addSymbolSelectedListener(com.sldeditor.ui.iface.SymbolizerSelectedInterface)}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectFirstSymbol()}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectTreeItem(com.sldeditor.TreeSelectionData)}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#getSelectedSymbolPanel()}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#leafSelected()}.
      */
     @Test
     public void testSLDTree() {
         List<RenderSymbolInterface> renderList = null;
         SLDTree tree1 = new SLDTree(renderList);
 
-        URL url = SLDTreeTest.class.getResource("/polygon/sld/polygon_attributebasedpolygon.sld");
+        URL url = SLDTreeTest.class.getResource("/test/polygon_line_point.sld");
 
         String sldContents = readFile(new File(url.getFile()).getAbsolutePath());
 
@@ -114,12 +124,11 @@ public class SLDTreeTest {
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
         SelectedSymbol.getInstance().setSld(sld);
-        
-        
+
         SymbolizerDetailsPanel symbolizerSelectedPanel = new SymbolizerDetailsPanel(null, null);
         tree1.addSymbolSelectedListener(symbolizerSelectedPanel);
         tree1.populateSLD();
-        
+
         // Nothing selected at this stage
         tree1.leafSelected();
         PopulateDetailsInterface panel = tree1.getSelectedSymbolPanel();
@@ -136,58 +145,101 @@ public class SLDTreeTest {
         // Select layer
         TreeSelectionData selectedTreeData = new TreeSelectionData();
         selectedTreeData.setLayerIndex(0);
-        tree1.selectTreeItem(selectedTreeData);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(NamedLayerDetails.class, panel.getClass());
 
         // Select style
         selectedTreeData.setStyleIndex(0);
-        tree1.selectTreeItem(selectedTreeData);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(StyleDetails.class, panel.getClass());
 
         // Select feature type style
         selectedTreeData.setFeatureTypeStyleIndex(0);
-        tree1.selectTreeItem(selectedTreeData);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(FeatureTypeStyleDetails.class, panel.getClass());
 
         // Select rule
         selectedTreeData.setRuleIndex(0);
-        tree1.selectTreeItem(selectedTreeData);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(RuleDetails.class, panel.getClass());
 
         // Select polygon symbolizer
         selectedTreeData.setSelectedPanel(PolygonSymbolizerDetails.class);
         selectedTreeData.setSymbolizerIndex(0);
-        tree1.selectTreeItem(selectedTreeData);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(PolygonSymbolizerDetails.class, panel.getClass());
 
         // Select line symbolizer
         selectedTreeData.setSelectedPanel(LineSymbolizerDetails.class);
-        tree1.selectTreeItem(selectedTreeData);
+        selectedTreeData.setRuleIndex(1);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(LineSymbolizerDetails.class, panel.getClass());
 
         // Select point symbolizer
         selectedTreeData.setSelectedPanel(PointSymbolizerDetails.class);
-        tree1.selectTreeItem(selectedTreeData);
+        selectedTreeData.setRuleIndex(2);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(PointSymbolizerDetails.class, panel.getClass());
 
         // Select text symbolizer
         selectedTreeData.setSelectedPanel(TextSymbolizerDetails.class);
-        tree1.selectTreeItem(selectedTreeData);
+        selectedTreeData.setSymbolizerIndex(1);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(TextSymbolizerDetails.class, panel.getClass());
 
         // Select raster symbolizer
         selectedTreeData.setSelectedPanel(RasterSymbolizerDetails.class);
-        tree1.selectTreeItem(selectedTreeData);
+        selectedTreeData.setSymbolizerIndex(2);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
         assertEquals(RasterSymbolizerDetails.class, panel.getClass());
+
+        // Select polygon symbolizer / fill
+        selectedTreeData.setSelectedPanel(PolygonFillDetails.class);
+        selectedTreeData.setSymbolizerIndex(0);
+        selectedTreeData.setSymbolizerDetailIndex(0);
+        selectedTreeData.setRuleIndex(0);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(PolygonFillDetails.class, panel.getClass());
+
+        // Select polygon symbolizer / stroke
+        selectedTreeData.setSelectedPanel(StrokeDetails.class);
+        selectedTreeData.setSymbolizerDetailIndex(1);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(StrokeDetails.class, panel.getClass());
+
+        // Select point symbolizer / fill
+        selectedTreeData.setSelectedPanel(PointFillDetails.class);
+        selectedTreeData.setRuleIndex(2);
+        selectedTreeData.setSymbolizerIndex(0);
+        selectedTreeData.setSymbolizerDetailIndex(0);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(PointFillDetails.class, panel.getClass());
+
+        // Select line symbolizer / stroke
+        selectedTreeData.setSelectedPanel(StrokeDetails.class);
+        selectedTreeData.setSymbolizerIndex(1);
+        selectedTreeData.setSymbolizerDetailIndex(0);
+        assertTrue(tree1.selectTreeItem(selectedTreeData));
+        panel = tree1.getSelectedSymbolPanel();
+        assertEquals(StrokeDetails.class, panel.getClass());
+
+        // Error cases
+        selectedTreeData.setSymbolizerDetailIndex(-2);
+        assertFalse(tree1.selectTreeItem(selectedTreeData));
+        selectedTreeData.setSymbolizerDetailIndex(1);
+        assertFalse(tree1.selectTreeItem(selectedTreeData));
     }
 
     /**
@@ -228,19 +280,12 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#addSymbolSelectedListener(com.sldeditor.ui.iface.SymbolizerSelectedInterface)}.
-     */
-    @Test
-    public void testAddSymbolSelectedListener() {
-        fail("Not yet implemented");
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.tree.SLDTree#addOverallSelectedListener(com.sldeditor.ui.iface.SymbolSelectedInterface)}.
      */
     @Test
     public void testAddOverallSelectedListener() {
-        fail("Not yet implemented");
+        SLDTree tree1 = new SLDTree(null);
+        tree1.addOverallSelectedListener(null);
     }
 
     /**
@@ -248,7 +293,10 @@ public class SLDTreeTest {
      */
     @Test
     public void testPopulateSLD() {
-        fail("Not yet implemented");
+        List<RenderSymbolInterface> renderList = null;
+        UpdateTreeStructureInterface tree1 = new SLDTree(renderList);
+
+        tree1.populateSLD();
     }
 
     /**
@@ -256,15 +304,9 @@ public class SLDTreeTest {
      */
     @Test
     public void testValueChanged() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectFirstSymbol()}.
-     */
-    @Test
-    public void testSelectFirstSymbol() {
-        fail("Not yet implemented");
+        // Do nothing, calls leafSelected()
+        SLDTree tree1 = new SLDTree(null);
+        tree1.valueChanged(null);
     }
 
     /**
@@ -272,7 +314,8 @@ public class SLDTreeTest {
      */
     @Test
     public void testTextUpdated() {
-        fail("Not yet implemented");
+        SLDTree tree1 = new SLDTree(null);
+        tree1.textUpdated();
     }
 
     /**
@@ -280,7 +323,8 @@ public class SLDTreeTest {
      */
     @Test
     public void testUpdateNode() {
-        fail("Not yet implemented");
+        SLDTree tree1 = new SLDTree(null);
+        tree1.updateNode(null, null);
     }
 
     /**
@@ -288,31 +332,8 @@ public class SLDTreeTest {
      */
     @Test
     public void testDataSourceLoaded() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectTreeItem(com.sldeditor.TreeSelectionData)}.
-     */
-    @Test
-    public void testSelectTreeItem() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#getSelectedSymbolPanel()}.
-     */
-    @Test
-    public void testGetSelectedSymbolPanel() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#leafSelected()}.
-     */
-    @Test
-    public void testLeafSelected() {
-        fail("Not yet implemented");
+        SLDTree tree1 = new SLDTree(null);
+        tree1.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
     }
 
     /**

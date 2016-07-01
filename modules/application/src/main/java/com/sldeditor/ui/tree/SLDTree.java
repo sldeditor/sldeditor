@@ -20,17 +20,12 @@ package com.sldeditor.ui.tree;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -48,13 +43,11 @@ import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.FillImpl;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.LineSymbolizerImpl;
-import org.geotools.styling.NamedLayer;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.PolygonSymbolizerImpl;
-import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.RasterSymbolizerImpl;
 import org.geotools.styling.Rule;
 import org.geotools.styling.RuleImpl;
@@ -64,28 +57,18 @@ import org.geotools.styling.StyleImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.StyledLayerDescriptorImpl;
-import org.geotools.styling.Symbolizer;
-import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizerImpl;
 
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
 import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
-import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.SelectedTreeItemEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -111,7 +94,7 @@ import com.sldeditor.ui.tree.item.SymbolizerTreeItem;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpdatedInterface, DataSourceUpdatedInterface, UndoActionInterface {
+public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpdatedInterface, DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -146,38 +129,11 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     /** The object to render the selected symbol. */
     private List<RenderSymbolInterface> renderList = null;
 
-    /** The new text button. */
-    private JButton btnNewText;
-
-    /** The new raster button. */
-    private JButton btnNewRaster;
-
-    /** The remove marker button. */
-    private JButton btnRemoveMarker;
-
-    /** The new polygon button. */
-    private JButton btnNewPolygon;
-
-    /** The new line button. */
-    private JButton btnNewLine;
-
-    /** The new marker button. */
-    private JButton btnNewMarker;
-
-    /** The move up button. */
-    private JButton btnMoveUp;
-
-    /** The move down button. */
-    private JButton btnMoveDown;
+    /** The tree tools. */
+    private SLDTreeTools treeTools = null;
 
     /** The current geometry type of the loaded data source. */
     private GeometryTypeEnum currentGeometryType = GeometryTypeEnum.UNKNOWN;
-
-    /** The add button. */
-    private JButton btnAddButton;
-
-    /** The sld writer. */
-    private SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
     /**
      * Instantiates a new SLD tree.
@@ -280,189 +236,8 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
         panelSymbolMarkerTree.add(scrollpane);
 
-        JPanel panelMarkerSymbolItems = new JPanel();
-        add(panelMarkerSymbolItems);
-        panelMarkerSymbolItems.setLayout(new BoxLayout(panelMarkerSymbolItems, BoxLayout.X_AXIS));
-
-        btnAddButton = new JButton("");
-        btnAddButton.setIcon(getResourceIcon("button/add.png"));
-        btnAddButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewThing();
-            }
-        });
-        panelMarkerSymbolItems.add(btnAddButton);
-
-        btnNewMarker = new JButton();
-        btnNewMarker.setIcon(getResourceIcon("button/point.png"));
-        btnNewMarker.setEnabled(false);
-        btnNewMarker.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewMarker();
-            }
-        });
-
-        panelMarkerSymbolItems.add(btnNewMarker);
-
-        btnNewLine = new JButton();
-        btnNewLine.setIcon(getResourceIcon("button/line.png"));
-        btnNewLine.setEnabled(false);
-        btnNewLine.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewLine();
-            }
-        });
-        panelMarkerSymbolItems.add(btnNewLine);
-
-        btnNewPolygon = new JButton();
-        btnNewPolygon.setIcon(getResourceIcon("button/polygon.png"));
-        btnNewPolygon.setEnabled(false);
-        btnNewPolygon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewPolygon();
-            }
-        });
-        panelMarkerSymbolItems.add(btnNewPolygon);
-
-        btnNewText = new JButton();
-        btnNewText.setIcon(getResourceIcon("button/text.png"));
-        btnNewText.setEnabled(false);
-        btnNewText.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewText();
-            }
-        });
-        panelMarkerSymbolItems.add(btnNewText);
-
-        btnNewRaster = new JButton();
-        btnNewRaster.setIcon(getResourceIcon("button/raster.png"));
-        btnNewRaster.setEnabled(false);
-        btnNewRaster.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addRaster();
-            }
-        });
-        panelMarkerSymbolItems.add(btnNewRaster);
-
-        btnRemoveMarker = new JButton();
-        btnRemoveMarker.setIcon(getResourceIcon("button/delete.png"));
-        btnRemoveMarker.setEnabled(false);
-        btnRemoveMarker.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeItem();
-            }
-        });
-        panelMarkerSymbolItems.add(btnRemoveMarker);
-
-        btnMoveUp = new JButton();
-        btnMoveUp.setIcon(getResourceIcon("button/up.png"));
-        btnMoveUp.setEnabled(false);
-        btnMoveUp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveItemUp();
-            }
-        });
-        panelMarkerSymbolItems.add(btnMoveUp);
-
-        btnMoveDown = new JButton();
-        btnMoveDown.setIcon(getResourceIcon("button/down.png"));
-        btnMoveDown.setEnabled(false);
-        btnMoveDown.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveItemDown();
-            }
-        });
-        panelMarkerSymbolItems.add(btnMoveDown);
-    }
-
-    /**
-     * Gets the resource icon.
-     *
-     * @param resourceString the resource string
-     * @return the resource icon
-     */
-    private static ImageIcon getResourceIcon(String resourceString)
-    {
-        URL url = SLDTree.class.getClassLoader().getResource(resourceString);
-
-        if(url == null)
-        {
-            ConsoleManager.getInstance().error(SLDTree.class, Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource") + resourceString);
-            return null;
-        }
-        else
-        {
-            return new ImageIcon(url);
-        }
-    }
-
-    /**
-     * Removes the item.
-     */
-    private void removeItem() {
-        TreePath path = symbolTree.getSelectionPath();
-
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-        Object obj = lastNode.getUserObject();
-
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        if(obj instanceof StyledLayerDescriptor)
-        {
-            SelectedSymbol.getInstance().removeStyledLayerDescriptor((StyledLayerDescriptor)obj);
-            removeTreeNode(lastNode);
-        }
-        else if(obj instanceof NamedLayer)
-        {
-            SelectedSymbol.getInstance().removeNamedLayer((NamedLayer)obj);
-            removeTreeNode(lastNode);
-        }
-        else if(obj instanceof Style)
-        {
-            SelectedSymbol.getInstance().removeStyle((Style)obj);
-            removeTreeNode(lastNode);
-        }
-        else if(obj instanceof FeatureTypeStyle)
-        {
-            SelectedSymbol.getInstance().removeFeatureTypeStyle((FeatureTypeStyle)obj);
-            removeTreeNode(lastNode);
-        }
-        else if(obj instanceof Rule)
-        {
-            SelectedSymbol.getInstance().removeRule((Rule)obj);
-            removeTreeNode(lastNode);
-        }
-        else if(obj instanceof Symbolizer)
-        {
-            SelectedSymbol.getInstance().removeSymbolizer((Symbolizer)obj);
-            removeTreeNode(lastNode);
-        }
-
-        for(RenderSymbolInterface render : renderList)
-        {
-            render.renderSymbol();
-        }
-
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        final UndoActionInterface parentObj = (UndoActionInterface) this;
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Removes the tree node.
-     *
-     * @param nodeToRemove the node to remove
-     */
-    private void removeTreeNode(DefaultMutableTreeNode nodeToRemove) {
-
-        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) nodeToRemove.getParent();
-        nodeMap.remove(nodeToRemove.getUserObject());
-        treeModel.removeNodeFromParent(nodeToRemove);
-        treeModel.nodeChanged(parent);
-
-        symbolTree.setSelectionPath(getPath(parent));
+        treeTools = new SLDTreeTools(this, symbolTree, renderList);
+        add(treeTools.getButtonPanel());
     }
 
     /**
@@ -483,379 +258,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         }
 
         return nodes.isEmpty() ? null : new TreePath(nodes.toArray());
-    }
-
-    /**
-     * Adds the new thing.
-     */
-    private void addNewThing() {
-        TreePath path = symbolTree.getSelectionPath();
-
-        DefaultMutableTreeNode newNode = null;
-
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-        Object obj = lastNode.getUserObject();
-
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        if(obj instanceof String)
-        {
-            StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
-
-            SelectedSymbol.getInstance().createNewSLD(sld);
-
-            NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
-
-            SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
-            newNode = addObject(lastNode, namedLayer, true);
-        }
-        else if(obj instanceof StyledLayerDescriptor)
-        {
-            NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
-
-            SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
-            newNode = addObject(lastNode, namedLayer, true);
-        }
-        else if(obj instanceof NamedLayer)
-        {
-            Style style = DefaultSymbols.createNewStyle();
-
-            SelectedSymbol.getInstance().addNewStyle(style);
-            newNode = addObject(lastNode, style, true);
-        }
-        else if(obj instanceof Style)
-        {
-            FeatureTypeStyle featureTypeStyle = DefaultSymbols.createNewFeatureTypeStyle();
-
-            SelectedSymbol.getInstance().addNewFeatureTypeStyle(featureTypeStyle);
-
-            newNode = addObject(lastNode, featureTypeStyle, true);
-        }
-        else if(obj instanceof FeatureTypeStyle)
-        {
-            Rule rule = DefaultSymbols.createNewRule();
-
-            SelectedSymbol.getInstance().addNewRule(rule);
-            newNode = addObject(lastNode, rule, true);
-        }
-
-        // Select the item just added
-        if(newNode != null)
-        {
-            TreePath newPath = getPath(newNode);
-
-            symbolTree.setSelectionPath(newPath);
-        }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Gets the rule tree node.
-     *
-     * @return the rule tree node
-     */
-    private DefaultMutableTreeNode getRuleTreeNode() {
-        TreePath path = symbolTree.getSelectionPath();
-
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-        Object obj = lastNode.getUserObject();
-
-        if(obj instanceof Symbolizer)
-        {
-            return (DefaultMutableTreeNode) lastNode.getParent();
-        }
-        else if(obj instanceof Rule)
-        {
-            return (DefaultMutableTreeNode) lastNode;
-        }
-        return rootNode;
-    }
-
-    /**
-     * Adds the new marker symbolizer.
-     */
-    private void addNewMarker() {
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        PointSymbolizer newPointSymbolizer = DefaultSymbols.createDefaultPointSymbolizer();
-
-        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
-
-        SelectedSymbol.getInstance().addSymbolizerToRule(newPointSymbolizer);
-        DefaultMutableTreeNode newNode = addObject(ruleNode, newPointSymbolizer, true); 
-
-        // Select the item just added
-        if(newNode != null)
-        {
-            TreePath newPath = getPath(newNode);
-
-            symbolTree.setSelectionPath(newPath);
-        }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Adds the new raster symbolizer.
-     */
-    private void addRaster() {
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        RasterSymbolizer newRasterSymbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
-        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
-
-        SelectedSymbol.getInstance().addSymbolizerToRule(newRasterSymbolizer);
-        DefaultMutableTreeNode newNode = addObject(ruleNode, newRasterSymbolizer, true); 
-
-        // Select the item just added
-        if(newNode != null)
-        {
-            TreePath newPath = getPath(newNode);
-
-            symbolTree.setSelectionPath(newPath);
-        }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Adds the new text symbolizer.
-     */
-    private void addNewText() {
-
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        TextSymbolizer newTextSymbolizer = DefaultSymbols.createDefaultTextSymbolizer();
-        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
-
-        SelectedSymbol.getInstance().addSymbolizerToRule(newTextSymbolizer);
-        DefaultMutableTreeNode newNode = addObject(ruleNode, newTextSymbolizer, true); 
-
-        // Select the item just added
-        if(newNode != null)
-        {
-            TreePath newPath = getPath(newNode);
-
-            symbolTree.setSelectionPath(newPath);
-        }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Adds the new line symbolizer.
-     */
-    private void addNewLine() {
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        LineSymbolizer newLineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
-
-        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
-
-        SelectedSymbol.getInstance().addSymbolizerToRule(newLineSymbolizer);
-        DefaultMutableTreeNode newNode = addObject(ruleNode, newLineSymbolizer, true); 
-
-        if(newNode != null)
-        {
-            addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
-
-            // Select the item just added
-            TreePath newPath = getPath(newNode);
-
-            symbolTree.setSelectionPath(newPath);
-        }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Adds the new polygon symbolizer.
-     */
-    private void addNewPolygon() {
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        PolygonSymbolizer newPolygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
-
-        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
-
-        SelectedSymbol.getInstance().addSymbolizerToRule(newPolygonSymbolizer);
-        DefaultMutableTreeNode newNode = addObject(ruleNode, newPolygonSymbolizer, true); 
-
-        if(newNode != null)
-        {
-            addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
-            addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer), true);
-
-            // Select the item just added
-            TreePath newPath = getPath(newNode);
-
-            symbolTree.setSelectionPath(newPath);
-        }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
-    }
-
-    /**
-     * Move item down.
-     */
-    private void moveItemDown() {
-        moveItem(1);
-    }
-
-    /**
-     * Move item up.
-     */
-    private void moveItemUp() {
-        moveItem(-1);
-    }
-
-    /**
-     * Move item within a list.  The direction parameter determines which way the item is moved.
-     *
-     * @param direction the direction is either up (-1) or down (+1)
-     */
-    private void moveItem(int direction) {
-        TreePath path = symbolTree.getSelectionPath();
-
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-        if(lastNode == null)
-        {
-            return;
-        }
-
-        Object obj = lastNode.getUserObject();
-        if(obj == null)
-        {
-            return;
-        }
-
-        DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode)lastNode.getParent();
-
-        if(parentNode == null)
-        {
-            return;
-        }
-        Object parentObj = parentNode.getUserObject();
-
-        if(parentObj == null)
-        {
-            return;
-        }
-
-        // Store current state of the SLD before the move
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        if(obj instanceof StyledLayer)
-        {
-            StyledLayerDescriptor sld = (StyledLayerDescriptor) parentObj;
-            int index = sld.layers().indexOf(obj);
-
-            StyledLayer styledLayer = sld.layers().remove(index);
-            sld.layers().add(index + direction, styledLayer);
-
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
-        }
-        else if(obj instanceof Style)
-        {
-            if(obj instanceof NamedLayerImpl)
-            {
-                NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
-                int index = namedLayer.styles().indexOf(obj);
-
-                Style style = namedLayer.styles().remove(index);
-                namedLayer.styles().add(index + direction, style);
-
-                treeModel.removeNodeFromParent(lastNode);
-                treeModel.insertNodeInto(lastNode, parentNode, index + direction);
-            }
-        }
-        else if(obj instanceof FeatureTypeStyle)
-        {
-            Style style = (Style) parentObj;
-            int index = style.featureTypeStyles().indexOf(obj);
-
-            FeatureTypeStyle fts = style.featureTypeStyles().remove(index);
-            style.featureTypeStyles().add(index + direction, fts);
-
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
-        }
-        else if(obj instanceof Rule)
-        {
-            FeatureTypeStyle fts = (FeatureTypeStyle) parentObj;
-            int index = fts.rules().indexOf(obj);
-
-            Rule rule = fts.rules().remove(index);
-            fts.rules().add(index + direction, rule);
-
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
-        }
-        else if(obj instanceof Symbolizer)
-        {
-            Rule rule = (Rule) parentObj;
-            int index = rule.symbolizers().indexOf(obj);
-
-            Symbolizer symbolizer = rule.symbolizers().remove(index);
-            rule.symbolizers().add(index + direction, symbolizer);
-
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
-        }
-
-        // Refresh the tree structure. Not very efficient but gets result wanted.
-        // The node has been moved in the tree above.  Now going to refresh model.
-        treeModel.nodeStructureChanged(lastNode);
-
-        // Get path for item moved
-        TreePath newNodePath = getPath(lastNode);
-        int[] selectedRows = new int[1];
-        selectedRows[0] = symbolTree.getRowForPath(newNodePath);
-
-        // Find the row of item moved
-
-        // Now clear tree structure and re-populate, inefficient but it means
-        // that all items are expanded as required.
-        populateSLD();
-
-        //  Make item moved selected again
-        symbolTree.setSelectionRows(selectedRows);
-
-        for(RenderSymbolInterface render : renderList)
-        {
-            render.renderSymbol();
-        }
-
-        // Store current state of the SLD after the move
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
@@ -918,15 +320,11 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         return addObject(parent, child, false);
     }
 
-    /**
-     * Adds the object.
-     *
-     * @param parent the parent
-     * @param child the child
-     * @param shouldBeVisible the should be visible
-     * @return the default mutable tree node
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#addObject(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object, boolean)
      */
-    private DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent,
+    @Override
+    public DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent,
             Object child, 
             boolean shouldBeVisible) {
         DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
@@ -948,9 +346,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         return childNode;
     }
 
-    /**
-     * Populate the tree with the SLD structure
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#populateSLD()
      */
+    @Override
     public void populateSLD()
     {
         reset();
@@ -1019,116 +418,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     @Override
     public void valueChanged(TreeSelectionEvent e) {
         leafSelected();
-    }
-
-    /**
-     * Sets the buttons state.
-     *
-     * @param parentNode the parent node
-     * @param selectedNode the new button state
-     */
-    private void setButtonState(DefaultMutableTreeNode parentNode, DefaultMutableTreeNode selectedNode) {
-        boolean symbolizerButtonsEnabled = false;
-        boolean addButtonEnabled = true;
-        boolean hasMoreThan1Item = false;
-        boolean isFirstSelected = false;
-        boolean isLastSelected = false;
-
-        if(selectedNode != null)
-        {
-            Object obj = selectedNode.getUserObject();
-            Object parentObj = null;
-
-            if(parentNode != null)
-            {
-                parentObj = parentNode.getUserObject();
-            }
-
-            if(obj instanceof StyledLayer)
-            {
-                if(parentObj != null)
-                {
-                    StyledLayerDescriptor sld = (StyledLayerDescriptor) parentObj;
-                    hasMoreThan1Item = sld.layers().size() > 1;
-                    isFirstSelected = (obj == sld.layers().get(0));
-                    isLastSelected = (obj == sld.layers().get(sld.layers().size() - 1));
-                }
-            }
-            else if(obj instanceof Style)
-            {
-                if(obj instanceof NamedLayerImpl)
-                {
-                    if(parentObj != null)
-                    {
-                        NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
-                        hasMoreThan1Item = namedLayer.styles().size() > 1;
-                        isFirstSelected = (obj == namedLayer.styles().get(0));
-                        isLastSelected = (obj == namedLayer.styles().get(namedLayer.styles().size() - 1));
-                    }
-                }
-            }
-            else if(obj instanceof FeatureTypeStyle)
-            {
-                if(parentObj != null)
-                {
-                    Style style = (Style) parentObj;
-                    hasMoreThan1Item = style.featureTypeStyles().size() > 1;
-                    isFirstSelected = (obj == style.featureTypeStyles().get(0));
-                    isLastSelected = (obj == style.featureTypeStyles().get(style.featureTypeStyles().size() - 1));
-                }
-            }
-            else if(obj instanceof Rule)
-            {
-                symbolizerButtonsEnabled = true;
-                addButtonEnabled = false;
-
-                if(parentObj != null)
-                {
-                    FeatureTypeStyle fts = (FeatureTypeStyle) parentObj;
-                    hasMoreThan1Item = fts.rules().size() > 1;
-                    isFirstSelected = (obj == fts.rules().get(0));
-                    isLastSelected = (obj == fts.rules().get(fts.rules().size() - 1));
-                }
-            }
-            else if(obj instanceof Symbolizer)
-            {
-                symbolizerButtonsEnabled = true;
-                addButtonEnabled = false;
-
-                if(parentObj != null)
-                {
-                    Rule rule = (Rule) parentObj;
-                    hasMoreThan1Item = rule.symbolizers().size() > 1;
-                    isFirstSelected = (obj == rule.symbolizers().get(0));
-                    isLastSelected = (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
-                }
-            }
-        }
-
-        this.btnAddButton.setEnabled(addButtonEnabled);
-
-        if(symbolizerButtonsEnabled == false)
-        {
-            btnNewMarker.setEnabled(false);
-            btnNewLine.setEnabled(false);
-            btnNewPolygon.setEnabled(false);
-            btnNewRaster.setEnabled(false);
-            btnNewText.setEnabled(false);
-        }
-        else
-        {
-            btnNewMarker.setEnabled(this.currentGeometryType == GeometryTypeEnum.POINT);
-            btnNewLine.setEnabled(this.currentGeometryType == GeometryTypeEnum.LINE);
-            btnNewPolygon.setEnabled(this.currentGeometryType == GeometryTypeEnum.POLYGON);
-            btnNewRaster.setEnabled(this.currentGeometryType == GeometryTypeEnum.RASTER);
-            btnNewText.setEnabled(true);
-        }
-
-        btnRemoveMarker.setEnabled(true);
-
-        // Up / down buttons
-        btnMoveUp.setEnabled(hasMoreThan1Item && !isFirstSelected);
-        btnMoveDown.setEnabled(hasMoreThan1Item && !isLastSelected);
     }
 
     /**
@@ -1315,13 +604,14 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                         }
                         else
                         {
-                            symbolizerDetailNode = (DefaultMutableTreeNode)symbolizerNode.getChildAt(symbolizerDetailIndex);
-
-                            if(symbolizerDetailNode == null)
+                            if((symbolizerDetailIndex < 0) || (symbolizerDetailIndex >= symbolizerNode.getChildCount()))
                             {
                                 return false;
                             }
-                            if((symbolizerDetailIndex < 0) || (symbolizerDetailIndex >= symbolizerNode.getChildCount()))
+
+                            symbolizerDetailNode = (DefaultMutableTreeNode)symbolizerNode.getChildAt(symbolizerDetailIndex);
+
+                            if(symbolizerDetailNode == null)
                             {
                                 return false;
                             }
@@ -1427,7 +717,8 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                 }
             }
         }
-        setButtonState(parent, node);
+
+        treeTools.setButtonState(parent, node, this.currentGeometryType);
     }
 
     /* (non-Javadoc)
@@ -1471,6 +762,14 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         {
             repopulateTree((String) undoRedoObject.getNewValue());
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#getUndoObject()
+     */
+    @Override
+    public UndoActionInterface getUndoObject() {
+        return this;
     }
 
 }
