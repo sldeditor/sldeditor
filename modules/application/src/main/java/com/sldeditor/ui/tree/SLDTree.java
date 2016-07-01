@@ -288,38 +288,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         treeModel.reload(); // This notifies the listeners and changes the GUI
     }
 
-    /**
-     *  Add child to the currently selected node.
-     *
-     * @param child the child
-     * @return the default mutable tree node
-     */
-    @SuppressWarnings("unused")
-    private DefaultMutableTreeNode addObject(Object child) {
-        DefaultMutableTreeNode parentNode = null;
-        TreePath parentPath = symbolTree.getSelectionPath();
-
-        if (parentPath == null) {
-            parentNode = rootNode;
-        } else {
-            parentNode = (DefaultMutableTreeNode)(parentPath.getLastPathComponent());
-        }
-
-        return addObject(parentNode, child, true);
-    }
-
-    /**
-     * Adds the object.
-     *
-     * @param parent the parent
-     * @param child the child
-     * @return the default mutable tree node
-     */
-    @SuppressWarnings("unused")
-    private DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent, Object child) {
-        return addObject(parent, child, false);
-    }
-
     /* (non-Javadoc)
      * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#addObject(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object, boolean)
      */
@@ -436,9 +404,12 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                 displayPanel.show(null, null);
             }
 
-            for(RenderSymbolInterface render : renderList)
+            if(renderList != null)
             {
-                render.renderSymbol();
+                for(RenderSymbolInterface render : renderList)
+                {
+                    render.renderSymbol();
+                }
             }
         }
     }

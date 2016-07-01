@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -75,6 +74,9 @@ public class SLDTreeTest {
     public void testSLDTreeNull() {
         List<RenderSymbolInterface> renderList = null;
         SLDTree tree1 = new SLDTree(renderList);
+
+        // Select top level node
+        tree1.selectFirstSymbol();
 
         URL url = SLDTreeTest.class.getResource("/polygon/sld/polygon_attributebasedpolygon.sld");
 
@@ -229,7 +231,8 @@ public class SLDTreeTest {
 
         // Select line symbolizer / stroke
         selectedTreeData.setSelectedPanel(StrokeDetails.class);
-        selectedTreeData.setSymbolizerIndex(1);
+        selectedTreeData.setRuleIndex(1);
+        selectedTreeData.setSymbolizerIndex(0);
         selectedTreeData.setSymbolizerDetailIndex(0);
         assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
@@ -341,7 +344,10 @@ public class SLDTreeTest {
      */
     @Test
     public void testUndoAction() {
-        fail("Not yet implemented");
+        SLDTree tree1 = new SLDTree(null);
+
+        assertEquals(tree1, tree1.getUndoObject());
+        tree1.undoAction(null);
     }
 
     /**
@@ -349,7 +355,9 @@ public class SLDTreeTest {
      */
     @Test
     public void testRedoAction() {
-        fail("Not yet implemented");
+        SLDTree tree1 = new SLDTree(null);
+
+        tree1.redoAction(null);
     }
 
 }
