@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Package to support the configuration of filters, expressions and functions.
+ * 
  * @author Robert Ward (SCISYS)
  *
  */

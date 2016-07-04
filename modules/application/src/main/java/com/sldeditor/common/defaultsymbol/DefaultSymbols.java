@@ -42,7 +42,6 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
@@ -283,30 +282,6 @@ public class DefaultSymbols {
         StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
 
         return sld;
-    }
-
-    /**
-     * Creates the complete polygon symbolizer.
-     *
-     * @param sld the source sld
-     * @param symbolizerList the symbolizer list
-     */
-    public static void createCompleteSymbolizer(StyledLayerDescriptor sld, List<Symbolizer> symbolizerList) {
-        Style style = createNewStyle();
-        NamedLayer namedLayer = createNewNamedLayer();
-        FeatureTypeStyle fts = createNewFeatureTypeStyle();
-        Rule rule = createNewRule();
-
-        fts.rules().add(rule);
-        style.featureTypeStyles().add(fts);
-        namedLayer.styles().add(style);
-        sld.layers().add(namedLayer);
-
-        PolygonSymbolizer polygon = createDefaultPolygonSymbolizer();
-        polygon.setFill(null);
-        polygon.setStroke(null);
-
-        rule.symbolizers().addAll(symbolizerList);
     }
 
     /**

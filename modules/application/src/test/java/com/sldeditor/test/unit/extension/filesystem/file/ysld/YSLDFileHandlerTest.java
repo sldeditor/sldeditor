@@ -36,8 +36,10 @@ import org.junit.Test;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
+import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 
 /**
  * Unit test for YSLDFileHandler class.
@@ -49,7 +51,7 @@ import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
 public class YSLDFileHandlerTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getFileExtensionList()}.
+     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtension() {
@@ -57,7 +59,7 @@ public class YSLDFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
+     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
      */
     @Test
     public void testPopulate() {
@@ -66,7 +68,7 @@ public class YSLDFileHandlerTest {
 
     /**
      * Single file
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -113,4 +115,73 @@ public class YSLDFileHandlerTest {
         }
     }
 
+    /**
+     * Is data source
+     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#isDataSource()}.
+     */
+    @Test
+    public void testIsDataSource() {
+        assertFalse(new YSLDFileHandler().isDataSource());
+    }
+
+    /**
+     * Check SLD name
+     * 
+     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     */
+    @Test
+    public void testGetSLDName() {
+        YSLDFileHandler handler = new YSLDFileHandler();
+
+        assertTrue(handler.getSLDName(null).compareTo("") == 0);
+
+        SLDData sldData = new SLDData(new StyleWrapper("workspace", "layer.ysld"), "sldContents");
+        String sldName = handler.getSLDName(sldData);
+        assertTrue(sldName.compareTo("layer.ysld") == 0);
+    }
+
+    /**
+     * Supply a folder name and retrieve all the ysld files in it
+     * 
+     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     */
+    @Test
+    public void testGetSLDContentsFolder() {
+        assertNull(new YSLDFileHandler().getSLDContents(null));
+
+        URL url = SLDFileHandlerTest.class.getResource("/point/ysld");
+
+        String folderName = "";
+        File parent = null;
+        try {
+            parent = new File(url.toURI());
+            folderName = parent.getName();
+            parent = parent.getParentFile();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+        try {
+            FileTreeNode fileTreeNode = new FileTreeNode(parent, folderName);
+
+            YSLDFileHandler handler = new YSLDFileHandler();
+
+            List<SLDDataInterface> sldDataList = handler.getSLDContents(fileTreeNode);
+
+            List<String> expectedLayerNameList = Arrays.asList("point_simplepoint.ysld");
+            assertEquals(expectedLayerNameList.size(), sldDataList.size());
+
+            for(SLDDataInterface sldData : sldDataList)
+            {
+                assertTrue(expectedLayerNameList.contains(sldData.getLayerName()));
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    }
 }

@@ -18,6 +18,8 @@
  */
 
 /**
+ * Allows YSLD files to be read/written.
+ * 
  * @author Robert Ward (SCISYS)
  *
  */

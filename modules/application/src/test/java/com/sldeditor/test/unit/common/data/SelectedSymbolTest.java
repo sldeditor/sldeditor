@@ -62,7 +62,7 @@ public class SelectedSymbolTest {
     {
         public Object objectOld = null;
         public Object objectNew = null;
-        
+
         @Override
         public void textUpdated() {
             // Does nothing for this unit test
@@ -78,9 +78,9 @@ public class SelectedSymbolTest {
         public void leafSelected() {
             // Does nothing for this unit test
         }
-        
+
     }
-    
+
     @Test
     public void testGetSLD() {
         SelectedSymbol.destroyInstance();
@@ -303,7 +303,7 @@ public class SelectedSymbolTest {
 
         LineSymbolizer lineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
         DummySLDTreeUpdated dummyTreeUpdated = new DummySLDTreeUpdated();
-        
+
         instance.setTreeUpdateListener(dummyTreeUpdated);
         instance.replaceSymbolizer(lineSymbolizer);
 
@@ -311,7 +311,7 @@ public class SelectedSymbolTest {
 
         assertEquals(dummyTreeUpdated.objectOld, polygonSymbolizer);
         assertEquals(dummyTreeUpdated.objectNew, lineSymbolizer);
-        
+
         Rule newRule = DefaultSymbols.createNewRule();
         newRule.setTitle("Replacement rule");
 
@@ -429,6 +429,13 @@ public class SelectedSymbolTest {
 
         instance.removeStyledLayerDescriptor(sld);
         assertEquals(sld, instance.getSld());
+
+        instance.removeNamedLayer(namedLayer);
+        assertEquals(1, instance.getSld().layers().size());
+        instance.removeNamedLayer(namedLayer);
+        assertEquals(0, instance.getSld().layers().size());
+        instance.removeNamedLayer(namedLayer);
+        assertEquals(0, instance.getSld().layers().size());
     }
 
     /**

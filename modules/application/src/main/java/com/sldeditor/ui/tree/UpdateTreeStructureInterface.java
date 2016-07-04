@@ -16,32 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.sldeditor.ui.tree;
 
-package com.sldeditor.test.unit.datasource.example.impl;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import com.sldeditor.datasource.example.impl.ExampleLineImpl;
+import com.sldeditor.common.undo.UndoActionInterface;
 
 /**
- * Unit test for ExampleLineImpl class.
- * <p>{@link com.sldeditor.datasource.example.impl.ExampleLineImpl}
+ * Interface that allows the tree structure to be updated
  * 
  * @author Robert Ward (SCISYS)
- *
  */
-public class ExampleLineImplTest {
+public interface UpdateTreeStructureInterface {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.example.impl.ExampleLineImpl#getLine()}.
+     * Adds the object.
+     *
+     * @param parent the parent
+     * @param child the child
+     * @param shouldBeVisible the should be visible
+     * @return the default mutable tree node
      */
-    @Test
-    public void testExample() {
-        ExampleLineImpl example = new ExampleLineImpl();
+    DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent, Object child,
+            boolean shouldBeVisible);
 
-        assertTrue(example.getLine() != null);
-        assertTrue(example.getLine() != null);
-    }
+    /**
+     * Populate the tree with the SLD structure
+     */
+    void populateSLD();
+
+    /**
+     * Gets the undo object.
+     *
+     * @return the undo object
+     */
+    UndoActionInterface getUndoObject();
 }

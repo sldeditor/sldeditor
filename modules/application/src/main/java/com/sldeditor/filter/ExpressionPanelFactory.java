@@ -62,7 +62,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVe
     /**
      * Instantiates a new expression panel factory.
      */
-    public ExpressionPanelFactory()
+    private ExpressionPanelFactory()
     {
         PrefManager.getInstance().addListener(this);
         PrefManager.getInstance().addVendorOptionListener(this);

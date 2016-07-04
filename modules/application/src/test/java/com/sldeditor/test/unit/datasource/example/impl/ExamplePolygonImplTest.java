@@ -42,5 +42,6 @@ public class ExamplePolygonImplTest {
         ExamplePolygonImpl example = new ExamplePolygonImpl();
 
         assertTrue(example.getPolygon() != null);
+        assertTrue(example.getPolygon() != null);
     }
 }

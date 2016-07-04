@@ -42,5 +42,6 @@ public class ExamplePointImplTest {
         ExamplePointImpl example = new ExamplePointImpl();
 
         assertTrue(example.getPoint() != null);
+        assertTrue(example.getPoint() != null);
     }
 }

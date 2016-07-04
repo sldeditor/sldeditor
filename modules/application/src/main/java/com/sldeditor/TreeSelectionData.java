@@ -216,6 +216,10 @@ public class TreeSelectionData {
             {
                 selection = SelectedTreeItemEnum.RASTER_SYMBOLIZER;
             }
+            else
+            {
+                selection = SelectedTreeItemEnum.UNKNOWN;
+            }
         }
         else if((layerIndex > -1) &&
                 (styleIndex > -1) &&
@@ -234,6 +238,10 @@ public class TreeSelectionData {
             else if(selectedPanel == StrokeDetails.class)
             {
                 selection = SelectedTreeItemEnum.STROKE;
+            }
+            else
+            {
+                selection = SelectedTreeItemEnum.UNKNOWN;
             }
         }
 

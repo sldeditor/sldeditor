@@ -73,7 +73,10 @@ public class RasterFileHandler implements FileHandlerInterface
     @Override
     public boolean populate(FileSystemInterface inputInterface,  DefaultTreeModel treeModel, FileTreeNode node)
     {
-        node.setFileCategory(FileTreeNodeTypeEnum.RASTER);
+        if(node != null)
+        {
+            node.setFileCategory(FileTreeNodeTypeEnum.RASTER);
+        }
 
         return false;
     }

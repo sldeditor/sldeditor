@@ -381,7 +381,6 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
      * Configure.
      *
      * @param title the title
-     * @param fieldConfig the field config
      * @param fieldType the field type
      */
     @Override

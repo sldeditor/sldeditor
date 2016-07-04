@@ -119,6 +119,11 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
     @Override
     public int compareTo(StyleWrapper o)
     {
+        if(o == null)
+        {
+            return -1;
+        }
+
         String s1 = this.workspace + this.style;
         String s2 = o.workspace + o.style;
         

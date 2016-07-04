@@ -24,14 +24,18 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.utils.ExternalFilenames;
+import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
@@ -73,7 +77,11 @@ public class SLDEditorFileTest {
      */
     @Test
     public void testSLDData() {
+        // Start with a blank canvas
         SLDEditorFile.destroyInstance();
+        SelectedSymbol.destroyInstance();
+
+        assertNull(SLDEditorFile.getInstance().getSLD());
         assertNull(SLDEditorFile.getInstance().getSLDData());
         assertNull(SLDEditorFile.getInstance().getSldEditorFile());
         assertNull(SLDEditorFile.getInstance().getDataSource());
@@ -134,6 +142,8 @@ public class SLDEditorFileTest {
         // File saved
         SLDEditorFile.getInstance().fileOpenedSaved();
         assertFalse(dataUpdateListener.dataEditedFlag);
+
+        assertNull(SLDEditorFile.getInstance().getRuleRenderOptions());
     }
 
     /**
@@ -162,4 +172,31 @@ public class SLDEditorFileTest {
         assertEquals(".sld", ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension()));
     }
 
+    /**
+     * Test method for {@link com.sldeditor.datasource.SLDEditorFile#vendorOptionsUpdated()}.
+     */
+    @Test
+    public void testVendorOptionsUpdated() {
+        SLDEditorFile.destroyInstance();
+        DummyDataUpdate dataUpdateListener = new DummyDataUpdate();
+
+        SLDEditorFile.getInstance().addSLDEditorFileUpdateListener(dataUpdateListener);
+
+        assertFalse(dataUpdateListener.dataEditedFlag);
+
+        SLDEditorFile.getInstance().vendorOptionsUpdated(null);
+        assertFalse(dataUpdateListener.dataEditedFlag);
+
+        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+        SLDEditorFile.getInstance().vendorOptionsUpdated(vendorOptionList);
+        assertFalse(dataUpdateListener.dataEditedFlag);
+
+        StyleWrapper styleWrapper = new StyleWrapper("workspace","style");
+        SLDData sldData = new SLDData(styleWrapper, "contents");
+
+        SLDEditorFile.getInstance().setSLDData(sldData);
+        SLDEditorFile.getInstance().vendorOptionsUpdated(vendorOptionList);
+
+        assertTrue(dataUpdateListener.dataEditedFlag);
+    }
 }

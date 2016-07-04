@@ -16,10 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.sldeditor.test.unit.ui.render;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.sldeditor.ui.render.RuleRenderOptions;
+
 /**
- * Classes generated from loadextension.xsd to read/write
- * class extension configuration files.
- * 
+ * The unit test for RuleRenderOptions.
+ * <p>{@link com.sldeditor.ui.render.RuleRenderOptions}
+ *
  * @author Robert Ward (SCISYS)
  */
-package com.sldeditor.common.xml.loadextension;
+public class RuleRenderOptionsTest {
+
+    @Test
+    public void test() {
+        RuleRenderOptions options = new RuleRenderOptions();
+
+        assertTrue(options.isTransformationApplied() == false);
+        
+        options.setApplyTransformation(true);
+        assertTrue(options.isTransformationApplied() == true);
+    }
+}

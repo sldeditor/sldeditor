@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.common.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -48,6 +49,12 @@ public class StyleWrapperTest {
         String expectedWorkspace = "test workspace";
         styleWrapper.setWorkspace(expectedWorkspace);
         assertEquals(styleWrapper.getWorkspace().compareTo(expectedWorkspace), 0);
+
+        // Clone
+        StyleWrapper clone = styleWrapper.clone();
+
+        assertTrue(styleWrapper.compareTo(null) != 0);
+        assertTrue(styleWrapper.compareTo(clone) == 0);
     }
 
 }
