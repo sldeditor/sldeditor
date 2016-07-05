@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Specifies the vendor option this whole test requires
+ *             
+ * 
  * <p>Java class for XMLVendorOption complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

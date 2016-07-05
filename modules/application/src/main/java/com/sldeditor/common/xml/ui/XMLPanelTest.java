@@ -17,6 +17,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration for testing panels
+ *             
+ * 
  * <p>Java class for XMLPanelTest complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

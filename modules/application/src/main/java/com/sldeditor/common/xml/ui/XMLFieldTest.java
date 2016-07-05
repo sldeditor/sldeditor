@@ -18,6 +18,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Possible sets that can be carried out on a field
+ *             
+ * 
  * <p>Java class for XMLFieldTest complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

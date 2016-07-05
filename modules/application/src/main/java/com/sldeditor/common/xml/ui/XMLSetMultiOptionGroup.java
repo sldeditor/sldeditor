@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration to display a multi-option group
+ *             
+ * 
  * <p>Java class for XMLSetMultiOptionGroup complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

@@ -14,6 +14,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Expecting field to be disabled
+ *             
+ * 
  * <p>Java class for XMLFieldDisabled complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

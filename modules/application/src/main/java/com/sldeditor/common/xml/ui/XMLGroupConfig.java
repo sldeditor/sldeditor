@@ -18,6 +18,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Defines how a group is configured
+ *             
+ * 
  * <p>Java class for XMLGroupConfig complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

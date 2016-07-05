@@ -1,9 +1,36 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+    <!-- 
+         SLD Editor - The Open Source Java SLD Editor
+
+         Copyright (C) 2016, SCISYS UK Limited
+
+         This program is free software: you can redistribute it and/or modify
+         it under the terms of the GNU General Public License as published by
+         the Free Software Foundation, either version 3 of the License, or
+         (at your option) any later version.
+    
+         This program is distributed in the hope that it will be useful,
+         but WITHOUT ANY WARRANTY; without even the implied warranty of
+         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+         GNU General Public License for more details.
+    
+         You should have received a copy of the GNU General Public License
+         along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     -->
+
+    <!-- @author Robert Ward (SCISYS) -->
+
     <xs:include schemaLocation="SLDTreeItem.xsd" />
     <xs:include schemaLocation="fieldid.xsd" />
 
     <xs:element name="SLDXPath">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration describe how to identify SLD attributes using XPATH 
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Section" type="XMLTestSection"
@@ -13,18 +40,51 @@
     </xs:element>
 
     <xs:complexType name="XMLTestSection">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration describe how to identify SLD attributes using XPATH 
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="Field" type="XMLTestSectionField"
                 maxOccurs="unbounded" minOccurs="0" />
         </xs:sequence>
-        <xs:attribute type="xs:string" name="prefix" use="required" />
-        <xs:attribute type="SelectedTreeItemEnum" name="sldtype"
-            use="required" />
+        <xs:attribute type="xs:string" name="prefix" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    XPATH prefix used for this part of the SLD structure
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="SelectedTreeItemEnum" name="sldtype" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Identify part of the SLD structure.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLTestSectionField">
-        <xs:attribute type="FieldIdEnum" name="id" use="required" />
-        <xs:attribute type="xs:string" name="xpath" use="required" />
+        <xs:annotation>
+            <xs:documentation>
+                Configuration specifying Field value to compare
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute type="FieldIdEnum" name="id" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Unique field identifier
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" name="xpath" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    XPATH string to identify field
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
 </xs:schema>

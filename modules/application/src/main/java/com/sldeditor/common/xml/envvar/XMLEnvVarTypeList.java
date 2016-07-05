@@ -17,6 +17,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 List of of environment variable types
+ *             
+ * 
  * <p>Java class for XMLEnvVarTypeList complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

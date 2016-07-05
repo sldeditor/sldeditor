@@ -16,6 +16,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration to establish which panel is being tested
+ *             
+ * 
  * <p>Java class for XMLSetup complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

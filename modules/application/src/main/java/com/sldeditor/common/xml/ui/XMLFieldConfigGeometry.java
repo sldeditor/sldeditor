@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration for a geometry field
+ *             
+ * 
  * <p>Java class for XMLFieldConfigGeometry complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

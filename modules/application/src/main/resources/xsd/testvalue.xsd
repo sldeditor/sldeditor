@@ -1,63 +1,136 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     attributeFormDefault="unqualified" elementFormDefault="qualified"
     xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+
+    <!-- 
+         SLD Editor - The Open Source Java SLD Editor
+
+         Copyright (C) 2016, SCISYS UK Limited
+
+         This program is free software: you can redistribute it and/or modify
+         it under the terms of the GNU General Public License as published by
+         the Free Software Foundation, either version 3 of the License, or
+         (at your option) any later version.
+    
+         This program is distributed in the hope that it will be useful,
+         but WITHOUT ANY WARRANTY; without even the implied warranty of
+         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+         GNU General Public License for more details.
+    
+         You should have received a copy of the GNU General Public License
+         along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     -->
+
+    <!-- @author Robert Ward (SCISYS) -->
+
     <xs:include schemaLocation="fieldid.xsd" />
     <xs:include schemaLocation="groupid.xsd" />
 
     <xs:element name="SldEditor_test">
+        <xs:annotation>
+            <xs:documentation>
+                An integration test
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="VendorOption" type="XMLVendorOption"
-                    maxOccurs="unbounded" minOccurs="0" />
-                <xs:element name="PanelTests" type="XMLPanelTest"
-                    maxOccurs="unbounded" minOccurs="0" />
+                <xs:element name="VendorOption" type="XMLVendorOption" maxOccurs="unbounded" minOccurs="0" />
+                <xs:element name="PanelTests" type="XMLPanelTest" maxOccurs="unbounded" minOccurs="0" />
             </xs:sequence>
-            <xs:attribute type="xs:string" name="testsldfile"
-                use="required" />
+            <xs:attribute type="xs:string" name="testsldfile" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    SLD file to load
+                </xs:documentation>
+            </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 
     <xs:complexType name="XMLVendorOption">
+        <xs:annotation>
+            <xs:documentation>
+                Specifies the vendor option this whole test requires
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="ClassType" type="xs:string" />
-            <xs:element name="Version" type="xs:string" />
+            <xs:element name="ClassType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        Full Java class name of vendor option, e.g.
+                        com.sldeditor.common.vendoroption.GeoServerVendorOption
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Version" type="xs:string" >
+                <xs:annotation>
+                    <xs:documentation>
+                        Vendor option version string
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="XMLPanelTest">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for testing panels
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="Setup" type="XMLSetup" />
-            <xs:element name="FieldTests" type="XMLFieldTest"
-                maxOccurs="unbounded" minOccurs="0" />
+            <xs:element name="FieldTests" type="XMLFieldTest" maxOccurs="unbounded" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="XMLSetup">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to establish which panel is being tested
+            </xs:documentation>
+        </xs:annotation>
+
         <xs:sequence>
-            <xs:element type="XMLIndex" name="FeatureTypeStyle"
-                maxOccurs="1" minOccurs="0" />
-            <xs:element type="XMLIndex" name="Layer"
-                maxOccurs="1" minOccurs="0" />
-            <xs:element type="XMLIndex" name="Rule"
-                maxOccurs="1" minOccurs="0" />
-            <xs:element type="XMLIndex" name="Style"
-                maxOccurs="1" minOccurs="0" />
-            <xs:element type="XMLIndex" name="Symbolizer"
-                maxOccurs="1" minOccurs="0" />
-            <xs:element type="XMLIndex" name="SymbolizerDetail"
-                maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="FeatureTypeStyle" maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Layer" maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Rule" maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Style" maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="Symbolizer" maxOccurs="1" minOccurs="0" />
+            <xs:element type="XMLIndex" name="SymbolizerDetail" maxOccurs="1" minOccurs="0" />
         </xs:sequence>
-        <xs:attribute type="xs:string" name="expectedPanel"
-            use="optional" />
-        <xs:attribute type="xs:boolean" name="enabled" use="optional"
-            default="true" />
+        <xs:attribute type="xs:string" name="expectedPanel" use="optional" >
+            <xs:annotation>
+                <xs:documentation>
+                    Full Java class name of panel under test, i.e. the expected class to be selected
+                    using the set up configuration above.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:boolean" name="enabled" use="optional" default="true" >
+            <xs:annotation>
+                <xs:documentation>
+                    Flag indicating whether data is expected in the panel
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLIndex">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to identify branches of the SLD structure tree
+            </xs:documentation>
+        </xs:annotation>
         <xs:attribute type="xs:int" name="index" use="required" />
     </xs:complexType>
 
     <xs:complexType name="XMLFieldTest">
+        <xs:annotation>
+            <xs:documentation>
+                Possible sets that can be carried out on a field
+            </xs:documentation>
+        </xs:annotation>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="Disabled" type="XMLFieldDisabled" />
             <xs:element name="LiteralString" type="XMLFieldLiteralString" />
@@ -78,28 +151,76 @@
     </xs:complexType>
 
     <xs:complexType name="XMLSetMultiOptionGroup">
-        <xs:attribute type="GroupIdEnum" name="multiOptionGroupId"
-            use="required" />
-        <xs:attribute type="GroupIdEnum" name="option" use="required" />
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to display a multi-option group
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute type="GroupIdEnum" name="multiOptionGroupId" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Unique identifier of the multi-option group
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="GroupIdEnum" name="option" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Unique identifier of the selected option group
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLSetGroup">
-        <xs:attribute type="GroupIdEnum" name="groupId"
-            use="required" />
-        <xs:attribute type="xs:boolean" name="enable" use="required" />
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to enable/disable a group
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute type="GroupIdEnum" name="groupId" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Unique identifier of the group
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:boolean" name="enable" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Flag indicating requested state
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldBase">
-        <xs:attribute type="FieldIdEnum" name="field" use="required" />
+        <xs:attribute type="FieldIdEnum" name="field" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Unique field identifier
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldDisabled">
+        <xs:annotation>
+            <xs:documentation>
+                Expecting field to be disabled
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldBase" />
         </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldLiteralString">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare the string value of a field
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldLiteralBase">
                 <xs:attribute name="value" type="xs:string" />
@@ -121,6 +242,11 @@
     </xs:complexType>
 
     <xs:complexType name="XMLFieldLiteralInt">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare the integer value of a field
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldLiteralBase">
                 <xs:attribute name="value" type="xs:int" />
@@ -142,6 +268,11 @@
     </xs:complexType>
 
     <xs:complexType name="XMLFieldLiteralDouble">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare the double value of a field
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldLiteralBase">
                 <xs:attribute name="value" type="xs:double" />
@@ -164,6 +295,11 @@
     </xs:complexType>
 
     <xs:complexType name="XMLFieldLiteralBoolean">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare the boolean value of a field
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldLiteralBase">
                 <xs:attribute name="value" type="xs:boolean" />
@@ -173,6 +309,9 @@
 
     <xs:complexType name="XMLSetFieldLiteralBoolean">
         <xs:annotation>
+            <xs:documentation>
+                Configuration to set and compare the boolean value of a field
+            </xs:documentation>
             <xs:appinfo>
                 <jaxb:class implClass="XMLSetFieldLiteralBooleanEx" />
             </xs:appinfo>
@@ -194,46 +333,66 @@
     <xs:complexType name="XMLSetFieldLiteralBase">
         <xs:complexContent>
             <xs:extension base="XMLFieldBase">
-                <xs:attribute name="ignoreCheck" type="xs:boolean"
-                    use="optional" default="false" />
+                <xs:attribute name="ignoreCheck" type="xs:boolean" use="optional" default="false" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Flag indicating whether to ignore the check:
+                            - true = set the value
+                            - false = set the value and check the value is as expected
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldExpression">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare the field expression
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldBase">
-                <xs:attribute type="xs:string" name="expression"
-                    use="required" />
+                <xs:attribute type="xs:string" name="expression" use="required" />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="XMLSetFieldExpression">
         <xs:annotation>
+            <xs:documentation>
+                Configuration to set and compare the field expression
+            </xs:documentation>
             <xs:appinfo>
                 <jaxb:class implClass="XMLSetFieldExpressionEx" />
             </xs:appinfo>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldBase">
-                <xs:attribute type="xs:string" name="expression"
-                    use="required" />
+                <xs:attribute type="xs:string" name="expression" use="required" />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare the field attribute
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldBase">
-                <xs:attribute type="xs:string" name="attribute"
-                    use="required" />
+                <xs:attribute type="xs:string" name="attribute" use="required" />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="XMLSetFieldAttribute">
         <xs:annotation>
+            <xs:documentation>
+                Configuration to set and compare the field attribute
+            </xs:documentation>
             <xs:appinfo>
                 <jaxb:class implClass="XMLSetFieldAttributeEx" />
             </xs:appinfo>

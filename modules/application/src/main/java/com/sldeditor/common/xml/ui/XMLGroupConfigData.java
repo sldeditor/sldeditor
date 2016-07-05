@@ -16,6 +16,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Common group data 
+ *             
+ * 
  * <p>Java class for XMLGroupConfigData complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
