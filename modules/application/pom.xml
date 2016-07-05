@@ -199,7 +199,6 @@
                 <configuration>
                     <excludes>
                         <exclude>com/sldeditor/common/xml/envvar/*.class</exclude>
-                        <exclude>com/sldeditor/common/xml/filter/*.class</exclude>
                         <exclude>com/sldeditor/common/xml/ui/*.class</exclude>
                         <exclude>com/sldeditor/generated/*.class</exclude>
                     </excludes>
@@ -349,20 +348,6 @@
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>filter xsd xjc</id>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/resources/xsd/filter.xsd</source>
-                            </sources>
-                            <packageName>com.sldeditor.common.xml.filter</packageName>
-                            <outputDirectory>src/main/java</outputDirectory>
-                            <clearOutputDir>false</clearOutputDir>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <!-- =========================================================== -->
@@ -384,7 +369,6 @@
                 <configuration>
                     <includes>
                         <include>src/main/java/com/sldeditor/common/xml/envvar/*.java</include>
-                        <include>src/main/java/com/sldeditor/common/xml/filter/*.java</include>
                         <include>src/main/java/com/sldeditor/common/xml/ui/*.java</include>
                     </includes>
                     <token>^// Generated on.*$</token>
