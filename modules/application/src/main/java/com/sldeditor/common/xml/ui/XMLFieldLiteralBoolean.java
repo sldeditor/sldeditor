@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration to compare the boolean value of a field
+ *             
+ * 
  * <p>Java class for XMLFieldLiteralBoolean complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

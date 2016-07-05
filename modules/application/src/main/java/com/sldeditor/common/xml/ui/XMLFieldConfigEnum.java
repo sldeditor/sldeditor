@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration for a drop down list of enumerations field
+ *             
+ * 
  * <p>Java class for XMLFieldConfigEnum complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

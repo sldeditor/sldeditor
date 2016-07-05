@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration to enable/disable a group
+ *             
+ * 
  * <p>Java class for XMLSetGroup complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

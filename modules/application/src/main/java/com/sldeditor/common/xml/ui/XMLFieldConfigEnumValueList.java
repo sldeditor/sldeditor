@@ -17,6 +17,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration for a list of enumeration values to display in XMLFieldConfigEnum field
+ *             
+ * 
  * <p>Java class for XMLFieldConfigEnumValueList complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

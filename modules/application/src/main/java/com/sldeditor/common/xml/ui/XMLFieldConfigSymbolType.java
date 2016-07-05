@@ -14,6 +14,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration for a symbol type selection field
+ *             
+ * 
  * <p>Java class for XMLFieldConfigSymbolType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

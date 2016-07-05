@@ -18,6 +18,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration describe how to identify SLD attributes using XPATH 
+ *             
+ * 
  * <p>Java class for XMLTestSection complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

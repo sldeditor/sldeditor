@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration to set and compare the field expression
+ *             
+ * 
  * <p>Java class for XMLSetFieldExpression complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

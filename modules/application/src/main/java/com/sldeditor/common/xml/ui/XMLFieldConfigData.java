@@ -16,6 +16,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Common field configuration
+ *             
+ * 
  * <p>Java class for XMLFieldConfigData complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

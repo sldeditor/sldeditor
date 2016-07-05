@@ -18,6 +18,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Option field configuration
+ *             
+ * 
  * <p>Java class for XMLOptionGroup complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

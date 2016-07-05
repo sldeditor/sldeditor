@@ -15,6 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * 
+ *                 Configuration to identify branches of the SLD structure tree
+ *             
+ * 
  * <p>Java class for XMLIndex complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.

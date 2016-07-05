@@ -1,19 +1,54 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     attributeFormDefault="unqualified" elementFormDefault="qualified">
 
+    <!-- 
+         SLD Editor - The Open Source Java SLD Editor
+
+         Copyright (C) 2016, SCISYS UK Limited
+
+         This program is free software: you can redistribute it and/or modify
+         it under the terms of the GNU General Public License as published by
+         the Free Software Foundation, either version 3 of the License, or
+         (at your option) any later version.
+    
+         This program is distributed in the hope that it will be useful,
+         but WITHOUT ANY WARRANTY; without even the implied warranty of
+         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+         GNU General Public License for more details.
+    
+         You should have received a copy of the GNU General Public License
+         along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     -->
+
+    <!-- @author Robert Ward (SCISYS) -->
+
     <xs:element name="EnvironmentVariables">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="EnvVarTypeList" type="XMLEnvVarTypeList"
-                    maxOccurs="1" minOccurs="1" />
-                <xs:element name="BuiltInEnvVarList" type="XMLBuiltInEnvVarList"
-                    maxOccurs="1" minOccurs="1" />
+                <xs:element name="EnvVarTypeList" type="XMLEnvVarTypeList" maxOccurs="1" minOccurs="1" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            List of allowed environment variable types
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="BuiltInEnvVarList" type="XMLBuiltInEnvVarList" maxOccurs="1" minOccurs="1" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            List of built in environment variable
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
-
         </xs:complexType>
     </xs:element>
 
     <xs:complexType name="XMLEnvVarTypeList">
+        <xs:annotation>
+            <xs:documentation>
+                List of of environment variable types
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="EnvVarType" type="XMLEnvVarType"
                 maxOccurs="unbounded" minOccurs="0" />
@@ -21,18 +56,42 @@
     </xs:complexType>
 
     <xs:complexType name="XMLEnvVarType">
-        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="name" type="xs:string" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Full Java class name of allowed environment variable type, e.g.
+                     java.lang.Boolean, org.geotools.geometry.jts.ReferencedEnvelope
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLBuiltInEnvVarList">
+        <xs:annotation>
+            <xs:documentation>
+                List of built in environment variables
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="EnvVar" type="XMLEnvVar"
-                maxOccurs="unbounded" minOccurs="0" />
+            <xs:element name="EnvVar" type="XMLEnvVar" maxOccurs="unbounded" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="XMLEnvVar">
-        <xs:attribute name="name" type="xs:string" use="required" />
-        <xs:attribute name="type" type="xs:string" use="required" />
+        <xs:attribute name="name" type="xs:string" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Environment variable name
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="type" type="xs:string" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Full Java class name of allowed environment variable type, e.g.
+                     java.lang.Boolean, org.geotools.geometry.jts.ReferencedEnvelope
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 </xs:schema>
