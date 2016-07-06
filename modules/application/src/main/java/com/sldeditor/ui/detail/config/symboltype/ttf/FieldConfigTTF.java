@@ -356,7 +356,7 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
         enableList.add(new FieldId(FieldIdEnum.GAP));
         enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
 
-        fieldEnableState.add(getPanelId().getName(), TTF_SYMBOL_KEY, enableList);
+        fieldEnableState.add(getClass().getName(), TTF_SYMBOL_KEY, enableList);
     }
 
     /**
