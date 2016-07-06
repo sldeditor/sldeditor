@@ -57,7 +57,6 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
-import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ParseXML;
@@ -128,17 +127,29 @@ public class SLDTreeTools {
 
     /**
      * Instantiates a new SLD tree tool class.
+     */
+    public SLDTreeTools()
+    {
+        createUI();
+    }
+
+    /**
+     * Configure the necessary field values.
      *
      * @param sldTree the sld tree
      * @param symbolTree the symbol tree
+     * @param treeModel the tree model
+     * @param renderList the render list
      */
-    public SLDTreeTools(UpdateTreeStructureInterface sldTree, JTree symbolTree, List<RenderSymbolInterface> renderList)
+    public void configure(UpdateTreeStructureInterface sldTree,
+            JTree symbolTree, 
+            DefaultTreeModel treeModel, 
+            List<RenderSymbolInterface> renderList)
     {
         this.sldTree = sldTree;
         this.symbolTree = symbolTree;
+        this.treeModel = treeModel;
         this.renderList = renderList;
-
-        createUI();
     }
 
     /**
@@ -264,20 +275,25 @@ public class SLDTreeTools {
     /**
      * Removes the item.
      */
-    private void removeItem() {
+    public void removeItem() {
+        if(symbolTree == null)
+        {
+            return;
+        }
+
         TreePath path = symbolTree.getSelectionPath();
+
+        if(path == null)
+        {
+            return;
+        }
 
         DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         Object obj = lastNode.getUserObject();
 
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
-        if(obj instanceof StyledLayerDescriptor)
-        {
-            SelectedSymbol.getInstance().removeStyledLayerDescriptor((StyledLayerDescriptor)obj);
-            removeTreeNode(lastNode);
-        }
-        else if(obj instanceof NamedLayer)
+        if(obj instanceof NamedLayer)
         {
             SelectedSymbol.getInstance().removeNamedLayer((NamedLayer)obj);
             removeTreeNode(lastNode);
@@ -302,6 +318,10 @@ public class SLDTreeTools {
             SelectedSymbol.getInstance().removeSymbolizer((Symbolizer)obj);
             removeTreeNode(lastNode);
         }
+        else
+        {
+            return;
+        }
 
         // Re-render the symbol
         if(renderList != null)
@@ -314,9 +334,7 @@ public class SLDTreeTools {
 
         Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
-        final UndoActionInterface parentObj = (UndoActionInterface) this;
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getClass().getName(), oldValueObj, newValueObj));
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
@@ -326,12 +344,25 @@ public class SLDTreeTools {
      */
     private void removeTreeNode(DefaultMutableTreeNode nodeToRemove) {
 
-        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) nodeToRemove.getParent();
-        nodeMap.remove(nodeToRemove.getUserObject());
-        treeModel.removeNodeFromParent(nodeToRemove);
-        treeModel.nodeChanged(parent);
+        if(nodeToRemove != null)
+        {
+            DefaultMutableTreeNode parent = (DefaultMutableTreeNode) nodeToRemove.getParent();
+            nodeMap.remove(nodeToRemove.getUserObject());
 
-        symbolTree.setSelectionPath(getPath(parent));
+            if(treeModel != null)
+            {
+                if(parent != null)
+                {
+                    treeModel.removeNodeFromParent(nodeToRemove);
+                    treeModel.nodeChanged(parent);
+                }
+            }
+
+            if(symbolTree != null)
+            {
+                symbolTree.setSelectionPath(getPath(parent));
+            }
+        }
     }
 
     /**
@@ -358,11 +389,22 @@ public class SLDTreeTools {
      * Adds the new thing.
      */
     public void addNewThing() {
+        if(symbolTree == null)
+        {
+            return;
+        }
+
         TreePath path = symbolTree.getSelectionPath();
+
+        if(path == null)
+        {
+            return;
+        }
+
+        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
 
         DefaultMutableTreeNode newNode = null;
 
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         Object obj = lastNode.getUserObject();
 
         // Store current state of the SLD before the add
@@ -415,12 +457,12 @@ public class SLDTreeTools {
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
@@ -429,18 +471,21 @@ public class SLDTreeTools {
      * @return the rule tree node
      */
     private DefaultMutableTreeNode getRuleTreeNode() {
-        TreePath path = symbolTree.getSelectionPath();
-
-        DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
-        Object obj = lastNode.getUserObject();
-
-        if(obj instanceof Symbolizer)
+        if(symbolTree != null)
         {
-            return (DefaultMutableTreeNode) lastNode.getParent();
-        }
-        else if(obj instanceof Rule)
-        {
-            return (DefaultMutableTreeNode) lastNode;
+            TreePath path = symbolTree.getSelectionPath();
+
+            DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+            Object obj = lastNode.getUserObject();
+
+            if(obj instanceof Symbolizer)
+            {
+                return (DefaultMutableTreeNode) lastNode.getParent();
+            }
+            else if(obj instanceof Rule)
+            {
+                return (DefaultMutableTreeNode) lastNode;
+            }
         }
         return rootNode;
     }
@@ -449,6 +494,11 @@ public class SLDTreeTools {
      * Adds the new marker symbolizer.
      */
     public void addNewMarker() {
+        if(symbolTree == null)
+        {
+            return;
+        }
+
         // Store current state of the SLD before the add
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
@@ -465,18 +515,22 @@ public class SLDTreeTools {
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
      * Adds the new raster symbolizer.
      */
     public void addRaster() {
+        if(symbolTree == null)
+        {
+            return;
+        }
         // Store current state of the SLD before the add
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
@@ -492,18 +546,22 @@ public class SLDTreeTools {
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
      * Adds the new text symbolizer.
      */
     public void addNewText() {
+        if(symbolTree == null)
+        {
+            return;
+        }
 
         // Store current state of the SLD before the add
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
@@ -520,18 +578,22 @@ public class SLDTreeTools {
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
      * Adds the new line symbolizer.
      */
     public void addNewLine() {
+        if(symbolTree == null)
+        {
+            return;
+        }
         // Store current state of the SLD before the add
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
@@ -550,18 +612,22 @@ public class SLDTreeTools {
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
      * Adds the new polygon symbolizer.
      */
     public void addNewPolygon() {
+        if(symbolTree == null)
+        {
+            return;
+        }
         // Store current state of the SLD before the add
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
@@ -581,26 +647,26 @@ public class SLDTreeTools {
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
-
-        // Store current state of the SLD after the add
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
-
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
 
     /**
      * Move item down.
      */
     private void moveItemDown() {
-        moveItem(1);
+        moveItem(false);
     }
 
     /**
      * Move item up.
      */
     private void moveItemUp() {
-        moveItem(-1);
+        moveItem(true);
     }
 
     /**
@@ -608,8 +674,28 @@ public class SLDTreeTools {
      *
      * @param direction the direction is either up (-1) or down (+1)
      */
-    public void moveItem(int direction) {
+    public void moveItem(boolean moveUp) {
+        if(symbolTree == null)
+        {
+            return;
+        }
+
+        if(treeModel == null)
+        {
+            return;
+        }
+
+        if(sldTree == null)
+        {
+            return;
+        }
+
         TreePath path = symbolTree.getSelectionPath();
+
+        if(path == null)
+        {
+            return;
+        }
 
         DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         if(lastNode == null)
@@ -629,6 +715,7 @@ public class SLDTreeTools {
         {
             return;
         }
+
         Object parentObj = parentNode.getUserObject();
 
         if(parentObj == null)
@@ -636,32 +723,64 @@ public class SLDTreeTools {
             return;
         }
 
+        // Calculate index offset value based on direction
+        int direction = moveUp ? -1 : 1;
+
         // Store current state of the SLD before the move
         Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
 
         if(obj instanceof StyledLayer)
         {
             StyledLayerDescriptor sld = (StyledLayerDescriptor) parentObj;
-            int index = sld.layers().indexOf(obj);
+            // NamedLayerImpl.equals() doesn't work in the way I want it to, so indexOf() does not work
+            boolean found = false;
+            int index = 0;
 
-            StyledLayer styledLayer = sld.layers().remove(index);
-            sld.layers().add(index + direction, styledLayer);
+            for(StyledLayer styledLayer : sld.layers())
+            {
+                if(styledLayer == obj)
+                {
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    index ++;
+                }
+            }
 
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+            if(found && ((index + direction) >= 0) && (index + direction) < sld.layers().size())
+            {
+                StyledLayer styledLayer = sld.layers().remove(index);
+                sld.layers().add(index + direction, styledLayer);
+
+                treeModel.removeNodeFromParent(lastNode);
+                treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+            }
+            else
+            {
+                return;
+            }
         }
         else if(obj instanceof Style)
         {
-            if(obj instanceof NamedLayerImpl)
+            if(parentObj instanceof NamedLayerImpl)
             {
                 NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
                 int index = namedLayer.styles().indexOf(obj);
 
-                Style style = namedLayer.styles().remove(index);
-                namedLayer.styles().add(index + direction, style);
+                if(((index + direction) >= 0) && (index + direction) < namedLayer.styles().size())
+                {
+                    Style style = namedLayer.styles().remove(index);
+                    namedLayer.styles().add(index + direction, style);
 
-                treeModel.removeNodeFromParent(lastNode);
-                treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+                    treeModel.removeNodeFromParent(lastNode);
+                    treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
         else if(obj instanceof FeatureTypeStyle)
@@ -669,33 +788,54 @@ public class SLDTreeTools {
             Style style = (Style) parentObj;
             int index = style.featureTypeStyles().indexOf(obj);
 
-            FeatureTypeStyle fts = style.featureTypeStyles().remove(index);
-            style.featureTypeStyles().add(index + direction, fts);
+            if(((index + direction) >= 0) && (index + direction) < style.featureTypeStyles().size())
+            {
+                FeatureTypeStyle fts = style.featureTypeStyles().remove(index);
+                style.featureTypeStyles().add(index + direction, fts);
 
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+                treeModel.removeNodeFromParent(lastNode);
+                treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+            }
+            else
+            {
+                return;
+            }
         }
         else if(obj instanceof Rule)
         {
             FeatureTypeStyle fts = (FeatureTypeStyle) parentObj;
             int index = fts.rules().indexOf(obj);
 
-            Rule rule = fts.rules().remove(index);
-            fts.rules().add(index + direction, rule);
+            if(((index + direction) >= 0) && (index + direction) < fts.rules().size())
+            {
+                Rule rule = fts.rules().remove(index);
+                fts.rules().add(index + direction, rule);
 
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+                treeModel.removeNodeFromParent(lastNode);
+                treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+            }
+            else
+            {
+                return;
+            }
         }
         else if(obj instanceof Symbolizer)
         {
             Rule rule = (Rule) parentObj;
             int index = rule.symbolizers().indexOf(obj);
 
-            Symbolizer symbolizer = rule.symbolizers().remove(index);
-            rule.symbolizers().add(index + direction, symbolizer);
+            if(((index + direction) >= 0) && (index + direction) < rule.symbolizers().size())
+            {
+                Symbolizer symbolizer = rule.symbolizers().remove(index);
+                rule.symbolizers().add(index + direction, symbolizer);
 
-            treeModel.removeNodeFromParent(lastNode);
-            treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+                treeModel.removeNodeFromParent(lastNode);
+                treeModel.insertNodeInto(lastNode, parentNode, index + direction);
+            }
+            else
+            {
+                return;
+            }
         }
 
         // Refresh the tree structure. Not very efficient but gets result wanted.
@@ -778,9 +918,9 @@ public class SLDTreeTools {
             }
             else if(obj instanceof Style)
             {
-                if(obj instanceof NamedLayerImpl)
+                if(parentObj != null)
                 {
-                    if(parentObj != null)
+                    if(parentObj instanceof NamedLayerImpl)
                     {
                         NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
                         hasMoreThan1Item = namedLayer.styles().size() > 1;

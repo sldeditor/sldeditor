@@ -57,6 +57,7 @@ import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
 import com.sldeditor.ui.detail.TextSymbolizerDetails;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.ui.tree.SLDTreeTools;
 import com.sldeditor.ui.tree.UpdateTreeStructureInterface;
 
 /**
@@ -73,7 +74,7 @@ public class SLDTreeTest {
     @Test
     public void testSLDTreeNull() {
         List<RenderSymbolInterface> renderList = null;
-        SLDTree tree1 = new SLDTree(renderList);
+        SLDTree tree1 = new SLDTree(renderList, null);
 
         // Select top level node
         tree1.selectFirstSymbol();
@@ -115,7 +116,8 @@ public class SLDTreeTest {
     @Test
     public void testSLDTree() {
         List<RenderSymbolInterface> renderList = null;
-        SLDTree tree1 = new SLDTree(renderList);
+        SLDTreeTools treeTools = new SLDTreeTools();
+        SLDTree tree1 = new SLDTree(renderList, treeTools);
 
         URL url = SLDTreeTest.class.getResource("/test/polygon_line_point.sld");
 
@@ -261,6 +263,9 @@ public class SLDTreeTest {
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
+        
+        org.junit.Assert.assertNotNull("Failed to read test file : " + fileName, br);
+
         try {
             String line = br.readLine();
 
@@ -287,7 +292,7 @@ public class SLDTreeTest {
      */
     @Test
     public void testAddOverallSelectedListener() {
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
         tree1.addOverallSelectedListener(null);
     }
 
@@ -297,7 +302,7 @@ public class SLDTreeTest {
     @Test
     public void testPopulateSLD() {
         List<RenderSymbolInterface> renderList = null;
-        UpdateTreeStructureInterface tree1 = new SLDTree(renderList);
+        UpdateTreeStructureInterface tree1 = new SLDTree(renderList, null);
 
         tree1.populateSLD();
     }
@@ -308,7 +313,7 @@ public class SLDTreeTest {
     @Test
     public void testValueChanged() {
         // Do nothing, calls leafSelected()
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
         tree1.valueChanged(null);
     }
 
@@ -317,7 +322,7 @@ public class SLDTreeTest {
      */
     @Test
     public void testTextUpdated() {
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
         tree1.textUpdated();
     }
 
@@ -326,7 +331,7 @@ public class SLDTreeTest {
      */
     @Test
     public void testUpdateNode() {
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
         tree1.updateNode(null, null);
     }
 
@@ -335,7 +340,7 @@ public class SLDTreeTest {
      */
     @Test
     public void testDataSourceLoaded() {
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
         tree1.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
     }
 
@@ -344,7 +349,7 @@ public class SLDTreeTest {
      */
     @Test
     public void testUndoAction() {
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
 
         assertEquals(tree1, tree1.getUndoObject());
         tree1.undoAction(null);
@@ -355,7 +360,7 @@ public class SLDTreeTest {
      */
     @Test
     public void testRedoAction() {
-        SLDTree tree1 = new SLDTree(null);
+        SLDTree tree1 = new SLDTree(null, null);
 
         tree1.redoAction(null);
     }

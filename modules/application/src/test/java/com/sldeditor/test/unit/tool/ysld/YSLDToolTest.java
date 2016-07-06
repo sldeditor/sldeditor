@@ -19,6 +19,7 @@
 package com.sldeditor.test.unit.tool.ysld;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Component;
@@ -203,6 +204,7 @@ public class YSLDToolTest {
         // Try with invalid file
         try {
             List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
+            assertNotNull(testFile1);
             nodeTypeList.add(new FileTreeNode(testFile1.getParentFile(), testFile1.getName()));
             assertFalse(tool.supports(null, nodeTypeList, null));
         } catch (SecurityException | FileNotFoundException e) {
