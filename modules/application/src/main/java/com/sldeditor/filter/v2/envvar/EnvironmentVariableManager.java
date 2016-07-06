@@ -242,7 +242,10 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      */
     @Override
     public void removeEnvVar(EnvVar envVar) {
-        envVarList.remove(envVar.getName());
+        if(envVar != null)
+        {
+            envVarList.remove(envVar);
+        }
     }
 
     /**
