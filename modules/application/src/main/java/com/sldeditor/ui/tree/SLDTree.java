@@ -102,11 +102,11 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     /** The logger. */
     private static Logger logger = Logger.getLogger(RenderSymbol.class);
 
-    /** The symbol marker tree. */
+    /** The sld symbol structure tree. */
     private JTree symbolTree = null;
 
     /** The root node. */
-    private DefaultMutableTreeNode rootNode = null;
+    protected DefaultMutableTreeNode rootNode = null;
 
     /** The tree model. */
     private DefaultTreeModel treeModel = null;
@@ -139,10 +139,12 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      * Instantiates a new SLD tree.
      *
      * @param renderList the render list
+     * @param treeTools the tree tools
      */
-    public SLDTree(List<RenderSymbolInterface> renderList)
+    public SLDTree(List<RenderSymbolInterface> renderList, SLDTreeTools treeTools)
     {
         this.renderList = renderList;
+        this.treeTools = treeTools;
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         if(dataSource != null)
@@ -236,8 +238,12 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
         panelSymbolMarkerTree.add(scrollpane);
 
-        treeTools = new SLDTreeTools(this, symbolTree, renderList);
-        add(treeTools.getButtonPanel());
+        // Add the tree tools if they were supplied
+        if(treeTools != null)
+        {
+            treeTools.configure(this, symbolTree, treeModel, renderList);
+            add(treeTools.getButtonPanel());
+        }
     }
 
     /**
@@ -689,7 +695,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             }
         }
 
-        treeTools.setButtonState(parent, node, this.currentGeometryType);
+        if(treeTools != null)
+        {
+            treeTools.setButtonState(parent, node, this.currentGeometryType);
+        }
     }
 
     /* (non-Javadoc)
@@ -718,7 +727,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
         populateSLD();
 
-        if(selectedRows != null)
+        if((selectedRows != null) && (selectedRows.length > 0))
         {
             symbolTree.setSelectionRow(selectedRows[0]);
         }

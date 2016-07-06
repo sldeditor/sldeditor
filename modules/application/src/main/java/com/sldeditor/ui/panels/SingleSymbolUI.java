@@ -36,6 +36,7 @@ import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * The Class SingleSymbolUI, coordinates creating all the necessary panels
@@ -140,7 +141,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         {
             List<RenderSymbolInterface> rendererList = getRendererList();
 
-            sldTree = new SLDTree(rendererList);
+            SLDTreeTools sldTreeTools = new SLDTreeTools();
+            sldTree = new SLDTree(rendererList, sldTreeTools);
 
             // Register for updates to the SLD tree structure
             SelectedSymbol.getInstance().setTreeUpdateListener(sldTree);

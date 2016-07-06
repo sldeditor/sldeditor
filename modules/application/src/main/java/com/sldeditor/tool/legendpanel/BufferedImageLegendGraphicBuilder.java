@@ -255,8 +255,8 @@ public class BufferedImageLegendGraphicBuilder {
                     Symbolizer symbolizer = symbolizers[sIdx];
 
                     if (symbolizer instanceof RasterSymbolizer) {
-//                        throw new IllegalStateException(
-//                                "It is not legal to have a RasterSymbolizer here");
+                        //                        throw new IllegalStateException(
+                        //                                "It is not legal to have a RasterSymbolizer here");
                     } else {
                         if(symbolizer instanceof PointSymbolizerImpl)
                         {
@@ -345,8 +345,11 @@ public class BufferedImageLegendGraphicBuilder {
 
             // JD: changed legend behavior, see GEOS-812
             // this.legendGraphic = scaleImage(mergeLegends(legendsStack), request);
-            BufferedImage mergedImage = mergeLegends(legendsStack, applicableRules, request);
-            imageMap.put(null, mergedImage);
+            if(!legendsStack.isEmpty())
+            {
+                BufferedImage mergedImage = mergeLegends(legendsStack, applicableRules, request);
+                imageMap.put(null, mergedImage);
+            }
         }
 
         return imageMap;

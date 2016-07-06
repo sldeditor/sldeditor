@@ -107,7 +107,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     {
         Map<String, BufferedImage> map = createLegend(backgroundColour, sld, heading, filename, false);
 
-        if(!map.isEmpty())
+        if((map != null) && !map.isEmpty())
         {
             String firstKey = map.keySet().iterator().next();
 
