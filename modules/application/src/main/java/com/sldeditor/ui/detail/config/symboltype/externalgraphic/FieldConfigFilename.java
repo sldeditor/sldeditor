@@ -330,7 +330,7 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
         enableList.add(new FieldId(FieldIdEnum.GAP));
         enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
 
-        fieldEnableState.add(getPanelId().getName(), EXTERNAL_SYMBOL_KEY, enableList);
+        fieldEnableState.add(getClass().getName(), EXTERNAL_SYMBOL_KEY, enableList);
     }
 
     /**

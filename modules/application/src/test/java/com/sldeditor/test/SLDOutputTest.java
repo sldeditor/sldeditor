@@ -357,7 +357,7 @@ public class SLDOutputTest {
             XMLSetFieldLiteralInt intLiteral = (XMLSetFieldLiteralInt) testValue;
             if((extractedString != null) && !extractedString.isEmpty())
             {
-                passed = (Integer.valueOf(extractedString) == intLiteral.getValue());
+                passed = (Integer.valueOf(extractedString).intValue() == intLiteral.getValue().intValue());
             }
         }
         else if(testValue instanceof XMLSetFieldLiteralBoolean)
