@@ -701,19 +701,49 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         {
             if(duration.isDate())
             {
-                timePeriodPanel.dateRadioButton.setSelected(true);
-                timePeriodPanel.dateModel.setValue(duration.getDate());
-                timePeriodPanel.timePicker.setValue(duration.getDate());
+                if(timePeriodPanel.dateRadioButton != null)
+                {
+                    timePeriodPanel.dateRadioButton.setSelected(true);
+                }
+                if(timePeriodPanel.dateModel != null)
+                {
+                    timePeriodPanel.dateModel.setValue(duration.getDate());
+                }
+                if(timePeriodPanel.timePicker != null)
+                {
+                    timePeriodPanel.timePicker.setValue(duration.getDate());
+                }
             }
             else
             {
-                timePeriodPanel.durationRadioButton.setSelected(true);
-                timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
-                timePeriodPanel.monthSpinner.setValue(duration.getDurationMonths());
-                timePeriodPanel.daySpinner.setValue(duration.getDurationDays());
-                timePeriodPanel.hourSpinner.setValue(duration.getDurationHours());
-                timePeriodPanel.minuteSpinner.setValue(duration.getDurationMinutes());
-                timePeriodPanel.secondSpinner.setValue(duration.getDurationSeconds());
+                if(timePeriodPanel.durationRadioButton != null)
+                {
+                    timePeriodPanel.durationRadioButton.setSelected(true);
+                }
+                if(timePeriodPanel.yearSpinner != null)
+                {
+                    timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
+                }
+                if(timePeriodPanel.monthSpinner != null)
+                {
+                    timePeriodPanel.monthSpinner.setValue(duration.getDurationMonths());
+                }
+                if(timePeriodPanel.daySpinner != null)
+                {
+                    timePeriodPanel.daySpinner.setValue(duration.getDurationDays());
+                }
+                if(timePeriodPanel.hourSpinner != null)
+                {
+                    timePeriodPanel.hourSpinner.setValue(duration.getDurationHours());
+                }
+                if(timePeriodPanel.minuteSpinner != null)
+                {
+                    timePeriodPanel.minuteSpinner.setValue(duration.getDurationMinutes());
+                }
+                if(timePeriodPanel.secondSpinner != null)
+                {
+                    timePeriodPanel.secondSpinner.setValue(duration.getDurationSeconds());
+                }
             }
 
             updateFields(timePeriodPanel);
@@ -767,6 +797,10 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param panel the panel
      */
     public void updateFields(TimePeriodPanel panel) {
+        if(panel.dateRadioButton == null)
+        {
+            return;
+        }
         boolean dateEnabled = panel.dateRadioButton.isSelected();
 
         panel.datePicker.setEnabled(dateEnabled);
