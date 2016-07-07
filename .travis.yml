@@ -5,7 +5,7 @@ cache:
   - $HOME/.m2
 script : 
   - mvn clean test
-  - mvn clean test -P IntegrationTests
+  - mvn test -P IntegrationTests
 
 before_script:
   - "export DISPLAY=:99.0"
