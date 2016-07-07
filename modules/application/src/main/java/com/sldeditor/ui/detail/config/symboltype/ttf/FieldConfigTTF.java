@@ -46,7 +46,6 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
@@ -93,19 +92,21 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
      * @param valueOnly the value only
      * @param multipleValues the multiple values
      */
-    public FieldConfigTTF(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigTTF(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
 
-        createUI(null, null);
+        createUI(null);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI( Box parentBox) {
 
-        FieldPanel fieldPanel = createFieldPanel(0, "", parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(0, "", parentBox);
         fieldPanel.setLayout(new BorderLayout());
         ttfPanel = new TTFDetails(this, FunctionManager.getInstance());
 
@@ -511,8 +512,7 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
         FieldConfigTTF copy = new FieldConfigTTF(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
                 fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.isValueOnly());
         return copy;
     }
 

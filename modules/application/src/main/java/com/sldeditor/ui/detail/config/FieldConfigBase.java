@@ -30,7 +30,6 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.ConstantExpression;
-import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -47,7 +46,6 @@ import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.TestValueVisitor;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.attribute.AttributeSelection;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
@@ -83,9 +81,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
 
     /** The value only flag: <ul> <li>true - do not display a value/attribute/expression drop down list</li> <li>false- display a value/attribute/expression drop down list</li> </ul>. */
     private boolean valueOnly = true;
-
-    /** The multiple values flag. */
-    private boolean multipleValues = false;
 
     /** The panel. */
     private FieldPanel fieldPanel = null;
@@ -140,9 +135,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
 
     /** The is function flag. */
     private boolean isFunction = false;
-
-    /** The pending function expression. */
-    private FunctionExpression pendingFunctionExpression = null;
 
     /** The field index. */
     private static int fieldIndex = 0;
@@ -202,14 +194,12 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param fieldId the field id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    protected FieldConfigBase(Class<?> panelId, FieldId fieldId, String label, boolean valueOnly, boolean multipleValues) {
+    protected FieldConfigBase(Class<?> panelId, FieldId fieldId, String label, boolean valueOnly) {
         this.panelId = panelId;
         this.fieldId = fieldId;
         this.label = label;
         this.valueOnly = valueOnly;
-        this.multipleValues = multipleValues;
     }
 
     /**
@@ -251,10 +241,9 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
-    public abstract void createUI(MultipleFieldInterface parentPanel, Box parentBox);
+    public abstract void createUI(Box parentBox);
 
     /**
      * Gets the panel.
@@ -330,7 +319,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * Fire data changed.
      */
     protected void fireDataChanged() {
-        if(!Controller.getInstance().isPopulating() || (pendingFunctionExpression != null))
+        if(!Controller.getInstance().isPopulating())
         {
             for(UpdateSymbolInterface listener : updateSymbolListenerList)
             {
@@ -472,7 +461,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
 
                     if(attributeSelectionPanel != null)
                     {
-                        attributeSelectionPanel.setAttribute(expression);
+                        attributeSelectionPanel.setAttribute((AttributeExpressionImpl)objValue);
                     }
 
                     setCachedExpression((AttributeExpressionImpl)objValue);
@@ -579,7 +568,10 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
         }
         else
         {
-            cachedExpression = attributeSelectionPanel.getExpression();
+            if(attributeSelectionPanel != null)
+            {
+                cachedExpression = attributeSelectionPanel.getExpression();
+            }
         }
         return cachedExpression;
     }
@@ -662,9 +654,9 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param parentBox the parent box
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel(int xPos, String fieldLabel, MultipleFieldInterface parentPanel, Box parentBox)
+    protected FieldPanel createFieldPanel(int xPos, String fieldLabel, Box parentBox)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, multipleValues, parentPanel, parentBox, this);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, parentBox, this);
 
         return fieldPanel;
     }
@@ -675,13 +667,12 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param xPos the x pos
      * @param height the height
      * @param fieldLabel the field label
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel, MultipleFieldInterface parentPanel, Box parentBox)
+    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel, Box parentBox)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, height, false, parentPanel, parentBox, null);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, height, parentBox, null);
 
         return fieldPanel;
     }
@@ -944,16 +935,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     }
 
     /**
-     * Returns has multiple values flag.
-     *
-     * @return true, if successful
-     */
-    public boolean hasMultipleValues()
-    {
-        return this.multipleValues;
-    }
-
-    /**
      * Gets the enum value, overridden if necessary.
      *
      * @return the enum value
@@ -995,10 +976,12 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public FieldConfigBase duplicate() {
         FieldConfigBase copy = createCopy(this);
 
-        copy.setParent(getParent());
-        copy.setIndentColumn(getIndentColumn());
-        copy.updateSymbolListenerList = this.updateSymbolListenerList;
-
+        if(copy != null)
+        {
+            copy.setParent(getParent());
+            copy.setIndentColumn(getIndentColumn());
+            copy.updateSymbolListenerList = this.updateSymbolListenerList;
+        }
         return copy;
     }
 
@@ -1009,19 +992,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @return the field config base
      */
     protected abstract FieldConfigBase createCopy(FieldConfigBase fieldConfigBase);
-
-    /**
-     * Sets the multiple value button state.
-     *
-     * @param enableAddButton the enable add button
-     * @param enableRemoveButton the enable remove button
-     */
-    public void setMultipleValueButtonState(boolean enableAddButton, boolean enableRemoveButton) {
-        if(fieldPanel != null)
-        {
-            fieldPanel.setMultipleValueButtonState(enableAddButton, enableRemoveButton);
-        }
-    }
 
     /**
      * Gets the x pos.
@@ -1041,16 +1011,19 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param functionField the function field
      */
     public void addFunction(FieldConfigBase functionField) {
-        functionField.setIndentColumn((getIndentColumn() + 1));
-        functionList.add(functionField);
+        if(functionField != null)
+        {
+            functionField.setIndentColumn((getIndentColumn() + 1));
+            functionList.add(functionField);
 
-        fieldIndex = fieldIndex  + 1;
-        functionField.revertToDefaultValue();
-        FieldId fieldId = new FieldId();
-        fieldId.setFieldId(getFieldId().getFieldId());
-        fieldId.setIndex(fieldIndex);
+            fieldIndex = fieldIndex  + 1;
+            functionField.revertToDefaultValue();
+            FieldId fieldId = new FieldId();
+            fieldId.setFieldId(getFieldId().getFieldId());
+            fieldId.setIndex(fieldIndex);
 
-        functionField.setFieldId(fieldId);
+            functionField.setFieldId(fieldId);
+        }
     }
 
     /**
@@ -1092,10 +1065,16 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      */
     private void findChildFunctionFields(List<FieldConfigBase> subFunctionList, List<FieldConfigBase> existingFunctionList)
     {
-        for(FieldConfigBase functionField : subFunctionList)
+        if(subFunctionList != null)
         {
-            existingFunctionList.add(functionField);
-            findChildFunctionFields(functionField.functionList, existingFunctionList);
+            for(FieldConfigBase functionField : subFunctionList)
+            {
+                if(functionField != null)
+                {
+                    existingFunctionList.add(functionField);
+                    findChildFunctionFields(functionField.functionList, existingFunctionList);
+                }
+            }
         }
     }
 
@@ -1105,9 +1084,12 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public void removeFunctionFields() {
         functionList.clear();
 
-        for(GroupConfigInterface group : functionGroupList)
+        if(functionGroupList != null)
         {
-            group.removeFromUI();
+            for(GroupConfigInterface group : functionGroupList)
+            {
+                group.removeFromUI();
+            }
         }
 
         functionGroupList.clear();
@@ -1139,25 +1121,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public Class<?> getFunctionParameterType() {
         return functionParameterType;
     }
-
-    /**
-     * Gets the pending function expression.
-     *
-     * @return the pendingFunctionExpression
-     */
-    public FunctionExpression getPendingFunctionExpression() {
-        return pendingFunctionExpression;
-    }
-
-    /**
-     * Sets the pending function expression.
-     *
-     * @param pendingFunctionExpression the pendingFunctionExpression to set
-     */
-    public void setPendingFunctionExpression(FunctionExpression pendingFunctionExpression) {
-        this.pendingFunctionExpression = pendingFunctionExpression;
-    }
-
 
     /**
      * Checks if is function.

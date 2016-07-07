@@ -27,7 +27,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import com.sldeditor.ui.widgets.DecimalSpinner;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -71,25 +70,24 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      * @param valueOnly the value only
      * @param multipleValues the multiple values
      */
-    public FieldConfigDouble(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigDouble(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         spinner = new DecimalSpinner(minValue, maxValue, stepSize, noOfDecimalPlaces);
         spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -350,8 +348,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
         FieldConfigDouble copy = new FieldConfigDouble(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
                 fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.isValueOnly());
 
         FieldConfigDouble doubleFieldConfig = (FieldConfigDouble)fieldConfigBase;
         copy.setConfig(doubleFieldConfig.minValue, 

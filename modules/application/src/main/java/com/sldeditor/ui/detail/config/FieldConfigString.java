@@ -36,7 +36,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -74,10 +73,9 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @param label the label
      * @param valueOnly the value only
      * @param buttonText the button text
-     * @param multipleFields the multiple fields
      */
-    public FieldConfigString(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText, boolean multipleFields) {
-        super(panelId, id, label, valueOnly, multipleFields);
+    public FieldConfigString(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText) {
+        super(panelId, id, label, valueOnly);
 
         this.buttonText = buttonText;
     }
@@ -89,11 +87,11 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         textField = new JTextField();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -292,9 +290,12 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     {
         if(textField != null)
         {
-            String oldValue = (String)undoRedoObject.getOldValue();
+            if(undoRedoObject != null)
+            {
+                String oldValue = (String)undoRedoObject.getOldValue();
 
-            textField.setText(oldValue);
+                textField.setText(oldValue);
+            }
         }
     }
 
@@ -308,9 +309,12 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     {
         if(textField != null)
         {
-            String newValue = (String)undoRedoObject.getNewValue();
+            if(undoRedoObject != null)
+            {
+                String newValue = (String)undoRedoObject.getNewValue();
 
-            textField.setText(newValue);
+                textField.setText(newValue);
+            }
         }
     }
 
@@ -367,12 +371,16 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigString copy = new FieldConfigString(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                this.buttonText,
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigString copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigString(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly(),
+                    this.buttonText);
+        }
         return copy;
     }
 

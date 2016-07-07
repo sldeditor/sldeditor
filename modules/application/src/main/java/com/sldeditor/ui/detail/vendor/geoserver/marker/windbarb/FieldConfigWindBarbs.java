@@ -44,7 +44,6 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
@@ -78,24 +77,25 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigWindBarbs(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigWindBarbs(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
 
-        createUI(null, null);
+        createUI(null);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
-        FieldPanel fieldPanel = createFieldPanel(0, "", parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(0, "", parentBox);
         fieldPanel.setLayout(new BorderLayout());
         windBarbsPanel = new WindBarbDetails(this, FunctionManager.getInstance());
 
@@ -487,8 +487,7 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
         FieldConfigWindBarbs copy = new FieldConfigWindBarbs(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
                 fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.isValueOnly());
         return copy;
     }
 

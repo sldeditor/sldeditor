@@ -42,7 +42,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
@@ -103,30 +102,31 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
      * @param colourField the colour field
      * @param opacityField the opacity field
      * @param symbolSelectionField the symbol selection field
-     * @param multipleValues the multiple values
      */
     public FieldConfigMarker(Class<?> panelId, FieldId id, String label, boolean valueOnly,
             FieldId colourField, 
             FieldId opacityField,
-            FieldId symbolSelectionField, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+            FieldId symbolSelectionField) {
+        super(panelId, id, label, valueOnly);
 
         this.colourField = colourField;
         this.opacityField = opacityField;
         this.symbolSelectionField = symbolSelectionField;
 
-        createUI(null, null);
+        createUI(null);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
-        createFieldPanel(0, "", parentPanel, parentBox);
+    public void createUI(Box parentBox) {
+        createFieldPanel(0, "", parentBox);
     }
 
     /**
@@ -618,8 +618,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
                 fieldConfigBase.isValueOnly(),
                 this.colourField,
                 this.opacityField,
-                this.symbolSelectionField, 
-                fieldConfigBase.hasMultipleValues());
+                this.symbolSelectionField);
         return copy;
     }
 

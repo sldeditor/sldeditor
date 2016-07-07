@@ -33,10 +33,8 @@ import javax.swing.JScrollPane;
 
 import org.apache.log4j.Logger;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.FunctionExpression;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
@@ -70,8 +68,9 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class BasePanel extends JPanel implements MultipleFieldInterface {
+public class BasePanel extends JPanel {
 
+    /** The Constant PANEL_HEIGHT. */
     private static final int PANEL_HEIGHT = 750;
 
     /** The Constant LAST_FIELD_INDEX. */
@@ -158,12 +157,10 @@ public class BasePanel extends JPanel implements MultipleFieldInterface {
     /** The containing panel. */
     private JPanel containingPanel;
 
-    /** The multiple field handler. */
-    private MultipleFieldHandler multipleFieldHandler = new MultipleFieldHandler();
-
     /** The function manager. */
     private FunctionNameInterface functionManager = null;
 
+    /** The padding component. */
     private Component padding;
 
     /**
@@ -556,7 +553,6 @@ public class BasePanel extends JPanel implements MultipleFieldInterface {
      * @param parentField the parent field
      * @param field the field
      */
-    @Override
     public void addField(Box parentBox, int index, FieldConfigBase parentField, FieldConfigBase field) {
 
         boolean isFunction = (index != LAST_FIELD_INDEX);
@@ -565,9 +561,7 @@ public class BasePanel extends JPanel implements MultipleFieldInterface {
             parentField.addFunction(field);
         }
 
-        multipleFieldHandler.addField(field);
-
-        field.createUI(this, parentBox);
+        field.createUI(parentBox);
         addFieldConfig(field);
 
         fieldConfigManager.addField(field);
@@ -800,121 +794,9 @@ public class BasePanel extends JPanel implements MultipleFieldInterface {
     /**
      * Refresh panel.
      */
-    @Override
     public void refreshPanel() {
         revalidate();
         repaint();
-    }
-
-    /**
-     * Removes the field.
-     *
-     * @param parentBox the parent box
-     * @param field the field
-     */
-    @Override
-    public void removeField(Box parentBox, FieldConfigBase field) {
-        if(parentBox != null)
-        {
-            multipleFieldHandler.removeField(field);
-            parentBox.remove(field.getPanel());
-            parentBox.revalidate();
-        }
-    }
-
-    /**
-     * Insert group config.
-     *
-     * @param panelId the panel id
-     * @param parent the parent
-     * @param functionExpression the function expression
-     * @param fieldConfig the field config to insert after
-     * @param isFunction the is function
-     */
-    public void insertGroupConfig(Class<?> panelId,
-            UpdateSymbolInterface parent,
-            FunctionExpression functionExpression,
-            FieldConfigBase fieldConfig,
-            boolean isFunction)
-    {
-        int insertIndex = LAST_FIELD_INDEX;
-
-        for(int index = 0; index < box.getComponentCount(); index ++)
-        {
-            Component component = box.getComponent(index);
-
-            if(component == fieldConfig.getPanel())
-            {
-                insertIndex = index;
-                break;
-            }
-        }
-
-        if(insertIndex > LAST_FIELD_INDEX)
-        {
-            // Remove existing functions
-            List<FieldConfigBase> listOfFieldsToRemove = fieldConfig.getAllFunctionFields();
-
-            for(FieldConfigBase functionField : listOfFieldsToRemove)
-            {
-                removeField(box, functionField);
-            }
-
-            fieldConfig.removeFunctionFields();
-
-            // Insert new function
-            if(functionExpression != null)
-            {
-                List<GroupConfigInterface> groupConfigList = functionManager.convertParameters(panelId, fieldConfig.getFieldId(), functionExpression.getFunctionName());
-
-                fieldConfig.setGroupComponents(groupConfigList);
-                ArrayList<GroupConfigInterface> copyOfGroupConfigList = new ArrayList<GroupConfigInterface>(groupConfigList);
-                for(GroupConfigInterface groupConfig : copyOfGroupConfigList)
-                {
-                    insertIndex ++;
-                    populateGroup(parent, box, insertIndex, groupConfig, fieldConfig, true);
-                }
-
-                if(fieldConfig.getFunctionFields() != null)
-                {
-                    int fieldIndex = 0;
-                    populateFunctionFields(fieldIndex, fieldConfig.getFunctionFields(), functionExpression.getParameters());
-                }
-            }
-
-            Dimension boxSize = box.getPreferredSize();
-            scrollFrame.setPreferredSize(boxSize);
-            preferredSize = boxSize;
-
-            refreshPanel();
-        }
-    }
-
-    /**
-     * Populate function fields.
-     *
-     * @param fieldIndex the field index
-     * @param functionFields the function fields
-     * @param parameters the parameters
-     */
-    private void populateFunctionFields(int fieldIndex, List<FieldConfigBase> functionFields,
-            List<Expression> parameters) {
-        int parameterIndex = 0;
-        while(fieldIndex < functionFields.size())
-        {
-            FieldConfigBase fieldConfig = functionFields.get(fieldIndex);
-
-            if(parameterIndex >= parameters.size())
-            {
-                return;
-            }
-            Expression expression = parameters.get(parameterIndex);
-
-            fieldConfig.populate(expression);
-
-            parameterIndex ++;
-            fieldIndex ++;
-        }
     }
 
     /**

@@ -55,7 +55,6 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.filter.v2.function.temporal.Duration;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
@@ -146,22 +145,20 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param panelId the panel id
      * @param id the id
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, null, valueOnly, multipleValues);
+    public FieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly) {
+        super(panelId, id, null, valueOnly);
     }
 
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
-        FieldPanel fieldPanel = createFieldPanel(getXPos(), getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(getXPos(), getLabel(), parentBox);
 
         createUIPanel(fieldPanel, start, 0, Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.from"));
         createUIPanel(fieldPanel, end, 1, Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.to"));
@@ -733,8 +730,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigTimePeriod copy = new FieldConfigTimePeriod(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.isValueOnly());
         return copy;
     }
 

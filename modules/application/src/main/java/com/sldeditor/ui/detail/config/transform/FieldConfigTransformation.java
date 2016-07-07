@@ -34,7 +34,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -81,10 +80,9 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
      * @param valueOnly the value only
      * @param editButtonText the edit button text
      * @param clearButtonText the clear button text
-     * @param multipleFields the multiple fields
      */
-    public FieldConfigTransformation(Class<?> panelId, FieldId id, String label, boolean valueOnly, String editButtonText, String clearButtonText, boolean multipleFields) {
-        super(panelId, id, label, valueOnly, multipleFields);
+    public FieldConfigTransformation(Class<?> panelId, FieldId id, String label, boolean valueOnly, String editButtonText, String clearButtonText) {
+        super(panelId, id, label, valueOnly);
 
         this.editButtonText = editButtonText;
         this.clearButtonText = clearButtonText;
@@ -93,18 +91,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel(), parentBox);
 
         int width = BasePanel.FIELD_PANEL_WIDTH - xPos - 20;
         int height = BasePanel.WIDGET_HEIGHT * (NO_OF_ROWS - 1);
@@ -380,8 +377,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
                 fieldConfigBase.getLabel(),
                 fieldConfigBase.isValueOnly(),
                 this.editButtonText,
-                this.clearButtonText,
-                fieldConfigBase.hasMultipleValues());
+                this.clearButtonText);
         return copy;
     }
 

@@ -39,7 +39,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -79,10 +78,9 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param panelId the panel id
      * @param id the id
      * @param label the label
-     * @param multipleFields the multiple fields
      */
-    public FieldConfigColourMap(Class<?> panelId, FieldId id, String label, boolean multipleFields) {
-        super(panelId, id, label, true, multipleFields);
+    public FieldConfigColourMap(Class<?> panelId, FieldId id, String label) {
+        super(panelId, id, label, true);
 
         model = new ColourMapModel(this);
     }
@@ -101,15 +99,14 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
         int xPos = getXPos();
         int maxNoOfRows = 12;
-        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(maxNoOfRows), getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(maxNoOfRows), getLabel(), parentBox);
 
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -361,8 +358,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigColourMap copy = new FieldConfigColourMap(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.getLabel());
         return copy;
     }
 

@@ -104,12 +104,11 @@ public class SymbolTypeFactory {
     {
         this.selectionComboBox = symbolSelectionField;
 
-        boolean multipleValues = false;
-        markerField = new FieldConfigMarker(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false, colourField, opacityField, symbolSelectionField, multipleValues);
-        externalImageField = new FieldConfigFilename(panelId, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), "", true, multipleValues);
-        ttfField = new FieldConfigTTF(panelId, new FieldId(FieldIdEnum.TTF_SYMBOL), "", true, multipleValues);
-        windBarbs = new FieldConfigWindBarbs(panelId, new FieldId(FieldIdEnum.WINDBARBS), "", true, multipleValues);
-        wktShape = new FieldConfigWKT(panelId, new FieldId(FieldIdEnum.WKT), "", true, multipleValues);
+        markerField = new FieldConfigMarker(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false, colourField, opacityField, symbolSelectionField);
+        externalImageField = new FieldConfigFilename(panelId, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), "", true);
+        ttfField = new FieldConfigTTF(panelId, new FieldId(FieldIdEnum.TTF_SYMBOL), "", true);
+        windBarbs = new FieldConfigWindBarbs(panelId, new FieldId(FieldIdEnum.WINDBARBS), "", true);
+        wktShape = new FieldConfigWKT(panelId, new FieldId(FieldIdEnum.WKT), "", true);
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);

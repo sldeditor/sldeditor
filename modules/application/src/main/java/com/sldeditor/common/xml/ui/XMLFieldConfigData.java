@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="id" use="required" type="{}FieldIdEnum" /&gt;
  *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="valueOnly" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
- *       &lt;attribute name="multiple" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
  *       &lt;attribute name="default" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -66,8 +65,6 @@ public class XMLFieldConfigData {
     protected String label;
     @XmlAttribute(name = "valueOnly")
     protected Boolean valueOnly;
-    @XmlAttribute(name = "multiple")
-    protected Boolean multiple;
     @XmlAttribute(name = "default")
     protected String _default;
 
@@ -145,34 +142,6 @@ public class XMLFieldConfigData {
      */
     public void setValueOnly(Boolean value) {
         this.valueOnly = value;
-    }
-
-    /**
-     * Gets the value of the multiple property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public boolean isMultiple() {
-        if (multiple == null) {
-            return false;
-        } else {
-            return multiple;
-        }
-    }
-
-    /**
-     * Sets the value of the multiple property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setMultiple(Boolean value) {
-        this.multiple = value;
     }
 
     /**

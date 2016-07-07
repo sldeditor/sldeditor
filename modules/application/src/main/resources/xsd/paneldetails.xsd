@@ -493,13 +493,6 @@
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute type="xs:boolean" name="multiple" use="optional" default="false" >
-            <xs:annotation>
-                <xs:documentation>
-                    Flag indicating whether multiple field values can exist
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
         <xs:attribute type="xs:string" name="default" use="optional" >
             <xs:annotation>
                 <xs:documentation>

@@ -36,7 +36,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -78,8 +77,8 @@ public class FieldConfigFunction extends FieldConfigBase implements UndoActionIn
      * @param buttonText the button text
      * @param multipleFields the multiple fields
      */
-    public FieldConfigFunction(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText, boolean multipleFields, Class<?> fieldType) {
-        super(panelId, id, label, valueOnly, multipleFields);
+    public FieldConfigFunction(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText, Class<?> fieldType) {
+        super(panelId, id, label, valueOnly);
 
         this.buttonText = buttonText;
         this.fieldType = fieldType;
@@ -89,16 +88,18 @@ public class FieldConfigFunction extends FieldConfigBase implements UndoActionIn
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         textField = new JTextField();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -378,7 +379,6 @@ public class FieldConfigFunction extends FieldConfigBase implements UndoActionIn
                 fieldConfigBase.getLabel(),
                 fieldConfigBase.isValueOnly(),
                 this.buttonText,
-                fieldConfigBase.hasMultipleValues(),
                 this.fieldType);
         return copy;
     }

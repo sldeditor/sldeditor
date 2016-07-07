@@ -45,7 +45,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -86,10 +85,9 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigBoundingBox(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigBoundingBox(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
@@ -106,17 +104,16 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         int row = 0;
         xMinTextField = createRow(Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.minx"), xPos, fieldPanel, row);
@@ -418,8 +415,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         FieldConfigBoundingBox copy = new FieldConfigBoundingBox(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
                 fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.isValueOnly());
         return copy;
     }
 

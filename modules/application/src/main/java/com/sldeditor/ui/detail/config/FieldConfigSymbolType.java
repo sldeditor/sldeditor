@@ -38,7 +38,6 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
 import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
@@ -104,20 +103,19 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigSymbolType(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigSymbolType(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         comboBox = new MenuComboBox(this);
         comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -487,8 +485,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
         FieldConfigSymbolType copy = new FieldConfigSymbolType(fieldConfigBase.getPanelId(),
                 fieldConfigBase.getFieldId(),
                 fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+                fieldConfigBase.isValueOnly());
         return copy;
     }
 
