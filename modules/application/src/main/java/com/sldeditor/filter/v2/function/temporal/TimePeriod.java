@@ -90,8 +90,11 @@ public class TimePeriod {
      */
     public void decode(String stringValue) {
         String[] components = stringValue.replace(" ", "").split(separator);
-        start = new Duration(components[0]);
-        end = new Duration(components[1]);
+        if(components.length == 2)
+        {
+            start = new Duration(components[0]);
+            end = new Duration(components[1]);
+        }
     }
 
     public void decode(DefaultPeriod objValue) {

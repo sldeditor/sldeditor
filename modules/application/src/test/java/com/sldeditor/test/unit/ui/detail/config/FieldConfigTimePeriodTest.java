@@ -21,14 +21,23 @@ package com.sldeditor.test.unit.ui.detail.config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import org.junit.Ignore;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Test;
+import org.opengis.filter.expression.Expression;
+import org.opengis.temporal.Period;
 
+import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.function.temporal.Duration;
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
 import com.sldeditor.ui.detail.config.FieldId;
 
@@ -38,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldId;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
 public class FieldConfigTimePeriodTest {
 
     /**
@@ -104,14 +112,64 @@ public class FieldConfigTimePeriodTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#generateExpression()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#populateField(com.sldeditor.filter.v2.function.temporal.TimePeriod)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test
     public void testGenerateExpression() {
-        fail("Not yet implemented");
+        boolean valueOnly = true;
+
+        class TestFieldConfigTimePeriod extends FieldConfigTimePeriod
+        {
+            public TestFieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly) {
+                super(panelId, id, valueOnly);
+            }
+
+            public Expression callGenerateExpression()
+            {
+                return generateExpression();
+            }
+        }
+
+        TestFieldConfigTimePeriod field = new TestFieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        Expression actualExpression = field.callGenerateExpression();
+        assertNotNull(actualExpression);
+
+        // Try string values - erroneous
+        field.createUI(null);
+        String expectedValue = "test string value";
+        field.setTestValue(null, expectedValue);
+        actualExpression = field.callGenerateExpression();
+        assertNotNull(actualExpression);
+
+        expectedValue = "test string value as expression";
+        field.populateExpression(expectedValue, null);
+        actualExpression = field.callGenerateExpression();
+        assertNotNull(actualExpression);
+
+        // Time period values
+        String timePeriod = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
+
+        field.setTestValue(null, (String)null);
+        field.setTestValue(null, timePeriod);
+        actualExpression = field.callGenerateExpression();
+        assertTrue(timePeriod.compareTo(actualExpression.toString()) == 0);
+
+        TimePeriod period = new TimePeriod();
+        Duration start = new Duration();
+        start.setDuration(0, 0, 1, 0, 32, 9);
+        period.setStart(start);
+
+        field.populateField((TimePeriod)null);
+        field.populateField(period);
+        actualExpression = field.callGenerateExpression();
+        assertTrue(period.getString().compareTo(actualExpression.toString()) == 0);
     }
 
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#revertToDefaultValue()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#getStringValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
@@ -120,19 +178,11 @@ public class FieldConfigTimePeriodTest {
 
         String expectedDefaultValue = "default value";
         field.revertToDefaultValue();
-        assertNull(field.getStringValue());
+        assertNotNull(field.getStringValue());
 
         field.createUI(null);
         field.revertToDefaultValue();
-        assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) == 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     */
-    @Test
-    public void testPopulateExpression() {
-        fail("Not yet implemented");
+        assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
     }
 
     /**
@@ -140,39 +190,40 @@ public class FieldConfigTimePeriodTest {
      */
     @Test
     public void testGetClassType() {
-        fail("Not yet implemented");
-    }
+        boolean valueOnly = true;
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#populateField(com.sldeditor.filter.v2.function.temporal.TimePeriod)}.
-     */
-    @Test
-    public void testPopulateFieldTimePeriod() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     */
-    @Test
-    public void testSetTestValueFieldIdString() {
-        fail("Not yet implemented");
+        assertEquals(Period.class, field.getClassType());
     }
 
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
-    public void testCreateCopy() {
-        fail("Not yet implemented");
-    }
+    public void testCreateCopy() {        
+        boolean valueOnly = true;
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#FieldConfigTimePeriod(java.lang.Class, com.sldeditor.ui.detail.config.FieldId, boolean)}.
-     */
-    @Test
-    public void testFieldConfigTimePeriod() {
-        fail("Not yet implemented");
+        class TestFieldConfigTimePeriod extends FieldConfigTimePeriod
+        {
+
+            public TestFieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly) {
+                super(panelId, id, valueOnly);
+            }
+
+            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            {
+                return createCopy(fieldConfigBase);
+            }
+        }
+
+        TestFieldConfigTimePeriod field = new TestFieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        FieldConfigTimePeriod copy = (FieldConfigTimePeriod) field.callCreateCopy(null);
+        assertNull(copy);
+
+        copy = (FieldConfigTimePeriod) field.callCreateCopy(field);
+        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertNull(copy.getLabel());
+        assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
 
     /**
@@ -180,39 +231,71 @@ public class FieldConfigTimePeriodTest {
      */
     @Test
     public void testAttributeSelection() {
-        fail("Not yet implemented");
-    }
+        boolean valueOnly = true;
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        field.attributeSelection(null);
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#getStringValue()}.
-     */
-    @Test
-    public void testGetStringValue() {
-        fail("Not yet implemented");
+        // Does nothing
     }
 
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     */
-    @Test
-    public void testUndoAction() {
-        fail("Not yet implemented");
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
-    public void testRedoAction() {
-        fail("Not yet implemented");
-    }
+    public void testUndoAction() {
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), false);
+        field.createUI(null);
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#updateFields(com.sldeditor.ui.detail.config.FieldConfigTimePeriod.TimePeriodPanel)}.
-     */
-    @Test
-    public void testUpdateFields() {
-        fail("Not yet implemented");
-    }
+        // Dates
+        SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MMM-yyyy");
+        Date date1 = null;
+        String dateInString1 = "7-Jun-2013";
 
+        SimpleDateFormat formatter2 = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
+        String dateInString2 = "Friday, Jun 7, 2013 12:10:56 PM";                
+        Date date2 = null;
+
+        try {
+            date1 = formatter1.parse(dateInString1);
+            date2 = formatter2.parse(dateInString2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        UndoEvent undoEventDate = new UndoEvent(null, new FieldId(), date1, date2);
+
+        field.undoAction(null);
+        field.undoAction(undoEventDate);
+        String actualValue = field.getStringValue();
+        String expectedDate1 = "";
+ //       assertTrue(actualValue.compareTo(expectedDate1) == 0);
+
+        field.redoAction(null);
+        field.redoAction(undoEventDate);
+        String expectedDate2 = "";
+ //       assertTrue(actualValue.compareTo(expectedDate2) == 0);
+
+        // Time period values
+        String timePeriod = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
+        TimePeriod period1 = new TimePeriod();
+        period1.decode(timePeriod);
+        String expectedPeriod1 = period1.getString();
+
+        TimePeriod period2 = new TimePeriod();        
+        Duration start = new Duration();
+        start.setDuration(0, 0, 1, 0, 32, 9);
+        period2.setStart(start);
+
+        UndoEvent undoTimePeriodEvent = new UndoEvent(null, new FieldId(), period1, period2);
+
+        field.undoAction(null);
+        field.undoAction(undoTimePeriodEvent);
+        actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedPeriod1) == 0);
+
+        field.redoAction(null);
+        field.redoAction(undoTimePeriodEvent);
+        assertTrue(actualValue.compareTo(expectedPeriod1) == 0);
+    }
 }
