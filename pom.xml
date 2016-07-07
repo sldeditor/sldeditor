@@ -119,6 +119,10 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <!-- Create coverage reports for integration tests -->
+                <jacoco.skip>false</jacoco.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -136,6 +140,10 @@
         </profile>
         <profile>
             <id>IntegrationTests</id>
+            <properties>
+                <!-- Don't create coverage reports for integration tests -->
+                <jacoco.skip>true</jacoco.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
