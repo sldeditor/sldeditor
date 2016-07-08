@@ -51,6 +51,9 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     /** The default value. */
     private boolean defaultValue = false;
 
+    /** The old value obj. */
+    private Boolean oldValueObj = null;
+
     /**
      * Instantiates a new field config boolean.
      *
@@ -196,9 +199,12 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        populateField((Boolean) objValue);
+        if(objValue != null)
+        {
+            populateField((Boolean) objValue);
 
-        valueUpdated();
+            valueUpdated();
+        }
     }
 
     /**
@@ -245,11 +251,14 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(checkBox != null)
+        if((checkBox != null) && (undoRedoObject != null))
         {
-            Boolean oldValue = (Boolean)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Boolean)
+            {
+                Boolean oldValue = (Boolean)undoRedoObject.getOldValue();
 
-            checkBox.setSelected(oldValue.booleanValue());
+                checkBox.setSelected(oldValue.booleanValue());
+            }
         }
     }
 
@@ -261,11 +270,14 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(checkBox != null)
+        if((checkBox != null) && (undoRedoObject != null))
         {
-            Boolean newValue = (Boolean)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Boolean)
+            {
+                Boolean newValue = (Boolean)undoRedoObject.getNewValue();
 
-            checkBox.setSelected(newValue.booleanValue());
+                checkBox.setSelected(newValue.booleanValue());
+            }
         }
     }
 
@@ -289,9 +301,13 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
      */
     @Override
     public void populateField(Boolean value) {
-        if(this.checkBox != null)
+        if((value != null) && (this.checkBox != null))
         {
             checkBox.setSelected(value);
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+
+            oldValueObj = value;
         }
     }
 
@@ -303,10 +319,15 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigBoolean copy = new FieldConfigBoolean(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigBoolean copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigBoolean(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
