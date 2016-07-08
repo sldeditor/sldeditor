@@ -84,7 +84,7 @@ public class TimePeriod {
     }
 
     /**
-     * Decode.
+     * Decode a time period encoded as a string.
      *
      * @param stringValue the string value
      */
@@ -97,6 +97,11 @@ public class TimePeriod {
         }
     }
 
+    /**
+     * Decode a DefaultPeriod object.
+     *
+     * @param objValue the obj value
+     */
     public void decode(DefaultPeriod objValue) {
         DefaultPeriod defaultPeriod = (DefaultPeriod) objValue;
         Instant beginning = defaultPeriod.getBeginning();

@@ -69,7 +69,7 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 public class FieldConfigTimePeriod extends FieldConfigBase implements UndoActionInterface {
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private TimePeriod oldValueObj = null;
 
     /**
      * The Class TimePeriodPanel.
@@ -124,9 +124,11 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         /** The panel. */
         private JPanel panel;
 
+
         /**
-         * Return true if all the fields are configured
-         * @return
+         * Return true if all the fields are configured.
+         *
+         * @return true, if successful
          */
         public boolean areFieldsConfigured()
         {
@@ -208,8 +210,6 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     private void createUIPanel(FieldPanel fieldPanel, TimePeriodPanel panelData, int index, String title)
     {
-        final UndoActionInterface parentObj = this;
-
         int row = 0;
         panelData.panel = new JPanel();
         panelData.panel.setLayout(null);
@@ -237,19 +237,6 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
             @Override
             public void stateChanged(ChangeEvent e)
             {
-                UtilDateModel utilDateModel = (UtilDateModel) e.getSource();
-
-                int day = utilDateModel.getDay();
-                int month = utilDateModel.getMonth();
-                int year = utilDateModel.getYear();
-
-                Calendar.getInstance().set(year, month, day);
-
-                Object newValueObj = Calendar.getInstance().getTime();
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                oldValueObj = newValueObj;
                 valueUpdated();
             }
         });
@@ -660,16 +647,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     {
         if(undoRedoObject != null)
         {
-            if(undoRedoObject.getOldValue() instanceof Date)
-            {
-                Date oldValue = (Date)undoRedoObject.getOldValue();
-
-                if(start.dateModel != null)
-                {
-                    start.dateModel.setValue(oldValue);
-                }
-            }
-            else if(undoRedoObject.getOldValue() instanceof TimePeriod)
+            if(undoRedoObject.getOldValue() instanceof TimePeriod)
             {
                 TimePeriod oldValue = (TimePeriod)undoRedoObject.getOldValue();
 
@@ -689,15 +667,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     {
         if(undoRedoObject != null)
         {
-            if(undoRedoObject.getNewValue() instanceof Date)
-            {
-                Date newValue = (Date)undoRedoObject.getNewValue();
-                if(start.datePicker != null)
-                {
-                    start.dateModel.setValue(newValue);
-                }
-            }
-            else if(undoRedoObject.getNewValue() instanceof TimePeriod)
+            if(undoRedoObject.getNewValue() instanceof TimePeriod)
             {
                 TimePeriod newValue = (TimePeriod)undoRedoObject.getNewValue();
 

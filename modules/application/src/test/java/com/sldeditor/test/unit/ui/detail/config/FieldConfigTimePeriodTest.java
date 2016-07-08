@@ -25,15 +25,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import org.geotools.temporal.object.DefaultInstant;
+import org.geotools.temporal.object.DefaultPeriod;
+import org.geotools.temporal.object.DefaultPosition;
 import org.junit.Test;
 import org.opengis.filter.expression.Expression;
 import org.opengis.temporal.Period;
 
-import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.Duration;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
@@ -149,7 +148,7 @@ public class FieldConfigTimePeriodTest {
         assertNotNull(actualExpression);
 
         // Time period values
-        String timePeriod = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
+        String timePeriod = "07-07-2016T17:42:27Z / 08-07-2016T17:42:27Z";
 
         field.setTestValue(null, (String)null);
         field.setTestValue(null, timePeriod);
@@ -165,6 +164,16 @@ public class FieldConfigTimePeriodTest {
         field.populateField(period);
         actualExpression = field.callGenerateExpression();
         assertTrue(period.getString().compareTo(actualExpression.toString()) == 0);
+
+        TimePeriod timePeriodObj = new TimePeriod();
+        timePeriodObj.decode(timePeriod);
+        DefaultPeriod defaultPeriod = new DefaultPeriod(
+                new DefaultInstant(new DefaultPosition(timePeriodObj.getStart().getDate())),
+                new DefaultInstant(new DefaultPosition(timePeriodObj.getEnd().getDate())));
+
+        field.populateExpression(defaultPeriod, null);
+        actualExpression = field.callGenerateExpression();
+        assertTrue(timePeriod.compareTo(actualExpression.toString()) == 0);
     }
 
     /**
@@ -200,7 +209,7 @@ public class FieldConfigTimePeriodTest {
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
-    public void testCreateCopy() {        
+    public void testCreateCopy() {
         boolean valueOnly = true;
 
         class TestFieldConfigTimePeriod extends FieldConfigTimePeriod
@@ -247,55 +256,27 @@ public class FieldConfigTimePeriodTest {
         FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), false);
         field.createUI(null);
 
-        // Dates
-        SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MMM-yyyy");
-        Date date1 = null;
-        String dateInString1 = "7-Jun-2013";
-
-        SimpleDateFormat formatter2 = new SimpleDateFormat("EEEE, MMM dd, yyyy HH:mm:ss a");
-        String dateInString2 = "Friday, Jun 7, 2013 12:10:56 PM";                
-        Date date2 = null;
-
-        try {
-            date1 = formatter1.parse(dateInString1);
-            date2 = formatter2.parse(dateInString2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        UndoEvent undoEventDate = new UndoEvent(null, new FieldId(), date1, date2);
-
-        field.undoAction(null);
-        field.undoAction(undoEventDate);
-        String actualValue = field.getStringValue();
-        String expectedDate1 = "";
- //       assertTrue(actualValue.compareTo(expectedDate1) == 0);
-
-        field.redoAction(null);
-        field.redoAction(undoEventDate);
-        String expectedDate2 = "";
- //       assertTrue(actualValue.compareTo(expectedDate2) == 0);
-
         // Time period values
-        String timePeriod = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
+        String timePeriod1 = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
         TimePeriod period1 = new TimePeriod();
-        period1.decode(timePeriod);
+        period1.decode(timePeriod1);
         String expectedPeriod1 = period1.getString();
 
-        TimePeriod period2 = new TimePeriod();        
-        Duration start = new Duration();
-        start.setDuration(0, 0, 1, 0, 32, 9);
-        period2.setStart(start);
+        field.populateField(period1);
 
-        UndoEvent undoTimePeriodEvent = new UndoEvent(null, new FieldId(), period1, period2);
+        String timePeriod2 = "P 0 Y 0 M 1 D 0 H 32 M 9 S / 08-07-2016T09:42:06Z";
+        TimePeriod period2 = new TimePeriod();
+        period2.decode(timePeriod2);
+        String expectedPeriod2 = period2.getString();
 
-        field.undoAction(null);
-        field.undoAction(undoTimePeriodEvent);
+        field.populateField(period2);
+
+        UndoManager.getInstance().undo();
+        String actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedPeriod1) == 0);
+
+        UndoManager.getInstance().redo();
         actualValue = field.getStringValue();
-        assertTrue(actualValue.compareTo(expectedPeriod1) == 0);
-
-        field.redoAction(null);
-        field.redoAction(undoTimePeriodEvent);
-        assertTrue(actualValue.compareTo(expectedPeriod1) == 0);
+        assertTrue(actualValue.compareTo(expectedPeriod2) == 0);
     }
 }
