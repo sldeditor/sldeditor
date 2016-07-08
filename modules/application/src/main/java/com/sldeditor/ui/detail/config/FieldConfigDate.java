@@ -42,6 +42,7 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
+import net.sourceforge.jdatepicker.DateModel;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -72,6 +73,9 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     /** The time format. */
     private DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 
+    /** The date/time format. */
+    private DateFormat dtf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
+
     /** The date model. */
     private UtilDateModel dateModel = new UtilDateModel();
 
@@ -100,7 +104,6 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void createUI(Box parentBox) {
-        final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
 
@@ -116,19 +119,6 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
             @Override
             public void stateChanged(ChangeEvent e)
             {
-                UtilDateModel utilDateModel = (UtilDateModel) e.getSource();
-
-                int day = utilDateModel.getDay();
-                int month = utilDateModel.getMonth();
-                int year = utilDateModel.getYear();
-
-                Calendar.getInstance().set(year, month, day);
-
-                Object newValueObj = Calendar.getInstance().getTime();
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                oldValueObj = newValueObj;
                 valueUpdated();
             }
         });
@@ -268,7 +258,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
         else if(objValue instanceof String)
         {
             try {
-                value = df.parse((String) objValue);
+                value = dtf.parse((String) objValue);
             }
             catch (ParseException e) {
                 ConsoleManager.getInstance().exception(this, e);
@@ -286,7 +276,12 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     @Override
     public String getStringValue()
     {
-        return String.format("%sT%sZ", df.format(getDate()), tf.format(getDate()));
+        Date date = getDate();
+        if(date == null)
+        {
+            return null;
+        }
+        return String.format("%sT%sZ", df.format(date), tf.format(date));
     }
 
     /**
@@ -296,7 +291,12 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     private Date getDate()
     {
-        Date selectedDate = (Date) datePicker.getModel().getValue();
+        if((datePicker == null) || (timePicker == null))
+        {
+            return null;
+        }
+        DateModel<?> model = datePicker.getModel();
+        Date selectedDate = (Date) model.getValue();
 
         Date time = (Date) timePicker.getValue();
 
@@ -323,11 +323,15 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(datePicker != null)
+        if((dateModel != null) && (timePicker != null) && (undoRedoObject != null))
         {
-            Date oldValue = (Date)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Date)
+            {
+                Date oldValue = (Date)undoRedoObject.getOldValue();
 
-            dateModel.setValue(oldValue);
+                dateModel.setValue(oldValue);
+                timePicker.setValue(oldValue);
+            }
         }
     }
 
@@ -339,11 +343,15 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(datePicker != null)
+        if((dateModel != null) && (timePicker != null) && (undoRedoObject != null))
         {
-            Date newValue = (Date)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Date)
+            {
+                Date newValue = (Date)undoRedoObject.getNewValue();
 
-            dateModel.setValue(newValue);
+                dateModel.setValue(newValue);
+                timePicker.setValue(newValue);
+            }
         }
     }
 
@@ -356,10 +364,8 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     @Override
     public void setTestValue(FieldId fieldId, String testValue) {
         try {
-            Date date = df.parse(testValue);
+            Date date = dtf.parse(testValue);
             populateField(date);
-
-            valueUpdated();
         }
         catch (ParseException e) {
             ConsoleManager.getInstance().exception(this, e);
@@ -373,9 +379,10 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void populateField(Date value) {
-        if(dateModel != null)
+        if((dateModel != null) && (timePicker != null) && (value != null))
         {
             dateModel.setValue(value);
+            timePicker.setValue(value);
             UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
             oldValueObj = value;
             valueUpdated();
@@ -390,10 +397,14 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigDate copy = new FieldConfigDate(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigDate copy = null;
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigDate(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
