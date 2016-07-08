@@ -593,6 +593,7 @@ public class FieldConfigBaseTest {
 
         field.populateField(new Date());
         field.populateField((ReferencedEnvelope)null);
+        field.setTestValue(expectedFieldId, (ReferencedEnvelope)null);
         field.populateField((Id)null);
         field.populateField((TimePeriod)null);
         field.populateField((ProcessFunction)null);

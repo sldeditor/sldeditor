@@ -891,6 +891,16 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     }
 
     /**
+     * Sets the test value, overridden if necessary.
+     *
+     * @param fieldId the field id
+     * @param testValue the test value
+     */
+    @Override
+    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue) {
+        // Do nothing
+    }
+    /**
      * Gets the double value, overridden if necessary.
      *
      * @return the double value

@@ -42,7 +42,7 @@ import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The unit test for FieldConfigTimePeriod.
- * <p>{@link com.sldeditor.ui.detail.config.FieldConfigTimePerio}
+ * <p>{@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -92,7 +92,8 @@ public class FieldConfigTimePeriodTest {
         field.setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
-        assertEquals(!expectedValue, field2.isEnabled());    }
+        assertEquals(!expectedValue, field2.isEnabled());
+    }
 
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigTimePeriod#setVisible(boolean)}.
