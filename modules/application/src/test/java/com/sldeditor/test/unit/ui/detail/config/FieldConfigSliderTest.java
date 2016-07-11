@@ -30,27 +30,26 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldId;
 
 /**
- * The unit test for FieldConfigDouble.
- * <p>{@link com.sldeditor.ui.detail.config.FieldConfigDouble}
+ * The unit test for FieldConfigSlider.
+ * <p>{@link com.sldeditor.ui.detail.config.FieldConfigSlider}
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigDoubleTest {
+public class FieldConfigSliderTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#isEnabled()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createUI(javax.swing.Box)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -69,7 +68,7 @@ public class FieldConfigDoubleTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigDouble field2 = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field2 = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
         // Text field will not have been created
         expectedValue = true;
@@ -89,12 +88,12 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setVisible(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -106,56 +105,52 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#populateField(java.lang.Double)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setTestValue(com.sldeditor.ui.detail.config.FieldId, double)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#getDoubleValue()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#generateExpression()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#populateField(java.lang.Double)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setTestValue(com.sldeditor.ui.detail.config.FieldId, double)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#getDoubleValue()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
+        double defaultDefaultValue = 0.5;
         double expectedValue = 1.0;
         field.populateField(expectedValue);
         double actualValue = field.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.0) < 0.001);
+        assertTrue(Math.abs(actualValue - defaultDefaultValue) < 0.001);
 
         field.setTestValue(null, expectedValue);
         actualValue = field.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.0) < 0.001);
+        assertTrue(Math.abs(actualValue - defaultDefaultValue) < 0.001);
 
         field.populateExpression(null, null);
         actualValue = field.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.0) < 0.001);
+        assertTrue(Math.abs(actualValue - defaultDefaultValue) < 0.001);
 
         field.createUI(null);
         field.populateField(expectedValue);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue) < 0.001);
 
-        double expectedValue2 = 0.134;
+        double expectedValue2 = 0.14;
         field.setTestValue(null, expectedValue2);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue2) < 0.001);
 
-        Integer expectedValue3a = Integer.valueOf(42);
+        Integer expectedValue3a = Integer.valueOf(1);
         field.populateExpression(expectedValue3a, null);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3a) < 0.001);
 
-        Long expectedValue3b = Long.valueOf(4567);
-        field.populateExpression(expectedValue3b, null);
-        actualValue = field.getDoubleValue();
-        assertTrue(Math.abs(actualValue - expectedValue3b) < 0.001);
-
-        Double expectedValue3c = Double.valueOf(42.12);
+        Double expectedValue3c = Double.valueOf(0.4);
         field.populateExpression(expectedValue3c, null);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3c) < 0.001);
 
-        double expectedValue3d = 698.7;
+        double expectedValue3d = 0.87;
         String expectedValue3dString = String.valueOf(expectedValue3d);
         field.populateExpression(expectedValue3dString, null);
         actualValue = field.getDoubleValue();
@@ -163,17 +158,18 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#revertToDefaultValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setDefaultValue(double)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#revertToDefaultValue()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setDefaultValue(double)}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
-        Double expectedDefaultValue = 42.19;
+        double defaultDefaultValue = 0.5; 
+        Double expectedDefaultValue = 0.42;
         field.revertToDefaultValue();
-        assertTrue(Math.abs(field.getDoubleValue() - 0.0) < 0.001);
+        assertTrue(Math.abs(field.getDoubleValue() - defaultDefaultValue) < 0.001);
 
         field.createUI(null);
         field.setDefaultValue(expectedDefaultValue);
@@ -183,26 +179,26 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#getClassType()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#getClassType()}.
      */
     @Test
     public void testGetClassType() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
         assertEquals(Double.class, field.getClassType());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigDouble extends FieldConfigDouble
+        class TestFieldConfigSlider extends FieldConfigSlider
         {
-            public TestFieldConfigDouble(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+            public TestFieldConfigSlider(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
                 super(panelId, id, label, valueOnly);
             }
 
@@ -212,48 +208,43 @@ public class FieldConfigDoubleTest {
             }
         }
 
-        TestFieldConfigDouble field = new TestFieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-        FieldConfigDouble copy = (FieldConfigDouble) field.callCreateCopy(null);
+        TestFieldConfigSlider field = new TestFieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider copy = (FieldConfigSlider) field.callCreateCopy(null);
         assertNull(copy);
 
-        copy = (FieldConfigDouble) field.callCreateCopy(field);
+        copy = (FieldConfigSlider) field.callCreateCopy(field);
         assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#attributeSelection(java.lang.String)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
         field.attributeSelection(null);
 
-        field.createUI(null);
-        assertTrue(field.isEnabled());
-        field.attributeSelection("test");
-        assertFalse(field.isEnabled());
-        field.attributeSelection(null);
-        assertTrue(field.isEnabled());
+        // Do nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
-        double expectedValue1 = 13.4;
+        double expectedValue1 = 0.13;
         field.createUI(null);
         field.populateField(expectedValue1);
         assertTrue(Math.abs(field.getDoubleValue() - expectedValue1) < 0.001);
 
-        double expectedValue2 = 987.6;
+        double expectedValue2 = 0.98;
         field.setTestValue(null, expectedValue2);
         assertTrue(Math.abs(field.getDoubleValue() - expectedValue2) < 0.001);
 

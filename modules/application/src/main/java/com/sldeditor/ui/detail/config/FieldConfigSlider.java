@@ -212,7 +212,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        Double value = 0.0;
+        Double value = defaultValue;
 
         if(objValue instanceof Integer)
         {
@@ -270,11 +270,14 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(slider != null)
+        if((slider != null) && (undoRedoObject != null))
         {
-            Integer oldValue = (Integer)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Integer)
+            {
+                Integer oldValue = (Integer)undoRedoObject.getOldValue();
 
-            slider.setValue(oldValue.intValue());
+                slider.setValue(oldValue.intValue());
+            }
         }
     }
 
@@ -286,11 +289,14 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(slider != null)
+        if((slider != null) && (undoRedoObject != null))
         {
-            Integer newValue = (Integer)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Integer)
+            {
+                Integer newValue = (Integer)undoRedoObject.getNewValue();
 
-            slider.setValue(newValue.intValue());
+                slider.setValue(newValue.intValue());
+            }
         }
     }
 
@@ -342,10 +348,15 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigSlider copy = new FieldConfigSlider(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigSlider copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigSlider(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
