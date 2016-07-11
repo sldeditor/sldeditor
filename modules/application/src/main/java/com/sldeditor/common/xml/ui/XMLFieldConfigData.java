@@ -50,7 +50,6 @@ import javax.xml.bind.annotation.XmlType;
     XMLFieldConfigString.class,
     XMLFieldConfigFont.class,
     XMLFieldConfigFontPreview.class,
-    XMLFieldConfigFunction.class,
     XMLFieldConfigGeometry.class,
     XMLFieldConfigSlider.class,
     XMLFieldConfigColour.class,

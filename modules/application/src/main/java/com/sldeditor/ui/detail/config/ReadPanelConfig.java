@@ -42,7 +42,6 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueItem;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFont;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFontPreview;
-import com.sldeditor.common.xml.ui.XMLFieldConfigFunction;
 import com.sldeditor.common.xml.ui.XMLFieldConfigGeometry;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInteger;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
@@ -337,22 +336,6 @@ public class ReadPanelConfig implements PanelConfigInterface {
                     getLocalisedText(localisationClass, xmlTransformationFieldConfig.getClearButtonText()));
 
             groupConfig.addField(transformationConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigFunction)
-        {
-            XMLFieldConfigFunction xmlStringFieldConfig = (XMLFieldConfigFunction) xmlFieldConfig;
-
-            FieldConfigFunction functionConfig = new FieldConfigFunction(panelId, id, label, valueOnly, getLocalisedText(localisationClass, xmlStringFieldConfig.getButtonText()), fieldType);
-
-            groupConfig.addField(functionConfig);
-
-            String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
-
-            if(defaultValueObj != null)
-            {
-                functionConfig.setDefaultValue(defaultValueObj);
-                defaultFieldMap.put(id, defaultValueObj);
-            }
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigGeometry)
         {

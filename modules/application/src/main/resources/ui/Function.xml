@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<PanelConfig panelTitle="style.paneltitle">
-    <Group id="STANDARD" showLabel="false">
-        <FieldConfigFunction id="FUNCTION" label="*standard.name" valueOnly="false" />
-    </Group>
-</PanelConfig>

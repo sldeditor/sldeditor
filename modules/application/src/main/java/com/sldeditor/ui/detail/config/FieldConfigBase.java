@@ -133,9 +133,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     /** The function parameter type. */
     private Class<?> functionParameterType = null;
 
-    /** The is function flag. */
-    private boolean isFunction = false;
-
     /** The field index. */
     private static int fieldIndex = 0;
 
@@ -1130,23 +1127,5 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      */
     public Class<?> getFunctionParameterType() {
         return functionParameterType;
-    }
-
-    /**
-     * Checks if is function.
-     *
-     * @return the isFunction
-     */
-    public boolean isFunction() {
-        return isFunction;
-    }
-
-    /**
-     * Sets the function.
-     *
-     * @param isFunction the isFunction to set
-     */
-    public void setFunction(boolean isFunction) {
-        this.isFunction = isFunction;
     }
 }

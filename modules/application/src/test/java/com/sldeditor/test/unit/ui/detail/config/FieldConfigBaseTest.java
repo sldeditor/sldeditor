@@ -331,7 +331,7 @@ public class FieldConfigBaseTest {
         String expectedLabel = "test label";
         TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
 
-        AttributeSelection attributeSelectionPanel = new AttributeSelection(String.class, false, field);
+        AttributeSelection attributeSelectionPanel = new AttributeSelection(String.class, field);
         attributeSelectionPanel.setEnabled(true);
         field.testAttributeSelectionPanel(attributeSelectionPanel);
         field.testSetValueFieldState();
@@ -501,7 +501,7 @@ public class FieldConfigBaseTest {
         String expectedLabel = "test label";
         TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
 
-        AttributeSelection attributeSelectionPanel = new AttributeSelection(String.class, false, field);
+        AttributeSelection attributeSelectionPanel = new AttributeSelection(String.class, field);
         field.testAttributeSelectionPanel(attributeSelectionPanel);
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
@@ -693,19 +693,4 @@ public class FieldConfigBaseTest {
         assertEquals(expectedClass, field.getFunctionParameterType());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#isFunction()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#setFunction(boolean)}.
-     */
-    @Test
-    public void testIsFunction() {
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
-        boolean isFunction = true;
-        
-        assertFalse(field.isFunction());
-        field.setFunction(isFunction);
-        assertTrue(field.isFunction());
-    }
 }

@@ -96,7 +96,6 @@
                     <xs:element name="FieldConfigDouble"        type="XMLFieldConfigDouble" />
                     <xs:element name="FieldConfigEnum"          type="XMLFieldConfigEnum" />
                     <xs:element name="FieldConfigString"        type="XMLFieldConfigString" />
-                    <xs:element name="FieldConfigFunction"      type="XMLFieldConfigFunction" />
                     <xs:element name="FieldConfigSlider"        type="XMLFieldConfigSlider" />
                     <xs:element name="FieldConfigColour"        type="XMLFieldConfigColour" />
                     <xs:element name="FieldConfigFont"          type="XMLFieldConfigFont" />
@@ -374,25 +373,6 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData" />
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="XMLFieldConfigFunction">
-        <xs:annotation>
-            <xs:documentation>
-                Configuration for a function field
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="XMLFieldConfigData">
-                <xs:attribute type="xs:string" name="buttonText" use="optional" >
-                    <xs:annotation>
-                        <xs:documentation>
-                            Text to display in button if specified
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:attribute>
-            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 

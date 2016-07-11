@@ -221,14 +221,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link XMLFieldConfigFunction }
-     * 
-     */
-    public XMLFieldConfigFunction createXMLFieldConfigFunction() {
-        return new XMLFieldConfigFunction();
-    }
-
-    /**
      * Create an instance of {@link XMLFieldConfigGeometry }
      * 
      */

@@ -29,7 +29,6 @@ import javax.swing.SwingConstants;
 import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigFunction;
 
 /**
  * Panel that contains a field.
@@ -83,16 +82,8 @@ public class FieldPanel extends JPanel {
      * @return the attribute selection
      */
     public AttributeSelection internalCreateAttrButton(Class<?> classType, FieldConfigBase field) {
-        boolean isFunction = (field instanceof FieldConfigFunction);
-        FieldConfigBase parentField = field.getParent();
 
-        if(parentField != null)
-        {
-            isFunction = parentField.isFunction();
-            field.setFunction(isFunction);
-        }
-
-        AttributeSelection buttonAttrLabel = new AttributeSelection(classType, isFunction, field);
+        AttributeSelection buttonAttrLabel = new AttributeSelection(classType, field);
         buttonAttrLabel.setBounds(xPos + BasePanel.ATTRIBUTE_BTN_X, 0, AttributeSelection.getPanelWidth(), BasePanel.WIDGET_HEIGHT);
         add(buttonAttrLabel);
 
