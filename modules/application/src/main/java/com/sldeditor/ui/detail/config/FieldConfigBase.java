@@ -647,7 +647,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      *
      * @param xPos the x pos
      * @param fieldLabel the field label
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      * @return the field panel
      */

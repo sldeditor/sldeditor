@@ -68,7 +68,6 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
     public FieldConfigDouble(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
         super(panelId, id, label, valueOnly);

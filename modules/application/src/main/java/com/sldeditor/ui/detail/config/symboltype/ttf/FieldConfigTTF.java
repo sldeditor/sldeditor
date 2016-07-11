@@ -90,7 +90,6 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
     public FieldConfigTTF(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
         super(panelId, id, label, valueOnly);
