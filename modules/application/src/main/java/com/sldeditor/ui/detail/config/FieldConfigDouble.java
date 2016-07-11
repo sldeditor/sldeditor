@@ -289,11 +289,14 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(spinner != null)
+        if((spinner != null) && (undoRedoObject != null))
         {
-            Double oldValue = (Double)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Double)
+            {
+                Double oldValue = (Double)undoRedoObject.getOldValue();
 
-            spinner.setValue(oldValue);
+                spinner.setValue(oldValue);
+            }
         }
     }
 
@@ -305,11 +308,14 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(spinner != null)
+        if((spinner != null) && (undoRedoObject != null))
         {
-            Double newValue = (Double)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Double)
+            {
+                Double newValue = (Double)undoRedoObject.getNewValue();
 
-            spinner.setValue(newValue);
+                spinner.setValue(newValue);
+            }
         }
     }
 
@@ -345,17 +351,21 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigDouble copy = new FieldConfigDouble(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigDouble copy = null;
 
-        FieldConfigDouble doubleFieldConfig = (FieldConfigDouble)fieldConfigBase;
-        copy.setConfig(doubleFieldConfig.minValue, 
-                doubleFieldConfig.maxValue, 
-                doubleFieldConfig.stepSize,
-                doubleFieldConfig.noOfDecimalPlaces);
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigDouble(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
 
+            FieldConfigDouble doubleFieldConfig = (FieldConfigDouble)fieldConfigBase;
+            copy.setConfig(doubleFieldConfig.minValue, 
+                    doubleFieldConfig.maxValue, 
+                    doubleFieldConfig.stepSize,
+                    doubleFieldConfig.noOfDecimalPlaces);
+        }
         return copy;
     }
 

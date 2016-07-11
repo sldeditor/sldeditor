@@ -272,11 +272,14 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(spinner != null)
+        if((spinner != null) && (undoRedoObject != null))
         {
-            Integer oldValue = (Integer)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Integer)
+            {
+                Integer oldValue = (Integer)undoRedoObject.getOldValue();
 
-            spinner.setValue(oldValue);
+                spinner.setValue(oldValue);
+            }
         }
     }
 
@@ -288,11 +291,14 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(spinner != null)
+        if((spinner != null) && (undoRedoObject != null))
         {
-            Integer newValue = (Integer)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Integer)
+            {
+                Integer newValue = (Integer)undoRedoObject.getNewValue();
 
-            spinner.setValue(newValue);
+                spinner.setValue(newValue);
+            }
         }
     }
 
@@ -328,10 +334,15 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigInteger copy = new FieldConfigInteger(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigInteger copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigInteger(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
