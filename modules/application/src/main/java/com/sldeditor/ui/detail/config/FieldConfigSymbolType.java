@@ -144,24 +144,27 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     public void addField(SymbolTypeInterface symbolType)
     {
-        FieldConfigBase fieldConfig = symbolType.getConfigField();
-        Class<?> panelId = symbolType.getClass();
-        VendorOptionVersion vendorOption = symbolType.getVendorOption();
-
-        if(fieldConfig == null)
+        if(symbolType != null)
         {
-            ConsoleManager.getInstance().error(this, "FieldConfigFillSymbolType.addPanel passed a field config as null");
-        }
-        else
-        {
-            // Add to card layout
-            containingPanel.add(fieldConfig.getPanel(), panelId.getName());
+            FieldConfigBase fieldConfig = symbolType.getConfigField();
+            Class<?> panelId = symbolType.getClass();
+            VendorOptionVersion vendorOption = symbolType.getVendorOption();
 
-            fieldConfigMap.put(panelId, fieldConfig);
-            vendorOptionMap.put(panelId, vendorOption);
+            if(fieldConfig == null)
+            {
+                ConsoleManager.getInstance().error(this, "FieldConfigSymbolType.addPanel passed a field config as null");
+            }
+            else
+            {
+                // Add to card layout
+                containingPanel.add(fieldConfig.getPanel(), panelId.getName());
 
-            fieldConfig.setExpressionUpdateListener(this);
-            fieldConfig.setParent(this);
+                fieldConfigMap.put(panelId, fieldConfig);
+                vendorOptionMap.put(panelId, vendorOption);
+
+                fieldConfig.setExpressionUpdateListener(this);
+                fieldConfig.setParent(this);
+            }
         }
     }
 
@@ -175,7 +178,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     {
         this.symbolSelectedListener = symbolSelectedListener;
 
-        comboBox.initialiseMenu(dataSelectionList);
+        if(comboBox != null)
+        {
+            comboBox.initialiseMenu(dataSelectionList);
+        }
     }
 
     /**
@@ -184,7 +190,12 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * @return the selected value
      */
     public Class<?> getSelectedValue() {
-        return getSelectedValueObj().getPanelId();
+        ValueComboBoxData selectedValueObj = getSelectedValueObj();
+        if(selectedValueObj == null)
+        {
+            return null;
+        }
+        return selectedValueObj.getPanelId();
     }
 
     /**
@@ -194,6 +205,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     public ValueComboBoxData getSelectedValueObj()
     {
+        if(comboBox == null)
+        {
+            return null;
+        }
         return comboBox.getSelectedData();
     }
 
@@ -265,14 +280,14 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
                 else
                 {
                     expression = fieldConfig.getExpression();
-                }
 
-                if((expression == null) && fieldConfig.isASingleValue())
-                {
-                    ValueComboBoxData value = getEnumValue();
-                    if(value != null)
+                    if((expression == null) && fieldConfig.isASingleValue())
                     {
-                        expression = getFilterFactory().literal(value.getKey());
+                        ValueComboBoxData value = getEnumValue();
+                        if(value != null)
+                        {
+                            expression = getFilterFactory().literal(value.getKey());
+                        }
                     }
                 }
             }
@@ -329,7 +344,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        populateField((String)objValue);
+        if(objValue instanceof String)
+        {
+            populateField((String)objValue);
+        }
     }
 
     /**
@@ -340,6 +358,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public ValueComboBoxData getEnumValue()
     {
+        if(comboBox == null)
+        {
+            return null;
+        }
         return comboBox.getSelectedData();
     }
 
@@ -354,7 +376,12 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public String getStringValue()
     {
-        return getEnumValue().getKey();
+        ValueComboBoxData enumValue = getEnumValue();
+        if(enumValue == null)
+        {
+            return null;
+        }
+        return enumValue.getKey();
     }
 
     /**
@@ -368,9 +395,15 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        String oldValue = (String)undoRedoObject.getOldValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getOldValue() instanceof String)
+            {
+                String oldValue = (String)undoRedoObject.getOldValue();
 
-        populateField(oldValue);
+                populateField(oldValue);
+            }
+        }
     }
 
     /**
@@ -384,9 +417,15 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        String newValue = (String)undoRedoObject.getNewValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getNewValue() instanceof String)
+            {
+                String newValue = (String)undoRedoObject.getNewValue();
 
-        populateField(newValue);
+                populateField(newValue);
+            }
+        }
     }
 
     /**
@@ -400,52 +439,55 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     @Override
     public void optionSelected(ValueComboBoxData selectedData) {
 
-        String newValueObj = selectedData.getKey();
-
-        // Show the correct panel in the card layout for the selected symbol type
-        CardLayout cl = (CardLayout)(containingPanel.getLayout());
-
-        cl.show(containingPanel, selectedData.getPanelId().getName());
-
-        FieldConfigBase fieldConfig = fieldConfigMap.get(selectedData.getPanelId());
-
-        if(fieldConfig == null)
+        if(selectedData != null)
         {
-            ConsoleManager.getInstance().error(this, "Failed to find field config for panel id :" + selectedData.getPanelId());
-        }
-        else
-        {
-            fieldConfig.justSelected();
+            String newValueObj = selectedData.getKey();
 
-            JPanel p = fieldConfig.getPanel();
+            // Show the correct panel in the card layout for the selected symbol type
+            CardLayout cl = (CardLayout)(containingPanel.getLayout());
 
-            Dimension preferredSize = null;
-            if(p.isPreferredSizeSet())
+            cl.show(containingPanel, selectedData.getPanelId().getName());
+
+            FieldConfigBase fieldConfig = fieldConfigMap.get(selectedData.getPanelId());
+
+            if(fieldConfig == null)
             {
-                preferredSize = p.getPreferredSize();
+                ConsoleManager.getInstance().error(this, "Failed to find field config for panel id :" + selectedData.getPanelId());
             }
             else
             {
-                preferredSize = new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
-            }
-            containingPanel.setPreferredSize(preferredSize);
+                fieldConfig.justSelected();
 
-            if(oldValueObj == null)
-            {
-                oldValueObj = comboBox.getDefaultValue();
-            }
+                JPanel p = fieldConfig.getPanel();
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+                Dimension preferredSize = null;
+                if(p.isPreferredSizeSet())
+                {
+                    preferredSize = p.getPreferredSize();
+                }
+                else
+                {
+                    preferredSize = new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
+                }
+                containingPanel.setPreferredSize(preferredSize);
 
-            oldValueObj = newValueObj;
+                if(oldValueObj == null)
+                {
+                    oldValueObj = comboBox.getDefaultValue();
+                }
 
-            valueUpdated();
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
 
-            if(symbolSelectedListener != null)
-            {
-                logger.debug(String.format("Field %s selected %s", getFieldId(), selectedData.getKey()));
+                oldValueObj = new String(newValueObj);
 
-                symbolSelectedListener.optionSelected(selectedData.getPanelId(), selectedData.getKey());
+                valueUpdated();
+
+                if(symbolSelectedListener != null)
+                {
+                    logger.debug(String.format("Field %s selected %s", getFieldId(), selectedData.getKey()));
+
+                    symbolSelectedListener.optionSelected(selectedData.getPanelId(), selectedData.getKey());
+                }
             }
         }
     }
@@ -470,8 +512,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     @Override
     public void populateField(String key) {
-        oldValueObj = key;
-        comboBox.setSelectedDataKey(key);
+        if(comboBox != null)
+        {
+            comboBox.setSelectedDataKey(key);
+        }
     }
 
     /**
@@ -482,13 +526,17 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigSymbolType copy = new FieldConfigSymbolType(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigSymbolType copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigSymbolType(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
-
 
     /**
      * Gets the class type supported.

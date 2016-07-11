@@ -179,7 +179,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     /**
      * Revert to default value.
      */
-   @Override
+    @Override
     public void revertToDefaultValue()
     {
         // Not used
@@ -612,13 +612,18 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigMarker copy = new FieldConfigMarker(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                this.colourField,
-                this.opacityField,
-                this.symbolSelectionField);
+        FieldConfigMarker copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigMarker(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly(),
+                    this.colourField,
+                    this.opacityField,
+                    this.symbolSelectionField);
+        }
         return copy;
     }
 

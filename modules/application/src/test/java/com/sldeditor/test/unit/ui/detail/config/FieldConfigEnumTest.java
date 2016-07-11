@@ -31,6 +31,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -335,6 +336,12 @@ public class FieldConfigEnumTest {
         assertTrue(expectedValue2.compareTo(actualValueString) == 0);
         actualValue = field.getEnumValue();
         assertTrue(expectedValue2.compareTo(actualValue.getKey()) == 0);
+
+        // Increase the code coverage
+        field.undoAction(null);
+        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(0),  Double.valueOf(23)));
+        field.redoAction(null);
+        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME),  Double.valueOf(0),  Double.valueOf(54)));
     }
 
 }
