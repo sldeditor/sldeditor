@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.geotools.styling.Font;
+import org.geotools.styling.StyleBuilder;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
 
@@ -49,6 +50,9 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
 
     /** The default value. */
     private String defaultValue = "";
+
+    /** The Constant DEFAULT_FONT_SIZE. */
+    private static final double DEFAULT_FONT_SIZE = 12.0;
 
     /** The Constant sampleText. */
     private static final String sampleText =
@@ -246,6 +250,20 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     }
 
     /**
+     * Populate string field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    @Override
+    public void populateField(String value) {
+        StyleBuilder styleBuilder = new StyleBuilder();
+
+        Font font = styleBuilder.createFont(defaultValue, DEFAULT_FONT_SIZE);
+
+        populateField(font);
+    }
+
+    /**
      * Populate field.
      *
      * @param font the font
@@ -318,10 +336,15 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigFontPreview copy = new FieldConfigFontPreview(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigFontPreview copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigFontPreview(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
@@ -333,7 +356,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     public Class<?> getClassType() {
-        return String.class;
+        return Font.class;
     }
 
     /**

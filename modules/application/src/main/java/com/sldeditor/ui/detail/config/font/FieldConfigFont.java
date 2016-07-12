@@ -28,6 +28,7 @@ import javax.swing.Box;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.Font;
+import org.geotools.styling.StyleBuilder;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -40,7 +41,6 @@ import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class FieldConfigFont wraps a button and text field that allows the selection of a font.
@@ -52,6 +52,8 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFont extends FieldConfigBase implements UndoActionInterface {
+
+    private static final double DEFAULT_FONT_SIZE = 12.0;
 
     /** The default font value. */
     private String defaultValue = "Arial";
@@ -261,6 +263,20 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     }
 
     /**
+     * Populate string field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    @Override
+    public void populateField(String value) {
+        StyleBuilder styleBuilder = new StyleBuilder();
+
+        Font font = styleBuilder.createFont(defaultValue, DEFAULT_FONT_SIZE);
+
+        populateField(font);
+    }
+
+    /**
      * Sets the default value.
      *
      * @param defaultValue the new default value
@@ -282,7 +298,10 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
         if(font != null)
         {
-            return font.toString();
+            if(font.getFamily().size() > 0)
+            {
+                return font.getFamily().get(0).toString();
+            }
         }
         return null;
     }
@@ -306,11 +325,14 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(comboBox != null)
+        if((comboBox != null) && (undoRedoObject != null))
         {
-            String oldValue = (String)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof String)
+            {
+                String oldValue = (String)undoRedoObject.getOldValue();
 
-            comboBox.setSelectValueKey(oldValue);
+                comboBox.setSelectValueKey(oldValue);
+            }
         }
     }
 
@@ -322,11 +344,14 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(comboBox != null)
+        if((comboBox != null) && (undoRedoObject != null))
         {
-            String newValue = (String)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof String)
+            {
+                String newValue = (String)undoRedoObject.getNewValue();
 
-            comboBox.setSelectValueKey(newValue);
+                comboBox.setSelectValueKey(newValue);
+            }
         }
     }
 
@@ -338,7 +363,10 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void setTestValue(FieldId fieldId, String testValue) {
-        comboBox.setSelectValueKey(testValue);
+        if(comboBox != null)
+        {
+            comboBox.setSelectValueKey(testValue);
+        }
     }
 
     /**
@@ -363,10 +391,15 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigFont copy = new FieldConfigFont(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigFont copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigFont(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
@@ -378,7 +411,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public Class<?> getClassType() {
-        return Geometry.class;
+        return Font.class;
     }
 
     /**
@@ -415,6 +448,11 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         else
         {
             differentFamilyName = (currentFont != null);
+        }
+
+        if(comboBox == null)
+        {
+            return false;
         }
         comboBox.setSelectValueKey(fontName);
         currentFont = font;
