@@ -47,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
-import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 
 /**
  * The unit test for FieldConfigFilename.

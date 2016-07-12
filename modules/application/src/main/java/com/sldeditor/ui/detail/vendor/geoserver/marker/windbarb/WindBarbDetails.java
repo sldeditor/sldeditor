@@ -135,8 +135,25 @@ UpdateSymbolInterface {
 
         if(wellKnownName != null)
         {
-            String windSpeed = wellKnownName.substring(wellKnownName.indexOf("(") + 1, wellKnownName.indexOf(")"));
-            String windSpeedUnits = wellKnownName.substring(wellKnownName.indexOf("[") + 1, wellKnownName.indexOf("]"));
+            int startSpeedOpenBracket = wellKnownName.indexOf("(");
+            int endSpeedCloseBracket = wellKnownName.indexOf(")");
+
+            if((startSpeedOpenBracket < 0) || (endSpeedCloseBracket < 0))
+            {
+                // Invalid
+                return;
+            }
+            String windSpeed = wellKnownName.substring(startSpeedOpenBracket + 1, endSpeedCloseBracket);
+
+            int startUnitsOpenBracket = wellKnownName.indexOf("[");
+            int endUnitsOpenBracket = wellKnownName.indexOf("]");
+            if((startUnitsOpenBracket < 0) || (endUnitsOpenBracket < 0))
+            {
+                // Invalid
+                return;
+            }
+
+            String windSpeedUnits = wellKnownName.substring(startUnitsOpenBracket + 1, endUnitsOpenBracket);
 
             Expression windSpeedExpression = null;
             if(AttributeUtils.isAttribute(windSpeed))
