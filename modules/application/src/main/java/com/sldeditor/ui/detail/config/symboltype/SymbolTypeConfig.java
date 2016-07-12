@@ -107,7 +107,10 @@ public class SymbolTypeConfig
                 }
             }
 
-            fieldEnableState.add(panelName, menuOption, fieldList);
+            if(fieldEnableState != null)
+            {
+                fieldEnableState.add(panelName, menuOption, fieldList);
+            }
         }
     }
 

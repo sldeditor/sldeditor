@@ -229,15 +229,21 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
     {
-        MarkImpl markerSymbol = (MarkImpl) symbol;
-
-        Expression wellKnownNameExpression = markerSymbol.getWellKnownName();
-
-        if(wellKnownNameExpression instanceof LiteralExpressionImpl)
+        if((symbol != null) && (fieldConfigManager != null))
         {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl) wellKnownNameExpression;
-            FieldConfigBase field = fieldConfigManager.get(symbolSelectionField);
-            field.populate(literal);
+            MarkImpl markerSymbol = (MarkImpl) symbol;
+
+            Expression wellKnownNameExpression = markerSymbol.getWellKnownName();
+
+            if(wellKnownNameExpression instanceof LiteralExpressionImpl)
+            {
+                LiteralExpressionImpl literal = (LiteralExpressionImpl) wellKnownNameExpression;
+                FieldConfigBase field = fieldConfigManager.get(symbolSelectionField);
+                if(field != null)
+                {
+                    field.populate(literal);
+                }
+            }
         }
     }
 
@@ -254,7 +260,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
             Expression symbolType, boolean fillEnabled, boolean strokeEnabled)
     {
-        if(symbolType == null)
+        if((symbolType == null) || (fieldConfigManager == null))
         {
             return null;
         }
@@ -374,11 +380,18 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     public Fill getFill(GraphicFill graphicFill,
             GraphicPanelFieldManager fieldConfigManager)
     {
+        if(fieldConfigManager == null)
+        {
+            return null;
+        }
         Expression fillColour = null;
         FieldConfigBase field = fieldConfigManager.get(colourField);
         if(field != null)
         {
-            fillColour = ((FieldConfigColour)field).getColourExpression();
+            if(field instanceof FieldConfigColour)
+            {
+                fillColour = ((FieldConfigColour)field).getColourExpression();
+            }
         }
 
         Expression fillColourOpacity = null;
@@ -428,10 +441,13 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
      */
     public void setSolidFill(GraphicPanelFieldManager fieldConfigManager, Expression expFillColour, Expression expFillColourOpacity) {
 
-        FieldConfigBase field = fieldConfigManager.get(colourField);
-        if(field != null)
+        if(fieldConfigManager != null)
         {
-            field.populate(expFillColour, expFillColourOpacity);
+            FieldConfigBase field = fieldConfigManager.get(colourField);
+            if(field != null)
+            {
+                field.populate(expFillColour, expFillColourOpacity);
+            }
         }
     }
 
@@ -449,7 +465,10 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
         {
             for(SymbolTypeConfig config : configList)
             {
-                config.updateFieldState(fieldEnableState, getClass().getName());
+                if(config != null)
+                {
+                    config.updateFieldState(fieldEnableState, getClass().getName());
+                }
             }
         }
         else
@@ -469,9 +488,11 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     {
         Map<FieldId, FieldConfigBase> map = new HashMap<FieldId, FieldConfigBase>();
 
-        map.put(colourField, fieldConfigManager.get(colourField));
-        map.put(opacityField, fieldConfigManager.get(opacityField));
-
+        if(fieldConfigManager != null)
+        {
+            map.put(colourField, fieldConfigManager.get(colourField));
+            map.put(opacityField, fieldConfigManager.get(opacityField));
+        }
         return map;
     }
 
@@ -501,11 +522,14 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
                     {
                         String valueString = (String) value;
 
-                        for(ValueComboBoxData data : localSymbolList)
+                        if(localSymbolList != null)
                         {
-                            if(data.getKey().compareTo(valueString) == 0)
+                            for(ValueComboBoxData data : localSymbolList)
                             {
-                                return true;
+                                if(data.getKey().compareTo(valueString) == 0)
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -644,6 +668,6 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
      */
     @Override
     public void setVisible(boolean visible) {
-        // Does nothing
+        // Does nothing, always visible
     }
 }
