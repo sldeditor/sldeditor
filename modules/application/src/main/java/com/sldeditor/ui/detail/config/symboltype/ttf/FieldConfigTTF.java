@@ -146,6 +146,10 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     protected Expression generateExpression()
     {
+        if(ttfPanel == null)
+        {
+            return null;
+        }
         return ttfPanel.getExpression();
     }
 
@@ -171,7 +175,10 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     public void revertToDefaultValue()
     {
-        ttfPanel.revertToDefaultValue();
+        if(ttfPanel != null)
+        {
+            ttfPanel.revertToDefaultValue();
+        }
     }
 
     /**
@@ -186,7 +193,13 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        ttfPanel.populateExpression((String) objValue);
+        if(ttfPanel != null)
+        {
+            if(objValue instanceof String)
+            {
+                ttfPanel.populateExpression((String) objValue);
+            }
+        }
     }
 
     /**
@@ -222,6 +235,16 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
     {
+        if(symbol == null)
+        {
+            return;
+        }
+
+        if(fieldConfigManager == null)
+        {
+            return;
+        }
+
         MarkImpl markerSymbol = (MarkImpl) symbol;
 
         FillImpl fill = markerSymbol.getFill();
@@ -240,7 +263,13 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
 
         if(ttfPanel != null)
         {
-            ttfPanel.populateExpression(markerSymbol.getWellKnownName().toString());
+            Expression wellKnownNameExpression = markerSymbol.getWellKnownName();
+            String wellKnownName = null;
+            if(wellKnownNameExpression != null)
+            {
+                wellKnownName = wellKnownNameExpression.toString();
+            }
+            ttfPanel.populateExpression(wellKnownName);
         }
 
         if(multiOptionPanel != null)
@@ -265,7 +294,7 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Expression wellKnownName = null;
-        if(getConfigField() != null)
+        if((getConfigField() != null) && (fieldConfigManager != null))
         {
             wellKnownName = getConfigField().getExpression();
             if(wellKnownName != null)
@@ -440,6 +469,15 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     public String getStringValue()
     {
+        if(ttfPanel == null)
+        {
+            return null;
+        }
+
+        if(ttfPanel.getExpression() == null)
+        {
+            return null;
+        }
         return ttfPanel.getExpression().toString();
     }
 
@@ -459,7 +497,13 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
      */
     public void checkSymbolIsValid() {
         // Mark symbol as valid/invalid
-        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, !getExpression().toString().isEmpty());
+        boolean valid = false;
+        Expression expression = getExpression();
+        if(expression != null)
+        {
+            valid = !expression.toString().isEmpty();
+        }
+        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
     }
 
     /**
@@ -471,7 +515,11 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
 
         checkSymbolIsValid();
 
-        getParent().valueUpdated();
+        FieldConfigBase parent = getParent();
+        if(parent != null)
+        {
+            parent.valueUpdated();
+        }
     }
 
     /**
@@ -506,10 +554,15 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigTTF copy = new FieldConfigTTF(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigTTF copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigTTF(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 

@@ -47,6 +47,7 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
+import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 
 /**
  * The unit test for FieldConfigFilename.
@@ -96,9 +97,8 @@ public class FieldConfigFilenameTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field2.setEnabled(expectedValue);
 
-        // Actual value is coming from the attribute panel, not the text field
         assertTrue(field2.isEnabled());
     }
 
@@ -296,7 +296,6 @@ public class FieldConfigFilenameTest {
 
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
         field.setValue(fieldConfigManager, null, externalGraphic);
-
     }
 
     /**
@@ -312,13 +311,6 @@ public class FieldConfigFilenameTest {
         field.createUI(null);
         List<GraphicalSymbol> actualValue = field.getValue(null, null, false, false);
         assertFalse(actualValue.isEmpty());
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateSymbolList(java.lang.Class, java.util.List)}.
-     */
-    @Test
-    public void testPopulateSymbolList() {
     }
 
     /**
@@ -378,6 +370,10 @@ public class FieldConfigFilenameTest {
      */
     @Test
     public void testGetFieldList() {
+        boolean valueOnly = true;
+        FieldConfigFilename field = new FieldConfigFilename(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        
+        assertEquals(1, field.getFieldList(null).size());
     }
 
     /**
