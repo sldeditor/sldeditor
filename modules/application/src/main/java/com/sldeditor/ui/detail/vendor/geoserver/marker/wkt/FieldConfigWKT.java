@@ -94,8 +94,6 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
      */
     public FieldConfigWKT(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
         super(panelId, id, label, valueOnly);
-
-        createUI(null);
     }
 
     /**

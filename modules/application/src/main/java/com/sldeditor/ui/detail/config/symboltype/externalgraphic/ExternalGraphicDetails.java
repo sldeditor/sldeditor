@@ -210,12 +210,16 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public void setValue(ExternalGraphicImpl externalGraphic) {
         try {
-            externalFileURL = externalGraphic.getLocation();
+            if(externalGraphic != null)
+            {
+                externalFileURL = externalGraphic.getLocation();
+            }
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL));
+        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL);
+        populateExpression(path);
     }
 
     /**
@@ -230,7 +234,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL));
+        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL);
+        populateExpression(path);
     }
 
     /**

@@ -116,6 +116,12 @@ public class SymbolTypeFactory {
         symbolTypeFieldList.add(windBarbs);
         symbolTypeFieldList.add(wktShape);
 
+        // Create the ui for the fields
+        for(SymbolTypeInterface fieldConfig : symbolTypeFieldList)
+        {
+            ((FieldConfigBase)fieldConfig).createUI(null);
+        }
+
         SOLID_FILL_VALUE = FieldConfigMarker.getSolidFillValue();
         NO_FILL_VALUE = FieldConfigMarker.getNoFillValue();
     }
@@ -389,7 +395,7 @@ public class SymbolTypeFactory {
         SymbolTypeInterface panel = classMap.get(selectedPanelId);
         if(panel != null)
         {
-  //          panel.setTestValue(value);
+            //          panel.setTestValue(value);
         }
     }
 }

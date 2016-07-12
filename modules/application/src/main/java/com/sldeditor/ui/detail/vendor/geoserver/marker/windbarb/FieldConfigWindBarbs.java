@@ -80,8 +80,6 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
      */
     public FieldConfigWindBarbs(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
         super(panelId, id, label, valueOnly);
-
-        createUI(null);
     }
 
     /**

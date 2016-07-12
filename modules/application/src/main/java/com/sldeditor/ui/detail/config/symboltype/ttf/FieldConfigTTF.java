@@ -93,8 +93,6 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
      */
     public FieldConfigTTF(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
         super(panelId, id, label, valueOnly);
-
-        createUI(null);
     }
 
     /**

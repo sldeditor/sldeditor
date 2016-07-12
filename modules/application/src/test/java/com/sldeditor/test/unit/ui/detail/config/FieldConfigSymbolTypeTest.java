@@ -142,6 +142,7 @@ public class FieldConfigSymbolTypeTest {
         assertNull(actualValue1);
 
         FieldConfigMarker marker = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.ANGLE), "label", valueOnly, null, null, null);
+        marker.createUI(null);
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
@@ -152,8 +153,8 @@ public class FieldConfigSymbolTypeTest {
 
         combinedSymbolList.add(new ValueComboBoxDataGroup(dataList));
 
-        field.addField(marker);
         field.createUI(null);
+        field.addField(marker);
         field.populate(null, combinedSymbolList);
         field.populateExpression(expectedValue1, null);
         actualValue1 = field.getStringValue();
@@ -251,7 +252,7 @@ public class FieldConfigSymbolTypeTest {
         boolean valueOnly = true;
         FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
         field.attributeSelection(null);
-        
+
         // Do nothing
     }
 
@@ -268,6 +269,7 @@ public class FieldConfigSymbolTypeTest {
         field.createUI(null);
 
         FieldConfigMarker marker = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.ANGLE), "label", valueOnly, null, null, null);
+        marker.createUI(null);
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
@@ -278,10 +280,10 @@ public class FieldConfigSymbolTypeTest {
 
         combinedSymbolList.add(new ValueComboBoxDataGroup(dataList));
 
-        field.addField(marker);
         field.createUI(null);
+        field.addField(marker);
         field.populate(null, combinedSymbolList);
-        
+
         String expectedValue2 = "key 2";
         field.populateExpression(expectedValue2, null);
         String actualValue2 = field.getStringValue();

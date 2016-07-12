@@ -112,8 +112,6 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
         this.colourField = colourField;
         this.opacityField = opacityField;
         this.symbolSelectionField = symbolSelectionField;
-
-        createUI(null);
     }
 
     /**
