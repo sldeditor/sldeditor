@@ -191,4 +191,12 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
     {
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

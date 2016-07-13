@@ -18,15 +18,8 @@
  */
 package com.sldeditor.ui.detail;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.AnchorPointImpl;
@@ -50,7 +43,6 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -490,53 +482,6 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
     }
 
     /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } 
-                catch (UnsupportedLookAndFeelException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (ClassNotFoundException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (InstantiationException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (IllegalAccessException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                JFrame frame = new JFrame("Test");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                //Add contents to the window.
-                JPanel panel = new JPanel();
-                panel.setPreferredSize(new Dimension(600, 464));
-                panel.setLayout(new BorderLayout());
-
-                TextSymbolizerDetails textDetails = new TextSymbolizerDetails(FunctionManager.getInstance());
-
-                panel.add(textDetails, BorderLayout.CENTER);
-                frame.getContentPane().add(panel);
-
-                //Display the window.
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
-    }
-
-    /**
      * Checks if is data present.
      *
      * @return true, if is data present
@@ -548,5 +493,13 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
     public boolean isDataPresent()
     {
         return true;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
     }
 }

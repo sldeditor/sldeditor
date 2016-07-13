@@ -543,4 +543,12 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
     {
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

@@ -124,4 +124,12 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
     {
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

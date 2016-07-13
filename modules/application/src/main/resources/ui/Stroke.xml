@@ -4,7 +4,7 @@
     <Group id="STROKE" label="stroke" showLabel="false" option="false">
         <FieldConfigSymbolType id="STROKE_STYLE"
             label="stroke.style" valueOnly="true" />
-        <FieldConfigDouble id="STROKE_WIDTH" label="stroke.width" defaultValue="5.0" minValue="0.1" />
+        <FieldConfigDouble id="STROKE_WIDTH" label="stroke.width" defaultValue="1.0" minValue="0.1" />
         <FieldConfigEnum id="STROKE_LINE_JOIN" label="stroke.lineJoin">
             <ValueList>
                 <Value>
@@ -32,7 +32,7 @@
         <FieldConfigDouble id="STROKE_SYMBOL_ANGLE"
             label="stroke.strokeSymbol.angle" />
         <FieldConfigDouble id="STROKE_SYMBOL_SIZE"
-            label="stroke.strokeSymbol.size" />
+            label="stroke.strokeSymbol.size" defaultValue="1.0" minValue="0.1" />
         <FieldConfigDouble id="STROKE_SYMBOL_INITIAL_GAP"
             label="stroke.strokeSymbol.initialGap" />
         <FieldConfigDouble id="STROKE_SYMBOL_GAP"

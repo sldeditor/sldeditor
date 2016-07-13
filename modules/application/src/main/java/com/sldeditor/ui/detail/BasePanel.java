@@ -555,6 +555,11 @@ public class BasePanel extends JPanel {
      */
     public void addField(Box parentBox, int index, FieldConfigBase parentField, FieldConfigBase field) {
 
+        if(field == null)
+        {
+            return;
+        }
+
         boolean isFunction = (index != LAST_FIELD_INDEX);
         if(parentField != null)
         {
@@ -566,15 +571,18 @@ public class BasePanel extends JPanel {
 
         fieldConfigManager.addField(field);
 
-        parentBox.add(field.getPanel(), index);
-
-        // Add any custom panels
-        if(field.getCustomPanels() != null)
+        if(parentBox != null)
         {
-            for(Component component : field.getCustomPanels())
+            parentBox.add(field.getPanel(), index);
+
+            // Add any custom panels
+            if(field.getCustomPanels() != null)
             {
-                index ++;
-                parentBox.add(component, isFunction ? index : LAST_FIELD_INDEX);
+                for(Component component : field.getCustomPanels())
+                {
+                    index ++;
+                    parentBox.add(component, isFunction ? index : LAST_FIELD_INDEX);
+                }
             }
         }
     }
@@ -656,9 +664,15 @@ public class BasePanel extends JPanel {
      */
     protected void setDefaultValue(FieldId fieldId)
     {
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        if(fieldConfigManager != null)
+        {
+            FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        fieldConfig.revertToDefaultValue();
+            if(fieldConfig != null)
+            {
+                fieldConfig.revertToDefaultValue();
+            }
+        }
     }
 
     /**
@@ -806,5 +820,18 @@ public class BasePanel extends JPanel {
      */
     public void addFirstField(FieldConfigBase fieldConfig) {
         addField(box, 0, null, fieldConfig);
+    }
+
+    /**
+     * Sets the default values for all the fields.
+     */
+    protected void setAllDefaultValues() {
+        for(FieldConfigBase fieldConfig : fieldConfigList)
+        {
+            if(fieldConfig != null)
+            {
+                fieldConfig.revertToDefaultValue();
+            }
+        }
     }
 }

@@ -195,10 +195,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     @Override
     public void revertToDefaultValue()
     {
-        if(spinner != null)
-        {
-            spinner.setValue(this.defaultValue);
-        }
+        internalSetValue(this.defaultValue);
     }
 
     /**
@@ -287,7 +284,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
             {
                 Integer oldValue = (Integer)undoRedoObject.getOldValue();
 
-                spinner.setValue(oldValue);
+                internalSetValue(oldValue);
             }
         }
     }
@@ -306,7 +303,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
             {
                 Integer newValue = (Integer)undoRedoObject.getNewValue();
 
-                spinner.setValue(newValue);
+                internalSetValue(newValue);
             }
         }
     }

@@ -590,4 +590,12 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     {
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

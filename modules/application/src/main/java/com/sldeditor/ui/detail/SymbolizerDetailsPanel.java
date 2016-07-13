@@ -267,4 +267,19 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
         }
     }
 
+    /**
+     * Method called before symbol loaded
+     */
+    public void preLoadSymbol() {
+        for(String key : panelMap.keySet())
+        {
+            List<PopulateDetailsInterface> panelList = panelMap.get(key);
+
+            for(PopulateDetailsInterface panel : panelList)
+            {
+                panel.preLoadSymbol();
+            }
+        }
+    }
+
 }

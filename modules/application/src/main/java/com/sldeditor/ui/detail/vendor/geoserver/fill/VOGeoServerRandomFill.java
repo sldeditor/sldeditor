@@ -494,4 +494,12 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     {
         // Do nothing
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

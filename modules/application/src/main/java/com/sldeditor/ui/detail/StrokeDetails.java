@@ -718,4 +718,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     {
         return SelectedSymbol.getInstance().hasStroke();
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

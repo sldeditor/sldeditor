@@ -321,4 +321,12 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             }
         }
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }
