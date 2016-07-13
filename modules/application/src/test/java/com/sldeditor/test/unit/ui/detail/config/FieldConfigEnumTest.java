@@ -79,7 +79,7 @@ public class FieldConfigEnumTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field.setEnabled(expectedValue);
+        field2.setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -88,7 +88,7 @@ public class FieldConfigEnumTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field2.setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

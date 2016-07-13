@@ -87,7 +87,7 @@ public class FieldConfigFilenameTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field.setEnabled(expectedValue);
+        field2.setEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field

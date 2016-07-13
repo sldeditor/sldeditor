@@ -101,7 +101,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field2.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field2.setEnabled(expectedValue);
 
         assertFalse(field2.isEnabled());
     }
