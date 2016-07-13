@@ -31,7 +31,7 @@ import com.sldeditor.common.localisation.Localisation;
 public class WKTGeometry {
 
     /** The geometry type. */
-    private WktType geometryType = null;
+    private WKTType geometryType = null;
 
     /** The segment list. */
     private List<List<WKTSegmentList>> segmentList = new ArrayList<List<WKTSegmentList>>();
@@ -62,7 +62,7 @@ public class WKTGeometry {
      *
      * @return the geometry type
      */
-    public WktType getGeometryType() {
+    public WKTType getGeometryType() {
         return geometryType;
     }
 
@@ -71,7 +71,7 @@ public class WKTGeometry {
      *
      * @param geometryType the new geometry type
      */
-    public void setGeometryType(WktType geometryType) {
+    public void setGeometryType(WKTType geometryType) {
         this.geometryType = geometryType;
     }
 

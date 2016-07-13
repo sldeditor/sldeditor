@@ -62,29 +62,29 @@ public class WKTConversion {
     private static WKTParser wktParser = null;
 
     /** The wkt type list. */
-    private static List<WktType> wktTypeList = new ArrayList<WktType>();
+    private static List<WKTType> wktTypeList = new ArrayList<WKTType>();
 
     /** The wkt type map. */
-    private static Map<String, WktType> wktTypeMap = new HashMap<String, WktType>();
+    private static Map<String, WKTType> wktTypeMap = new HashMap<String, WKTType>();
 
     /**
      * Gets the WKT type data.
      *
      * @return the WKT type data
      */
-    public static List<WktType> getWKTTypeData()
+    public static List<WKTType> getWKTTypeData()
     {
         if(wktTypeList.isEmpty())
         {
-            wktTypeList.add(new WktType(WKT_POINT, false, 1, "Point"));
-            wktTypeList.add(new WktType(WKT_MULTIPOINT, true, 1, "Point"));
-            wktTypeList.add(new WktType(WKT_LINESTRING, false, 2, "Line"));
-            wktTypeList.add(new WktType("LINEARRING", false, 2, "Line"));
-            wktTypeList.add(new WktType(WKT_MULTILINESTRING, true, 2, "Line"));
-            wktTypeList.add(new WktType(WKT_POLYGON, false, -1, "Polygon"));
-            wktTypeList.add(new WktType(WKT_MULTIPOLYGON, true, -1, "Polygon", true));
+            wktTypeList.add(new WKTType(WKT_POINT, false, 1, "Point"));
+            wktTypeList.add(new WKTType(WKT_MULTIPOINT, true, 1, "Point"));
+            wktTypeList.add(new WKTType(WKT_LINESTRING, false, 2, "Line"));
+            wktTypeList.add(new WKTType("LINEARRING", false, 2, "Line"));
+            wktTypeList.add(new WKTType(WKT_MULTILINESTRING, true, 2, "Line"));
+            wktTypeList.add(new WKTType(WKT_POLYGON, false, -1, "Polygon"));
+            wktTypeList.add(new WKTType(WKT_MULTIPOLYGON, true, -1, "Polygon", true));
 
-            for(WktType wkyType : wktTypeList)
+            for(WKTType wkyType : wktTypeList)
             {
                 wktTypeMap.put(wkyType.getName(), wkyType);
             }
@@ -99,7 +99,7 @@ public class WKTConversion {
      * @param geometryType the geometry type
      * @return the WKT type
      */
-    public static WktType getWKTType(String geometryType) {
+    public static WKTType getWKTType(String geometryType) {
         return wktTypeMap.get(geometryType);
     }
 
@@ -221,7 +221,7 @@ public class WKTConversion {
 
             wktGeometry.setValid(false);
 
-            for(WktType wktType : wktTypeList)
+            for(WKTType wktType : wktTypeList)
             {
                 if(wktString.startsWith(wktType.getName()))
                 {
@@ -389,7 +389,7 @@ public class WKTConversion {
      * @param wktType the wkt type
      * @return the WKT geometry
      */
-    public static WKTGeometry createEmpty(WktType wktType) {
+    public static WKTGeometry createEmpty(WKTType wktType) {
         WKTGeometry wktGeometry = new WKTGeometry();
         wktGeometry.setGeometryType(wktType);
 

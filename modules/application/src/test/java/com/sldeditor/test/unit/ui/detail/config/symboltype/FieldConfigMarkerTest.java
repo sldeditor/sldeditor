@@ -92,7 +92,7 @@ public class FieldConfigMarkerTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field.setEnabled(expectedValue);
+        field2.setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field

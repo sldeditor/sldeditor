@@ -23,7 +23,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class WktType
+public class WKTType
 {
 
     /** The name. */
@@ -50,7 +50,7 @@ public class WktType
      * @param listItem the list item
      * @param canHaveMultipleShapes the can have multiple shapes
      */
-    public WktType(String name, boolean multipleCoordinates, int numOfPoints, String listItem, boolean canHaveMultipleShapes) {
+    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem, boolean canHaveMultipleShapes) {
         super();
         this.name = name;
         this.multipleCoordinates = multipleCoordinates;
@@ -67,7 +67,7 @@ public class WktType
      * @param numOfPoints the num of points
      * @param listItem the list item
      */
-    public WktType(String name, boolean multipleCoordinates, int numOfPoints, String listItem) {
+    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem) {
         this(name, multipleCoordinates, numOfPoints, listItem ,false);
     }
 

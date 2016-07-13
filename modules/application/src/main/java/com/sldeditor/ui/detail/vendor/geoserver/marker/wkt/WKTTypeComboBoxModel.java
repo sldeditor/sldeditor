@@ -36,17 +36,17 @@ public class WKTTypeComboBoxModel extends AbstractListModel implements ComboBoxM
     private static final long serialVersionUID = 1L;
 
     /** The wkt type list. */
-    private List<WktType> wktTypeList = new ArrayList<WktType>();
+    private List<WKTType> wktTypeList = new ArrayList<WKTType>();
 
     /** The selection. */
-    private WktType selection = null;
+    private WKTType selection = null;
 
     /**
      * Instantiates a new WKT type combo box model.
      *
      * @param wktTypeDataList the wkt type data list
      */
-    public WKTTypeComboBoxModel(List<WktType> wktTypeDataList) {
+    public WKTTypeComboBoxModel(List<WKTType> wktTypeDataList) {
         this.wktTypeList = wktTypeDataList;
     }
 
@@ -68,7 +68,7 @@ public class WKTTypeComboBoxModel extends AbstractListModel implements ComboBoxM
      * @see javax.swing.ComboBoxModel#setSelectedItem(java.lang.Object)
      */
     public void setSelectedItem(Object anItem) {
-        selection = (WktType) anItem; // to select and register an
+        selection = (WKTType) anItem; // to select and register an
     } // item from the pull-down list
 
     /* (non-Javadoc)

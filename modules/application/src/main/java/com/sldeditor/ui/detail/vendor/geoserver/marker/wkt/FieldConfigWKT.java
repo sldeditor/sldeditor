@@ -146,7 +146,12 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     protected Expression generateExpression()
     {
-        return wktPanel.getExpression();
+        if(wktPanel != null)
+        {
+            return wktPanel.getExpression();
+        }
+
+        return null;
     }
 
     /**
@@ -171,7 +176,10 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     public void revertToDefaultValue()
     {
-        wktPanel.revertToDefaultValue();
+        if(wktPanel != null)
+        {
+            wktPanel.revertToDefaultValue();
+        }
     }
 
     /**
@@ -186,7 +194,13 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        wktPanel.populateExpression((String) objValue);
+        if(wktPanel != null)
+        {
+            if(objValue instanceof String)
+            {
+                wktPanel.populateExpression((String) objValue);
+            }
+        }
     }
 
     /**
@@ -222,30 +236,36 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
     {
-        MarkImpl markerSymbol = (MarkImpl) symbol;
-
-        FillImpl fill = markerSymbol.getFill();
-
-        if(fill != null)
+        if((symbol != null) && (fieldConfigManager != null))
         {
-            Expression expFillColour = fill.getColor();
-            Expression expFillColourOpacity = fill.getOpacity();
-
-            FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-            if(field != null)
+            if(symbol instanceof Mark)
             {
-                field.populate(expFillColour, expFillColourOpacity);
+                MarkImpl markerSymbol = (MarkImpl) symbol;
+
+                FillImpl fill = markerSymbol.getFill();
+
+                if(fill != null)
+                {
+                    Expression expFillColour = fill.getColor();
+                    Expression expFillColourOpacity = fill.getOpacity();
+
+                    FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                    if(field != null)
+                    {
+                        field.populate(expFillColour, expFillColourOpacity);
+                    }
+                }
+
+                if(wktPanel != null)
+                {
+                    wktPanel.populateExpression(markerSymbol.getWellKnownName().toString());
+                }
+
+                if(multiOptionPanel != null)
+                {
+                    multiOptionPanel.setSelectedItem(WKT_SYMBOL_KEY);
+                }
             }
-        }
-
-        if(wktPanel != null)
-        {
-            wktPanel.populateExpression(markerSymbol.getWellKnownName().toString());
-        }
-
-        if(multiOptionPanel != null)
-        {
-            multiOptionPanel.setSelectedItem(WKT_SYMBOL_KEY);
         }
     }
 
@@ -264,31 +284,37 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
-        Expression wellKnownName = null;
-        if(getConfigField() != null)
+        if(fieldConfigManager != null)
         {
-            wellKnownName = getConfigField().getExpression();
-            if(wellKnownName != null)
+            Expression wellKnownName = null;
+            if(getConfigField() != null)
             {
-                Expression expFillColour = null;
-                Expression expFillColourOpacity = null;
-
-                FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-                if(field != null)
+                wellKnownName = getConfigField().getExpression();
+                if(wellKnownName != null)
                 {
-                    FieldConfigColour colourField = (FieldConfigColour)field;
+                    Expression expFillColour = null;
+                    Expression expFillColourOpacity = null;
 
-                    expFillColour = colourField.getColourExpression();
-                    expFillColourOpacity = colourField.getColourOpacityExpression();
+                    FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                    if(field != null)
+                    {
+                        if(field instanceof FieldConfigColour)
+                        {
+                            FieldConfigColour colourField = (FieldConfigColour)field;
+
+                            expFillColour = colourField.getColourExpression();
+                            expFillColourOpacity = colourField.getColourOpacityExpression();
+                        }
+                    }
+
+                    Stroke stroke = null;
+                    Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
+                    Expression size = null;
+                    Expression rotation = null;
+                    Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
+
+                    symbolList.add(mark);
                 }
-
-                Stroke stroke = null;
-                Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                Expression size = null;
-                Expression rotation = null;
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
-
-                symbolList.add(mark);
             }
         }
         return symbolList;
@@ -354,7 +380,10 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
         enableList.add(new FieldId(FieldIdEnum.GAP));
         enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
 
-        fieldEnableState.add(getPanelId().getName(), WKT_SYMBOL_KEY, enableList);
+        if(fieldEnableState != null)
+        {
+            fieldEnableState.add(getPanelId().getName(), WKT_SYMBOL_KEY, enableList);
+        }
     }
 
     /**
@@ -440,7 +469,15 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     @Override
     public String getStringValue()
     {
-        return wktPanel.getExpression().toString();
+        if(wktPanel != null)
+        {
+            if(wktPanel.getExpression() != null)
+            {
+                return wktPanel.getExpression().toString();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -452,7 +489,11 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
 
         checkSymbolIsValid();
 
-        getParent().valueUpdated();
+        FieldConfigBase parent = getParent();
+        if(parent != null)
+        {
+            parent.valueUpdated();
+        }
     }
 
     /**
@@ -485,7 +526,13 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
      */
     public void checkSymbolIsValid() {
         // Mark symbol as valid/invalid
-        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, !getExpression().toString().isEmpty());
+        boolean valid = false;
+        Expression expression = getExpression();
+        if(expression != null)
+        {
+            valid = !expression.toString().isEmpty();
+        }
+        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
     }
 
     /**
@@ -496,10 +543,15 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigWKT copy = new FieldConfigWKT(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly());
+        FieldConfigWKT copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigWKT(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
