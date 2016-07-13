@@ -141,6 +141,8 @@ public class FieldConfigEnumTest {
 
         boolean valueOnly = true;
         FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        field.undoAction(null);
+        field.redoAction(null);
         field.addConfig(null);
         assertNull(field.getStringValue());
 

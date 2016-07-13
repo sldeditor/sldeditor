@@ -273,6 +273,8 @@ public class FieldConfigColourTest {
     @Test
     public void testUndoAction() {
         FieldConfigColour field = new FieldConfigColour(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true);
+        field.undoAction(null);
+        field.redoAction(null);
         field.createUI(null);
 
         String colour1 = "#123456";

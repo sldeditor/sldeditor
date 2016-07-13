@@ -112,12 +112,12 @@ public class FieldConfigBooleanTest {
     public void testGenerateExpression() {
         boolean valueOnly = true;
         FieldConfigBoolean field = new FieldConfigBoolean(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-        
+
         field.setTestValue(null, true);
         field.populateField((Boolean)null);
         field.populateField(Boolean.TRUE);
         field.populateExpression(null, null);
-        
+
         field.createUI(null);
         field.populateField(Boolean.TRUE);
         assertTrue(field.getBooleanValue());
@@ -223,7 +223,9 @@ public class FieldConfigBooleanTest {
     public void testUndoAction() {
         boolean valueOnly = true;
         FieldConfigBoolean field = new FieldConfigBoolean(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-        
+        field.undoAction(null);
+        field.redoAction(null);
+
         field.createUI(null);
         field.populateField(Boolean.TRUE);
         field.populateField(Boolean.FALSE);

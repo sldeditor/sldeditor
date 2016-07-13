@@ -255,6 +255,8 @@ public class FieldConfigTimePeriodTest {
     @Test
     public void testUndoAction() {
         FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), false);
+        field.undoAction(null);
+        field.redoAction(null);
         field.createUI(null);
 
         // Time period values

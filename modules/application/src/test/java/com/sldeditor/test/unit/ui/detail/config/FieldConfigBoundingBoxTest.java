@@ -109,7 +109,7 @@ public class FieldConfigBoundingBoxTest {
 
         expectedValue = false;
         field.setVisible(expectedValue);
-        
+
     }
 
     /**
@@ -231,6 +231,8 @@ public class FieldConfigBoundingBoxTest {
     @Test
     public void testUndoAction() {
         FieldConfigBoundingBox field = new FieldConfigBoundingBox(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true);
+        field.undoAction(null);
+        field.redoAction(null);
         field.createUI(null);
 
         CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
@@ -249,7 +251,7 @@ public class FieldConfigBoundingBoxTest {
         UndoManager.getInstance().redo();
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(envelope2.toString()) == 0);
-        
+
         field.undoAction(null);
         field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
         field.redoAction(null);

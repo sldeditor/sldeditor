@@ -238,6 +238,8 @@ public class FieldConfigSliderTest {
     public void testUndoAction() {
         boolean valueOnly = true;
         FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        field.undoAction(null);
+        field.redoAction(null);
 
         double expectedValue1 = 0.13;
         field.createUI(null);

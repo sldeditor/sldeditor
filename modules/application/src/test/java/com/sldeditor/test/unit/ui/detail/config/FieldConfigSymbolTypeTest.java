@@ -265,6 +265,8 @@ public class FieldConfigSymbolTypeTest {
         UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
         boolean valueOnly = true;
         FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        field.undoAction(null);
+        field.redoAction(null);
 
         field.createUI(null);
 

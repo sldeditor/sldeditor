@@ -220,6 +220,8 @@ public class FieldConfigGeometryTest {
     @Test
     public void testUndoAction() {
         FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", false, "button text");
+        field.undoAction(null);
+        field.redoAction(null);
 
         field.createUI(null);
         field.setTestValue(null, (String)null);

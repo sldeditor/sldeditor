@@ -237,6 +237,8 @@ public class FieldConfigIntegerTest {
     public void testUndoAction() {
         boolean valueOnly = true;
         FieldConfigInteger field = new FieldConfigInteger(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        field.undoAction(null);
+        field.redoAction(null);
 
         int expectedValue1 = 134;
         field.createUI(null);

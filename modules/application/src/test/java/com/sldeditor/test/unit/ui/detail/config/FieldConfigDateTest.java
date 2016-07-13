@@ -256,6 +256,8 @@ public class FieldConfigDateTest {
     @Test
     public void testUndoAction() {
         FieldConfigDate field = new FieldConfigDate(Date.class, new FieldId(FieldIdEnum.NAME), "label", false);
+        field.undoAction(null);
+        field.redoAction(null);
         field.createUI(null);
 
         SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -288,7 +290,7 @@ public class FieldConfigDateTest {
         UndoManager.getInstance().redo();
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(dateFormat2String) == 0);
-        
+
         field.undoAction(null);
         field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
         field.redoAction(null);

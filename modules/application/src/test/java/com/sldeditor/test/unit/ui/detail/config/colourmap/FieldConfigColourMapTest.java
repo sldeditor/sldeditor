@@ -85,21 +85,21 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testGenerateExpression() {
-        
+
         FieldConfigColourMap field = new FieldConfigColourMap(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
         ColorMap testValue = null;
         field.populate(null, null);
         field.setTestValue(null, testValue);
         field.populateField(testValue);
-        
+
         field.createUI(null);
-        
+
         ColorMap expectedValue1 = new ColorMapImpl();
         field.populateField(expectedValue1);
         assertEquals(expectedValue1, field.getColourMap());
-        
+
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        
+
         ColorMap expectedValue2 = new ColorMapImpl();
         ColorMapEntryImpl entry = new ColorMapEntryImpl();
         entry.setColor(ff.literal("#001122"));
@@ -182,15 +182,16 @@ public class FieldConfigColourMapTest {
     @Test
     public void testUndoAction() {
         FieldConfigColourMap field = new FieldConfigColourMap(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
-        
+        field.undoAction(null);
+        field.redoAction(null);
         field.createUI(null);
-        
+
         ColorMap expectedValue1 = new ColorMapImpl();
         field.populateField(expectedValue1);
         assertEquals(expectedValue1, field.getColourMap());
-        
+
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        
+
         ColorMap expectedValue2 = new ColorMapImpl();
         ColorMapEntryImpl entry = new ColorMapEntryImpl();
         entry.setColor(ff.literal("#001122"));
@@ -224,7 +225,7 @@ public class FieldConfigColourMapTest {
     @Test
     public void testColourMapUpdated() {
         FieldConfigColourMap field = new FieldConfigColourMap(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
-        
+
         field.createUI(null);
         field.colourMapUpdated();
     }
