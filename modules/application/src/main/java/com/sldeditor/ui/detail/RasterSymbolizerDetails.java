@@ -245,7 +245,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 ColorMap colourMap = rasterSymbolizer.getColorMap();
 
                 fieldConfigVisitor.populateComboBoxField(FieldIdEnum.RASTER_COLOURMAP_TYPE, Integer.valueOf(colourMap.getType()).toString());
-                fieldConfigVisitor.populateField(FieldIdEnum.RASTER_COLOURMAP, colourMap);
+                fieldConfigVisitor.populateColourMapField(FieldIdEnum.RASTER_COLOURMAP, colourMap);
 
                 // Shaded relief
                 ShadedRelief shadedRelief = rasterSymbolizer.getShadedRelief();

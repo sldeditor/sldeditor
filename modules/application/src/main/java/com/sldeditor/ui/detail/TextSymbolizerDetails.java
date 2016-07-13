@@ -186,13 +186,13 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
                 if(font != null)
                 {
-                    fieldConfigVisitor.populateField(FieldIdEnum.FONT_FAMILY, font);
+                    fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_FAMILY, font);
 
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_WEIGHT, font.getWeight());
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_STYLE, font.getStyle());
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_SIZE, font.getSize());
                 }
-                fieldConfigVisitor.populateField(FieldIdEnum.FONT_PREVIEW, font);
+                fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
 
                 // Fill
                 Fill fill = (FillImpl) textSymbolizer.getFill();
@@ -391,7 +391,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         Font font = extractFont();
 
         // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
-        fieldConfigVisitor.populateField(FieldIdEnum.FONT_PREVIEW, font);
+        fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
 
         TextSymbolizer textSymbolizer = (TextSymbolizer) getStyleFactory().textSymbolizer(standardData.name,
                 defaultGeometryField,

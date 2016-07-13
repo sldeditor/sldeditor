@@ -257,7 +257,19 @@ public class ColourMapModel extends AbstractTableModel {
                 int quantity = 1;
                 if(quantityExpression != null)
                 {
-                    quantity = Integer.valueOf((String) ((LiteralExpressionImpl)quantityExpression).getValue());
+                    Object quantityValue = ((LiteralExpressionImpl)quantityExpression).getValue();
+                    if(quantityValue instanceof Integer)
+                    {
+                        quantity = ((Integer) quantityValue).intValue();
+                    }
+                    else if(quantityValue instanceof Double)
+                    {
+                        quantity = ((Double) quantityValue).intValue();
+                    }
+                    else if(quantityValue instanceof String)
+                    {
+                        quantity = Integer.valueOf((String) quantityValue);
+                    }
                 }
 
                 data.setColour(ColourUtils.toColour(colourString));
