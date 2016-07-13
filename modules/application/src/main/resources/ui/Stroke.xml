@@ -4,7 +4,7 @@
     <Group id="STROKE" label="stroke" showLabel="false" option="false">
         <FieldConfigSymbolType id="STROKE_STYLE"
             label="stroke.style" valueOnly="true" />
-        <FieldConfigDouble id="STROKE_WIDTH" label="stroke.width" />
+        <FieldConfigDouble id="STROKE_WIDTH" label="stroke.width" defaultValue="5.0" minValue="0.1" />
         <FieldConfigEnum id="STROKE_LINE_JOIN" label="stroke.lineJoin">
             <ValueList>
                 <Value>

@@ -372,6 +372,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
             FieldConfigDouble doubleConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
 
             XMLFieldConfigDouble xmlDouble = (XMLFieldConfigDouble)xmlFieldConfig;
+            doubleConfig.setDefaultValue(xmlDouble.getDefaultValue());
             doubleConfig.setConfig(xmlDouble.getMinValue(), xmlDouble.getMaxValue(), xmlDouble.getStepSize(), xmlDouble.getNoOfDecimalPlaces());
 
             groupConfig.addField(doubleConfig);

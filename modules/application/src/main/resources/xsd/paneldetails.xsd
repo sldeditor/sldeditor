@@ -167,7 +167,14 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData">
-                <xs:attribute type="xs:double" name="minValue" use="optional" default="0.0" >
+                <xs:attribute type="xs:double" name="defaultValue" use="optional" default="0.0" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Default value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:double" name="minValue" use="optional" default="-INF" >
                     <xs:annotation>
                         <xs:documentation>
                             Minimum allowed value

@@ -248,6 +248,9 @@ public class FieldConfigDoubleTest {
         boolean valueOnly = true;
         FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
+        field.undoAction(null);
+        field.redoAction(null);
+
         double expectedValue1 = 13.4;
         field.createUI(null);
         field.populateField(expectedValue1);
@@ -264,9 +267,35 @@ public class FieldConfigDoubleTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
         field.redoAction(null);
+        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
         field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
     }
 
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#testSetConfig(double, double, double, double)}.
+     */
+    @Test
+    public void testSetConfig() {
+        boolean valueOnly = true;
+        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+
+        field.createUI(null);
+        double minValue = 10.0;
+        double maxValue = 20.0;
+        double stepSize = 1.0;
+        int noOfDecimalPlaces = 2;
+
+        field.setConfig(minValue, maxValue, stepSize, noOfDecimalPlaces);
+
+        // Should be set to the minimum value
+        double expectedValue1 = 1.4;
+        field.populateField(expectedValue1);
+        assertTrue(Math.abs(field.getDoubleValue() - minValue) < 0.001);
+
+        // Should be set to the maximum value
+        double expectedValue2 = 41.4;
+        field.populateField(expectedValue2);
+        assertTrue(Math.abs(field.getDoubleValue() - maxValue) < 0.001);
+    }
 }

@@ -50,7 +50,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     private double defaultValue = 0.0;
 
     /** The minimum value. */
-    private double minValue = 0.0;
+    private double minValue = Double.MIN_VALUE;
 
     /** The maximum value. */
     private double maxValue = Double.MAX_VALUE;
@@ -197,10 +197,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void revertToDefaultValue()
     {
-        if(spinner != null)
-        {
-            spinner.setValue(this.defaultValue);
-        }
+        internalSetValue(this.defaultValue);
     }
 
     /**
@@ -294,7 +291,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
             {
                 Double oldValue = (Double)undoRedoObject.getOldValue();
 
-                spinner.setValue(oldValue);
+                internalSetValue(oldValue);
             }
         }
     }
@@ -313,7 +310,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
             {
                 Double newValue = (Double)undoRedoObject.getNewValue();
 
-                spinner.setValue(newValue);
+                internalSetValue(newValue);
             }
         }
     }
@@ -336,9 +333,29 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void populateField(Double value) {
+        internalSetValue(value);
+    }
+
+    /**
+     * Internal set value.
+     *
+     * @param value the value
+     */
+    private void internalSetValue(Double value) {
         if(spinner != null)
-        {          
-            spinner.setValue(value);
+        {
+            if(value.doubleValue() < minValue)
+            {
+                spinner.setValue(minValue);
+            }
+            else if(value.doubleValue() > maxValue)
+            {
+                spinner.setValue(maxValue);
+            }
+            else
+            {
+                spinner.setValue(value);
+            }
         }
     }
 
@@ -364,6 +381,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
                     doubleFieldConfig.maxValue, 
                     doubleFieldConfig.stepSize,
                     doubleFieldConfig.noOfDecimalPlaces);
+            copy.setDefaultValue(doubleFieldConfig.defaultValue);
         }
         return copy;
     }

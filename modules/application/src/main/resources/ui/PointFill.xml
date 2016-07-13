@@ -5,7 +5,7 @@
         <FieldConfigSymbolType id="SYMBOL_TYPE"
             label="fillSymbol.symbol" />
         <FieldConfigDouble id="ANGLE" label="fillSymbol.angle" />
-        <FieldConfigDouble id="SIZE" label="fillSymbol.size" />
+        <FieldConfigDouble id="SIZE" label="fillSymbol.size" defaultValue="5.0" minValue="0.1"/>
         <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" />
         <FieldConfigDouble id="INITIAL_GAP" label="fillSymbol.initialGap" />
         <FieldConfigDouble id="GAP" label="fillSymbol.gap" />
