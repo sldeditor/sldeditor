@@ -24,6 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
@@ -49,7 +50,10 @@ public class IntegerSpinner extends JSpinner {
     /**
      * Instantiates a new value spinner.
      */
-    public IntegerSpinner() {
+    public IntegerSpinner(int min, int max, int stepSize) {
+        SpinnerNumberModel model = new SpinnerNumberModel(min, min, max, stepSize);
+        setModel(model);
+
         JComponent comp = getEditor();
         final JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();

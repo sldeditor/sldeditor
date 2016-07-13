@@ -446,6 +446,34 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:int" name="defaultValue" use="optional" default="0" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Default value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:int" name="minValue" use="optional" default="-2147483648" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Minimum allowed value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:int" name="maxValue" use="optional" default="2147483647" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Maximum allowed value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:int" name="stepSize" use="optional" default="1" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Step size
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

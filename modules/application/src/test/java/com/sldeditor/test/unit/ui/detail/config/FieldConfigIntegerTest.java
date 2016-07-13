@@ -261,4 +261,29 @@ public class FieldConfigIntegerTest {
         field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
     }
 
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigInteger#testSetConfig(double, double, double)}.
+     */
+    @Test
+    public void testSetConfig() {
+        boolean valueOnly = true;
+        FieldConfigInteger field = new FieldConfigInteger(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+
+        field.createUI(null);
+        int minValue = 10;
+        int maxValue = 20;
+        int stepSize = 1;
+
+        field.setConfig(minValue, maxValue, stepSize);
+
+        // Should be set to the minimum value
+        int expectedValue1 = 1;
+        field.populateField(expectedValue1);
+        assertEquals(minValue, field.getIntValue());
+
+        // Should be set to the maximum value
+        int expectedValue2 = 41;
+        field.populateField(expectedValue2);
+        assertEquals(maxValue, field.getIntValue());
+    }
 }

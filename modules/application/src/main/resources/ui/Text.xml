@@ -43,7 +43,7 @@
                 </Value>
             </ValueList>
         </FieldConfigEnum>
-        <FieldConfigInteger id="FONT_SIZE" label="text.font.size" />
+        <FieldConfigInteger id="FONT_SIZE" label="text.font.size" defaultValue="12" minValue="0"/>
         <FieldConfigFontPreview id="FONT_PREVIEW"/>
     </Group>
     <Group id="HALO" label="text.halo" showLabel="true" option="true">

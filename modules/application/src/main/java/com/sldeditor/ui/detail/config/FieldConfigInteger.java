@@ -49,6 +49,15 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /** The default value. */
     private int defaultValue = 0;
 
+    /** The minimum value. */
+    private int minValue = Integer.MIN_VALUE;
+
+    /** The maximum value. */
+    private int maxValue = Integer.MAX_VALUE;
+
+    /** The step size. */
+    private int stepSize = 1;
+
     /**
      * Instantiates a new field config double.
      *
@@ -76,7 +85,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         int xPos = getXPos();
         FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
-        spinner = new IntegerSpinner();
+        spinner = new IntegerSpinner(minValue, maxValue, stepSize);
         spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(spinner);
 
@@ -320,9 +329,29 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     @Override
     public void populateField(Integer value) {
+        internalSetValue(value);
+    }
+
+    /**
+     * Internal set value.
+     *
+     * @param value the value
+     */
+    private void internalSetValue(Integer value) {
         if(spinner != null)
-        {           
-            spinner.setValue(value);
+        {
+            if(value.intValue() < minValue)
+            {
+                spinner.setValue(minValue);
+            }
+            else if(value.intValue() > maxValue)
+            {
+                spinner.setValue(maxValue);
+            }
+            else
+            {
+                spinner.setValue(value);
+            }
         }
     }
 
@@ -342,6 +371,12 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
                     fieldConfigBase.getFieldId(),
                     fieldConfigBase.getLabel(),
                     fieldConfigBase.isValueOnly());
+
+            FieldConfigInteger intFieldConfig = (FieldConfigInteger)fieldConfigBase;
+            copy.setConfig(intFieldConfig.minValue, 
+                    intFieldConfig.maxValue, 
+                    intFieldConfig.stepSize);
+            copy.setDefaultValue(intFieldConfig.defaultValue);
         }
         return copy;
     }
@@ -367,5 +402,21 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         {
             spinner.setVisible(visible);
         }
+    }
+
+    /**
+     * Sets the configuration.
+     *
+     * @param minValue the minimum value
+     * @param maxValue the maximum value
+     * @param stepSize the step size
+     */
+    public void setConfig(int minValue, 
+            int maxValue,
+            int stepSize)
+    {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.stepSize = stepSize;
     }
 }

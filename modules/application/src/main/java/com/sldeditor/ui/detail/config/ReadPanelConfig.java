@@ -387,7 +387,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigInteger)
         {
+            XMLFieldConfigInteger xmlInteger = (XMLFieldConfigInteger)xmlFieldConfig;
+
             FieldConfigInteger integerConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
+            integerConfig.setDefaultValue(xmlInteger.getDefaultValue());
+            integerConfig.setConfig(xmlInteger.getMinValue(), xmlInteger.getMaxValue(), xmlInteger.getStepSize());
 
             groupConfig.addField(integerConfig);
 
