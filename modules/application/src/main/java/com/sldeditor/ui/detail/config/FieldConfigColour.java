@@ -322,6 +322,8 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
                 Color oldValue = (Color)undoRedoObject.getOldValue();
 
                 colourButton.setColour(oldValue);
+
+                valueUpdated();
             }
         }
     }
@@ -341,6 +343,8 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
                 Color newValue = (Color)undoRedoObject.getNewValue();
 
                 colourButton.setColour(newValue);
+
+                valueUpdated();
             }
         }
     }
