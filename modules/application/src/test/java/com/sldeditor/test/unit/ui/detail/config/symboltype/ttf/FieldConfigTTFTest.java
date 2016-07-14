@@ -149,7 +149,13 @@ public class FieldConfigTTFTest {
             e.printStackTrace();
         }
         try {
-            expectedValue = f.toURI().toURL().toString();
+            if((f != null) && (f.toURI() != null))
+            {
+                if(f.toURI().toURL() != null)
+                {
+                    expectedValue = f.toURI().toURL().toString();
+                }
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

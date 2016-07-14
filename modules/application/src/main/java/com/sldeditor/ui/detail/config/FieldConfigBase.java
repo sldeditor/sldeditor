@@ -1096,9 +1096,9 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
             {
                 group.removeFromUI();
             }
-        }
 
-        functionGroupList.clear();
+            functionGroupList.clear();
+        }
     }
 
     /**

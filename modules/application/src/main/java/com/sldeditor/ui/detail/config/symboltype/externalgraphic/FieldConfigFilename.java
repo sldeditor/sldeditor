@@ -322,7 +322,7 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
             Expression fillColour = null;
             Expression fillColourOpacity = null;
 
-            if(fillColourOpacity instanceof FieldConfigColour)
+            if(fieldConfig instanceof FieldConfigColour)
             {
                 fillColourOpacity = ((FieldConfigColour)fieldConfig).getColourOpacityExpression();
             }

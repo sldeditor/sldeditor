@@ -146,7 +146,13 @@ public class FieldConfigFilenameTest {
             e.printStackTrace();
         }
         try {
-            expectedValue = f.toURI().toURL().toString();
+            if((f != null) && (f.toURI() != null))
+            {
+                if(f.toURI().toURL() != null)
+                {
+                    expectedValue = f.toURI().toURL().toString();
+                }
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -288,7 +294,13 @@ public class FieldConfigFilenameTest {
             e.printStackTrace();
         }
         try {
-            filename = f.toURI().toURL().toString();
+            if((f != null) && (f.toURI() != null))
+            {
+                if(f.toURI().toURL() != null)
+                {
+                    filename = f.toURI().toURL().toString();
+                }
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -371,7 +383,7 @@ public class FieldConfigFilenameTest {
     public void testGetFieldList() {
         boolean valueOnly = true;
         FieldConfigFilename field = new FieldConfigFilename(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-        
+
         assertEquals(1, field.getFieldList(null).size());
     }
 
@@ -400,7 +412,7 @@ public class FieldConfigFilenameTest {
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
         FieldConfigFilename field = new FieldConfigFilename(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-        
+
         field.setUpdateSymbolListener(null);
     }
 }

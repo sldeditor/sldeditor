@@ -305,7 +305,13 @@ public class FieldConfigWKTTest {
             e.printStackTrace();
         }
         try {
-            filename = f.toURI().toURL().toString();
+            if((f != null) && (f.toURI() != null))
+            {
+                if(f.toURI().toURL() != null)
+                {
+                    filename = f.toURI().toURL().toString();
+                }
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
