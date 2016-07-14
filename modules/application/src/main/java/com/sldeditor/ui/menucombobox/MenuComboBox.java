@@ -424,6 +424,9 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
         {
             ConsoleManager.getInstance().error(this, "Unknown menu combo box key : " + key);
         }
-        setSelectedData(value);
+        else
+        {
+            setSelectedData(value);
+        }
     }
 }

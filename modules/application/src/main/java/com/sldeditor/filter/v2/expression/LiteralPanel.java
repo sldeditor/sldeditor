@@ -114,27 +114,27 @@ public class LiteralPanel extends JPanel {
 
         if(node.getType() == Date.class)
         {
-            fieldConfig = new FieldConfigDate(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            fieldConfig = new FieldConfigDate(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
         }
         else if(node.getType() == TimePeriod.class)
         {
-            fieldConfig = new FieldConfigTimePeriod(null, new FieldId(FieldIdEnum.FUNCTION), true, false);
+            fieldConfig = new FieldConfigTimePeriod(null, new FieldId(FieldIdEnum.FUNCTION), true);
         }
         else if(node.getType() == String.class)
         {
-            fieldConfig = new FieldConfigString(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null, false);
+            fieldConfig = new FieldConfigString(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null);
         }
         else if(node.getType() == Boolean.class)
         {
-            fieldConfig = new FieldConfigBoolean(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            fieldConfig = new FieldConfigBoolean(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
         }
         else if(node.getType() == BoundingBox.class)
         {
-            fieldConfig = new FieldConfigBoundingBox(null, new FieldId(FieldIdEnum.FUNCTION), null, true, false);
+            fieldConfig = new FieldConfigBoundingBox(null, new FieldId(FieldIdEnum.FUNCTION), null, true);
         }
         else if(node.getType() == StringBuilder.class)
         {
-            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
 
             List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
             SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);
@@ -154,7 +154,7 @@ public class LiteralPanel extends JPanel {
 
         if(fieldConfig != null)
         {
-            fieldConfig.createUI(null, null);
+            fieldConfig.createUI(null);
             fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
                 @Override

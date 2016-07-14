@@ -35,7 +35,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
@@ -84,10 +83,9 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigEnum(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigEnum(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
@@ -111,16 +109,18 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
@@ -283,9 +283,12 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     {
         if(comboBox != null)
         {
-            String sValue = (String) objValue;
+            if(objValue instanceof String)
+            {
+                String sValue = (String) objValue;
 
-            populateField(sValue);
+                populateField(sValue);
+            }
         }
     }
 
@@ -297,6 +300,10 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     @Override
     public ValueComboBoxData getEnumValue()
     {
+        if(comboBox == null)
+        {
+            return null;
+        }
         ValueComboBoxData selectedItem = (ValueComboBoxData) comboBox.getSelectedItem();
 
         return selectedItem;
@@ -326,15 +333,21 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     public void addConfig(List<SymbolTypeConfig> configList)
     {
-        for(SymbolTypeConfig config : configList)
+        if(configList != null)
         {
-            fieldMap.putAll(config.getFieldMap());
-
-            Map<String, String> optionMap = config.getOptionMap();
-
-            for(String key : optionMap.keySet())
+            for(SymbolTypeConfig config : configList)
             {
-                addValue(key, optionMap.get(key));
+                if(config != null)
+                {
+                    fieldMap.putAll(config.getFieldMap());
+
+                    Map<String, String> optionMap = config.getOptionMap();
+
+                    for(String key : optionMap.keySet())
+                    {
+                        addValue(key, optionMap.get(key));
+                    }
+                }
             }
         }
     }
@@ -367,9 +380,19 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        String oldValue = (String)undoRedoObject.getOldValue();
+        if((comboBox != null) && (undoRedoObject != null))
+        {
+            if(undoRedoObject.getOldValue() instanceof String)
+            {
+                String oldValue = (String)undoRedoObject.getOldValue();
 
-        populateField(oldValue);
+                ValueComboBoxData valueComboBoxData = comboDataMap.get(oldValue);
+                if(valueComboBoxData != null)
+                {
+                    comboBox.setSelectedItem(valueComboBoxData);
+                }
+            }
+        }
     }
 
     /**
@@ -383,9 +406,19 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        String newValue = (String)undoRedoObject.getNewValue();
+        if((comboBox != null) && (undoRedoObject != null))
+        {
+            if(undoRedoObject.getNewValue() instanceof String)
+            {
+                String oldValue = (String)undoRedoObject.getNewValue();
 
-        populateField(newValue);
+                ValueComboBoxData valueComboBoxData = comboDataMap.get(oldValue);
+                if(valueComboBoxData != null)
+                {
+                    comboBox.setSelectedItem(valueComboBoxData);
+                }
+            }
+        }
     }
 
     /**
@@ -408,15 +441,17 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void populateField(String value) {
-        ValueComboBoxData valueComboBoxData = comboDataMap.get(value);
-        if(valueComboBoxData != null)
+        if(comboBox != null)
         {
-            oldValueObj = valueComboBoxData.getKey();
-            comboBox.setSelectedItem(valueComboBoxData);
-        }
-        else
-        {
-            logger.error("Unknown ValueComboBoxData value : " + value);
+            ValueComboBoxData valueComboBoxData = comboDataMap.get(value);
+            if(valueComboBoxData != null)
+            {
+                comboBox.setSelectedItem(valueComboBoxData);
+            }
+            else
+            {
+                logger.error("Unknown ValueComboBoxData value : " + value);
+            }
         }
     }
 
@@ -438,11 +473,15 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigEnum copy = new FieldConfigEnum(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigEnum copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigEnum(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 

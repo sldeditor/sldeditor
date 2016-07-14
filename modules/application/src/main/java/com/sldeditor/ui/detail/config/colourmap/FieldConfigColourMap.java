@@ -39,7 +39,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -79,10 +78,9 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param panelId the panel id
      * @param id the id
      * @param label the label
-     * @param multipleFields the multiple fields
      */
-    public FieldConfigColourMap(Class<?> panelId, FieldId id, String label, boolean multipleFields) {
-        super(panelId, id, label, true, multipleFields);
+    public FieldConfigColourMap(Class<?> panelId, FieldId id, String label) {
+        super(panelId, id, label, true);
 
         model = new ColourMapModel(this);
     }
@@ -101,15 +99,14 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
         int xPos = getXPos();
         int maxNoOfRows = 12;
-        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(maxNoOfRows), getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(maxNoOfRows), getLabel(), parentBox);
 
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -213,10 +210,6 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     {
         Expression expression = null;
 
-        //        if(this.textField != null)
-        //        {
-        //            expression = getFilterFactory().literal(textField.getText());
-        //        }
         return expression;
     }
 
@@ -269,9 +262,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        String sValue = (String) objValue;
-
-        populateField(sValue);
+        // Do nothing
     }
 
     /**
@@ -297,11 +288,14 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(table != null)
+        if((table != null) && (undoRedoObject != null))
         {
-            ColorMap oldValue = (ColorMap)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof ColorMap)
+            {
+                ColorMap oldValue = (ColorMap)undoRedoObject.getOldValue();
 
-            populateField(oldValue);
+                populateField(oldValue);
+            }
         }
     }
 
@@ -313,11 +307,14 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(table != null)
+        if((table != null) && (undoRedoObject != null))
         {
-            ColorMap newValue = (ColorMap)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof ColorMap)
+            {
+                ColorMap newValue = (ColorMap)undoRedoObject.getNewValue();
 
-            populateField(newValue);
+                populateField(newValue);
+            }
         }
     }
 
@@ -341,13 +338,16 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     public void populateField(ColorMap value) {
         if(model != null)
         {
-            model.populate(value);
+            if(value != null)
+            {
+                model.populate(value);
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-            oldValueObj = value;
+                oldValueObj = value;
 
-            valueUpdated();
+                valueUpdated();
+            }
         }
     }
 
@@ -359,10 +359,14 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigColourMap copy = new FieldConfigColourMap(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigColourMap copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigColourMap(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel());
+        }
         return copy;
     }
 

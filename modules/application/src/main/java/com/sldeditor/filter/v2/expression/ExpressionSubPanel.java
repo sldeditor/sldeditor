@@ -322,48 +322,48 @@ public class ExpressionSubPanel extends JPanel {
         String valueText = Localisation.getString(ExpressionPanelv2.class, "ExpressionSubPanel.value");
         if(node.getType() == Geometry.class)
         {
-            fieldConfig = new FieldConfigGeometry(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null, false);
+            fieldConfig = new FieldConfigGeometry(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null);
         }
         else if(node.getType() == Date.class)
         {
-            fieldConfig = new FieldConfigDate(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            fieldConfig = new FieldConfigDate(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
         }
         else if(node.getType() == ReferencedEnvelope.class)
         {
-            fieldConfig = new FieldConfigBoundingBox(null, new FieldId(FieldIdEnum.FUNCTION), "", true, false);
+            fieldConfig = new FieldConfigBoundingBox(null, new FieldId(FieldIdEnum.FUNCTION), "", true);
         }
         else if((node.getType() == String.class) ||
                 (node.getType() == Object.class))
         {
-            fieldConfig = new FieldConfigString(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null, false);
+            fieldConfig = new FieldConfigString(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null);
         }
         else if(node.getType() == Boolean.class)
         {
-            fieldConfig = new FieldConfigBoolean(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            fieldConfig = new FieldConfigBoolean(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
         }
         else if(node.getType() == Integer.class)
         {
-            fieldConfig = new FieldConfigInteger(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            fieldConfig = new FieldConfigInteger(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
         }
         else if(node.getType() == Double.class)
         {
-            fieldConfig = new FieldConfigDouble(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            fieldConfig = new FieldConfigDouble(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
         }
         else if(node.getType() == Number.class)
         {
             Class<?> filterType = TypeManager.getInstance().getDataType();
             if((filterType == Float.class) || (filterType == Double.class))
             {
-                fieldConfig = new FieldConfigDouble(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+                fieldConfig = new FieldConfigDouble(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
             }
             else
             {
-                fieldConfig = new FieldConfigInteger(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+                fieldConfig = new FieldConfigInteger(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
             }
         }
         else if(node.getType() == StringBuilder.class)
         {
-            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, false);
+            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
 
             List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
             SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);
@@ -381,7 +381,7 @@ public class ExpressionSubPanel extends JPanel {
             System.err.println("Unknown type : " + node.getType());
         }
 
-        fieldConfig.createUI(null, box);
+        fieldConfig.createUI(box);
         fieldConfig.setFunctionParameterType(node.getType());
         fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
         {

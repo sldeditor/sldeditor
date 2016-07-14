@@ -167,7 +167,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
         box.add(GroupConfig.createSeparator());
 
-        fieldPanel = new FieldPanel(0, "", BasePanel.WIDGET_HEIGHT * 2, false, null, null, null);
+        fieldPanel = new FieldPanel(0, "", BasePanel.WIDGET_HEIGHT * 2, null, null);
         // Set up title
         if(isOptional())
         {
@@ -249,7 +249,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
                     for(FieldConfigBase field : groupConfig.getFieldConfigList())
                     {
-                        field.createUI(null, null);
+                        field.createUI(null);
                         FieldPanel component = field.getPanel();
                         optionBox.add(component);
                         fieldConfigManager.addField(field);
@@ -262,7 +262,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
                         for(FieldConfigBase field : subGroup.getFieldConfigList())
                         {
-                            field.createUI(null, null);
+                            field.createUI(null);
                             FieldPanel component = field.getPanel();
                             optionBox.add(component);
                             fieldConfigManager.addField(field);

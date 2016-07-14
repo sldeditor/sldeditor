@@ -30,7 +30,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -64,25 +63,26 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigSlider(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigSlider(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
 
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         slider = new JSlider();
         slider.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -211,7 +211,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        Double value = 0.0;
+        Double value = defaultValue;
 
         if(objValue instanceof Integer)
         {
@@ -269,11 +269,14 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(slider != null)
+        if((slider != null) && (undoRedoObject != null))
         {
-            Integer oldValue = (Integer)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Integer)
+            {
+                Integer oldValue = (Integer)undoRedoObject.getOldValue();
 
-            slider.setValue(oldValue.intValue());
+                slider.setValue(oldValue.intValue());
+            }
         }
     }
 
@@ -285,11 +288,14 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(slider != null)
+        if((slider != null) && (undoRedoObject != null))
         {
-            Integer newValue = (Integer)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Integer)
+            {
+                Integer newValue = (Integer)undoRedoObject.getNewValue();
 
-            slider.setValue(newValue.intValue());
+                slider.setValue(newValue.intValue());
+            }
         }
     }
 
@@ -341,11 +347,15 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigSlider copy = new FieldConfigSlider(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigSlider copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigSlider(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 

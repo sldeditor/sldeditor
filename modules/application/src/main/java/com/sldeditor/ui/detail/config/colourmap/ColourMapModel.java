@@ -234,31 +234,50 @@ public class ColourMapModel extends AbstractTableModel {
 
             ColourMapData data = new ColourMapData();
 
-            String colourString = (String) ((LiteralExpressionImpl)colourExpression).getValue();
-            double opacity = 1.0;
-            if(opacityExpression != null)
+            if(colourExpression != null)
             {
-                Object opacityValue = ((LiteralExpressionImpl)opacityExpression).getValue();
-                if(opacityValue instanceof Double)
+                String colourString = (String) ((LiteralExpressionImpl)colourExpression).getValue();
+                double opacity = 1.0;
+                if(opacityExpression != null)
                 {
-                    opacity = (double) opacityValue;
+                    Object opacityValue = ((LiteralExpressionImpl)opacityExpression).getValue();
+                    if(opacityValue instanceof Double)
+                    {
+                        opacity = (double) opacityValue;
+                    }
+                    else if(opacityValue instanceof String)
+                    {
+                        opacity = Double.valueOf((String)opacityValue);
+                    }
+                    else
+                    {
+                        ConsoleManager.getInstance().error(this, "Unknown opacity type" + opacityValue.getClass().getName());
+                    }
                 }
-                else if(opacityValue instanceof String)
+                int quantity = 1;
+                if(quantityExpression != null)
                 {
-                    opacity = Double.valueOf((String)opacityValue);
+                    Object quantityValue = ((LiteralExpressionImpl)quantityExpression).getValue();
+                    if(quantityValue instanceof Integer)
+                    {
+                        quantity = ((Integer) quantityValue).intValue();
+                    }
+                    else if(quantityValue instanceof Double)
+                    {
+                        quantity = ((Double) quantityValue).intValue();
+                    }
+                    else if(quantityValue instanceof String)
+                    {
+                        quantity = Integer.valueOf((String) quantityValue);
+                    }
                 }
-                else
-                {
-                    ConsoleManager.getInstance().error(this, "Unknown opacity type" + opacityValue.getClass().getName());
-                }
-            }
-            int quantity = Integer.valueOf((String) ((LiteralExpressionImpl)quantityExpression).getValue());
 
-            data.setColour(ColourUtils.toColour(colourString));
-            data.setOpacity(opacity);
-            data.setQuantity(quantity);
-            data.setLabel(label);
-            colourMapList.add(data);
+                data.setColour(ColourUtils.toColour(colourString));
+                data.setOpacity(opacity);
+                data.setQuantity(quantity);
+                data.setLabel(label);
+                colourMapList.add(data);
+            }
         }
         this.fireTableDataChanged();
     }

@@ -81,7 +81,6 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
         createFilter();
     }
 
-
     /**
      * Creates the filter.
      *
@@ -337,5 +336,13 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
         }
 
         return value;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
     }
 }

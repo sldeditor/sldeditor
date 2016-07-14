@@ -150,4 +150,12 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
     {
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

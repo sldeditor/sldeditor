@@ -23,13 +23,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.geotools.styling.Font;
+import org.geotools.styling.StyleBuilder;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
 
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -50,6 +50,9 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
 
     /** The default value. */
     private String defaultValue = "";
+
+    /** The Constant DEFAULT_FONT_SIZE. */
+    private static final double DEFAULT_FONT_SIZE = 12.0;
 
     /** The Constant sampleText. */
     private static final String sampleText =
@@ -74,28 +77,26 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleFields the multiple fields
      */
-    public FieldConfigFontPreview(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleFields) {
-        super(panelId, id, label, valueOnly, multipleFields);
+    public FieldConfigFontPreview(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
         int xPos = getXPos();
         int height = getRowY(sampleTextLines);
         int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
-        FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel(), parentBox);
 
         textField = new JTextArea();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
@@ -249,6 +250,20 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     }
 
     /**
+     * Populate string field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    @Override
+    public void populateField(String value) {
+        StyleBuilder styleBuilder = new StyleBuilder();
+
+        Font font = styleBuilder.createFont(defaultValue, DEFAULT_FONT_SIZE);
+
+        populateField(font);
+    }
+
+    /**
      * Populate field.
      *
      * @param font the font
@@ -321,11 +336,15 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigFontPreview copy = new FieldConfigFontPreview(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigFontPreview copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigFontPreview(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
@@ -337,7 +356,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     public Class<?> getClassType() {
-        return String.class;
+        return Font.class;
     }
 
     /**

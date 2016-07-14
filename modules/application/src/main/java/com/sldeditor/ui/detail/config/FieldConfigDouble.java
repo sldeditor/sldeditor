@@ -27,7 +27,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import com.sldeditor.ui.widgets.DecimalSpinner;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -51,7 +50,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     private double defaultValue = 0.0;
 
     /** The minimum value. */
-    private double minValue = 0.0;
+    private double minValue = Double.MIN_VALUE;
 
     /** The maximum value. */
     private double maxValue = Double.MAX_VALUE;
@@ -69,27 +68,25 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigDouble(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigDouble(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         spinner = new DecimalSpinner(minValue, maxValue, stepSize, noOfDecimalPlaces);
         spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -200,10 +197,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void revertToDefaultValue()
     {
-        if(spinner != null)
-        {
-            spinner.setValue(this.defaultValue);
-        }
+        internalSetValue(this.defaultValue);
     }
 
     /**
@@ -291,11 +285,14 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(spinner != null)
+        if((spinner != null) && (undoRedoObject != null))
         {
-            Double oldValue = (Double)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof Double)
+            {
+                Double oldValue = (Double)undoRedoObject.getOldValue();
 
-            spinner.setValue(oldValue);
+                internalSetValue(oldValue);
+            }
         }
     }
 
@@ -307,11 +304,14 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(spinner != null)
+        if((spinner != null) && (undoRedoObject != null))
         {
-            Double newValue = (Double)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof Double)
+            {
+                Double newValue = (Double)undoRedoObject.getNewValue();
 
-            spinner.setValue(newValue);
+                internalSetValue(newValue);
+            }
         }
     }
 
@@ -333,9 +333,29 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void populateField(Double value) {
+        internalSetValue(value);
+    }
+
+    /**
+     * Internal set value.
+     *
+     * @param value the value
+     */
+    private void internalSetValue(Double value) {
         if(spinner != null)
-        {          
-            spinner.setValue(value);
+        {
+            if(value.doubleValue() < minValue)
+            {
+                spinner.setValue(minValue);
+            }
+            else if(value.doubleValue() > maxValue)
+            {
+                spinner.setValue(maxValue);
+            }
+            else
+            {
+                spinner.setValue(value);
+            }
         }
     }
 
@@ -347,18 +367,22 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigDouble copy = new FieldConfigDouble(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigDouble copy = null;
 
-        FieldConfigDouble doubleFieldConfig = (FieldConfigDouble)fieldConfigBase;
-        copy.setConfig(doubleFieldConfig.minValue, 
-                doubleFieldConfig.maxValue, 
-                doubleFieldConfig.stepSize,
-                doubleFieldConfig.noOfDecimalPlaces);
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigDouble(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
 
+            FieldConfigDouble doubleFieldConfig = (FieldConfigDouble)fieldConfigBase;
+            copy.setConfig(doubleFieldConfig.minValue, 
+                    doubleFieldConfig.maxValue, 
+                    doubleFieldConfig.stepSize,
+                    doubleFieldConfig.noOfDecimalPlaces);
+            copy.setDefaultValue(doubleFieldConfig.defaultValue);
+        }
         return copy;
     }
 

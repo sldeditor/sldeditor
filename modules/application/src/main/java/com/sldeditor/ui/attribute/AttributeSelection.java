@@ -112,16 +112,15 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * Instantiates a new attribute selection.
      *
      * @param expectedDataType the expected data type
-     * @param isFunctionField the is function field
      * @param field the field
      */
-    public AttributeSelection(Class<?> expectedDataType, boolean isFunctionField, FieldConfigBase field) {
+    public AttributeSelection(Class<?> expectedDataType, FieldConfigBase field) {
 
         this.field = field;
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         setLayout(new BorderLayout(0, 0));
         setPreferredSize(new Dimension(100, BasePanel.WIDGET_HEIGHT));
-        createUI(isFunctionField, expectedDataType);
+        createUI(expectedDataType);
         if(dataSource != null)
         {
             dataSource.addListener(this);
@@ -141,11 +140,10 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
     /**
      * Creates the ui.
      *
-     * @param isFunctionField the is function field
      * @param expectedDataType the expected data type
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void createUI(boolean isFunctionField, Class<?> expectedDataType) {
+    private void createUI(Class<?> expectedDataType) {
         final UndoActionInterface thisObj = this;
 
         outerPanel = new JPanel();

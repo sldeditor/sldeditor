@@ -96,7 +96,6 @@
                     <xs:element name="FieldConfigDouble"        type="XMLFieldConfigDouble" />
                     <xs:element name="FieldConfigEnum"          type="XMLFieldConfigEnum" />
                     <xs:element name="FieldConfigString"        type="XMLFieldConfigString" />
-                    <xs:element name="FieldConfigFunction"      type="XMLFieldConfigFunction" />
                     <xs:element name="FieldConfigSlider"        type="XMLFieldConfigSlider" />
                     <xs:element name="FieldConfigColour"        type="XMLFieldConfigColour" />
                     <xs:element name="FieldConfigFont"          type="XMLFieldConfigFont" />
@@ -168,7 +167,14 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData">
-                <xs:attribute type="xs:double" name="minValue" use="optional" default="0.0" >
+                <xs:attribute type="xs:double" name="defaultValue" use="optional" default="0.0" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Default value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:double" name="minValue" use="optional" default="-INF" >
                     <xs:annotation>
                         <xs:documentation>
                             Minimum allowed value
@@ -377,25 +383,6 @@
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="XMLFieldConfigFunction">
-        <xs:annotation>
-            <xs:documentation>
-                Configuration for a function field
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="XMLFieldConfigData">
-                <xs:attribute type="xs:string" name="buttonText" use="optional" >
-                    <xs:annotation>
-                        <xs:documentation>
-                            Text to display in button if specified
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:attribute>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
     <xs:complexType name="XMLFieldConfigGeometry">
         <xs:annotation>
             <xs:documentation>
@@ -459,6 +446,34 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:int" name="defaultValue" use="optional" default="0" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Default value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:int" name="minValue" use="optional" default="-2147483648" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Minimum allowed value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:int" name="maxValue" use="optional" default="2147483647" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Maximum allowed value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute type="xs:int" name="stepSize" use="optional" default="1" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Step size
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -490,13 +505,6 @@
                     Flag indicating whether field is:
                     - (false) displayed with an attribute/expression/function dropdown
                     - (true) displayed as a field only
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute type="xs:boolean" name="multiple" use="optional" default="false" >
-            <xs:annotation>
-                <xs:documentation>
-                    Flag indicating whether multiple field values can exist
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>

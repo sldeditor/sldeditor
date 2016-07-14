@@ -48,4 +48,9 @@ public interface PopulateDetailsInterface {
      * @return true, if is data present
      */
     public boolean isDataPresent();
+
+    /**
+     * Method called before symbol loaded
+     */
+    public void preLoadSymbol();
 }

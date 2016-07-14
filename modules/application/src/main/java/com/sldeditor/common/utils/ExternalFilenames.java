@@ -117,7 +117,7 @@ public class ExternalFilenames {
      */
     public static String getText(SLDDataInterface sldDataInterface, URL location) {
 
-        if((location == null) || (sldDataInterface == null))
+        if(location == null)
         {
             return null;
         }
@@ -127,19 +127,25 @@ public class ExternalFilenames {
 
         text = new File(text).getAbsolutePath();
 
-        if(sldDataInterface.getSLDFile() != null)
+        if(sldDataInterface != null)
         {
-            String parentFolder = sldDataInterface.getSLDFile().getParent();
-
-            if(text.startsWith(parentFolder))
+            if(sldDataInterface.getSLDFile() != null)
             {
-                text = text.substring(parentFolder.length());
+                String parentFolder = sldDataInterface.getSLDFile().getParent();
+
+                if(parentFolder != null)
+                {
+                    if(text.startsWith(parentFolder))
+                    {
+                        text = text.substring(parentFolder.length());
+                    }
+                }
             }
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(ExternalFilenames.class, "No SLD filename set");
-            return null;
+            else
+            {
+                ConsoleManager.getInstance().error(ExternalFilenames.class, "No SLD filename set");
+                return null;
+            }
         }
 
         return text;

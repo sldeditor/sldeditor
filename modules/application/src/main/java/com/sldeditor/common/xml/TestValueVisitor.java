@@ -19,6 +19,7 @@
 
 package com.sldeditor.common.xml;
 
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.styling.ColorMap;
 import org.opengis.filter.expression.Expression;
 
@@ -79,4 +80,12 @@ public interface TestValueVisitor {
      * @param testValue the test value
      */
     public void setTestValue(FieldId fieldId, Expression testValue);
+
+    /**
+     * Sets the test reference envelope value.
+     *
+     * @param fieldId the field id
+     * @param testValue the test value
+     */
+    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue);
 }

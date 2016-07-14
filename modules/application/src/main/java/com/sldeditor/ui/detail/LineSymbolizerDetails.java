@@ -141,4 +141,12 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
     {
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }

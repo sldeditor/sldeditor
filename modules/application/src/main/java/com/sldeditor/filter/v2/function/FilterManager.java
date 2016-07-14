@@ -306,7 +306,6 @@ public class FilterManager implements FilterNameInterface {
             String label = functionName.getArgumentNames().get(index);
             Parameter<?> parameterType = functionName.getArguments().get(index);
 
-            boolean multipleValues = (parameterType.getMaxOccurs() > 1);
             boolean valueOnly = false;
             FieldId id = FieldId.getUnknownValue();
 
@@ -320,55 +319,55 @@ public class FilterManager implements FilterNameInterface {
             FieldConfigBase fieldConfig = null;
             if(type == java.lang.Number.class)
             {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
             }
             else if(type == Double.class)
             {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
             }
             else if(type == Float.class)
             {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
             }
             else if(type == Integer.class)
             {
-                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
             }
             else if(type == Long.class)
             {
-                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
             }
             else if(type == String.class)
             {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null, multipleValues);
+                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
             }
             else if(type == Object.class)
             {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null, multipleValues);
+                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
             }
             else if(type == Boolean.class)
             {
-                fieldConfig = new FieldConfigBoolean(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigBoolean(panelId, id, label, valueOnly);
             }
             else if(type == Geometry.class)
             {
-                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null, multipleValues);
+                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
             }
             else if(type == LineString.class)
             {
-                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null, multipleValues);
+                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
             }
             else if(type == Date.class)
             {
-                fieldConfig = new FieldConfigDate(panelId, id, label, valueOnly, multipleValues);
+                fieldConfig = new FieldConfigDate(panelId, id, label, valueOnly);
             }
             else if(type == Class.class)
             {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null, multipleValues);
+                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
             }
             else if(type == Classifier.class)
             {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null, multipleValues);
+                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
             }
             else
             {

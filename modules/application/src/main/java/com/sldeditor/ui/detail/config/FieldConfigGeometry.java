@@ -36,7 +36,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -74,26 +73,27 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      * @param label the label
      * @param valueOnly the value only
      * @param buttonText the button text
-     * @param multipleFields the multiple fields
      */
-    public FieldConfigGeometry(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText, boolean multipleFields) {
-        super(panelId, id, label, valueOnly, multipleFields);
+    public FieldConfigGeometry(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText) {
+        super(panelId, id, label, valueOnly);
 
         this.buttonText = buttonText;
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         textField = new JTextField();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -254,9 +254,12 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        String sValue = (String) objValue;
+        if(objValue instanceof String)
+        {
+            String sValue = (String) objValue;
 
-        populateField(sValue);
+            populateField(sValue);
+        }
     }
 
     /**
@@ -292,11 +295,14 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if((textField != null) && (undoRedoObject != null))
         {
-            String oldValue = (String)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof String)
+            {
+                String oldValue = (String)undoRedoObject.getOldValue();
 
-            textField.setText(oldValue);
+                textField.setText(oldValue);
+            }
         }
     }
 
@@ -308,11 +314,14 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if((textField != null) && (undoRedoObject != null))
         {
-            String newValue = (String)undoRedoObject.getNewValue();
+            if(undoRedoObject.getNewValue() instanceof String)
+            {
+                String newValue = (String)undoRedoObject.getNewValue();
 
-            textField.setText(newValue);
+                textField.setText(newValue);
+            }
         }
     }
 
@@ -369,12 +378,15 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigGeometry copy = new FieldConfigGeometry(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                this.buttonText,
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigGeometry copy = null;
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigGeometry(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly(),
+                    this.buttonText);
+        }
         return copy;
     }
 

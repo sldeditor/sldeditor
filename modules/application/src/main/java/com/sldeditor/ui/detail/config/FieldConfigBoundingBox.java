@@ -45,7 +45,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -86,10 +85,9 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigBoundingBox(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
+    public FieldConfigBoundingBox(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
@@ -106,17 +104,16 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /**
      * Creates the ui.
      *
-     * @param parentPanel the parent panel
      * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
 
         int row = 0;
         xMinTextField = createRow(Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.minx"), xPos, fieldPanel, row);
@@ -257,6 +254,22 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     @Override
     protected Expression generateExpression()
     {
+        ReferencedEnvelope envelope = getBBox();
+
+        return getFilterFactory().literal(envelope);
+    }
+
+    /**
+     * Generates the bounding box from the ui.
+     *
+     * @return the b box
+     */
+    private ReferencedEnvelope getBBox() {
+        if(xMinTextField == null)
+        {
+            return null;
+        }
+
         double minX = xMinTextField.getText().isEmpty() ? 0.0 : Double.valueOf(xMinTextField.getText());
         double maxX = xMaxTextField.getText().isEmpty() ? 0.0 : Double.valueOf(xMaxTextField.getText());
         double minY = yMinTextField.getText().isEmpty() ? 0.0 : Double.valueOf(yMinTextField.getText());
@@ -279,8 +292,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         }
 
         ReferencedEnvelope envelope = new ReferencedEnvelope(minX, maxX, minY, maxY, crs);
-
-        return getFilterFactory().literal(envelope);
+        return envelope;
     }
 
     /**
@@ -335,9 +347,12 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        populateField((ReferencedEnvelope) objValue);
+        if(objValue instanceof ReferencedEnvelope)
+        {
+            populateField((ReferencedEnvelope) objValue);
 
-        valueUpdated();
+            valueUpdated();
+        }
     }
 
     /**
@@ -348,7 +363,12 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     @Override
     public String getStringValue()
     {
-        return String.valueOf(getBooleanValue());
+        ReferencedEnvelope envelope = getBBox();
+        if(envelope == null)
+        {
+            return "";
+        }
+        return envelope.toString();
     }
 
     /**
@@ -359,9 +379,15 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        ReferencedEnvelope oldValue = (ReferencedEnvelope)undoRedoObject.getOldValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getOldValue() instanceof ReferencedEnvelope)
+            {
+                ReferencedEnvelope oldValue = (ReferencedEnvelope)undoRedoObject.getOldValue();
 
-        populateField(oldValue);
+                populateField(oldValue);
+            }
+        }
     }
 
     /**
@@ -372,9 +398,15 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        ReferencedEnvelope newValue = (ReferencedEnvelope)undoRedoObject.getNewValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getNewValue() instanceof ReferencedEnvelope)
+            {
+                ReferencedEnvelope oldValue = (ReferencedEnvelope)undoRedoObject.getNewValue();
 
-        populateField(newValue);
+                populateField(oldValue);
+            }
+        }
     }
 
     /**
@@ -384,7 +416,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, boolean testValue) {
+    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -405,6 +437,9 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         String key = CoordManager.getInstance().getCRSCode(value.getCoordinateReferenceSystem());
 
         crsComboBox.setSelectValueKey(key);
+
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+        oldValueObj = value;
     }
 
     /**
@@ -415,11 +450,14 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigBoundingBox copy = new FieldConfigBoundingBox(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigBoundingBox copy = null;
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigBoundingBox(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 
@@ -430,7 +468,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     @Override
     public Class<?> getClassType() {
-        return Boolean.class;
+        return ReferencedEnvelope.class;
     }
 
     /**

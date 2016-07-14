@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FieldConfigDouble" type="{}XMLFieldConfigDouble"/&gt;
  *         &lt;element name="FieldConfigEnum" type="{}XMLFieldConfigEnum"/&gt;
  *         &lt;element name="FieldConfigString" type="{}XMLFieldConfigString"/&gt;
- *         &lt;element name="FieldConfigFunction" type="{}XMLFieldConfigFunction"/&gt;
  *         &lt;element name="FieldConfigSlider" type="{}XMLFieldConfigSlider"/&gt;
  *         &lt;element name="FieldConfigColour" type="{}XMLFieldConfigColour"/&gt;
  *         &lt;element name="FieldConfigFont" type="{}XMLFieldConfigFont"/&gt;
@@ -67,7 +66,6 @@ public class XMLGroupConfig
         @XmlElement(name = "FieldConfigDouble", type = XMLFieldConfigDouble.class),
         @XmlElement(name = "FieldConfigEnum", type = XMLFieldConfigEnum.class),
         @XmlElement(name = "FieldConfigString", type = XMLFieldConfigString.class),
-        @XmlElement(name = "FieldConfigFunction", type = XMLFieldConfigFunction.class),
         @XmlElement(name = "FieldConfigSlider", type = XMLFieldConfigSlider.class),
         @XmlElement(name = "FieldConfigColour", type = XMLFieldConfigColour.class),
         @XmlElement(name = "FieldConfigFont", type = XMLFieldConfigFont.class),
@@ -103,7 +101,6 @@ public class XMLGroupConfig
      * {@link XMLFieldConfigDouble }
      * {@link XMLFieldConfigEnum }
      * {@link XMLFieldConfigString }
-     * {@link XMLFieldConfigFunction }
      * {@link XMLFieldConfigSlider }
      * {@link XMLFieldConfigColour }
      * {@link XMLFieldConfigFont }

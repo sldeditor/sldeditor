@@ -44,7 +44,6 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
@@ -78,24 +77,23 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigWindBarbs(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
-
-        createUI(null, null);
+    public FieldConfigWindBarbs(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
-        FieldPanel fieldPanel = createFieldPanel(0, "", parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(0, "", parentBox);
         fieldPanel.setLayout(new BorderLayout());
         windBarbsPanel = new WindBarbDetails(this, FunctionManager.getInstance());
 
@@ -130,6 +128,7 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
     @Override
     public void setEnabled(boolean enabled)
     {
+        // Do nothin
     }
 
     /**
@@ -143,6 +142,10 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
     @Override
     protected Expression generateExpression()
     {
+        if(windBarbsPanel == null)
+        {
+            return null;
+        }
         Expression expression = windBarbsPanel.getExpression();
 
         return expression;
@@ -171,7 +174,10 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
     @Override
     public void revertToDefaultValue()
     {
-        windBarbsPanel.revertToDefaultValue();
+        if(windBarbsPanel != null)
+        {
+            windBarbsPanel.revertToDefaultValue();
+        }
     }
 
     /**
@@ -186,7 +192,13 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        windBarbsPanel.populateExpression((String) objValue);
+        if(windBarbsPanel != null)
+        {
+            if(objValue instanceof String)
+            {
+                windBarbsPanel.populateExpression((String) objValue);
+            }
+        }
     }
 
     /**
@@ -222,16 +234,22 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
     {
-        MarkImpl markerSymbol = (MarkImpl) symbol;
-
-        if(getConfigField() != null)
+        if(symbol != null)
         {
-            getConfigField().populate(markerSymbol.getWellKnownName());
-        }
+            if(symbol instanceof Mark)
+            {
+                MarkImpl markerSymbol = (MarkImpl) symbol;
 
-        if(multiOptionPanel != null)
-        {
-            multiOptionPanel.setSelectedItem(WINDBARB_SYMBOL_KEY);
+                if(getConfigField() != null)
+                {
+                    getConfigField().populate(markerSymbol.getWellKnownName());
+                }
+
+                if(multiOptionPanel != null)
+                {
+                    multiOptionPanel.setSelectedItem(WINDBARB_SYMBOL_KEY);
+                }
+            }
         }
     }
 
@@ -251,7 +269,7 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Expression wellKnownName = null;
-        if(getConfigField() != null)
+        if((getConfigField() != null) && (fieldConfigManager != null))
         {
             wellKnownName = symbolType;
             if(wellKnownName != null)
@@ -262,10 +280,13 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
                 FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
                 if(field != null)
                 {
-                    FieldConfigColour colourField = (FieldConfigColour)field;
+                    if(field instanceof FieldConfigColour)
+                    {
+                        FieldConfigColour colourField = (FieldConfigColour)field;
 
-                    expFillColour = colourField.getColourExpression();
-                    expFillColourOpacity = colourField.getColourOpacityExpression();
+                        expFillColour = colourField.getColourExpression();
+                        expFillColourOpacity = colourField.getColourOpacityExpression();
+                    }
                 }
 
                 Stroke stroke = null;
@@ -447,10 +468,13 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
      */
     @Override
     public void windBarbValueUpdated() {
-      //  fireExpressionUpdated(generateExpression());
         setCachedExpression(generateExpression());
 
-        getParent().valueUpdated();
+        FieldConfigBase parent = getParent();
+        if(parent != null)
+        {
+            parent.valueUpdated();
+        }
     }
 
     /**
@@ -473,7 +497,10 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
      */
     @Override
     public void setTestValue(FieldId fieldId, String testValue) {
-        windBarbsPanel.setTestValue(fieldId, testValue);
+        if(windBarbsPanel != null)
+        {
+            windBarbsPanel.setTestValue(fieldId, testValue);
+        }
     }
 
     /**
@@ -484,11 +511,15 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigWindBarbs copy = new FieldConfigWindBarbs(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigWindBarbs copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigWindBarbs(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 

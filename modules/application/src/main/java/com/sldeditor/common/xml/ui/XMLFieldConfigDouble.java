@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType name="XMLFieldConfigDouble"&gt;
  *   &lt;complexContent&gt;
  *     &lt;extension base="{}XMLFieldConfigData"&gt;
- *       &lt;attribute name="minValue" type="{http://www.w3.org/2001/XMLSchema}double" default="0.0" /&gt;
+ *       &lt;attribute name="defaultValue" type="{http://www.w3.org/2001/XMLSchema}double" default="0.0" /&gt;
+ *       &lt;attribute name="minValue" type="{http://www.w3.org/2001/XMLSchema}double" default="-INF" /&gt;
  *       &lt;attribute name="maxValue" type="{http://www.w3.org/2001/XMLSchema}double" default="INF" /&gt;
  *       &lt;attribute name="stepSize" type="{http://www.w3.org/2001/XMLSchema}double" default="1.0" /&gt;
  *       &lt;attribute name="noOfDecimalPlaces" type="{http://www.w3.org/2001/XMLSchema}int" default="3" /&gt;
@@ -44,6 +45,8 @@ public class XMLFieldConfigDouble
     extends XMLFieldConfigData
 {
 
+    @XmlAttribute(name = "defaultValue")
+    protected Double defaultValue;
     @XmlAttribute(name = "minValue")
     protected Double minValue;
     @XmlAttribute(name = "maxValue")
@@ -52,6 +55,34 @@ public class XMLFieldConfigDouble
     protected Double stepSize;
     @XmlAttribute(name = "noOfDecimalPlaces")
     protected Integer noOfDecimalPlaces;
+
+    /**
+     * Gets the value of the defaultValue property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
+     */
+    public double getDefaultValue() {
+        if (defaultValue == null) {
+            return  0.0D;
+        } else {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * Sets the value of the defaultValue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
+     */
+    public void setDefaultValue(Double value) {
+        this.defaultValue = value;
+    }
 
     /**
      * Gets the value of the minValue property.
@@ -63,7 +94,7 @@ public class XMLFieldConfigDouble
      */
     public double getMinValue() {
         if (minValue == null) {
-            return  0.0D;
+            return java.lang.Double.NEGATIVE_INFINITY;
         } else {
             return minValue;
         }

@@ -42,7 +42,6 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.MultipleFieldInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
@@ -85,24 +84,23 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param multipleValues the multiple values
      */
-    public FieldConfigFilename(Class<?> panelId, FieldId id, String label, boolean valueOnly, boolean multipleValues) {
-        super(panelId, id, label, valueOnly, multipleValues);
-
-        createUI(null, null);
+    public FieldConfigFilename(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(MultipleFieldInterface parentPanel, Box parentBox) {
+    public void createUI(Box parentBox) {
 
-        FieldPanel fieldPanel = createFieldPanel(0, "", parentPanel, parentBox);
+        FieldPanel fieldPanel = createFieldPanel(0, "", parentBox);
         fieldPanel.setLayout(new BorderLayout());
         externalGraphicPanel = new ExternalGraphicDetails(this, FunctionManager.getInstance());
 
@@ -154,8 +152,12 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     @Override
     protected Expression generateExpression()
     {
-        Expression expression = externalGraphicPanel.getExpression();
+        Expression expression = null;
 
+        if(externalGraphicPanel != null)
+        {
+            expression = externalGraphicPanel.getExpression();
+        }
         return expression;
     }
 
@@ -182,7 +184,10 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     @Override
     public void revertToDefaultValue()
     {
-        externalGraphicPanel.revertToDefaultValue();
+        if(externalGraphicPanel != null)
+        {
+            externalGraphicPanel.revertToDefaultValue();
+        }
     }
 
     /**
@@ -197,7 +202,13 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        externalGraphicPanel.populateExpression((String) objValue);
+        if(externalGraphicPanel != null)
+        {
+            if(objValue instanceof String)
+            {
+                externalGraphicPanel.populateExpression((String) objValue);
+            }
+        }
     }
 
     /**
@@ -233,13 +244,19 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
     {
-        ExternalGraphicImpl markerSymbol = (ExternalGraphicImpl) symbol;
-
-        externalGraphicPanel.setValue(markerSymbol);
-
-        if(multiOptionPanel != null)
+        if(symbol instanceof ExternalGraphicImpl)
         {
-            multiOptionPanel.setSelectedItem(EXTERNAL_SYMBOL_KEY);
+            ExternalGraphicImpl markerSymbol = (ExternalGraphicImpl) symbol;
+
+            if(externalGraphicPanel != null)
+            {
+                externalGraphicPanel.setValue(markerSymbol);
+            }
+
+            if(multiOptionPanel != null)
+            {
+                multiOptionPanel.setSelectedItem(EXTERNAL_SYMBOL_KEY);
+            }
         }
     }
 
@@ -257,10 +274,12 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
             Expression symbolType, boolean fillEnabled, boolean strokeEnabled)
     {
         List<GraphicalSymbol> symbols = null;
-        ExternalGraphic extGraphic = externalGraphicPanel.getSymbol();
+        if(externalGraphicPanel != null)
+        {
+            ExternalGraphic extGraphic = externalGraphicPanel.getSymbol();
 
-        symbols = SelectedSymbol.getInstance().getSymbolList(extGraphic);
-
+            symbols = SelectedSymbol.getInstance().getSymbolList(extGraphic);
+        }
         return symbols;
     }
 
@@ -291,12 +310,29 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     @Override
     public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager)
     {
-        Expression fillColour = null;
+        if(fieldConfigManager == null)
+        {
+            return null;
+        }
+
+        Fill fill = null;
         FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.OPACITY);
-        Expression fillColourOpacity = ((FieldConfigColour)fieldConfig).getColourOpacityExpression();
+        if(fieldConfig != null)
+        {
+            Expression fillColour = null;
+            Expression fillColourOpacity = null;
 
-        Fill fill = getStyleFactory().fill(graphicFill, fillColour, fillColourOpacity);
+            if(fieldConfig instanceof FieldConfigColour)
+            {
+                fillColourOpacity = ((FieldConfigColour)fieldConfig).getColourOpacityExpression();
+            }
+            else
+            {
+                fillColourOpacity = fieldConfig.getExpression();
+            }
 
+            fill = getStyleFactory().fill(graphicFill, fillColour, fillColourOpacity);
+        }
         return fill;
     }
 
@@ -330,7 +366,10 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
         enableList.add(new FieldId(FieldIdEnum.GAP));
         enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
 
-        fieldEnableState.add(getClass().getName(), EXTERNAL_SYMBOL_KEY, enableList);
+        if(fieldEnableState != null)
+        {
+            fieldEnableState.add(getClass().getName(), EXTERNAL_SYMBOL_KEY, enableList);
+        }
     }
 
     /**
@@ -398,6 +437,15 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     @Override
     public String getStringValue()
     {
+        if(externalGraphicPanel == null)
+        {
+            return null;
+        }
+
+        if(externalGraphicPanel.getExpression() == null)
+        {
+            return null;
+        }
         return externalGraphicPanel.getExpression().toString();
     }
 
@@ -410,7 +458,11 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
 
         checkSymbolIsValid();
 
-        getParent().valueUpdated();
+        FieldConfigBase parent = getParent();
+        if(parent != null)
+        {
+            parent.valueUpdated();
+        }
     }
 
     /**
@@ -431,7 +483,10 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
      */
     @Override
     public void populateField(String value) {
-        externalGraphicPanel.setValue(value);
+        if(externalGraphicPanel != null)
+        {
+            externalGraphicPanel.setValue(value);
+        }
     }
 
     /**
@@ -450,7 +505,13 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
      */
     public void checkSymbolIsValid() {
         // Mark symbol as valid/invalid
-        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, !getExpression().toString().isEmpty());
+        boolean valid = false;
+        Expression expression = getExpression();
+        if(expression != null)
+        {
+            valid = !expression.toString().isEmpty();
+        }
+        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
     }
 
     /**
@@ -461,11 +522,15 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigFilename copy = new FieldConfigFilename(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                fieldConfigBase.hasMultipleValues());
+        FieldConfigFilename copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigFilename(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly());
+        }
         return copy;
     }
 

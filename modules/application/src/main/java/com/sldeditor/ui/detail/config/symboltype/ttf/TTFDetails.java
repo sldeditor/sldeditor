@@ -169,9 +169,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public Expression getExpression() {
         String string = fieldConfigVisitor.getText(FieldIdEnum.TTF_SYMBOL);
-        
+
         Expression expression = getFilterFactory().literal(string);
-        
+
         return expression;
     }
 
@@ -181,11 +181,14 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
-        for(FieldConfigBase field : fieldList)
+        if(fieldList != null)
         {
-            if(field != null)
+            for(FieldConfigBase field : fieldList)
             {
-                field.revertToDefaultValue();
+                if(field != null)
+                {
+                    field.revertToDefaultValue();
+                }
             }
         }
     }
@@ -244,5 +247,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
                 }
             });
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
     }
 }

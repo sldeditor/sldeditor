@@ -672,7 +672,7 @@ public class SLDTreeTools {
     /**
      * Move item within a list.  The direction parameter determines which way the item is moved.
      *
-     * @param direction the direction is either up (-1) or down (+1)
+     * @param moveUp the move up flags (true), or down (false)
      */
     public void moveItem(boolean moveUp) {
         if(symbolTree == null)

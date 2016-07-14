@@ -154,7 +154,7 @@ public class Duration
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(time);
 
-                int hour = cal.get(Calendar.HOUR);
+                int hour = cal.get(Calendar.HOUR_OF_DAY);
                 int minute = cal.get(Calendar.MINUTE);
                 int seconds = cal.get(Calendar.SECOND);
 

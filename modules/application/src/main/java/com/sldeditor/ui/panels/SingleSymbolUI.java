@@ -173,6 +173,11 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
+        if(panelSymbolizerDetails != null)
+        {
+            // Reset all field values
+            panelSymbolizerDetails.preLoadSymbol();
+        }
         getSymbolTree().populateSLD();
         getSymbolTree().selectFirstSymbol();
     }

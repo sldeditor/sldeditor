@@ -51,7 +51,7 @@ public class WKTDialog extends JDialog {
     private WKTPointModel tablePointModel = new WKTPointModel();
 
     /** The geometry type combo box. */
-    private JComboBox<WktType> geometryTypeComboBox = null;
+    private JComboBox<WKTType> geometryTypeComboBox = null;
 
     /** The wkt text area. */
     private JTextArea wktTextArea = null;
@@ -119,10 +119,10 @@ public class WKTDialog extends JDialog {
         getContentPane().add(wktSelectionPanel, BorderLayout.NORTH);
 
         model = new WKTTypeComboBoxModel(WKTConversion.getWKTTypeData());
-        geometryTypeComboBox = new JComboBox<WktType>(model);
+        geometryTypeComboBox = new JComboBox<WKTType>(model);
         geometryTypeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                WktType wktType = (WktType) geometryTypeComboBox.getSelectedItem();
+                WKTType wktType = (WKTType) geometryTypeComboBox.getSelectedItem();
 
                 wktGeometry = WKTConversion.createEmpty(wktType);
 
@@ -236,7 +236,7 @@ public class WKTDialog extends JDialog {
      *
      * @param wktType the wkt type
      */
-    private void showMultiPanel(WktType wktType) {
+    private void showMultiPanel(WKTType wktType) {
         boolean enabled = false;
 
         if(wktType != null)
@@ -631,7 +631,7 @@ public class WKTDialog extends JDialog {
 
         boolean enabled = true;
 
-        WktType geometryType = wktGeometry.getGeometryType();
+        WKTType geometryType = wktGeometry.getGeometryType();
         if(geometryType != null)
         {
             if(geometryType.canHaveMultipleShapes())
@@ -652,7 +652,7 @@ public class WKTDialog extends JDialog {
      * Update point buttons.
      */
     private void updatePointButtons() {
-        WktType wktType = (WktType) geometryTypeComboBox.getSelectedItem();
+        WKTType wktType = (WKTType) geometryTypeComboBox.getSelectedItem();
 
         boolean enablePointButtons = false;
 
@@ -722,7 +722,7 @@ public class WKTDialog extends JDialog {
      *
      * @param wktType the wkt type
      */
-    private void updateUI(WktType wktType) {
+    private void updateUI(WKTType wktType) {
         multiListModel.clear();
         segmentListModel.clear();
         tablePointModel.clear();

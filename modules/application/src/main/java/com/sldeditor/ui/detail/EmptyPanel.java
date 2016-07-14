@@ -83,4 +83,11 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
         return false;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
+    }
 }
