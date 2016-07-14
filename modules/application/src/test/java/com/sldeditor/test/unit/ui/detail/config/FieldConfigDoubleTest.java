@@ -126,7 +126,7 @@ public class FieldConfigDoubleTest {
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.001);
 
-        field.populateExpression(null, null);
+        field.populateExpression(null);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.001);
 
@@ -141,23 +141,23 @@ public class FieldConfigDoubleTest {
         assertTrue(Math.abs(actualValue - expectedValue2) < 0.001);
 
         Integer expectedValue3a = Integer.valueOf(42);
-        field.populateExpression(expectedValue3a, null);
+        field.populateExpression(expectedValue3a);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3a) < 0.001);
 
         Long expectedValue3b = Long.valueOf(4567);
-        field.populateExpression(expectedValue3b, null);
+        field.populateExpression(expectedValue3b);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3b) < 0.001);
 
         Double expectedValue3c = Double.valueOf(42.12);
-        field.populateExpression(expectedValue3c, null);
+        field.populateExpression(expectedValue3c);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3c) < 0.001);
 
         double expectedValue3d = 698.7;
         String expectedValue3dString = String.valueOf(expectedValue3d);
-        field.populateExpression(expectedValue3dString, null);
+        field.populateExpression(expectedValue3dString);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3d) < 0.001);
     }

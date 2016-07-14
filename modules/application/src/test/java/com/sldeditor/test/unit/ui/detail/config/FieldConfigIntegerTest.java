@@ -124,7 +124,7 @@ public class FieldConfigIntegerTest {
         field.setTestValue(null, expectedValue);
         assertEquals(0, field.getIntValue());
 
-        field.populateExpression(null, null);
+        field.populateExpression(null);
         assertEquals(0, field.getIntValue());
 
         field.createUI(null);
@@ -136,19 +136,19 @@ public class FieldConfigIntegerTest {
         assertEquals(expectedValue2, field.getIntValue());
 
         Integer expectedValue3a = Integer.valueOf(42);
-        field.populateExpression(expectedValue3a, null);
+        field.populateExpression(expectedValue3a);
         assertEquals(expectedValue3a.intValue(), field.getIntValue());
 
         Long expectedValue3b = Long.valueOf(4567);
-        field.populateExpression(expectedValue3b, null);
+        field.populateExpression(expectedValue3b);
         assertEquals(expectedValue3b.intValue(), field.getIntValue());
 
         Double expectedValue3c = Double.valueOf(42.12);
-        field.populateExpression(expectedValue3c, null);
+        field.populateExpression(expectedValue3c);
         assertEquals(expectedValue3c.intValue(), field.getIntValue());
 
         String expectedValue3d = String.valueOf(6987);
-        field.populateExpression(expectedValue3d, null);
+        field.populateExpression(expectedValue3d);
         assertEquals(Integer.valueOf(expectedValue3d).intValue(), field.getIntValue());
     }
 

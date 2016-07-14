@@ -116,13 +116,13 @@ public class FieldConfigBooleanTest {
         field.setTestValue(null, true);
         field.populateField((Boolean)null);
         field.populateField(Boolean.TRUE);
-        field.populateExpression(null, null);
+        field.populateExpression(null);
 
         field.createUI(null);
         field.populateField(Boolean.TRUE);
         assertTrue(field.getBooleanValue());
 
-        field.populateExpression(Boolean.FALSE, null);
+        field.populateExpression(Boolean.FALSE);
         assertFalse(field.getBooleanValue());
 
         field.setTestValue(null, true);

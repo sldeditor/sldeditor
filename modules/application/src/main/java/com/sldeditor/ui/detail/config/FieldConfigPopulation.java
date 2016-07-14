@@ -129,9 +129,8 @@ public class FieldConfigPopulation {
      *
      * @param fieldId the field id
      * @param colour the colour
-     * @param opacity the opacity
      */
-    public void populateColourField(FieldId fieldId, Expression colour, Expression opacity)
+    public void populateColourField(FieldId fieldId, Expression colour)
     {
         if(fieldConfigManager == null)
         {
@@ -140,7 +139,7 @@ public class FieldConfigPopulation {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
-            fieldConfig.populateExpression(colour, opacity);
+            fieldConfig.populateExpression(colour);
         }
     }
 

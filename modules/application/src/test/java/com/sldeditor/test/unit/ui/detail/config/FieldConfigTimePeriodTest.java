@@ -144,7 +144,7 @@ public class FieldConfigTimePeriodTest {
         assertNotNull(actualExpression);
 
         expectedValue = "test string value as expression";
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
         actualExpression = field.callGenerateExpression();
         assertNotNull(actualExpression);
 
@@ -172,7 +172,7 @@ public class FieldConfigTimePeriodTest {
                 new DefaultInstant(new DefaultPosition(timePeriodObj.getStart().getDate())),
                 new DefaultInstant(new DefaultPosition(timePeriodObj.getEnd().getDate())));
 
-        field.populateExpression(defaultPeriod, null);
+        field.populateExpression(defaultPeriod);
         actualExpression = field.callGenerateExpression();
         assertTrue(timePeriod.compareTo(actualExpression.toString()) == 0);
     }

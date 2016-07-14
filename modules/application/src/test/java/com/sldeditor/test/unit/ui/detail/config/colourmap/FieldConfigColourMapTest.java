@@ -88,7 +88,7 @@ public class FieldConfigColourMapTest {
 
         FieldConfigColourMap field = new FieldConfigColourMap(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
         ColorMap testValue = null;
-        field.populate(null, null);
+        field.populate(null);
         field.setTestValue(null, testValue);
         field.populateField(testValue);
 
@@ -107,7 +107,7 @@ public class FieldConfigColourMapTest {
         field.setTestValue(null, expectedValue2);
         assertEquals(expectedValue2.getColorMapEntries().length, field.getColourMap().getColorMapEntries().length);
 
-        field.populateExpression((String)null, null);
+        field.populateExpression((String)null);
     }
 
     /**

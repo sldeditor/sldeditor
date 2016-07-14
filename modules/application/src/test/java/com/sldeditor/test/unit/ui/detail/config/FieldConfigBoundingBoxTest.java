@@ -140,11 +140,11 @@ public class FieldConfigBoundingBoxTest {
 
         // Try string values - erroneous
         field.createUI(null);
-        field.populateExpression("", null);
+        field.populateExpression("");
 
         CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
         ReferencedEnvelope envelope1 = new ReferencedEnvelope(0.0, 1.0, 51.0, 51.1, crs);
-        field.populateExpression(envelope1, null);
+        field.populateExpression(envelope1);
         actualExpression = field.callGenerateExpression();
         assertTrue(envelope1.toString().compareTo(actualExpression.toString()) == 0);
 

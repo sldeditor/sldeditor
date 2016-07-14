@@ -136,7 +136,7 @@ public class FieldConfigStringTest {
         assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
 
         expectedValue = "test string value as expression";
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
     }

@@ -128,19 +128,19 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
 
         field.setTestValue(null, (String)null);
-        field.populateExpression((Double)null, null);
+        field.populateExpression((Double)null);
         assertNull(field.getStringValue());
 
         // Create ui
         field.createUI(null);
-        field.populateExpression((Double)null, null);
+        field.populateExpression((Double)null);
         String expectedValue = "string value";
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
 
         expectedValue = "windbarbs://default(9)[m/s]?hemisphere=s";
         field.setTestValue(null, expectedValue);
 
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
     }
 
     /**

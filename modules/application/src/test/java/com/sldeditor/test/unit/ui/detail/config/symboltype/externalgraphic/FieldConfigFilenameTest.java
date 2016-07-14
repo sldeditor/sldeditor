@@ -128,15 +128,15 @@ public class FieldConfigFilenameTest {
         boolean valueOnly = true;
         FieldConfigFilename field = new FieldConfigFilename(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
 
-        field.populateExpression((Double)null, null);
+        field.populateExpression((Double)null);
         field.populateField((String)null);
         assertNull(field.getStringValue());
 
         // Create ui
         field.createUI(null);
-        field.populateExpression((Double)null, null);
+        field.populateExpression((Double)null);
         String expectedValue = "string value";
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
         assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
 
         File f = null;
@@ -158,7 +158,7 @@ public class FieldConfigFilenameTest {
         }
         field.setTestValue(null, expectedValue);
 
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
         assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
     }
 

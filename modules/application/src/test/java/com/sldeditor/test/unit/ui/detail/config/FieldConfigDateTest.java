@@ -142,7 +142,7 @@ public class FieldConfigDateTest {
 
         // Try string values - erroneous
         field.createUI(null);
-        field.populateExpression("", null);
+        field.populateExpression("");
 
         SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String dateString = "10-01-2012 23:13:26";
@@ -153,7 +153,7 @@ public class FieldConfigDateTest {
             e.printStackTrace();
         }
 
-        field.populateExpression(dateTime1, null);
+        field.populateExpression(dateTime1);
         actualExpression = field.callGenerateExpression();
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -161,7 +161,7 @@ public class FieldConfigDateTest {
         String dateFormat1String = String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
         assertTrue(dateFormat1String.compareTo(actualExpression.toString()) == 0);
 
-        field.populateExpression(dateString, null);
+        field.populateExpression(dateString);
         actualExpression = field.callGenerateExpression();
         String dateFormat1aString = String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
         assertTrue(dateFormat1aString.compareTo(actualExpression.toString()) == 0);

@@ -31,6 +31,7 @@ import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -138,18 +139,18 @@ public class FieldConfigColourTest {
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
         field.setTestValue(null, (String)null);
-        field.populateExpression(null, null);
+        field.populateExpression(null);
         assertNull(field.getColourExpression());
         assertNull(field.getColourOpacityExpression());
 
         // Try string values - erroneous
         field.createUI(null);
-        field.populateExpression("", null);
+        field.populateExpression("");
         String actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo("#000000") == 0);
 
         String colour1 = "#123456";
-        field.populateExpression(colour1, null);
+        field.populateExpression(colour1);
         actualValue = field.getStringValue();
         assertTrue(colour1.compareTo(actualValue) == 0);
         actualExpression = field.getColourExpression();
@@ -172,11 +173,11 @@ public class FieldConfigColourTest {
 
         // Try using FieldConfigBase.populate(colour expression, opacity)
         String colour3 = "#001122";
-        expectedOpacity = 0.42;
+        expectedOpacity = DefaultSymbols.defaultColourOpacity();
 
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
-        field.populate(ff.literal(colour3), ff.literal(expectedOpacity));
+        field.populate(ff.literal(colour3));
         actualValue = field.getStringValue();
         assertTrue(colour3.compareTo(actualValue) == 0);
         actualExpression = field.getColourExpression();
@@ -189,7 +190,7 @@ public class FieldConfigColourTest {
         assertTrue(Math.abs(opacity - expectedOpacity) < 0.1);
 
         AttributeExpressionImpl attributeExpression = new AttributeExpressionImpl("colour");
-        field.populate(attributeExpression, ff.literal(expectedOpacity));
+        field.populate(attributeExpression);
         actualExpression = field.getColourExpression();
         assertTrue(actualExpression instanceof AttributeExpressionImpl);
         assertTrue(actualExpression.toString().compareTo(attributeExpression.toString()) == 0);
@@ -278,10 +279,10 @@ public class FieldConfigColourTest {
         field.createUI(null);
 
         String colour1 = "#123456";
-        field.populateExpression(colour1, null);
+        field.populateExpression(colour1);
 
         String colour2 = "#AABBCC";
-        field.populateExpression(colour2, null);
+        field.populateExpression(colour2);
 
         UndoManager.getInstance().undo();
 

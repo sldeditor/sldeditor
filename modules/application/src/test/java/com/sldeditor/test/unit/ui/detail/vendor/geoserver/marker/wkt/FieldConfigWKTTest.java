@@ -128,21 +128,21 @@ public class FieldConfigWKTTest {
         boolean valueOnly = true;
         FieldConfigWKT field = new FieldConfigWKT(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
 
-        field.populateExpression((Double)null, null);
+        field.populateExpression((Double)null);
         field.populateField((String)null);
         assertNull(field.getStringValue());
 
         // Create ui
         field.createUI(null);
-        field.populateExpression((Double)null, null);
+        field.populateExpression((Double)null);
         String expectedValue = "string value";
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
         assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
 
         expectedValue = "wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))";
         field.setTestValue(null, expectedValue);
 
-        field.populateExpression(expectedValue, null);
+        field.populateExpression(expectedValue);
         assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
     }
 

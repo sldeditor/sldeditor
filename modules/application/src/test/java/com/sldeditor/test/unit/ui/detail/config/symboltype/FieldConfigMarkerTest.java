@@ -133,7 +133,7 @@ public class FieldConfigMarkerTest {
 
         assertNull(field.getStringValue());
 
-        field.populateExpression((String)null, null);
+        field.populateExpression((String)null);
     }
 
     /**

@@ -26,6 +26,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -205,10 +206,10 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @param opacity the opacity
      */
     /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue, Expression opacity)
+    public void populateExpression(Object objValue)
     {
         String sValue = null;
         boolean validColour = true;
@@ -242,6 +243,7 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
             }
             else
             {
+                Expression opacity = getFilterFactory().literal(DefaultSymbols.defaultColourOpacity());
                 colourButton.populate(sValue, opacity);
                 Color newValue = colourButton.getColour();
 

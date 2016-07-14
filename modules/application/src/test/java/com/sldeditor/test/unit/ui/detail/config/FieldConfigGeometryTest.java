@@ -119,7 +119,7 @@ public class FieldConfigGeometryTest {
         field.createUI(null);
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
-        field.populateExpression((String)null, null);
+        field.populateExpression((String)null);
 
         String wktPoint = "POINT( 48.44 -123.37)";
 
@@ -135,7 +135,7 @@ public class FieldConfigGeometryTest {
 
         String wktLine = "LINESTRING(0 2, 2 0, 8 6)";
 
-        field.populateExpression(wktLine, null);
+        field.populateExpression(wktLine);
         actualValue = field.getStringValue();
         assertTrue(wktLine.compareTo(actualValue) == 0);
     }
@@ -226,7 +226,7 @@ public class FieldConfigGeometryTest {
         field.createUI(null);
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
-        field.populateExpression((String)null, null);
+        field.populateExpression((String)null);
 
         String wktPoint = "POINT( 48.44 -123.37)";
 
@@ -242,7 +242,7 @@ public class FieldConfigGeometryTest {
 
         String wktLine = "LINESTRING(0 2, 2 0, 8 6)";
 
-        field.populateExpression(wktLine, null);
+        field.populateExpression(wktLine);
         actualValue = field.getStringValue();
         assertTrue(wktLine.compareTo(actualValue) == 0);
 

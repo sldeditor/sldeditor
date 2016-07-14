@@ -108,7 +108,7 @@ public class FieldConfigBaseTest {
         }
 
         @Override
-        public void populateExpression(Object objValue, Expression opacity) {
+        public void populateExpression(Object objValue) {
         }
 
         @Override
