@@ -149,7 +149,7 @@ public class FieldConfigEnumTest {
         field.addConfig(configList);
 
         // Try without creating the ui
-        field.populateExpression(null, null);
+        field.populateExpression(null);
         field.populateField((String)null);
         field.setTestValue(null, (String)null);
 

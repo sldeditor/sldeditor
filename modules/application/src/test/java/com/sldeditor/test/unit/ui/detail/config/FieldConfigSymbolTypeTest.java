@@ -127,7 +127,7 @@ public class FieldConfigSymbolTypeTest {
         boolean valueOnly = true;
         FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
-        field.populateExpression(null, null);
+        field.populateExpression(null);
         field.setTestValue(null, (String)null);
         assertNull(field.getEnumValue());
         assertNull(field.getSelectedValueObj());
@@ -136,7 +136,7 @@ public class FieldConfigSymbolTypeTest {
         field.createUI(null);
 
         String expectedValue1 = "circle";
-        field.populateExpression(expectedValue1, null);
+        field.populateExpression(expectedValue1);
 
         String actualValue1 = field.getStringValue();
         assertNull(actualValue1);
@@ -156,12 +156,12 @@ public class FieldConfigSymbolTypeTest {
         field.createUI(null);
         field.addField(marker);
         field.populate(null, combinedSymbolList);
-        field.populateExpression(expectedValue1, null);
+        field.populateExpression(expectedValue1);
         actualValue1 = field.getStringValue();
         assertNull(actualValue1);
 
         String expectedValue2 = "key 2";
-        field.populateExpression(expectedValue2, null);
+        field.populateExpression(expectedValue2);
         String actualValue2 = field.getStringValue();
         assertTrue(actualValue2.compareTo(field.getStringValue()) == 0);
 
@@ -287,7 +287,7 @@ public class FieldConfigSymbolTypeTest {
         field.populate(null, combinedSymbolList);
 
         String expectedValue2 = "key 2";
-        field.populateExpression(expectedValue2, null);
+        field.populateExpression(expectedValue2);
         String actualValue2 = field.getStringValue();
         assertTrue(actualValue2.compareTo(field.getStringValue()) == 0);
 

@@ -126,7 +126,7 @@ public class FieldConfigSliderTest {
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - defaultDefaultValue) < 0.001);
 
-        field.populateExpression(null, null);
+        field.populateExpression(null);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - defaultDefaultValue) < 0.001);
 
@@ -141,18 +141,18 @@ public class FieldConfigSliderTest {
         assertTrue(Math.abs(actualValue - expectedValue2) < 0.001);
 
         Integer expectedValue3a = Integer.valueOf(1);
-        field.populateExpression(expectedValue3a, null);
+        field.populateExpression(expectedValue3a);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3a) < 0.001);
 
         Double expectedValue3c = Double.valueOf(0.4);
-        field.populateExpression(expectedValue3c, null);
+        field.populateExpression(expectedValue3c);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3c) < 0.001);
 
         double expectedValue3d = 0.87;
         String expectedValue3dString = String.valueOf(expectedValue3d);
-        field.populateExpression(expectedValue3dString, null);
+        field.populateExpression(expectedValue3dString);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue3d) < 0.001);
     }

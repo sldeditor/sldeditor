@@ -288,11 +288,11 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V, expAnchorPointY);
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X, expDisplacementX);
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y, expDisplacementY);
-        fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.FILL_COLOUR), expFillColour, expOpacity);
+        fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.FILL_COLOUR), expFillColour);
         fieldConfigVisitor.populateField(FieldIdEnum.OPACITY, expOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.GAP, expGap);
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
-        fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.STROKE_FILL_COLOUR)      , expStrokeColour, expStrokeColourOpacity);
+        fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), expStrokeColour);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_OPACITY, expStrokeColourOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_WIDTH, expStrokeWidth);
 

@@ -203,13 +203,12 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * Populate expression.
      *
      * @param objValue the obj value
-     * @param opacity the opacity
      */
     /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue, Expression opacity)
+    public void populateExpression(Object objValue)
     {
         Double value = defaultValue;
 

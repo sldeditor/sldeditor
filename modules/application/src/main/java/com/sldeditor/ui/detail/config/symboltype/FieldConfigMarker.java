@@ -187,10 +187,12 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
      * Populate expression.
      *
      * @param objValue the obj value
-     * @param opacity the opacity
+     */
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue, Expression opacity)
+    public void populateExpression(Object objValue)
     {
     }
 
@@ -444,8 +446,15 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
             FieldConfigBase field = fieldConfigManager.get(colourField);
             if(field != null)
             {
-                field.populate(expFillColour, expFillColourOpacity);
+                field.populate(expFillColour);
             }
+            
+            field = fieldConfigManager.get(opacityField);
+            if(field != null)
+            {
+                field.populate(expFillColourOpacity);
+            }
+
         }
     }
 

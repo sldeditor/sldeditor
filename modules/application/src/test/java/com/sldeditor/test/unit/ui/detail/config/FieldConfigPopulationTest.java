@@ -71,7 +71,7 @@ public class FieldConfigPopulationTest {
         FieldConfigPopulation obj = new FieldConfigPopulation(null);
         obj.populateBooleanField(fieldId, Boolean.TRUE);
         obj.populateComboBoxField(fieldId, "");
-        obj.populateColourField(fieldId, null, null);
+        obj.populateColourField(fieldId, null);
         obj.populateColourMapField(FieldIdEnum.ANCHOR_POINT_V, (ColorMap)null);
         obj.populateFontField(FieldIdEnum.ANCHOR_POINT_V, (Font)null);
         obj.populateTextField(fieldId, (String)null);
@@ -188,10 +188,9 @@ public class FieldConfigPopulationTest {
 
         StyleBuilder styleBuilder = new StyleBuilder();
         Expression colour = styleBuilder.colorExpression(Color.red);
-        Expression opacity = styleBuilder.literalExpression(0.42);
 
-        obj.populateColourField(fieldId, colour, opacity);
-        obj.populateColourField(new FieldId(wrongFieldEnum), colour, opacity);
+        obj.populateColourField(fieldId, colour);
+        obj.populateColourField(new FieldId(wrongFieldEnum), colour);
     }
 
     /**

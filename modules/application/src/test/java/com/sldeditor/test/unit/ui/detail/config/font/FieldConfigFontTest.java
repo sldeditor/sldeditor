@@ -126,7 +126,7 @@ public class FieldConfigFontTest {
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
         field.populateField((Font)null);
-        field.populateExpression((Font)null, null);
+        field.populateExpression((Font)null);
 
         String expectedValue = fontFamilies[0];
         field.createUI(null);

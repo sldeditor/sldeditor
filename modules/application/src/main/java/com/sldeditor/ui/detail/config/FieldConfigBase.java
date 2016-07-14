@@ -42,7 +42,6 @@ import org.opengis.filter.Id;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.TestValueVisitor;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.attribute.AttributeSelection;
@@ -173,9 +172,8 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * Populate expression.
      *
      * @param objValue the obj value
-     * @param opacity the opacity
      */
-    public abstract void populateExpression(Object objValue, Expression opacity);
+    public abstract void populateExpression(Object objValue);
 
     /**
      * Gets the class type that this field supports.
@@ -417,19 +415,9 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * Populate.
      *
      * @param expression the expression
-     */
-    public void populate(Expression expression)
-    {
-        populate(expression, ff.literal(DefaultSymbols.defaultColourOpacity()));
-    }
-
-    /**
-     * Populate.
-     *
-     * @param expression the expression
      * @param opacity the opacity
      */
-    public void populate(Expression expression, Expression opacity)
+    public void populate(Expression expression)
     {
         if(attributeSelectionPanel != null)
         {
@@ -467,7 +455,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
                 {
                     expressionType = ExpressionTypeEnum.E_VALUE;
 
-                    populateExpression(objValue, opacity);
+                    populateExpression(objValue);
 
                     valueUpdated();
                 }
@@ -480,7 +468,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
 
                 expressionType = ExpressionTypeEnum.E_VALUE;
 
-                populateExpression(objValue, opacity);
+                populateExpression(objValue);
 
                 valueUpdated();
             }
@@ -492,7 +480,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
 
                 expressionType = ExpressionTypeEnum.E_VALUE;
 
-                populateExpression(objValue, opacity);
+                populateExpression(objValue);
 
                 valueUpdated();
             }

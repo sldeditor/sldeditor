@@ -185,13 +185,12 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
      * Populate expression.
      *
      * @param objValue the obj value
-     * @param opacity the opacity
      */
     /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue, Expression opacity)
+    public void populateExpression(Object objValue)
     {
         if(ttfPanel != null)
         {
@@ -257,7 +256,12 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
             FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
             if(field != null)
             {
-                field.populate(expFillColour, expFillColourOpacity);
+                field.populate(expFillColour);
+            }
+            field = fieldConfigManager.get(FieldIdEnum.OPACITY);
+            if(field != null)
+            {
+                field.populate(expFillColourOpacity);
             }
         }
 

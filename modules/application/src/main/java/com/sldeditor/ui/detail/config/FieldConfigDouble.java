@@ -207,10 +207,10 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      * @param opacity the opacity
      */
     /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue, Expression opacity)
+    public void populateExpression(Object objValue)
     {
         Double newValue = 0.0;
 
