@@ -60,6 +60,14 @@
                 <Field id="STROKE_FILL_COLOUR" enabled="false" />
                 <Field id="STROKE_FILL_OPACITY" enabled="false" />
                 <Field id="STROKE_WIDTH" enabled="false" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="false" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="false" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="false" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="false" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="false" />
             </FieldList>
         </Value>
         <Value>
@@ -83,6 +91,14 @@
                 <Field id="STROKE_FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_OPACITY" enabled="true" />
                 <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
             </FieldList>
         </Value>
     </Symbolizer>

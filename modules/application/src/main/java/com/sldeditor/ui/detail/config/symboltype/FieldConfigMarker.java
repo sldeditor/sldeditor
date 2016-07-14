@@ -64,6 +64,12 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
  */
 public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInterface {
 
+    /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
+     * field enable/disable field states for the different symbol types
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "SymbolTypeFieldState.xml";
+
     /** The Constant NONE_SYMBOL_KEY. */
     private static final String NONE_SYMBOL_KEY = "none";
 
@@ -194,6 +200,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     @Override
     public void populateExpression(Object objValue)
     {
+        // Do nothing
     }
 
     /**
@@ -358,7 +365,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
 
                 for(String key : config.getKeyOrderList())
                 {
-                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key), this.getClass());
+                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key), symbolizerClass);
                     groupSymbolList.add(data);
                 }
 
@@ -474,7 +481,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
             {
                 if(config != null)
                 {
-                    config.updateFieldState(fieldEnableState, getClass().getName());
+                    config.updateFieldState(fieldEnableState, symbolizerClass.getName());
                 }
             }
         }
@@ -485,7 +492,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     }
 
     /**
-     * Gets the field map
+     * Gets the field map.
      *
      * @param fieldConfigManager the field config manager
      * @return the field map
@@ -579,8 +586,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
         {
             fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
 
-            String fullResourceName = "FillColourPanel.xml";
-            SymbolTypeConfigReader.readConfig(getClass(), fullResourceName, fieldEnableMap);
+            SymbolTypeConfigReader.readConfig(getClass(), SYMBOLTYPE_FIELD_STATE_RESOURCE, fieldEnableMap);
 
             vendorOptionMarkerSymbolFactory.getFieldMap(fieldEnableMap);
         }
