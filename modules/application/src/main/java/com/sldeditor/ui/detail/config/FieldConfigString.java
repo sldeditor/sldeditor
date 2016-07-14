@@ -250,9 +250,12 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     @Override
     public void populateExpression(Object objValue, Expression opacity)
     {
-        String sValue = (String) objValue;
+        if(objValue instanceof String)
+        {
+            String sValue = (String) objValue;
 
-        populateField(sValue);
+            populateField(sValue);
+        }
     }
 
     /**

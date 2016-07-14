@@ -182,9 +182,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public Expression getExpression() {
         String string = fieldConfigVisitor.getText(FieldIdEnum.EXTERNAL_GRAPHIC);
-        
+
         Expression expression = getFilterFactory().literal(string);
-        
+
         return expression;
     }
 
@@ -218,6 +218,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             ConsoleManager.getInstance().exception(this, e);
         }
 
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), oldValueObj, externalFileURL));
+        try {
+            oldValueObj = new URL(externalFileURL.toExternalForm());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL);
         populateExpression(path);
     }
@@ -232,6 +239,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             externalFileURL = new URL(filename);
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
+        }
+
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), oldValueObj, externalFileURL));
+        try {
+            oldValueObj = new URL(externalFileURL.toExternalForm());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
 
         String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL);
@@ -264,18 +278,48 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         return extGraphic;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
+     */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        URL oldValue = (URL)undoRedoObject.getOldValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getOldValue() instanceof URL)
+            {
+                URL oldValue = (URL)undoRedoObject.getOldValue();
 
-        populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), oldValue));
+                populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), oldValue));
+                externalFileURL = oldValue;
+
+                if(parentObj != null)
+                {
+                    parentObj.externalGraphicValueUpdated();
+                }
+            }
+        }
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
+     */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        URL newValue = (URL)undoRedoObject.getNewValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getNewValue() instanceof URL)
+            {
+                URL newValue = (URL)undoRedoObject.getNewValue();
 
-        populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), newValue));
+                populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), newValue));
+                externalFileURL = newValue;
+
+                if(parentObj != null)
+                {
+                    parentObj.externalGraphicValueUpdated();
+                }
+            }
+        }
     }
 
     /**
