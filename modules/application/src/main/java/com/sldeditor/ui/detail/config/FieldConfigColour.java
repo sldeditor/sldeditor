@@ -203,7 +203,6 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * Populate expression.
      *
      * @param objValue the obj value
-     * @param opacity the opacity
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
