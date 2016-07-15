@@ -12,24 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for XMLPanelDetails complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="XMLPanelDetails"&gt;
+ * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Value" type="{}XMLFieldConfigEnumValue" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="Panel" type="{}XMLPanelDetails" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -38,67 +37,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "XMLPanelDetails", propOrder = {
-    "value"
+@XmlType(name = "", propOrder = {
+    "panel"
 })
-public class XMLPanelDetails {
+@XmlRootElement(name = "XMLSymbolTypeConfig")
+public class XMLSymbolTypeConfig {
 
-    @XmlElement(name = "Value")
-    protected List<XMLFieldConfigEnumValue> value;
-    @XmlAttribute(name = "type", required = true)
-    protected String type;
+    @XmlElement(name = "Panel", required = true)
+    protected List<XMLPanelDetails> panel;
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the panel property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the value property.
+     * This is why there is not a <CODE>set</CODE> method for the panel property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getValue().add(newItem);
+     *    getPanel().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link XMLFieldConfigEnumValue }
+     * {@link XMLPanelDetails }
      * 
      * 
      */
-    public List<XMLFieldConfigEnumValue> getValue() {
-        if (value == null) {
-            value = new ArrayList<XMLFieldConfigEnumValue>();
+    public List<XMLPanelDetails> getPanel() {
+        if (panel == null) {
+            panel = new ArrayList<XMLPanelDetails>();
         }
-        return this.value;
-    }
-
-    /**
-     * Gets the value of the type property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Sets the value of the type property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setType(String value) {
-        this.type = value;
+        return this.panel;
     }
 
 }

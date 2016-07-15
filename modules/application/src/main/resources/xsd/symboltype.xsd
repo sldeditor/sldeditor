@@ -40,7 +40,7 @@
  
     <xs:complexType name="XMLPanelDetails">
         <xs:sequence>
-            <xs:element name="Value" type="XMLFieldConfigEnumValue" maxOccurs="unbounded" minOccurs="1" >
+            <xs:element name="Value" type="XMLFieldConfigEnumValue" maxOccurs="unbounded" minOccurs="0" >
                 <xs:annotation>
                     <xs:documentation>
                         List of enum values to display and field states

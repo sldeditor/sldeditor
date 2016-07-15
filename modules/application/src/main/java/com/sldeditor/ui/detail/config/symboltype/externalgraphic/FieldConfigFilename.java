@@ -20,7 +20,6 @@ package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,17 +39,14 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.widgets.FieldPanel;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
  * The Class FieldConfigFilename wraps a text field GUI component and an optional
@@ -66,7 +62,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeInterface, ExternalGraphicUpdateInterface {
+public class FieldConfigFilename extends FieldState implements ExternalGraphicUpdateInterface {
 
     /** The Constant VALIDITY_KEY. */
     private static final String VALIDITY_KEY = "External";
@@ -78,6 +74,12 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     private ExternalGraphicDetails externalGraphicPanel = null;
 
     /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
+     * field enable/disable field states for the different symbol types
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Filename.xml";
+
+    /**
      * Instantiates a new field config string.
      *
      * @param panelId the panel id
@@ -86,7 +88,7 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
      * @param valueOnly the value only
      */
     public FieldConfigFilename(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
     }
 
     /**
@@ -283,23 +285,6 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     }
 
     /**
-     * Populate symbol list.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param symbolList the symbol list
-     */
-    @Override
-    public void populateSymbolList(Class<?> symbolizerClass,
-            List<ValueComboBoxDataGroup> symbolList)
-    {
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
-
-        dataList.add(new ValueComboBoxData(EXTERNAL_SYMBOL_KEY, "External", this.getClass()));
-
-        symbolList.add(new ValueComboBoxDataGroup(dataList));
-    }
-
-    /**
      * Gets the fill.
      *
      * @param graphicFill the graphic fill
@@ -347,31 +332,6 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
     }
 
     /**
-     * Populate field override map.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param fieldEnableState the field enable state
-     */
-    @Override
-    public void populateFieldOverrideMap(Class<?> symbolizerClass, FieldEnableState fieldEnableState)
-    {
-        List<FieldId> enableList = new ArrayList<FieldId>();
-
-        enableList.add(new FieldId(FieldIdEnum.DISPLACEMENT_X));
-        enableList.add(new FieldId(FieldIdEnum.DISPLACEMENT_Y));
-        enableList.add(new FieldId(FieldIdEnum.SIZE));
-        enableList.add(new FieldId(FieldIdEnum.OPACITY));
-        enableList.add(new FieldId(FieldIdEnum.ANGLE));
-        enableList.add(new FieldId(FieldIdEnum.GAP));
-        enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
-
-        if(fieldEnableState != null)
-        {
-            fieldEnableState.add(getClass().getName(), EXTERNAL_SYMBOL_KEY, enableList);
-        }
-    }
-
-    /**
      * Gets the field map.
      *
      * @param fieldConfigManager the field config manager
@@ -404,17 +364,6 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
             }
         }
         return false;
-    }
-
-    /**
-     * Sets the update symbol listener.
-     *
-     * @param listener the update symbol listener
-     */
-    @Override
-    public void setUpdateSymbolListener(UpdateSymbolInterface listener)
-    {
-        addDataChangedListener(listener);
     }
 
     /**
@@ -554,5 +503,13 @@ public class FieldConfigFilename extends FieldConfigBase implements SymbolTypeIn
         {
             externalGraphicPanel.setVisible(visible);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
+     */
+    @Override
+    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+        // No vendor options
     }
 }

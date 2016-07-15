@@ -38,7 +38,7 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface;
+import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
 import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
 import com.sldeditor.ui.menucombobox.MenuComboBox;
@@ -142,7 +142,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param symbolType the symbol type
      */
-    public void addField(SymbolTypeInterface symbolType)
+    public void addField(FieldState symbolType)
     {
         if(symbolType != null)
         {

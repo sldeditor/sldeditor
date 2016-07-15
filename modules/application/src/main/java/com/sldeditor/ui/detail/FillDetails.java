@@ -109,16 +109,16 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
     /**
      * Creates the ui.
      *
-     * @param symbolizerClass the symbolizer class
+     * @param panelDetails the panel details the configuration is for
      * @param configFile the config file
      */
-    private void createUI(Class<?> symbolizerClass, String configFile) {
+    private void createUI(Class<?> panelDetails, String configFile) {
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
         readConfigFile(this, configFile);
 
-        symbolTypeFactory.populate(this, symbolizerClass, fieldConfigManager);
+        symbolTypeFactory.populate(this, panelDetails, fieldConfigManager);
 
         createVendorOptionPanel();
     }
@@ -176,8 +176,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         Expression expStrokeColourOpacity = null;
         Expression expStrokeWidth = null;
 
-        boolean hasAnchorPoint = false;
-        boolean hasDisplacement = false;
         boolean hasFillColour = false;
         boolean hasStroke = false;
 
@@ -229,7 +227,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
                 if(anchorPoint != null)
                 {
-                    hasAnchorPoint = true;
                     expAnchorPointX = anchorPoint.getAnchorPointX();
                     expAnchorPointY = anchorPoint.getAnchorPointY();
                 }
@@ -239,7 +236,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
                 if(displacement != null)
                 {
-                    hasDisplacement = true;
                     expDisplacementX = displacement.getDisplacementX();
                     expDisplacementY = displacement.getDisplacementY();
                 }
@@ -297,20 +293,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), expStrokeColour);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_OPACITY, expStrokeColourOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_WIDTH, expStrokeWidth);
-
-        GroupConfigInterface anchorPointGroup = getGroup(GroupIdEnum.ANCHORPOINT);
-
-        if(anchorPointGroup != null)
-        {
-            anchorPointGroup.enable(hasAnchorPoint);
-        }
-
-        GroupConfigInterface displacementGroup = getGroup(GroupIdEnum.DISPLACEMENT);
-
-        if(displacementGroup != null)
-        {
-            displacementGroup.enable(hasDisplacement);
-        }
 
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
 

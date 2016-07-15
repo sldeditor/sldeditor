@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <XMLSymbolTypeConfig>
-    <Symbolizer type="com.sldeditor.ui.detail.PointSymbolizerDetails">
+    <Panel type="com.sldeditor.ui.detail.PointFillDetails">
         <Value groupName="extshape://" separateGroup="true">
             <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
             <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
@@ -23,8 +23,8 @@
                 <Field id="STROKE_WIDTH" enabled="true" />
             </FieldList>
         </Value>
-    </Symbolizer>
-    <Symbolizer type="org.geotools.styling.PolygonSymbolizerImpl">
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
         <Value groupName="extshape://" separateGroup="true">
             <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
             <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
@@ -47,8 +47,8 @@
                 <Field id="STROKE_WIDTH" enabled="true" />
             </FieldList>
         </Value>
-    </Symbolizer>
-    <Symbolizer type="com.sldeditor.ui.detail.StrokeDetails">
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.StrokeDetails">
         <Value groupName="extshape://" separateGroup="true">
             <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
             <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
@@ -71,6 +71,6 @@
                 <Field id="STROKE_WIDTH" enabled="true" />
             </FieldList>
         </Value>
-    </Symbolizer>
+    </Panel>
 </XMLSymbolTypeConfig>
 	
