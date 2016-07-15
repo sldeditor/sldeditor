@@ -338,15 +338,15 @@ public class SymbolTypeFactory {
     /**
      * Gets the field overrides.
      *
-     * @param symbolizerClass the symbolizer class
+     * @param panelDetails the panel details the configuration is for
      * @return the field overrides
      */
-    public FieldEnableState getFieldOverrides(Class<?> symbolizerClass) {
+    public FieldEnableState getFieldOverrides(Class<?> panelDetails) {
         FieldEnableState fieldEnableState = new FieldEnableState();
 
         for(FieldState panel : symbolTypeFieldList)
         {
-            panel.populateFieldOverrideMap(symbolizerClass, fieldEnableState);
+            panel.populateFieldOverrideMap(panelDetails, fieldEnableState);
         }
         return fieldEnableState;
     }

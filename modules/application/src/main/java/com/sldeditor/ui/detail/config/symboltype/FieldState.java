@@ -52,7 +52,7 @@ public abstract class FieldState extends FieldConfigBase {
     private String resourceFile;
 
     /** The local symbol list. */
-    protected List<ValueComboBoxData> localSymbolList = null;
+    private List<ValueComboBoxData> localSymbolList = null;
 
     /** The field enable map. */
     private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = null;
@@ -204,13 +204,13 @@ public abstract class FieldState extends FieldConfigBase {
     /**
      * Populate field override map.
      *
-     * @param symbolizerClass the symbolizer class
+     * @param panelDetails the panel details the configuration is for
      * @param fieldEnableState the field enable state
      */
-    public void populateFieldOverrideMap(Class<?> symbolizerClass, FieldEnableState fieldEnableState)
+    public void populateFieldOverrideMap(Class<?> panelDetails, FieldEnableState fieldEnableState)
     {
         Map<Class<?>, List<SymbolTypeConfig>> fieldMap = getFieldMap();
-        List<SymbolTypeConfig> configList = fieldMap.get(symbolizerClass);
+        List<SymbolTypeConfig> configList = fieldMap.get(panelDetails);
         if(configList != null)
         {
             for(SymbolTypeConfig config : configList)
@@ -223,7 +223,7 @@ public abstract class FieldState extends FieldConfigBase {
         }
         else
         {
-            ConsoleManager.getInstance().error(this, "No config for symbolizer class : " + symbolizerClass.getName());
+            ConsoleManager.getInstance().error(this, "No config for panel details class : " + panelDetails.getName());
         }
     }
 
@@ -251,5 +251,14 @@ public abstract class FieldState extends FieldConfigBase {
     public void setUpdateSymbolListener(UpdateSymbolInterface listener)
     {
         addDataChangedListener(listener);
+    }
+
+    /**
+     * Gets the local symbol list.
+     *
+     * @return the localSymbolList
+     */
+    protected List<ValueComboBoxData> getLocalSymbolList() {
+        return localSymbolList;
     }
 }

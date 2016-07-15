@@ -466,6 +466,7 @@ public class FieldConfigMarker extends FieldState {
                     {
                         String valueString = (String) value;
 
+                        List<ValueComboBoxData> localSymbolList = getLocalSymbolList();
                         if(localSymbolList != null)
                         {
                             for(ValueComboBoxData data : localSymbolList)
