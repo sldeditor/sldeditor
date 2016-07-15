@@ -27,34 +27,36 @@ import org.geotools.styling.NamedLayer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.Symbolizer;
 import org.junit.Test;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.RuleDetails;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
- * The unit test for StyleDetails.
- * <p>{@link com.sldeditor.ui.detail.StyleDetails}
+ * The unit test for RuleDetails.
+ * <p>{@link com.sldeditor.ui.detail.RuleDetails}
  *
  * @author Robert Ward (SCISYS)
  */
-public class FeatureTypeStyleDetailsTest {
+public class RuleDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.FeatureTypeStyleDetails#FeatureTypeStyleDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.FeatureTypeStyleDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.FeatureTypeStyleDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.FeatureTypeStyleDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.FeatureTypeStyleDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.FeatureTypeStyleDetails#preLoadSymbol()}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#RuleDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#getFieldDataManager()}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#isDataPresent()}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#preLoadSymbol()}.
      */
     @Test
-    public void testFeatureTypeStyleDetails() {
-        FeatureTypeStyleDetails panel = new FeatureTypeStyleDetails(null);
+    public void testRuleDetails() {
+
+        RuleDetails panel = new RuleDetails(null);
         panel.populate(null);
 
         // Set up test data
@@ -68,23 +70,33 @@ public class FeatureTypeStyleDetailsTest {
         style.setName(expectedNameStyleValue);
         namedLayer.addStyle(style);
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
-        String expectedNameValue = "feature type style test value";
-        fts.setName(expectedNameValue);
+        String expectedNameFTSValue = "feature type style test value";
+        fts.setName(expectedNameFTSValue);
         style.featureTypeStyles().add(fts);
         Rule rule = DefaultSymbols.createNewRule();
-        String expectedRuleNameValue = "rule test value";
-        rule.setName(expectedRuleNameValue);
+        String expectedNameValue = "rule test value";
+        rule.setName(expectedNameValue);
+
+        Symbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
+        rule.symbolizers().add(symbolizer);
         fts.rules().add(rule);
         sld.layers().add(namedLayer);
         SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
         SelectedSymbol.getInstance().setStyledLayer(namedLayer);
         SelectedSymbol.getInstance().setStyle(style);
         SelectedSymbol.getInstance().setFeatureTypeStyle(fts);
+        SelectedSymbol.getInstance().setRule(rule);
 
         panel.populate(SelectedSymbol.getInstance());
-        panel.dataChanged(null);
+
         GraphicPanelFieldManager fieldDataManager = panel.getFieldDataManager();
         assertNotNull(fieldDataManager);
+        
+        FieldConfigString filterField = (FieldConfigString) fieldDataManager.get(FieldIdEnum.FILTER);
+        String filterString = "STATE_ABBR >= 'B' AND STATE_ABBR <= 'O'";
+        filterField.populateField(filterString);
+
+        panel.dataChanged(null);
 
         FieldConfigString nameField = (FieldConfigString) fieldDataManager.get(FieldIdEnum.NAME);
         String actualValue = nameField.getStringValue();
