@@ -27,8 +27,8 @@ import org.apache.log4j.Logger;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue;
+import com.sldeditor.common.xml.ui.XMLPanelDetails;
 import com.sldeditor.common.xml.ui.XMLSymbolTypeConfig;
-import com.sldeditor.common.xml.ui.XMLSymbolizer;
 import com.sldeditor.ui.detail.config.ReadPanelConfig;
 
 /**
@@ -62,15 +62,15 @@ public class SymbolTypeConfigReader {
             return false;
         }
 
-        for(XMLSymbolizer xmlSymbolizer : symbolTypeConfig.getSymbolizer())
+        for(XMLPanelDetails xmlPanelDetails : symbolTypeConfig.getPanel())
         {
-            String symbolizerClassName = xmlSymbolizer.getType();
+            String symbolizerClassName = xmlPanelDetails.getType();
             logger.debug("Symbolizer : " + symbolizerClassName);
 
             Class<?> symbolizerClass;
             try {
                 symbolizerClass = Class.forName(symbolizerClassName);
-                List<SymbolTypeConfig> configList = readSymbolizerConfig(panelId, xmlSymbolizer);
+                List<SymbolTypeConfig> configList = readSymbolizerConfig(panelId, xmlPanelDetails);
 
                 fieldEnableMap.put(symbolizerClass, configList);
                 
@@ -86,14 +86,14 @@ public class SymbolTypeConfigReader {
      * Read symbolizer config.
      *
      * @param panelId the panel id
-     * @param xmlSymbolizer the symbolizer element
+     * @param xmlPanelDetails the xml panel details
      * @return the symbol type config
      */
-    private static List<SymbolTypeConfig> readSymbolizerConfig(Class<?> panelId, XMLSymbolizer xmlSymbolizer)
+    private static List<SymbolTypeConfig> readSymbolizerConfig(Class<?> panelId, XMLPanelDetails xmlPanelDetails)
     {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
 
-        for (XMLFieldConfigEnumValue value : xmlSymbolizer.getValue()) {
+        for (XMLFieldConfigEnumValue value : xmlPanelDetails.getValue()) {
 
             SymbolTypeConfig config = ReadPanelConfig.parseSymbolTypeConfig(SymbolTypeConfig.class, panelId, value);
 

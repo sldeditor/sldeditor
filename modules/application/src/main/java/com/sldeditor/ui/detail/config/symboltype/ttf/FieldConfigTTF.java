@@ -386,6 +386,14 @@ public class FieldConfigTTF extends FieldConfigBase implements SymbolTypeInterfa
         enableList.add(new FieldId(FieldIdEnum.ANGLE));
         enableList.add(new FieldId(FieldIdEnum.GAP));
         enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_SIZE));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_ANGLE));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_GAP));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_INITIAL_GAP));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X));
+        enableList.add(new FieldId(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
         fieldEnableState.add(getClass().getName(), TTF_SYMBOL_KEY, enableList);
     }

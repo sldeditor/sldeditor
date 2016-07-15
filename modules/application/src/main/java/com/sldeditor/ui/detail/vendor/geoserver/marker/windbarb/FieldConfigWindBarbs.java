@@ -359,7 +359,7 @@ public class FieldConfigWindBarbs extends FieldConfigBase implements SymbolTypeI
         enableList.add(new FieldId(FieldIdEnum.GAP));
         enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
 
-        fieldEnableState.add(getPanelId().getName(), WINDBARB_SYMBOL_KEY, enableList);
+        fieldEnableState.add(getClass().getName(), WINDBARB_SYMBOL_KEY, enableList);
     }
 
     /**

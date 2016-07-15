@@ -33,7 +33,6 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.PolygonSymbolizerImpl;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
 import org.opengis.filter.expression.Expression;
@@ -86,11 +85,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         setUpdateSymbolListener(this);
 
-        Class<?> symbolizerClass = PolygonSymbolizerImpl.class;
+        fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
+                new FieldId(FieldIdEnum.STROKE_FILL_COLOUR),
+                new FieldId(FieldIdEnum.STROKE_FILL_OPACITY),
+                new FieldId(FieldIdEnum.STROKE_STYLE));
 
-        fillFactory = new SymbolTypeFactory(StrokeDetails.class, new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), new FieldId(FieldIdEnum.STROKE_FILL_OPACITY), new FieldId(FieldIdEnum.STROKE_STYLE));
-
-        fieldEnableState = fillFactory.getFieldOverrides(symbolizerClass);
+        fieldEnableState = fillFactory.getFieldOverrides(this.getClass());
 
         createUI();
     }
@@ -668,14 +668,14 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     /**
      * Option selected.
      *
-     * @param panelId the panel id
+     * @param fieldPanelId the field panel id
      * @param selectedItem the selected item
      */
     @Override
-    public void optionSelected(Class<?> panelId, String selectedItem) {
-        setSymbolTypeVisibility(panelId, selectedItem);
+    public void optionSelected(Class<?> fieldPanelId, String selectedItem) {
+        setSymbolTypeVisibility(fieldPanelId, selectedItem);
 
-        selectedFillPanelId = panelId;
+        selectedFillPanelId = fieldPanelId;
 
         dataHasChanged();
     }
@@ -692,15 +692,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         for(FieldConfigBase fieldConfig : this.getFieldConfigList())
         {
-            FieldId fieldId = fieldConfigManager.getFieldEnum(panelId, fieldConfig);
+            FieldId fieldId = fieldConfigManager.getFieldEnum(this.getClass(), fieldConfig);
             FieldIdEnum field = fieldId.getFieldId();
-            if((field != FieldIdEnum.STROKE_STYLE) && (list != null))
+            if((field != FieldIdEnum.UNKNOWN) && (field != FieldIdEnum.STROKE_STYLE) && (list != null))
             {
-                if(field != FieldIdEnum.UNKNOWN)
-                {
-                    boolean disable = !list.contains(fieldId);
-                    fieldConfig.setFieldStateOverride(disable);
-                }
+                boolean disable = !list.contains(fieldId);
+                fieldConfig.setFieldStateOverride(disable);
             }
         }
     }

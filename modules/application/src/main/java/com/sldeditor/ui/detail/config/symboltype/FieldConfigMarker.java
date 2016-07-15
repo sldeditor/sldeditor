@@ -365,7 +365,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
 
                 for(String key : config.getKeyOrderList())
                 {
-                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key), symbolizerClass);
+                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key), this.getClass());
                     groupSymbolList.add(data);
                 }
 
@@ -474,14 +474,15 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     @Override
     public void populateFieldOverrideMap(Class<?> symbolizerClass, FieldEnableState fieldEnableState)
     {
-        List<SymbolTypeConfig> configList = getFieldMap().get(symbolizerClass);
+        Map<Class<?>, List<SymbolTypeConfig>> fieldMap = getFieldMap();
+        List<SymbolTypeConfig> configList = fieldMap.get(symbolizerClass);
         if(configList != null)
         {
             for(SymbolTypeConfig config : configList)
             {
                 if(config != null)
                 {
-                    config.updateFieldState(fieldEnableState, symbolizerClass.getName());
+                    config.updateFieldState(fieldEnableState, getClass().getName());
                 }
             }
         }

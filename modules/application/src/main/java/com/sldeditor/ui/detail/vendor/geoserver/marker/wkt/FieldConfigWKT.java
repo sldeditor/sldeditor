@@ -386,7 +386,7 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
 
         if(fieldEnableState != null)
         {
-            fieldEnableState.add(getPanelId().getName(), WKT_SYMBOL_KEY, enableList);
+            fieldEnableState.add(getClass().getName(), WKT_SYMBOL_KEY, enableList);
         }
     }
 

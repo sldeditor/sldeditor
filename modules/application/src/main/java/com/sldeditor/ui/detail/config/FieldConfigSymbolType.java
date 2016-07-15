@@ -445,7 +445,8 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
             // Show the correct panel in the card layout for the selected symbol type
             CardLayout cl = (CardLayout)(containingPanel.getLayout());
 
-            cl.show(containingPanel, selectedData.getPanelId().getName());
+            String name = selectedData.getPanelId().getName();
+            cl.show(containingPanel, name);
 
             FieldConfigBase fieldConfig = fieldConfigMap.get(selectedData.getPanelId());
 

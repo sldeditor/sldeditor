@@ -43,6 +43,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.PointSymbolizerDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -441,9 +442,9 @@ public class FieldConfigMarkerTest {
         groupList.add(new ValueComboBoxDataGroup(dataList));
 
         field.populateSymbolList(String.class, groupList);
-        field.populateSymbolList(PointSymbolizerDetails.class, groupList);
+        field.populateSymbolList(PointFillDetails.class, groupList);
         assertTrue(field.accept(marker));
-        field.populateSymbolList(PointSymbolizerDetails.class, groupList);
+        field.populateSymbolList(PointFillDetails.class, groupList);
         assertTrue(field.accept(marker));
     }
 

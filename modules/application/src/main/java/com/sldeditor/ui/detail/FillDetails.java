@@ -96,11 +96,14 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
         setUpdateSymbolListener(this);
 
-        Class<?> symbolizerClass = PolygonSymbolizerImpl.class;
+        symbolTypeFactory = new SymbolTypeFactory(FillDetails.class,
+                new FieldId(FieldIdEnum.FILL_COLOUR),
+                new FieldId(FieldIdEnum.OPACITY),
+                new FieldId(FieldIdEnum.SYMBOL_TYPE));
 
-        symbolTypeFactory = new SymbolTypeFactory(FillDetails.class, new FieldId(FieldIdEnum.FILL_COLOUR), new FieldId(FieldIdEnum.OPACITY), new FieldId(FieldIdEnum.SYMBOL_TYPE));
-        fieldEnableState = symbolTypeFactory.getFieldOverrides(symbolizerClass);
-        createUI(symbolizerClass, configFile);
+        fieldEnableState = symbolTypeFactory.getFieldOverrides(panelId);
+
+        createUI(panelId, configFile);
     }
 
     /**
@@ -118,7 +121,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         symbolTypeFactory.populate(this, symbolizerClass, fieldConfigManager);
 
         createVendorOptionPanel();
-
     }
 
     /**
@@ -489,15 +491,15 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
     /**
      * Option selected.
      *
-     * @param panelId the panel id
+     * @param fieldPanelId the field panel id
      * @param selectedItem the selected item
      */
     @Override
-    public void optionSelected(Class<?> panelId, String selectedItem) {
+    public void optionSelected(Class<?> fieldPanelId, String selectedItem) {
 
-        setSymbolTypeVisibility(panelId, selectedItem);
+        setSymbolTypeVisibility(fieldPanelId, selectedItem);
 
-        selectedFillPanelId = panelId;
+        selectedFillPanelId = fieldPanelId;
 
         FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.SIZE);
         if(fieldConfig.isEnabled())

@@ -45,7 +45,8 @@
         <FieldTests>
             <LiteralString value="circle" field="STROKE_STYLE"/>
             <LiteralString value="#000033" field="STROKE_STROKE_COLOUR"/>
-            <LiteralDouble value="1.0" field="STROKE_WIDTH"/>
+            <Disabled field="STROKE_WIDTH"/>
+            <LiteralDouble value="5.0" field="STROKE_SYMBOL_SIZE"/>
             <LiteralString value="5 15" field="STROKE_DASH_ARRAY"/>
             <LiteralDouble value="7.5" field="STROKE_OFFSET"/>
         </FieldTests>
