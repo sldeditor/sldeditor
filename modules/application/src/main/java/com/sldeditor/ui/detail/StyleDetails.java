@@ -71,10 +71,13 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        Style style = selectedSymbol.getStyle();
+        if(selectedSymbol != null)
+        {
+            Style style = selectedSymbol.getStyle();
 
-        populateStandardData(style);
-        fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE, style.isDefault());
+            populateStandardData(style);
+            fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE, style.isDefault());
+        }
     }
 
     /**

@@ -69,11 +69,14 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
-        FeatureTypeStyle featureTypeStyle = selectedSymbol.getFeatureTypeStyle();
+        if(selectedSymbol != null)
+        {
+            FeatureTypeStyle featureTypeStyle = selectedSymbol.getFeatureTypeStyle();
 
-        populateStandardData(featureTypeStyle);
+            populateStandardData(featureTypeStyle);
 
-        fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION, featureTypeStyle.getTransformation());
+            fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION, featureTypeStyle.getTransformation());
+        }
     }
 
     /**

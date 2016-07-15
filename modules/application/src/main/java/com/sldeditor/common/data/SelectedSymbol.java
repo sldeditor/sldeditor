@@ -510,6 +510,10 @@ public class SelectedSymbol {
      */
     public void replaceStyledLayer(NamedLayer newNamedLayer) {
 
+        if(this.sld == null)
+        {
+            return;
+        }
         StyledLayer[] styledLayerList = this.sld.getStyledLayers();
 
         int indexFound = -1;
