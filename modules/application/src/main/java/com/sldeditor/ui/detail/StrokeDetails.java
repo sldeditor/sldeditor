@@ -106,20 +106,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     }
 
     /**
-     * Parses the dash array.
-     *
-     * @param text the text
-     */
-    protected void parseDashArray(String text) {
-        List<Float> floatList = createDashArray(text);
-
-        if(floatList != null)
-        {
-            updateSymbol();
-        }
-    }
-
-    /**
      * Gets the stroke.
      *
      * @return the stroke
@@ -223,7 +209,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      * @param dashes the dashes
      * @return the list
      */
-    List<Expression> createDashArrayList(float[] dashes) {
+    private List<Expression> createDashArrayList(float[] dashes) {
         List<Expression> dashExpressionList = null;
 
         if(dashes != null)
@@ -309,34 +295,37 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     private Stroke getStrokeFromSymbolizer(SelectedSymbol selectedSymbol) {
         Stroke stroke = null;
 
-        Symbolizer symbolizer = selectedSymbol.getSymbolizer();
-        if(symbolizer instanceof PointSymbolizer)
+        if(selectedSymbol != null)
         {
-            Graphic graphic = selectedSymbol.getGraphic();
-
-            List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
-
-            if(graphicalSymbols.size() > 0)
+            Symbolizer symbolizer = selectedSymbol.getSymbolizer();
+            if(symbolizer instanceof PointSymbolizer)
             {
-                GraphicalSymbol symbol = graphicalSymbols.get(0);
+                Graphic graphic = selectedSymbol.getGraphic();
 
-                if(symbol instanceof MarkImpl)
+                List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
+
+                if(graphicalSymbols.size() > 0)
                 {
-                    MarkImpl markerSymbol = (MarkImpl) symbol;
+                    GraphicalSymbol symbol = graphicalSymbols.get(0);
 
-                    stroke = markerSymbol.getStroke();
+                    if(symbol instanceof MarkImpl)
+                    {
+                        MarkImpl markerSymbol = (MarkImpl) symbol;
+
+                        stroke = markerSymbol.getStroke();
+                    }
                 }
             }
-        }
-        else if(symbolizer instanceof LineSymbolizer)
-        {
-            LineSymbolizer lineSymbol = (LineSymbolizer) selectedSymbol.getSymbolizer();
-            stroke = lineSymbol.getStroke();
-        }
-        else if(symbolizer instanceof PolygonSymbolizer)
-        {
-            PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) selectedSymbol.getSymbolizer();
-            stroke = polygonSymbol.getStroke();
+            else if(symbolizer instanceof LineSymbolizer)
+            {
+                LineSymbolizer lineSymbol = (LineSymbolizer) selectedSymbol.getSymbolizer();
+                stroke = lineSymbol.getStroke();
+            }
+            else if(symbolizer instanceof PolygonSymbolizer)
+            {
+                PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) selectedSymbol.getSymbolizer();
+                stroke = polygonSymbol.getStroke();
+            }
         }
         return stroke;
     }

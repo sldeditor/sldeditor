@@ -355,7 +355,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      *
      * @return the graphic
      */
-    public Graphic getGraphic() {
+    private Graphic getGraphic() {
 
         AnchorPoint anchor = null;
         Displacement displacement = null;
@@ -409,7 +409,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      *
      * @return the graphic fill
      */
-    public GraphicFill getGraphicFill() {
+    private GraphicFill getGraphicFill() {
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
         boolean hasFill = fillGroup.isPanelEnabled();
 
@@ -450,24 +450,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         GraphicFill graphicFill = getStyleFactory().graphicFill(symbols, opacity, size, rotation, anchorPoint, displacement);
 
         return graphicFill;
-    }
-
-    /**
-     * Gets the fill colour.
-     *
-     * @return the fill colour
-     */
-    public Expression getFillColour() {
-        return symbolTypeFactory.getFillColour();
-    }
-
-    /**
-     * Gets the fill colour opacity.
-     *
-     * @return the fill colour opacity
-     */
-    public Expression getFillColourOpacity() {
-        return symbolTypeFactory.getFillColourOpacity();
     }
 
     /**
