@@ -208,8 +208,6 @@ public class StrokeDetailsTest {
 
         PolygonSymbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
         
-        StyleBuilder styleBuilder = new StyleBuilder();
-        styleBuilder.createG
         rule.symbolizers().add(symbolizer);
         fts.rules().add(rule);
         sld.layers().add(namedLayer);
