@@ -562,6 +562,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         {
             dataLoaded = false;
         }
+        renderSymbol();
     }
 
     /**
