@@ -104,7 +104,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
                 polygonSymbolizer.setUnitOfMeasure(standardData.unit);
 
                 polygonSymbolizer.setDisplacement(displacement);
-                if((geometryField != null) && !geometryField.toString().isEmpty())
+                if((geometryField != null) && (geometryField.toString() != null) && !geometryField.toString().isEmpty())
                 {
                     polygonSymbolizer.setGeometry(geometryField);
                 }

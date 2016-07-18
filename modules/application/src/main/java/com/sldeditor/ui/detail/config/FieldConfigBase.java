@@ -415,7 +415,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * Populate.
      *
      * @param expression the expression
-     * @param opacity the opacity
      */
     public void populate(Expression expression)
     {

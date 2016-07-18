@@ -33,14 +33,14 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Symbolizer" type="XMLSymbolizer" maxOccurs="unbounded" minOccurs="1" />
+                <xs:element name="Panel" type="XMLPanelDetails" maxOccurs="unbounded" minOccurs="1" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
  
-    <xs:complexType name="XMLSymbolizer">
+    <xs:complexType name="XMLPanelDetails">
         <xs:sequence>
-            <xs:element name="Value" type="XMLFieldConfigEnumValue" maxOccurs="unbounded" minOccurs="1" >
+            <xs:element name="Value" type="XMLFieldConfigEnumValue" maxOccurs="unbounded" minOccurs="0" >
                 <xs:annotation>
                     <xs:documentation>
                         List of enum values to display and field states
@@ -53,8 +53,8 @@
                 <xs:documentation>
                     Full Java class name of panel details class that the options will be available for, e.g.
                         com.sldeditor.ui.detail.StrokeDetails
-                        com.sldeditor.ui.detail.PointSymbolizerDetails
-                        org.geotools.styling.PolygonSymbolizerImpl
+                        com.sldeditor.ui.detail.PointFillDetails
+                        com.sldeditor.ui.detail.PolygonFillDetails
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>

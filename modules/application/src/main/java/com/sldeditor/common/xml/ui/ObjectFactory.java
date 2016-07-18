@@ -77,11 +77,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link XMLSymbolizer }
+     * Create an instance of {@link XMLPanelDetails }
      * 
      */
-    public XMLSymbolizer createXMLSymbolizer() {
-        return new XMLSymbolizer();
+    public XMLPanelDetails createXMLPanelDetails() {
+        return new XMLPanelDetails();
     }
 
     /**

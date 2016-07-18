@@ -31,7 +31,8 @@
             <LiteralString value="#666666" field="STROKE_FILL_COLOUR"/>
             <LiteralString value="#333333" field="STROKE_STROKE_COLOUR"/>
             <LiteralString value="4 6" field="STROKE_DASH_ARRAY"/>
-            <LiteralDouble value="1.0" field="STROKE_WIDTH"/>
+            <Disabled field="STROKE_WIDTH"/>
+            <LiteralDouble value="4.0" field="STROKE_SYMBOL_SIZE"/>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>

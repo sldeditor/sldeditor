@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLSymbolTypeConfig>
+    <Panel type="com.sldeditor.ui.detail.PointFillDetails">
+        <Value>
+            <Item id="External" label="External" />
+            <FieldList>
+                <Field id="EXTERNAL_GRAPHIC" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="GAP" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="true" />
+                <Field id="ANCHOR_POINT_H" enabled="true" />
+                <Field id="ANCHOR_POINT_V" enabled="true" />
+                <Field id="DISPLACEMENT_X" enabled="true" />
+                <Field id="DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
+        <Value>
+            <Item id="External" label="External" />
+            <FieldList>
+                <Field id="EXTERNAL_GRAPHIC" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.StrokeDetails">
+        <Value>
+            <Item id="External" label="External" />
+            <FieldList>
+                <Field id="EXTERNAL_GRAPHIC" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OPACITY" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
+                <Field id="FILL_COLOUR" enabled="true" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
+</XMLSymbolTypeConfig>

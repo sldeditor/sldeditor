@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <XMLSymbolTypeConfig>
-    <Symbolizer type="com.sldeditor.ui.detail.PointSymbolizerDetails">
+    <Panel type="com.sldeditor.ui.detail.PointFillDetails">
         <Value>
             <Item id="square" label="symbolType.square" />
             <Item id="circle" label="symbolType.circle" />
@@ -24,8 +24,8 @@
                 <Field id="STROKE_WIDTH" enabled="true" />
             </FieldList>
         </Value>
-    </Symbolizer>
-    <Symbolizer type="org.geotools.styling.PolygonSymbolizerImpl">
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
         <Value>
             <Item id="none" label="symbolType.none" />
             <FieldList>
@@ -60,6 +60,14 @@
                 <Field id="STROKE_FILL_COLOUR" enabled="false" />
                 <Field id="STROKE_FILL_OPACITY" enabled="false" />
                 <Field id="STROKE_WIDTH" enabled="false" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="false" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="false" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="false" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="false" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="false" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="false" />
             </FieldList>
         </Value>
         <Value>
@@ -83,10 +91,18 @@
                 <Field id="STROKE_FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_OPACITY" enabled="true" />
                 <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
+                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_INITIAL_GAP" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
+                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
+                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
             </FieldList>
         </Value>
-    </Symbolizer>
-    <Symbolizer type="com.sldeditor.ui.detail.StrokeDetails">
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.StrokeDetails">
         <Value>
             <Item id="solid" label="symbolType.line" />
             <FieldList>
@@ -126,10 +142,10 @@
                 <Field id="STROKE_STROKE_OPACITY" enabled="true" />
                 <Field id="STROKE_WIDTH" enabled="false" />
 
-                <Field id="STROKE_LINE_JOIN" enabled="false" />
-                <Field id="STROKE_LINE_CAP" enabled="false" />
-                <Field id="STROKE_DASH_ARRAY" enabled="false" />
-                <Field id="STROKE_OFFSET" enabled="false" />
+                <Field id="STROKE_LINE_JOIN" enabled="true" />
+                <Field id="STROKE_LINE_CAP" enabled="true" />
+                <Field id="STROKE_DASH_ARRAY" enabled="true" />
+                <Field id="STROKE_OFFSET" enabled="true" />
 
                 <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
                 <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
@@ -141,5 +157,5 @@
                 <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
             </FieldList>
         </Value>
-    </Symbolizer>
+    </Panel>
 </XMLSymbolTypeConfig>

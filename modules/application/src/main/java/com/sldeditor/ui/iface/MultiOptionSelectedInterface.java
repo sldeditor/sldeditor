@@ -28,8 +28,8 @@ public interface MultiOptionSelectedInterface {
     /**
      * Option selected.
      *
-     * @param panelId the panel id
+     * @param fieldPanelId the field panel id
      * @param selectedItem the selected item
      */
-    abstract void optionSelected(Class<?> panelId, String selectedItem);
+    abstract void optionSelected(Class<?> fieldPanelId, String selectedItem);
 }

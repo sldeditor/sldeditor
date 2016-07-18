@@ -33,7 +33,6 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.PolygonSymbolizerImpl;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
 import org.opengis.filter.expression.Expression;
@@ -86,11 +85,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         setUpdateSymbolListener(this);
 
-        Class<?> symbolizerClass = PolygonSymbolizerImpl.class;
+        fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
+                new FieldId(FieldIdEnum.STROKE_FILL_COLOUR),
+                new FieldId(FieldIdEnum.STROKE_FILL_OPACITY),
+                new FieldId(FieldIdEnum.STROKE_STYLE));
 
-        fillFactory = new SymbolTypeFactory(StrokeDetails.class, new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), new FieldId(FieldIdEnum.STROKE_FILL_OPACITY), new FieldId(FieldIdEnum.STROKE_STYLE));
-
-        fieldEnableState = fillFactory.getFieldOverrides(symbolizerClass);
+        fieldEnableState = fillFactory.getFieldOverrides(this.getClass());
 
         createUI();
     }
@@ -103,20 +103,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         readConfigFile(this, "Stroke.xml");
 
         fillFactory.populate(this, fieldConfigManager);
-    }
-
-    /**
-     * Parses the dash array.
-     *
-     * @param text the text
-     */
-    protected void parseDashArray(String text) {
-        List<Float> floatList = createDashArray(text);
-
-        if(floatList != null)
-        {
-            updateSymbol();
-        }
     }
 
     /**
@@ -179,19 +165,11 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             List<Expression> dashExpressionList = createDashArrayList(dashes);
             stroke.setDashArray(dashExpressionList);
 
-            AnchorPoint anchorPoint = null;
-            if(isPanelEnabled(GroupIdEnum.ANCHORPOINT))
-            {
-                anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
-                        fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
-            }
+            AnchorPoint anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
-            Displacement displacement = null;
-            if(isPanelEnabled(GroupIdEnum.DISPLACEMENT))
-            {
-                anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
-                        fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
-            }
+            Displacement displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
             List<GraphicalSymbol> symbols = fillFactory.getValue(this.fieldConfigManager, symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
 
@@ -223,7 +201,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      * @param dashes the dashes
      * @return the list
      */
-    List<Expression> createDashArrayList(float[] dashes) {
+    private List<Expression> createDashArrayList(float[] dashes) {
         List<Expression> dashExpressionList = null;
 
         if(dashes != null)
@@ -309,34 +287,37 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     private Stroke getStrokeFromSymbolizer(SelectedSymbol selectedSymbol) {
         Stroke stroke = null;
 
-        Symbolizer symbolizer = selectedSymbol.getSymbolizer();
-        if(symbolizer instanceof PointSymbolizer)
+        if(selectedSymbol != null)
         {
-            Graphic graphic = selectedSymbol.getGraphic();
-
-            List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
-
-            if(graphicalSymbols.size() > 0)
+            Symbolizer symbolizer = selectedSymbol.getSymbolizer();
+            if(symbolizer instanceof PointSymbolizer)
             {
-                GraphicalSymbol symbol = graphicalSymbols.get(0);
+                Graphic graphic = selectedSymbol.getGraphic();
 
-                if(symbol instanceof MarkImpl)
+                List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
+
+                if(graphicalSymbols.size() > 0)
                 {
-                    MarkImpl markerSymbol = (MarkImpl) symbol;
+                    GraphicalSymbol symbol = graphicalSymbols.get(0);
 
-                    stroke = markerSymbol.getStroke();
+                    if(symbol instanceof MarkImpl)
+                    {
+                        MarkImpl markerSymbol = (MarkImpl) symbol;
+
+                        stroke = markerSymbol.getStroke();
+                    }
                 }
             }
-        }
-        else if(symbolizer instanceof LineSymbolizer)
-        {
-            LineSymbolizer lineSymbol = (LineSymbolizer) selectedSymbol.getSymbolizer();
-            stroke = lineSymbol.getStroke();
-        }
-        else if(symbolizer instanceof PolygonSymbolizer)
-        {
-            PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) selectedSymbol.getSymbolizer();
-            stroke = polygonSymbol.getStroke();
+            else if(symbolizer instanceof LineSymbolizer)
+            {
+                LineSymbolizer lineSymbol = (LineSymbolizer) selectedSymbol.getSymbolizer();
+                stroke = lineSymbol.getStroke();
+            }
+            else if(symbolizer instanceof PolygonSymbolizer)
+            {
+                PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) selectedSymbol.getSymbolizer();
+                stroke = polygonSymbol.getStroke();
+            }
         }
         return stroke;
     }
@@ -668,14 +649,14 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     /**
      * Option selected.
      *
-     * @param panelId the panel id
+     * @param fieldPanelId the field panel id
      * @param selectedItem the selected item
      */
     @Override
-    public void optionSelected(Class<?> panelId, String selectedItem) {
-        setSymbolTypeVisibility(panelId, selectedItem);
+    public void optionSelected(Class<?> fieldPanelId, String selectedItem) {
+        setSymbolTypeVisibility(fieldPanelId, selectedItem);
 
-        selectedFillPanelId = panelId;
+        selectedFillPanelId = fieldPanelId;
 
         dataHasChanged();
     }
@@ -692,15 +673,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         for(FieldConfigBase fieldConfig : this.getFieldConfigList())
         {
-            FieldId fieldId = fieldConfigManager.getFieldEnum(panelId, fieldConfig);
+            FieldId fieldId = fieldConfigManager.getFieldEnum(this.getClass(), fieldConfig);
             FieldIdEnum field = fieldId.getFieldId();
-            if((field != FieldIdEnum.STROKE_STYLE) && (list != null))
+            if((field != FieldIdEnum.UNKNOWN) && (field != FieldIdEnum.STROKE_STYLE) && (list != null))
             {
-                if(field != FieldIdEnum.UNKNOWN)
-                {
-                    boolean disable = !list.contains(fieldId);
-                    fieldConfig.setFieldStateOverride(disable);
-                }
+                boolean disable = !list.contains(fieldId);
+                fieldConfig.setFieldStateOverride(disable);
             }
         }
     }

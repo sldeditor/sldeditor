@@ -96,29 +96,31 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
         setUpdateSymbolListener(this);
 
-        Class<?> symbolizerClass = PolygonSymbolizerImpl.class;
+        symbolTypeFactory = new SymbolTypeFactory(FillDetails.class,
+                new FieldId(FieldIdEnum.FILL_COLOUR),
+                new FieldId(FieldIdEnum.OPACITY),
+                new FieldId(FieldIdEnum.SYMBOL_TYPE));
 
-        symbolTypeFactory = new SymbolTypeFactory(FillDetails.class, new FieldId(FieldIdEnum.FILL_COLOUR), new FieldId(FieldIdEnum.OPACITY), new FieldId(FieldIdEnum.SYMBOL_TYPE));
-        fieldEnableState = symbolTypeFactory.getFieldOverrides(symbolizerClass);
-        createUI(symbolizerClass, configFile);
+        fieldEnableState = symbolTypeFactory.getFieldOverrides(panelId);
+
+        createUI(panelId, configFile);
     }
 
     /**
      * Creates the ui.
      *
-     * @param symbolizerClass the symbolizer class
+     * @param panelDetails the panel details the configuration is for
      * @param configFile the config file
      */
-    private void createUI(Class<?> symbolizerClass, String configFile) {
+    private void createUI(Class<?> panelDetails, String configFile) {
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
         readConfigFile(this, configFile);
 
-        symbolTypeFactory.populate(this, symbolizerClass, fieldConfigManager);
+        symbolTypeFactory.populate(this, panelDetails, fieldConfigManager);
 
         createVendorOptionPanel();
-
     }
 
     /**
@@ -174,8 +176,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         Expression expStrokeColourOpacity = null;
         Expression expStrokeWidth = null;
 
-        boolean hasAnchorPoint = false;
-        boolean hasDisplacement = false;
         boolean hasFillColour = false;
         boolean hasStroke = false;
 
@@ -227,7 +227,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
                 if(anchorPoint != null)
                 {
-                    hasAnchorPoint = true;
                     expAnchorPointX = anchorPoint.getAnchorPointX();
                     expAnchorPointY = anchorPoint.getAnchorPointY();
                 }
@@ -237,7 +236,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
                 if(displacement != null)
                 {
-                    hasDisplacement = true;
                     expDisplacementX = displacement.getDisplacementX();
                     expDisplacementY = displacement.getDisplacementY();
                 }
@@ -295,20 +293,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), expStrokeColour);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_OPACITY, expStrokeColourOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_WIDTH, expStrokeWidth);
-
-        GroupConfigInterface anchorPointGroup = getGroup(GroupIdEnum.ANCHORPOINT);
-
-        if(anchorPointGroup != null)
-        {
-            anchorPointGroup.enable(hasAnchorPoint);
-        }
-
-        GroupConfigInterface displacementGroup = getGroup(GroupIdEnum.DISPLACEMENT);
-
-        if(displacementGroup != null)
-        {
-            displacementGroup.enable(hasDisplacement);
-        }
 
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
 
@@ -371,7 +355,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      *
      * @return the graphic
      */
-    public Graphic getGraphic() {
+    private Graphic getGraphic() {
 
         AnchorPoint anchor = null;
         Displacement displacement = null;
@@ -425,7 +409,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      *
      * @return the graphic fill
      */
-    public GraphicFill getGraphicFill() {
+    private GraphicFill getGraphicFill() {
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
         boolean hasFill = fillGroup.isPanelEnabled();
 
@@ -469,35 +453,17 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
     }
 
     /**
-     * Gets the fill colour.
-     *
-     * @return the fill colour
-     */
-    public Expression getFillColour() {
-        return symbolTypeFactory.getFillColour();
-    }
-
-    /**
-     * Gets the fill colour opacity.
-     *
-     * @return the fill colour opacity
-     */
-    public Expression getFillColourOpacity() {
-        return symbolTypeFactory.getFillColourOpacity();
-    }
-
-    /**
      * Option selected.
      *
-     * @param panelId the panel id
+     * @param fieldPanelId the field panel id
      * @param selectedItem the selected item
      */
     @Override
-    public void optionSelected(Class<?> panelId, String selectedItem) {
+    public void optionSelected(Class<?> fieldPanelId, String selectedItem) {
 
-        setSymbolTypeVisibility(panelId, selectedItem);
+        setSymbolTypeVisibility(fieldPanelId, selectedItem);
 
-        selectedFillPanelId = panelId;
+        selectedFillPanelId = fieldPanelId;
 
         FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.SIZE);
         if(fieldConfig.isEnabled())

@@ -123,21 +123,21 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
     /**
      * Populate.
      *
-     * @param pointSymbol the point symbol
+     * @param selectedSymbol the selected symbol
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
-    public void populate(SelectedSymbol pointSymbol) {
+    public void populate(SelectedSymbol selectedSymbol) {
 
         boolean rangeSet = false;
         String minScaleText = "";
         String maxScaleText = "";
 
-        if(pointSymbol != null)
+        if(selectedSymbol != null)
         {
-            Rule rule = pointSymbol.getRule();
+            Rule rule = selectedSymbol.getRule();
 
             if(rule != null)
             {

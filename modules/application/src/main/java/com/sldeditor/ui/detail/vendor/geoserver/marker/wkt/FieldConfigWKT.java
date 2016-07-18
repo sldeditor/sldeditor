@@ -44,17 +44,14 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.widgets.FieldPanel;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -70,7 +67,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterface, WKTUpdateInterface {
+public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
     /** The Constant VALIDITY_KEY. */
     private static final String VALIDITY_KEY = "WKT";
@@ -85,6 +82,12 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     private WKTDetails wktPanel = null;
 
     /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
+     * field enable/disable field states for the different symbol types
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WKT.xml";
+
+    /**
      * Instantiates a new field config string.
      *
      * @param panelId the panel id
@@ -93,7 +96,7 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
      * @param valueOnly the value only
      */
     public FieldConfigWKT(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
     }
 
     /**
@@ -325,23 +328,6 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     }
 
     /**
-     * Populate symbol list.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param symbolList the symbol list
-     */
-    @Override
-    public void populateSymbolList(Class<?> symbolizerClass,
-            List<ValueComboBoxDataGroup> symbolList)
-    {
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
-
-        dataList.add(new ValueComboBoxData(WKT_SYMBOL_KEY, "WKT", this.getClass()));
-
-        symbolList.add(new ValueComboBoxDataGroup(dataList));
-    }
-
-    /**
      * Gets the fill.
      *
      * @param graphicFill the graphic fill
@@ -364,30 +350,6 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
     public BasePanel getBasePanel()
     {
         return null;
-    }
-
-    /**
-     * Populate field override map.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param fieldEnableState the field enable state
-     */
-    @Override
-    public void populateFieldOverrideMap(Class<?> symbolizerClass, FieldEnableState fieldEnableState)
-    {
-        List<FieldId> enableList = new ArrayList<FieldId>();
-        enableList.add(new FieldId(FieldIdEnum.WKT));
-        enableList.add(new FieldId(FieldIdEnum.FILL_COLOUR));
-        enableList.add(new FieldId(FieldIdEnum.SIZE));
-        enableList.add(new FieldId(FieldIdEnum.OPACITY));
-        enableList.add(new FieldId(FieldIdEnum.ANGLE));
-        enableList.add(new FieldId(FieldIdEnum.GAP));
-        enableList.add(new FieldId(FieldIdEnum.INITIAL_GAP));
-
-        if(fieldEnableState != null)
-        {
-            fieldEnableState.add(getPanelId().getName(), WKT_SYMBOL_KEY, enableList);
-        }
     }
 
     /**
@@ -441,17 +403,6 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
             }
         }
         return false;
-    }
-
-    /**
-     * Sets the update symbol listener.
-     *
-     * @param listener the update symbol listener
-     */
-    @Override
-    public void setUpdateSymbolListener(UpdateSymbolInterface listener)
-    {
-        addDataChangedListener(listener);
     }
 
     /**
@@ -580,5 +531,13 @@ public class FieldConfigWKT extends FieldConfigBase implements SymbolTypeInterfa
         {
             wktPanel.setVisible(visible);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
+     */
+    @Override
+    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+        // No vendor options
     }
 }

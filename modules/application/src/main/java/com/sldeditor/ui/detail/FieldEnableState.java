@@ -23,15 +23,15 @@ public class FieldEnableState {
      * @param fieldList the field list
      */
     public void add(String panelName, String menuOption, List<FieldId> fieldList) {
-        
+
         Map<String, List<FieldId> > menuOptionFieldMap = enabledFieldStateMap.get(panelName);
-        
+
         if(menuOptionFieldMap == null)
         {
             menuOptionFieldMap = new HashMap<String, List<FieldId> >();
             enabledFieldStateMap.put(panelName, menuOptionFieldMap);
         }
-        
+
         menuOptionFieldMap.put(menuOption, fieldList);
     }
 
@@ -48,10 +48,10 @@ public class FieldEnableState {
         if(panelMap != null)
         {
             List<FieldId> list = panelMap.get(selectedItem);
-            
+
             return list;
         }
-        
+
         return null;
     }
 }

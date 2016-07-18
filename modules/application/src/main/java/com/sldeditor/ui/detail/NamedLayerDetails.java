@@ -64,12 +64,15 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        StyledLayer styledLayer = selectedSymbol.getStyledLayer();
-        if(styledLayer instanceof NamedLayerImpl)
+        if(selectedSymbol != null)
         {
-            NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
+            StyledLayer styledLayer = selectedSymbol.getStyledLayer();
+            if(styledLayer instanceof NamedLayerImpl)
+            {
+                NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
 
-            fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, namedLayer.getName());
+                fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, namedLayer.getName());
+            }
         }
     }
 

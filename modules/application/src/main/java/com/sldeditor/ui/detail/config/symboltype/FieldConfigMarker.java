@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.detail.config.symboltype;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,22 +33,18 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
 
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
  * The Class FieldConfigMarker handles all the marker symbols, including:
@@ -62,19 +57,19 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
  * No field is displayed when a marker symbol type is selected.
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInterface {
+public class FieldConfigMarker extends FieldState {
+
+    /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
+     * field enable/disable field states for the different symbol types
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Marker.xml";
 
     /** The Constant NONE_SYMBOL_KEY. */
     private static final String NONE_SYMBOL_KEY = "none";
 
     /** The Constant SOLID_SYMBOL. */
     private static final String SOLID_SYMBOL_KEY = "solid";
-
-    /** The local symbol list. */
-    private List<ValueComboBoxData> localSymbolList = null;
-
-    /** The field enable map. */
-    private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = null;
 
     /** The colour field. */
     private FieldId colourField;
@@ -107,7 +102,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
             FieldId colourField, 
             FieldId opacityField,
             FieldId symbolSelectionField) {
-        super(panelId, id, label, valueOnly);
+        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
 
         this.colourField = colourField;
         this.opacityField = opacityField;
@@ -194,6 +189,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     @Override
     public void populateExpression(Object objValue)
     {
+        // Do nothing
     }
 
     /**
@@ -327,49 +323,6 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     }
 
     /**
-     * Populate symbol list.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param symbolList the symbol list
-     */
-    @Override
-    public void populateSymbolList(Class<?> symbolizerClass, List<ValueComboBoxDataGroup> symbolList)
-    {
-        List<SymbolTypeConfig> configList = getFieldMap().get(symbolizerClass);
-
-        if(configList == null)
-        {
-            ConsoleManager.getInstance().error(this, "No config for symbolizer class : " + symbolizerClass.getName());
-        }
-        else
-        {
-            if(localSymbolList == null)
-            {
-                localSymbolList = new ArrayList<ValueComboBoxData>();
-            }
-            else
-            {
-                localSymbolList.clear();
-            }
-
-            for(SymbolTypeConfig config : configList)
-            {
-                List<ValueComboBoxData> groupSymbolList = new ArrayList<ValueComboBoxData>();
-
-                for(String key : config.getKeyOrderList())
-                {
-                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key), this.getClass());
-                    groupSymbolList.add(data);
-                }
-
-                symbolList.add(new ValueComboBoxDataGroup(config.getGroupName(), groupSymbolList, config.isSeparateGroup()));
-
-                localSymbolList.addAll(groupSymbolList);
-            }
-        }
-    }
-
-    /**
      * Gets the fill.
      *
      * @param graphicFill the graphic fill
@@ -459,33 +412,17 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     }
 
     /**
-     * Populate field override map.
+     * Populate vendor option field map in derived class.
      *
-     * @param symbolizerClass the symbolizer class
-     * @param fieldEnableState the field enable state
+     * @param fieldEnableMap the field enable map
      */
-    @Override
-    public void populateFieldOverrideMap(Class<?> symbolizerClass, FieldEnableState fieldEnableState)
+    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap)
     {
-        List<SymbolTypeConfig> configList = getFieldMap().get(symbolizerClass);
-        if(configList != null)
-        {
-            for(SymbolTypeConfig config : configList)
-            {
-                if(config != null)
-                {
-                    config.updateFieldState(fieldEnableState, getClass().getName());
-                }
-            }
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(this, "No config for symbolizer class : " + symbolizerClass.getName());
-        }
+        vendorOptionMarkerSymbolFactory.getFieldMap(fieldEnableMap);
     }
 
     /**
-     * Gets the field map
+     * Gets the field map.
      *
      * @param fieldConfigManager the field config manager
      * @return the field map
@@ -529,6 +466,7 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
                     {
                         String valueString = (String) value;
 
+                        List<ValueComboBoxData> localSymbolList = getLocalSymbolList();
                         if(localSymbolList != null)
                         {
                             for(ValueComboBoxData data : localSymbolList)
@@ -547,17 +485,6 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     }
 
     /**
-     * Sets the update symbol listener.
-     *
-     * @param listener the update symbol listener
-     */
-    @Override
-    public void setUpdateSymbolListener(UpdateSymbolInterface listener)
-    {
-        addDataChangedListener(listener);
-    }
-
-    /**
      * Gets the field.
      *
      * @return the field
@@ -566,26 +493,6 @@ public class FieldConfigMarker extends FieldConfigBase implements SymbolTypeInte
     public FieldConfigBase getConfigField()
     {
         return this;
-    }
-
-    /**
-     * Gets the field map.
-     *
-     * @return the field map
-     */
-    private Map<Class<?>, List<SymbolTypeConfig> > getFieldMap()
-    {
-        if(fieldEnableMap == null)
-        {
-            fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
-
-            String fullResourceName = "FillColourPanel.xml";
-            SymbolTypeConfigReader.readConfig(getClass(), fullResourceName, fieldEnableMap);
-
-            vendorOptionMarkerSymbolFactory.getFieldMap(fieldEnableMap);
-        }
-
-        return fieldEnableMap;
     }
 
     /**
