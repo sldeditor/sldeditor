@@ -302,7 +302,11 @@ public class GraphicPanelFieldManager {
     {
         Map<GroupIdEnum, GroupConfigInterface> panelMap = groupMap.get(requestedPanelId);
 
-        return (MultiOptionGroup) panelMap.get(groupId);
+        if(panelMap != null)
+        {
+            return (MultiOptionGroup) panelMap.get(groupId);
+        }
+        return null;
     }
 
     /**
@@ -316,7 +320,12 @@ public class GraphicPanelFieldManager {
     {
         Map<GroupIdEnum, GroupConfigInterface> panelMap = groupMap.get(requestedPanelId);
 
-        return (GroupConfig) panelMap.get(groupId);
+        if(panelMap != null)
+        {
+            return (GroupConfig) panelMap.get(groupId);
+        }
+
+        return null;
     }
 
     /**
