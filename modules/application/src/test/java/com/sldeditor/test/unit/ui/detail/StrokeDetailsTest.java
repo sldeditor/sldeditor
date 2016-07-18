@@ -11,15 +11,24 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
+import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
+import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicStroke;
+import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
@@ -30,6 +39,9 @@ import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
 
 /**
  * The unit test for StrokeDetails.
@@ -42,6 +54,7 @@ public class StrokeDetailsTest {
     /**
      * Test method for {@link com.sldeditor.ui.detail.StrokeDetails#StrokeDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
      */
+    @SuppressWarnings("deprecation")
     @Test
     public void testStrokeDetailsLine() {
         StrokeDetails panel = new StrokeDetails(null);
@@ -66,6 +79,34 @@ public class StrokeDetailsTest {
         rule.setName(expectedNameValue);
 
         LineSymbolizer symbolizer = DefaultSymbols.createDefaultLineSymbolizer();
+
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+        Stroke stroke = styleFactory.getDefaultStroke();
+
+        SymbolTypeFactory fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
+                new FieldId(FieldIdEnum.STROKE_FILL_COLOUR),
+                new FieldId(FieldIdEnum.STROKE_FILL_OPACITY),
+                new FieldId(FieldIdEnum.STROKE_STYLE));
+        fillFactory.populate(panel, panel.getFieldDataManager());
+
+        Expression symbolType = ff.literal("star");
+        List<GraphicalSymbol> symbols = fillFactory.getValue(panel.getFieldDataManager(), symbolType, true, true, FieldConfigMarker.class);
+
+        Expression initalGap = ff.literal(0);
+        Expression gap = ff.literal(0);
+
+        GraphicStroke graphicStroke = styleFactory.graphicStroke(symbols, null,
+                ff.literal(10),
+                ff.literal(0), 
+                styleFactory.createAnchorPoint(ff.literal(0.5), ff.literal(0.75)), 
+                styleFactory.createDisplacement(ff.literal(0.35), ff.literal(0.12)),
+                initalGap,
+                gap);
+
+        stroke.setDashArray(new float[] {1.0f,2.0f,3.0f});
+        stroke.setGraphicStroke(graphicStroke);
+        symbolizer.setStroke(stroke);
         rule.symbolizers().add(symbolizer);
         fts.rules().add(rule);
         sld.layers().add(namedLayer);
@@ -179,7 +220,7 @@ public class StrokeDetailsTest {
         actualValue = opacityField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.5) < 0.01);
     }
-    
+
     /**
      * Test method for {@link com.sldeditor.ui.detail.StrokeDetails#StrokeDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
      */
@@ -207,7 +248,7 @@ public class StrokeDetailsTest {
         rule.setName(expectedNameValue);
 
         PolygonSymbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
-        
+
         rule.symbolizers().add(symbolizer);
         fts.rules().add(rule);
         sld.layers().add(namedLayer);
@@ -254,7 +295,7 @@ public class StrokeDetailsTest {
         actualValue = opacityField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.5) < 0.01);
     }
-    
+
     /**
      * Test method for {@link com.sldeditor.ui.detail.StrokeDetails#parseDashArray(java.lang.String)}.
      */

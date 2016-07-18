@@ -18,15 +18,8 @@
  */
 package com.sldeditor.ui.detail;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
@@ -41,14 +34,12 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.style.ContrastMethod;
 import org.opengis.style.OverlapBehavior;
 
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -528,53 +519,6 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         this.vendorOptionVersionList = vendorOptionList;
 
         updateVendorOptionPanels();
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } 
-                catch (UnsupportedLookAndFeelException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (ClassNotFoundException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (InstantiationException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (IllegalAccessException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-                JFrame frame = new JFrame("Test");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                //Add contents to the window.
-                JPanel panel = new JPanel();
-                panel.setPreferredSize(new Dimension(600, 464));
-                panel.setLayout(new BorderLayout());
-
-                RasterSymbolizerDetails textDetails = new RasterSymbolizerDetails(FunctionManager.getInstance());
-
-                panel.add(textDetails, BorderLayout.CENTER);
-                frame.getContentPane().add(panel);
-
-                //Display the window.
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
     }
 
     /**

@@ -165,19 +165,11 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             List<Expression> dashExpressionList = createDashArrayList(dashes);
             stroke.setDashArray(dashExpressionList);
 
-            AnchorPoint anchorPoint = null;
-            if(isPanelEnabled(GroupIdEnum.ANCHORPOINT))
-            {
-                anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
-                        fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
-            }
+            AnchorPoint anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
-            Displacement displacement = null;
-            if(isPanelEnabled(GroupIdEnum.DISPLACEMENT))
-            {
-                anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
-                        fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
-            }
+            Displacement displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
             List<GraphicalSymbol> symbols = fillFactory.getValue(this.fieldConfigManager, symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
 
