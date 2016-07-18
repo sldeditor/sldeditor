@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.swing.ComboBoxModel;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.SLDDataInterface;
@@ -33,10 +34,11 @@ import com.sldeditor.create.NewSLDPanel;
 /**
  * The Class NewSLDPanelTest.
  * 
- * Set to @Ignore currently because Travis CI can not run the test as it requires a display.
+ * Set to @Ignore currently because it takes focus away from the user when the unit test is run
  *
  * @author Robert Ward (SCISYS)
  */
+@Ignore
 public class NewSLDPanelTest {
 
     /**
