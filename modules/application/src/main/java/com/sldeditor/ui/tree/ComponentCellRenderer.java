@@ -49,7 +49,7 @@ import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-class ComponentCellRenderer implements TreeCellRenderer {
+public class ComponentCellRenderer implements TreeCellRenderer {
 
     /**  The renderer we are a wrapper for. */
     private TreeCellRenderer renderer;

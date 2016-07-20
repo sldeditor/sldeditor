@@ -75,7 +75,6 @@ import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.render.RenderSymbol;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolSelectedInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
@@ -100,7 +99,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     private static final long serialVersionUID = 1L;
 
     /** The logger. */
-    private static Logger logger = Logger.getLogger(RenderSymbol.class);
+    private static Logger logger = Logger.getLogger(SLDTree.class);
 
     /** The sld symbol structure tree. */
     private JTree symbolTree = null;

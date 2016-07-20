@@ -27,6 +27,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.geometryfield.ExtractGeometryField;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -43,6 +44,8 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
 
     /**
      * Constructor.
+     *
+     * @param functionManager the function manager
      */
     public PolygonSymbolizerDetails(FunctionNameInterface functionManager)
     {
@@ -83,8 +86,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
     private void updateSymbol() {
         if(!Controller.getInstance().isPopulating())
         {
-            String geometryFieldName = null;
-            Expression geometryField = getFilterFactory().property(geometryFieldName);
+            Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
             Expression perpendicularOffset = fieldConfigVisitor.getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
 

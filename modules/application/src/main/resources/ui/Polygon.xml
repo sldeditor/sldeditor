@@ -19,7 +19,7 @@
         </FieldConfigEnum>
     </Group>
     <Group id="GENERAL" showLabel="false">
-        <FieldConfigDouble id="PERPENDICULAR_OFFSET"
-            label="polygon.general.perpendicularOffset" />
+        <FieldConfigDouble id="PERPENDICULAR_OFFSET" label="polygon.general.perpendicularOffset" />
+        <FieldConfigString id="GEOMETRY" label="geometry.name" />
     </Group>
 </PanelConfig>

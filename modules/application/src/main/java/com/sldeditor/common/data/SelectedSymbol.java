@@ -40,6 +40,7 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
+import com.sldeditor.geometryfield.GeometryFieldManager;
 
 /**
  * The Class SelectedSymbol contains the SLD data for the symbol being edited.
@@ -70,7 +71,7 @@ public class SelectedSymbol {
     private SymbolData symbolData = new SymbolData();
 
     /** The tree update listener. */
-    private SLDTreeUpdatedInterface treeUpdateListener = null;
+    private List<SLDTreeUpdatedInterface> treeUpdateListenerList = new ArrayList<SLDTreeUpdatedInterface>();
 
     /** The filename. */
     private String filename = null;
@@ -328,7 +329,6 @@ public class SelectedSymbol {
                                                         localSymbolData.incrementSelectedSymbolizerIndex();
                                                     }
                                                 }
-
                                             }
                                             localSymbolData.incrementSelectedRuleIndex();
                                         }
@@ -420,6 +420,7 @@ public class SelectedSymbol {
         {
             List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule().symbolizers();
             symbolizerList.add(newSymbolizer);
+            GeometryFieldManager.getInstance().addSymbolizer(newSymbolizer);
         }
     }
 
@@ -573,11 +574,12 @@ public class SelectedSymbol {
                     symbolizerList.remove(indexFound);
                     symbolizerList.add(indexFound, newSymbolizer);
                     setSymbolizer(newSymbolizer);
+                    GeometryFieldManager.getInstance().replaceSymbolizer(oldSymbolizer, newSymbolizer);
                 }
 
-                if(treeUpdateListener != null)
+                for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
                 {
-                    treeUpdateListener.updateNode(oldSymbolizer, newSymbolizer);
+                    listener.updateNode(oldSymbolizer, newSymbolizer);
                 }
             }
         }
@@ -674,7 +676,10 @@ public class SelectedSymbol {
      * @param treeObj the new tree update listener
      */
     public void setTreeUpdateListener(SLDTreeUpdatedInterface treeObj) {
-        this.treeUpdateListener = treeObj;
+        if(!this.treeUpdateListenerList.contains(treeObj))
+        {
+            this.treeUpdateListenerList.add(treeObj);
+        }
     }
 
     /**
@@ -778,6 +783,7 @@ public class SelectedSymbol {
         if(indexFound > -1)
         {
             symbolizerList.remove(indexFound);
+            GeometryFieldManager.getInstance().removeSymbolizer(symbolizerToDelete);
         }
     }
 
