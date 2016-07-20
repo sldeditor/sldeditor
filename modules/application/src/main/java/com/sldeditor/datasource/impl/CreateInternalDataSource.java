@@ -18,6 +18,7 @@
  */
 package com.sldeditor.datasource.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.geotools.data.memory.MemoryDataStore;
@@ -59,6 +60,12 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
     /** The geometry field. */
     private GeometryField geometryField = new GeometryField();
+
+    /** The list of class considered geometry types. */
+    private static List<Class<?>> geometryTypeList = Arrays.asList(Geometry.class,
+            MultiPolygon.class,
+            LineString.class, 
+            Point.class);
 
     /**
      * Creates the.
@@ -144,17 +151,17 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
         switch(dsInfo.getGeometryType())
         {
         case POLYGON:
-            b.add( geometryFieldName, MultiPolygon.class );
+            b.add(geometryFieldName, MultiPolygon.class);
             break;
         case LINE:
-            b.add( geometryFieldName, LineString.class );
+            b.add(geometryFieldName, LineString.class);
             break;
         case POINT:
         default:
-            b.add( geometryFieldName, Point.class );
+            b.add(geometryFieldName, Point.class);
             break;
         }
-        b.setDefaultGeometry( geometryFieldName );
+        b.setDefaultGeometry(geometryFieldName);
     }
 
     /**
@@ -168,7 +175,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
         for(DataSourceFieldInterface field : fieldList)
         {
-            if(field.getFieldType() == Geometry.class)
+            if(isGeometryField(field.getFieldType()))
             {
                 geometryField.setGeometryFieldName(field.getName());
             }
@@ -177,6 +184,16 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
                 b.add(field.getName(), field.getFieldType());
             }
         }
+    }
+
+    /**
+     * Checks if field is a geometry field.
+     *
+     * @param fieldType the field type
+     * @return true, if is geometry field
+     */
+    private boolean isGeometryField(Class<?> fieldType) {
+        return geometryTypeList.contains(fieldType);
     }
 
     /**
