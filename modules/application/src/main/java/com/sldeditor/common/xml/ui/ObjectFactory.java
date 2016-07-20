@@ -205,6 +205,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigGeometryField }
+     * 
+     */
+    public XMLFieldConfigGeometryField createXMLFieldConfigGeometryField() {
+        return new XMLFieldConfigGeometryField();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigFont }
      * 
      */

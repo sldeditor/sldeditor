@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FieldConfigFontPreview" type="{}XMLFieldConfigFontPreview"/&gt;
  *         &lt;element name="FieldConfigBoolean" type="{}XMLFieldConfigBoolean"/&gt;
  *         &lt;element name="FieldConfigGeometry" type="{}XMLFieldConfigGeometry"/&gt;
+ *         &lt;element name="FieldConfigGeometryField" type="{}XMLFieldConfigGeometryField"/&gt;
  *         &lt;element name="FieldConfigColourMap" type="{}XMLFieldConfigColourMap"/&gt;
  *         &lt;element name="FieldConfigTransformation" type="{}XMLFieldConfigTransformation"/&gt;
  *         &lt;element name="FieldConfigInteger" type="{}XMLFieldConfigInteger"/&gt;
@@ -72,6 +73,7 @@ public class XMLGroupConfig
         @XmlElement(name = "FieldConfigFontPreview", type = XMLFieldConfigFontPreview.class),
         @XmlElement(name = "FieldConfigBoolean", type = XMLFieldConfigBoolean.class),
         @XmlElement(name = "FieldConfigGeometry", type = XMLFieldConfigGeometry.class),
+        @XmlElement(name = "FieldConfigGeometryField", type = XMLFieldConfigGeometryField.class),
         @XmlElement(name = "FieldConfigColourMap", type = XMLFieldConfigColourMap.class),
         @XmlElement(name = "FieldConfigTransformation", type = XMLFieldConfigTransformation.class),
         @XmlElement(name = "FieldConfigInteger", type = XMLFieldConfigInteger.class),
@@ -107,6 +109,7 @@ public class XMLGroupConfig
      * {@link XMLFieldConfigFontPreview }
      * {@link XMLFieldConfigBoolean }
      * {@link XMLFieldConfigGeometry }
+     * {@link XMLFieldConfigGeometryField }
      * {@link XMLFieldConfigColourMap }
      * {@link XMLFieldConfigTransformation }
      * {@link XMLFieldConfigInteger }

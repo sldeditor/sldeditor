@@ -40,7 +40,6 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
-import com.sldeditor.geometryfield.GeometryFieldManager;
 
 /**
  * The Class SelectedSymbol contains the SLD data for the symbol being edited.
@@ -420,7 +419,6 @@ public class SelectedSymbol {
         {
             List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule().symbolizers();
             symbolizerList.add(newSymbolizer);
-            GeometryFieldManager.getInstance().addSymbolizer(newSymbolizer);
         }
     }
 
@@ -574,7 +572,6 @@ public class SelectedSymbol {
                     symbolizerList.remove(indexFound);
                     symbolizerList.add(indexFound, newSymbolizer);
                     setSymbolizer(newSymbolizer);
-                    GeometryFieldManager.getInstance().replaceSymbolizer(oldSymbolizer, newSymbolizer);
                 }
 
                 for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
@@ -783,7 +780,6 @@ public class SelectedSymbol {
         if(indexFound > -1)
         {
             symbolizerList.remove(indexFound);
-            GeometryFieldManager.getInstance().removeSymbolizer(symbolizerToDelete);
         }
     }
 

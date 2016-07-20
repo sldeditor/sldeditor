@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +65,8 @@ import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.tool.ysld.YSLDTool;
 
 /**
- * Class that makes the underlying file system appear as a file system!
- * 
+ * Class that makes the underlying file system appear as a file system!.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemInput implements FileSystemInterface
@@ -81,6 +82,9 @@ public class FileSystemInput implements FileSystemInterface
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(FileSystemInput.class);
+
+    /** The drive skip list. */
+    private List<String> driveSkipList = Arrays.asList("A:\\", "F:\\");
 
     /**
      * Instantiates a new file system input.
@@ -144,10 +148,13 @@ public class FileSystemInput implements FileSystemInterface
                 {
                     String driveLetter = f.getPath();
 
-                    FileTreeNode fileSystemRootNode = new FileTreeNode(new File(driveLetter), "");
-                    fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
+                    if(!driveSkipList.contains(driveLetter))
+                    {
+                        FileTreeNode fileSystemRootNode = new FileTreeNode(new File(driveLetter), "");
+                        fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
 
-                    rootNode.add(fileSystemRootNode);
+                        rootNode.add(fileSystemRootNode);
+                    }
                 }
             }
         }
@@ -266,7 +273,7 @@ public class FileSystemInput implements FileSystemInterface
     }
 
     /**
-     * Gets the file handler for the given file extension
+     * Gets the file handler for the given file extension.
      *
      * @param filename the filename
      * @return the file handler

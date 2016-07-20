@@ -102,6 +102,7 @@
                     <xs:element name="FieldConfigFontPreview"   type="XMLFieldConfigFontPreview" />
                     <xs:element name="FieldConfigBoolean"       type="XMLFieldConfigBoolean" />
                     <xs:element name="FieldConfigGeometry"      type="XMLFieldConfigGeometry" />
+                    <xs:element name="FieldConfigGeometryField" type="XMLFieldConfigGeometryField" />
                     <xs:element name="FieldConfigColourMap"     type="XMLFieldConfigColourMap" />
                     <xs:element name="FieldConfigTransformation" type="XMLFieldConfigTransformation" />
                     <xs:element name="FieldConfigInteger"       type="XMLFieldConfigInteger" />
@@ -357,6 +358,18 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigGeometryField">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for a geometry field
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

@@ -24,14 +24,10 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.geometryfield.GeometryFieldManager;
-import com.sldeditor.geometryfield.ui.GeometryFieldTree;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.tool.legendpanel.LegendManager;
 import com.sldeditor.tool.legendpanel.LegendPanel;
@@ -39,7 +35,6 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
-import com.sldeditor.ui.layout.SLDEditorDefaultLayout;
 import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.ui.tree.SLDTreeTools;
 
@@ -53,9 +48,6 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
     /** The panel marker symbol. */
     private SLDTree sldTree = null;
-
-    /** The geometry field tree. */
-    private GeometryFieldTree geometryFieldTree = null;
 
     /** The panel marker details. */
     private SymbolizerDetailsPanel panelSymbolizerDetails = null;
@@ -120,19 +112,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         symbolPanel.add(RenderPanelFactory.getRenderOptionPanel(renderSymbol, getRendererList()));
 
         JPanel symbolTreePanel = getSymbolTree();
-        JPanel geometryFieldTreePanel = getGeometryFieldTree();
 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
-
-        // Symbol tree
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol"), null, symbolTreePanel,
-                Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol.tooltip"));
-
-        // Geometry field tree
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.geometry"), null, geometryFieldTreePanel,
-                Localisation.getString(SLDEditorDefaultLayout.class, "panels.geometry.tooltip"));
-
-        symbolPanel.add(tabbedPane);
+        symbolPanel.add(symbolTreePanel);
         symbolPanel.add(getLegendPanel());
 
         return symbolPanel;
@@ -175,24 +156,6 @@ public class SingleSymbolUI implements SymbolPanelInterface {
     }
 
     /**
-     * Gets the geometry field tree.
-     *
-     * @return the geometry field tree
-     */
-    public GeometryFieldTree getGeometryFieldTree() {
-
-        if(geometryFieldTree == null)
-        {
-            geometryFieldTree = new GeometryFieldTree(getRendererList());
-
-            // Register for updates to the SLD tree structure
-            SelectedSymbol.getInstance().setTreeUpdateListener(geometryFieldTree);
-        }
-
-        return geometryFieldTree;
-    }
-
-    /**
      * Gets the renderer list.
      *
      * @return the renderer list
@@ -220,11 +183,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
             panelSymbolizerDetails.preLoadSymbol();
         }
         
-        GeometryFieldManager.getInstance().newSymbol();
         getSymbolTree().populateSLD();
         getSymbolTree().selectFirstSymbol();
-
-        getGeometryFieldTree().populateSLD();
     }
 
     /* (non-Javadoc)

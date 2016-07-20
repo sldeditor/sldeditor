@@ -20,6 +20,6 @@
     </Group>
     <Group id="GENERAL" showLabel="false">
         <FieldConfigDouble id="PERPENDICULAR_OFFSET" label="polygon.general.perpendicularOffset" />
-        <FieldConfigString id="GEOMETRY" label="geometry.name" />
+        <FieldConfigGeometryField id="GEOMETRY" label="geometry.name" />
     </Group>
 </PanelConfig>

@@ -47,9 +47,9 @@ public class ExtractAttributesTest {
      */
     @Test
     public void testAddDefaultFields() {
-        
+
         DummyInternalSLDEditorFile dummy = new DummyInternalSLDEditorFile();
-        
+
         SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
 
         String typeName = "test type name";
@@ -65,10 +65,11 @@ public class ExtractAttributesTest {
 
         b.setDefaultGeometry( "geom" );
 
-        ExtractAttributes.addDefaultFields(b, dummy.getSLDData().getSld());
-        
+        ExtractAttributes extract = new ExtractAttributes();
+        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
+
         SimpleFeatureType featureType = b.buildFeatureType();
-        
+
         Collection<PropertyDescriptor> fieldList = featureType.getDescriptors();
         assertTrue(fieldList != null);
 

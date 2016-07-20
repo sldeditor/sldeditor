@@ -27,7 +27,6 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
-import com.sldeditor.geometryfield.ExtractGeometryField;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -76,6 +75,8 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
                 populateStandardData(polygonSymbolizer);
 
                 fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET, polygonSymbolizer.getPerpendicularOffset());
+
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, polygonSymbolizer.getGeometry());
             }
         }
     }
@@ -106,10 +107,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
                 polygonSymbolizer.setUnitOfMeasure(standardData.unit);
 
                 polygonSymbolizer.setDisplacement(displacement);
-                if((geometryField != null) && (geometryField.toString() != null) && !geometryField.toString().isEmpty())
-                {
-                    polygonSymbolizer.setGeometry(geometryField);
-                }
+                polygonSymbolizer.setGeometry(geometryField);
                 polygonSymbolizer.setPerpendicularOffset(perpendicularOffset);
 
                 this.fireUpdateSymbol();
