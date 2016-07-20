@@ -491,6 +491,10 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
                 {
                     attributeSelectionPanel.setAttribute(expression);
                 }
+                else
+                {
+                    populateExpression(expression);
+                }
 
                 setCachedExpression(expression);
             }

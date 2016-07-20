@@ -57,11 +57,8 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     /** The Constant INTERNAL_SCHEMA_NAME. */
     private static final String INTERNAL_SCHEMA_NAME = "MEMORY";
 
-    /** The Constant DEFAULT_GEOMETRY_FIELD_NAME. */
-    private static final String DEFAULT_GEOMETRY_FIELD_NAME = "geom";
-
-    /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    /** The geometry field. */
+    private GeometryField geometryField = new GeometryField();
 
     /**
      * Creates the.
@@ -94,23 +91,31 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             //add a geometry property
             b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
 
-            if(sldWriter == null)
-            {
-                sldWriter = SLDWriterFactory.createWriter(null);
-            }
+            SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
             List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
 
-            setGeometryField(b, DEFAULT_GEOMETRY_FIELD_NAME);
+            // Set the geometry field by default
+            geometryField.reset();
 
             if((fieldList == null) || fieldList.isEmpty())
             {
-                fieldList = ExtractAttributes.addDefaultFields(b, sldWriter.encodeSLD(sld));
+                ExtractAttributes extract = new ExtractAttributes();
+                extract.extractDefaultFields(b, sldWriter.encodeSLD(sld));
+                fieldList = extract.getFields();
+
+                List<String> geometryFields = extract.getGeometryFields();
+                for(String geometryFieldName : geometryFields)
+                {
+                    geometryField.setGeometryFieldName(geometryFieldName);
+                }
             }
             else
             {
                 addFields(b, fieldList);
             }
+
+            setGeometryField(b, geometryField.getGeometryFieldName());
 
             // Store the fields
             sldData.setFieldList(fieldList);
@@ -165,7 +170,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
         {
             if(field.getFieldType() == Geometry.class)
             {
-                setGeometryField(b, field.getName());
+                geometryField.setGeometryFieldName(field.getName());
             }
             else
             {

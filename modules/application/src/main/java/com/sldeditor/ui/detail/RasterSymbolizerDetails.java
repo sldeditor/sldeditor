@@ -156,6 +156,10 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
             {
                 populateStandardData(rasterSymbolizer);
 
+                // Geometry
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, rasterSymbolizer.getGeometry());
+
+                // Opacity
                 fieldConfigVisitor.populateField(FieldIdEnum.RASTER_OPACITY, rasterSymbolizer.getOpacity());
 
                 // Contrast
@@ -341,9 +345,8 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
         colorMap.setType(Integer.valueOf(colourMapType.getKey()));
 
-        Expression geometryField = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
-        String geometryFieldName = null;
-        Expression defaultGeometryField = getFilterFactory().property(geometryFieldName);
+        // Geometry field
+        Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
         // Channel selection
         ChannelSelection channelSelection = null;
@@ -421,7 +424,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         Symbolizer symbolizer = null;
 
         RasterSymbolizer rasterSymbolizer = (RasterSymbolizer) getStyleFactory().rasterSymbolizer(standardData.name,
-                defaultGeometryField,
+                geometryField,
                 standardData.description, 
                 standardData.unit, 
                 opacityExpression,

@@ -24,6 +24,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -67,6 +68,8 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         {
             Symbolizer symbolizer = selectedSymbol.getSymbolizer();
             populateStandardData(symbolizer);
+
+            fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, symbolizer.getGeometry());
         }
 
         updateSymbol();
@@ -80,8 +83,7 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         {
             StandardData standardData = getStandardData();
 
-            String geometryFieldName = null;
-            Expression geometryField = getFilterFactory().property(geometryFieldName);
+            Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
             PointSymbolizer pointSymbolizer = (PointSymbolizer)SelectedSymbol.getInstance().getSymbolizer();
 
@@ -90,11 +92,7 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
                 pointSymbolizer.setName(standardData.name);
                 pointSymbolizer.setDescription(standardData.description);
                 pointSymbolizer.setUnitOfMeasure(standardData.unit);
-
-                if((geometryField != null) && (geometryField.toString() != null) && !geometryField.toString().isEmpty())
-                {
-                    pointSymbolizer.setGeometry(geometryField);
-                }
+                pointSymbolizer.setGeometry(geometryField);
 
                 this.fireUpdateSymbol();
             }
