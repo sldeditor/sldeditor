@@ -20,7 +20,7 @@
         </FieldConfigEnum>
     </Group>
     <Group id="GENERAL" showLabel="false">
-        <FieldConfigGeometryField id="GEOMETRY" label="geometry.name" />
+        <FieldConfigGeometryField id="GEOMETRY" label="raster.geometry.name" />
     </Group>
     <Group id="RASTER" showLabel="false">
         <FieldConfigSlider id="RASTER_OPACITY" label="raster.overallopacity" />
