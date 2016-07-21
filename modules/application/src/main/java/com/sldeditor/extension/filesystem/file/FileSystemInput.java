@@ -84,7 +84,7 @@ public class FileSystemInput implements FileSystemInterface
     private static Logger logger = Logger.getLogger(FileSystemInput.class);
 
     /** The drive skip list. */
-    private List<String> driveSkipList = Arrays.asList("A:\\", "F:\\");
+    private List<String> driveSkipList = Arrays.asList();
 
     /**
      * Instantiates a new file system input.
@@ -150,7 +150,9 @@ public class FileSystemInput implements FileSystemInterface
 
                     if(!driveSkipList.contains(driveLetter))
                     {
-                        FileTreeNode fileSystemRootNode = new FileTreeNode(new File(driveLetter), "");
+                        File rootDrive = new File(driveLetter);
+                        logger.info("Adding root : " + driveLetter);
+                        FileTreeNode fileSystemRootNode = new FileTreeNode(rootDrive, "");
                         fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
 
                         rootNode.add(fileSystemRootNode);
