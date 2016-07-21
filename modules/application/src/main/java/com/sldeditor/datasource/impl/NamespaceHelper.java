@@ -6,22 +6,24 @@ package com.sldeditor.datasource.impl;
 import org.w3c.dom.Node;
 
 /**
+ * Class to help with the decoding of XML elements.
+ * 
  * @author Robert Ward (SCISYS)
  *
  */
-public class Namespace {
+public class NamespaceHelper {
 
-    private String prefix;
+    private String prefix = "";
 
     /** The element name. */
-    private String elementName;
+    private String elementName = "";
 
     /**
      * Instantiates a new namespace by decoding a Node object.
      *
      * @param node the node
      */
-    public Namespace(Node node) {
+    public NamespaceHelper(Node node) {
         if(node != null)
         {
             String[] component = node.getNodeName().split(":");
@@ -66,7 +68,14 @@ public class Namespace {
      * @return the string
      */
     public static String encode(String namespacePrefix, String element) {
-        return String.format("%s:%s", namespacePrefix, element);
+        if((namespacePrefix != null) && !namespacePrefix.isEmpty())
+        {
+            return String.format("%s:%s", namespacePrefix, element);
+        }
+        else
+        {
+            return element;
+        }
     }
 
     /**

@@ -219,7 +219,7 @@ public class ExtractAttributes {
 
                     Node parent = node.getParentNode();
 
-                    Namespace namespace = new Namespace(parent);
+                    NamespaceHelper namespace = new NamespaceHelper(parent);
                     addField = true;
 
                     if(namespace.isElement(OGC_NAMESPACE, FUNCTION))
@@ -227,7 +227,7 @@ public class ExtractAttributes {
                         Node parentAgain = parent.getParentNode();
                         if(parentAgain != null)
                         {
-                            Namespace geometryNamespace = new Namespace(parentAgain);
+                            NamespaceHelper geometryNamespace = new NamespaceHelper(parentAgain);
 
                             if(geometryNamespace.isElement(SLD_NAMESPACE, GEOMETRY_FIELD))
                             {
@@ -283,7 +283,7 @@ public class ExtractAttributes {
         List<String> prefixList = namespacePrefixes.get(namespacePrefix);
         for(String prefix : prefixList)
         {
-            String tagName = Namespace.encode(prefix, elementName);
+            String tagName = NamespaceHelper.encode(prefix, elementName);
             NodeList nodeList = doc.getElementsByTagName(tagName);
             completeNodeList.add(nodeList);
         }
