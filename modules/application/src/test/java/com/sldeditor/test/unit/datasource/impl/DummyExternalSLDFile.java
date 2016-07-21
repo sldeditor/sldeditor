@@ -34,11 +34,11 @@ import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 
 /**
- * The Class DummySLDEditorFile.
+ * The Class DummyExternalSLDEditorFile.
  *
  * @author Robert Ward (SCISYS)
  */
-public class DummyExternalSLDEditorFile implements SLDEditorFileInterface {
+public class DummyExternalSLDFile implements SLDEditorFileInterface {
 
     private SLDDataInterface sldData = null;
 
@@ -46,7 +46,7 @@ public class DummyExternalSLDEditorFile implements SLDEditorFileInterface {
 
     private List<String> expectedFieldList = new ArrayList<String>();
 
-    public DummyExternalSLDEditorFile()
+    public DummyExternalSLDFile()
     {
         String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
                 "<StyledLayerDescriptor version=\"1.0.0\" " +

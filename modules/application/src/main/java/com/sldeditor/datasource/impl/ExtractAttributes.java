@@ -63,7 +63,7 @@ public class ExtractAttributes {
     private static final String SLD_NAMESPACE_URL = "http://www.opengis.net/sld";
 
     /** The Constant WELL_KNOWN_NAME. */
-    private static final String WELL_KNOWN_NAME = "sld:WellKnownName";
+    private static final String WELL_KNOWN_NAME = "WellKnownName";
 
     /** The Constant GEOMETRY_FIELD. */
     private static final String GEOMETRY_FIELD = "Geometry";
@@ -116,8 +116,10 @@ public class ExtractAttributes {
             InputSource is = new InputSource(new StringReader(encodedSLD));
             Document doc = builder.parse(is);
 
-            extractSimpleAttributes(b, doc, processedFieldList, geometryFieldList);
-            extractWKTAttributes(b, doc, processedFieldList);
+            Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
+
+            extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
+            extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
         }
         catch(IOException e)
         {
@@ -154,19 +156,25 @@ public class ExtractAttributes {
      *
      * @param b the b
      * @param doc the doc
+     * @param namespacePrefixes the namespace prefixes
      * @param processedFieldList the processed field list
      */
     private static void extractWKTAttributes(SimpleFeatureTypeBuilder b, Document doc,
+            Map<String, List<String>> namespacePrefixes,
             List<DataSourceFieldInterface> processedFieldList) {
-        NodeList nodeList = doc.getElementsByTagName(WELL_KNOWN_NAME);
+        // Get node list for all possible namespace prefixes
+        List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, SLD_NAMESPACE, WELL_KNOWN_NAME);
 
-        for(int index = 0; index < nodeList.getLength(); index ++)
+        for(NodeList nodeList : completeNodeList)
         {
-            Node node = nodeList.item(index);
+            for(int index = 0; index < nodeList.getLength(); index ++)
+            {
+                Node node = nodeList.item(index);
 
-            String contents = node.getTextContent();
+                String contents = node.getTextContent();
 
-            System.out.println(contents);
+                System.out.println(contents);
+            }
         }
     }
 
@@ -175,11 +183,13 @@ public class ExtractAttributes {
      *
      * @param b the feature type builder
      * @param doc the doc
+     * @param namespacePrefixes the namespace prefixes
      * @param processedFieldList the processed field list
      * @param geometryList the geometry list
      */
     private static void extractSimpleAttributes(SimpleFeatureTypeBuilder b,
             Document doc,
+            Map<String, List<String>> namespacePrefixes,
             List<DataSourceFieldInterface> processedFieldList,
             List<String> geometryList)
     {
@@ -197,8 +207,6 @@ public class ExtractAttributes {
         {
             return;
         }
-
-        Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
 
         // Get node list for all possible namespace prefixes
         List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, OGC_NAMESPACE, PROPERTY_NAME);
@@ -222,14 +230,14 @@ public class ExtractAttributes {
                     NamespaceHelper namespace = new NamespaceHelper(parent);
                     addField = true;
 
-                    if(namespace.isElement(OGC_NAMESPACE, FUNCTION))
+                    if(namespace.isElement(namespacePrefixes.get(OGC_NAMESPACE), FUNCTION))
                     {
                         Node parentAgain = parent.getParentNode();
                         if(parentAgain != null)
                         {
                             NamespaceHelper geometryNamespace = new NamespaceHelper(parentAgain);
 
-                            if(geometryNamespace.isElement(SLD_NAMESPACE, GEOMETRY_FIELD))
+                            if(geometryNamespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
                             {
                                 addField = false;
                             }
@@ -247,7 +255,7 @@ public class ExtractAttributes {
                             }
                         }
                     }
-                    else if(namespace.isElement(SLD_NAMESPACE, GEOMETRY_FIELD))
+                    else if(namespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
                     {
                         addField = false;
                         geometryList.add(fieldName);

@@ -3,6 +3,8 @@
  */
 package com.sldeditor.datasource.impl;
 
+import java.util.List;
+
 import org.w3c.dom.Node;
 
 /**
@@ -44,14 +46,36 @@ public class NamespaceHelper {
     /**
      * Checks if this element matches the requested.
      *
-     * @param requestedNamespacePrefix the requested namespace prefix
+     * @param requestPrefixList the requested namespace prefix
      * @param requestedElementName the requested element name
      * @return true, if is element matches
      */
-    public boolean isElement(String requestedNamespacePrefix, String requestedElementName) {
-        if((requestedNamespacePrefix != null) && (requestedElementName != null))
+    public boolean isElement(List<String> requestPrefixList, String requestedElementName) {
+        if((requestPrefixList != null) && (requestedElementName != null))
         {
-            if((requestedNamespacePrefix.compareToIgnoreCase(prefix) == 0) &&
+            for(String requestPrefix : requestPrefixList)
+            {
+                if(isElement(requestPrefix, requestedElementName))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Checks if this element matches the requested.
+     *
+     * @param requestPrefixList the requested namespace prefix
+     * @param requestedElementName the requested element name
+     * @return true, if is element matches
+     */
+    public boolean isElement(String requestPrefix, String requestedElementName) {
+        if((requestPrefix != null) && (requestedElementName != null))
+        {
+            if((requestPrefix.compareToIgnoreCase(prefix) == 0) &&
                     (requestedElementName.compareToIgnoreCase(elementName) == 0))
             {
                 return true;
@@ -59,7 +83,6 @@ public class NamespaceHelper {
         }
         return false;
     }
-
     /**
      * Encode XML element.
      *

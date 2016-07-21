@@ -70,9 +70,9 @@ public class NamespaceHelperTest {
         assertTrue(actualValue.compareTo(expectedElement) == 0);
 
         // Try NamespaceHelper.isElement
-        assertFalse(namespace.isElement(null, null));
+        assertFalse(namespace.isElement((String)null, null));
         assertFalse(namespace.isElement(components[0], null));
-        assertFalse(namespace.isElement(null, components[1]));
+        assertFalse(namespace.isElement((String)null, components[1]));
         assertTrue(namespace.isElement(components[0], components[1]));
         assertFalse(namespace.isElement(components[1], components[0]));
     }
@@ -119,8 +119,8 @@ public class NamespaceHelperTest {
         assertTrue(actualValue.compareTo(expectedElement) == 0);
 
         // Try NamespaceHelper.isElement
-        assertFalse(namespace.isElement(null, null));
-        assertFalse(namespace.isElement(null, expectedElement));
+        assertFalse(namespace.isElement((String)null, null));
+        assertFalse(namespace.isElement((String)null, expectedElement));
         assertTrue(namespace.isElement("", expectedElement));
     }
 }
