@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.geotools.data.FeatureSource;
+import org.geotools.feature.type.GeometryDescriptorImpl;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -76,7 +77,7 @@ public class DataSourceImplTest {
     public void testConnectToInternalDataSource() {
         DataSourceImpl ds = new DataSourceImpl();
 
-        DummyInternalSLDEditorFile editorFile = new DummyInternalSLDEditorFile();
+        DummyInternalSLDFile editorFile = new DummyInternalSLDFile();
         DummyDataSourceUpdate dataSourceUpdateListener = new DummyDataSourceUpdate();
         ds.addListener(dataSourceUpdateListener);
 
@@ -95,7 +96,10 @@ public class DataSourceImplTest {
         List<String> actualFieldnameList = new ArrayList<String>();
         for(PropertyDescriptor field : fieldList)
         {
-            actualFieldnameList.add(field.getName().getLocalPart());
+            if(!(field instanceof GeometryDescriptorImpl))
+            {
+                actualFieldnameList.add(field.getName().getLocalPart());
+            }
         }
 
         // Check fields extracted ok
@@ -117,8 +121,7 @@ public class DataSourceImplTest {
         assertTrue(ds.getAttributes(Integer.class).isEmpty());
         assertTrue(ds.getAttributes(Double.class).isEmpty());
 
-        // Number of fields should be all fields minus the geometry field
-        assertEquals(expectedFieldList.size() - 1, ds.getAttributes(String.class).size());
+        assertEquals(expectedFieldList.size(), ds.getAttributes(String.class).size());
 
         // Add new field
         DataSourceFieldInterface dataSourceField = new DataSourceField("bearing", Double.class);
@@ -165,7 +168,7 @@ public class DataSourceImplTest {
     public void testConnectToExternalDataSource() {
         DataSourceImpl ds = new DataSourceImpl();
 
-        DummyExternalSLDEditorFile editorFile = new DummyExternalSLDEditorFile();
+        DummyExternalSLDFile editorFile = new DummyExternalSLDFile();
         DummyDataSourceUpdate dataSourceUpdateListener = new DummyDataSourceUpdate();
         ds.addListener(dataSourceUpdateListener);
 
