@@ -65,18 +65,16 @@ public class FileSystemWatcher implements Runnable {
      * Instantiates a new file system watcher.
      *
      * @param parent the parent
-     * @param file the file
+     * @param path the path
      */
-    public void addWatch(FileWatcherUpdateInterface parent, File file) {
-        if(file != null)
+    public void addWatch(FileWatcherUpdateInterface parent, Path path) {
+        if(path != null)
         {
             // The directory that has to be watched needs to be registered. Any
             // object that implements the Watchable interface can be registered.
 
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
-            Path path = file.toPath();
-
             try {
                 WatchKey key = path.register(watchService,
                         StandardWatchEventKinds.ENTRY_CREATE,
@@ -154,25 +152,24 @@ public class FileSystemWatcher implements Runnable {
                 Path dir = (Path)key.watchable();
                 Path fullPath = dir.resolve((Path) watchEvent.context());
 
-                File f = fullPath.toFile();
                 FileWatcherUpdateInterface parentObj = watcherMap.get(key);
                 if (watchEventKind == StandardWatchEventKinds.ENTRY_CREATE) {
                     // A new file has been created
                     if(parentObj != null)
                     {
-                        parentObj.fileAdded(f);
+                        parentObj.fileAdded(fullPath);
                     }
                 } else if (watchEventKind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     // The file has been modified.
                     if(parentObj != null)
                     {
-                        parentObj.fileModified(f);
+                        parentObj.fileModified(fullPath);
                     }
                 } else if (watchEventKind == StandardWatchEventKinds.ENTRY_DELETE) {
 
                     if(parentObj != null)
                     {
-                        parentObj.fileDeleted(f);
+                        parentObj.fileDeleted(fullPath);
                     }
                 }
                 // Reset the key so the further key events may be polled
@@ -200,18 +197,18 @@ public class FileSystemWatcher implements Runnable {
         FileSystemWatcher.getInstance().addWatch(new FileWatcherUpdateInterface() {
 
             @Override
-            public void fileAdded(File f) {
-                System.out.println("File Created:" + f.getAbsolutePath());
+            public void fileAdded(Path f) {
+                System.out.println("File Created:" + f.toString());
             }
 
             @Override
-            public void fileModified(File f) {
-                System.out.println("File Modified:" + f.getAbsolutePath());
+            public void fileModified(Path f) {
+                System.out.println("File Modified:" + f.toString());
             }
 
             @Override
-            public void fileDeleted(File f) {
-                System.out.println("File Deleted:" + f.getAbsolutePath());
-            }}, dir);
+            public void fileDeleted(Path f) {
+                System.out.println("File Deleted:" + f.toString());
+            }}, dir.toPath());
     }
 }

@@ -66,23 +66,23 @@ public class FileSystemWatcherTest {
         FileSystemWatcher.getInstance().addWatch(new FileWatcherUpdateInterface() {
 
             @Override
-            public void fileAdded(File f) {
-                String message = "Added " + f.getName();
+            public void fileAdded(Path f) {
+                String message = "Added " + f.toString();
                 resultList.add(message);
                 System.out.println(message);
             }
 
             @Override
-            public void fileModified(File f) {
+            public void fileModified(Path f) {
                 // Ignore
             }
 
             @Override
-            public void fileDeleted(File f) {
-                String message = "Del " + f.getName();
+            public void fileDeleted(Path f) {
+                String message = "Del " + f.toString();
                 resultList.add(message);
                 System.out.println(message);
-            }}, tempFolder.toFile());
+            }}, tempFolder);
 
         File tmpFile = null;
         try {

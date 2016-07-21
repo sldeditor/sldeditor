@@ -18,7 +18,7 @@
  */
 package com.sldeditor.common.watcher;
 
-import java.io.File;
+import java.nio.file.Path;
 
 /**
  * The Interface FileWatcherUpdateInterface.
@@ -32,19 +32,19 @@ public interface FileWatcherUpdateInterface {
      *
      * @param f the f
      */
-    void fileAdded(File f);
+    void fileAdded(Path f);
 
     /**
      * File modified.
      *
      * @param f the f
      */
-    void fileModified(File f);
+    void fileModified(Path f);
 
     /**
      * File deleted.
      *
      * @param f the f
      */
-    void fileDeleted(File f);
+    void fileDeleted(Path f);
 }
