@@ -158,7 +158,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             {
                 if(render instanceof DataSourceUpdatedInterface)
                 {
-                    dataSource.addListener(render);
+                    if(dataSource != null)
+                    {
+                        dataSource.addListener(render);
+                    }
                 }
             }
         }

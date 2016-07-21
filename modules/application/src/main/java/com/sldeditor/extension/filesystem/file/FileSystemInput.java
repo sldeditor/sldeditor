@@ -27,6 +27,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -140,11 +142,11 @@ public class FileSystemInput implements FileSystemInterface
             {
                 boolean prePopulateFirstLevelFolders = false;
 
-                for(File f : File.listRoots())
+                for(Path path : FileSystems.getDefault().getRootDirectories())
                 {
-                    String driveLetter = f.getPath();
+                    logger.debug("Adding root folder : " + path.toString());
 
-                    FileTreeNode fileSystemRootNode = new FileTreeNode(new File(driveLetter), "");
+                    FileTreeNode fileSystemRootNode = new FileTreeNode(path);
                     fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
 
                     rootNode.add(fileSystemRootNode);
