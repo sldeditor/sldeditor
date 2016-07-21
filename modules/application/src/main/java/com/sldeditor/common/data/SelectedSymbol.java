@@ -70,7 +70,7 @@ public class SelectedSymbol {
     private SymbolData symbolData = new SymbolData();
 
     /** The tree update listener. */
-    private SLDTreeUpdatedInterface treeUpdateListener = null;
+    private List<SLDTreeUpdatedInterface> treeUpdateListenerList = new ArrayList<SLDTreeUpdatedInterface>();
 
     /** The filename. */
     private String filename = null;
@@ -328,7 +328,6 @@ public class SelectedSymbol {
                                                         localSymbolData.incrementSelectedSymbolizerIndex();
                                                     }
                                                 }
-
                                             }
                                             localSymbolData.incrementSelectedRuleIndex();
                                         }
@@ -575,9 +574,9 @@ public class SelectedSymbol {
                     setSymbolizer(newSymbolizer);
                 }
 
-                if(treeUpdateListener != null)
+                for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
                 {
-                    treeUpdateListener.updateNode(oldSymbolizer, newSymbolizer);
+                    listener.updateNode(oldSymbolizer, newSymbolizer);
                 }
             }
         }
@@ -674,7 +673,10 @@ public class SelectedSymbol {
      * @param treeObj the new tree update listener
      */
     public void setTreeUpdateListener(SLDTreeUpdatedInterface treeObj) {
-        this.treeUpdateListener = treeObj;
+        if(!this.treeUpdateListenerList.contains(treeObj))
+        {
+            this.treeUpdateListenerList.add(treeObj);
+        }
     }
 
     /**
