@@ -18,6 +18,7 @@
  */
 package com.sldeditor.datasource.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.geotools.data.memory.MemoryDataStore;
@@ -57,11 +58,14 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     /** The Constant INTERNAL_SCHEMA_NAME. */
     private static final String INTERNAL_SCHEMA_NAME = "MEMORY";
 
-    /** The Constant DEFAULT_GEOMETRY_FIELD_NAME. */
-    private static final String DEFAULT_GEOMETRY_FIELD_NAME = "geom";
+    /** The geometry field. */
+    private GeometryField geometryField = new GeometryField();
 
-    /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    /** The list of class considered geometry types. */
+    private static List<Class<?>> geometryTypeList = Arrays.asList(Geometry.class,
+            MultiPolygon.class,
+            LineString.class, 
+            Point.class);
 
     /**
      * Creates the.
@@ -94,23 +98,31 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             //add a geometry property
             b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
 
-            if(sldWriter == null)
-            {
-                sldWriter = SLDWriterFactory.createWriter(null);
-            }
+            SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
             List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
 
-            setGeometryField(b, DEFAULT_GEOMETRY_FIELD_NAME);
+            // Set the geometry field by default
+            geometryField.reset();
 
             if((fieldList == null) || fieldList.isEmpty())
             {
-                fieldList = ExtractAttributes.addDefaultFields(b, sldWriter.encodeSLD(sld));
+                ExtractAttributes extract = new ExtractAttributes();
+                extract.extractDefaultFields(b, sldWriter.encodeSLD(sld));
+                fieldList = extract.getFields();
+
+                List<String> geometryFields = extract.getGeometryFields();
+                for(String geometryFieldName : geometryFields)
+                {
+                    geometryField.setGeometryFieldName(geometryFieldName);
+                }
             }
             else
             {
                 addFields(b, fieldList);
             }
+
+            setGeometryField(b, geometryField.getGeometryFieldName());
 
             // Store the fields
             sldData.setFieldList(fieldList);
@@ -139,17 +151,17 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
         switch(dsInfo.getGeometryType())
         {
         case POLYGON:
-            b.add( geometryFieldName, MultiPolygon.class );
+            b.add(geometryFieldName, MultiPolygon.class);
             break;
         case LINE:
-            b.add( geometryFieldName, LineString.class );
+            b.add(geometryFieldName, LineString.class);
             break;
         case POINT:
         default:
-            b.add( geometryFieldName, Point.class );
+            b.add(geometryFieldName, Point.class);
             break;
         }
-        b.setDefaultGeometry( geometryFieldName );
+        b.setDefaultGeometry(geometryFieldName);
     }
 
     /**
@@ -163,15 +175,25 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
         for(DataSourceFieldInterface field : fieldList)
         {
-            if(field.getFieldType() == Geometry.class)
+            if(isGeometryField(field.getFieldType()))
             {
-                setGeometryField(b, field.getName());
+                geometryField.setGeometryFieldName(field.getName());
             }
             else
             {
                 b.add(field.getName(), field.getFieldType());
             }
         }
+    }
+
+    /**
+     * Checks if field is a geometry field.
+     *
+     * @param fieldType the field type
+     * @return true, if is geometry field
+     */
+    private boolean isGeometryField(Class<?> fieldType) {
+        return geometryTypeList.contains(fieldType);
     }
 
     /**

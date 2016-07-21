@@ -37,12 +37,15 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigDouble;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnum;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue.FieldList;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueField;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueItem;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFont;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFontPreview;
 import com.sldeditor.common.xml.ui.XMLFieldConfigGeometry;
+import com.sldeditor.common.xml.ui.XMLFieldConfigGeometryField;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInteger;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
 import com.sldeditor.common.xml.ui.XMLFieldConfigString;
@@ -297,7 +300,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             XMLFieldConfigString xmlStringFieldConfig = (XMLFieldConfigString) xmlFieldConfig;
 
-            FieldConfigString stringConfig = new FieldConfigString(panelId, id, label, valueOnly, getLocalisedText(localisationClass, xmlStringFieldConfig.getButtonText()));
+            FieldConfigString stringConfig = new FieldConfigString(panelId, 
+                    id, 
+                    label,
+                    valueOnly,
+                    getLocalisedText(localisationClass, xmlStringFieldConfig.getButtonText()));
 
             groupConfig.addField(stringConfig);
 
@@ -314,6 +321,18 @@ public class ReadPanelConfig implements PanelConfigInterface {
             FieldConfigColourMap stringConfig = new FieldConfigColourMap(panelId, id, label);
 
             groupConfig.addField(stringConfig);
+        }
+        else if(xmlFieldConfig instanceof XMLFieldConfigGeometryField)
+        {
+            FieldConfigGeometryField geometryFieldConfig = new FieldConfigGeometryField(panelId, id, label);
+
+            DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+            if(dataSource != null)
+            {
+                dataSource.addListener(geometryFieldConfig);
+            }
+
+            groupConfig.addField(geometryFieldConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigFont)
         {

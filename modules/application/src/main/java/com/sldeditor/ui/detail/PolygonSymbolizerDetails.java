@@ -43,6 +43,8 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
 
     /**
      * Constructor.
+     *
+     * @param functionManager the function manager
      */
     public PolygonSymbolizerDetails(FunctionNameInterface functionManager)
     {
@@ -73,6 +75,8 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
                 populateStandardData(polygonSymbolizer);
 
                 fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET, polygonSymbolizer.getPerpendicularOffset());
+
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, polygonSymbolizer.getGeometry());
             }
         }
     }
@@ -83,8 +87,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
     private void updateSymbol() {
         if(!Controller.getInstance().isPopulating())
         {
-            String geometryFieldName = null;
-            Expression geometryField = getFilterFactory().property(geometryFieldName);
+            Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
             Expression perpendicularOffset = fieldConfigVisitor.getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
 
@@ -104,10 +107,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
                 polygonSymbolizer.setUnitOfMeasure(standardData.unit);
 
                 polygonSymbolizer.setDisplacement(displacement);
-                if((geometryField != null) && (geometryField.toString() != null) && !geometryField.toString().isEmpty())
-                {
-                    polygonSymbolizer.setGeometry(geometryField);
-                }
+                polygonSymbolizer.setGeometry(geometryField);
                 polygonSymbolizer.setPerpendicularOffset(perpendicularOffset);
 
                 this.fireUpdateSymbol();

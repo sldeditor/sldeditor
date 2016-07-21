@@ -48,7 +48,7 @@ public class CreateExternalDataSourceTest {
         assertNull(dsInfo.getDataStore());
         assertNull(dsInfo.getTypeName());
 
-        SLDEditorFileInterface sldEditor = new DummyExternalSLDEditorFile(); 
+        SLDEditorFileInterface sldEditor = new DummyExternalSLDFile(); 
         dsInfo = ds.connect(sldEditor);
         
         assertTrue(dsInfo != null);

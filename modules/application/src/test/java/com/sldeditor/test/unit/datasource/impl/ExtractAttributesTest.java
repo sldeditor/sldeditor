@@ -18,20 +18,19 @@
  */
 package com.sldeditor.test.unit.datasource.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.PropertyDescriptor;
 
+import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Unit test for ExtractAttributes class.
@@ -47,9 +46,9 @@ public class ExtractAttributesTest {
      */
     @Test
     public void testAddDefaultFields() {
-        
-        DummyInternalSLDEditorFile dummy = new DummyInternalSLDEditorFile();
-        
+
+        DummyInternalSLDFile dummy = new DummyInternalSLDFile();
+
         SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
 
         String typeName = "test type name";
@@ -65,33 +64,119 @@ public class ExtractAttributesTest {
 
         b.setDefaultGeometry( "geom" );
 
-        ExtractAttributes.addDefaultFields(b, dummy.getSLDData().getSld());
-        
-        SimpleFeatureType featureType = b.buildFeatureType();
-        
-        Collection<PropertyDescriptor> fieldList = featureType.getDescriptors();
-        assertTrue(fieldList != null);
-
-        List<String> actualFieldnameList = new ArrayList<String>();
-        for(PropertyDescriptor field : fieldList)
-        {
-            actualFieldnameList.add(field.getName().getLocalPart());
-        }
+        ExtractAttributes extract = new ExtractAttributes();
+        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
 
         // Check fields extracted ok
         List<String> expectedFieldList = dummy.getExpectedFieldList();
+        List<DataSourceFieldInterface> actualFieldnameList = extract.getFields();
         assertTrue(expectedFieldList.size() == actualFieldnameList.size());
 
         // Not assuming fields are in the same order
         int count = 0;
-        for(String fieldName : actualFieldnameList)
+        for(DataSourceFieldInterface dataSourceField : actualFieldnameList)
         {
-            if(expectedFieldList.contains(fieldName))
+            if(expectedFieldList.contains(dataSourceField.getName()))
             {
                 count ++;
             }
         }
         assertTrue(expectedFieldList.size() == count);
+
+        // Check geometry fields extracted ok
+        List<String> actualGeometryFields = extract.getGeometryFields();
+        assertEquals(0, actualGeometryFields.size());
     }
 
+    /**
+     * Test sld symbol contains non-default geometry field.
+     * 
+     * Test method for {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     */
+    @Test
+    public void testNonStandardGeometryField() {
+
+        DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
+
+        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+
+        String typeName = "test type name";
+        b.setName( typeName );
+
+        String namespace = null;
+        b.setNamespaceURI(namespace);
+
+        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
+        //add a geometry property
+        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
+
+        b.add( expectedGeometryFieldName, Polygon.class );
+
+        b.setDefaultGeometry( expectedGeometryFieldName );
+
+        ExtractAttributes extract = new ExtractAttributes();
+        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
+
+        // Check fields extracted ok - should be none
+        List<String> expectedFieldList = dummy.getExpectedFieldList();
+        List<DataSourceFieldInterface> actualFieldnameList = extract.getFields();
+        assertTrue(expectedFieldList.size() == actualFieldnameList.size());
+        assertEquals(0, actualFieldnameList.size());
+
+        // Check geometry fields extracted ok
+        List<String> actualGeometryFields = extract.getGeometryFields();
+        assertEquals(1, actualGeometryFields.size());
+        assertTrue(expectedGeometryFieldName.compareTo(actualGeometryFields.get(0)) == 0);
+    }
+
+    /**
+     * Test sld symbol contains non-default geometry field and non-standard xml namespace.
+     * 
+     * Test method for {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     */
+    @Test
+    public void testNonStandardGeometryNamespace() {
+
+        DummyInternalSLDFile3 dummy = new DummyInternalSLDFile3();
+
+        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+
+        String typeName = "test type name";
+        b.setName( typeName );
+
+        String namespace = null;
+        b.setNamespaceURI(namespace);
+
+        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
+        //add a geometry property
+        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
+
+        b.add( expectedGeometryFieldName, Point.class );
+
+        b.setDefaultGeometry( expectedGeometryFieldName );
+
+        ExtractAttributes extract = new ExtractAttributes();
+        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
+
+        // Check fields extracted ok - should be none
+        List<String> expectedFieldList = dummy.getExpectedFieldList();
+        List<DataSourceFieldInterface> actualFieldnameList = extract.getFields();
+        assertTrue(expectedFieldList.size() == actualFieldnameList.size());
+
+        // Not assuming fields are in the same order
+        int count = 0;
+        for(DataSourceFieldInterface dataSourceField : actualFieldnameList)
+        {
+            if(expectedFieldList.contains(dataSourceField.getName()))
+            {
+                count ++;
+            }
+        }
+        assertTrue(expectedFieldList.size() == count);
+
+        // Check geometry fields extracted ok
+        List<String> actualGeometryFields = extract.getGeometryFields();
+        assertEquals(1, actualGeometryFields.size());
+        assertTrue(expectedGeometryFieldName.compareTo(actualGeometryFields.get(0)) == 0);
+    }
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.ui.tree;
+package com.sldeditor.geometryfield.ui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -31,12 +31,10 @@ import javax.swing.tree.TreeCellRenderer;
 
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
-import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
-import org.geotools.styling.TextSymbolizer;
 
-import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
+import com.sldeditor.geometryfield.GeometryFieldManager;
 import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 
 /**
@@ -111,12 +109,6 @@ public class ComponentCellRenderer implements TreeCellRenderer {
 
         if(showCheckbox)
         {
-            DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-
-            Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-
-            boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject, symbolizer);
-
             if (selected)
             {
                 leafRenderer.setForeground(selectionForeground);
@@ -128,8 +120,12 @@ public class ComponentCellRenderer implements TreeCellRenderer {
                 leafRenderer.setBackground(textBackground);
             }
 
+            boolean selectedItem = GeometryFieldManager.getInstance().isSelected(userObject);
+            boolean enableItem = GeometryFieldManager.getInstance().isEnabled(userObject);
             label.setText(name);
+            label.setEnabled(enableItem);
             checkBox.setSelected(selectedItem);
+            checkBox.setEnabled(enableItem);
 
             return panel;
         }
@@ -145,8 +141,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      * @return true, if is leaf
      */
     public static boolean isLeaf(Object userObject) {
-        boolean leaf = (userObject instanceof TextSymbolizer) || (userObject instanceof RasterSymbolizer) || showCheckbox(userObject);
-        return leaf;
+        return (userObject instanceof Symbolizer);
     }
 
     /**
@@ -157,7 +152,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      */
     public static boolean showCheckbox(Object userObject) {
         boolean showCheckbox = (userObject instanceof Stroke) || (userObject instanceof Fill);
-        return showCheckbox;
+        return true;
     }
 
     /**
@@ -182,7 +177,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
             }
             else
             {
-                SLDTreeItemInterface treeItem = SLDTree.treeItemMap.get(userObject.getClass());
+                SLDTreeItemInterface treeItem = GeometryFieldTree.treeItemMap.get(userObject.getClass());
 
                 if(treeItem != null)
                 {

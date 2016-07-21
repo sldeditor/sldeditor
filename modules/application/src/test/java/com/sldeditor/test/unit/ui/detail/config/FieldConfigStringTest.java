@@ -253,7 +253,7 @@ public class FieldConfigStringTest {
         assertTrue(expectedTestValue.compareTo(field.getStringValue()) == 0);
 
         String expectedUndoTestValue = "undo value";
-        String expectedRedoTestValue = "undo value";
+        String expectedRedoTestValue = "redo value";
 
         UndoEvent undoEvent = new UndoEvent(null, new FieldId(), expectedUndoTestValue, expectedRedoTestValue);
         field.undoAction(undoEvent);

@@ -21,7 +21,9 @@ package com.sldeditor.datasource.impl;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,6 +32,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -41,32 +44,71 @@ import com.sldeditor.datasource.DataSourceField;
 import com.sldeditor.filter.v2.function.FunctionManager;
 
 /**
- * Class that extracts all data source fields from an SLD file
- * 
+ * Class that extracts all data source fields from an SLD file.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ExtractAttributes {
 
-    private static final String OGC_FUNCTION_NAME = "name";
+    /** The Constant OGC_NAMESPACE. */
+    private static final String OGC_NAMESPACE = "ogc";
 
-    private static final String WELL_KNOWN_NAME = "sld:WellKnownName";
+    /** The Constant OGC_NAMESPACE_URL. */
+    private static final String OGC_NAMESPACE_URL = "http://www.opengis.net/ogc";
 
-    /** The Constant OGC_FUNCTION. */
-    private static final String OGC_FUNCTION = "ogc:Function";
+    /** The Constant SLD_NAMESPACE. */
+    private static final String SLD_NAMESPACE = "sld";
 
-    /** The Constant OGC_PROPERTY_NAME. */
-    private static final String OGC_PROPERTY_NAME = "ogc:PropertyName";
+    /** The Constant SLD_NAMESPACE_URL. */
+    private static final String SLD_NAMESPACE_URL = "http://www.opengis.net/sld";
+
+    /** The Constant WELL_KNOWN_NAME. */
+    private static final String WELL_KNOWN_NAME = "WellKnownName";
+
+    /** The Constant GEOMETRY_FIELD. */
+    private static final String GEOMETRY_FIELD = "Geometry";
+
+    /** The Constant FUNCTION. */
+    private static final String FUNCTION = "Function";
+
+    /** The Constant FUNCTION_NAME. */
+    private static final String FUNCTION_NAME = "name";
+
+    /** The Constant PROPERTY_NAME. */
+    private static final String PROPERTY_NAME = "PropertyName";
+
+    /** The namespace map. */
+    private static Map<String, String> namespaceMap = null;
+
+    /** The processed field list. */
+    private List<DataSourceFieldInterface> processedFieldList = new ArrayList<DataSourceFieldInterface>();
+
+    /** The geometry field list. */
+    private List<String> geometryFieldList = new ArrayList<String>();
 
     /**
-     * Adds the default fields.
+     * Populate namespace map.
+     */
+    private static void populateNamespaceMap()
+    {
+        if(namespaceMap == null)
+        {
+            namespaceMap = new HashMap<String, String>();
+
+            namespaceMap.put(OGC_NAMESPACE_URL, OGC_NAMESPACE);
+            namespaceMap.put(SLD_NAMESPACE_URL, SLD_NAMESPACE);
+        }
+    }
+
+    /**
+     * Extract the default fields.
      *
      * @param b the feature type builder
      * @param encodedSLD the encoded sld
+     * @return the list
      */
-    public static List<DataSourceFieldInterface> addDefaultFields(SimpleFeatureTypeBuilder b, String encodedSLD) {
-
-        List<DataSourceFieldInterface> processedFieldList = new ArrayList<DataSourceFieldInterface>();
-
+    public void extractDefaultFields(SimpleFeatureTypeBuilder b, String encodedSLD)
+    {
         try
         {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -74,8 +116,10 @@ public class ExtractAttributes {
             InputSource is = new InputSource(new StringReader(encodedSLD));
             Document doc = builder.parse(is);
 
-            extractSimpleAttributes(b, doc, processedFieldList);
-            extractWKTAttributes(b, doc, processedFieldList);
+            Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
+
+            extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
+            extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
         }
         catch(IOException e)
         {
@@ -85,8 +129,26 @@ public class ExtractAttributes {
         } catch (ParserConfigurationException e) {
             ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
         }
+    }
 
+    /**
+     * Gets the fields.
+     *
+     * @return the fields
+     */
+    public List<DataSourceFieldInterface> getFields()
+    {
         return processedFieldList;
+    }
+
+    /**
+     * Gets the geometry fields.
+     *
+     * @return the geometry fields
+     */
+    public List<String> getGeometryFields()
+    {
+        return geometryFieldList;
     }
 
     /**
@@ -94,19 +156,25 @@ public class ExtractAttributes {
      *
      * @param b the b
      * @param doc the doc
+     * @param namespacePrefixes the namespace prefixes
      * @param processedFieldList the processed field list
      */
     private static void extractWKTAttributes(SimpleFeatureTypeBuilder b, Document doc,
+            Map<String, List<String>> namespacePrefixes,
             List<DataSourceFieldInterface> processedFieldList) {
-        NodeList nodeList = doc.getElementsByTagName(WELL_KNOWN_NAME);
+        // Get node list for all possible namespace prefixes
+        List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, SLD_NAMESPACE, WELL_KNOWN_NAME);
 
-        for(int index = 0; index < nodeList.getLength(); index ++)
+        for(NodeList nodeList : completeNodeList)
         {
-            Node node = nodeList.item(index);
+            for(int index = 0; index < nodeList.getLength(); index ++)
+            {
+                Node node = nodeList.item(index);
 
-            String contents = node.getTextContent();
+                String contents = node.getTextContent();
 
-            System.out.println(contents);
+                System.out.println(contents);
+            }
         }
     }
 
@@ -115,46 +183,162 @@ public class ExtractAttributes {
      *
      * @param b the feature type builder
      * @param doc the doc
+     * @param namespacePrefixes the namespace prefixes
      * @param processedFieldList the processed field list
+     * @param geometryList the geometry list
      */
-    private static void extractSimpleAttributes(SimpleFeatureTypeBuilder b, Document doc,
-            List<DataSourceFieldInterface> processedFieldList) {
-        NodeList nodeList = doc.getElementsByTagName(OGC_PROPERTY_NAME);
-
-        for(int index = 0; index < nodeList.getLength(); index ++)
+    private static void extractSimpleAttributes(SimpleFeatureTypeBuilder b,
+            Document doc,
+            Map<String, List<String>> namespacePrefixes,
+            List<DataSourceFieldInterface> processedFieldList,
+            List<String> geometryList)
+    {
+        if(geometryList == null)
         {
-            Node node = nodeList.item(index);
+            return;
+        }
 
-            String fieldName = node.getTextContent();
+        if(processedFieldList == null)
+        {
+            return;
+        }
 
-            if(!fieldExists(processedFieldList, fieldName))
+        if(doc == null)
+        {
+            return;
+        }
+
+        // Get node list for all possible namespace prefixes
+        List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, OGC_NAMESPACE, PROPERTY_NAME);
+
+        boolean addField = false;
+
+        for(NodeList nodeList : completeNodeList)
+        {
+            for(int index = 0; index < nodeList.getLength(); index ++)
             {
-                Class<?> fieldType = String.class; // We don't now any better at the moment
+                Node node = nodeList.item(index);
 
-                Node parent = node.getParentNode();
+                String fieldName = node.getTextContent();
 
-                String propName = parent.getNodeName();
-
-                if(propName.compareTo(OGC_FUNCTION) == 0)
+                if(!fieldExists(processedFieldList, fieldName))
                 {
-                    propName = parent.getParentNode().getNodeName();
+                    Class<?> fieldType = String.class; // We don't now any better at the moment
 
-                    Element e = (Element) parent;
-                    String functionName = e.getAttribute(OGC_FUNCTION_NAME);
+                    Node parent = node.getParentNode();
 
-                    Class<?> tmpFieldType = FunctionManager.getInstance().getFunctionType(functionName);
-                    if(tmpFieldType != null)
+                    NamespaceHelper namespace = new NamespaceHelper(parent);
+                    addField = true;
+
+                    if(namespace.isElement(namespacePrefixes.get(OGC_NAMESPACE), FUNCTION))
                     {
-                        fieldType = tmpFieldType;
+                        Node parentAgain = parent.getParentNode();
+                        if(parentAgain != null)
+                        {
+                            NamespaceHelper geometryNamespace = new NamespaceHelper(parentAgain);
+
+                            if(geometryNamespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
+                            {
+                                addField = false;
+                            }
+                        }
+
+                        if(addField)
+                        {
+                            Element e = (Element) parent;
+                            String functionName = e.getAttribute(FUNCTION_NAME);
+
+                            Class<?> tmpFieldType = FunctionManager.getInstance().getFunctionType(functionName);
+                            if(tmpFieldType != null)
+                            {
+                                fieldType = tmpFieldType;
+                            }
+                        }
+                    }
+                    else if(namespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
+                    {
+                        addField = false;
+                        geometryList.add(fieldName);
+                    }
+
+                    if(addField)
+                    {
+                        DataSourceFieldInterface field = new DataSourceField(fieldName, fieldType);
+                        processedFieldList.add(field);
+
+                        b.add(fieldName, fieldType);
                     }
                 }
-
-                DataSourceFieldInterface field = new DataSourceField(fieldName, fieldType);
-                processedFieldList.add(field);
-
-                b.add(fieldName, fieldType);
             }
         }
+    }
+
+    /**
+     * Gets the node list.
+     *
+     * @param doc the doc
+     * @param namespacePrefixes the namespace prefixes used in the document
+     * @param namespacePrefix the namespace prefix to find
+     * @param elementName the element name
+     * @return the node list
+     */
+    private static List<NodeList> getNodeList(Document doc, 
+            Map<String, List<String>> namespacePrefixes, 
+            String namespacePrefix,
+            String elementName) {
+        List<NodeList> completeNodeList = new ArrayList<NodeList>();
+
+        List<String> prefixList = namespacePrefixes.get(namespacePrefix);
+        for(String prefix : prefixList)
+        {
+            String tagName = NamespaceHelper.encode(prefix, elementName);
+            NodeList nodeList = doc.getElementsByTagName(tagName);
+            completeNodeList.add(nodeList);
+        }
+
+        return completeNodeList;
+    }
+
+    /**
+     * Gets the namespace prefixes.
+     *
+     * @param doc the doc
+     * @return the namespace prefix map
+     */
+    private static Map<String, List<String>> getNamespacePrefixes(Document doc) {
+
+        populateNamespaceMap();
+
+        Map<String, List<String>> prefixMap = new HashMap<String, List<String>>();
+
+        NamedNodeMap attributeMap = doc.getDocumentElement().getAttributes();
+
+        for(int index = 0; index < attributeMap.getLength(); index ++)
+        {
+            Node node = attributeMap.item(index);
+
+            String namespaceURI = node.getNodeValue();
+            if(namespaceMap.containsKey(namespaceURI))
+            {
+                String prefixConstant = namespaceMap.get(namespaceURI);
+
+                String[] components = node.getNodeName().split(":");
+                String prefix = "";
+                if(components.length == 2)
+                {
+                    prefix = components[1];
+                }
+
+                List<String> prefixList = prefixMap.get(prefixConstant);
+                if(prefixList == null)
+                {
+                    prefixList = new ArrayList<String>();
+                }
+                prefixList.add(prefix);
+                prefixMap.put(prefixConstant, prefixList);
+            }
+        }
+        return prefixMap;
     }
 
     /**

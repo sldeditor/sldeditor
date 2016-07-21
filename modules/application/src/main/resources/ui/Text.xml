@@ -20,7 +20,7 @@
         </FieldConfigEnum>
     </Group>
     <Group id="GENERAL" showLabel="false">
-        <FieldConfigGeometry id="GEOMETRY" label="text.general.geometry" />
+        <FieldConfigGeometryField id="GEOMETRY" label="text.general.geometry" />
         <FieldConfigString id="LABEL" label="text.general.label" />
         <FieldConfigColour id="FILL_COLOUR" label="text.general.colour" />
     </Group>

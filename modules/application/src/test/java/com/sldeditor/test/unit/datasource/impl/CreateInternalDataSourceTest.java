@@ -48,7 +48,7 @@ public class CreateInternalDataSourceTest {
         assertNull(dsInfo.getDataStore());
         assertNull(dsInfo.getTypeName());
 
-        SLDEditorFileInterface sldEditor = new DummyInternalSLDEditorFile(); 
+        SLDEditorFileInterface sldEditor = new DummyInternalSLDFile(); 
         dsInfo = ds.connect(sldEditor);
         
         assertTrue(dsInfo != null);

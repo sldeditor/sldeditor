@@ -55,6 +55,9 @@ public class SingleSymbolUI implements SymbolPanelInterface {
     /** The legend panel. */
     private LegendPanel legendPanel = null;
 
+    /** The renderer list. */
+    private List<RenderSymbolInterface> rendererList = null;
+
     /* (non-Javadoc)
      * @see com.sldeditor.ui.SymbolPanelInterface#addWestPanel()
      */
@@ -139,10 +142,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
     public SLDTree getSymbolTree() {
         if(sldTree == null)
         {
-            List<RenderSymbolInterface> rendererList = getRendererList();
-
             SLDTreeTools sldTreeTools = new SLDTreeTools();
-            sldTree = new SLDTree(rendererList, sldTreeTools);
+            sldTree = new SLDTree(getRendererList(), sldTreeTools);
 
             // Register for updates to the SLD tree structure
             SelectedSymbol.getInstance().setTreeUpdateListener(sldTree);
@@ -160,11 +161,14 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      * @return the renderer list
      */
     private List<RenderSymbolInterface> getRendererList() {
-        List<RenderSymbolInterface> rendererList = new ArrayList<RenderSymbolInterface>();
+        if(rendererList == null)
+        {
+            rendererList = new ArrayList<RenderSymbolInterface>();
 
-        RenderSymbolInterface renderer = RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName());
-        rendererList.add(renderer);
-        rendererList.add(getLegendPanel());
+            RenderSymbolInterface renderer = RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName());
+            rendererList.add(renderer);
+            rendererList.add(getLegendPanel());
+        }
         return rendererList;
     }
 
@@ -178,6 +182,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
             // Reset all field values
             panelSymbolizerDetails.preLoadSymbol();
         }
+        
         getSymbolTree().populateSLD();
         getSymbolTree().selectFirstSymbol();
     }

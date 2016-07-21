@@ -48,6 +48,7 @@ import javax.xml.bind.annotation.XmlType;
     XMLFieldConfigTransformation.class,
     XMLFieldConfigEnum.class,
     XMLFieldConfigString.class,
+    XMLFieldConfigGeometryField.class,
     XMLFieldConfigFont.class,
     XMLFieldConfigFontPreview.class,
     XMLFieldConfigGeometry.class,

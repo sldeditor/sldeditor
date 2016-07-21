@@ -72,6 +72,8 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
                 populateStandardData(lineSymbolizer);
 
                 fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET, lineSymbolizer.getPerpendicularOffset());
+
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, lineSymbolizer.getGeometry());
             }
         }
     }
@@ -83,8 +85,7 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
         if(!Controller.getInstance().isPopulating())
         {
             Expression perpendicularOffset = fieldConfigVisitor.getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
-            String geometryFieldName = null;
-            Expression geometryField = getFilterFactory().property(geometryFieldName);
+            Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
             StandardData standardData = getStandardData();
 
@@ -96,10 +97,7 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
                 lineSymbolizer.setDescription(standardData.description);
                 lineSymbolizer.setUnitOfMeasure(standardData.unit);
 
-                if((geometryField != null) && (geometryField.toString() != null) && !geometryField.toString().isEmpty())
-                {
-                    lineSymbolizer.setGeometry(geometryField);
-                }
+                lineSymbolizer.setGeometry(geometryField);
 
                 lineSymbolizer.setPerpendicularOffset(perpendicularOffset);
 

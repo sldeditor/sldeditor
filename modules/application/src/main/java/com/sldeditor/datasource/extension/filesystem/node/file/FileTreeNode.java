@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -208,6 +209,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
                     stream = Files.newDirectoryStream( path );
                 } catch (AccessDeniedException e) {
                     // Access was denied
+                } catch (NotDirectoryException e) {
+                    // Ignore
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
                 }
