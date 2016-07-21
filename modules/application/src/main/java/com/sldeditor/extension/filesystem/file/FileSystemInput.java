@@ -27,9 +27,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +65,8 @@ import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.tool.ysld.YSLDTool;
 
 /**
- * Class that makes the underlying file system appear as a file system!
- * 
+ * Class that makes the underlying file system appear as a file system!.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemInput implements FileSystemInterface
@@ -83,6 +82,9 @@ public class FileSystemInput implements FileSystemInterface
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(FileSystemInput.class);
+
+    /** The drive skip list. */
+    private List<String> driveSkipList = Arrays.asList();
 
     /**
      * Instantiates a new file system input.
@@ -142,14 +144,19 @@ public class FileSystemInput implements FileSystemInterface
             {
                 boolean prePopulateFirstLevelFolders = false;
 
-                for(Path path : FileSystems.getDefault().getRootDirectories())
+                for(File f : File.listRoots())
                 {
-                    logger.debug("Adding root folder : " + path.toString());
+                    String driveLetter = f.getPath();
 
-                    FileTreeNode fileSystemRootNode = new FileTreeNode(path);
-                    fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
+                    if(!driveSkipList.contains(driveLetter))
+                    {
+                        File rootDrive = new File(driveLetter);
+                        logger.info("Adding root : " + driveLetter);
+                        FileTreeNode fileSystemRootNode = new FileTreeNode(rootDrive, "");
+                        fileSystemRootNode.populateDirectories(prePopulateFirstLevelFolders);
 
-                    rootNode.add(fileSystemRootNode);
+                        rootNode.add(fileSystemRootNode);
+                    }
                 }
             }
         }
@@ -268,7 +275,7 @@ public class FileSystemInput implements FileSystemInterface
     }
 
     /**
-     * Gets the file handler for the given file extension
+     * Gets the file handler for the given file extension.
      *
      * @param filename the filename
      * @return the file handler
