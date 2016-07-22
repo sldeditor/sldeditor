@@ -46,6 +46,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigFont;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFontPreview;
 import com.sldeditor.common.xml.ui.XMLFieldConfigGeometry;
 import com.sldeditor.common.xml.ui.XMLFieldConfigGeometryField;
+import com.sldeditor.common.xml.ui.XMLFieldConfigInlineFeature;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInteger;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
 import com.sldeditor.common.xml.ui.XMLFieldConfigString;
@@ -62,6 +63,7 @@ import com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
 import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
+import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 
@@ -339,6 +341,12 @@ public class ReadPanelConfig implements PanelConfigInterface {
             FieldConfigFont fontConfig = new FieldConfigFont(panelId, id, label, valueOnly);
 
             groupConfig.addField(fontConfig);
+        }
+        else if(xmlFieldConfig instanceof XMLFieldConfigInlineFeature)
+        {
+            FieldConfigInlineFeature inlineFeatureConfig = new FieldConfigInlineFeature(panelId, id);
+
+            groupConfig.addField(inlineFeatureConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigFontPreview)
         {

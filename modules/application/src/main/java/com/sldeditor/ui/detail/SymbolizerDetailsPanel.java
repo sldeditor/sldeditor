@@ -42,6 +42,7 @@ import org.geotools.styling.StrokeImpl;
 import org.geotools.styling.StyleImpl;
 import org.geotools.styling.StyledLayerDescriptorImpl;
 import org.geotools.styling.TextSymbolizerImpl;
+import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -95,6 +96,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
         populateMap(FeatureTypeStyleImpl.class.toString(), new FeatureTypeStyleDetails(functionManager));
         populateMap(StyleImpl.class.toString(), new StyleDetails(functionManager));
         populateMap(NamedLayerImpl.class.toString(), new NamedLayerDetails(functionManager));
+        populateMap(UserLayerImpl.class.toString(), new UserLayerDetails(functionManager));
         populateMap(StyledLayerDescriptorImpl.class.toString(), new EmptyPanel(functionManager));
         populateMap(StrokeImpl.class.toString(), new StrokeDetails(functionManager));
         populateMap(FillImpl.class.toString(), new PointFillDetails(functionManager));

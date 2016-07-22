@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="userlayer.paneltitle">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="NAME" label="*standard.name" valueOnly="true" />
+    </Group>
+    <Group id="REMOTE_OWS" label="userlayer.remoteows" showLabel="true">
+        <FieldConfigString id="REMOTE_OWS_SERVICE" label="userlayer.service" valueOnly="true" />
+        <FieldConfigString id="REMOTE_OWS_ONLINERESOURCE" label="userlayer.onlineresource" valueOnly="true" />
+    </Group>
+    <Group id="INLINE_FEATURE" label="userlayer.inlinefeature" showLabel="true">
+        <FieldConfigInlineFeature id="INLINE_FEATURE" valueOnly="true" />
+    </Group>
+</PanelConfig>

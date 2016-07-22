@@ -125,6 +125,10 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_RGB_GREY_NAME"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD"/&gt;
+ *     &lt;enumeration value="REMOTE_OWS_SERVICE"/&gt;
+ *     &lt;enumeration value="REMOTE_OWS_ONLINERESOURCE"/&gt;
+ *     &lt;enumeration value="INLINE_FEATURE"/&gt;
+ *     &lt;enumeration value="LAYER_FEATURE_CONSTRAINTS"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -238,7 +242,11 @@ public enum FieldIdEnum {
     RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
     RASTER_RGB_GREY_NAME,
     RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
-    RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD;
+    RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
+    REMOTE_OWS_SERVICE,
+    REMOTE_OWS_ONLINERESOURCE,
+    INLINE_FEATURE,
+    LAYER_FEATURE_CONSTRAINTS;
 
     public String value() {
         return name();

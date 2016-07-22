@@ -430,11 +430,11 @@ public class SelectedSymbolTest {
         instance.removeStyledLayerDescriptor(sld);
         assertEquals(sld, instance.getSld());
 
-        instance.removeNamedLayer(namedLayer);
+        instance.removeUserNamedLayer(namedLayer);
         assertEquals(1, instance.getSld().layers().size());
-        instance.removeNamedLayer(namedLayer);
+        instance.removeUserNamedLayer(namedLayer);
         assertEquals(0, instance.getSld().layers().size());
-        instance.removeNamedLayer(namedLayer);
+        instance.removeUserNamedLayer(namedLayer);
         assertEquals(0, instance.getSld().layers().size());
     }
 

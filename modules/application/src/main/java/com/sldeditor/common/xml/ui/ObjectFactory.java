@@ -165,6 +165,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigInlineFeature }
+     * 
+     */
+    public XMLFieldConfigInlineFeature createXMLFieldConfigInlineFeature() {
+        return new XMLFieldConfigInlineFeature();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigEnum }
      * 
      */

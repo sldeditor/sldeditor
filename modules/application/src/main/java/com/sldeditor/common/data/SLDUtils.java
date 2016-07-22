@@ -73,7 +73,16 @@ public class SLDUtils {
         }
 
         setResourcelocator(styleReader, url);
-        StyledLayerDescriptor sld = styleReader.parseSLD();
+        StyledLayerDescriptor sld = null;
+        
+        try
+        {
+            sld = styleReader.parseSLD();
+        }
+        catch(RuntimeException e)
+        {
+            ConsoleManager.getInstance().error(SLDUtils.class, e.getMessage());
+        }
 
         return sld;
     }

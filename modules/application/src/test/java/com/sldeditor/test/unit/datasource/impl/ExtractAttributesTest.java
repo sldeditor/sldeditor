@@ -28,6 +28,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
 
 import com.sldeditor.common.DataSourceFieldInterface;
+import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
@@ -65,7 +66,7 @@ public class ExtractAttributesTest {
         b.setDefaultGeometry( "geom" );
 
         ExtractAttributes extract = new ExtractAttributes();
-        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
+        extract.extractDefaultFields(b, SLDUtils.createSLDFromString(dummy.getSLDData()));
 
         // Check fields extracted ok
         List<String> expectedFieldList = dummy.getExpectedFieldList();
@@ -115,7 +116,7 @@ public class ExtractAttributesTest {
         b.setDefaultGeometry( expectedGeometryFieldName );
 
         ExtractAttributes extract = new ExtractAttributes();
-        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
+        extract.extractDefaultFields(b, SLDUtils.createSLDFromString(dummy.getSLDData()));
 
         // Check fields extracted ok - should be none
         List<String> expectedFieldList = dummy.getExpectedFieldList();
@@ -156,7 +157,7 @@ public class ExtractAttributesTest {
         b.setDefaultGeometry( expectedGeometryFieldName );
 
         ExtractAttributes extract = new ExtractAttributes();
-        extract.extractDefaultFields(b, dummy.getSLDData().getSld());
+        extract.extractDefaultFields(b, SLDUtils.createSLDFromString(dummy.getSLDData()));
 
         // Check fields extracted ok - should be none
         List<String> expectedFieldList = dummy.getExpectedFieldList();

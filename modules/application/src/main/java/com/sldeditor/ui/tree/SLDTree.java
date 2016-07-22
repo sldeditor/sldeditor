@@ -58,6 +58,7 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.StyledLayerDescriptorImpl;
 import org.geotools.styling.TextSymbolizerImpl;
+import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.Controller;
@@ -87,6 +88,7 @@ import com.sldeditor.ui.tree.item.StrokeTreeItem;
 import com.sldeditor.ui.tree.item.StyleTreeItem;
 import com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem;
 import com.sldeditor.ui.tree.item.SymbolizerTreeItem;
+import com.sldeditor.ui.tree.item.UserLayerTreeItem;
 
 /**
  * The component that displays the structure of the SLD as a tree.
@@ -188,6 +190,9 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             /** The name layer tree item. */
             NameLayerTreeItem nameLayerTreeItem = new NameLayerTreeItem();
 
+            /** The user layer tree item. */
+            UserLayerTreeItem userLayerTreeItem = new UserLayerTreeItem();
+
             /** The fill tree item. */
             FillTreeItem fillTreeItem = new FillTreeItem();
 
@@ -203,6 +208,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             treeItemMap.put(PolygonSymbolizerImpl.class, symbolizerTreeItem);
             treeItemMap.put(TextSymbolizerImpl.class, symbolizerTreeItem);
             treeItemMap.put(NamedLayerImpl.class, nameLayerTreeItem);
+            treeItemMap.put(UserLayerImpl.class, userLayerTreeItem);
             treeItemMap.put(StrokeImpl.class, strokeTreeItem);
             treeItemMap.put(FillImpl.class, fillTreeItem);
             treeItemMap.put(RasterSymbolizerImpl.class, symbolizerTreeItem);
@@ -346,13 +352,27 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                 {
                     for(StyledLayer styledLayer : styledLayerList)
                     {
+                        DefaultMutableTreeNode styledLayerTreeNode = null;
+                        List<Style> styleList = null;
+
                         if(styledLayer instanceof NamedLayerImpl)
                         {
                             NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                            styleList = namedLayerImpl.styles();
 
-                            DefaultMutableTreeNode styledLayerTreeNode = addObject(rootNode, namedLayerImpl, true);
+                            styledLayerTreeNode = addObject(rootNode, namedLayerImpl, true);
+                        }
+                        else if(styledLayer instanceof UserLayerImpl)
+                        {
+                            UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                            styleList = userLayerImpl.userStyles();
 
-                            for(Style style : namedLayerImpl.styles())
+                            styledLayerTreeNode = addObject(rootNode, userLayerImpl, true);
+                        }
+
+                        if(styleList != null)
+                        {
+                            for(Style style : styleList)
                             {
                                 DefaultMutableTreeNode styleTreeNode = addObject(styledLayerTreeNode, style, true);
 

@@ -49,6 +49,7 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.geotools.styling.UserLayer;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -295,7 +296,12 @@ public class SLDTreeTools {
 
         if(obj instanceof NamedLayer)
         {
-            SelectedSymbol.getInstance().removeNamedLayer((NamedLayer)obj);
+            SelectedSymbol.getInstance().removeUserNamedLayer((NamedLayer)obj);
+            removeTreeNode(lastNode);
+        }
+        else if(obj instanceof UserLayer)
+        {
+            SelectedSymbol.getInstance().removeUserNamedLayer((UserLayer)obj);
             removeTreeNode(lastNode);
         }
         else if(obj instanceof Style)

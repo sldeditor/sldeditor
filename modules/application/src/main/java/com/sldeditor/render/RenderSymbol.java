@@ -26,6 +26,7 @@ import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
+import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.ui.render.RuleRenderOptions;
@@ -62,11 +63,24 @@ public class RenderSymbol {
 
         for(StyledLayer styledLayer : styledLayerList)
         {
+            List<Style> styleList = null;
+
             if(styledLayer instanceof NamedLayerImpl)
             {
-                NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
 
-                for(Style style : namedLayerImpl.styles())
+                styleList = namedLayer.styles();
+            }
+            else if(styledLayer instanceof UserLayerImpl)
+            {
+                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
+
+                styleList = userLayer.userStyles();
+            }
+
+            if(styleList != null)
+            {
+                for(Style style : styleList)
                 {
                     FeatureTypeStyle ftsToRender = selectedSymbol.getFeatureTypeStyle();
                     Rule ruleToRender = selectedSymbol.getRule();

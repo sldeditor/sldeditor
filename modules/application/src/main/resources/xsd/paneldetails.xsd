@@ -106,6 +106,7 @@
                     <xs:element name="FieldConfigColourMap"     type="XMLFieldConfigColourMap" />
                     <xs:element name="FieldConfigTransformation" type="XMLFieldConfigTransformation" />
                     <xs:element name="FieldConfigInteger"       type="XMLFieldConfigInteger" />
+                    <xs:element name="FieldConfigInlineFeature" type="XMLFieldConfigInlineFeature" />
                     <xs:element name="Group" type="XMLGroupConfig" />
                 </xs:choice>
             </xs:extension>
@@ -240,6 +241,18 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigInlineFeature">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for an inline feature field
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

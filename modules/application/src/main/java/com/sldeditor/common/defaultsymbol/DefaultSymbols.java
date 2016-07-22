@@ -43,6 +43,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizer;
+import org.geotools.styling.UserLayer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Displacement;
@@ -265,12 +266,23 @@ public class DefaultSymbols {
     /**
      * Creates the new named layer.
      *
-     * @return the style
+     * @return the named layer
      */
     public static NamedLayer createNewNamedLayer() {
         NamedLayer namedLayer = styleFactory.createNamedLayer();
 
         return namedLayer;
+    }
+
+    /**
+     * Creates the new user layer.
+     *
+     * @return the user layer
+     */
+    public static UserLayer createNewUserLayer() {
+        UserLayer userLayer = styleFactory.createUserLayer();
+
+        return userLayer;
     }
 
     /**

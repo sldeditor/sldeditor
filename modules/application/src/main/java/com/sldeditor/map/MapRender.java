@@ -44,6 +44,7 @@ import org.geotools.map.MapContent;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayerImpl;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.NoToolAction;
 import org.geotools.swing.action.PanAction;
@@ -232,11 +233,24 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
                 for(StyledLayer styledLayer : styledLayerList)
                 {
+                    List<org.geotools.styling.Style> styleList = null;
+
                     if(styledLayer instanceof NamedLayerImpl)
                     {
                         NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
 
-                        for(Style style : namedLayerImpl.styles())
+                        styleList = namedLayerImpl.styles();
+                    }
+                    else if(styledLayer instanceof UserLayerImpl)
+                    {
+                        UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+
+                        styleList = userLayerImpl.userStyles();
+                    }
+
+                    if(styleList != null)
+                    {
+                        for(Style style : styleList)
                         {
                             renderSymbol(style);
                         }
