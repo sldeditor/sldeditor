@@ -18,6 +18,7 @@
  */
 package com.sldeditor.ui.detail.config.inlinefeature;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,6 +30,7 @@ import javax.swing.JTextArea;
 import org.geotools.process.function.ProcessFunction;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -36,9 +38,6 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
-import com.sldeditor.ui.detail.config.transform.TransformationExchange;
-import com.sldeditor.ui.detail.config.transform.TransformationInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -53,6 +52,9 @@ import com.sldeditor.ui.widgets.FieldPanel;
  */
 public class FieldConfigInlineFeature extends FieldConfigBase implements UndoActionInterface {
 
+    /** The Constant FONT_SIZE. */
+    private static final int FONT_SIZE = 14;
+
     /** The text field. */
     private JTextArea textField;
 
@@ -62,15 +64,6 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     /** The old value obj. */
     private Object oldValueObj = null;
 
-    /** The Edit button text. */
-    private String editButtonText = null;
-
-    /** The Clear button text. */
-    private String clearButtonText = null;
-
-    /** The value. */
-    private ProcessFunction processFunction = null;
-
     /** The number of rows the text area will have. */
     private int NO_OF_ROWS = 10;
 
@@ -79,10 +72,6 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @param panelId the panel id
      * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
-     * @param editButtonText the edit button text
-     * @param clearButtonText the clear button text
      */
     public FieldConfigInlineFeature(Class<?> panelId, FieldId id) {
         super(panelId, id, "", true);
@@ -107,7 +96,14 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         int height = BasePanel.WIDGET_HEIGHT * (NO_OF_ROWS - 1);
         textField = new JTextArea();
         textField.setBounds(xPos, BasePanel.WIDGET_HEIGHT, width, height);
-        textField.setEditable(false);
+        Font font = textField.getFont();
+
+        // Create a new, smaller font from the current font
+        Font updatedFont = new Font(font.getFontName(), font.getStyle(), FONT_SIZE);
+
+        // Set the new font in the editing area
+        textField.setFont(updatedFont);
+        textField.setEditable(true);
 
         JScrollPane scroll = new JScrollPane(textField);
         scroll.setBounds(xPos, BasePanel.WIDGET_HEIGHT, width, height);
@@ -116,44 +112,12 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         fieldPanel.add(scroll);
 
         //
-        // Edit button
-        //
-        final JButton buttonEdit = new JButton(editButtonText);
-        buttonEdit.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                TransformationInterface impl = TransformationExchange.getInstance().getImpl();
-
-                if(impl != null)
-                {
-                    ProcessFunction expression = impl.showTransformationDialog(processFunction);
-
-                    if(expression != null)
-                    {
-                        ProcessFunction newValueObj = processFunction;
-                        processFunction = expression;
-
-                        textField.setText(ParameterFunctionUtils.getString(processFunction));
-
-                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                        valueUpdated();
-                    }
-                }
-            }
-        });
-
-        buttonEdit.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(buttonEdit);
-
-        //
         // Clear button
         //
-        final JButton buttonClear = new JButton(clearButtonText);
+        final JButton buttonClear = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.clear"));
         buttonClear.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                processFunction = null;
 
                 textField.setText("");
 
@@ -163,7 +127,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
             }
         });
 
-        buttonClear.setBounds((int)buttonEdit.getBounds().getMaxX() + 5, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        buttonClear.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(buttonClear);
     }
 
@@ -374,8 +338,12 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigInlineFeature copy = new FieldConfigInlineFeature(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId());
+        FieldConfigInlineFeature copy = null;
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigInlineFeature(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId());
+        }
         return copy;
     }
 
@@ -401,37 +369,5 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         {
             textField.setVisible(visible);
         }
-    }
-
-    /**
-     * Populate process function field
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(ProcessFunction value) {
-        processFunction = value;
-
-        if(textField != null)
-        {
-            textField.setText(ParameterFunctionUtils.getString(processFunction));
-
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-            oldValueObj = value;
-
-            valueUpdated();
-        }
-    }
-
-    /**
-     * Gets the process function, overridden if necessary.
-     *
-     * @return the process function
-     */
-    @Override
-    public ProcessFunction getProcessFunction()
-    {
-        return processFunction;
     }
 }

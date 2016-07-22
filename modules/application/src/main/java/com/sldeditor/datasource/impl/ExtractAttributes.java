@@ -152,7 +152,7 @@ public class ExtractAttributes {
 
         DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
         sld.accept(duplicator);
-        StyledLayerDescriptor sldCopy = (StyledLayerDescriptor ) duplicator.getCopy();
+        StyledLayerDescriptor sldCopy = (StyledLayerDescriptor)duplicator.getCopy();
 
         for(StyledLayer styledLayer : sldCopy.layers())
         {

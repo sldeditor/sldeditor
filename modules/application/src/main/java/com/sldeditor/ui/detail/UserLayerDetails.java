@@ -18,7 +18,8 @@
  */
 package com.sldeditor.ui.detail;
 
-import org.geotools.styling.NamedLayerImpl;
+import org.geotools.styling.RemoteOWS;
+import org.geotools.styling.RemoteOWSImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.UserLayer;
@@ -27,8 +28,13 @@ import org.geotools.styling.UserLayerImpl;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
+import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
+import com.sldeditor.ui.detail.config.base.OptionGroup;
+import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -73,6 +79,38 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
 
                 fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, userLayer.getName());
+
+                GroupConfigInterface group = getGroup(GroupIdEnum.USER_LAYER_SOURCE);
+                if(group != null)
+                {
+                    MultiOptionGroup userLayerSourceGroup = (MultiOptionGroup) group;
+
+                    if(userLayer.getInlineFeatureDatastore() == null)
+                    {
+                        userLayerSourceGroup.setOption(GroupIdEnum.REMOTE_OWS);
+
+                        // Remote OWS
+                        String service = "";
+                        String onlineResource = "";
+                        RemoteOWS remoteOWS = userLayer.getRemoteOWS();
+
+                        if(remoteOWS != null)
+                        {
+                            service = remoteOWS.getService();
+                            onlineResource = remoteOWS.getOnlineResource();
+                        }
+                        fieldConfigVisitor.populateTextField(FieldIdEnum.REMOTE_OWS_SERVICE, service);
+                        fieldConfigVisitor.populateTextField(FieldIdEnum.REMOTE_OWS_ONLINERESOURCE, onlineResource);
+                    }
+                    else
+                    {
+                        userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE);
+
+                        // Inline features
+                        String inlineFeaturesText = InlineFeatureUtils.getInlineFeaturesText(userLayer);
+                        fieldConfigVisitor.populateTextField(FieldIdEnum.INLINE_FEATURE, inlineFeaturesText);
+                    }
+                }
             }
         }
     }
@@ -91,16 +129,49 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
     private void updateSymbol() {
         if(!Controller.getInstance().isPopulating())
         {
-            String name = fieldConfigVisitor.getText(new FieldId(FieldIdEnum.NAME));
             UserLayer userLayer = getStyleFactory().createUserLayer();
+            String name = fieldConfigVisitor.getText(new FieldId(FieldIdEnum.NAME));
             userLayer.setName(name);
 
-            StyledLayer existingStyledLayer = SelectedSymbol.getInstance().getStyledLayer();
-            if(existingStyledLayer instanceof NamedLayerImpl)
+            GroupConfigInterface group = getGroup(GroupIdEnum.USER_LAYER_SOURCE);
+            if(group != null)
             {
-                NamedLayerImpl existingNamedLayer = (NamedLayerImpl) existingStyledLayer;
+                MultiOptionGroup userLayerSourceGroup = (MultiOptionGroup) group;
 
-                for(Style style : existingNamedLayer.styles())
+                OptionGroup selectedOption = userLayerSourceGroup.getSelectedOptionGroup();
+                switch(selectedOption.getId())
+                {
+                case REMOTE_OWS:
+                {
+                    RemoteOWS remoteOWS = new RemoteOWSImpl();
+
+                    String service = fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_SERVICE);
+                    remoteOWS.setService(service);
+
+                    String onlineResource = fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_ONLINERESOURCE);
+                    remoteOWS.setOnlineResource(onlineResource);
+
+                    userLayer.setRemoteOWS(remoteOWS);
+                }
+                break;
+                case INLINE_FEATURE:
+                {
+                    String inlineFeatures = fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
+
+                    InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+                }
+                break;
+                default:
+                    break;
+                }
+            }
+
+            StyledLayer existingStyledLayer = SelectedSymbol.getInstance().getStyledLayer();
+            if(existingStyledLayer instanceof UserLayerImpl)
+            {
+                UserLayerImpl existingUserLayer = (UserLayerImpl) existingStyledLayer;
+
+                for(Style style : existingUserLayer.userStyles())
                 {
                     userLayer.addUserStyle(style);
                 }

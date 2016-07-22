@@ -63,6 +63,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="REMOTE_OWS"/&gt;
  *     &lt;enumeration value="FEATURE_CONSTRAINTS"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
+ *     &lt;enumeration value="USER_LAYER_SOURCE"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -112,7 +113,8 @@ public enum GroupIdEnum {
     RASTER_RGB_CHANNEL_GREY_CONTRAST,
     REMOTE_OWS,
     FEATURE_CONSTRAINTS,
-    INLINE_FEATURE;
+    INLINE_FEATURE,
+    USER_LAYER_SOURCE;
 
     public String value() {
         return name();
