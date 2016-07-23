@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     XMLFieldConfigColourMap.class,
     XMLFieldConfigTransformation.class,
     XMLFieldConfigInlineFeature.class,
+    XMLFieldConfigFeatureTypeConstraint.class,
     XMLFieldConfigEnum.class,
     XMLFieldConfigString.class,
     XMLFieldConfigGeometryField.class,

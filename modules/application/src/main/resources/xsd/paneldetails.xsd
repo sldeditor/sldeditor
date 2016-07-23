@@ -107,6 +107,7 @@
                     <xs:element name="FieldConfigTransformation" type="XMLFieldConfigTransformation" />
                     <xs:element name="FieldConfigInteger"       type="XMLFieldConfigInteger" />
                     <xs:element name="FieldConfigInlineFeature" type="XMLFieldConfigInlineFeature" />
+                    <xs:element name="FieldConfigFeatureTypeConstraint" type="XMLFieldConfigFeatureTypeConstraint" />
                     <xs:element name="Group" type="XMLGroupConfig" />
                 </xs:choice>
             </xs:extension>
@@ -249,6 +250,18 @@
         <xs:annotation>
             <xs:documentation>
                 Configuration for an inline feature field
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigFeatureTypeConstraint">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for an feature type constraint field
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>

@@ -65,7 +65,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     private Object oldValueObj = null;
 
     /** The number of rows the text area will have. */
-    private int NO_OF_ROWS = 10;
+    private int NO_OF_ROWS = 20;
 
     /**
      * Instantiates a new field config string.

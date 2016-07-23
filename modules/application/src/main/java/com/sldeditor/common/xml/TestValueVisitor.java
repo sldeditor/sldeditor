@@ -19,8 +19,11 @@
 
 package com.sldeditor.common.xml;
 
+import java.util.List;
+
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.ui.detail.config.FieldId;
@@ -40,7 +43,7 @@ public interface TestValueVisitor {
      * @param testValue the test value
      */
     public void setTestValue(FieldId fieldId, String testValue);
-    
+
     /**
      * Sets the test integer value.
      *
@@ -48,7 +51,7 @@ public interface TestValueVisitor {
      * @param testValue the test value
      */
     public void setTestValue(FieldId fieldId, int testValue);
-    
+
     /**
      * Sets the test double value.
      *
@@ -56,7 +59,7 @@ public interface TestValueVisitor {
      * @param testValue the test value
      */
     public void setTestValue(FieldId fieldId, double testValue);
-    
+
     /**
      * Sets the test boolean value.
      *
@@ -72,6 +75,14 @@ public interface TestValueVisitor {
      * @param testValue the test value
      */
     public void setTestValue(FieldId fieldId, ColorMap testValue);
+
+    /**
+     * Sets the test feature type constraint map value.
+     *
+     * @param fieldId the field id
+     * @param testValue the test value
+     */
+    public void setTestValue(FieldId fieldId, List<FeatureTypeConstraint> testValue);
 
     /**
      * Sets the test attribute/expression value.

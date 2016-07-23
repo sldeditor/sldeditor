@@ -16,10 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package com.sldeditor.ui.detail.config.featuretypeconstraint;
+
 /**
- * Package contains the classes to allow the configuration of inline features
- * 
- * @author Robert Ward (SCISYS)
+ * The Interface FeatureTypeConstraintModelUpdateInterface.
  *
+ * @author Robert Ward (SCISYS)
  */
-package com.sldeditor.ui.detail.config.inlinefeature;
+public interface FeatureTypeConstraintModelUpdateInterface {
+
+    /**
+     * Feature type constraint updated.
+     */
+    void featureTypeConstraintUpdated();
+}

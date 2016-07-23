@@ -173,6 +173,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigFeatureTypeConstraint }
+     * 
+     */
+    public XMLFieldConfigFeatureTypeConstraint createXMLFieldConfigFeatureTypeConstraint() {
+        return new XMLFieldConfigFeatureTypeConstraint();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigEnum }
      * 
      */

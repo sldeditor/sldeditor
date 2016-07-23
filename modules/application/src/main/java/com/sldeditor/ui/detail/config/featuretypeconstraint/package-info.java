@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package contains the classes to allow the configuration of inline features
+ * Package contains the classes to allow the configuration of feature type constraints
  * 
  * @author Robert Ward (SCISYS)
  *
  */
-package com.sldeditor.ui.detail.config.inlinefeature;
+package com.sldeditor.ui.detail.config.featuretypeconstraint;
