@@ -18,6 +18,9 @@
  */
 package com.sldeditor.ui.detail;
 
+import java.util.List;
+
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.RemoteOWS;
 import org.geotools.styling.RemoteOWSImpl;
 import org.geotools.styling.Style;
@@ -133,6 +136,15 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
             String name = fieldConfigVisitor.getText(new FieldId(FieldIdEnum.NAME));
             userLayer.setName(name);
 
+            // Feature type constraints
+            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor.getFeatureTypeConstraint(new FieldId(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS));
+            if((ftcList != null) && !ftcList.isEmpty())
+            {
+                FeatureTypeConstraint[] ftcArray = new FeatureTypeConstraint[ftcList.size()];
+                userLayer.setLayerFeatureConstraints(ftcList.toArray(ftcArray));
+            }
+
+            // Source
             GroupConfigInterface group = getGroup(GroupIdEnum.USER_LAYER_SOURCE);
             if(group != null)
             {

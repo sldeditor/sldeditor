@@ -30,4 +30,9 @@ public interface FeatureTypeConstraintModelUpdateInterface {
      * Feature type constraint updated.
      */
     void featureTypeConstraintUpdated();
+    
+    /**
+     * Extent updated.
+     */
+    void extentUpdated();
 }

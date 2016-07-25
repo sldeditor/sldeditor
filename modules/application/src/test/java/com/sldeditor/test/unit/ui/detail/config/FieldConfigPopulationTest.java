@@ -34,6 +34,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapEntryImpl;
 import org.geotools.styling.ColorMapImpl;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleBuilder;
 import org.junit.Test;
@@ -78,7 +79,8 @@ public class FieldConfigPopulationTest {
         obj.populateDoubleField(fieldId, (Double)null);
         obj.populateIntegerField(fieldId, (Integer)null);
         obj.populateField(fieldId, (Expression)null);
-
+        obj.populateFieldTypeConstraint(fieldId.getFieldId(), (List<FeatureTypeConstraint>)null);
+        
         assertNull(obj.getExpression(fieldId));
         assertFalse(obj.getBoolean(fieldId));
         assertEquals(0, obj.getInteger(fieldId));
@@ -87,6 +89,7 @@ public class FieldConfigPopulationTest {
         assertNull(obj.getComboBox(fieldId));
         assertNull(obj.getColourMap(fieldId));
         assertNull(obj.getFieldConfig(fieldId));
+        assertNull(obj.getFeatureTypeConstraint(fieldId));
     }
 
     /**

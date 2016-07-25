@@ -53,10 +53,6 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-/**
- * @author Robert Ward (SCISYS)
- *
- */
 public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements UndoActionInterface, FeatureTypeConstraintModelUpdateInterface {
 
     /** The filter table. */
@@ -411,7 +407,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     @Override
     public List<FeatureTypeConstraint> getFeatureTypeConstraint()
     {
-        return null;
+        return model.getFeatureTypeConstraint();
     }
 
     /**
@@ -511,5 +507,16 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         oldValueObj = ftc;
 
         valueUpdated();
+    }
+
+    @Override
+    public void extentUpdated() {
+        FeatureTypeConstraint ftc = model.getFeatureTypeConstraint(filterTable.getSelectedRow());
+        if(ftc != null)
+        {
+            extentModel.updateExtent(ftc);
+        }
+        
+        featureTypeConstraintUpdated();
     }
 }

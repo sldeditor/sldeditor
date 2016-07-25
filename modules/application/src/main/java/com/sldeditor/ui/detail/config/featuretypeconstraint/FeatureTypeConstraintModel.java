@@ -24,13 +24,12 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.FeatureTypeConstraintImpl;
+import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 
@@ -58,6 +57,12 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
     /** The parent object to inform of any changes. */
     private FeatureTypeConstraintModelUpdateInterface parentObj = null;
+
+    /** The style factory. */
+    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+
+    /** The filter factory */
+    private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
      * Instantiates a new feature type constraint model.
@@ -124,11 +129,18 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      * Adds the new entry.
      */
     public void addNewEntry() {
-        FeatureTypeConstraint ftc = new FeatureTypeConstraintImpl();
-        ftc.setFeatureTypeName("New type");
+
+        FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint("Feature", 
+                Filter.INCLUDE,
+                null);
         ftcList.add(ftc);
 
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.featureTypeConstraintUpdated();
+        }
     }
 
     /**
@@ -208,17 +220,9 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
         for(FeatureTypeConstraint ftc : ftcList)
         {
-            FeatureTypeConstraint newFTC = new FeatureTypeConstraintImpl();
-            newFTC.setFeatureTypeName(ftc.getFeatureTypeName());
-
-            Filter newFilter = null;
-            try {
-                newFilter = CQL.toFilter(CQL.toCQL(ftc.getFilter()));
-            } catch (CQLException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
-
-            newFTC.setFilter(newFilter);
+            FeatureTypeConstraint newFTC = styleFactory.createFeatureTypeConstraint(ftc.getFeatureTypeName(), 
+                    ftc.getFilter(),
+                    null);
 
             this.ftcList.add(newFTC);
         }

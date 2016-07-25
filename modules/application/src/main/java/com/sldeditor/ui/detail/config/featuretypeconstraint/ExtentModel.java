@@ -26,6 +26,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Extent;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.StyleFactoryImpl;
 
 import com.sldeditor.common.localisation.Localisation;
@@ -286,4 +287,29 @@ public class ExtentModel extends AbstractTableModel {
         return extentList;
     }
 
+    /**
+     * Update extents of a feature type constraint.
+     *
+     * @param ftc the feature type constraint to update
+     */
+    public void updateExtent(FeatureTypeConstraint ftc) {
+        if(ftc == null)
+        {
+            return;
+        }
+
+        if(!extentList.isEmpty())
+        {
+            Extent[] extentArray = new Extent[extentList.size()];
+            int index = 0;
+            for(Extent extent : extentList)
+            {
+                Extent newExtent = styleFactory.createExtent(extent.getName(), extent.getValue());
+
+                extentArray[index] = newExtent;
+
+                index ++;
+            }
+        }
+    }
 }
