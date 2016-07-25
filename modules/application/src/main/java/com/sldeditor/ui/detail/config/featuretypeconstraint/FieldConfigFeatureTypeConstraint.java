@@ -355,16 +355,9 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     @Override
     public boolean isEnabled()
     {
-        if((attributeSelectionPanel != null) && !isValueOnly())
+        if(filterTable != null)
         {
-            return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(filterTable != null)
-            {
-                return filterTable.isEnabled();
-            }
+            return filterTable.isEnabled();
         }
         return false;
     }
@@ -405,9 +398,17 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     {
         if((filterTable != null) && (undoRedoObject != null))
         {
-            List<FeatureTypeConstraint> oldValue = (List<FeatureTypeConstraint>)undoRedoObject.getOldValue();
+            try
+            {
+                @SuppressWarnings("unchecked")
+                List<FeatureTypeConstraint> oldValue = (List<FeatureTypeConstraint>)undoRedoObject.getOldValue();
 
-            populateField(oldValue);
+                populateField(oldValue);
+            }
+            catch(ClassCastException e)
+            {
+                // Ignore
+            }
         }
     }
 
@@ -421,9 +422,17 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     {
         if((filterTable != null) && (undoRedoObject != null))
         {
-            List<FeatureTypeConstraint> newValue = (List<FeatureTypeConstraint>)undoRedoObject.getNewValue();
+            try
+            {
+                @SuppressWarnings("unchecked")
+                List<FeatureTypeConstraint> newValue = (List<FeatureTypeConstraint>)undoRedoObject.getNewValue();
 
-            populateField(newValue);
+                populateField(newValue);
+            }
+            catch(ClassCastException e)
+            {
+                // Ignore
+            }
         }
     }
 
@@ -539,12 +548,15 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
     @Override
     public void extentUpdated() {
-        FeatureTypeConstraint ftc = filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
-        if(ftc != null)
+        if(filterTable != null)
         {
-            extentModel.updateExtent(ftc);
-        }
+            FeatureTypeConstraint ftc = filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
+            if(ftc != null)
+            {
+                extentModel.updateExtent(ftc);
+            }
 
-        featureTypeConstraintUpdated();
+            featureTypeConstraintUpdated();
+        }
     }
 }
