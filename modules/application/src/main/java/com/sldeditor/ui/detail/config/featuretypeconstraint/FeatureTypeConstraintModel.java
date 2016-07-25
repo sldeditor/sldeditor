@@ -29,7 +29,6 @@ import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -61,9 +60,6 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
     /** The style factory. */
     private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
-
-    /** The filter factory */
-    private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
      * Instantiates a new feature type constraint model.

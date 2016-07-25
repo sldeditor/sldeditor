@@ -79,7 +79,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     private JButton removeExtentButton;
 
     /** The feature type constraint map data model. */
-    private FeatureTypeConstraintModel model = null;
+    private FeatureTypeConstraintModel filterModel = null;
 
     /** The extent model. */
     private ExtentModel extentModel = null;
@@ -94,7 +94,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     public FieldConfigFeatureTypeConstraint(Class<?> panelId, FieldId id, String label) {
         super(panelId, id, label, true);
 
-        model = new FeatureTypeConstraintModel(this);
+        filterModel = new FeatureTypeConstraintModel(this);
         extentModel = new ExtentModel(this);
     }
 
@@ -189,7 +189,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param fieldPanel the field panel
      */
     private void createFilterTable(int xPos, int maxNoOfRows, FieldPanel fieldPanel) {
-        filterTable = new JTable(model);
+        filterTable = new JTable(filterModel);
         filterTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         filterTable.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfRows - 2));
@@ -199,7 +199,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
             public void valueChanged(ListSelectionEvent e) {
                 if(!e.getValueIsAdjusting())
                 {
-                    FeatureTypeConstraint ftc = model.getFeatureTypeConstraint(filterTable.getSelectedRow());
+                    FeatureTypeConstraint ftc = filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
                     if(ftc != null)
                     {
                         extentModel.populate(ftc.getExtents());
@@ -208,7 +208,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
                         int[] selectedColumns = filterTable.getSelectedColumns();
 
-                        if(model.isFilterColumn(selectedColumns))
+                        if(filterModel.isFilterColumn(selectedColumns))
                         {
                             FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
 
@@ -220,7 +220,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
                             {
                                 ftc.setFilter(filterPanel.getFilter());
 
-                                model.fireTableDataChanged();
+                                filterModel.fireTableDataChanged();
 
                                 featureTypeConstraintUpdated();
                             }
@@ -266,16 +266,22 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * Adds a new feature type constraint entry.
      */
     private void addEntry() {
-        model.addNewEntry();
+        filterModel.addNewEntry();
+        extentModel.populate(null);
         removeFTCButton.setEnabled(false);
+        addExtentButton.setEnabled(false);
+        removeExtentButton.setEnabled(false);
     }
 
     /**
      * Removes the selected feature type constraint entries.
      */
     private void removeEntry() {
-        model.removeEntries(filterTable.getSelectionModel().getMinSelectionIndex(), filterTable.getSelectionModel().getMaxSelectionIndex());
+        filterModel.removeEntries(filterTable.getSelectionModel().getMinSelectionIndex(), filterTable.getSelectionModel().getMaxSelectionIndex());
+        extentModel.populate(null);
         removeFTCButton.setEnabled(false);
+        addExtentButton.setEnabled(false);
+        removeExtentButton.setEnabled(false);
     }
 
     /**
@@ -429,7 +435,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     @Override
     public List<FeatureTypeConstraint> getFeatureTypeConstraint()
     {
-        return model.getFeatureTypeConstraint();
+        return filterModel.getFeatureTypeConstraint();
     }
 
     /**
@@ -450,11 +456,11 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      */
     @Override
     public void populateField(List<FeatureTypeConstraint> valueList) {
-        if(model != null)
+        if(filterModel != null)
         {
             if(valueList != null)
             {
-                model.populate(valueList);
+                filterModel.populate(valueList);
 
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, valueList));
 
@@ -522,7 +528,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      */
     @Override
     public void featureTypeConstraintUpdated() {
-        List<FeatureTypeConstraint> ftc = model.getFeatureTypeConstraint();
+        List<FeatureTypeConstraint> ftc = filterModel.getFeatureTypeConstraint();
 
         UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, ftc));
 
@@ -533,7 +539,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
     @Override
     public void extentUpdated() {
-        FeatureTypeConstraint ftc = model.getFeatureTypeConstraint(filterTable.getSelectedRow());
+        FeatureTypeConstraint ftc = filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
         if(ftc != null)
         {
             extentModel.updateExtent(ftc);

@@ -42,17 +42,23 @@ public class ExtentModel extends AbstractTableModel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant DEFAULT_NEW_EXTENT_NAME. */
+    private static final String DEFAULT_NEW_EXTENT_NAME = "New Extent";
+
+    /** The Constant COL_NAME. */
+    private static final int COL_NAME = 0;
+
     /** The Constant COL_MINX. */
-    private static final int COL_MINX = 0;
+    private static final int COL_MINX = 1;
 
     /** The Constant COL_MINY. */
-    private static final int COL_MINY = 1;
+    private static final int COL_MINY = 2;
 
     /** The Constant COL_MAXX. */
-    private static final int COL_MAXX = 2;
+    private static final int COL_MAXX = 3;
 
     /** The Constant COL_MAXY. */
-    private static final int COL_MAXY = 3;
+    private static final int COL_MAXY = 4;
 
     /** The extent list. */
     private List<Extent> extentList = new ArrayList<Extent>();
@@ -74,10 +80,11 @@ public class ExtentModel extends AbstractTableModel {
     public ExtentModel(FeatureTypeConstraintModelUpdateInterface parent) {
         this.parentObj = parent;
 
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintModel.minX"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintModel.minY"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintModel.maxX"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintModel.maxY"));
+        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.name"));
+        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.minX"));
+        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.minY"));
+        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.maxX"));
+        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.maxY"));
     }
 
     /* (non-Javadoc)
@@ -120,6 +127,8 @@ public class ExtentModel extends AbstractTableModel {
         {
             switch(columnIndex)
             {
+            case COL_NAME:
+                return extent.getName();
             case COL_MINX:
                 if(components.length > 0)
                 {
@@ -156,11 +165,16 @@ public class ExtentModel extends AbstractTableModel {
      */
     public void addNewEntry() {
 
-        Extent extent = styleFactory.createExtent("", "0 0 0 0");
+        Extent extent = styleFactory.createExtent(DEFAULT_NEW_EXTENT_NAME, "0 0 0 0");
 
         extentList.add(extent);
 
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.extentUpdated();
+        }
     }
 
     /**
@@ -183,6 +197,11 @@ public class ExtentModel extends AbstractTableModel {
             index --;
         }
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.extentUpdated();
+        }
     }
 
     /**
@@ -208,48 +227,55 @@ public class ExtentModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Extent extent = extentList.get(rowIndex);
 
-        String[] components = extent.getValue().split(" ");
-
-        if(components.length != 4)
+        if(columnIndex == COL_NAME)
         {
-            components = new String[4];
-            components[0] = "0";
-            components[1] = "0";
-            components[2] = "0";
-            components[3] = "0";
+            extent.setName((String) aValue);
         }
-
-        Double value = 0.0;
-
-        try
+        else
         {
-            value = Double.valueOf((String)aValue);
-            switch(columnIndex)
+            String[] components = extent.getValue().split(" ");
+
+            if(components.length != 4)
             {
-            case COL_MINX:
-                components[0] = value.toString();
-                break;
-            case COL_MINY:
-                components[1] = value.toString();
-                break;
-            case COL_MAXX:
-                components[2] = value.toString();
-                break;
-            case COL_MAXY:
-                components[3] = value.toString();
-                break;
-            default:
-                break;
+                components = new String[4];
+                components[0] = "0";
+                components[1] = "0";
+                components[2] = "0";
+                components[3] = "0";
             }
-        }
-        catch(NumberFormatException e)
-        {
-            // Ignore
-        }
 
-        String encodedExtent = String.format("%s %s %s %s", components[0], components[1], components[2], components[3]);
+            Double value = 0.0;
 
-        extent.setValue(encodedExtent);
+            try
+            {
+                value = Double.valueOf((String)aValue);
+                switch(columnIndex)
+                {
+                case COL_MINX:
+                    components[0] = value.toString();
+                    break;
+                case COL_MINY:
+                    components[1] = value.toString();
+                    break;
+                case COL_MAXX:
+                    components[2] = value.toString();
+                    break;
+                case COL_MAXY:
+                    components[3] = value.toString();
+                    break;
+                default:
+                    break;
+                }
+            }
+            catch(NumberFormatException e)
+            {
+                // Ignore
+            }
+
+            String encodedExtent = String.format("%s %s %s %s", components[0], components[1], components[2], components[3]);
+
+            extent.setValue(encodedExtent);
+        }
         this.fireTableDataChanged();
 
         if(parentObj != null)
@@ -310,7 +336,7 @@ public class ExtentModel extends AbstractTableModel {
 
                 index ++;
             }
-            
+
             ftc.setExtents(extentArray);
         }
     }
