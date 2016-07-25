@@ -82,7 +82,13 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
 
                 fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, userLayer.getName());
+                // Feature layer constraint
 
+                List<FeatureTypeConstraint> ftcList = userLayer.layerFeatureConstraints();
+
+                fieldConfigVisitor.populateFieldTypeConstraint(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS, ftcList);
+
+                // Source
                 GroupConfigInterface group = getGroup(GroupIdEnum.USER_LAYER_SOURCE);
                 if(group != null)
                 {

@@ -254,7 +254,7 @@ public class ExtentModel extends AbstractTableModel {
 
         if(parentObj != null)
         {
-            parentObj.featureTypeConstraintUpdated();
+            parentObj.extentUpdated();
         }
     }
 
@@ -310,6 +310,8 @@ public class ExtentModel extends AbstractTableModel {
 
                 index ++;
             }
+            
+            ftc.setExtents(extentArray);
         }
     }
 }

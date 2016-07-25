@@ -25,6 +25,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.Filter;
@@ -132,7 +133,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
         FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint("Feature", 
                 Filter.INCLUDE,
-                null);
+                new Extent[0]);
         ftcList.add(ftc);
 
         this.fireTableDataChanged();
@@ -222,10 +223,11 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
         {
             FeatureTypeConstraint newFTC = styleFactory.createFeatureTypeConstraint(ftc.getFeatureTypeName(), 
                     ftc.getFilter(),
-                    null);
+                    new Extent[0]);
 
             this.ftcList.add(newFTC);
         }
+        this.fireTableDataChanged();
     }
 
     /**
@@ -251,6 +253,26 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
             return ftc;
         }
         return null;
+    }
+
+    /**
+     * Checks if the selected column is filter column.
+     *
+     * @param selectedColumns the selected columns
+     * @return true, if is filter column
+     */
+    public boolean isFilterColumn(int[] selectedColumns) {
+        if(selectedColumns != null)
+        {
+            for(int column : selectedColumns)
+            {
+                if(column == COL_FILTER)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

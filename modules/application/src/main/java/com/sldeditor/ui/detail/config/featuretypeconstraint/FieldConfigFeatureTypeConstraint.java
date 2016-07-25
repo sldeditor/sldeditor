@@ -38,6 +38,8 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.filter.ExpressionPanelFactory;
+import com.sldeditor.filter.FilterPanelInterface;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -60,9 +62,6 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
     /** The extent table. */
     private JTable extentTable;
-
-    /** The default value. */
-    private Object defaultValue = null;
 
     /** The old value obj. */
     private List<FeatureTypeConstraint> oldValueObj = null;
@@ -156,7 +155,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         //
         // Add button
         //
-        addExtentButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.add"));
+        addExtentButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.add"));
         addExtentButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         addExtentButton.setEnabled(false);
         addExtentButton.addActionListener(new ActionListener(){
@@ -170,7 +169,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         //
         // Remove button
         //
-        removeExtentButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.remove"));
+        removeExtentButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.remove"));
         removeExtentButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         removeExtentButton.setEnabled(false);
         removeExtentButton.addActionListener(new ActionListener(){
@@ -198,12 +197,35 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                FeatureTypeConstraint ftc = model.getFeatureTypeConstraint(filterTable.getSelectedRow());
-                if(ftc != null)
+                if(!e.getValueIsAdjusting())
                 {
-                    extentModel.populate(ftc.getExtents());
-                    addExtentButton.setEnabled(true);
-                    removeFTCButton.setEnabled(true);
+                    FeatureTypeConstraint ftc = model.getFeatureTypeConstraint(filterTable.getSelectedRow());
+                    if(ftc != null)
+                    {
+                        extentModel.populate(ftc.getExtents());
+                        addExtentButton.setEnabled(true);
+                        removeFTCButton.setEnabled(true);
+
+                        int[] selectedColumns = filterTable.getSelectedColumns();
+
+                        if(model.isFilterColumn(selectedColumns))
+                        {
+                            FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
+
+                            filterPanel.configure(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.filterPanel"), Object.class);
+
+                            filterPanel.populate(ftc.getFilter());
+
+                            if(filterPanel.showDialog())
+                            {
+                                ftc.setFilter(filterPanel.getFilter());
+
+                                model.fireTableDataChanged();
+
+                                featureTypeConstraintUpdated();
+                            }
+                        }
+                    }
                 }
             }});
 
@@ -215,7 +237,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         //
         // Add button
         //
-        addFTCButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.add"));
+        addFTCButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.add"));
         addFTCButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         addFTCButton.addActionListener(new ActionListener(){
 
@@ -228,7 +250,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         //
         // Remove button
         //
-        removeFTCButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.remove"));
+        removeFTCButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.remove"));
         removeFTCButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         removeFTCButton.setEnabled(false);
         removeFTCButton.addActionListener(new ActionListener(){
@@ -516,7 +538,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         {
             extentModel.updateExtent(ftc);
         }
-        
+
         featureTypeConstraintUpdated();
     }
 }
