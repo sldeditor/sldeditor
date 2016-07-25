@@ -26,7 +26,6 @@ import javax.swing.table.AbstractTableModel;
 
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.FeatureTypeConstraintImpl;
 import org.opengis.filter.Filter;
@@ -39,10 +38,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
  * The Class FeatureTypeConstraintModel.
  *
  * @author Robert Ward (SCISYS)
- */
-/**
- * @author Robert Ward (SCISYS)
- *
  */
 public class FeatureTypeConstraintModel extends AbstractTableModel {
 
@@ -225,17 +220,6 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
             newFTC.setFilter(newFilter);
 
-            if(ftc.getExtents() != null)
-            {
-                Extent[] newExtent = new Extent[ftc.getExtents().length];
-                int index = 0;
-                for(Extent extent : ftc.getExtents())
-                {
-                    newExtent[index] = extent;
-                    index ++;
-                }
-                newFTC.setExtents(newExtent);
-            }
             this.ftcList.add(newFTC);
         }
     }
@@ -247,6 +231,22 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      */
     public List<FeatureTypeConstraint> getFeatureTypeConstraint() {
         return ftcList;
+    }
+
+    /**
+     * Gets the feature type constraint.
+     *
+     * @param row the row
+     * @return the feature type constraint
+     */
+    public FeatureTypeConstraint getFeatureTypeConstraint(int row) {
+        if((row >= 0) && (row < ftcList.size()))
+        {
+            FeatureTypeConstraint ftc = ftcList.get(row);
+
+            return ftc;
+        }
+        return null;
     }
 
 }
