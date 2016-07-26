@@ -4,4 +4,7 @@
         <FieldConfigString id="NAME" label="*standard.name"
             valueOnly="true" />
     </Group>
+    <Group id="FEATURE_TYPE_CONSTRAINTS" showLabel="false">
+        <FieldConfigFeatureTypeConstraint id="LAYER_FEATURE_CONSTRAINTS" label="userlayer.featuretypeconstraint" valueOnly="true" />
+    </Group>
 </PanelConfig>
