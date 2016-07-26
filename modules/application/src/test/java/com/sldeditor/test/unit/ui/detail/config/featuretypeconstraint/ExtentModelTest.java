@@ -107,11 +107,11 @@ public class ExtentModelTest {
     @Test
     public void testGetValueAt() {
         TestModelUpdate testUpdate = new TestModelUpdate();
-        
+
         ExtentModel model = new ExtentModel(testUpdate);
 
         assertEquals(0, model.getRowCount());
-        
+
         assertFalse(testUpdate.hasExtentUpdatedBeenCalled());
         model.addNewEntry();
         assertTrue(testUpdate.hasExtentUpdatedBeenCalled());

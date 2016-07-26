@@ -43,6 +43,9 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant DEFAULT_NAME. */
+    private static final String DEFAULT_NAME = "Feature";
+
     /** The Constant COL_NUMBER. */
     private static final int COL_NAME = 0;
 
@@ -105,6 +108,16 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= getRowCount()))
+        {
+            return null;
+        }
+
+        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
+        {
+            return null;
+        }
+
         FeatureTypeConstraint ftc = ftcList.get(rowIndex);
 
         switch(columnIndex)
@@ -127,7 +140,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      */
     public void addNewEntry() {
 
-        FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint("Feature", 
+        FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint(DEFAULT_NAME, 
                 Filter.INCLUDE,
                 new Extent[0]);
         ftcList.add(ftc);
@@ -147,7 +160,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
-        if((maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= ftcList.size()))
+        if((minSelectionIndex < 0) || (maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= ftcList.size()))
         {
             return;
         }
@@ -160,6 +173,11 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
             index --;
         }
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.featureTypeConstraintUpdated();
+        }
     }
 
     /**
@@ -183,6 +201,16 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= getRowCount()))
+        {
+            return;
+        }
+
+        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
+        {
+            return;
+        }
+
         FeatureTypeConstraint ftc = ftcList.get(rowIndex);
 
         switch(columnIndex)
@@ -215,13 +243,16 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
     public void populate(List<FeatureTypeConstraint> ftcList) {
         this.ftcList.clear();
 
-        for(FeatureTypeConstraint ftc : ftcList)
+        if(ftcList != null)
         {
-            FeatureTypeConstraint newFTC = styleFactory.createFeatureTypeConstraint(ftc.getFeatureTypeName(), 
-                    ftc.getFilter(),
-                    new Extent[0]);
+            for(FeatureTypeConstraint ftc : ftcList)
+            {
+                FeatureTypeConstraint newFTC = styleFactory.createFeatureTypeConstraint(ftc.getFeatureTypeName(), 
+                        ftc.getFilter(),
+                        new Extent[0]);
 
-            this.ftcList.add(newFTC);
+                this.ftcList.add(newFTC);
+            }
         }
         this.fireTableDataChanged();
     }
