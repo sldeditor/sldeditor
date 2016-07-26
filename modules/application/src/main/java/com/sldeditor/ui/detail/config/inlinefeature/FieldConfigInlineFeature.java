@@ -27,7 +27,6 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.geotools.process.function.ProcessFunction;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
@@ -197,16 +196,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public boolean isEnabled()
     {
-        if((attributeSelectionPanel != null) && !isValueOnly())
+        if(textField != null)
         {
-            return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(textField != null)
-            {
-                return textField.isEnabled();
-            }
+            return textField.isEnabled();
         }
 
         return false;
@@ -235,11 +227,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void populateExpression(Object objValue)
     {
-        if(objValue instanceof ProcessFunction)
+        if(objValue instanceof String)
         {
-            ProcessFunction processFunction = (ProcessFunction) objValue;
-
-            populateField(processFunction);
+            populateField((String)objValue);
         }
     }
 
@@ -276,11 +266,14 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if((textField != null) && (undoRedoObject != null))
         {
-            String oldValue = (String)undoRedoObject.getOldValue();
+            if(undoRedoObject.getOldValue() instanceof String)
+            {
+                String oldValue = (String)undoRedoObject.getOldValue();
 
-            textField.setText(oldValue);
+                textField.setText(oldValue);
+            }
         }
     }
 
@@ -292,11 +285,14 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if((textField != null) && (undoRedoObject != null))
         {
-            String newValue = (String)undoRedoObject.getNewValue();
+            if(undoRedoObject.getOldValue() instanceof String)
+            {
+                String newValue = (String)undoRedoObject.getNewValue();
 
-            textField.setText(newValue);
+                textField.setText(newValue);
+            }
         }
     }
 
