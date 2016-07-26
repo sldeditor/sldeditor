@@ -119,6 +119,16 @@ public class ExtentModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= getRowCount()))
+        {
+            return null;
+        }
+
+        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
+        {
+            return null;
+        }
+
         Extent extent = extentList.get(rowIndex);
 
         String[] components = extent.getValue().split(" ");
@@ -184,7 +194,7 @@ public class ExtentModel extends AbstractTableModel {
      * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
-        if((maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= extentList.size()))
+        if((minSelectionIndex < 0) || (maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= extentList.size()))
         {
             return;
         }
@@ -225,6 +235,16 @@ public class ExtentModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= getRowCount()))
+        {
+            return;
+        }
+
+        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
+        {
+            return;
+        }
+
         Extent extent = extentList.get(rowIndex);
 
         if(columnIndex == COL_NAME)
