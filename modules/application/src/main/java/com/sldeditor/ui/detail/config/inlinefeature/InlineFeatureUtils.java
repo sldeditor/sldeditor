@@ -118,6 +118,10 @@ public class InlineFeatureUtils {
 
         int endIndex = userLayerXML.lastIndexOf(GML_END) + GML_END.length();
 
+        if(beginIndex < 0)
+        {
+            beginIndex = 0;
+        }
         String extract = userLayerXML.substring(beginIndex, endIndex);
 
         extract = extract.replace(sb.toString(), "\n");

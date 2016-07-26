@@ -20,16 +20,21 @@ package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.FeatureType;
+import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -40,6 +45,9 @@ import com.sldeditor.common.console.ConsoleManager;
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceInfo {
+
+    /** The logger. */
+    private static Logger logger = Logger.getLogger(DataSourceInfo.class);
 
     /** The schema. */
     private FeatureType schema = null;
@@ -55,6 +63,15 @@ public class DataSourceInfo {
 
     /** The grid coverage. */
     private AbstractGridCoverage2DReader gridCoverageReader = null;
+
+    /** The field name map. */
+    private Map<Integer, Name> fieldNameMap = new HashMap<Integer, Name>();
+
+    /** The field type map. */
+    private Map<Integer, Class<?> > fieldTypeMap = new HashMap<Integer, Class<?> >();
+
+    /** The user layer. */
+    private UserLayer userLayer = null;
 
     /**
      * Default constructor.
@@ -77,6 +94,10 @@ public class DataSourceInfo {
         dataStore = null;
 
         gridCoverageReader = null;
+
+        fieldNameMap.clear();
+
+        fieldTypeMap.clear();
     }
 
     /**
@@ -269,4 +290,61 @@ public class DataSourceInfo {
         return (dataStore != null) || (gridCoverageReader != null);
     }
 
+    /**
+     * Gets the field name map.
+     *
+     * @return the fieldNameMap
+     */
+    public Map<Integer, Name> getFieldNameMap() {
+        return fieldNameMap;
+    }
+
+    /**
+     * Gets the field type map.
+     *
+     * @return the fieldTypeMap
+     */
+    public Map<Integer, Class<?>> getFieldTypeMap() {
+        return fieldTypeMap;
+    }
+
+    /**
+     * Populate field map for the data source.
+     */
+    public void populateFieldMap() {
+        fieldNameMap.clear();
+        fieldTypeMap.clear();
+
+        logger.debug("Datasource fields:");
+        int index = 0;
+        Collection<PropertyDescriptor> descriptorList = getPropertyDescriptorList();
+        if(descriptorList != null)
+        {
+            for(PropertyDescriptor property : descriptorList)
+            {
+                logger.debug(String.format("    %-20s %s", property.getName(), property.getType().getBinding().getName()));
+                fieldNameMap.put(index, property.getName());
+                fieldTypeMap.put(index, property.getType().getBinding());
+                index ++;
+            }
+        }
+    }
+
+    /**
+     * Gets the user layer.
+     *
+     * @return the userLayer
+     */
+    public UserLayer getUserLayer() {
+        return userLayer;
+    }
+
+    /**
+     * Sets the user layer.
+     *
+     * @param userLayer the userLayer to set
+     */
+    public void setUserLayer(UserLayer userLayer) {
+        this.userLayer = userLayer;
+    }
 }

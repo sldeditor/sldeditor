@@ -33,7 +33,7 @@ import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.opengis.feature.GeometryAttribute;
+import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
@@ -71,11 +71,8 @@ public class DataSourceImpl implements DataSourceInterface {
     /** The example data source info, used to draw the single rendered symbol. */
     private DataSourceInfo exampleDataSourceInfo = new DataSourceInfo();
 
-    /** The field name map. */
-    private Map<Integer, Name> fieldNameMap = new HashMap<Integer, Name>();
-
-    /** The field type map. */
-    private Map<Integer, Class<?> > fieldTypeMap = new HashMap<Integer, Class<?> >();
+    /** The user layer data source info. */
+    private List<DataSourceInfo> userLayerDataSourceInfo = new ArrayList<DataSourceInfo>();
 
     /** The data source properties. */
     private DataSourcePropertiesInterface dataSourceProperties = null;
@@ -88,10 +85,6 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /** The editor file interface. */
     private SLDEditorFileInterface editorFileInterface = null;
-
-    /** The geometry field name. */
-    @SuppressWarnings("unused")
-    private String geometryFieldName = null;
 
     /** The internal data source. */
     private CreateDataSourceInterface internalDataSource = null;
@@ -178,16 +171,13 @@ public class DataSourceImpl implements DataSourceInterface {
                 // Create the example data to show in the render panel
                 createExampleDataSource();
 
+                createUserLayerDataSources();
+
                 if(this.dataSourceProperties.isEmpty())
                 {
                     openWithoutDataSource();
                 }
-                else if(this.dataSourceProperties.isInLine())
-                {
-                    openInlineDataSource();
-                }
                 else
-
                 {
                     openExternalDataSource();
                 }
@@ -196,9 +186,9 @@ public class DataSourceImpl implements DataSourceInterface {
     }
 
     /**
-     * Open inline data source.
+     * Create inline data sources
      */
-    private void openInlineDataSource()
+    private void createUserLayerDataSources()
     {
         if(inlineDataSource == null)
         {
@@ -206,19 +196,14 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            dataSourceInfo = inlineDataSource.connect(this.editorFileInterface);
+            userLayerDataSourceInfo = inlineDataSource.connect(this.editorFileInterface);
 
-            if(dataSourceInfo.hasData())
+            for(DataSourceInfo dsInfo : userLayerDataSourceInfo)
             {
-                populateFieldMap();
-
-                connectedToDataSourceFlag = true;
-
-                notifyDataSourceLoaded();
-            }
-            else
-            {
-                openWithoutDataSource();
+                if(dsInfo.hasData())
+                {
+                    dsInfo.populateFieldMap();
+                }
             }
         }
     }
@@ -234,19 +219,23 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            dataSourceInfo = externalDataSource.connect(this.editorFileInterface);
-
-            if(dataSourceInfo.hasData())
+            List<DataSourceInfo> dataSourceInfoList = externalDataSource.connect(this.editorFileInterface);
+            if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
             {
-                populateFieldMap();
+                dataSourceInfo = dataSourceInfoList.get(0);
 
-                connectedToDataSourceFlag = true;
+                if(dataSourceInfo.hasData())
+                {
+                    dataSourceInfo.populateFieldMap();
 
-                notifyDataSourceLoaded();
-            }
-            else
-            {
-                openWithoutDataSource();
+                    connectedToDataSourceFlag = true;
+
+                    notifyDataSourceLoaded();
+                }
+                else
+                {
+                    openWithoutDataSource();
+                }
             }
         }
     }
@@ -267,33 +256,6 @@ public class DataSourceImpl implements DataSourceInterface {
             logger.debug("\t" + fac.getDisplayName());
 
             availableDataStoreList.add(fac.getDisplayName());
-        }
-    }
-
-    /**
-     * Populate field map for the data source.
-     */
-    private void populateFieldMap() {
-        if(dataSourceInfo != null)
-        {
-            geometryFieldName = dataSourceInfo.getGeometryFieldName();
-
-            fieldNameMap.clear();
-            fieldTypeMap.clear();
-
-            logger.debug("Datasource fields:");
-            int index = 0;
-            Collection<PropertyDescriptor> descriptorList = dataSourceInfo.getPropertyDescriptorList();
-            if(descriptorList != null)
-            {
-                for(PropertyDescriptor property : descriptorList)
-                {
-                    logger.debug(String.format("    %-20s %s", property.getName(), property.getType().getBinding().getName()));
-                    fieldNameMap.put(index, property.getName());
-                    fieldTypeMap.put(index, property.getType().getBinding());
-                    index ++;
-                }
-            }
         }
     }
 
@@ -406,6 +368,10 @@ public class DataSourceImpl implements DataSourceInterface {
         if(featureCollection != null)
         {
             SimpleFeatureIterator iterator = featureCollection.features();
+
+            Map<Integer, Name> fieldNameMap = dataSourceInfo.getFieldNameMap();
+            Map<Integer, Class<?>> fieldTypeMap = dataSourceInfo.getFieldTypeMap();
+
             if(iterator.hasNext())
             {
                 SimpleFeature feature = iterator.next();
@@ -416,7 +382,7 @@ public class DataSourceImpl implements DataSourceInterface {
                     Name fieldName = fieldNameMap.get(i);
 
                     Class<?> type = fieldTypeMap.get(i);
-                    
+
                     if(type == Geometry.class)
                     {
                         Object value = feature.getAttribute(fieldName);
@@ -478,11 +444,15 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            dataSourceInfo = internalDataSource.connect(this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(this.editorFileInterface);
+            if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
+            {
+                dataSourceInfo = dataSourceInfoList.get(0);
 
-            populateFieldMap();
+                dataSourceInfo.populateFieldMap();
 
-            notifyDataSourceLoaded();
+                notifyDataSourceLoaded();
+            }
         }
     }
 
@@ -497,7 +467,11 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            exampleDataSourceInfo = internalDataSource.connect(this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(this.editorFileInterface);
+            if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
+            {
+                exampleDataSourceInfo = dataSourceInfoList.get(0);
+            }
         }
     }
 
@@ -629,5 +603,22 @@ public class DataSourceImpl implements DataSourceInterface {
             gridCoverage = dataSourceInfo.getGridCoverageReader();
         }
         return gridCoverage;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceInterface#getUserLayerFeatureSource()
+     */
+    @Override
+    public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map = new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
+
+        for(DataSourceInfo dsInfo : userLayerDataSourceInfo)
+        {
+            FeatureSource<SimpleFeatureType, SimpleFeature> features = dsInfo.getFeatures();
+            UserLayer userLayer = dsInfo.getUserLayer();
+
+            map.put(userLayer, features);
+        }
+        return map;
     }
 }

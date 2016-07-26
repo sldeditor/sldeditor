@@ -36,7 +36,6 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
-import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import com.sldeditor.ui.render.RuleRenderOptions;
 
 /**
@@ -255,16 +254,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
         {
             if(dataSourceProperties == null)
             {
-                StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
-
-                if(InlineFeatureUtils.containsInLineFeatures(sld))
-                {
-                    this.sldData.setDataSourceProperties(DataSourceConnectorFactory.getInLineDataSource());
-                }
-                else
-                {
-                    this.sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
-                }
+                this.sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
             }
             else
             {

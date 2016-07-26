@@ -23,22 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.data.DataStore;
-import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
-import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.feature.type.Name;
 
 import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class CreateInlineDataSource.
@@ -48,18 +42,22 @@ import com.vividsolutions.jts.geom.Geometry;
 public class CreateInlineDataSource implements CreateDataSourceInterface {
 
     /** The data source info. */
-    private DataSourceInfo dsInfo = new DataSourceInfo();
+    private List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
 
     /**
      * Creates the data source.
      *
      * @param editorFile the editor file
-     * @return the data source info
+     * @return the list of data stores
      */
     @Override
-    public DataSourceInfo connect(SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
     {
-        dsInfo.reset();
+        for(DataSourceInfo dsInfo : dataSourceInfoList)
+        {
+            dsInfo.reset();
+        }
+        dataSourceInfoList.clear();
 
         if(editorFile != null)
         {
@@ -68,34 +66,38 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
 
             List<UserLayer> userLayerList = InlineFeatureUtils.extractUserLayers(sld);
 
-            UserLayer userLayer = userLayerList.get(0);
+            for(UserLayer userLayer : userLayerList)
+            {
+                DataSourceInfo dsInfo = new DataSourceInfo();
+                dsInfo.setUserLayer(userLayer);
+                dataSourceInfoList.add(dsInfo);
+                DataStore dataStore = userLayer.getInlineFeatureDatastore();
+                try {
+                    // Set the type name
+                    String typeName = dataStore.getTypeNames()[0];
+                    dsInfo.setTypeName(typeName);
 
-            DataStore dataStore = userLayer.getInlineFeatureDatastore();
-            try {
-                // Set the type name
-                String typeName = dataStore.getTypeNames()[0];
-                dsInfo.setTypeName(typeName);
+                    List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
 
-                List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
+                    // Store the fields
+                    sldData.setFieldList(fieldList);
 
-                // Store the fields
-                sldData.setFieldList(fieldList);
+                    SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
+                    SimpleFeatureType schema = source.getSchema();
+                    dsInfo.setSchema(schema);
 
-                SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
-                SimpleFeatureType schema = source.getSchema();
-                dsInfo.setSchema(schema);
+                    dsInfo.setDataStore(dataStore);
 
-                dsInfo.setDataStore(dataStore);
+                    GeometryTypeEnum geometryType = InlineFeatureUtils.determineGeometryType(schema.getGeometryDescriptor(),
+                            source.getFeatures());
 
-                GeometryTypeEnum geometryType = InlineFeatureUtils.determineGeometryType(schema.getGeometryDescriptor(),
-                        source.getFeatures());
-
-                dsInfo.setGeometryType(geometryType);
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-                dsInfo.reset();
+                    dsInfo.setGeometryType(geometryType);
+                } catch (IOException e) {
+                    ConsoleManager.getInstance().exception(this, e);
+                    dsInfo.reset();
+                }
             }
         }
-        return dsInfo;
+        return dataSourceInfoList;
     }
 }

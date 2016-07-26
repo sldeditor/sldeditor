@@ -20,9 +20,11 @@ package com.sldeditor.datasource;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
+import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
@@ -154,5 +156,12 @@ public interface DataSourceInterface {
      * @return the grid coverage reader
      */
     AbstractGridCoverage2DReader getGridCoverageReader();
+
+    /**
+     * Gets the user layer feature source.
+     *
+     * @return the user layer feature source
+     */
+    Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource();
 
 }

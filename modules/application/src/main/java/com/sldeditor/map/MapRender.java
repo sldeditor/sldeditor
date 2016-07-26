@@ -27,6 +27,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -44,6 +45,7 @@ import org.geotools.map.MapContent;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayer;
 import org.geotools.styling.UserLayerImpl;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.NoToolAction;
@@ -94,6 +96,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The feature list. */
     private FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
+    /** The user feature list. */
+    private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature> > userLayerFeatureListMap = null;
+    
     /** The map pane. */
     private JMapPane mapPane = null;
 
@@ -252,7 +257,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                     {
                         for(Style style : styleList)
                         {
-                            renderSymbol(style);
+                            renderSymbol(styledLayer, style);
                         }
                     }
                 }
@@ -263,9 +268,10 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /**
      * Render symbol.
      *
+     * @param styledLayer the styled layer
      * @param style the style
      */
-    private void renderSymbol(Style style)
+    private void renderSymbol(StyledLayer styledLayer, Style style)
     {
         MapContent existing = mapPane.getMapContent();
         if(existing != null)
@@ -287,12 +293,25 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         case POINT:
         case LINE:
         case POLYGON:
+        {
+            FeatureSource<SimpleFeatureType, SimpleFeature> tmpFeatureList = null;
+            
+            if(styledLayer instanceof UserLayer)
+            {
+                tmpFeatureList = userLayerFeatureListMap.get(styledLayer);
+            }
+            else
+            {
+                tmpFeatureList = featureList;
+            }
+            
             try {
                 wmsEnvVarValues.setMapBounds(featureList.getFeatures().getBounds());
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(MapRender.class, e);
             }
-            mapContent.addLayer(new FeatureLayer(featureList, (org.geotools.styling.Style) style));
+            mapContent.addLayer(new FeatureLayer(tmpFeatureList, (org.geotools.styling.Style) style));
+        }
             break;
         default:
             break;
@@ -338,6 +357,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         this.geometryType = geometryType;
         featureList = DataSourceFactory.getDataSource().getFeatureSource();
+        userLayerFeatureListMap = DataSourceFactory.getDataSource().getUserLayerFeatureSource();
         gridCoverage = DataSourceFactory.getDataSource().getGridCoverageReader();
 
         CardLayout cardLayout = (CardLayout) mapPanel.getLayout();

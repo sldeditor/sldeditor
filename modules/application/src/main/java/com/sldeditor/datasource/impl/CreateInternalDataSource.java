@@ -18,6 +18,7 @@
  */
 package com.sldeditor.datasource.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,11 +71,14 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * Creates the.
      *
      * @param editorFile the editor file
-     * @return the data source info
+     * @return the list of datastores
      */
     @Override
-    public DataSourceInfo connect(SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
     {
+        List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
+        dataSourceInfoList.add(dsInfo);
+
         dsInfo.reset();
 
         if(editorFile != null)
@@ -134,7 +138,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
             dsInfo.setDataStore(dataStore);
         }
-        return dsInfo;
+        return dataSourceInfoList;
     }
 
     /**

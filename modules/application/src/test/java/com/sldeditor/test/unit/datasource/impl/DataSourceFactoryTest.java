@@ -23,9 +23,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
+import org.geotools.styling.UserLayer;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -59,7 +61,7 @@ public class DataSourceFactoryTest {
     class DummyDataSource implements DataSourceInterface
     {
         public GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
-        
+
         @Override
         public void addListener(DataSourceUpdatedInterface listener) {
         }
@@ -133,8 +135,13 @@ public class DataSourceFactoryTest {
         public FeatureSource<SimpleFeatureType, SimpleFeature> getExampleFeatureSource() {
             return null;
         }
-        
+
+        @Override
+        public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+            return null;
+        }
     }
+
     /**
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#createDataSource(java.lang.String)}.
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#getDataSource()}.
