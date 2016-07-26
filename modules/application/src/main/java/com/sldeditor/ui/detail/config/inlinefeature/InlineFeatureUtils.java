@@ -66,6 +66,11 @@ public class InlineFeatureUtils {
      */
     public static String getInlineFeaturesText(UserLayer userLayer)
     {
+        if(userLayer == null)
+        {
+            return "";
+        }
+
         // Inline features
         SLDTransformer transform = new SLDTransformer();
 
@@ -76,13 +81,15 @@ public class InlineFeatureUtils {
             transform.createTransformer();
             transform.transform(userLayer, stringWriter);
         } catch (TransformerException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
+            return null;
         }
 
         String userLayerXML = stringWriter.toString();
 
         int beginIndex = userLayerXML.indexOf(GML_START);
         StringBuilder sb = new StringBuilder();
+        sb.append("\n");
         int index = beginIndex - 1;
         while(index > 0)
         {
@@ -101,9 +108,9 @@ public class InlineFeatureUtils {
 
         String extract = userLayerXML.substring(beginIndex, endIndex);
 
-        extract = extract.replace(sb.toString(), "");
-        return(extract);
+        extract = extract.replace(sb.toString(), "\n");
 
+        return(extract);
     }
 
     /**
