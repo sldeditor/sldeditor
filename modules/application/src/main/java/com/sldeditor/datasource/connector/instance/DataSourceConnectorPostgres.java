@@ -270,4 +270,13 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
         return connectPropertyMap;
     }
 
+    /**
+     * Checks if data source is inline.
+     *
+     * @return true, if data source is inline
+     */
+    @Override
+    public boolean isInLine() {
+        return false;
+    }
 }

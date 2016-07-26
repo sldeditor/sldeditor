@@ -244,7 +244,8 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
          */
         @Override
         public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-                CreateDataSourceInterface externalDataSource) {
+                CreateDataSourceInterface externalDataSource,
+                CreateDataSourceInterface inlineDataSource) {
         }
 
         /**

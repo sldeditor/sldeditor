@@ -131,13 +131,15 @@ public interface DataSourceInterface {
     void addField(DataSourceFieldInterface dataSourceField);
 
     /**
-     * Sets the data source creation lcasses.
+     * Sets the data source creation classes.
      *
      * @param internalDataSource the internal data source
      * @param externalDataSource the external data source
+     * @param inlineDataSource the inline data source
      */
     void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-            CreateDataSourceInterface externalDataSource);
+            CreateDataSourceInterface externalDataSource,
+            CreateDataSourceInterface inlineDataSource);
 
     /**
      * Gets the property descriptor list.

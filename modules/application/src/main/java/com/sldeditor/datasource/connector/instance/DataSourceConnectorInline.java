@@ -19,58 +19,34 @@
 package com.sldeditor.datasource.connector.instance;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.sldeditor.common.Controller;
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.DataSourceInterface;
-import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
- * Data source connector for shape file data sources.
+ * Data source connector for inline data sources.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceConnectorShapeFile implements DataSourceConnectorInterface
+public class DataSourceConnectorInline implements DataSourceConnectorInterface
 {
-    /** The supported file types. */
-    private static String[] supportedFileTypes = {"shp"};
-
     /** The supported file type list. */
-    private List<String> supportedFileTypeList = Arrays.asList(supportedFileTypes);
-
-    /** The data source text field. */
-    private JTextField dataSourceTextField;
+    private List<String> supportedFileTypeList = null;
 
     /** The data source field panel. */
     private JPanel dataSourceFieldPanel;
 
-    /** The data source. */
-    private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
-
     /**
      * Default constructor
      */
-    public DataSourceConnectorShapeFile()
+    public DataSourceConnectorInline()
     {
         createUI();
     }
@@ -81,7 +57,7 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
     @Override
     public String getDisplayName()
     {
-        return "Shape File";
+        return "Inline";
     }
 
     /* (non-Javadoc)
@@ -102,20 +78,6 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
         FlowLayout flowLayout = (FlowLayout) dataSourceFieldPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-
-        JButton btnNewData = new JButton(Localisation.getString(DataSourceConnectorShapeFile.class, "DataSourceConnectorShapeFile.data"));
-        dataSourceFieldPanel.add(btnNewData);
-
-        dataSourceTextField = new JTextField();
-        dataSourceFieldPanel.add(dataSourceTextField);
-        dataSourceTextField.setColumns(50);
-
-        btnNewData.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                chooseDataSourceToOpen();
-            }
-        });
     }
 
     /* (non-Javadoc)
@@ -190,54 +152,7 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
     @Override
     public void populate(DataSourcePropertiesInterface dataSourceProperties)
     {
-        if(dataSourceProperties != null)
-        {
-            dataSourceTextField.setText(dataSourceProperties.getFilename());
-        }
-    }
-
-    /**
-     * Choose data source to open.
-     */
-    private void chooseDataSourceToOpen() {
-
-        DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance().getDataSource();
-        String dataSourceString = null;
-
-        if(dsProperties != null)
-        {
-            dataSourceString = dsProperties.getFilename();
-        }
-
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Shape files", "shp");
-        fileChooser.setFileFilter(filter);
-
-        try {
-            if(dataSourceString != null)
-            {
-                File f = new File(new File(dataSourceString).getCanonicalPath());
-                if(f.exists())
-                {
-                    fileChooser.setSelectedFile(f);
-                }
-            }
-
-            int result = fileChooser.showOpenDialog(Controller.getInstance().getFrame());
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-
-                dsProperties = getDataSourceProperties(DataSourceProperties.encodeFilename(selectedFile.toURI().toURL().toString()));
-
-                SLDEditorFile.getInstance().setDataSource(dsProperties);
-                if(dataSource != null)
-                {
-                    dataSource.connect(SLDEditorFile.getInstance());
-                }
-            }           
-        } catch (IOException e1) {
-            ConsoleManager.getInstance().exception(this, e1);
-        }
+//      No data displayed
     }
 
     /* (non-Javadoc)
@@ -269,6 +184,6 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
      */
     @Override
     public boolean isInLine() {
-        return false;
+        return true;
     }
 }

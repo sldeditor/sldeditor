@@ -201,7 +201,8 @@ public class FieldConfigGeometryFieldTest {
          */
         @Override
         public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-                CreateDataSourceInterface externalDataSource) {
+                CreateDataSourceInterface externalDataSource,
+                CreateDataSourceInterface inlineDataSource) {
         }
 
         /**

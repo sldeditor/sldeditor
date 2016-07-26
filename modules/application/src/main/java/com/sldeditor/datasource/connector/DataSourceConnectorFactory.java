@@ -26,6 +26,7 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorArcSDE;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorFileGDB;
+import com.sldeditor.datasource.connector.instance.DataSourceConnectorInline;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorRasterFile;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
@@ -44,6 +45,9 @@ public class DataSourceConnectorFactory
 
     /** The no data source. */
     private static DataSourceConnectorEmpty noDataSource;
+
+    /** The inline data source. */
+    private static DataSourceConnectorInline inlineDataSource;
 
     /**
      * Gets the data source connector list.
@@ -72,6 +76,8 @@ public class DataSourceConnectorFactory
         populate_internal(new DataSourceConnectorArcSDE());
         populate_internal(new DataSourceConnectorFileGDB());
         populate_internal(new DataSourceConnectorPostgres());
+        inlineDataSource = new DataSourceConnectorInline();
+        populate_internal(inlineDataSource);
     }
 
     /**
@@ -117,6 +123,16 @@ public class DataSourceConnectorFactory
     public static DataSourcePropertiesInterface getNoDataSource()
     {
         return new DataSourceProperties(noDataSource);
+    }
+
+    /**
+     * Gets the in line data source.
+     *
+     * @return the in line data source
+     */
+    public static DataSourcePropertiesInterface getInLineDataSource()
+    {
+        return new DataSourceProperties(inlineDataSource);
     }
 
     /**

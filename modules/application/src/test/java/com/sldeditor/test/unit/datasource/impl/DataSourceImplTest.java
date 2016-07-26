@@ -83,8 +83,9 @@ public class DataSourceImplTest {
 
         CreateDataSourceInterface internalDataSource = new CreateInternalDataSource();
         CreateDataSourceInterface externalDataSource = new DummyCreateDataSource();
+        CreateDataSourceInterface inlineDataSource = new DummyCreateDataSource();
 
-        ds.setDataSourceCreation(internalDataSource, externalDataSource);
+        ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
         ds.connect(editorFile);
 
         assertEquals(GeometryTypeEnum.POINT, dataSourceUpdateListener.geometryType);
@@ -174,8 +175,9 @@ public class DataSourceImplTest {
 
         CreateDataSourceInterface internalDataSource = new DummyCreateDataSource();
         CreateDataSourceInterface externalDataSource = new CreateExternalDataSource();
+        CreateDataSourceInterface inlineDataSource = new DummyCreateDataSource();
 
-        ds.setDataSourceCreation(internalDataSource, externalDataSource);
+        ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
         ds.connect(editorFile);
 
         assertEquals(GeometryTypeEnum.POINT, dataSourceUpdateListener.geometryType);

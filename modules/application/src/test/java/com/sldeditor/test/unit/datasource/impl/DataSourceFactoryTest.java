@@ -111,7 +111,8 @@ public class DataSourceFactoryTest {
 
         @Override
         public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-                CreateDataSourceInterface externalDataSource) {
+                CreateDataSourceInterface externalDataSource,
+                CreateDataSourceInterface inlineDataSource) {
         }
 
         @Override

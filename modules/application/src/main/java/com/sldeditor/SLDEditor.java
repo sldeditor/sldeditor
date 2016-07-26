@@ -556,15 +556,15 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 {
                     String layerName = firstObject.getLayerName();
 
-                    SLDEditorFile.getInstance().setSLDData(firstObject);
-                    dataSource.reset();
-
                     StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
 
                     SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
                     selectedSymbolInstance.setSld(sld);
                     selectedSymbolInstance.setFilename(layerName);
                     selectedSymbolInstance.setName(layerName);
+
+                    SLDEditorFile.getInstance().setSLDData(firstObject);
+                    dataSource.reset();
 
                     dataSource.connect(SLDEditorFile.getInstance());
 
@@ -626,7 +626,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 sldDataList = extension.open(url);
             }
         }
-        
+
         loadSLDString(false, false, sldDataList);
     }
 

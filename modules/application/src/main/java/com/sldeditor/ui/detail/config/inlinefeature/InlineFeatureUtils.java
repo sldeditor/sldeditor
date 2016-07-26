@@ -22,21 +22,33 @@ package com.sldeditor.ui.detail.config.inlinefeature;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.styling.SLDInlineFeatureParser;
 import org.geotools.styling.SLDTransformer;
+import org.geotools.styling.StyledLayer;
+import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.feature.type.Name;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.datasource.impl.GeometryTypeMapping;
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Utility methods to read/write inline features as GML
@@ -168,5 +180,119 @@ public class InlineFeatureUtils {
         } catch (ParserConfigurationException e) {
             ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
         }
+    }
+
+    /**
+     * Checks to see if SLD contains inline features.
+     *
+     * @param sld the sld
+     * @return true, if sld contains inline features
+     */
+    public static boolean containsInLineFeatures(StyledLayerDescriptor sld)
+    {
+        if(sld != null)
+        {
+            for(StyledLayer layer : sld.layers())
+            {
+                if(layer instanceof UserLayer)
+                {
+                    UserLayer userLayer = (UserLayer) layer;
+
+                    if(userLayer.getInlineFeatureDatastore() != null)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Extract user layers from an SLD.
+     *
+     * @param sld the sld
+     * @return the list of user layers
+     */
+    public static List<UserLayer> extractUserLayers(StyledLayerDescriptor sld)
+    {
+        List<UserLayer> userLayerList = new ArrayList<UserLayer>();
+
+        if(sld != null)
+        {
+            for(StyledLayer layer : sld.layers())
+            {
+                if(layer instanceof UserLayer)
+                {
+                    UserLayer userLayer = (UserLayer) layer;
+
+                    userLayerList.add(userLayer);
+                }
+            }
+        }
+        return userLayerList;
+    }
+
+    /**
+     * Determine geometry type.
+     *
+     * @param geometryDescriptor the geometry descriptor
+     * @param simpleFeatureCollection the simple feature collection
+     * @return the geometry type enum
+     */
+    public static GeometryTypeEnum determineGeometryType(GeometryDescriptor geometryDescriptor,
+            SimpleFeatureCollection simpleFeatureCollection) {
+        Class<?> bindingType = geometryDescriptor.getType().getBinding();
+
+        if(bindingType == Geometry.class)
+        {
+            Name geometryName = geometryDescriptor.getName();
+            SimpleFeatureIterator iterator = simpleFeatureCollection.features();
+
+            List<GeometryTypeEnum> geometryFeatures = new ArrayList<GeometryTypeEnum>();
+
+            while(iterator.hasNext())
+            {
+                SimpleFeature feature = iterator.next();
+
+                Object value = feature.getAttribute(geometryName);
+
+                if(value != null)
+                {
+                    GeometryTypeEnum geometryType = GeometryTypeMapping.getGeometryType(value.getClass());
+
+                    if(!geometryFeatures.contains(geometryType))
+                    {
+                        geometryFeatures.add(geometryType);
+                    }
+                }
+            }
+            return(combineGeometryType(geometryFeatures));
+        }
+        else
+        {
+            return GeometryTypeMapping.getGeometryType(bindingType);
+        }
+    }
+
+    /**
+     * Combine geometry type.
+     *
+     * @param geometryFeatures the geometry features
+     * @return the geometry type enum
+     */
+    public static GeometryTypeEnum combineGeometryType(List<GeometryTypeEnum> geometryFeatures) {
+        if(geometryFeatures != null)
+        {
+            if(geometryFeatures.size() == 1)
+            {
+                return geometryFeatures.get(0);
+            }
+            else
+            {
+                return geometryFeatures.get(0);
+            }
+        }
+        return GeometryTypeEnum.UNKNOWN;
     }
 }

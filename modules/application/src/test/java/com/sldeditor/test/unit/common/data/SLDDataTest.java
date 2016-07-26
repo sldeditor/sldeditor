@@ -95,6 +95,11 @@ public class SLDDataTest {
             return null;
         }
 
+        @Override
+        public boolean isInLine() {
+            return false;
+        }
+
     }
 
     class DummyDataSourceField implements DataSourceFieldInterface

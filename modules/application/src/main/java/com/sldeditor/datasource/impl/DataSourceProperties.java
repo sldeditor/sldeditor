@@ -209,9 +209,9 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     }
 
     /**
-     * Checks if is empty.
+     * Checks if data source is empty.
      *
-     * @return true, if is empty
+     * @return true, if data source is empty
      */
     @Override
     public boolean isEmpty()
@@ -219,6 +219,24 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
         if(dsc != null)
         {
             return dsc.isEmpty();
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /**
+     * Checks if data source is inline.
+     *
+     * @return true, if data source is inline
+     */
+    @Override
+    public boolean isInLine()
+    {
+        if(dsc != null)
+        {
+            return dsc.isInLine();
         }
         else
         {

@@ -33,6 +33,7 @@ import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
+import org.opengis.feature.GeometryAttribute;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
@@ -49,6 +50,7 @@ import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Class that represents an SLD Editor data source. Provides functionality to read and update its schema.
@@ -97,6 +99,9 @@ public class DataSourceImpl implements DataSourceInterface {
     /** The external data source. */
     private CreateDataSourceInterface externalDataSource = null;
 
+    /** The inline data source. */
+    private CreateDataSourceInterface inlineDataSource = null;
+
     /**
      * Default constructor.
      */
@@ -106,16 +111,20 @@ public class DataSourceImpl implements DataSourceInterface {
     }
 
     /**
-     * Sets the data source creation class.
+     * Sets the data source creation classes.
      *
      * @param internalDataSource the internal data source
      * @param externalDataSource the external data source
+     * @param inlineDataSource the inline data source
      */
     @Override
-    public void setDataSourceCreation(CreateDataSourceInterface internalDataSource, CreateDataSourceInterface externalDataSource)
+    public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
+            CreateDataSourceInterface externalDataSource,
+            CreateDataSourceInterface inlineDataSource)
     {
         this.internalDataSource = internalDataSource;
         this.externalDataSource = externalDataSource;
+        this.inlineDataSource = inlineDataSource;
     }
 
     /**
@@ -173,10 +182,43 @@ public class DataSourceImpl implements DataSourceInterface {
                 {
                     openWithoutDataSource();
                 }
+                else if(this.dataSourceProperties.isInLine())
+                {
+                    openInlineDataSource();
+                }
                 else
+
                 {
                     openExternalDataSource();
                 }
+            }
+        }
+    }
+
+    /**
+     * Open inline data source.
+     */
+    private void openInlineDataSource()
+    {
+        if(inlineDataSource == null)
+        {
+            ConsoleManager.getInstance().error(this, "No inline data source creation object set");
+        }
+        else
+        {
+            dataSourceInfo = inlineDataSource.connect(this.editorFileInterface);
+
+            if(dataSourceInfo.hasData())
+            {
+                populateFieldMap();
+
+                connectedToDataSourceFlag = true;
+
+                notifyDataSourceLoaded();
+            }
+            else
+            {
+                openWithoutDataSource();
             }
         }
     }
@@ -373,8 +415,16 @@ public class DataSourceImpl implements DataSourceInterface {
                 {
                     Name fieldName = fieldNameMap.get(i);
 
+                    Class<?> type = fieldTypeMap.get(i);
+                    
+                    if(type == Geometry.class)
+                    {
+                        Object value = feature.getAttribute(fieldName);
+
+                        type = value.getClass();
+                    }
                     DataSourceAttributeData data = new DataSourceAttributeData(fieldName,
-                            fieldTypeMap.get(i),
+                            type,
                             attributes.get(i));
 
                     valueMap.add(data);
