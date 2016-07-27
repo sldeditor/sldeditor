@@ -180,7 +180,10 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 {
                     String inlineFeatures = fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
 
-                    InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+                    if((inlineFeatures != null) && (!inlineFeatures.isEmpty()))
+                    {
+                        InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+                    }
                 }
                 break;
                 default:

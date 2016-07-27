@@ -18,14 +18,8 @@
  */
 package com.sldeditor.ui.detail.config.inlinefeature;
 
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTabbedPane;
 
 import org.opengis.filter.expression.Expression;
 
@@ -49,13 +43,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigInlineFeature extends FieldConfigBase implements UndoActionInterface {
-
-    /** The Constant FONT_SIZE. */
-    private static final int FONT_SIZE = 14;
-
-    /** The text field. */
-    private JTextArea textField;
+public class FieldConfigInlineFeature extends FieldConfigBase implements UndoActionInterface, InlineFeatureUpdateInterface {
 
     /** The default value. */
     private String defaultValue = "";
@@ -65,6 +53,11 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
 
     /** The number of rows the text area will have. */
     private int NO_OF_ROWS = 20;
+
+    /** The inline GML. */
+    private InlineGMLPreviewPanel inlineGML = null;
+
+    private JTabbedPane tabbedPane;
 
     /**
      * Instantiates a new field config string.
@@ -86,67 +79,17 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      */
     @Override
     public void createUI(Box parentBox) {
-        final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
         FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel(), parentBox);
 
-        int width = BasePanel.FIELD_PANEL_WIDTH - xPos - 20;
-        int height = BasePanel.WIDGET_HEIGHT * (NO_OF_ROWS - 1);
-        textField = new JTextArea();
-        textField.setBounds(xPos, BasePanel.WIDGET_HEIGHT, width, height);
-        Font font = textField.getFont();
+        inlineGML = new InlineGMLPreviewPanel(this, NO_OF_ROWS);
 
-        // Create a new, smaller font from the current font
-        Font updatedFont = new Font(font.getFontName(), font.getStyle(), FONT_SIZE);
-
-        // Set the new font in the editing area
-        textField.setFont(updatedFont);
-        textField.setEditable(true);
-
-        JScrollPane scroll = new JScrollPane(textField);
-        scroll.setBounds(xPos, BasePanel.WIDGET_HEIGHT, width, height);
-        scroll.setAutoscrolls(true);
-
-        fieldPanel.add(scroll);
-
-        //
-        // Apply button
-        //
-        final JButton buttonApply = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.apply"));
-        buttonApply.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                String value = textField.getText();
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, value));
-
-                oldValueObj = value;
-
-                valueUpdated();
-            }
-        });
-        buttonApply.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(buttonApply);
-
-        //
-        // Clear button
-        //
-        final JButton buttonClear = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.clear"));
-        buttonClear.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-
-                textField.setText("");
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, null));
-
-                valueUpdated();
-            }
-        });
-
-        buttonClear.setBounds((int)buttonApply.getBounds().getMaxX() + 5, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(buttonClear);
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml"), null, inlineGML,
+                Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml.tooltip"));
+        tabbedPane.setBounds(0, 0, inlineGML.getWidth(), inlineGML.getHeight());
+        fieldPanel.add(tabbedPane);
     }
 
     /**
@@ -174,9 +117,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void setEnabled(boolean enabled)
     {
-        if(textField != null)
+        if(inlineGML != null)
         {
-            textField.setEnabled(enabled);
+            inlineGML.setEnabled(enabled);
         }
     }
 
@@ -193,9 +136,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     {
         Expression expression = null;
 
-        if(this.textField != null)
+        if(inlineGML != null)
         {
-            String text = textField.getText();
+            String text = inlineGML.getInlineFeatures();
             if((text != null) && !text.isEmpty())
             {
                 expression = getFilterFactory().literal(text);
@@ -215,9 +158,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public boolean isEnabled()
     {
-        if(textField != null)
+        if(inlineGML != null)
         {
-            return textField.isEnabled();
+            return inlineGML.isEnabled();
         }
 
         return false;
@@ -270,9 +213,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public String getStringValue()
     {
-        if(textField != null)
+        if(inlineGML != null)
         {
-            return textField.getText();
+            return inlineGML.getInlineFeatures();
         }
         return null;
     }
@@ -285,13 +228,13 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if((textField != null) && (undoRedoObject != null))
+        if((inlineGML != null) && (undoRedoObject != null))
         {
             if(undoRedoObject.getOldValue() instanceof String)
             {
                 String oldValue = (String)undoRedoObject.getOldValue();
 
-                textField.setText(oldValue);
+                inlineGML.setInlineFeatures(oldValue);
             }
         }
     }
@@ -304,13 +247,13 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if((textField != null) && (undoRedoObject != null))
+        if((inlineGML != null) && (undoRedoObject != null))
         {
-            if(undoRedoObject.getOldValue() instanceof String)
+            if(undoRedoObject.getNewValue() instanceof String)
             {
                 String newValue = (String)undoRedoObject.getNewValue();
 
-                textField.setText(newValue);
+                inlineGML.setInlineFeatures(newValue);
             }
         }
     }
@@ -333,9 +276,9 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      */
     @Override
     public void populateField(String value) {
-        if(textField != null)
+        if(inlineGML != null)
         {
-            textField.setText(value);
+            inlineGML.setInlineFeatures(value);
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
@@ -380,9 +323,23 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      */
     @Override
     public void setVisible(boolean visible) {
-        if(textField != null)
+        if(tabbedPane != null)
         {
-            textField.setVisible(visible);
+            tabbedPane.setVisible(visible);
+        }
+    }
+
+    @Override
+    public void inlineFeatureUpdated() {
+        if(inlineGML != null)
+        {
+            String value = inlineGML.getInlineFeatures();
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+
+            oldValueObj = value;
+
+            valueUpdated();
         }
     }
 }

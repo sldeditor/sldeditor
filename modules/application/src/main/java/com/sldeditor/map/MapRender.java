@@ -402,7 +402,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             for(UserLayer userLayer : userLayerFeatureListMap.keySet())
             {
                 try {
-                    refEnvList.add(userLayerFeatureListMap.get(userLayer).getFeatures().getBounds());
+                    FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = userLayerFeatureListMap.get(userLayer);
+
+                    if(featureSource != null)
+                    {
+                        refEnvList.add(featureSource.getFeatures().getBounds());
+                    }
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(MapRender.class, e);
                 }
