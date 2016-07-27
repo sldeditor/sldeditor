@@ -18,6 +18,8 @@
  */
 package com.sldeditor.test.unit.datasource.impl;
 
+import java.util.List;
+
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceInfo;
@@ -33,10 +35,10 @@ public class DummyCreateDataSource implements CreateDataSourceInterface {
      * Connect.
      *
      * @param editorFile the editor file
-     * @return the data store
+     * @return the list
      */
     @Override
-    public DataSourceInfo connect(SLDEditorFileInterface editorFile) {
+    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile) {
         return null;
     }
 

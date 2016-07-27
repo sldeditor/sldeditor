@@ -20,9 +20,11 @@ package com.sldeditor.datasource;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
+import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
@@ -131,13 +133,15 @@ public interface DataSourceInterface {
     void addField(DataSourceFieldInterface dataSourceField);
 
     /**
-     * Sets the data source creation lcasses.
+     * Sets the data source creation classes.
      *
      * @param internalDataSource the internal data source
      * @param externalDataSource the external data source
+     * @param inlineDataSource the inline data source
      */
     void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-            CreateDataSourceInterface externalDataSource);
+            CreateDataSourceInterface externalDataSource,
+            CreateDataSourceInterface inlineDataSource);
 
     /**
      * Gets the property descriptor list.
@@ -153,4 +157,15 @@ public interface DataSourceInterface {
      */
     AbstractGridCoverage2DReader getGridCoverageReader();
 
+    /**
+     * Gets the user layer feature source.
+     *
+     * @return the user layer feature source
+     */
+    Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource();
+
+    /**
+     * Recreate inline data sources for user layers.
+     */
+    void updateUserLayers();
 }

@@ -34,7 +34,7 @@ import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 
 /**
- * The Class DummyExternalSLDEditorFile.
+ * The Class DummyExternalSLDFile.
  *
  * @author Robert Ward (SCISYS)
  */

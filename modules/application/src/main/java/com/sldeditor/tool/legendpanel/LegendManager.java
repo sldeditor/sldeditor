@@ -46,10 +46,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.geotools.styling.NamedLayer;
+import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
@@ -177,12 +178,23 @@ public class LegendManager implements LegendOptionDataUpdateInterface
 
             for(StyledLayer styledLayer : styledLayerList)
             {
-                if(styledLayer instanceof NamedLayer)
+                List<Style> styleList = null;
+
+                if(styledLayer instanceof NamedLayerImpl)
                 {
-                    NamedLayer namedLayer = (NamedLayer)styledLayer;
+                    NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
 
-                    List<Style> styleList = namedLayer.styles();
+                    styleList = namedLayer.styles();
+                }
+                else if(styledLayer instanceof UserLayerImpl)
+                {
+                    UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
 
+                    styleList = userLayer.userStyles();
+                }
+
+                if(styleList != null)
+                {
                     for(Style style : styleList)
                     {
                         if(!style.featureTypeStyles().isEmpty())

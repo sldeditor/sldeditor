@@ -18,6 +18,8 @@
  */
 package com.sldeditor.datasource.impl;
 
+import java.util.List;
+
 import com.sldeditor.datasource.SLDEditorFileInterface;
 
 /**
@@ -28,11 +30,11 @@ import com.sldeditor.datasource.SLDEditorFileInterface;
 public interface CreateDataSourceInterface {
 
     /**
-     * Connect to the external data source.
+     * Connect to the data source.
      *
      * @param editorFile the editor file
-     * @return the data store
+     * @return the list
      */
-    DataSourceInfo connect(SLDEditorFileInterface editorFile);
+    List<DataSourceInfo> connect(SLDEditorFileInterface editorFile);
 
 }

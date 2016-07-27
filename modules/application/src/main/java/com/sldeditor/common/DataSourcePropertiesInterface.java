@@ -87,9 +87,9 @@ public interface DataSourcePropertiesInterface {
     void encodeXML(Document doc, Element root, String elementName);
 
     /**
-     * Checks if is empty.
+     * Checks if data source is empty.
      *
-     * @return true, if is empty
+     * @return true, if data source is empty
      */
     boolean isEmpty();
 

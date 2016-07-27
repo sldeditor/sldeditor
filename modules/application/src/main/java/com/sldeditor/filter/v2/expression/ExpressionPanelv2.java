@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -54,6 +55,7 @@ import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.geotools.filter.function.FilterFunction_strConcat;
 import org.geotools.filter.text.cql2.CQL;
+import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
@@ -244,7 +246,8 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
          */
         @Override
         public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-                CreateDataSourceInterface externalDataSource) {
+                CreateDataSourceInterface externalDataSource,
+                CreateDataSourceInterface inlineDataSource) {
         }
 
         /**
@@ -285,6 +288,15 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
         @Override
         public FeatureSource<SimpleFeatureType, SimpleFeature> getExampleFeatureSource() {
             return null;
+        }
+
+        @Override
+        public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+            return null;
+        }
+
+        @Override
+        public void updateUserLayers() {
         }
     }
 

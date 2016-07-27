@@ -60,6 +60,10 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_GREY_CHANNEL_OPTION"/&gt;
  *     &lt;enumeration value="RASTER_GREY_CHANNEL"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST"/&gt;
+ *     &lt;enumeration value="REMOTE_OWS"/&gt;
+ *     &lt;enumeration value="FEATURE_TYPE_CONSTRAINTS"/&gt;
+ *     &lt;enumeration value="INLINE_FEATURE"/&gt;
+ *     &lt;enumeration value="USER_LAYER_SOURCE"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -106,7 +110,11 @@ public enum GroupIdEnum {
     RASTER_RGB_CHANNEL_BLUE_CONTRAST,
     RASTER_GREY_CHANNEL_OPTION,
     RASTER_GREY_CHANNEL,
-    RASTER_RGB_CHANNEL_GREY_CONTRAST;
+    RASTER_RGB_CHANNEL_GREY_CONTRAST,
+    REMOTE_OWS,
+    FEATURE_TYPE_CONSTRAINTS,
+    INLINE_FEATURE,
+    USER_LAYER_SOURCE;
 
     public String value() {
         return name();

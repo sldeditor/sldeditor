@@ -21,6 +21,8 @@ package com.sldeditor.test.unit.datasource.impl;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -41,16 +43,19 @@ public class CreateExternalDataSourceTest {
     @Test
     public void testConnect() {
         CreateExternalDataSource ds = new CreateExternalDataSource();
-        
-        DataSourceInfo dsInfo = ds.connect(null);
-        
+
+        List<DataSourceInfo> dataSourceInfoList = ds.connect(null);
+
+        DataSourceInfo dsInfo = dataSourceInfoList.get(0);
+
         assertTrue(dsInfo != null);
         assertNull(dsInfo.getDataStore());
         assertNull(dsInfo.getTypeName());
 
         SLDEditorFileInterface sldEditor = new DummyExternalSLDFile(); 
-        dsInfo = ds.connect(sldEditor);
-        
+        dataSourceInfoList = ds.connect(sldEditor);
+        dsInfo = dataSourceInfoList.get(0);
+
         assertTrue(dsInfo != null);
         assertTrue(dsInfo.getTypeName() != null);
         assertTrue(dsInfo.getDataStore() != null);

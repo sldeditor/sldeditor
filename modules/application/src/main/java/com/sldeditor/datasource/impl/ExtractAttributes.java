@@ -30,6 +30,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.geotools.styling.StyledLayer;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayer;
+import org.geotools.styling.UserLayerImpl;
+import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -40,6 +45,8 @@ import org.xml.sax.SAXException;
 
 import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.datasource.DataSourceField;
 import com.sldeditor.filter.v2.function.FunctionManager;
 
@@ -104,31 +111,67 @@ public class ExtractAttributes {
      * Extract the default fields.
      *
      * @param b the feature type builder
-     * @param encodedSLD the encoded sld
-     * @return the list
+     * @param sld the sld
      */
-    public void extractDefaultFields(SimpleFeatureTypeBuilder b, String encodedSLD)
+    public void extractDefaultFields(SimpleFeatureTypeBuilder b, StyledLayerDescriptor sld)
     {
-        try
-        {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(encodedSLD));
-            Document doc = builder.parse(is);
+        // Remove inline features
+        String sldContents = preprocessSLD(sld);
 
-            Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
-
-            extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
-            extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
-        }
-        catch(IOException e)
+        if((sldContents != null) && (b != null))
         {
-            ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-        } catch (SAXException e) {
-            ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-        } catch (ParserConfigurationException e) {
-            ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            try
+            {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                InputSource is = new InputSource(new StringReader(sldContents));
+                Document doc = builder.parse(is);
+
+                Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
+
+                extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
+                extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
+            }
+            catch(IOException e)
+            {
+                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            } catch (SAXException e) {
+                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            } catch (ParserConfigurationException e) {
+                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            }
         }
+    }
+
+    /**
+     * Take a copy of the StyledLayerDescriptor and null out the inline features
+     *
+     * @param sld the original sld
+     * @return the string contents without the inline features
+     */
+    private String preprocessSLD(StyledLayerDescriptor sld) {
+        if(sld == null)
+        {
+            return null;
+        }
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
+
+        DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
+        sld.accept(duplicator);
+        StyledLayerDescriptor sldCopy = (StyledLayerDescriptor)duplicator.getCopy();
+
+        for(StyledLayer styledLayer : sldCopy.layers())
+        {
+            if(styledLayer instanceof UserLayer)
+            {
+                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
+                userLayer.setInlineFeatureDatastore(null);
+                userLayer.setInlineFeatureType(null);
+            }
+        }
+
+        String sldContents = sldWriter.encodeSLD(sldCopy);
+        return sldContents;
     }
 
     /**

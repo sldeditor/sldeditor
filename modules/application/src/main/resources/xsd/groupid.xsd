@@ -71,6 +71,11 @@
             <xs:enumeration value="RASTER_GREY_CHANNEL_OPTION" />
             <xs:enumeration value="RASTER_GREY_CHANNEL" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST" />
+
+            <xs:enumeration value="REMOTE_OWS" />
+            <xs:enumeration value="FEATURE_TYPE_CONSTRAINTS" />
+            <xs:enumeration value="INLINE_FEATURE" />
+            <xs:enumeration value="USER_LAYER_SOURCE" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

@@ -79,9 +79,9 @@ public interface DataSourceConnectorInterface
     public void populate(DataSourcePropertiesInterface dataSourceProperties);
 
     /**
-     * Checks if is empty.
+     * Checks if data source is empty.
      *
-     * @return true, if is empty
+     * @return true, if data source is empty
      */
     public boolean isEmpty();
 

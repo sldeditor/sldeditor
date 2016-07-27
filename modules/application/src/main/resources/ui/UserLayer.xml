@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="userlayer.paneltitle">
+    <Group id="STANDARD" showLabel="false">
+        <FieldConfigString id="NAME" label="*standard.name"
+            valueOnly="true" />
+    </Group>
+    <Group id="FEATURE_TYPE_CONSTRAINTS" showLabel="false">
+        <FieldConfigFeatureTypeConstraint id="LAYER_FEATURE_CONSTRAINTS" label="userlayer.featuretypeconstraint" valueOnly="true" />
+    </Group>
+    <MultiOptionGroup id="USER_LAYER_SOURCE" label="userlayer.source" showLabel="true">
+        <OptionGroup id="REMOTE_OWS" label="userlayer.remoteows" showLabel="true">
+            <Group id="REMOTE_OWS" showLabel="false">
+                <FieldConfigString id="REMOTE_OWS_SERVICE" label="userlayer.service" valueOnly="true" />
+                <FieldConfigString id="REMOTE_OWS_ONLINERESOURCE" label="userlayer.onlineresource" valueOnly="true" />
+            </Group>
+        </OptionGroup>
+        <OptionGroup id="INLINE_FEATURE" label="userlayer.inlinefeature" showLabel="true">
+            <Group id="INLINE_FEATURE" showLabel="false">
+                <FieldConfigInlineFeature id="INLINE_FEATURE" valueOnly="true" />
+            </Group>
+        </OptionGroup>
+    </MultiOptionGroup>
+</PanelConfig>

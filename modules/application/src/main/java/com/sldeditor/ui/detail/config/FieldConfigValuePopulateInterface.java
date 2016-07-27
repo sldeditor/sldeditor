@@ -19,10 +19,12 @@
 package com.sldeditor.ui.detail.config;
 
 import java.util.Date;
+import java.util.List;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.opengis.filter.Id;
 
@@ -100,6 +102,13 @@ public interface FieldConfigValuePopulateInterface {
     public void populateField(ColorMap value);
 
     /**
+     * Populate feature type constraint map field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    public void populateField(List<FeatureTypeConstraint> value);
+
+    /**
      * Populate field.
      *
      * @param value the value
@@ -168,4 +177,11 @@ public interface FieldConfigValuePopulateInterface {
      * @return the font
      */
     public Font getFont();
+
+    /**
+     * Gets the feature type constraint.
+     *
+     * @return the feature type constraint
+     */
+    public List<FeatureTypeConstraint> getFeatureTypeConstraint();
 }

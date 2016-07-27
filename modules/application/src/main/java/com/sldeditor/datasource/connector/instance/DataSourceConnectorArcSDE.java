@@ -324,5 +324,4 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
         }
         return connectPropertyMap;
     }
-
 }

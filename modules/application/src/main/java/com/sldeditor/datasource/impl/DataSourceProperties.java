@@ -209,9 +209,9 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     }
 
     /**
-     * Checks if is empty.
+     * Checks if data source is empty.
      *
-     * @return true, if is empty
+     * @return true, if data source is empty
      */
     @Override
     public boolean isEmpty()

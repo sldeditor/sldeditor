@@ -165,6 +165,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigInlineFeature }
+     * 
+     */
+    public XMLFieldConfigInlineFeature createXMLFieldConfigInlineFeature() {
+        return new XMLFieldConfigInlineFeature();
+    }
+
+    /**
+     * Create an instance of {@link XMLFieldConfigFeatureTypeConstraint }
+     * 
+     */
+    public XMLFieldConfigFeatureTypeConstraint createXMLFieldConfigFeatureTypeConstraint() {
+        return new XMLFieldConfigFeatureTypeConstraint();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigEnum }
      * 
      */

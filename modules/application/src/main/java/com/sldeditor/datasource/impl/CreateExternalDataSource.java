@@ -20,6 +20,8 @@ package com.sldeditor.datasource.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
@@ -67,10 +69,13 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
      * Connect.
      *
      * @param editorFile the editor file
-     * @return the data store
+     * @return the list of datastores
      */
     @Override
-    public DataSourceInfo connect(SLDEditorFileInterface editorFile) {
+    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
+    {
+        List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
+        dataSourceInfoList.add(dsInfo);
 
         dsInfo.reset();
 
@@ -154,7 +159,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                 ConsoleManager.getInstance().error(this, "Failed to connect to data source : " + dataSourceProperties.getDebugConnectionString());
             }
         }
-        return dsInfo;
+        return dataSourceInfoList;
     }
 
     /**

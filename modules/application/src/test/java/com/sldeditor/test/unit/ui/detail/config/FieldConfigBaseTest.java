@@ -40,6 +40,7 @@ import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
@@ -606,6 +607,10 @@ public class FieldConfigBaseTest {
         field.populateField((ColorMap)null);
         field.setTestValue(expectedFieldId, (ColorMap)null);
         assertNull(field.getColourMap());
+
+        field.populateField((List<FeatureTypeConstraint>)null);
+        field.setTestValue(expectedFieldId, (List<FeatureTypeConstraint>)null);
+        assertNull(field.getFeatureTypeConstraint());
 
         field.populateField((Font)null);
         assertNull(field.getFont());

@@ -19,9 +19,11 @@
 package com.sldeditor.ui.detail.config;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.opengis.filter.expression.Expression;
 
@@ -158,6 +160,24 @@ public class FieldConfigPopulation {
         if(fieldConfig != null)
         {
             fieldConfig.populateField(colourMap);
+        }
+    }
+
+    /**
+     * Populate feature type constraint field.
+     *
+     * @param fieldId the field id
+     * @param ftcList the ftc list
+     */
+    public void populateFieldTypeConstraint(FieldIdEnum fieldId, List<FeatureTypeConstraint> ftcList) {
+        if(fieldConfigManager == null)
+        {
+            return;
+        }
+        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        if(fieldConfig != null)
+        {
+            fieldConfig.populateField(ftcList);
         }
     }
 
@@ -433,6 +453,35 @@ public class FieldConfigPopulation {
             }
         }
         return "";
+    }
+
+    /**
+     * Gets the feature type constraint.
+     *
+     * @return the feature type constraint
+     */
+    public List<FeatureTypeConstraint> getFeatureTypeConstraint(FieldIdEnum fieldIdEnum)
+    {
+        return getFeatureTypeConstraint(new FieldId(fieldIdEnum));
+    }
+
+    /**
+     * Gets the list of feature type constraints
+     *
+     * @param fieldId the field id
+     * @return the list of feature type constraints
+     */
+    public List<FeatureTypeConstraint> getFeatureTypeConstraint(FieldId fieldId) {
+        if(fieldConfigManager != null)
+        {
+            FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
+
+            if(fieldConfig != null)
+            {
+                return fieldConfig.getFeatureTypeConstraint();
+            }
+        }
+        return null;
     }
 
     /**

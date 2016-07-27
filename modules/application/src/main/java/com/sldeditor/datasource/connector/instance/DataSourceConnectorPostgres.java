@@ -269,5 +269,4 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
         }
         return connectPropertyMap;
     }
-
 }

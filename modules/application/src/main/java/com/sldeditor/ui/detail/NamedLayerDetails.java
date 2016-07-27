@@ -18,6 +18,9 @@
  */
 package com.sldeditor.ui.detail;
 
+import java.util.List;
+
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Style;
@@ -72,6 +75,11 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
                 NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
 
                 fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, namedLayer.getName());
+
+                // Feature layer constraint
+                List<FeatureTypeConstraint> ftcList = namedLayer.layerFeatureConstraints();
+
+                fieldConfigVisitor.populateFieldTypeConstraint(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS, ftcList);
             }
         }
     }
@@ -93,6 +101,14 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
             String name = fieldConfigVisitor.getText(new FieldId(FieldIdEnum.NAME));
             NamedLayer namedLayer = getStyleFactory().createNamedLayer();
             namedLayer.setName(name);
+
+            // Feature type constraints
+            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor.getFeatureTypeConstraint(new FieldId(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS));
+            if((ftcList != null) && !ftcList.isEmpty())
+            {
+                FeatureTypeConstraint[] ftcArray = new FeatureTypeConstraint[ftcList.size()];
+                namedLayer.setLayerFeatureConstraints(ftcList.toArray(ftcArray));
+            }
 
             StyledLayer existingStyledLayer = SelectedSymbol.getInstance().getStyledLayer();
             if(existingStyledLayer instanceof NamedLayerImpl)

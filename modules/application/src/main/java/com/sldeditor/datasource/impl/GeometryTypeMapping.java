@@ -59,14 +59,14 @@ public class GeometryTypeMapping {
      * @return the geometry type
      */
     public static GeometryTypeEnum getGeometryType(Class<?> bindingType) {
-        
+
         GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
-        
+
         if(geometryMap.isEmpty())
         {
             populate();
         }
-        
+
         if(geometryMap.containsKey(bindingType))
         {
             geometryType = geometryMap.get(bindingType);
@@ -75,7 +75,7 @@ public class GeometryTypeMapping {
         {
             ConsoleManager.getInstance().error(GeometryTypeMapping.class, "Unsupported geometry type : " + bindingType.getName());
         }
-        
+
         return geometryType;
     }
 }

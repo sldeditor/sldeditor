@@ -94,7 +94,6 @@ public class SLDDataTest {
         public String getDebugConnectionString() {
             return null;
         }
-
     }
 
     class DummyDataSourceField implements DataSourceFieldInterface

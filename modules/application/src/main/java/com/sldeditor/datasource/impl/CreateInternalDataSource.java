@@ -18,6 +18,7 @@
  */
 package com.sldeditor.datasource.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,12 +34,11 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayerImpl;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -71,11 +71,14 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * Creates the.
      *
      * @param editorFile the editor file
-     * @return the data source info
+     * @return the list of datastores
      */
     @Override
-    public DataSourceInfo connect(SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
     {
+        List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
+        dataSourceInfoList.add(dsInfo);
+
         dsInfo.reset();
 
         if(editorFile != null)
@@ -98,8 +101,6 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             //add a geometry property
             b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
 
-            SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
-
             List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
 
             // Set the geometry field by default
@@ -108,7 +109,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             if((fieldList == null) || fieldList.isEmpty())
             {
                 ExtractAttributes extract = new ExtractAttributes();
-                extract.extractDefaultFields(b, sldWriter.encodeSLD(sld));
+                extract.extractDefaultFields(b, sld);
                 fieldList = extract.getFields();
 
                 List<String> geometryFields = extract.getGeometryFields();
@@ -137,7 +138,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
             dsInfo.setDataStore(dataStore);
         }
-        return dsInfo;
+        return dataSourceInfoList;
     }
 
     /**
@@ -215,11 +216,24 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
         for(StyledLayer styledLayer : styledLayerList)
         {
+            List<Style> styleList = null;
+
             if(styledLayer instanceof NamedLayerImpl)
             {
                 NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
 
-                for(Style style : namedLayerImpl.styles())
+                styleList = namedLayerImpl.styles();
+            }
+            else if(styledLayer instanceof UserLayerImpl)
+            {
+                UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+
+                styleList = userLayerImpl.userStyles();
+            }
+
+            if(styleList != null)
+            {
+                for(Style style : styleList)
                 {
                     for(FeatureTypeStyle fts : style.featureTypeStyles())
                     {

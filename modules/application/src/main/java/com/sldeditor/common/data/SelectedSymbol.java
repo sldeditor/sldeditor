@@ -36,6 +36,8 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
+import org.geotools.styling.UserLayer;
+import org.geotools.styling.UserLayerImpl;
 import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -266,77 +268,85 @@ public class SelectedSymbol {
                     return;
                 }
 
+                List<Style> styleList = null;
+
                 if((styledLayer instanceof NamedLayerImpl) && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER))
                 {
                     NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                    styleList = namedLayerImpl.styles();
+                }
+                else if((styledLayer instanceof UserLayerImpl) && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER))
+                {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                    styleList = userLayerImpl.userStyles();
+                }
 
-                    if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLE))
+                if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLE) && (styleList != null))
+                {
+                    localSymbolData.initialiseSelectedStyleIndex();
+                    for(Style style : styleList)
                     {
-                        localSymbolData.initialiseSelectedStyleIndex();
-                        for(Style style : namedLayerImpl.styles())
+                        localSymbolData.setStyle(style);
+
+                        if(style == symbolData.getStyle())
                         {
-                            localSymbolData.setStyle(style);
+                            this.symbolData.update(localSymbolData);
+                            return;
+                        }
 
-                            if(style == symbolData.getStyle())
+                        if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_FEATURE_TYPE_STYLE))
+                        {
+                            localSymbolData.initialiseSelectedFTSIndex();
+
+                            for(FeatureTypeStyle fts : style.featureTypeStyles())
                             {
-                                this.symbolData.update(localSymbolData);
-                                return;
-                            }
+                                localSymbolData.setFeatureTypeStyle(fts);
 
-                            if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_FEATURE_TYPE_STYLE))
-                            {
-                                localSymbolData.initialiseSelectedFTSIndex();
-
-                                for(FeatureTypeStyle fts : style.featureTypeStyles())
+                                if(fts == symbolData.getFeatureTypeStyle())
                                 {
-                                    localSymbolData.setFeatureTypeStyle(fts);
+                                    this.symbolData.update(localSymbolData);
+                                    return;
+                                }
 
-                                    if(fts == symbolData.getFeatureTypeStyle())
+                                if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_RULE))
+                                {
+                                    localSymbolData.initialiseSelectedRuleIndex();
+                                    for(Rule rule : fts.rules())
                                     {
-                                        this.symbolData.update(localSymbolData);
-                                        return;
-                                    }
+                                        localSymbolData.setRule(rule);
 
-                                    if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_RULE))
-                                    {
-                                        localSymbolData.initialiseSelectedRuleIndex();
-                                        for(Rule rule : fts.rules())
+                                        if(rule == symbolData.getRule())
                                         {
-                                            localSymbolData.setRule(rule);
+                                            this.symbolData.update(localSymbolData);
+                                            return;
+                                        }
 
-                                            if(rule == symbolData.getRule())
+                                        if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_SYMBOLIZER))
+                                        {
+                                            localSymbolData.initialiseSelectedSymbolizerIndex();
+
+                                            for(Symbolizer symbol : rule.symbolizers())
                                             {
-                                                this.symbolData.update(localSymbolData);
-                                                return;
-                                            }
+                                                localSymbolData.setSymbolizer(symbol);
 
-                                            if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_SYMBOLIZER))
-                                            {
-                                                localSymbolData.initialiseSelectedSymbolizerIndex();
-
-                                                for(Symbolizer symbol : rule.symbolizers())
+                                                if(symbol == this.symbolData.getSymbolizer())
                                                 {
-                                                    localSymbolData.setSymbolizer(symbol);
-
-                                                    if(symbol == this.symbolData.getSymbolizer())
-                                                    {
-                                                        this.symbolData.update(localSymbolData);
-                                                        break;
-                                                    }
-                                                    else
-                                                    {
-                                                        localSymbolData.incrementSelectedSymbolizerIndex();
-                                                    }
+                                                    this.symbolData.update(localSymbolData);
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    localSymbolData.incrementSelectedSymbolizerIndex();
                                                 }
                                             }
-                                            localSymbolData.incrementSelectedRuleIndex();
                                         }
+                                        localSymbolData.incrementSelectedRuleIndex();
                                     }
-                                    localSymbolData.incrementSelectedFTSIndex();
                                 }
+                                localSymbolData.incrementSelectedFTSIndex();
                             }
-                            localSymbolData.incrementSelectedStyleIndex();
                         }
+                        localSymbolData.incrementSelectedStyleIndex();
                     }
                 }
                 localSymbolData.incrementSelectedStyledLayerIndex();
@@ -383,11 +393,24 @@ public class SelectedSymbol {
         {
             for(StyledLayer styledLayer : styledLayers)
             {
+                List<Style> styleList = null;
+
                 if(styledLayer instanceof NamedLayerImpl)
                 {
                     NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
 
-                    for(Style style : namedLayerImpl.styles())
+                    styleList = namedLayerImpl.styles();
+                }
+                else if(styledLayer instanceof UserLayerImpl)
+                {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+
+                    styleList = userLayerImpl.userStyles();
+                }
+
+                if(styleList != null)
+                {
+                    for(Style style : styleList)
                     {
                         for(FeatureTypeStyle fts : style.featureTypeStyles())
                         {
@@ -503,7 +526,7 @@ public class SelectedSymbol {
     }
 
     /**
-     * Replace styled layer.
+     * Replace named layer.
      *
      * @param newNamedLayer the new named layer
      */
@@ -535,6 +558,42 @@ public class SelectedSymbol {
             styledLayerList[indexFound] = newNamedLayer;
             this.sld.setStyledLayers(styledLayerList);
             setStyledLayer(newNamedLayer);
+        }
+    }
+
+    /**
+     * Replace styled user layer.
+     *
+     * @param newUserLayer the new user layer
+     */
+    public void replaceStyledLayer(UserLayer newUserLayer) {
+
+        if(this.sld == null)
+        {
+            return;
+        }
+        StyledLayer[] styledLayerList = this.sld.getStyledLayers();
+
+        int indexFound = -1;
+        int index = 0;
+        for(StyledLayer styledLayer : styledLayerList)
+        {
+            if(styledLayer == this.symbolData.getStyledLayer())
+            {
+                indexFound = index;
+                break;
+            }
+            else
+            {
+                index ++;
+            }
+        }
+
+        if(indexFound > -1)
+        {
+            styledLayerList[indexFound] = newUserLayer;
+            this.sld.setStyledLayers(styledLayerList);
+            setStyledLayer(newUserLayer);
         }
     }
 
@@ -589,12 +648,23 @@ public class SelectedSymbol {
      */
     public void replaceStyle(Style newStyle) {
 
+        List<Style> styleList = null;
+
         if(this.symbolData.getStyledLayer() instanceof NamedLayerImpl)
         {
             NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
 
-            List<Style> styleList = namedLayer.styles();
+            styleList = namedLayer.styles();
+        }
+        else if(this.symbolData.getStyledLayer() instanceof UserLayerImpl)
+        {
+            UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
 
+            styleList = userLayer.userStyles();
+        }
+
+        if(styleList != null)
+        {
             int indexFound = -1;
             int index = 0;
             for(Style style : styleList)
@@ -717,6 +787,14 @@ public class SelectedSymbol {
 
                 styleList.add(style);
             }
+            else if(this.symbolData.getStyledLayer() instanceof UserLayerImpl)
+            {
+                UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
+
+                List<Style> styleList = userLayer.userStyles();
+
+                styleList.add(style);
+            }
         }
     }
 
@@ -739,7 +817,7 @@ public class SelectedSymbol {
     }
 
     /**
-     * Adds the new styled layer.
+     * Adds the new named styled layer.
      *
      * @param namedLayer the named layer
      */
@@ -751,6 +829,22 @@ public class SelectedSymbol {
         else
         {
             this.sld.addStyledLayer(namedLayer);
+        }
+    }
+
+    /**
+     * Adds the new user styled layer.
+     *
+     * @param userLayer the user layer
+     */
+    public void addNewStyledLayer(UserLayer userLayer) {
+        if(this.sld == null)
+        {
+            ConsoleManager.getInstance().error(this, "sld == null");
+        }
+        else
+        {
+            this.sld.addStyledLayer(userLayer);
         }
     }
 
@@ -847,12 +941,23 @@ public class SelectedSymbol {
      * @param styleToDelete the style to delete
      */
     public void removeStyle(Style styleToDelete) {
+        List<Style> styleList = null;
+
         if(this.symbolData.getStyledLayer() instanceof NamedLayerImpl)
         {
             NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
 
-            List<Style> styleList = namedLayer.styles();
+            styleList = namedLayer.styles();
+        }
+        else if(this.symbolData.getStyledLayer() instanceof UserLayerImpl)
+        {
+            UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
 
+            styleList = userLayer.userStyles();
+        }
+
+        if(styleList != null)
+        {
             int indexFound = -1;
             int index = 0;
             for(Style style : styleList)
@@ -876,18 +981,18 @@ public class SelectedSymbol {
     }
 
     /**
-     * Removes the named layer.
+     * Removes the named/user layer.
      *
-     * @param namedLayerToDelete the named layer to delete
+     * @param layerToDelete the named/user layer to delete
      */
-    public void removeNamedLayer(NamedLayer namedLayerToDelete) {
+    public void removeUserNamedLayer(StyledLayer layerToDelete) {
         List<StyledLayer> styledLayerList = this.sld.layers();
 
         int indexFound = -1;
         int index = 0;
         for(StyledLayer styledLayer : styledLayerList)
         {
-            if(styledLayer == namedLayerToDelete)
+            if(styledLayer == layerToDelete)
             {
                 indexFound = index;
                 break;

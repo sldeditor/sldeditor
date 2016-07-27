@@ -35,6 +35,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
+import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.FilterFactory;
@@ -812,6 +813,26 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     }
 
     /**
+     * Populate feature type constraint map field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    public void populateField(List<FeatureTypeConstraint> value)
+    {
+        // Do nothing
+    }
+
+    /**
+     * Gets the feature type constraint.
+     *
+     * @return the feature type constraint
+     */
+    public List<FeatureTypeConstraint> getFeatureTypeConstraint()
+    {
+        return null;
+    }
+
+    /**
      * Sets the test value, overridden if necessary.
      *
      * @param fieldId the field id
@@ -867,6 +888,17 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     }
 
     /**
+     * Sets the test value, overridden if necessary.
+     *
+     * @param fieldId the field id
+     * @param testValue the test value
+     */
+    @Override
+    public void setTestValue(FieldId fieldId, List<FeatureTypeConstraint> testValue) {
+        // Do nothing
+    }
+
+    /**
      * Sets the test expression value.
      *
      * @param fieldId the field id
@@ -884,9 +916,11 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue) {
+    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue)
+    {
         // Do nothing
     }
+
     /**
      * Gets the double value, overridden if necessary.
      *
@@ -895,7 +929,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     @Override
     public double getDoubleValue() {
         // Do nothing
-        return 0;
+        return 0.0;
     }
 
     /**

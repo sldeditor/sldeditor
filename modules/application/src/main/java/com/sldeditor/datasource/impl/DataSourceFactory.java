@@ -51,6 +51,9 @@ public class DataSourceFactory {
     /** The external data source. */
     private static CreateDataSourceInterface externalDataSource = new CreateExternalDataSource();
 
+    /** The inline data source. */
+    private static CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
+
     /**
      * Creates a new DataSource object.
      *
@@ -64,7 +67,7 @@ public class DataSourceFactory {
             if((dataSource == null) || override.getClass() != dataSource.getClass())
             {
                 dataSource = override;
-                dataSource.setDataSourceCreation(internalDataSource, externalDataSource);
+                dataSource.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
             }
         }
         else
@@ -72,7 +75,7 @@ public class DataSourceFactory {
             if(dataSource == null)
             {
                 dataSource = new DataSourceImpl();
-                dataSource.setDataSourceCreation(internalDataSource, externalDataSource);
+                dataSource.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
             }
         }
         return dataSource;
