@@ -308,9 +308,13 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     @Override
     public FeatureSource<SimpleFeatureType, SimpleFeature> getExampleFeatureSource() {
-        FeatureSource<SimpleFeatureType, SimpleFeature> features = exampleDataSourceInfo.getFeatures();
+        if(exampleDataSourceInfo != null)
+        {
+            FeatureSource<SimpleFeatureType, SimpleFeature> features = exampleDataSourceInfo.getFeatures();
 
-        return features;
+            return features;
+        }
+        return null;
     }
 
     /**

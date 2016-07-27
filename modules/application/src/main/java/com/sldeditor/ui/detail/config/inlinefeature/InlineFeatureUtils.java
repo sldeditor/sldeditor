@@ -265,6 +265,17 @@ public class InlineFeatureUtils {
      */
     public static GeometryTypeEnum determineGeometryType(GeometryDescriptor geometryDescriptor,
             SimpleFeatureCollection simpleFeatureCollection) {
+
+        if(geometryDescriptor == null)
+        {
+            return GeometryTypeEnum.UNKNOWN;
+        }
+
+        if(simpleFeatureCollection == null)
+        {
+            return GeometryTypeEnum.UNKNOWN;
+        }
+
         Class<?> bindingType = geometryDescriptor.getType().getBinding();
 
         if(bindingType == Geometry.class)

@@ -19,17 +19,26 @@
 
 package com.sldeditor.test.unit.ui.detail.config.inlinefeature;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.junit.Test;
+import org.opengis.feature.type.GeometryDescriptor;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 
 /**
@@ -108,7 +117,16 @@ public class InlineFeatureUtilsTest {
             "        </feature>" +
             "      </gml:featureMember>" +
             "   </FeatureCollection>";
-;
+
+    private static String testNoInline = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"+
+            "<sld:UserLayer>" +
+            "<sld:Name>Inline</sld:Name>" +
+            "</sld:UserLayer>" + 
+            "<sld:NamedLayer>" +
+            "<sld:Name>NamedLayer</sld:Name>" +
+            "</sld:NamedLayer>" + 
+            "</sld:StyledLayerDescriptor>";
+
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#getInlineFeaturesText(org.geotools.styling.UserLayer)}.
      */
@@ -149,10 +167,85 @@ public class InlineFeatureUtilsTest {
         InlineFeatureUtils.setInlineFeatures(null, null);
         InlineFeatureUtils.setInlineFeatures(userLayer, null);
         InlineFeatureUtils.setInlineFeatures(null, "");
-        
+
         assertNull(userLayer.getInlineFeatureDatastore());
         InlineFeatureUtils.setInlineFeatures(userLayer, testInline2);
         assertNotNull(userLayer.getInlineFeatureDatastore());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#containsInLineFeatures(org.geotools.styling.StyledLayerDescriptor)}.
+     */
+    @Test
+    public void testContainsInLineFeatures() {
+        assertFalse(InlineFeatureUtils.containsInLineFeatures(null));
+
+        // Contains inline data
+        SLDData sldData = new SLDData(null, testInline1a);
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+        assertTrue(InlineFeatureUtils.containsInLineFeatures(sld));
+
+        // Contains no inline data
+        sldData = new SLDData(null, testNoInline);
+        sld = SLDUtils.createSLDFromString(sldData);
+        assertFalse(InlineFeatureUtils.containsInLineFeatures(sld));
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#extractUserLayers(org.geotools.styling.StyledLayerDescriptor)}.
+     */
+    @Test
+    public void testExtractUserLayers() {
+        assertTrue(InlineFeatureUtils.extractUserLayers(null).isEmpty());
+
+        // Contains inline data
+        SLDData sldData = new SLDData(null, testInline1a);
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+        assertEquals(1, InlineFeatureUtils.extractUserLayers(sld).size());
+
+        // Contains no inline data
+        sldData = new SLDData(null, testNoInline);
+        sld = SLDUtils.createSLDFromString(sldData);
+        assertEquals(1, InlineFeatureUtils.extractUserLayers(sld).size());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#determineGeometryType(org.opengis.feature.type.GeometryDescriptor, org.geotools.data.simple.SimpleFeatureCollection)}.
+     */
+    @Test
+    public void testDetermineGeometryType() {
+        // Test 1
+        SLDData sldData = new SLDData(null, testInline1a);
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+
+        UserLayer userLayer1 = (UserLayer) sld.layers().get(0);
+
+        GeometryDescriptor geometryDescriptor = userLayer1.getInlineFeatureType().getGeometryDescriptor();
+        String typeName = userLayer1.getInlineFeatureType().getTypeName();
+        SimpleFeatureCollection simpleFeatureCollection = null;
+        try {
+            simpleFeatureCollection = userLayer1.getInlineFeatureDatastore().getFeatureSource(typeName).getFeatures();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(GeometryTypeEnum.UNKNOWN, InlineFeatureUtils.determineGeometryType(null, null));
+        assertEquals(GeometryTypeEnum.UNKNOWN, InlineFeatureUtils.determineGeometryType(geometryDescriptor, null));
+
+        assertEquals(GeometryTypeEnum.POLYGON, InlineFeatureUtils.determineGeometryType(geometryDescriptor, simpleFeatureCollection));
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#combineGeometryType(List<GeometryTypeEnum>)}.
+     */
+    @Test
+    public void testCombineGeometryType() {
+        assertEquals(GeometryTypeEnum.UNKNOWN, InlineFeatureUtils.combineGeometryType(null));
+        
+        List<GeometryTypeEnum> geometryFeatures = Arrays.asList(GeometryTypeEnum.POINT);
+        assertEquals(GeometryTypeEnum.POINT, InlineFeatureUtils.combineGeometryType(geometryFeatures));
+
+        geometryFeatures = Arrays.asList(GeometryTypeEnum.LINE, GeometryTypeEnum.POINT, GeometryTypeEnum.POLYGON);
+        assertEquals(GeometryTypeEnum.LINE, InlineFeatureUtils.combineGeometryType(geometryFeatures));
+    }
 }

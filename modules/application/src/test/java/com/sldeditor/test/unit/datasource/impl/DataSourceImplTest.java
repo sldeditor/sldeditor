@@ -20,6 +20,8 @@ package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -27,21 +29,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.type.GeometryDescriptorImpl;
+import org.geotools.styling.UserLayer;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 
 import com.sldeditor.common.DataSourceFieldInterface;
+import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.DataSourceField;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.CreateExternalDataSource;
+import com.sldeditor.datasource.impl.CreateInlineDataSource;
 import com.sldeditor.datasource.impl.CreateInternalDataSource;
 import com.sldeditor.datasource.impl.DataSourceImpl;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
@@ -60,13 +66,23 @@ public class DataSourceImplTest {
         public GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
         public boolean isConnectedToDataSourceFlag = false;
 
+        private boolean hasBeenCalled = false;
+
         @Override
         public void dataSourceLoaded(GeometryTypeEnum geometryType,
                 boolean isConnectedToDataSourceFlag) {
             this.geometryType = geometryType;
             this.isConnectedToDataSourceFlag = isConnectedToDataSourceFlag;
+            this.hasBeenCalled = true;
         }
 
+        public boolean hasBeenCalled()
+        {
+            boolean tmp = hasBeenCalled;
+            hasBeenCalled = false;
+
+            return tmp;
+        }
     }
 
     /**
@@ -79,6 +95,7 @@ public class DataSourceImplTest {
 
         DummyInternalSLDFile editorFile = new DummyInternalSLDFile();
         DummyDataSourceUpdate dataSourceUpdateListener = new DummyDataSourceUpdate();
+        ds.addListener(dataSourceUpdateListener);
         ds.addListener(dataSourceUpdateListener);
 
         CreateDataSourceInterface internalDataSource = new CreateInternalDataSource();
@@ -131,6 +148,7 @@ public class DataSourceImplTest {
 
         // Update field
         DataSourceAttributeList attributeData = new DataSourceAttributeList();
+        ds.readAttributes(null);
         ds.readAttributes(attributeData);
 
         assertTrue(ds.getPropertyDescriptorList().size() == attributeData.getData().size());
@@ -141,6 +159,7 @@ public class DataSourceImplTest {
         data.setType(Integer.class);
         attributeDataList.add(2, data);
 
+        ds.updateFields(null);
         ds.updateFields(attributeData);
         assertTrue(ds.getAttributes(Integer.class).size() == 1);
 
@@ -151,6 +170,9 @@ public class DataSourceImplTest {
             e.printStackTrace();
             fail(e.getMessage());
         }
+        assertFalse(dataSourceUpdateListener.isConnectedToDataSourceFlag);
+
+        ds.removeListener(dataSourceUpdateListener);
         assertFalse(dataSourceUpdateListener.isConnectedToDataSourceFlag);
     }
 
@@ -165,6 +187,9 @@ public class DataSourceImplTest {
         System.out.println(ds.getAvailableDataStoreList());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}.
+     */
     @Test
     public void testConnectToExternalDataSource() {
         DataSourceImpl ds = new DataSourceImpl();
@@ -242,5 +267,44 @@ public class DataSourceImplTest {
             fail(e.getMessage());
         }
         assertTrue(dataSourceUpdateListener.isConnectedToDataSourceFlag);
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}.
+     */
+    @Test
+    public void testConnectToInlineDataSource() {
+        DataSourceImpl ds = new DataSourceImpl();
+
+        DummyInlineSLDFile editorFile = new DummyInlineSLDFile();
+        DummyDataSourceUpdate dataSourceUpdateListener = new DummyDataSourceUpdate();
+        ds.addListener(dataSourceUpdateListener);
+
+        CreateDataSourceInterface internalDataSource = new DummyCreateDataSource();
+        CreateDataSourceInterface externalDataSource = new DummyCreateDataSource();
+        CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
+
+        ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
+        ds.connect(editorFile);
+
+        assertEquals(GeometryTypeEnum.UNKNOWN, dataSourceUpdateListener.geometryType);
+        assertFalse(dataSourceUpdateListener.isConnectedToDataSourceFlag);
+
+        Collection<PropertyDescriptor> fieldList = ds.getPropertyDescriptorList();
+        assertNull(fieldList);
+
+        FeatureSource<SimpleFeatureType, SimpleFeature> exampleLayer = ds.getExampleFeatureSource();
+        assertNull(exampleLayer);
+
+        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> userLayerMap = ds.getUserLayerFeatureSource();
+        assertEquals(1, userLayerMap.size());
+
+        assertFalse(dataSourceUpdateListener.hasBeenCalled());
+
+        ds.updateUserLayers();
+        assertTrue(dataSourceUpdateListener.hasBeenCalled());
+
+        DataSourcePropertiesInterface dsi = ds.getDataConnectorProperties();
+        assertNotNull(dsi);
     }
 }
