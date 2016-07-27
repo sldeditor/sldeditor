@@ -86,13 +86,6 @@ public interface DataSourceConnectorInterface
     public boolean isEmpty();
 
     /**
-     * Checks if data source is inline.
-     *
-     * @return true, if data source is inline
-     */
-    public boolean isInLine();
-    
-    /**
      * Gets the connection properties.
      *
      * @param dataSourceProperties the data source properties

@@ -227,24 +227,6 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     }
 
     /**
-     * Checks if data source is inline.
-     *
-     * @return true, if data source is inline
-     */
-    @Override
-    public boolean isInLine()
-    {
-        if(dsc != null)
-        {
-            return dsc.isInLine();
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /**
      * Encode filename.
      *
      * @param filename the filename

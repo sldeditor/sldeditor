@@ -94,13 +94,6 @@ public interface DataSourcePropertiesInterface {
     boolean isEmpty();
 
     /**
-     * Checks if data source is inline.
-     *
-     * @return true, if data source is inline
-     */
-    boolean isInLine();
-    
-    /**
      * Checks for password.
      *
      * @return true, if successful
