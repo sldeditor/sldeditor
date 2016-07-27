@@ -255,6 +255,10 @@ public class FieldConfigGeometryFieldTest {
         public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
             return null;
         }
+
+        @Override
+        public void updateUserLayers() {
+        }
     }
 
     /**

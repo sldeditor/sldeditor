@@ -68,7 +68,7 @@ public class NamespaceHelper {
     /**
      * Checks if this element matches the requested.
      *
-     * @param requestPrefixList the requested namespace prefix
+     * @param requestPrefix the request prefix
      * @param requestedElementName the requested element name
      * @return true, if is element matches
      */

@@ -53,7 +53,12 @@ import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Class that represents an SLD Editor data source. Provides functionality to read and update its schema.
+ * Class that represents data sources for an SLD symbol.
+ * Provides functionality to read and update its schema.
+ * Handles the following:<p>
+ * - example data<p>
+ * - external data (e.g shape file, tiff)<p>
+ * - user layer inline data<p>
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -198,11 +203,14 @@ public class DataSourceImpl implements DataSourceInterface {
         {
             userLayerDataSourceInfo = inlineDataSource.connect(this.editorFileInterface);
 
-            for(DataSourceInfo dsInfo : userLayerDataSourceInfo)
+            if(userLayerDataSourceInfo != null)
             {
-                if(dsInfo.hasData())
+                for(DataSourceInfo dsInfo : userLayerDataSourceInfo)
                 {
-                    dsInfo.populateFieldMap();
+                    if(dsInfo.hasData())
+                    {
+                        dsInfo.populateFieldMap();
+                    }
                 }
             }
         }
@@ -620,5 +628,16 @@ public class DataSourceImpl implements DataSourceInterface {
             map.put(userLayer, features);
         }
         return map;
+    }
+
+    /**
+     * Recreate inline data sources for user layers.
+     */
+    @Override
+    public void updateUserLayers()
+    {
+        createUserLayerDataSources();
+
+        notifyDataSourceLoaded();
     }
 }

@@ -164,4 +164,8 @@ public interface DataSourceInterface {
      */
     Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource();
 
+    /**
+     * Recreate inline data sources for user layers.
+     */
+    void updateUserLayers();
 }

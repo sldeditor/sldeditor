@@ -58,6 +58,9 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class InlineFeatureUtils {
 
+    private static final String GML_NAMESPACE_PREFIX = "gml:";
+    private static final String SLD_INLINE_FEATURE_END = "</sld:InlineFeature>";
+    private static final String SLD_INLINE_FEATURE_START = "<sld:InlineFeature>";
     private static final String GML_FEATURE_FID_END = "</gml:_Feature>";
     private static final String FEATURE_FID_WITHOUT_PREFIX_END = "</:_Feature>";
     private static final String GML_FEATURE_FID = "<gml:_Feature fid";
@@ -154,11 +157,24 @@ public class InlineFeatureUtils {
             sb.append(XML_HEADER);
             sb.append(SLD_ROOT_ELEMENT);
             sb.append(SLD_USER_LAYER_START);
+            sb.append(SLD_INLINE_FEATURE_START);
+
+            // There is an issue with the inline features parser, when generating the
+            // xml it adds gml: namespace prefixes and the parser can't read them!
+
+            // Remove gml namespace prefix
+            inlineFeatures = inlineFeatures.replace(GML_NAMESPACE_PREFIX, "");
 
             // The hack, put the gml namespace prefix back otherwise the XML parsing fails
             inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX, GML_FEATURE_FID);
             inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END, GML_FEATURE_FID_END);
+
+            // Remove empty namespace prefixes
+            inlineFeatures = inlineFeatures.replace("<:", "<");
+            inlineFeatures = inlineFeatures.replace("</:", "</");
+
             sb.append(inlineFeatures);
+            sb.append(SLD_INLINE_FEATURE_END);
             sb.append(SLD_USER_LAYER_END);
             sb.append(SLD_ROOT_ELEMENT_END);
 
@@ -168,9 +184,12 @@ public class InlineFeatureUtils {
             Document doc = builder.parse(is);
 
             Node root = doc.getDocumentElement();
+            Node userLayerNode = root.getFirstChild();
+            Node inlineFeatureNode = userLayerNode.getFirstChild();
+
             SLDInlineFeatureParser inparser = null;
             try {
-                inparser = new SLDInlineFeatureParser(root);
+                inparser = new SLDInlineFeatureParser(inlineFeatureNode);
                 userLayer.setInlineFeatureDatastore(inparser.dataStore);
                 userLayer.setInlineFeatureType(inparser.featureType);
             } catch (Exception e) {

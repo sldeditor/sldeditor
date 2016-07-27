@@ -297,6 +297,10 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
             return null;
         }
+
+        @Override
+        public void updateUserLayers() {
+        }
     }
 
     /** The Constant EMPTY_PANEL. */

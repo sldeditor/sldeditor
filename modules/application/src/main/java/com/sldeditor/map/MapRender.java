@@ -26,6 +26,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.GridReaderLayer;
+import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
@@ -98,7 +100,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /** The user feature list. */
     private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature> > userLayerFeatureListMap = null;
-    
+
     /** The map pane. */
     private JMapPane mapPane = null;
 
@@ -129,6 +131,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /** The map panel that contains the card layout containing map pane and 'no data source' panel. */
     private JPanel mapPanel;
+
+    /** The map bounds. */
+    private ReferencedEnvelope mapBounds = null;
 
     /**
      * Default constructor.
@@ -232,6 +237,20 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
             StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
 
+            MapContent mapContent = mapPane.getMapContent();
+            if(mapContent == null)
+            {
+                mapContent = new MapContent();
+                mapPane.setMapContent(mapContent);
+            }
+
+            // Remove all layers
+            for(Layer layer : mapContent.layers())
+            {
+                mapContent.removeLayer(layer);
+            }
+
+            // Add the layers back with the updated style
             if(sld != null)
             {
                 List<StyledLayer> styledLayerList = sld.layers();
@@ -257,7 +276,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                     {
                         for(Style style : styleList)
                         {
-                            renderSymbol(styledLayer, style);
+                            renderSymbol(mapContent, styledLayer, style);
                         }
                     }
                 }
@@ -268,23 +287,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /**
      * Render symbol.
      *
+     * @param mapContent the map content
      * @param styledLayer the styled layer
      * @param style the style
      */
-    private void renderSymbol(StyledLayer styledLayer, Style style)
+    private void renderSymbol(MapContent mapContent, StyledLayer styledLayer, Style style)
     {
-        MapContent existing = mapPane.getMapContent();
-        if(existing != null)
-        {
-            existing.dispose();
-        }
-
-        MapContent mapContent = new MapContent();
-
-        // Live with memory leak warnings at the moment.
-
-        // Seems to be a bug if I call mapContent.removeMapLayer() in ContentState.removeListener()
-
         switch(geometryType)
         {
         case RASTER:
@@ -295,31 +303,31 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         case POLYGON:
         {
             FeatureSource<SimpleFeatureType, SimpleFeature> tmpFeatureList = null;
-            
+
             if(styledLayer instanceof UserLayer)
             {
-                tmpFeatureList = userLayerFeatureListMap.get(styledLayer);
+                if(userLayerFeatureListMap != null)
+                {
+                    tmpFeatureList = userLayerFeatureListMap.get(styledLayer);
+                }
             }
             else
             {
                 tmpFeatureList = featureList;
             }
-            
-            try {
-                wmsEnvVarValues.setMapBounds(featureList.getFeatures().getBounds());
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(MapRender.class, e);
+
+            if(tmpFeatureList != null)
+            {
+                mapContent.addLayer(new FeatureLayer(tmpFeatureList, (org.geotools.styling.Style) style));
             }
-            mapContent.addLayer(new FeatureLayer(tmpFeatureList, (org.geotools.styling.Style) style));
         }
-            break;
+        break;
         default:
             break;
         }
 
+        wmsEnvVarValues.setMapBounds(mapBounds);
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
-
-        mapPane.setMapContent(mapContent);
     }
 
     /**
@@ -357,8 +365,11 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         this.geometryType = geometryType;
         featureList = DataSourceFactory.getDataSource().getFeatureSource();
+
         userLayerFeatureListMap = DataSourceFactory.getDataSource().getUserLayerFeatureSource();
         gridCoverage = DataSourceFactory.getDataSource().getGridCoverageReader();
+
+        calculateMapBounds();
 
         CardLayout cardLayout = (CardLayout) mapPanel.getLayout();
 
@@ -371,6 +382,51 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             cardLayout.show(mapPanel, MAP_PANEL);
 
             internalRenderStyle();
+        }
+    }
+
+    private void calculateMapBounds() {
+        List<ReferencedEnvelope> refEnvList = new ArrayList<ReferencedEnvelope>();
+
+        if(featureList != null)
+        {
+            try {
+                refEnvList.add(featureList.getFeatures().getBounds());
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(MapRender.class, e);
+            }
+        }
+
+        if(userLayerFeatureListMap != null)
+        {
+            for(UserLayer userLayer : userLayerFeatureListMap.keySet())
+            {
+                try {
+                    refEnvList.add(userLayerFeatureListMap.get(userLayer).getFeatures().getBounds());
+                } catch (IOException e) {
+                    ConsoleManager.getInstance().exception(MapRender.class, e);
+                }
+            }
+        }
+
+        //        if(gridCoverage != null)
+        //        {
+        //            try {
+        //                GridCoverage2D grid = gridCoverage.;
+        //           //     refEnvList.add(gridCoverage.);
+        //            } catch (IOException e) {
+        //                ConsoleManager.getInstance().exception(MapRender.class, e);
+        //            }
+        //        }
+
+        if(!refEnvList.isEmpty())
+        {
+            // Combine all the bounding boxes of all the layers
+            mapBounds = refEnvList.get(0);
+            for(int index = 1; index < refEnvList.size(); index ++)
+            {
+                mapBounds.expandToInclude(refEnvList.get(index));
+            }
         }
     }
 

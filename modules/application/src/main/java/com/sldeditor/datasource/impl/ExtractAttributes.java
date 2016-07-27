@@ -112,32 +112,34 @@ public class ExtractAttributes {
      *
      * @param b the feature type builder
      * @param sld the sld
-     * @return the list
      */
     public void extractDefaultFields(SimpleFeatureTypeBuilder b, StyledLayerDescriptor sld)
     {
         // Remove inline features
         String sldContents = preprocessSLD(sld);
 
-        try
+        if((sldContents != null) && (b != null))
         {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(sldContents));
-            Document doc = builder.parse(is);
+            try
+            {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                InputSource is = new InputSource(new StringReader(sldContents));
+                Document doc = builder.parse(is);
 
-            Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
+                Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
 
-            extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
-            extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
-        }
-        catch(IOException e)
-        {
-            ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-        } catch (SAXException e) {
-            ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-        } catch (ParserConfigurationException e) {
-            ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+                extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
+                extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
+            }
+            catch(IOException e)
+            {
+                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            } catch (SAXException e) {
+                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            } catch (ParserConfigurationException e) {
+                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
+            }
         }
     }
 
@@ -148,6 +150,10 @@ public class ExtractAttributes {
      * @return the string contents without the inline features
      */
     private String preprocessSLD(StyledLayerDescriptor sld) {
+        if(sld == null)
+        {
+            return null;
+        }
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
         DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();

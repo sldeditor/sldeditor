@@ -30,7 +30,7 @@ import com.sldeditor.datasource.SLDEditorFileInterface;
 public interface CreateDataSourceInterface {
 
     /**
-     * Connect to the external data source.
+     * Connect to the data source.
      *
      * @param editorFile the editor file
      * @return the list

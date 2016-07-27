@@ -32,6 +32,8 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -129,13 +131,15 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
      */
     @Override
     public void dataChanged(FieldId changedField) {
-        updateSymbol();
+        updateSymbol(changedField);
     }
 
     /**
      * Update symbol.
+     *
+     * @param changedField the changed field
      */
-    private void updateSymbol() {
+    private void updateSymbol(FieldId changedField) {
         if(!Controller.getInstance().isPopulating())
         {
             UserLayer userLayer = getStyleFactory().createUserLayer();
@@ -195,6 +199,13 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 }
             }
             SelectedSymbol.getInstance().replaceStyledLayer(userLayer);
+
+            // Update inline data sources if the inline data changed, reduces creation of datasources
+            if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
+            {
+                DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+                dataSource.updateUserLayers();
+            }
 
             this.fireUpdateSymbol();
         }
