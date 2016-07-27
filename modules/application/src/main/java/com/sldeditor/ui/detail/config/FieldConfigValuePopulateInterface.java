@@ -26,6 +26,7 @@ import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
+import org.geotools.styling.UserLayer;
 import org.opengis.filter.Id;
 
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
@@ -121,6 +122,13 @@ public interface FieldConfigValuePopulateInterface {
      * @param value the value
      */
     public void populateField(Font value);
+
+    /**
+     * Populate field.
+     *
+     * @param value the value
+     */
+    public void populateField(UserLayer value);
 
     /**
      * Gets the double value.

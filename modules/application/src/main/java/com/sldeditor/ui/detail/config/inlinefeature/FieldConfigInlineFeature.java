@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.config.inlinefeature;
 import javax.swing.Box;
 import javax.swing.JTabbedPane;
 
+import org.geotools.styling.UserLayer;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
@@ -57,6 +58,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     /** The inline GML. */
     private InlineGMLPreviewPanel inlineGML = null;
 
+    /** The inline feature. */
+    private InlineFeaturePanel inlineFeature = null;
+
+    /** The tabbed pane. */
     private JTabbedPane tabbedPane;
 
     /**
@@ -84,11 +89,15 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel(), parentBox);
 
         inlineGML = new InlineGMLPreviewPanel(this, NO_OF_ROWS);
+        inlineFeature = new InlineFeaturePanel(this, NO_OF_ROWS);
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml"), null, inlineGML,
                 Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml.tooltip"));
+        tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.feature"), null, inlineFeature,
+                Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.feature.tooltip"));
         tabbedPane.setBounds(0, 0, inlineGML.getWidth(), inlineGML.getHeight());
+
         fieldPanel.add(tabbedPane);
     }
 
@@ -275,17 +284,23 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      * @param value the value
      */
     @Override
-    public void populateField(String value) {
+    public void populateField(UserLayer value) {
+        String inlineFeaturesText = InlineFeatureUtils.getInlineFeaturesText(value);
         if(inlineGML != null)
         {
-            inlineGML.setInlineFeatures(value);
-
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-            oldValueObj = value;
-
-            valueUpdated();
+            inlineGML.setInlineFeatures(inlineFeaturesText);
         }
+
+        if(inlineFeature != null)
+        {
+            inlineFeature.setInlineFeatures(value);
+        }
+
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, inlineFeaturesText));
+
+        oldValueObj = inlineFeaturesText;
+
+        valueUpdated();
     }
 
     /**

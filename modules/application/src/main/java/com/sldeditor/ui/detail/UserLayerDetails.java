@@ -118,8 +118,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                         userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE);
 
                         // Inline features
-                        String inlineFeaturesText = InlineFeatureUtils.getInlineFeaturesText(userLayer);
-                        fieldConfigVisitor.populateTextField(FieldIdEnum.INLINE_FEATURE, inlineFeaturesText);
+                        fieldConfigVisitor.populateUserLayer(FieldIdEnum.INLINE_FEATURE, userLayer);
                     }
                 }
             }
