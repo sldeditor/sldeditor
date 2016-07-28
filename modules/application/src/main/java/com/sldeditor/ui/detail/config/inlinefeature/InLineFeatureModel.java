@@ -25,15 +25,21 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.geotools.data.DataStore;
+import org.geotools.data.DataUtilities;
+import org.geotools.data.collection.ListFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.geotools.feature.type.GeometryDescriptorImpl;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
  * The Class InLineFeatureModel.
@@ -41,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
  * @author Robert Ward (SCISYS)
  */
 public class InLineFeatureModel extends AbstractTableModel {
-
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -55,14 +60,17 @@ public class InLineFeatureModel extends AbstractTableModel {
     /** The feature collection. */
     private SimpleFeatureCollection featureCollection = null;
 
-    /** The Constant COL_TYPE. */
-    private static final int COL_TYPE = 0;
+    /** The geometry field index. */
+    private int geometryFieldIndex = -1;
 
-    /** The Constant COL_CRS. */
-    private static final int COL_CRS = 1;
+    /** The user layer. */
+    private UserLayer userLayer = null;
 
-    /** The Constant COL_FEATURE. */
-    private static final int COL_FEATURE = 2;
+    /** The last row. */
+    private int lastRow = -1;
+
+    /** The cached feature. */
+    private SimpleFeature cachedFeature = null;
 
     /**
      * Instantiates a new in line feature model.
@@ -72,10 +80,6 @@ public class InLineFeatureModel extends AbstractTableModel {
     public InLineFeatureModel(InlineFeatureUpdateInterface parent)
     {
         this.parentObj = parent;
-
-        columnList.add(Localisation.getString(FieldConfigBase.class, "InLineFeatureModel.type"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "InLineFeatureModel.crs"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "InLineFeatureModel.feature"));
     }
 
     /* (non-Javadoc)
@@ -114,29 +118,49 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int column) {
+        SimpleFeature feature = getFeature(row);
+
+        if(feature != null)
+        {
+            if(column == geometryFieldIndex)
+            {
+                Object defaultGeometry = feature.getDefaultGeometry();
+                return defaultGeometry;
+            }
+            else
+            {
+                Object attributeData = feature.getAttribute(column);
+                return attributeData;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the feature.
+     *
+     * @param row the row
+     * @return the feature
+     */
+    private SimpleFeature getFeature(int row) {
         if(featureCollection != null)
         {
-            SimpleFeatureIterator iterator = featureCollection.features();
-
-            SimpleFeature feature = iterator.next();
-            int index = 0;
-            while(iterator.hasNext() && (index < row))
+            if(row != lastRow)
             {
-                feature = iterator.next();
-                index ++;
-            }
+                SimpleFeatureIterator iterator = featureCollection.features();
 
-            switch(column)
-            {
-            case COL_TYPE:
-                return feature.getFeatureType().getTypeName();
-            case COL_CRS:
-                break;
-            case COL_FEATURE:
-                break;
-            default:
-                break;
+                SimpleFeature feature = iterator.next();
+                int index = 0;
+                while(iterator.hasNext() && (index < row))
+                {
+                    feature = iterator.next();
+                    index ++;
+                }
+
+                lastRow = row;
+                cachedFeature = feature;
             }
+            return cachedFeature;
         }
         return null;
     }
@@ -147,7 +171,11 @@ public class InLineFeatureModel extends AbstractTableModel {
      * @param userLayer the user layer
      */
     public void populate(UserLayer userLayer) {
+        this.userLayer = userLayer;
         featureCollection = null;
+        geometryFieldIndex = -1;
+
+        columnList.clear();
 
         if(userLayer != null)
         {
@@ -161,7 +189,188 @@ public class InLineFeatureModel extends AbstractTableModel {
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
+
+            // Populate field names
+            List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
+            int index = 0;
+            for(AttributeDescriptor descriptor : descriptorList)
+            {
+                if(descriptor instanceof GeometryDescriptorImpl)
+                {
+                    geometryFieldIndex = index;
+                }
+                columnList.add(descriptor.getLocalName());
+                index ++;
+            }
+        }
+        this.fireTableStructureChanged();
+        this.fireTableDataChanged();
+    }
+
+    /**
+     * Gets the geometry field index.
+     *
+     * @return the geometry field index
+     */
+    public int getGeometryFieldIndex() {
+        return geometryFieldIndex;
+    }
+
+    /**
+     * Checks if is cell editable.
+     *
+     * @param rowIndex the row index
+     * @param columnIndex the column index
+     * @return true, if is cell editable
+     */
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
+    }
+
+    /**
+     * Sets the value at.
+     *
+     * @param aValue the a value
+     * @param rowIndex the row index
+     * @param columnIndex the column index
+     */
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= getRowCount()))
+        {
+            return;
+        }
+
+        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
+        {
+            return;
+        }
+
+        SimpleFeature feature = getFeature(rowIndex);
+
+        if(feature != null)
+        {
+            if(columnIndex == getGeometryFieldIndex())
+            {
+
+            }
+            else
+            {
+                feature.setAttribute(columnIndex, aValue);
+            }
+        }
+
+        if(parentObj != null)
+        {
+            parentObj.inlineFeatureUpdated();
         }
     }
 
+    /**
+     * Gets the feature collection.
+     *
+     * @return the featureCollection
+     */
+    public SimpleFeatureCollection getFeatureCollection() {
+        return featureCollection;
+    }
+
+    /**
+     * Gets the inline features.
+     *
+     * @return the inline features
+     */
+    public String getInlineFeatures() {
+        return InlineFeatureUtils.getInlineFeaturesText(userLayer);
+    }
+
+    /**
+     * Adds the new column.
+     */
+    public void addNewColumn() {
+        if(featureCollection != null)
+        {
+            String attributeName = getUniqueAttributeName();
+
+            columnList.add(attributeName);
+
+            // Populate field names
+            SimpleFeatureTypeBuilder featureTypeBuilder = new SimpleFeatureTypeBuilder();
+            featureTypeBuilder.init(featureCollection.getSchema());
+            featureTypeBuilder.add(attributeName, String.class);
+
+            SimpleFeatureType newFeatureType = featureTypeBuilder.buildFeatureType();
+
+            String typeName = userLayer.getInlineFeatureType().getTypeName();
+            try {
+                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+
+                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+
+                ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+
+                SimpleFeatureIterator it = featureSource.getFeatures().features();
+                try { 
+                    while (it.hasNext()) { 
+                        SimpleFeature sf = it.next(); 
+                        sfb.addAll(sf.getAttributes()); 
+                        sfb.add(new String("")); 
+                        featureList.add(sfb.buildFeature(null)); 
+                    } 
+                } finally { 
+                    it.close(); 
+                } 
+
+                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
+                DataStore dataStore = DataUtilities.dataStore( collection );
+
+                featureCollection = collection;
+                cachedFeature = null;
+                lastRow = -1;
+                userLayer.setInlineFeatureDatastore(dataStore);
+                userLayer.setInlineFeatureType(newFeatureType);
+
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            } 
+
+            this.fireTableStructureChanged();
+            this.fireTableDataChanged();
+        }
+    }
+
+    /**
+     * Gets the unique attribute name.
+     *
+     * @return the unique attribute name
+     */
+    private String getUniqueAttributeName() {
+        String newColumnName = "";
+        List<String> columnNameList = new ArrayList<String>();
+
+        List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
+
+        for(AttributeDescriptor attribute : descriptorList)
+        {
+            columnNameList.add(attribute.getLocalName());
+        }
+
+        int colIndex = descriptorList.size() + 1;
+        boolean found = false;
+        while(!found)
+        {
+            newColumnName = String.format("attr%02d", colIndex);
+
+            if(columnNameList.contains(newColumnName))
+            {
+                colIndex ++;
+            }
+            else
+            {
+                return newColumnName;
+            }
+        }
+        return newColumnName;
+    }
 }

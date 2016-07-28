@@ -24,6 +24,7 @@ import javax.swing.JTabbedPane;
 import org.geotools.styling.UserLayer;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -344,17 +345,29 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUpdateInterface#inlineFeatureUpdated()
+     */
     @Override
     public void inlineFeatureUpdated() {
-        if(inlineGML != null)
+        if(!Controller.getInstance().isPopulating())
         {
-            String value = inlineGML.getInlineFeatures();
+            String value = "";
+            if(inlineFeature != null)
+            {
+                value = inlineFeature.getInlineFeatures();
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-            oldValueObj = value;
+                oldValueObj = value;
 
-            valueUpdated();
+                valueUpdated();
+            }
+
+            if(inlineGML != null)
+            {
+                inlineGML.setInlineFeatures(value);
+            }
         }
     }
 }

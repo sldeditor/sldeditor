@@ -20,17 +20,30 @@
 package com.sldeditor.ui.detail.config.inlinefeature;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 import org.geotools.styling.UserLayer;
 
@@ -60,6 +73,11 @@ public class InlineFeaturePanel extends JPanel {
 
     /** The model. */
     private InLineFeatureModel model;
+
+    private JTableHeader columnHeader;
+    private JPopupMenu renamePopup;
+    private JTextField columnTextField;
+    private TableColumn tableColumn;
 
     /**
      * Instantiates a new inline feature panel.
@@ -99,9 +117,9 @@ public class InlineFeaturePanel extends JPanel {
         JPanel tablePanel = new JPanel();
         featureTable = new JTable(model);
         featureTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
+        featureTable.setColumnSelectionAllowed(true);
         featureTable.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
-        
+
         JScrollPane scrollPanel = new JScrollPane(featureTable);
         scrollPanel.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
 
@@ -110,15 +128,67 @@ public class InlineFeaturePanel extends JPanel {
 
         // Buttons
         JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        
+        // Feature panel
+        JPanel addFeaturePanel = new JPanel();
+        addFeaturePanel.setBorder(BorderFactory.createTitledBorder("Features"));
         
         JButton addButton = new JButton("Add");
-        addButton.setBounds(xPos, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        bottomPanel.add(addButton);
+        addFeaturePanel.add(addButton);
 
         JButton removeButton = new JButton("Remove");
-        removeButton.setBounds(xPos + addButton.getWidth() + 5, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        bottomPanel.add(removeButton);
+        addFeaturePanel.add(removeButton);
+        
+        bottomPanel.add(addFeaturePanel);
+
+        // Attribute panel
+        JPanel attributePanel = new JPanel();
+        attributePanel.setBorder(BorderFactory.createTitledBorder("Attributes"));
+        
+        JButton addColumnButton = new JButton("Add");
+        addColumnButton.addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        model.addNewColumn();
+                    }
+                });
+        attributePanel.add(addColumnButton);
+
+        JButton removeColumnButton = new JButton("Remove");
+        attributePanel.add(removeColumnButton);
+        
+        bottomPanel.add(attributePanel);
         add(bottomPanel, BorderLayout.SOUTH);
+
+        //
+        // Set up the column header editing
+        //
+        columnHeader = featureTable.getTableHeader();
+        columnHeader.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent event)
+            {
+                if (event.getClickCount() == 2)
+                {
+                    editColumnAt(event.getPoint());
+                }
+            }
+        });
+
+        columnTextField = new JTextField();
+        columnTextField.setBorder(null);
+        columnTextField.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                renameColumn();
+            }
+        });
+
+        renamePopup = new JPopupMenu();
+        renamePopup.setBorder(new MatteBorder(0, 1, 1, 1, Color.DARK_GRAY));
+        renamePopup.add(columnTextField);
     }
 
     /**
@@ -172,7 +242,60 @@ public class InlineFeaturePanel extends JPanel {
     {
         if(userLayer != null)
         {
+            String crsCode = CoordManager.getInstance().getCRSCode(userLayer.getInlineFeatureType().getCoordinateReferenceSystem());
+
+            if(crsCode.isEmpty())
+            {
+                crsComboBox.setSelectedIndex(-1);
+            }
+            else
+            {
+                crsComboBox.setSelectValueKey(crsCode);
+            }
             model.populate(userLayer);
         }
+    }
+
+    /**
+     * Edits the column at.
+     *
+     * @param p the point at which the mouse was clicked
+     */
+    private void editColumnAt(Point p)
+    {
+        int columnIndex = columnHeader.columnAtPoint(p);
+
+        if((columnIndex != -1) && (columnIndex != model.getGeometryFieldIndex()))
+        {
+            tableColumn = columnHeader.getColumnModel().getColumn(columnIndex);
+            Rectangle columnRectangle = columnHeader.getHeaderRect(columnIndex);
+
+            columnTextField.setText(tableColumn.getHeaderValue().toString());
+            renamePopup.setPreferredSize(
+                    new Dimension(columnRectangle.width, columnRectangle.height - 1));
+            renamePopup.show(columnHeader, columnRectangle.x, 0);
+
+            columnTextField.requestFocusInWindow();
+            columnTextField.selectAll();
+        }
+    }
+
+    /**
+     * Rename column.
+     */
+    private void renameColumn()
+    {
+        tableColumn.setHeaderValue(columnTextField.getText());
+        renamePopup.setVisible(false);
+        columnHeader.repaint();
+    }
+
+    /**
+     * Gets the inline features.
+     *
+     * @return the inline features
+     */
+    public String getInlineFeatures() {
+        return model.getInlineFeatures();
     }
 }
