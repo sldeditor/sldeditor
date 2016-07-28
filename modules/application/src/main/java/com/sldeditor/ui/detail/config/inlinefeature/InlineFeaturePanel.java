@@ -31,9 +31,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -46,9 +48,13 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import org.geotools.styling.UserLayer;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.menucombobox.ArrowIcon;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -74,10 +80,20 @@ public class InlineFeaturePanel extends JPanel {
     /** The model. */
     private InLineFeatureModel model;
 
+    /** The column header. */
     private JTableHeader columnHeader;
+
+    /** The rename popup. */
     private JPopupMenu renamePopup;
+
+    /** The column text field. */
     private JTextField columnTextField;
+
+    /** The table column. */
     private TableColumn tableColumn;
+
+    /** The populating flag. */
+    private boolean populatingFlag = false;
 
     /**
      * Instantiates a new inline feature panel.
@@ -118,6 +134,8 @@ public class InlineFeaturePanel extends JPanel {
         featureTable = new JTable(model);
         featureTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         featureTable.setColumnSelectionAllowed(true);
+        featureTable.setAutoscrolls(true);
+        featureTable.getTableHeader().setReorderingAllowed(false);
         featureTable.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
 
         JScrollPane scrollPanel = new JScrollPane(featureTable);
@@ -129,36 +147,68 @@ public class InlineFeaturePanel extends JPanel {
         // Buttons
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
-        
+
         // Feature panel
         JPanel addFeaturePanel = new JPanel();
-        addFeaturePanel.setBorder(BorderFactory.createTitledBorder("Features"));
-        
-        JButton addButton = new JButton("Add");
+        addFeaturePanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(FieldConfigBase.class, "InlineFeature.features")));
+
+        JButton addButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.addfeature"));
         addFeaturePanel.add(addButton);
 
-        JButton removeButton = new JButton("Remove");
+        JButton removeButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.removefeature"));
         addFeaturePanel.add(removeButton);
-        
+
         bottomPanel.add(addFeaturePanel);
 
         // Attribute panel
         JPanel attributePanel = new JPanel();
-        attributePanel.setBorder(BorderFactory.createTitledBorder("Attributes"));
-        
-        JButton addColumnButton = new JButton("Add");
+        attributePanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(FieldConfigBase.class, "InlineFeature.attributes")));
+
+        JButton addColumnButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.addattribute"));
         addColumnButton.addActionListener(new ActionListener()
-                {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        model.addNewColumn();
-                    }
-                });
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addNewColumn();
+            }
+        });
         attributePanel.add(addColumnButton);
 
-        JButton removeColumnButton = new JButton("Remove");
+        JButton removeColumnButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.removeattribute"));
+        ArrowIcon arrow = new ArrowIcon(SwingConstants.SOUTH, true);
+        removeColumnButton.setIcon(arrow);
+        removeColumnButton.setHorizontalTextPosition(AbstractButton.LEFT);
+        removeColumnButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPopupMenu popupMenu = new JPopupMenu();
+
+                List<String> columnNames = model.getColumnNames();
+
+                for(String columnName : columnNames)
+                {
+                    JMenuItem menuItem = new JMenuItem(columnName);
+                    menuItem.addActionListener(new ActionListener()
+                    {
+                        public void actionPerformed(ActionEvent event)
+                        {
+                            model.removeColumn(columnName);
+                        }
+                    });
+                    popupMenu.add(menuItem);
+                }
+
+                if(e != null)
+                {
+                    popupMenu.show(removeColumnButton,
+                            removeColumnButton.getX() - removeColumnButton.getWidth(),
+                            removeColumnButton.getY());
+                }
+            }
+        });
         attributePanel.add(removeColumnButton);
-        
+
         bottomPanel.add(attributePanel);
         add(bottomPanel, BorderLayout.SOUTH);
 
@@ -214,9 +264,12 @@ public class InlineFeaturePanel extends JPanel {
         crsComboBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(parentObj != null)
+                if(!isPopulating())
                 {
-                    parentObj.inlineFeatureUpdated();
+                    if(parentObj != null)
+                    {
+                        parentObj.inlineFeatureUpdated();
+                    }
                 }
             }});
         return crsComboBox;
@@ -242,8 +295,14 @@ public class InlineFeaturePanel extends JPanel {
     {
         if(userLayer != null)
         {
-            String crsCode = CoordManager.getInstance().getCRSCode(userLayer.getInlineFeatureType().getCoordinateReferenceSystem());
+            String crsCode = "";
+            SimpleFeatureType inlineFeatureType = userLayer.getInlineFeatureType();
+            if(inlineFeatureType != null)
+            {
+                crsCode = CoordManager.getInstance().getCRSCode(inlineFeatureType.getCoordinateReferenceSystem());
+            }
 
+            setPopulating(true);
             if(crsCode.isEmpty())
             {
                 crsComboBox.setSelectedIndex(-1);
@@ -252,8 +311,28 @@ public class InlineFeaturePanel extends JPanel {
             {
                 crsComboBox.setSelectValueKey(crsCode);
             }
+            setPopulating(false);
             model.populate(userLayer);
         }
+    }
+
+    /**
+     * Sets the populating flag.
+     *
+     * @param populateFlag the new populating
+     */
+    private void setPopulating(boolean populateFlag) {
+        this.populatingFlag = true;
+    }
+
+    /**
+     * Checks if is populating.
+     *
+     * @return true, if is populating
+     */
+    private boolean isPopulating()
+    {
+        return this.populatingFlag;
     }
 
     /**

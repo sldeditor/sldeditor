@@ -59,8 +59,8 @@ import com.vividsolutions.jts.geom.Geometry;
 public class InlineFeatureUtils {
 
     private static final String GML_NAMESPACE_PREFIX = "gml:";
-    private static final String SLD_INLINE_FEATURE_END = "</sld:InlineFeature>";
     private static final String SLD_INLINE_FEATURE_START = "<sld:InlineFeature>";
+    private static final String SLD_INLINE_FEATURE_END = "</sld:InlineFeature>";
     private static final String GML_FEATURE_FID_END = "</gml:_Feature>";
     private static final String FEATURE_FID_WITHOUT_PREFIX_END = "</:_Feature>";
     private static final String GML_FEATURE_FID = "<gml:_Feature fid";
@@ -101,6 +101,12 @@ public class InlineFeatureUtils {
         }
 
         String userLayerXML = stringWriter.toString();
+        
+        // Check to see if there are any inline features
+        if(!userLayerXML.contains(SLD_INLINE_FEATURE_START))
+        {
+            return "";
+        }
 
         int beginIndex = userLayerXML.indexOf(GML_START);
         StringBuilder sb = new StringBuilder();

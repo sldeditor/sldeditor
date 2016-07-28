@@ -25,14 +25,20 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.geotools.styling.UserLayer;
 import org.junit.Test;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.test.unit.datasource.impl.DummyInlineSLDFile;
+import com.sldeditor.test.unit.datasource.impl.DummyInlineSLDFile2;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
+import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -100,19 +106,29 @@ public class FieldConfigInlineFeatureTest {
 
         field.createUI(null);
 
-        String expectedValue1 = "test inline value";
-        field.populateField(expectedValue1);
-        assertTrue(expectedValue1.compareTo(field.getStringValue()) == 0);
+        UserLayer userLayer1 = DefaultSymbols.createNewUserLayer();
+        field.populateField(userLayer1);
+        String actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo("") == 0);
 
-        String expectedValue2 = "test inline value2";
+        DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
+
+        UserLayer userLayer2 = (UserLayer) testData1.getSLD().layers().get(0);
+        Controller.getInstance().setPopulating(true);
+        field.populateField(userLayer2);
+        String expectedValue2 = InlineFeatureUtils.getInlineFeaturesText(userLayer2);
+        actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedValue2) == 0);
+
         field.setTestValue(null, expectedValue2);
-        assertTrue(expectedValue2.compareTo(field.getStringValue()) == 0);
+        actualValue = field.getStringValue();
+        // The fids are different
+        assertTrue(expectedValue2.compareTo(actualValue) != 0);
 
         field.populateExpression((String)null);
         field.populateExpression((Integer)null);
         String expectedValue3 = "test inline value3";
         field.populateExpression(expectedValue3);
-        assertTrue(expectedValue3.compareTo(field.getStringValue()) == 0);
     }
 
     /**
@@ -135,7 +151,6 @@ public class FieldConfigInlineFeatureTest {
         field.setDefaultValue(expectedValue);
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
-        assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
     }
 
     /**
@@ -192,22 +207,39 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testUndoAction() {
+        UndoManager.destroyInstance();
         FieldConfigInlineFeature field = new FieldConfigInlineFeature(Geometry.class, new FieldId(FieldIdEnum.NAME));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI(null);
 
-        String expectedValue1 = "test inline value";
-        field.populateField(expectedValue1);
-        assertTrue(expectedValue1.compareTo(field.getStringValue()) == 0);
+        DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
 
-        String expectedValue2 = "test inline value2";
-        field.populateField(expectedValue2);
+        UserLayer userLayer1 = (UserLayer) testData1.getSLD().layers().get(0);
+        Controller.getInstance().setPopulating(true);
+        field.populateField(userLayer1);
+        String expectedValue1 = InlineFeatureUtils.getInlineFeaturesText(userLayer1);
+        String actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedValue1) == 0);
 
+        DummyInlineSLDFile2 testData2 = new DummyInlineSLDFile2();
+
+        UserLayer userLayer2 = (UserLayer) testData2.getSLD().layers().get(0);
+        field.populateField(userLayer2);
+        String expectedValue2 = InlineFeatureUtils.getInlineFeaturesText(userLayer2);
+        actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedValue2) == 0);
+        Controller.getInstance().setPopulating(false);
         UndoManager.getInstance().undo();
-        assertTrue(expectedValue1.compareTo(field.getStringValue()) == 0);
+        actualValue = field.getStringValue();
+        System.out.println("Actual");
+        System.out.println(actualValue);
+        System.out.println("Expected");
+        System.out.println(expectedValue1);
+        assertTrue(actualValue.compareTo(expectedValue1) == 0);
         UndoManager.getInstance().redo();
-        assertTrue(expectedValue2.compareTo(field.getStringValue()) == 0);
+        actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedValue2) == 0);
 
         // Increase the code coverage
         field.undoAction(null);

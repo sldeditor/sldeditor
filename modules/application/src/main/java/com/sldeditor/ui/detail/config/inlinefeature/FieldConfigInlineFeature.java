@@ -25,6 +25,7 @@ import org.geotools.styling.UserLayer;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -238,13 +239,29 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if((inlineGML != null) && (undoRedoObject != null))
+        if(undoRedoObject != null)
         {
             if(undoRedoObject.getOldValue() instanceof String)
             {
                 String oldValue = (String)undoRedoObject.getOldValue();
 
-                inlineGML.setInlineFeatures(oldValue);
+                System.out.println("Old value");
+                System.out.println(undoRedoObject.getOldValue().getClass().getName());
+                System.out.println(undoRedoObject.getOldValue().toString());
+                System.out.println(oldValue);
+
+                UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+                InlineFeatureUtils.setInlineFeatures(userLayer, oldValue);
+                if(inlineGML != null)
+                {
+                    inlineGML.setInlineFeatures(oldValue);
+                }
+
+                if(inlineFeature != null)
+                {
+                    inlineFeature.setInlineFeatures(userLayer);
+                }
             }
         }
     }
@@ -257,13 +274,25 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if((inlineGML != null) && (undoRedoObject != null))
+        if(undoRedoObject != null)
         {
             if(undoRedoObject.getNewValue() instanceof String)
             {
                 String newValue = (String)undoRedoObject.getNewValue();
 
-                inlineGML.setInlineFeatures(newValue);
+                UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+                InlineFeatureUtils.setInlineFeatures(userLayer, newValue);
+
+                if(inlineGML != null)
+                {
+                    inlineGML.setInlineFeatures(newValue);
+                }
+
+                if(inlineFeature != null)
+                {
+                    inlineFeature.setInlineFeatures(userLayer);
+                }
             }
         }
     }
@@ -276,7 +305,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      */
     @Override
     public void setTestValue(FieldId fieldId, String testValue) {
-        populateField(testValue);
+        UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+        InlineFeatureUtils.setInlineFeatures(userLayer, testValue);
+        populateField(userLayer);
     }
 
     /**
@@ -297,9 +329,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
             inlineFeature.setInlineFeatures(value);
         }
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, inlineFeaturesText));
+        System.out.println("populateField\n" + inlineFeaturesText);
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, new String(inlineFeaturesText)));
 
-        oldValueObj = inlineFeaturesText;
+        oldValueObj = new String(inlineFeaturesText);
 
         valueUpdated();
     }
@@ -356,10 +389,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
             if(inlineFeature != null)
             {
                 value = inlineFeature.getInlineFeatures();
+System.out.println("inlineFeatureUpdated\n" + value);
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, new String(value)));
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-                oldValueObj = value;
+                oldValueObj = new String(value);
 
                 valueUpdated();
             }

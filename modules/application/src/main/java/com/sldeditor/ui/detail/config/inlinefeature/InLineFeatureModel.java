@@ -179,28 +179,31 @@ public class InLineFeatureModel extends AbstractTableModel {
 
         if(userLayer != null)
         {
-            String typeName = userLayer.getInlineFeatureType().getTypeName();
-            try {
-                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
-                if(featureSource != null)
-                {
-                    featureCollection = featureSource.getFeatures();
-                }
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
-
-            // Populate field names
-            List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
-            int index = 0;
-            for(AttributeDescriptor descriptor : descriptorList)
+            if(userLayer.getInlineFeatureType() != null)
             {
-                if(descriptor instanceof GeometryDescriptorImpl)
-                {
-                    geometryFieldIndex = index;
+                String typeName = userLayer.getInlineFeatureType().getTypeName();
+                try {
+                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+                    if(featureSource != null)
+                    {
+                        featureCollection = featureSource.getFeatures();
+                    }
+                } catch (IOException e) {
+                    ConsoleManager.getInstance().exception(this, e);
                 }
-                columnList.add(descriptor.getLocalName());
-                index ++;
+
+                // Populate field names
+                List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
+                int index = 0;
+                for(AttributeDescriptor descriptor : descriptorList)
+                {
+                    if(descriptor instanceof GeometryDescriptorImpl)
+                    {
+                        geometryFieldIndex = index;
+                    }
+                    columnList.add(descriptor.getLocalName());
+                    index ++;
+                }
             }
         }
         this.fireTableStructureChanged();
@@ -337,6 +340,11 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             this.fireTableStructureChanged();
             this.fireTableDataChanged();
+
+            if(parentObj != null)
+            {
+                parentObj.inlineFeatureUpdated();
+            }
         }
     }
 
@@ -372,5 +380,96 @@ public class InLineFeatureModel extends AbstractTableModel {
             }
         }
         return newColumnName;
+    }
+
+    /**
+     * Gets the column names, excluding the geometry.
+     *
+     * @return the column names
+     */
+    public List<String> getColumnNames() {
+        List<String> columnNames = new ArrayList<String>();
+        int index = 0;
+        for(String columnName : columnList)
+        {
+            if(index != geometryFieldIndex)
+            {
+                columnNames.add(columnName);
+            }
+            index ++;
+        }
+        return columnNames;
+    }
+
+    /**
+     * Removes the column.
+     *
+     * @param columnName the column name
+     */
+    public void removeColumn(String columnName) {
+        if(featureCollection != null)
+        {
+            columnList.remove(columnName);
+
+            // Populate field names
+            SimpleFeatureTypeBuilder featureTypeBuilder = new SimpleFeatureTypeBuilder();
+            featureTypeBuilder.init(featureCollection.getSchema());
+            featureTypeBuilder.remove(columnName);
+
+            SimpleFeatureType newFeatureType = featureTypeBuilder.buildFeatureType();
+
+            int attributeToRemoveIndex = 0;
+            for(AttributeDescriptor descriptor : newFeatureType.getAttributeDescriptors())
+            {
+                if(descriptor.getLocalName().compareTo(columnName) == 0)
+                {
+                    break;
+                }
+                attributeToRemoveIndex ++;
+            }
+
+            String typeName = userLayer.getInlineFeatureType().getTypeName();
+            try {
+                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+
+                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+
+                ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+
+                SimpleFeatureIterator it = featureSource.getFeatures().features();
+                try {
+                    while (it.hasNext()) { 
+                        SimpleFeature sf = it.next();
+                        List<Object> attributes = sf.getAttributes();
+                        attributes.remove(attributeToRemoveIndex);
+
+                        sfb.addAll(attributes); 
+                        featureList.add(sfb.buildFeature(null)); 
+                    } 
+                } finally { 
+                    it.close(); 
+                } 
+
+                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
+                DataStore dataStore = DataUtilities.dataStore( collection );
+
+                featureCollection = collection;
+                cachedFeature = null;
+                lastRow = -1;
+                userLayer.setInlineFeatureDatastore(dataStore);
+                userLayer.setInlineFeatureType(newFeatureType);
+
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            } 
+
+            this.fireTableStructureChanged();
+            this.fireTableDataChanged();
+
+            if(parentObj != null)
+            {
+                parentObj.inlineFeatureUpdated();
+            }
+        }
     }
 }

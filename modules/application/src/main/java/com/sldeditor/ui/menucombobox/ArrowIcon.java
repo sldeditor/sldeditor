@@ -26,11 +26,11 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 /**
- * Displays an arrow icon in the menu combox box.
+ * Displays an arrow icon in the menu combo box.
  * 
  * @author Robert Ward (SCISYS)
  */
-class ArrowIcon implements Icon, SwingConstants {
+public class ArrowIcon implements Icon, SwingConstants {
 
     /** The Constant DEFAULT_SIZE. */
     private static final int DEFAULT_SIZE = 11;
