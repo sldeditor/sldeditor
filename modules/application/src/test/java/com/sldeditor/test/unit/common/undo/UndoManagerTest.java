@@ -238,6 +238,7 @@ public class UndoManagerTest {
         UndoManager.getInstance().undo();
         assertEquals(event5, parentListener.undoAction);
         assertNull(parentListener.redoAction);
+        UndoManager.getInstance().setPopulationCheck(null);
     }
 
 }

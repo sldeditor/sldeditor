@@ -207,7 +207,6 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testUndoAction() {
-        UndoManager.destroyInstance();
         FieldConfigInlineFeature field = new FieldConfigInlineFeature(Geometry.class, new FieldId(FieldIdEnum.NAME));
         field.undoAction(null);
         field.redoAction(null);
@@ -216,7 +215,6 @@ public class FieldConfigInlineFeatureTest {
         DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
 
         UserLayer userLayer1 = (UserLayer) testData1.getSLD().layers().get(0);
-        Controller.getInstance().setPopulating(true);
         field.populateField(userLayer1);
         String expectedValue1 = InlineFeatureUtils.getInlineFeaturesText(userLayer1);
         String actualValue = field.getStringValue();
@@ -229,13 +227,8 @@ public class FieldConfigInlineFeatureTest {
         String expectedValue2 = InlineFeatureUtils.getInlineFeaturesText(userLayer2);
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(expectedValue2) == 0);
-        Controller.getInstance().setPopulating(false);
         UndoManager.getInstance().undo();
         actualValue = field.getStringValue();
-        System.out.println("Actual");
-        System.out.println(actualValue);
-        System.out.println("Expected");
-        System.out.println(expectedValue1);
         assertTrue(actualValue.compareTo(expectedValue1) == 0);
         UndoManager.getInstance().redo();
         actualValue = field.getStringValue();

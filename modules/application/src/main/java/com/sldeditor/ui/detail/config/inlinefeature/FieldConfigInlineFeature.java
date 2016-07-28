@@ -245,11 +245,6 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
             {
                 String oldValue = (String)undoRedoObject.getOldValue();
 
-                System.out.println("Old value");
-                System.out.println(undoRedoObject.getOldValue().getClass().getName());
-                System.out.println(undoRedoObject.getOldValue().toString());
-                System.out.println(oldValue);
-
                 UserLayer userLayer = DefaultSymbols.createNewUserLayer();
 
                 InlineFeatureUtils.setInlineFeatures(userLayer, oldValue);
@@ -329,7 +324,6 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
             inlineFeature.setInlineFeatures(value);
         }
 
-        System.out.println("populateField\n" + inlineFeaturesText);
         UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, new String(inlineFeaturesText)));
 
         oldValueObj = new String(inlineFeaturesText);
@@ -389,7 +383,6 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
             if(inlineFeature != null)
             {
                 value = inlineFeature.getInlineFeatures();
-System.out.println("inlineFeatureUpdated\n" + value);
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, new String(value)));
 
                 oldValueObj = new String(value);

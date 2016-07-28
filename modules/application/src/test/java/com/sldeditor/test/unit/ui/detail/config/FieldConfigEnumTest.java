@@ -286,6 +286,7 @@ public class FieldConfigEnumTest {
 
         assertEquals(actualMap.get(new FieldId(FieldIdEnum.ANCHOR_POINT_H)), Boolean.TRUE);
         assertEquals(actualMap.get(new FieldId(FieldIdEnum.ANCHOR_POINT_V)), Boolean.FALSE);
+        UndoManager.getInstance().setPopulationCheck(null);
     }
 
     /**
@@ -344,6 +345,7 @@ public class FieldConfigEnumTest {
         field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(0),  Double.valueOf(23)));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME),  Double.valueOf(0),  Double.valueOf(54)));
+        UndoManager.getInstance().setPopulationCheck(null);
     }
 
 }
