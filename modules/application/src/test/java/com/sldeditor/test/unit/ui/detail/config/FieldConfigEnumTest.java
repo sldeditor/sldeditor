@@ -295,7 +295,6 @@ public class FieldConfigEnumTest {
      */
     @Test
     public void testUndoAction() {
-        UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
         SymbolTypeConfig s1 = new SymbolTypeConfig(null);
         s1.addOption("key1", "Value 1");
@@ -345,7 +344,6 @@ public class FieldConfigEnumTest {
         field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(0),  Double.valueOf(23)));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME),  Double.valueOf(0),  Double.valueOf(54)));
-        UndoManager.getInstance().setPopulationCheck(null);
     }
 
 }

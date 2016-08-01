@@ -129,6 +129,7 @@ public class FieldConfigInlineFeatureTest {
         field.populateExpression((Integer)null);
         String expectedValue3 = "test inline value3";
         field.populateExpression(expectedValue3);
+        Controller.getInstance().setPopulating(false);
     }
 
     /**
