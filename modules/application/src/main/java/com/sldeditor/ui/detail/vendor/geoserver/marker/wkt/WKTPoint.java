@@ -41,8 +41,11 @@ public class WKTPoint
      */
     public WKTPoint(DirectPosition pt) {
 
-        this.x = pt.getCoordinate()[0];
-        this.y = pt.getCoordinate()[1];
+        if(pt != null)
+        {
+            this.x = pt.getCoordinate()[0];
+            this.y = pt.getCoordinate()[1];
+        }
     }
 
     /**
