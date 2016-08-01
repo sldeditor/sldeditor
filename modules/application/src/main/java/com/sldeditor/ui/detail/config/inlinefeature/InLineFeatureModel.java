@@ -38,8 +38,11 @@ import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class InLineFeatureModel.
@@ -444,6 +447,65 @@ public class InLineFeatureModel extends AbstractTableModel {
                         attributes.remove(attributeToRemoveIndex);
 
                         sfb.addAll(attributes); 
+                        featureList.add(sfb.buildFeature(null)); 
+                    } 
+                } finally { 
+                    it.close(); 
+                } 
+
+                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
+                DataStore dataStore = DataUtilities.dataStore( collection );
+
+                featureCollection = collection;
+                cachedFeature = null;
+                lastRow = -1;
+                userLayer.setInlineFeatureDatastore(dataStore);
+                userLayer.setInlineFeatureType(newFeatureType);
+
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            } 
+
+            this.fireTableStructureChanged();
+            this.fireTableDataChanged();
+
+            if(parentObj != null)
+            {
+                parentObj.inlineFeatureUpdated();
+            }
+        }
+    }
+
+    /**
+     * Update CRS.
+     *
+     * @param selectedValue the selected value
+     */
+    public void updateCRS(ValueComboBoxData selectedValue) {
+        if(selectedValue != null)
+        {
+            String crsCode = selectedValue.getKey();
+
+            CoordinateReferenceSystem newCRS = CoordManager.getInstance().getCRS(crsCode);
+
+            SimpleFeatureType newFeatureType = SimpleFeatureTypeBuilder.retype(featureCollection.getSchema(), newCRS);
+
+            CoordinateReferenceSystem oldCRS = featureCollection.getSchema().getCoordinateReferenceSystem();
+
+            String typeName = userLayer.getInlineFeatureType().getTypeName();
+            try {
+                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+
+                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+
+                ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+
+                SimpleFeatureIterator it = featureSource.getFeatures().features();
+                try { 
+                    while (it.hasNext()) { 
+                        SimpleFeature sf = it.next(); 
+                        List<Object> attributeValueList = sf.getAttributes();
+                        sfb.addAll(attributeValueList);
                         featureList.add(sfb.buildFeature(null)); 
                     } 
                 } finally { 

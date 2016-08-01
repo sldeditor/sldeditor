@@ -266,10 +266,7 @@ public class InlineFeaturePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(!isPopulating())
                 {
-                    if(parentObj != null)
-                    {
-                        parentObj.inlineFeatureUpdated();
-                    }
+                    model.updateCRS(crsComboBox.getSelectedValue());
                 }
             }});
         return crsComboBox;
@@ -322,7 +319,7 @@ public class InlineFeaturePanel extends JPanel {
      * @param populateFlag the new populating
      */
     private void setPopulating(boolean populateFlag) {
-        this.populatingFlag = true;
+        this.populatingFlag = populateFlag;
     }
 
     /**

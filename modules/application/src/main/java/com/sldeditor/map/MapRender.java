@@ -39,11 +39,13 @@ import javax.swing.JToolBar;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.GridReaderLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.referencing.CRS;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -58,9 +60,14 @@ import org.geotools.swing.action.ZoomOutAction;
 import org.geotools.swing.control.JMapStatusBar;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
+import org.opengis.referencing.operation.TransformException;
 import org.opengis.style.Style;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputInterface;
@@ -391,7 +398,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         if(featureList != null)
         {
             try {
-                refEnvList.add(featureList.getFeatures().getBounds());
+                refEnvList.add(convertToWGS84(featureList.getFeatures().getBounds()));
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(MapRender.class, e);
             }
@@ -406,7 +413,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
                     if(featureSource != null)
                     {
-                        refEnvList.add(featureSource.getFeatures().getBounds());
+                        refEnvList.add(convertToWGS84(featureSource.getFeatures().getBounds()));
                     }
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(MapRender.class, e);
@@ -428,11 +435,58 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         {
             // Combine all the bounding boxes of all the layers
             mapBounds = refEnvList.get(0);
+
             for(int index = 1; index < refEnvList.size(); index ++)
             {
                 mapBounds.expandToInclude(refEnvList.get(index));
             }
         }
+    }
+
+    /**
+     * Convert referenced envelope to WGS 84.
+     *
+     * @param bounds the bounds
+     * @return the referenced envelope
+     */
+    private ReferencedEnvelope convertToWGS84(ReferencedEnvelope bounds) {
+        if(bounds == null)
+        {
+            return null;
+        }
+
+        CoordinateReferenceSystem wgs84 = CoordManager.getInstance().getWGS84();
+
+        if(wgs84.equals(bounds.getCoordinateReferenceSystem()))
+        {
+            return bounds;
+        }
+
+        if(bounds.getCoordinateReferenceSystem() == null)
+        {
+            return bounds;
+        }
+
+        MathTransform transform = null;
+        try {
+            transform = CRS.findMathTransform(bounds.getCoordinateReferenceSystem(), wgs84);
+        } catch (FactoryException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        }
+        Envelope targetGeometry = null;
+        try {
+            targetGeometry = JTS.transform(bounds, transform);
+        } catch (TransformException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        }
+
+        ReferencedEnvelope refEnv = new ReferencedEnvelope(targetGeometry.getMinY(), 
+                targetGeometry.getMaxY(), 
+                targetGeometry.getMinX(), 
+                targetGeometry.getMaxX(),
+                wgs84);
+
+        return refEnv;
     }
 
     /**
