@@ -203,10 +203,13 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
             SelectedSymbol.getInstance().replaceStyledLayer(userLayer);
 
             // Update inline data sources if the inline data changed, reduces creation of datasources
-            if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
+            if(changedField != null)
             {
-                DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-                dataSource.updateUserLayers();
+                if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
+                {
+                    DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+                    dataSource.updateUserLayers();
+                }
             }
 
             this.fireUpdateSymbol();

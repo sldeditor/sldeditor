@@ -102,6 +102,10 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public String getColumnName(int column) {
+        if((column < 0) || (column >= columnList.size()))
+        {
+            return null;
+        }
         return columnList.get(column);
     }
 
@@ -122,6 +126,16 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int column) {
+        if((row < 0) || (row >= getRowCount()))
+        {
+            return null;
+        }
+
+        if((column < 0) || (column >= getColumnCount()))
+        {
+            return null;
+        }
+
         SimpleFeature feature = getFeature(row);
 
         if(feature != null)
@@ -413,66 +427,69 @@ public class InLineFeatureModel extends AbstractTableModel {
     public void removeColumn(String columnName) {
         if(featureCollection != null)
         {
-            columnList.remove(columnName);
-
-            // Populate field names
-            SimpleFeatureTypeBuilder featureTypeBuilder = new SimpleFeatureTypeBuilder();
-            featureTypeBuilder.init(featureCollection.getSchema());
-            featureTypeBuilder.remove(columnName);
-
-            SimpleFeatureType newFeatureType = featureTypeBuilder.buildFeatureType();
-
-            int attributeToRemoveIndex = 0;
-            for(AttributeDescriptor descriptor : newFeatureType.getAttributeDescriptors())
+            if(columnList.contains(columnName))
             {
-                if(descriptor.getLocalName().compareTo(columnName) == 0)
+                columnList.remove(columnName);
+
+                // Find field name to remote
+                SimpleFeatureTypeBuilder featureTypeBuilder = new SimpleFeatureTypeBuilder();
+                featureTypeBuilder.init(featureCollection.getSchema());
+                featureTypeBuilder.remove(columnName);
+
+                SimpleFeatureType newFeatureType = featureTypeBuilder.buildFeatureType();
+
+                int attributeToRemoveIndex = 0;
+                for(AttributeDescriptor descriptor : newFeatureType.getAttributeDescriptors())
                 {
-                    break;
+                    if(descriptor.getLocalName().compareTo(columnName) == 0)
+                    {
+                        break;
+                    }
+                    attributeToRemoveIndex ++;
                 }
-                attributeToRemoveIndex ++;
-            }
 
-            String typeName = userLayer.getInlineFeatureType().getTypeName();
-            try {
-                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
-
-                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
-
-                ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
-
-                SimpleFeatureIterator it = featureSource.getFeatures().features();
+                String typeName = userLayer.getInlineFeatureType().getTypeName();
                 try {
-                    while (it.hasNext()) { 
-                        SimpleFeature sf = it.next();
-                        List<Object> attributes = sf.getAttributes();
-                        attributes.remove(attributeToRemoveIndex);
+                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
 
-                        sfb.addAll(attributes); 
-                        featureList.add(sfb.buildFeature(null)); 
+                    SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+
+                    ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+
+                    SimpleFeatureIterator it = featureSource.getFeatures().features();
+                    try {
+                        while (it.hasNext()) { 
+                            SimpleFeature sf = it.next();
+                            List<Object> attributes = sf.getAttributes();
+                            attributes.remove(attributeToRemoveIndex);
+
+                            sfb.addAll(attributes); 
+                            featureList.add(sfb.buildFeature(null)); 
+                        } 
+                    } finally { 
+                        it.close(); 
                     } 
-                } finally { 
-                    it.close(); 
+
+                    SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
+                    DataStore dataStore = DataUtilities.dataStore( collection );
+
+                    featureCollection = collection;
+                    cachedFeature = null;
+                    lastRow = -1;
+                    userLayer.setInlineFeatureDatastore(dataStore);
+                    userLayer.setInlineFeatureType(newFeatureType);
+
+                } catch (IOException e) {
+                    ConsoleManager.getInstance().exception(this, e);
                 } 
 
-                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
-                DataStore dataStore = DataUtilities.dataStore( collection );
+                this.fireTableStructureChanged();
+                this.fireTableDataChanged();
 
-                featureCollection = collection;
-                cachedFeature = null;
-                lastRow = -1;
-                userLayer.setInlineFeatureDatastore(dataStore);
-                userLayer.setInlineFeatureType(newFeatureType);
-
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            } 
-
-            this.fireTableStructureChanged();
-            this.fireTableDataChanged();
-
-            if(parentObj != null)
-            {
-                parentObj.inlineFeatureUpdated();
+                if(parentObj != null)
+                {
+                    parentObj.inlineFeatureUpdated();
+                }
             }
         }
     }
