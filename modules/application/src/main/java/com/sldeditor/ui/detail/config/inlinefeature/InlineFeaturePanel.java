@@ -44,6 +44,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
@@ -54,9 +56,12 @@ import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import com.sldeditor.ui.menucombobox.ArrowIcon;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class InlineFeaturePanel.
@@ -67,9 +72,6 @@ public class InlineFeaturePanel extends JPanel {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The parent obj. */
-    private InlineFeatureUpdateInterface parentObj = null;
 
     /** The crs combo box. */
     private ValueComboBox crsComboBox;
@@ -103,8 +105,6 @@ public class InlineFeaturePanel extends JPanel {
      */
     public InlineFeaturePanel(InlineFeatureUpdateInterface parent, int noOfRows)
     {
-        this.parentObj = parent;
-
         model = new InLineFeatureModel(parent);
 
         createUI(noOfRows);
@@ -137,6 +137,38 @@ public class InlineFeaturePanel extends JPanel {
         featureTable.setAutoscrolls(true);
         featureTable.getTableHeader().setReorderingAllowed(false);
         featureTable.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
+        ListSelectionModel selectionModel = featureTable.getSelectionModel();
+
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if(!e.getValueIsAdjusting())
+                {
+                    int row = featureTable.getSelectedRow();
+                    if(row >= 0)
+                    {
+                        int column = featureTable.getSelectedColumn();
+
+                        if(column == model.getGeometryFieldIndex())
+                        {
+                            WKTDialog wktDialog = new WKTDialog();
+
+                            String geometryString = (String) model.getValueAt(row, column).toString();
+                            if(wktDialog.showDialog(geometryString))
+                            {
+                                String crsCode = null;
+                                if(crsComboBox.getSelectedValue() != null)
+                                {
+                                    crsCode = crsComboBox.getSelectedValue().getKey();
+                                }
+                                Geometry geometry = WKTConversion.convertToGeometry(wktDialog.getWKTString(), crsCode);
+
+                                model.updateGeometry(row, geometry);
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
         JScrollPane scrollPanel = new JScrollPane(featureTable);
         scrollPanel.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
@@ -373,5 +405,9 @@ public class InlineFeaturePanel extends JPanel {
      */
     public String getInlineFeatures() {
         return model.getInlineFeatures();
+    }
+
+    public void clearSelection() {
+        featureTable.clearSelection();
     }
 }

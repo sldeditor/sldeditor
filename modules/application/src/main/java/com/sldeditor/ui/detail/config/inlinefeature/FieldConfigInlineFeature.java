@@ -94,10 +94,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         inlineFeature = new InlineFeaturePanel(this, NO_OF_ROWS);
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml"), null, inlineGML,
-                Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml.tooltip"));
         tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.feature"), null, inlineFeature,
                 Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.feature.tooltip"));
+        tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml"), null, inlineGML,
+                Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml.tooltip"));
         tabbedPane.setBounds(0, 0, inlineGML.getWidth(), inlineGML.getHeight());
 
         fieldPanel.add(tabbedPane);
@@ -388,6 +388,11 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
                 oldValueObj = new String(value);
 
                 valueUpdated();
+            }
+
+            if(inlineFeature != null)
+            {
+                inlineFeature.clearSelection();
             }
 
             if(inlineGML != null)

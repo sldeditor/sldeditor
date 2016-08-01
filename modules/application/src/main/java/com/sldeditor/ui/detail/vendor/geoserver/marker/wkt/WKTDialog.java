@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 
 import javax.swing.JLabel;
@@ -97,16 +98,19 @@ public class WKTDialog extends JDialog {
 
     /** The reload button. */
     private JButton btnReload;
-    
+
     /**
      * Constructor.
      */
     public WKTDialog() {
+        super(Controller.getInstance().getFrame());
         setTitle(Localisation.getString(WKTDialog.class, "WKTDialog.title"));
         setResizable(false);
         setModal(true);
 
         createUI();
+
+        Controller.getInstance().centreDialog(this);
     }
 
     /**
@@ -567,7 +571,7 @@ public class WKTDialog extends JDialog {
      * @param wktString the wkt string
      */
     private void populate(String wktString) {
-        
+
         wktGeometry = WKTConversion.parseWKTString(wktString);
 
         model.setSelectedItem(wktGeometry.getGeometryType());
@@ -690,7 +694,7 @@ public class WKTDialog extends JDialog {
         {
             wktTextArea.setBackground(Color.red);
         }
-        
+
         btnReload.setEnabled(false);
     }
 

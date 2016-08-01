@@ -27,7 +27,7 @@ import java.util.List;
  * @author Robert Ward (SCISYS)
  */
 public class WKTSegmentList {
-    
+
     /** The wkt point list. */
     private List<WKTPoint> wktPointList = null;
 
@@ -59,7 +59,7 @@ public class WKTSegmentList {
         {
             wktPointList = new ArrayList<WKTPoint>();
         }
-        
+
         if(!wktPointList.isEmpty())
         {
             if(!pointToAdd.equals(wktPointList.get(wktPointList.size() - 1)))
@@ -76,20 +76,40 @@ public class WKTSegmentList {
     /**
      * Gets the WKT string.
      *
+     * @param makeFirstLastTheSame the make first last the same
      * @return the WKT string
      */
     public String getWKTString() {
+        return getWKTString(false);
+    }
+
+    /**
+     * Gets the WKT string.
+     *
+     * @param makeFirstLastTheSame the make first last the same
+     * @return the WKT string
+     */
+    public String getWKTString(boolean makeFirstLastTheSame) {
         StringBuilder sb = new StringBuilder();
-        
+
+        List<WKTPoint> copyList = new ArrayList<WKTPoint>(wktPointList);
+        if(makeFirstLastTheSame)
+        {
+            if(copyList.get(0) != copyList.get(copyList.size() - 1))
+            {
+                copyList.add(copyList.get(0));
+            }
+        }
+
         sb.append("(");
         int index = 0;
-        for(WKTPoint point : wktPointList)
+        for(WKTPoint point : copyList)
         {
             if(index > 0)
             {
                 sb.append(", ");
             }
-            
+
             sb.append(point.getX());
             sb.append(" ");
             sb.append(point.getY());

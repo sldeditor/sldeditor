@@ -30,7 +30,6 @@ import javax.swing.Box;
 import org.apache.log4j.Logger;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;

@@ -43,6 +43,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class InLineFeatureModel.
@@ -231,7 +232,7 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
+        return (columnIndex != geometryFieldIndex);
     }
 
     /**
@@ -259,7 +260,7 @@ public class InLineFeatureModel extends AbstractTableModel {
         {
             if(columnIndex == getGeometryFieldIndex())
             {
-
+                feature.setAttribute(columnIndex, aValue);
             }
             else
             {
@@ -490,8 +491,6 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             SimpleFeatureType newFeatureType = SimpleFeatureTypeBuilder.retype(featureCollection.getSchema(), newCRS);
 
-            CoordinateReferenceSystem oldCRS = featureCollection.getSchema().getCoordinateReferenceSystem();
-
             String typeName = userLayer.getInlineFeatureType().getTypeName();
             try {
                 SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
@@ -533,5 +532,15 @@ public class InLineFeatureModel extends AbstractTableModel {
                 parentObj.inlineFeatureUpdated();
             }
         }
+    }
+
+    /**
+     * Update geometry for a given row.
+     *
+     * @param row the row to update
+     * @param geometry the new geometry
+     */
+    public void updateGeometry(int row, Geometry geometry) {
+        setValueAt(geometry, row, getGeometryFieldIndex());
     }
 }

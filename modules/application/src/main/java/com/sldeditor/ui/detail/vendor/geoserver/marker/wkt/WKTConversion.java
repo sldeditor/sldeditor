@@ -32,7 +32,6 @@ import org.geotools.geometry.iso.primitive.PointImpl;
 import org.geotools.geometry.iso.primitive.SurfaceImpl;
 import org.geotools.geometry.text.WKTParser;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.geometry.Geometry;
 import org.opengis.geometry.PositionFactory;
 import org.opengis.geometry.aggregate.AggregateFactory;
 import org.opengis.geometry.coordinate.GeometryFactory;
@@ -40,6 +39,10 @@ import org.opengis.geometry.coordinate.LineSegment;
 import org.opengis.geometry.primitive.Primitive;
 import org.opengis.geometry.primitive.PrimitiveFactory;
 import org.opengis.geometry.primitive.Ring;
+
+import com.sldeditor.common.console.ConsoleManager;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.WKTReader;
 
 /**
  * Converts a WKT string to WKTxxx objects.
@@ -124,7 +127,7 @@ public class WKTConversion {
         }
 
         try {
-            Geometry geometry = wktParser.parse(wktString);
+            org.opengis.geometry.Geometry geometry = wktParser.parse(wktString);
 
             if(geometry instanceof MultiPrimitiveImpl)
             {
@@ -282,16 +285,23 @@ public class WKTConversion {
                     (wktGeometry.getGeometryType().getName().compareTo(WKT_POLYGON) == 0) ||
                     (wktGeometry.getGeometryType().getName().compareTo(WKT_MULTIPOINT) == 0))
             {
+                sb.append("(");
                 if(formatText)
                 {
-                    sb.append("(\n");
+                    sb.append("\n");
                 }
 
                 int index = 0;
                 List<WKTSegmentList> segmentList = wktGeometry.getSegmentList(0);
                 if(segmentList != null)
                 {
-                    for(WKTSegmentList pointList :segmentList)
+                    boolean makeFirstAndLastSame = false;
+                    if(wktGeometry.getGeometryType().getName().compareTo(WKT_POLYGON) == 0)
+                    {
+                        makeFirstAndLastSame = true;
+                    }
+
+                    for(WKTSegmentList pointList : segmentList)
                     {
                         if(index > 0)
                         {
@@ -304,8 +314,11 @@ public class WKTConversion {
                                 sb.append(", ");
                             }
                         }
-                        sb.append("\t");
-                        sb.append(pointList.getWKTString());
+                        if(formatText)
+                        {
+                            sb.append("\t");
+                        }
+                        sb.append(pointList.getWKTString(makeFirstAndLastSame));
                         index ++;
                     }
                 }
@@ -334,7 +347,10 @@ public class WKTConversion {
                             sb.append(", ");
                         }
                     }
-                    sb.append("\t");
+                    if(formatText)
+                    {
+                        sb.append("\t");
+                    }
                     List<WKTSegmentList> segmentList = wktGeometry.getSegmentList(multiIndex);
                     if(segmentList != null)
                     {
@@ -367,7 +383,7 @@ public class WKTConversion {
                         for(WKTSegmentList pointList : segmentList)
                         {
                             sb.append(pointList.getWKTString());
-                        }            
+                        }
                     }
                     else if(wktGeometry.getGeometryType().getName().compareTo(WKT_LINESTRING) == 0)
                     {
@@ -394,6 +410,31 @@ public class WKTConversion {
         wktGeometry.setGeometryType(wktType);
 
         return wktGeometry;
+    }
+
+    /**
+     * Convert to geometry.
+     *
+     * @param wktString the wkt string
+     * @param crsCode the crs code
+     */
+    public static Geometry convertToGeometry(String wktString,
+            String crsCode) {
+        WKTReader parser = new WKTReader();
+
+        if(wktString.startsWith(WKT_PREFIX))
+        {
+            wktString = wktString.substring(WKT_PREFIX.length());
+        }
+
+        Geometry shape = null;
+        try {
+            shape = parser.read(wktString);
+        } catch (com.vividsolutions.jts.io.ParseException e) {
+            ConsoleManager.getInstance().exception(WKTConversion.class, e);
+        }
+
+        return shape;
     }
 
 }

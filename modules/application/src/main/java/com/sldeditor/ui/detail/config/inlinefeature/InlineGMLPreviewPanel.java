@@ -93,48 +93,6 @@ public class InlineGMLPreviewPanel extends JPanel {
         scroll.setAutoscrolls(true);
 
         add(scroll, BorderLayout.CENTER);
-
-        // Create a button panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBounds(0, 0, BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
-
-        add(buttonPanel, BorderLayout.NORTH);
-
-        //
-        // Apply button
-        //
-        final JButton buttonApply = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.apply"));
-        buttonApply.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if(parentObj != null)
-                {
-                    parentObj.inlineFeatureUpdated();
-                }
-            }
-        });
-        buttonApply.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        buttonPanel.add(buttonApply);
-
-        //
-        // Clear button
-        //
-        final JButton buttonClear = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.clear"));
-        buttonClear.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-
-                textField.setText("");
-
-                if(parentObj != null)
-                {
-                    parentObj.inlineFeatureUpdated();
-                }
-            }
-        });
-
-        buttonClear.setBounds((int)buttonApply.getBounds().getMaxX() + 5, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        buttonPanel.add(buttonClear);
     }
 
     /**
