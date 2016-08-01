@@ -79,13 +79,13 @@ public class WKTConversion {
     {
         if(wktTypeList.isEmpty())
         {
-            wktTypeList.add(new WKTType(WKT_POINT, false, 1, "Point"));
-            wktTypeList.add(new WKTType(WKT_MULTIPOINT, true, 1, "Point"));
-            wktTypeList.add(new WKTType(WKT_LINESTRING, false, 2, "Line"));
-            wktTypeList.add(new WKTType("LINEARRING", false, 2, "Line"));
-            wktTypeList.add(new WKTType(WKT_MULTILINESTRING, true, 2, "Line"));
-            wktTypeList.add(new WKTType(WKT_POLYGON, false, -1, "Polygon"));
-            wktTypeList.add(new WKTType(WKT_MULTIPOLYGON, true, -1, "Polygon", true));
+            wktTypeList.add(new WKTType(WKT_POINT, false, 1, "Point", false));
+            wktTypeList.add(new WKTType(WKT_MULTIPOINT, true, 1, "Point", false));
+            wktTypeList.add(new WKTType(WKT_LINESTRING, false, 2, "Line", false));
+            wktTypeList.add(new WKTType("LINEARRING", false, 2, "Line", false));
+            wktTypeList.add(new WKTType(WKT_MULTILINESTRING, true, 2, "Line", false));
+            wktTypeList.add(new WKTType(WKT_POLYGON, false, -1, "Polygon", true));
+            wktTypeList.add(new WKTType(WKT_MULTIPOLYGON, true, -1, "Polygon", true, true));
 
             for(WKTType wkyType : wktTypeList)
             {

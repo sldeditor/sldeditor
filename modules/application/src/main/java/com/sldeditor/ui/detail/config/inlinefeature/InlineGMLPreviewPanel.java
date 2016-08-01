@@ -21,17 +21,12 @@ package com.sldeditor.ui.detail.config.inlinefeature;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
  * The Class InlineGMLPreviewPanel.
@@ -50,6 +45,7 @@ public class InlineGMLPreviewPanel extends JPanel {
     private JTextArea textField;
 
     /** The parent obj. */
+    @SuppressWarnings("unused")
     private InlineFeatureUpdateInterface parentObj = null;
     
     /**

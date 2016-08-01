@@ -387,17 +387,12 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
 
                 oldValueObj = new String(value);
 
+                if(inlineGML != null)
+                {
+                    inlineGML.setInlineFeatures(value);
+                }
+
                 valueUpdated();
-            }
-
-            if(inlineFeature != null)
-            {
-                inlineFeature.clearSelection();
-            }
-
-            if(inlineGML != null)
-            {
-                inlineGML.setInlineFeatures(value);
             }
         }
     }

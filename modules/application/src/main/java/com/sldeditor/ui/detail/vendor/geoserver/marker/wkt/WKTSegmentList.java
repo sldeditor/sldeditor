@@ -36,7 +36,22 @@ public class WKTSegmentList {
      *
      * @return the wkt point list
      */
-    public List<WKTPoint> getWktPointList() {
+    public List<WKTPoint> getWktPointList(boolean ensureFirstAndLastPointsAreTheSame) {
+        if(!ensureFirstAndLastPointsAreTheSame)
+        {
+            return wktPointList;
+        }
+
+        List<WKTPoint> copyList = new ArrayList<WKTPoint>(wktPointList);
+
+        if(copyList.size() > 1)
+        {
+            if(copyList.get(0).equals(copyList.get(copyList.size() - 1)))
+            {
+                copyList.remove(copyList.size() - 1);
+                return copyList;
+            }
+        }
         return wktPointList;
     }
 

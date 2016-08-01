@@ -37,10 +37,13 @@ public class WKTType
 
     /** The list item. */
     private String listItem = "Item";
-    
+
     /** The can have multiple shapes. */
     private boolean canHaveMultipleShapes = false;
-    
+
+    /** The do first and last point have to be same. */
+    private boolean doFirstLastHaveToBeSame = false;
+
     /**
      * Instantiates a new wkt type.
      *
@@ -49,14 +52,22 @@ public class WKTType
      * @param numOfPoints the num of points
      * @param listItem the list item
      * @param canHaveMultipleShapes the can have multiple shapes
+     * @param doFirstLastHaveToBeSame the do first last have to be same
      */
-    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem, boolean canHaveMultipleShapes) {
+    public WKTType(String name, 
+            boolean multipleCoordinates,
+            int numOfPoints,
+            String listItem, 
+            boolean canHaveMultipleShapes,
+            boolean doFirstLastHaveToBeSame)
+    {
         super();
         this.name = name;
         this.multipleCoordinates = multipleCoordinates;
         this.numOfPoints = numOfPoints;
         this.listItem = listItem;
         this.canHaveMultipleShapes = canHaveMultipleShapes;
+        this.doFirstLastHaveToBeSame = doFirstLastHaveToBeSame;
     }
 
     /**
@@ -67,8 +78,8 @@ public class WKTType
      * @param numOfPoints the num of points
      * @param listItem the list item
      */
-    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem) {
-        this(name, multipleCoordinates, numOfPoints, listItem ,false);
+    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem, boolean doFirstLastHaveToBeSame) {
+        this(name, multipleCoordinates, numOfPoints, listItem ,false, doFirstLastHaveToBeSame);
     }
 
     /**
@@ -127,5 +138,14 @@ public class WKTType
      */
     public boolean canHaveMultipleShapes() {
         return canHaveMultipleShapes;
+    }
+
+    /**
+     * Do first last have to be same.
+     *
+     * @return true, if successful
+     */
+    public boolean doFirstLastHaveToBeSame() {
+        return doFirstLastHaveToBeSame;
     }
 };

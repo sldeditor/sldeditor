@@ -164,6 +164,8 @@ public class InlineFeaturePanel extends JPanel {
 
                                 model.updateGeometry(row, geometry);
                             }
+
+                            featureTable.clearSelection();
                         }
                     }
                 }
@@ -405,9 +407,5 @@ public class InlineFeaturePanel extends JPanel {
      */
     public String getInlineFeatures() {
         return model.getInlineFeatures();
-    }
-
-    public void clearSelection() {
-        featureTable.clearSelection();
     }
 }

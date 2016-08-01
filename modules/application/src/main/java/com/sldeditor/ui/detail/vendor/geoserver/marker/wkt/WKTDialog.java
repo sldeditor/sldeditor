@@ -732,7 +732,7 @@ public class WKTDialog extends JDialog {
         tablePointModel.clear();
 
         showMultiPanel(wktType);
-
+        tablePointModel.setWKTType(wktType);
         updateSegmentButtons();
         updatePointButtons();
     }

@@ -45,6 +45,9 @@ public class WKTPointModel extends AbstractTableModel {
     /** The column list. */
     private List<String> columnList = new ArrayList<String>();
 
+    /** The ensure first and last points are the same. */
+    private boolean ensureFirstAndLastPointsAreTheSame = false;
+
     /**
      * Constructor.
      */
@@ -192,16 +195,16 @@ public class WKTPointModel extends AbstractTableModel {
      * @param wktPointList the wkt point list
      */
     public void populate(WKTSegmentList wktPointList) {
-        
+
         if(wktPointList == null)
         {
             pointList.clear();
         }
         else
         {
-            pointList = wktPointList.getWktPointList();
+            pointList = wktPointList.getWktPointList(ensureFirstAndLastPointsAreTheSame);
         }
-        
+
         this.fireTableDataChanged();
     }
 
@@ -212,15 +215,31 @@ public class WKTPointModel extends AbstractTableModel {
      */
     public void removePoint(int rowIndex) {
         pointList.remove(rowIndex);
-        
+
         this.fireTableDataChanged();
     }
 
     /**
-     * Clear all the data from the model
+     * Clear all the data from the model.
      */
     public void clear() {
         pointList.clear();
         this.fireTableDataChanged();
+    }
+
+    /**
+     * Sets the WKT type.
+     *
+     * @param wktType the new WKT type
+     */
+    public void setWKTType(WKTType wktType) {
+        if(wktType != null)
+        {
+            ensureFirstAndLastPointsAreTheSame = wktType.doFirstLastHaveToBeSame();
+        }
+        else
+        {
+            ensureFirstAndLastPointsAreTheSame = false;
+        }
     }
 }
