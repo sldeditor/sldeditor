@@ -164,9 +164,8 @@ public class InlineFeaturePanel extends JPanel {
 
                                 model.updateGeometry(row, geometry);
                             }
-
-                            featureTable.clearSelection();
                         }
+                        featureTable.clearSelection();
                     }
                 }
             }
