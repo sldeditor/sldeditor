@@ -30,6 +30,7 @@ import javax.swing.Box;
 import org.apache.log4j.Logger;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -157,18 +158,21 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                 ValueComboBox comboBox = (ValueComboBox) e.getSource();
                 if (comboBox.getSelectedItem() != null) {
 
-                    Object newValueObj = comboBox.getSelectedValue().getKey();
-
-                    if((oldValueObj == null) && comboBox.getItemCount() > 0)
+                    if(!Controller.getInstance().isPopulating())
                     {
-                        oldValueObj = comboBox.getFirstItem().getKey();
+                        Object newValueObj = comboBox.getSelectedValue().getKey();
+
+                        if((oldValueObj == null) && comboBox.getItemCount() > 0)
+                        {
+                            oldValueObj = comboBox.getFirstItem().getKey();
+                        }
+
+                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+
+                        oldValueObj = newValueObj;
+
+                        valueUpdated();
                     }
-
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                    oldValueObj = newValueObj;
-
-                    valueUpdated();
                 }
             }
         });
