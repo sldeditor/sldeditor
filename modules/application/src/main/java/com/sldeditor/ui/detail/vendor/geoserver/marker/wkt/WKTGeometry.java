@@ -109,18 +109,24 @@ public class WKTGeometry {
     public int addSegmentList(int index, WKTSegmentList segmentListToAdd) {
         List<WKTSegmentList> localSegmentList = null;
 
-        if(index >= segmentList.size())
+        if(index < 0)
         {
-            localSegmentList = new ArrayList<WKTSegmentList>();
-            segmentList.add(localSegmentList);
+            return -1;
         }
         else
         {
-            localSegmentList = segmentList.get(index);
-        }
+            if(index >= segmentList.size())
+            {
+                localSegmentList = new ArrayList<WKTSegmentList>();
+                segmentList.add(localSegmentList);
+            }
+            else
+            {
+                localSegmentList = segmentList.get(index);
+            }
 
-        localSegmentList.add(segmentListToAdd);
-        
+            localSegmentList.add(segmentListToAdd);
+        }       
         return localSegmentList.size() - 1;
     }
 
@@ -167,7 +173,7 @@ public class WKTGeometry {
 
         return segmentList.size();
     }
-    
+
     /**
      * Removes the segment at the specified index.
      *
@@ -176,7 +182,7 @@ public class WKTGeometry {
      */
     public void removeSegment(int shapeIndex, int segmentIndex) {
         List<WKTSegmentList> shapeList = segmentList.get(shapeIndex);
-        
+
         if((segmentIndex >= 0) && (segmentIndex < shapeList.size()))
         {
             shapeList.remove(segmentIndex);
@@ -227,7 +233,7 @@ public class WKTGeometry {
      * @return true, if is empty
      */
     public boolean isEmpty() {
-        return (geometryType == null) && segmentList.isEmpty();
+        return (geometryType == null) || segmentList.isEmpty();
     }
 
 }
