@@ -49,13 +49,13 @@ public class WKTSegmentListTest {
     @Test
     public void testGetWktPointList() {
         WKTSegmentList segmentList = new WKTSegmentList();
-        
+
         DirectPosition pos1 = new DirectPosition2D(1.0, 1.0);
         DirectPosition pos2 = new DirectPosition2D(2.0, 2.0);
         DirectPosition pos3 = new DirectPosition2D(3.0, 3.0);
         DirectPosition pos4 = new DirectPosition2D(4.0, 4.0);
         segmentList.addPoint(new WKTPoint(pos1));
-        
+
         String actualValue = segmentList.getWKTString();
         assertTrue(actualValue.compareTo("(1.0 1.0)") == 0);
 

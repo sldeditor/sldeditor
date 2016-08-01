@@ -121,6 +121,11 @@ public class WKTPointModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= pointList.size()))
+        {
+            return null;
+        }
+
         WKTPoint data = pointList.get(rowIndex);
 
         switch(columnIndex)
@@ -145,19 +150,27 @@ public class WKTPointModel extends AbstractTableModel {
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     public void setValueAt(Object value, int row, int col) {
-        WKTPoint data = pointList.get(row);
-        switch(col)
+        if((row < 0) || (row >= pointList.size()))
         {
-        case X_COLUMN_ID:
-            data.setX(Double.valueOf((String) value));
-            break;
-        case Y_COLUMN_ID:
-            data.setY(Double.valueOf((String) value));
-            break;
-        default:
-            break;
+            return;
         }
-        fireTableCellUpdated(row, col);
+
+        if(value instanceof String)
+        {
+            WKTPoint data = pointList.get(row);
+            switch(col)
+            {
+            case X_COLUMN_ID:
+                data.setX(Double.valueOf((String) value));
+                break;
+            case Y_COLUMN_ID:
+                data.setY(Double.valueOf((String) value));
+                break;
+            default:
+                break;
+            }
+            fireTableCellUpdated(row, col);
+        }
     }
 
     /**
@@ -167,25 +180,6 @@ public class WKTPointModel extends AbstractTableModel {
     {
         pointList.add(new WKTPoint());
 
-        this.fireTableDataChanged();
-    }
-
-    /**
-     * Populate model.
-     *
-     * @param wktString the wkt string
-     * @param noOfPoints the no of points
-     */
-    public void populate(String wktString, int noOfPoints) {
-
-        pointList.clear();
-
-        int maxPoints = (noOfPoints >= 0) ? noOfPoints : 3;
-
-        for(int index = 0; index < maxPoints; index ++)
-        {
-            pointList.add(new WKTPoint());
-        }
         this.fireTableDataChanged();
     }
 
@@ -214,6 +208,10 @@ public class WKTPointModel extends AbstractTableModel {
      * @param rowIndex the row index
      */
     public void removePoint(int rowIndex) {
+        if((rowIndex < 0) || (rowIndex >= pointList.size()))
+        {
+            return;
+        }
         pointList.remove(rowIndex);
 
         this.fireTableDataChanged();
