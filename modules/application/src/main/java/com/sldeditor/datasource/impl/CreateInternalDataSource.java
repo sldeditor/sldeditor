@@ -30,6 +30,7 @@ import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
@@ -213,6 +214,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
         int pointCount = 0;
         int lineCount = 0;
         int polygonCount = 0;
+        int rasterCount = 0;
 
         for(StyledLayer styledLayer : styledLayerList)
         {
@@ -253,6 +255,10 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
                                 {
                                     polygonCount ++;
                                 }
+                                else if(symbolizer instanceof RasterSymbolizer)
+                                {
+                                    rasterCount ++;
+                                }
                             }
                         }
                     }
@@ -271,6 +277,10 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
         else if(polygonCount > 0)
         {
             dsInfo.setGeometryType(GeometryTypeEnum.POLYGON);
+        }
+        else if(rasterCount > 0)
+        {
+            dsInfo.setGeometryType(GeometryTypeEnum.RASTER);
         }
     }
 }

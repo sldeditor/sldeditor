@@ -75,7 +75,10 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
 
             populateStandardData(featureTypeStyle);
 
-            fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION, featureTypeStyle.getTransformation());
+            if(featureTypeStyle != null)
+            {
+                fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION, featureTypeStyle.getTransformation());
+            }
         }
     }
 

@@ -39,25 +39,15 @@ import javax.swing.tree.TreePath;
 
 import org.apache.log4j.Logger;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.FeatureTypeStyleImpl;
-import org.geotools.styling.FillImpl;
 import org.geotools.styling.LineSymbolizer;
-import org.geotools.styling.LineSymbolizerImpl;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.PolygonSymbolizerImpl;
-import org.geotools.styling.RasterSymbolizerImpl;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.RuleImpl;
-import org.geotools.styling.StrokeImpl;
 import org.geotools.styling.Style;
-import org.geotools.styling.StyleImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.StyledLayerDescriptorImpl;
-import org.geotools.styling.TextSymbolizerImpl;
 import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.TreeSelectionData;
@@ -78,16 +68,9 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
-import com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem;
-import com.sldeditor.ui.tree.item.FillTreeItem;
-import com.sldeditor.ui.tree.item.NameLayerTreeItem;
-import com.sldeditor.ui.tree.item.RuleTreeItem;
+import com.sldeditor.ui.tree.item.RasterSymbolizerImageOutline;
 import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
-import com.sldeditor.ui.tree.item.StrokeTreeItem;
-import com.sldeditor.ui.tree.item.StyleTreeItem;
-import com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem;
-import com.sldeditor.ui.tree.item.SymbolizerTreeItem;
-import com.sldeditor.ui.tree.item.UserLayerTreeItem;
+import com.sldeditor.ui.tree.item.TreeItemMap;
 
 /**
  * The component that displays the structure of the SLD as a tree.
@@ -111,17 +94,11 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     /** The tree model. */
     private DefaultTreeModel treeModel = null;
 
-    /** The tree item map. */
-    protected static Map<Class<?>, SLDTreeItemInterface> treeItemMap = new HashMap<Class<?>, SLDTreeItemInterface>();
-
     /** The display panel. */
     private SymbolizerSelectedInterface displayPanel = null;
 
-    /** The rule tree item. */
-    private RuleTreeItem ruleTreeItem = new RuleTreeItem();
-
-    /** The symbolizer tree item. */
-    private SymbolizerTreeItem symbolizerTreeItem = new SymbolizerTreeItem();
+    /** The tree item map. */
+    private TreeItemMap treeItemMap = TreeItemMap.getInstance();
 
     /** The node map. */
     private Map<Object, DefaultMutableTreeNode> nodeMap = new HashMap<Object, DefaultMutableTreeNode>();
@@ -166,52 +143,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             }
         }
 
-        createTreeItemMap();
         createUI();
-    }
-
-    /**
-     * Creates the tree item map.
-     */
-    private void createTreeItemMap() {
-
-        if(treeItemMap.isEmpty())
-        {
-            /** The sld tree item. */
-            StyledLayerDescriptorTreeItem sldTreeItem = new StyledLayerDescriptorTreeItem();
-
-            /** The style tree item. */
-            StyleTreeItem styleTreeItem = new StyleTreeItem();
-
-            /** The fts tree item. */
-            FeatureTypeStyleTreeItem ftsTreeItem = new FeatureTypeStyleTreeItem();
-
-            /** The name layer tree item. */
-            NameLayerTreeItem nameLayerTreeItem = new NameLayerTreeItem();
-
-            /** The user layer tree item. */
-            UserLayerTreeItem userLayerTreeItem = new UserLayerTreeItem();
-
-            /** The fill tree item. */
-            FillTreeItem fillTreeItem = new FillTreeItem();
-
-            /** The stroke tree item. */
-            StrokeTreeItem strokeTreeItem = new StrokeTreeItem();
-
-            treeItemMap.put(StyledLayerDescriptorImpl.class, sldTreeItem);
-            treeItemMap.put(StyleImpl.class, styleTreeItem);
-            treeItemMap.put(FeatureTypeStyleImpl.class, ftsTreeItem);
-            treeItemMap.put(RuleImpl.class, ruleTreeItem);
-            treeItemMap.put(PointSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(LineSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(PolygonSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(TextSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(NamedLayerImpl.class, nameLayerTreeItem);
-            treeItemMap.put(UserLayerImpl.class, userLayerTreeItem);
-            treeItemMap.put(StrokeImpl.class, strokeTreeItem);
-            treeItemMap.put(FillImpl.class, fillTreeItem);
-            treeItemMap.put(RasterSymbolizerImpl.class, symbolizerTreeItem);
-        }
     }
 
     /**
@@ -384,6 +316,27 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                                             if((symbolizer instanceof PolygonSymbolizer) || (symbolizer instanceof LineSymbolizer))
                                             {
                                                 addObject(symbolizerTreeNode, SLDTreeLeafFactory.getInstance().getStroke(symbolizer), true);
+                                            }
+
+                                            if(symbolizer instanceof RasterSymbolizer)
+                                            {
+                                                RasterSymbolizerImageOutline imageOutline = SLDTreeLeafFactory.getInstance().getImageOutline(symbolizer);
+                                                LineSymbolizer outlineLineSymbolizer = imageOutline.getLineSymbolizer();
+                                                if(outlineLineSymbolizer != null)
+                                                {
+                                                    DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(symbolizerTreeNode, outlineLineSymbolizer, true);
+
+                                                    addObject(symbolizerImageOutlineLineNode, SLDTreeLeafFactory.getInstance().getStroke(outlineLineSymbolizer), true);
+                                                }
+
+                                                PolygonSymbolizer outlinePolygonSymbolizer = imageOutline.getPolygonSymbolizer();
+                                                if(outlinePolygonSymbolizer != null)
+                                                {
+                                                    DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(symbolizerTreeNode, outlinePolygonSymbolizer, true);
+
+                                                    addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getFill(outlinePolygonSymbolizer), true);
+                                                    addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getStroke(outlinePolygonSymbolizer), true);
+                                                }
                                             }
                                         }
                                     }
@@ -673,7 +626,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             Object nodeInfo = node.getUserObject();
             if(nodeInfo != null)
             {
-                SLDTreeItemInterface treeItem = treeItemMap.get(nodeInfo.getClass());
+                SLDTreeItemInterface treeItem = treeItemMap.getValue(nodeInfo.getClass().getClass());
 
                 if(treeItem != null)
                 {

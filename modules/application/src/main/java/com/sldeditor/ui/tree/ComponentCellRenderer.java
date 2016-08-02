@@ -38,6 +38,7 @@ import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
 import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
+import com.sldeditor.ui.tree.item.TreeItemMap;
 
 /**
  * A TreeCellRenderer displays each node of a tree. The default renderer
@@ -182,7 +183,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
             }
             else
             {
-                SLDTreeItemInterface treeItem = SLDTree.treeItemMap.get(userObject.getClass());
+                SLDTreeItemInterface treeItem = TreeItemMap.getInstance().getValue(userObject.getClass());
 
                 if(treeItem != null)
                 {
