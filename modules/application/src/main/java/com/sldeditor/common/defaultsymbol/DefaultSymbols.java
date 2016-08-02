@@ -39,6 +39,7 @@ import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
+import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -48,7 +49,9 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Displacement;
 import org.opengis.style.GraphicalSymbol;
-import org.opengis.style.Stroke;
+
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class of static methods to provide default sld values to the application.
@@ -102,7 +105,8 @@ public class DefaultSymbols {
                 ff.literal(0.0),
                 anchorPoint,
                 displacement);
-        PointSymbolizer newPointSymbolizer = (PointSymbolizer) styleFactory.pointSymbolizer("New Marker",
+        PointSymbolizer newPointSymbolizer = (PointSymbolizer) styleFactory.pointSymbolizer(
+                Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"),
                 geometryField,
                 null,
                 null,
@@ -127,7 +131,7 @@ public class DefaultSymbols {
         String geometryFieldName = null;
         Expression geometryField = ff.property(geometryFieldName);
 
-        String name = "TextSymbol";
+        String name = Localisation.getString(SLDTreeTools.class, "TreeItem.newText");
         AnchorPoint anchor = null;
         Displacement displacement = null;
 
@@ -237,7 +241,7 @@ public class DefaultSymbols {
      */
     public static Rule createNewRule() {
         Rule rule = styleFactory.createRule();
-        rule.setName("New Rule");
+        rule.setName(Localisation.getString(SLDTreeTools.class, "TreeItem.newRule"));
         return rule;
     }
 
@@ -401,5 +405,15 @@ public class DefaultSymbols {
         rule.symbolizers().add(line);
 
         return sld;
+    }
+
+    /**
+     * Creates the default stroke.
+     *
+     * @return the stroke
+     */
+    public static Stroke createDefaultStroke() {
+        Stroke stroke = styleFactory.getDefaultStroke();
+        return stroke;
     }
 }

@@ -118,8 +118,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                         userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE);
 
                         // Inline features
-                        String inlineFeaturesText = InlineFeatureUtils.getInlineFeaturesText(userLayer);
-                        fieldConfigVisitor.populateTextField(FieldIdEnum.INLINE_FEATURE, inlineFeaturesText);
+                        fieldConfigVisitor.populateUserLayer(FieldIdEnum.INLINE_FEATURE, userLayer);
                     }
                 }
             }
@@ -180,7 +179,10 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 {
                     String inlineFeatures = fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
 
-                    InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+                    if((inlineFeatures != null) && (!inlineFeatures.isEmpty()))
+                    {
+                        InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+                    }
                 }
                 break;
                 default:
@@ -201,10 +203,13 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
             SelectedSymbol.getInstance().replaceStyledLayer(userLayer);
 
             // Update inline data sources if the inline data changed, reduces creation of datasources
-            if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
+            if(changedField != null)
             {
-                DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-                dataSource.updateUserLayers();
+                if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
+                {
+                    DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+                    dataSource.updateUserLayers();
+                }
             }
 
             this.fireUpdateSymbol();

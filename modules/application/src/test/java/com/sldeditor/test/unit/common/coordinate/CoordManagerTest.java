@@ -19,6 +19,7 @@
 
 package com.sldeditor.test.unit.common.coordinate;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -53,10 +54,13 @@ public class CoordManagerTest {
     public void testGetInstance() throws NoSuchAuthorityCodeException, FactoryException {
         List<ValueComboBoxData> crsList = CoordManager.getInstance().getCRSList();
         assertTrue(crsList.size() > 0);
-        
-        CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
+
+        CoordinateReferenceSystem crs = CoordManager.getInstance().getCRS(null);
+        assertNull(crs);
+
+        crs = CoordManager.getInstance().getWGS84();
         assertTrue(crs != null);
-        
+
         String code = CoordManager.getInstance().getCRSCode(null);
         assertTrue(code.compareTo("") == 0);
 

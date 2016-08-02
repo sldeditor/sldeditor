@@ -38,6 +38,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
+import org.geotools.styling.UserLayer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Id;
 import org.opengis.filter.expression.Expression;
@@ -748,6 +749,16 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param value the value
      */
     public void populateField(ReferencedEnvelope value)
+    {
+        // Do nothing
+    }
+
+    /**
+     * Populate field.
+     *
+     * @param value the value
+     */
+    public void populateField(UserLayer value)
     {
         // Do nothing
     }

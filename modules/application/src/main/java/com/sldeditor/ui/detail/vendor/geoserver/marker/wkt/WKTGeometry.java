@@ -49,7 +49,7 @@ public class WKTGeometry {
     }
 
     /**
-     * Sets the valid.
+     * Sets the is valid flag.
      *
      * @param valid the new valid
      */
@@ -109,18 +109,24 @@ public class WKTGeometry {
     public int addSegmentList(int index, WKTSegmentList segmentListToAdd) {
         List<WKTSegmentList> localSegmentList = null;
 
-        if(index >= segmentList.size())
+        if(index < 0)
         {
-            localSegmentList = new ArrayList<WKTSegmentList>();
-            segmentList.add(localSegmentList);
+            return -1;
         }
         else
         {
-            localSegmentList = segmentList.get(index);
-        }
+            if(index >= segmentList.size())
+            {
+                localSegmentList = new ArrayList<WKTSegmentList>();
+                segmentList.add(localSegmentList);
+            }
+            else
+            {
+                localSegmentList = segmentList.get(index);
+            }
 
-        localSegmentList.add(segmentListToAdd);
-        
+            localSegmentList.add(segmentListToAdd);
+        }       
         return localSegmentList.size() - 1;
     }
 
@@ -167,7 +173,7 @@ public class WKTGeometry {
 
         return segmentList.size();
     }
-    
+
     /**
      * Removes the segment at the specified index.
      *
@@ -176,7 +182,7 @@ public class WKTGeometry {
      */
     public void removeSegment(int shapeIndex, int segmentIndex) {
         List<WKTSegmentList> shapeList = segmentList.get(shapeIndex);
-        
+
         if((segmentIndex >= 0) && (segmentIndex < shapeList.size()))
         {
             shapeList.remove(segmentIndex);
@@ -227,7 +233,47 @@ public class WKTGeometry {
      * @return true, if is empty
      */
     public boolean isEmpty() {
-        return (geometryType == null) && segmentList.isEmpty();
+        return (geometryType == null) || segmentList.isEmpty();
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((geometryType == null) ? 0 : geometryType.hashCode());
+        result = prime * result + ((segmentList == null) ? 0 : segmentList.hashCode());
+        result = prime * result + (valid ? 1231 : 1237);
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WKTGeometry other = (WKTGeometry) obj;
+        if (geometryType == null) {
+            if (other.geometryType != null)
+                return false;
+        } else if (!geometryType.equals(other.geometryType))
+            return false;
+        if (segmentList == null) {
+            if (other.segmentList != null)
+                return false;
+        } else if (!segmentList.equals(other.segmentList))
+            return false;
+        if (valid != other.valid)
+            return false;
+        return true;
     }
 
 }

@@ -45,6 +45,9 @@ public class WKTPointModel extends AbstractTableModel {
     /** The column list. */
     private List<String> columnList = new ArrayList<String>();
 
+    /** The ensure first and last points are the same. */
+    private boolean ensureFirstAndLastPointsAreTheSame = false;
+
     /**
      * Constructor.
      */
@@ -118,6 +121,11 @@ public class WKTPointModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if((rowIndex < 0) || (rowIndex >= pointList.size()))
+        {
+            return null;
+        }
+
         WKTPoint data = pointList.get(rowIndex);
 
         switch(columnIndex)
@@ -142,19 +150,27 @@ public class WKTPointModel extends AbstractTableModel {
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     public void setValueAt(Object value, int row, int col) {
-        WKTPoint data = pointList.get(row);
-        switch(col)
+        if((row < 0) || (row >= pointList.size()))
         {
-        case X_COLUMN_ID:
-            data.setX(Double.valueOf((String) value));
-            break;
-        case Y_COLUMN_ID:
-            data.setY(Double.valueOf((String) value));
-            break;
-        default:
-            break;
+            return;
         }
-        fireTableCellUpdated(row, col);
+
+        if(value instanceof String)
+        {
+            WKTPoint data = pointList.get(row);
+            switch(col)
+            {
+            case X_COLUMN_ID:
+                data.setX(Double.valueOf((String) value));
+                break;
+            case Y_COLUMN_ID:
+                data.setY(Double.valueOf((String) value));
+                break;
+            default:
+                break;
+            }
+            fireTableCellUpdated(row, col);
+        }
     }
 
     /**
@@ -168,40 +184,21 @@ public class WKTPointModel extends AbstractTableModel {
     }
 
     /**
-     * Populate model.
-     *
-     * @param wktString the wkt string
-     * @param noOfPoints the no of points
-     */
-    public void populate(String wktString, int noOfPoints) {
-
-        pointList.clear();
-
-        int maxPoints = (noOfPoints >= 0) ? noOfPoints : 3;
-
-        for(int index = 0; index < maxPoints; index ++)
-        {
-            pointList.add(new WKTPoint());
-        }
-        this.fireTableDataChanged();
-    }
-
-    /**
      * Populate.
      *
      * @param wktPointList the wkt point list
      */
     public void populate(WKTSegmentList wktPointList) {
-        
+
         if(wktPointList == null)
         {
             pointList.clear();
         }
         else
         {
-            pointList = wktPointList.getWktPointList();
+            pointList = wktPointList.getWktPointList(ensureFirstAndLastPointsAreTheSame);
         }
-        
+
         this.fireTableDataChanged();
     }
 
@@ -211,16 +208,36 @@ public class WKTPointModel extends AbstractTableModel {
      * @param rowIndex the row index
      */
     public void removePoint(int rowIndex) {
+        if((rowIndex < 0) || (rowIndex >= pointList.size()))
+        {
+            return;
+        }
         pointList.remove(rowIndex);
-        
+
         this.fireTableDataChanged();
     }
 
     /**
-     * Clear all the data from the model
+     * Clear all the data from the model.
      */
     public void clear() {
         pointList.clear();
         this.fireTableDataChanged();
+    }
+
+    /**
+     * Sets the WKT type.
+     *
+     * @param wktType the new WKT type
+     */
+    public void setWKTType(WKTType wktType) {
+        if(wktType != null)
+        {
+            ensureFirstAndLastPointsAreTheSame = wktType.doFirstLastHaveToBeSame();
+        }
+        else
+        {
+            ensureFirstAndLastPointsAreTheSame = false;
+        }
     }
 }

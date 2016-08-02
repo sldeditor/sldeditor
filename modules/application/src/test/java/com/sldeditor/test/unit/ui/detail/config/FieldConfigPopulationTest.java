@@ -37,6 +37,7 @@ import org.geotools.styling.ColorMapImpl;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleBuilder;
+import org.geotools.styling.UserLayer;
 import org.junit.Test;
 import org.opengis.filter.expression.Expression;
 
@@ -79,6 +80,7 @@ public class FieldConfigPopulationTest {
         obj.populateDoubleField(fieldId, (Double)null);
         obj.populateIntegerField(fieldId, (Integer)null);
         obj.populateField(fieldId, (Expression)null);
+        obj.populateUserLayer(fieldId, (UserLayer)null);
         obj.populateFieldTypeConstraint(fieldId.getFieldId(), (List<FeatureTypeConstraint>)null);
         
         assertNull(obj.getExpression(fieldId));

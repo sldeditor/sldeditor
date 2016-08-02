@@ -318,6 +318,7 @@ public class FieldConfigSymbolTypeTest {
         field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(0),  Double.valueOf(23)));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME),  Double.valueOf(0),  Double.valueOf(54)));
+        UndoManager.getInstance().setPopulationCheck(null);
     }
 
     /**

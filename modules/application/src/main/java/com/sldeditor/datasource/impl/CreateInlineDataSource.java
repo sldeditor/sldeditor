@@ -72,6 +72,11 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
                 dsInfo.setUserLayer(userLayer);
                 dataSourceInfoList.add(dsInfo);
                 DataStore dataStore = userLayer.getInlineFeatureDatastore();
+                if(dataStore == null)
+                {
+                    continue;
+                }
+
                 try {
                     // Set the type name
                     String typeName = dataStore.getTypeNames()[0];

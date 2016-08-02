@@ -41,8 +41,11 @@ public class WKTPoint
      */
     public WKTPoint(DirectPosition pt) {
 
-        this.x = pt.getCoordinate()[0];
-        this.y = pt.getCoordinate()[1];
+        if(pt != null)
+        {
+            this.x = pt.getCoordinate()[0];
+            this.y = pt.getCoordinate()[1];
+        }
     }
 
     /**
@@ -119,9 +122,11 @@ public class WKTPoint
         if (getClass() != obj.getClass())
             return false;
         WKTPoint other = (WKTPoint) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+        double diffX = Math.abs(x - other.x);
+        if (diffX > 0.0001)
             return false;
-        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+        double diffY = Math.abs(y - other.y);
+        if (diffY > 0.0001)
             return false;
         return true;
     }

@@ -23,6 +23,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.styling.Symbolizer;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display fill data within the sld tree structure.
@@ -31,6 +33,9 @@ import com.sldeditor.common.data.SelectedSymbol;
  */
 public class FillTreeItem implements SLDTreeItemInterface
 {
+
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.fill");
 
     /**
      * Instantiates a new fill tree item.
@@ -45,7 +50,7 @@ public class FillTreeItem implements SLDTreeItemInterface
     @Override
     public String getTreeString(Object nodeObject)
     {
-        return "Fill";
+        return TITLE;
     }
 
     /* (non-Javadoc)
@@ -57,13 +62,16 @@ public class FillTreeItem implements SLDTreeItemInterface
         SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
 
         // Individual symbol selected
-        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-        if(parent != null)
+        if(node != null)
         {
-            if(parent.getUserObject() instanceof Symbolizer)
+            DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+            if(parent != null)
             {
-                Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-                selectedSymbol.setSymbolizer(symbolizer);
+                if(parent.getUserObject() instanceof Symbolizer)
+                {
+                    Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
+                    selectedSymbol.setSymbolizer(symbolizer);
+                }
             }
         }
     }

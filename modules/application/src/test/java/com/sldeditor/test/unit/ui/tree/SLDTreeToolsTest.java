@@ -32,6 +32,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.LineSymbolizerImpl;
+import org.geotools.styling.NamedLayer;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizerImpl;
@@ -41,6 +42,7 @@ import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyleImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizerImpl;
+import org.geotools.styling.UserLayer;
 import org.junit.Test;
 
 import com.sldeditor.TreeSelectionData;
@@ -138,7 +140,9 @@ public class SLDTreeToolsTest {
         treeTools.addNewMarker();
         treeTools.addNewPolygon();
         treeTools.addNewText();
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(UserLayer.class);
+        treeTools.addNewThing(NamedLayer.class);
         treeTools.addRaster();
         treeTools.moveItem(true);
         treeTools.removeItem();
@@ -154,7 +158,7 @@ public class SLDTreeToolsTest {
 
         TestSLDTree sldTree = new TestSLDTree(null, treeTools);
 
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
@@ -174,7 +178,7 @@ public class SLDTreeToolsTest {
         // Add a thing - a quick way of creating sld structure
 
         // This should add a named layer and select it
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
         assertEquals(1, rootNode.getChildCount());
         DefaultMutableTreeNode namedLayer = (DefaultMutableTreeNode) rootNode.getChildAt(0);
 
@@ -182,7 +186,7 @@ public class SLDTreeToolsTest {
 
         // This should add a style and select it
         assertEquals(0, namedLayer.getChildCount());
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
         assertEquals(1, namedLayer.getChildCount());
 
         DefaultMutableTreeNode styleLayer = (DefaultMutableTreeNode) namedLayer.getChildAt(0);
@@ -191,7 +195,7 @@ public class SLDTreeToolsTest {
 
         // This should add a feature type style and select it
         assertEquals(0, styleLayer.getChildCount());
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
         assertEquals(1, styleLayer.getChildCount());
 
         DefaultMutableTreeNode featureTypeStyle = (DefaultMutableTreeNode) styleLayer.getChildAt(0);
@@ -200,7 +204,7 @@ public class SLDTreeToolsTest {
 
         // This should add a rule and select it
         assertEquals(0, featureTypeStyle.getChildCount());
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
         assertEquals(1, featureTypeStyle.getChildCount());
 
         DefaultMutableTreeNode rule = (DefaultMutableTreeNode) featureTypeStyle.getChildAt(0);
@@ -209,7 +213,7 @@ public class SLDTreeToolsTest {
 
         // This should do nothing
         assertEquals(0, rule.getChildCount());
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
         assertEquals(0, rule.getChildCount());
 
         // Undo last add of rule to feature type style
@@ -243,10 +247,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
@@ -279,10 +283,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
@@ -315,10 +319,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
@@ -351,10 +355,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
@@ -387,10 +391,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
@@ -428,7 +432,7 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
         DefaultMutableTreeNode namedLayer1Node = (DefaultMutableTreeNode) rootNode.getChildAt(0);
@@ -436,7 +440,7 @@ public class SLDTreeToolsTest {
         String expectedNamedLayer1 = "named layer 1";
         namedLayer1.setName(expectedNamedLayer1);
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
 
         DefaultMutableTreeNode namedLayer2Node = (DefaultMutableTreeNode) rootNode.getChildAt(1);
         NamedLayerImpl namedLayer2 = (NamedLayerImpl) namedLayer2Node.getUserObject();
@@ -516,8 +520,8 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
         DefaultMutableTreeNode style1Node = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0);
@@ -529,7 +533,7 @@ public class SLDTreeToolsTest {
         data.setLayerIndex(0);
         sldTree.selectTreeItem(data);
 
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode style2Node = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(1);
         StyleImpl style2 = (StyleImpl) style2Node.getUserObject();
@@ -608,9 +612,9 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
         DefaultMutableTreeNode featureTypeStyle1Node = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0);
@@ -623,7 +627,7 @@ public class SLDTreeToolsTest {
         data.setStyleIndex(0);
         sldTree.selectTreeItem(data);
 
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode featureTypeStyle2Node = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(1);
         FeatureTypeStyleImpl featureTypeStyle2 = (FeatureTypeStyleImpl) featureTypeStyle2Node.getUserObject();
@@ -703,10 +707,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
         DefaultMutableTreeNode rule1Node = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
@@ -720,7 +724,7 @@ public class SLDTreeToolsTest {
         data.setFeatureTypeStyleIndex(0);
         sldTree.selectTreeItem(data);
 
-        treeTools.addNewThing();
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rule2Node = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(1);
         RuleImpl rule2 = (RuleImpl) rule2Node.getUserObject();
@@ -800,10 +804,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
-        treeTools.addNewThing();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
@@ -997,10 +1001,10 @@ public class SLDTreeToolsTest {
 
         sldTree.populateSLD();
         sldTree.selectFirstSymbol();
-        treeTools.addNewThing(); // Named layer
-        treeTools.addNewThing(); // Style
-        treeTools.addNewThing(); // Feature type style
-        treeTools.addNewThing(); // Rule
+        treeTools.addNewThing(NamedLayer.class); // Named layer
+        treeTools.addNewThing(null); // Style
+        treeTools.addNewThing(null); // Feature type style
+        treeTools.addNewThing(null); // Rule
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 

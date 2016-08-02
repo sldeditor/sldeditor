@@ -173,8 +173,24 @@ public class CoordManager {
     public CoordinateReferenceSystem getWGS84() {
         if(defaultCRS == null)
         {
+            defaultCRS = getCRS(WGS84);
+        }
+        return defaultCRS;
+    }
+
+    /**
+     * Gets the coordinate reference object for the supplied CRS code.
+     *
+     * @param crsCode the crs code
+     * @return the coordinate reference system
+     */
+    public CoordinateReferenceSystem getCRS(String crsCode) {
+        CoordinateReferenceSystem crs = null;
+
+        if(crsCode != null)
+        {
             try {
-                defaultCRS = CRS.decode(WGS84);
+                crs = CRS.decode(crsCode);
             }
             catch (NoSuchAuthorityCodeException e) {
                 ConsoleManager.getInstance().exception(this, e);
@@ -183,6 +199,6 @@ public class CoordManager {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
-        return defaultCRS;
+        return crs;
     }
 }

@@ -24,6 +24,8 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display UserLayer data within the sld tree structure.
@@ -32,6 +34,9 @@ import com.sldeditor.common.data.SelectedSymbol;
  */
 public class UserLayerTreeItem implements SLDTreeItemInterface {
 
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.userlayer");
+
     /* (non-Javadoc)
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(java.lang.Object)
      */
@@ -39,7 +44,15 @@ public class UserLayerTreeItem implements SLDTreeItemInterface {
     public String getTreeString(Object nodeObject) {
         UserLayerImpl userLayer = (UserLayerImpl)nodeObject;
 
-        return String.format("User Layer : %s", userLayer.getName());
+        String name = "";
+        if(userLayer != null)
+        {
+            if(userLayer.getName() != null)
+            {
+                name = userLayer.getName();
+            }
+        }
+        return String.format("%s : %s", TITLE, name);
     }
 
     /* (non-Javadoc)

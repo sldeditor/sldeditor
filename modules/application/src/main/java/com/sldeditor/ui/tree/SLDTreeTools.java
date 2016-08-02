@@ -18,6 +18,7 @@
  */
 package com.sldeditor.ui.tree;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -63,6 +64,7 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 
 /**
@@ -114,6 +116,12 @@ public class SLDTreeTools {
     /** The add button. */
     private JButton btnAddButton;
 
+    /** The add named layer button. */
+    private JButton btnAddNamedLayerButton;
+
+    /** The add user layer button. */
+    private JButton btnAddUserLayerButton;
+
     /** The sld writer. */
     private SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
@@ -160,19 +168,36 @@ public class SLDTreeTools {
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-
+        buttonPanel.setPreferredSize(new Dimension(400, BasePanel.WIDGET_HEIGHT));
         btnAddButton = new JButton("");
         btnAddButton.setIcon(getResourceIcon("button/add.png"));
         btnAddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addNewThing();
+                addNewThing(null);
             }
         });
         buttonPanel.add(btnAddButton);
 
+        btnAddNamedLayerButton = new JButton(Localisation.getString(SLDTreeTools.class, "SLDTreeTools.named"));
+        btnAddNamedLayerButton.setIcon(getResourceIcon("button/add.png"));
+        btnAddNamedLayerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addNewThing(NamedLayer.class);
+            }
+        });
+        buttonPanel.add(btnAddNamedLayerButton);
+
+        btnAddUserLayerButton = new JButton(Localisation.getString(SLDTreeTools.class, "SLDTreeTools.user"));
+        btnAddUserLayerButton.setIcon(getResourceIcon("button/add.png"));
+        btnAddUserLayerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addNewThing(UserLayer.class);
+            }
+        });
+        buttonPanel.add(btnAddUserLayerButton);
+
         btnNewMarker = new JButton();
         btnNewMarker.setIcon(getResourceIcon("button/point.png"));
-        btnNewMarker.setEnabled(false);
         btnNewMarker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewMarker();
@@ -183,7 +208,6 @@ public class SLDTreeTools {
 
         btnNewLine = new JButton();
         btnNewLine.setIcon(getResourceIcon("button/line.png"));
-        btnNewLine.setEnabled(false);
         btnNewLine.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewLine();
@@ -193,7 +217,6 @@ public class SLDTreeTools {
 
         btnNewPolygon = new JButton();
         btnNewPolygon.setIcon(getResourceIcon("button/polygon.png"));
-        btnNewPolygon.setEnabled(false);
         btnNewPolygon.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewPolygon();
@@ -203,7 +226,6 @@ public class SLDTreeTools {
 
         btnNewText = new JButton();
         btnNewText.setIcon(getResourceIcon("button/text.png"));
-        btnNewText.setEnabled(false);
         btnNewText.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewText();
@@ -213,7 +235,6 @@ public class SLDTreeTools {
 
         btnNewRaster = new JButton();
         btnNewRaster.setIcon(getResourceIcon("button/raster.png"));
-        btnNewRaster.setEnabled(false);
         btnNewRaster.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addRaster();
@@ -393,8 +414,10 @@ public class SLDTreeTools {
 
     /**
      * Adds the new thing.
+     *
+     * @param hint the hint when the are multiple possibilities
      */
-    public void addNewThing() {
+    public void addNewThing(Class<?> hint) {
         if(symbolTree == null)
         {
             return;
@@ -422,19 +445,46 @@ public class SLDTreeTools {
 
             SelectedSymbol.getInstance().createNewSLD(sld);
 
-            NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
+            if(hint == NamedLayer.class)
+            {
+                NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
 
-            SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
-            newNode = sldTree.addObject(lastNode, namedLayer, true);
+                SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
+                newNode = sldTree.addObject(lastNode, namedLayer, true);
+            }
+            else if(hint == UserLayer.class)
+            {
+                UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+                SelectedSymbol.getInstance().addNewStyledLayer(userLayer);
+                newNode = sldTree.addObject(lastNode, userLayer, true);
+            }
         }
         else if(obj instanceof StyledLayerDescriptor)
         {
-            NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
+            if(hint == NamedLayer.class)
+            {
+                NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
 
-            SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
-            newNode = sldTree.addObject(lastNode, namedLayer, true);
+                SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
+                newNode = sldTree.addObject(lastNode, namedLayer, true);
+            }
+            else if(hint == UserLayer.class)
+            {
+                UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+                SelectedSymbol.getInstance().addNewStyledLayer(userLayer);
+                newNode = sldTree.addObject(lastNode, userLayer, true);
+            }
         }
         else if(obj instanceof NamedLayer)
+        {
+            Style style = DefaultSymbols.createNewStyle();
+
+            SelectedSymbol.getInstance().addNewStyle(style);
+            newNode = sldTree.addObject(lastNode, style, true);
+        }
+        else if(obj instanceof UserLayer)
         {
             Style style = DefaultSymbols.createNewStyle();
 
@@ -898,6 +948,8 @@ public class SLDTreeTools {
             GeometryTypeEnum currentGeometryType) {
         boolean symbolizerButtonsEnabled = false;
         boolean addButtonEnabled = true;
+        boolean addNamedLayerButtonEnabled = false;
+        boolean addUserLayerButtonEnabled = false;
         boolean hasMoreThan1Item = false;
         boolean isFirstSelected = false;
         boolean isLastSelected = false;
@@ -912,7 +964,13 @@ public class SLDTreeTools {
                 parentObj = parentNode.getUserObject();
             }
 
-            if(obj instanceof StyledLayer)
+            if(obj instanceof StyledLayerDescriptor)
+            {
+                addNamedLayerButtonEnabled = true;
+                addUserLayerButtonEnabled = true;
+                addButtonEnabled = false;
+            }
+            else if(obj instanceof StyledLayer)
             {
                 if(parentObj != null)
                 {
@@ -973,23 +1031,25 @@ public class SLDTreeTools {
             }
         }
 
-        this.btnAddButton.setEnabled(addButtonEnabled);
+        btnAddNamedLayerButton.setVisible(addNamedLayerButtonEnabled);
+        btnAddUserLayerButton.setVisible(addUserLayerButtonEnabled);
+        btnAddButton.setVisible(addButtonEnabled);
 
         if(symbolizerButtonsEnabled == false)
         {
-            btnNewMarker.setEnabled(false);
-            btnNewLine.setEnabled(false);
-            btnNewPolygon.setEnabled(false);
-            btnNewRaster.setEnabled(false);
-            btnNewText.setEnabled(false);
+            btnNewMarker.setVisible(false);
+            btnNewLine.setVisible(false);
+            btnNewPolygon.setVisible(false);
+            btnNewRaster.setVisible(false);
+            btnNewText.setVisible(false);
         }
         else
         {
-            btnNewMarker.setEnabled(currentGeometryType == GeometryTypeEnum.POINT);
-            btnNewLine.setEnabled(currentGeometryType == GeometryTypeEnum.LINE);
-            btnNewPolygon.setEnabled(currentGeometryType == GeometryTypeEnum.POLYGON);
-            btnNewRaster.setEnabled(currentGeometryType == GeometryTypeEnum.RASTER);
-            btnNewText.setEnabled(true);
+            btnNewMarker.setVisible(currentGeometryType == GeometryTypeEnum.POINT);
+            btnNewLine.setVisible(currentGeometryType == GeometryTypeEnum.LINE);
+            btnNewPolygon.setVisible(currentGeometryType == GeometryTypeEnum.POLYGON);
+            btnNewRaster.setVisible(currentGeometryType == GeometryTypeEnum.RASTER);
+            btnNewText.setVisible(true);
         }
 
         btnRemoveMarker.setEnabled(true);

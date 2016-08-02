@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 
 import javax.swing.JLabel;
@@ -97,16 +98,19 @@ public class WKTDialog extends JDialog {
 
     /** The reload button. */
     private JButton btnReload;
-    
+
     /**
      * Constructor.
      */
     public WKTDialog() {
+        super(Controller.getInstance().getFrame());
         setTitle(Localisation.getString(WKTDialog.class, "WKTDialog.title"));
         setResizable(false);
         setModal(true);
 
         createUI();
+
+        Controller.getInstance().centreDialog(this);
     }
 
     /**
@@ -567,16 +571,25 @@ public class WKTDialog extends JDialog {
      * @param wktString the wkt string
      */
     private void populate(String wktString) {
-        
+
         wktGeometry = WKTConversion.parseWKTString(wktString);
 
-        model.setSelectedItem(wktGeometry.getGeometryType());
+        WKTType geometryType = null;
+        boolean valid = false;
 
-        updateUI(wktGeometry.getGeometryType());
-
-        if(wktGeometry.isValid())
+        if(wktGeometry != null)
         {
-            if(wktGeometry.getGeometryType().canHaveMultipleShapes())
+            geometryType = wktGeometry.getGeometryType();
+            valid = wktGeometry.isValid();
+        }
+
+        model.setSelectedItem(geometryType);
+
+        updateUI(geometryType);
+
+        if(valid)
+        {
+            if(geometryType.canHaveMultipleShapes())
             {
                 populateMultiShapeList();
             }
@@ -629,19 +642,22 @@ public class WKTDialog extends JDialog {
      */
     private void updateSegmentButtons() {
 
-        boolean enabled = true;
+        boolean enabled = false;
 
-        WKTType geometryType = wktGeometry.getGeometryType();
-        if(geometryType != null)
+        if(wktGeometry != null)
         {
-            if(geometryType.canHaveMultipleShapes())
+            WKTType geometryType = wktGeometry.getGeometryType();
+            if(geometryType != null)
             {
-                enabled = !multiListModel.isEmpty();
+                if(geometryType.canHaveMultipleShapes())
+                {
+                    enabled = !multiListModel.isEmpty();
+                }
+                else
+                {
+                    enabled = true;
+                }
             }
-        }
-        else
-        {
-            enabled = false;
         }
         addSegmentButton.setEnabled(enabled);
 
@@ -677,12 +693,21 @@ public class WKTDialog extends JDialog {
     private void updateWKTString() {
         String wktString = WKTConversion.generateWKTString(wktGeometry, true);
 
-        if(wktGeometry.isValid())
+        boolean valid = false;
+        boolean empty = false;
+
+        if(wktGeometry != null)
+        {
+            valid = wktGeometry.isValid();
+            empty = wktGeometry.isEmpty();
+        }
+
+        if(valid)
         {
             wktTextArea.setText(wktString);
         }
 
-        if(wktGeometry.isValid() || wktGeometry.isEmpty())
+        if(valid || empty)
         {
             wktTextArea.setBackground(Color.white);
         }
@@ -690,7 +715,7 @@ public class WKTDialog extends JDialog {
         {
             wktTextArea.setBackground(Color.red);
         }
-        
+
         btnReload.setEnabled(false);
     }
 
@@ -728,7 +753,7 @@ public class WKTDialog extends JDialog {
         tablePointModel.clear();
 
         showMultiPanel(wktType);
-
+        tablePointModel.setWKTType(wktType);
         updateSegmentButtons();
         updatePointButtons();
     }

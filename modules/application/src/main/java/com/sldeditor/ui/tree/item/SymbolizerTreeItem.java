@@ -18,9 +18,6 @@
  */
 package com.sldeditor.ui.tree.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.geotools.styling.LineSymbolizer;
@@ -32,8 +29,8 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.ui.iface.SymbolSelectedInterface;
-import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display Symbolizer data within the sld tree structure.
@@ -43,44 +40,19 @@ import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 public class SymbolizerTreeItem implements SLDTreeItemInterface {
 
     /** The Constant DEFAULT_MARKER_NAME. */
-    private static final String DEFAULT_MARKER_NAME = "Marker";
+    private static final String DEFAULT_MARKER_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.marker");
 
     /** The Constant DEFAULT_TEXT_NAME. */
-    public static final String DEFAULT_TEXT_NAME = "Text";
+    public static final String DEFAULT_TEXT_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.text");
 
     /** The Constant DEFAULT_LINE_NAME. */
-    public static final String DEFAULT_LINE_NAME = "Line";
+    public static final String DEFAULT_LINE_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.line");
 
     /** The Constant DEFAULT_POLYGON_NAME. */
-    public static final String DEFAULT_POLYGON_NAME = "Polygon";
+    public static final String DEFAULT_POLYGON_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.polygon");
 
     /** The Constant DEFAULT_RASTER_NAME. */
-    public static final String DEFAULT_RASTER_NAME = "Raster";
-
-    /** The symbol selected listeners. */
-    private List<SymbolizerSelectedInterface> symbolSelectedListeners = new ArrayList<SymbolizerSelectedInterface>();
-
-    /** The overall selected listeners. */
-    private List<SymbolSelectedInterface> overallSelectedListeners = new ArrayList<SymbolSelectedInterface>();
-
-    /**
-     * Adds the symbol selected listener.
-     *
-     * @param toAdd the to add
-     */
-    public void addSymbolSelectedListener(SymbolizerSelectedInterface toAdd) {
-        symbolSelectedListeners.add(toAdd);
-    }
-
-    /**
-     * Adds the overall selected listener.
-     *
-     * @param toAdd the to add
-     */
-    public void addOverallSelectedListener(SymbolSelectedInterface toAdd)
-    {
-        overallSelectedListeners.add(toAdd);
-    }
+    public static final String DEFAULT_RASTER_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.raster");
 
     /**
      * Gets the tree string.
@@ -139,15 +111,18 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
         // Individual symbol selected
         Symbolizer symbolizer = (Symbolizer) userObject;
 
-        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-        if(parent != null)
+        if(node != null)
         {
-            if(parent.getUserObject() instanceof Rule)
+            DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+            if(parent != null)
             {
-                Rule rule = (Rule) parent.getUserObject();
-                selectedSymbol.setRule(rule);
+                if(parent.getUserObject() instanceof Rule)
+                {
+                    Rule rule = (Rule) parent.getUserObject();
+                    selectedSymbol.setRule(rule);
+                }
             }
+            selectedSymbol.setSymbolizer(symbolizer);
         }
-        selectedSymbol.setSymbolizer(symbolizer);
     }
 }

@@ -24,6 +24,8 @@ import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display NamedLayer data within the sld tree structure.
@@ -32,6 +34,9 @@ import com.sldeditor.common.data.SelectedSymbol;
  */
 public class NameLayerTreeItem implements SLDTreeItemInterface {
 
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer");
+
     /* (non-Javadoc)
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(java.lang.Object)
      */
@@ -39,7 +44,16 @@ public class NameLayerTreeItem implements SLDTreeItemInterface {
     public String getTreeString(Object nodeObject) {
         NamedLayerImpl namedLayer = (NamedLayerImpl)nodeObject;
 
-        return String.format("Named Layer : %s", namedLayer.getName());
+        String name = "";
+        if(namedLayer != null)
+        {
+            if(namedLayer.getName() != null)
+            {
+                name = namedLayer.getName();
+            }
+        }
+
+        return String.format("%s : %s", TITLE, name);
     }
 
     /* (non-Javadoc)

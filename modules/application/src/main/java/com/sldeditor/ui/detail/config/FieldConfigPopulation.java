@@ -25,6 +25,7 @@ import java.util.Map;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
+import org.geotools.styling.UserLayer;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -233,6 +234,40 @@ public class FieldConfigPopulation {
     {
         FieldId fieldId = new FieldId(fieldIdEnum);
         populateTextField(fieldId, value);
+    }
+
+    /**
+     * Populate user layer.
+     *
+     * @param fieldIdEnum the field id enum
+     * @param value the user layer
+     */
+    public void populateUserLayer(FieldIdEnum fieldIdEnum, UserLayer value) {
+        FieldId fieldId = new FieldId(fieldIdEnum);
+        populateUserLayer(fieldId, value);
+    }
+
+    /**
+     * Populate text field.
+     *
+     * @param fieldId the field id
+     * @param value the user layer
+     */
+    public void populateUserLayer(FieldId fieldId, UserLayer value)
+    {
+        if(fieldConfigManager == null)
+        {
+            return;
+        }
+        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        if(fieldConfig != null)
+        {
+            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
+        }
+        else
+        {
+            ConsoleManager.getInstance().error(this, String.format("populateUserLayer - %s : %s", Localisation.getString(StandardPanel.class, "StandardPanel.unknownField") , fieldId));
+        }
     }
 
     /**
@@ -613,5 +648,4 @@ public class FieldConfigPopulation {
         }
         return fieldConfig;
     }
-
 }

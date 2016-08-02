@@ -20,11 +20,11 @@ package com.sldeditor.ui.tree.item;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.geotools.styling.Description;
 import org.geotools.styling.Style;
-import org.opengis.util.InternationalString;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display Style data within the sld tree structure.
@@ -33,6 +33,9 @@ import com.sldeditor.common.data.SelectedSymbol;
  */
 public class StyleTreeItem implements SLDTreeItemInterface {
 
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.style");
+
     /* (non-Javadoc)
      * @see com.sldeditor.ui.tree.SLDTreeItemInterface#getTreeString(java.lang.Object)
      */
@@ -40,20 +43,15 @@ public class StyleTreeItem implements SLDTreeItemInterface {
     public String getTreeString(Object nodeObject) {
         Style style = (Style)nodeObject;
 
-        String styleTitle = "";
-
-        Description description = style.getDescription();
-        if(description != null)
+        String name = "";
+        if(style != null)
         {
-            InternationalString title = description.getTitle();
-
-            if(title != null)
+            if(style.getName() != null)
             {
-                styleTitle = title.toString();
+                name = style.getName();
             }
         }
-
-        return String.format("Style : %s", styleTitle);
+        return String.format("%s : %s", TITLE, name);
     }
 
     /* (non-Javadoc)

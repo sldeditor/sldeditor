@@ -286,6 +286,7 @@ public class FieldConfigEnumTest {
 
         assertEquals(actualMap.get(new FieldId(FieldIdEnum.ANCHOR_POINT_H)), Boolean.TRUE);
         assertEquals(actualMap.get(new FieldId(FieldIdEnum.ANCHOR_POINT_V)), Boolean.FALSE);
+        UndoManager.getInstance().setPopulationCheck(null);
     }
 
     /**
@@ -294,7 +295,6 @@ public class FieldConfigEnumTest {
      */
     @Test
     public void testUndoAction() {
-        UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
         SymbolTypeConfig s1 = new SymbolTypeConfig(null);
         s1.addOption("key1", "Value 1");
