@@ -18,15 +18,13 @@
  */
 package com.sldeditor.ui.tree.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.geotools.styling.Rule;
 
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.ui.iface.SymbolSelectedInterface;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display Rule data within the sld tree structure.
@@ -35,18 +33,8 @@ import com.sldeditor.ui.iface.SymbolSelectedInterface;
  */
 public class RuleTreeItem implements SLDTreeItemInterface {
 
-    /** The overall selected listeners. */
-    private List<SymbolSelectedInterface> overallSelectedListeners = new ArrayList<SymbolSelectedInterface>();
-
-    /**
-     * Adds the overall selected listener.
-     *
-     * @param toAdd the to add
-     */
-    public void addOverallSelectedListener(SymbolSelectedInterface toAdd)
-    {
-        overallSelectedListeners.add(toAdd);
-    }
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.rule");
 
     /* (non-Javadoc)
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(java.lang.Object)
@@ -55,7 +43,16 @@ public class RuleTreeItem implements SLDTreeItemInterface {
     public String getTreeString(Object nodeObject) {
         Rule rule = (Rule)nodeObject;
 
-        return String.format("Rule : %s", rule.getName());
+        String name = "";
+        if(rule != null)
+        {
+            if(rule.getName() != null)
+            {
+                name = rule.getName();
+            }
+        }
+
+        return String.format("%s : %s", TITLE, name);
     }
 
     /* (non-Javadoc)

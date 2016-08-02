@@ -173,7 +173,7 @@ public class SLDTreeTools {
         btnAddButton.setIcon(getResourceIcon("button/add.png"));
         btnAddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addNewThing();
+                addNewThing(null);
             }
         });
         buttonPanel.add(btnAddButton);
@@ -182,7 +182,7 @@ public class SLDTreeTools {
         btnAddNamedLayerButton.setIcon(getResourceIcon("button/add.png"));
         btnAddNamedLayerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addNewThing();
+                addNewThing(NamedLayer.class);
             }
         });
         buttonPanel.add(btnAddNamedLayerButton);
@@ -191,7 +191,7 @@ public class SLDTreeTools {
         btnAddUserLayerButton.setIcon(getResourceIcon("button/add.png"));
         btnAddUserLayerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addNewThing();
+                addNewThing(UserLayer.class);
             }
         });
         buttonPanel.add(btnAddUserLayerButton);
@@ -414,8 +414,10 @@ public class SLDTreeTools {
 
     /**
      * Adds the new thing.
+     *
+     * @param hint the hint when the are multiple possibilities
      */
-    public void addNewThing() {
+    public void addNewThing(Class<?> hint) {
         if(symbolTree == null)
         {
             return;
@@ -443,19 +445,46 @@ public class SLDTreeTools {
 
             SelectedSymbol.getInstance().createNewSLD(sld);
 
-            NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
+            if(hint == NamedLayer.class)
+            {
+                NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
 
-            SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
-            newNode = sldTree.addObject(lastNode, namedLayer, true);
+                SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
+                newNode = sldTree.addObject(lastNode, namedLayer, true);
+            }
+            else if(hint == UserLayer.class)
+            {
+                UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+                SelectedSymbol.getInstance().addNewStyledLayer(userLayer);
+                newNode = sldTree.addObject(lastNode, userLayer, true);
+            }
         }
         else if(obj instanceof StyledLayerDescriptor)
         {
-            NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
+            if(hint == NamedLayer.class)
+            {
+                NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
 
-            SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
-            newNode = sldTree.addObject(lastNode, namedLayer, true);
+                SelectedSymbol.getInstance().addNewStyledLayer(namedLayer);
+                newNode = sldTree.addObject(lastNode, namedLayer, true);
+            }
+            else if(hint == UserLayer.class)
+            {
+                UserLayer userLayer = DefaultSymbols.createNewUserLayer();
+
+                SelectedSymbol.getInstance().addNewStyledLayer(userLayer);
+                newNode = sldTree.addObject(lastNode, userLayer, true);
+            }
         }
         else if(obj instanceof NamedLayer)
+        {
+            Style style = DefaultSymbols.createNewStyle();
+
+            SelectedSymbol.getInstance().addNewStyle(style);
+            newNode = sldTree.addObject(lastNode, style, true);
+        }
+        else if(obj instanceof UserLayer)
         {
             Style style = DefaultSymbols.createNewStyle();
 

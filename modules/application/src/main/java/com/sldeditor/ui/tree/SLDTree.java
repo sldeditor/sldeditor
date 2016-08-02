@@ -77,7 +77,6 @@ import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
-import com.sldeditor.ui.iface.SymbolSelectedInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 import com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem;
 import com.sldeditor.ui.tree.item.FillTreeItem;
@@ -281,17 +280,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      */
     public void addSymbolSelectedListener(SymbolizerSelectedInterface symbolizerSelectedPanel) {
         displayPanel = symbolizerSelectedPanel;
-    }
-
-    /**
-     * Adds the overall selected listener.
-     *
-     * @param toAdd the to add
-     */
-    public void addOverallSelectedListener(SymbolSelectedInterface toAdd)
-    {
-        ruleTreeItem.addOverallSelectedListener(toAdd);
-        symbolizerTreeItem.addOverallSelectedListener(toAdd);
     }
 
     /**

@@ -23,6 +23,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.styling.Symbolizer;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display stroke data within the sld tree structure.
@@ -32,12 +34,14 @@ import com.sldeditor.common.data.SelectedSymbol;
 public class StrokeTreeItem implements SLDTreeItemInterface
 {
 
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.stroke");
+
     /**
      * Instantiates a new stroke tree item.
      */
     public StrokeTreeItem()
     {
-
     }
 
     /* (non-Javadoc)
@@ -46,7 +50,7 @@ public class StrokeTreeItem implements SLDTreeItemInterface
     @Override
     public String getTreeString(Object nodeObject)
     {
-        return "Stroke";
+        return TITLE;
     }
 
     /* (non-Javadoc)
@@ -55,16 +59,19 @@ public class StrokeTreeItem implements SLDTreeItemInterface
     @Override
     public void itemSelected(DefaultMutableTreeNode node, Object userObject)
     {
-        SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
-
-        // Individual symbol selected
-        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-        if(parent != null)
+        if(node != null)
         {
-            if(parent.getUserObject() instanceof Symbolizer)
+            SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
+
+            // Individual symbol selected
+            DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+            if(parent != null)
             {
-                Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-                selectedSymbol.setSymbolizer(symbolizer);
+                if(parent.getUserObject() instanceof Symbolizer)
+                {
+                    Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
+                    selectedSymbol.setSymbolizer(symbolizer);
+                }
             }
         }
     }

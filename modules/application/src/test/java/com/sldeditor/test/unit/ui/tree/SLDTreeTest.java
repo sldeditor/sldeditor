@@ -288,15 +288,6 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#addOverallSelectedListener(com.sldeditor.ui.iface.SymbolSelectedInterface)}.
-     */
-    @Test
-    public void testAddOverallSelectedListener() {
-        SLDTree tree1 = new SLDTree(null, null);
-        tree1.addOverallSelectedListener(null);
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.tree.SLDTree#populateSLD()}.
      */
     @Test

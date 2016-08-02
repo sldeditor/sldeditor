@@ -23,6 +23,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.styling.FeatureTypeStyle;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * Class that display a FeatureTypeStyle within the sld tree structure.
@@ -31,6 +33,9 @@ import com.sldeditor.common.data.SelectedSymbol;
  */
 public class FeatureTypeStyleTreeItem implements SLDTreeItemInterface {
 
+    /** The Constant TITLE. */
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle");
+
     /* (non-Javadoc)
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(java.lang.Object)
      */
@@ -38,7 +43,15 @@ public class FeatureTypeStyleTreeItem implements SLDTreeItemInterface {
     public String getTreeString(Object nodeObject) {
         FeatureTypeStyle fts = (FeatureTypeStyle)nodeObject;
 
-        return String.format("FeatureTypeStyle : %s", fts.getName());
+        String name = "";
+        if(fts != null)
+        {
+            if(fts.getName() != null)
+            {
+                name = fts.getName();
+            }
+        }
+        return String.format("%s : %s", TITLE, name);
     }
 
     /* (non-Javadoc)
