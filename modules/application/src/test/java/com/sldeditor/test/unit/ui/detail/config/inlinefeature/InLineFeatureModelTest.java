@@ -69,7 +69,7 @@ public class InLineFeatureModelTest {
         InLineFeatureModel model = new InLineFeatureModel(null);
         assertTrue(model.isCellEditable(0, 0));
         assertTrue(model.isCellEditable(0, 1));
-        assertFalse(model.isCellEditable(0, -1));
+        assertTrue(model.isCellEditable(0, -1));
         assertEquals(-1, model.getGeometryFieldIndex());
     }
 

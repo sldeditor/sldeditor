@@ -32,6 +32,7 @@ import javax.xml.transform.TransformerException;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.styling.SLDInlineFeatureParser;
 import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.StyledLayer;
@@ -86,6 +87,23 @@ public class InlineFeatureUtils {
             return "";
         }
 
+        // Handle the case where there is a featurecollection but no features
+        if(userLayer.getInlineFeatureDatastore() != null)
+        {
+            String typeName = userLayer.getInlineFeatureType().getTypeName();
+            SimpleFeatureSource featureSource;
+            try {
+                featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+                if(featureSource.getFeatures().isEmpty())
+                {
+                    return "";
+                }
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
+                return "";
+            }
+        }
+
         // Inline features
         SLDTransformer transform = new SLDTransformer();
 
@@ -101,7 +119,7 @@ public class InlineFeatureUtils {
         }
 
         String userLayerXML = stringWriter.toString();
-        
+
         // Check to see if there are any inline features
         if(!userLayerXML.contains(SLD_INLINE_FEATURE_START))
         {

@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
@@ -42,6 +44,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
+import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -75,6 +79,12 @@ public class InLineFeatureModel extends AbstractTableModel {
 
     /** The cached feature. */
     private SimpleFeature cachedFeature = null;
+
+    /** The feature table. */
+    private JTable featureTable = null;
+
+    /** The crs combo box. */
+    private ValueComboBox crsComboBox;
 
     /**
      * Instantiates a new in line feature model.
@@ -224,8 +234,22 @@ public class InLineFeatureModel extends AbstractTableModel {
                 }
             }
         }
+
         this.fireTableStructureChanged();
         this.fireTableDataChanged();
+
+        // Set up the editor to handle editing the table cells
+        InlineCellEditor editor = new InlineCellEditor(this);
+
+        if(featureTable != null)
+        {
+            if(featureTable.getColumnModel().getColumnCount() > 0)
+            {
+                TableColumn column = featureTable.getColumnModel().getColumn(0);
+                column.setCellEditor(editor);
+                featureTable.setCellEditor(editor);
+            }
+        }
     }
 
     /**
@@ -238,7 +262,7 @@ public class InLineFeatureModel extends AbstractTableModel {
     }
 
     /**
-     * Checks if is cell editable.
+     * Checks if cell editable.
      *
      * @param rowIndex the row index
      * @param columnIndex the column index
@@ -246,7 +270,7 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return (columnIndex != geometryFieldIndex);
+        return true;
     }
 
     /**
@@ -559,5 +583,145 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     public void updateGeometry(int row, Geometry geometry) {
         setValueAt(geometry, row, getGeometryFieldIndex());
+    }
+
+    /**
+     * Adds the new feature.
+     */
+    public void addNewFeature() {
+        SimpleFeatureType featureType = userLayer.getInlineFeatureType();
+
+        String typeName = userLayer.getInlineFeatureType().getTypeName();
+        try {
+            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+
+            SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType); 
+
+            ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+
+            SimpleFeatureIterator it = featureSource.getFeatures().features();
+            try { 
+                while (it.hasNext()) { 
+                    SimpleFeature sf = it.next(); 
+                    List<Object> attributeValueList = sf.getAttributes();
+                    sfb.addAll(attributeValueList);
+                    featureList.add(sfb.buildFeature(null)); 
+                }
+                // Add new feature
+                String wktString = "wkt://POINT(0 0)";
+                Geometry geometry = WKTConversion.convertToGeometry(wktString, getSelectedCRSCode());
+                sfb.add(geometry);
+                featureList.add(sfb.buildFeature(null)); 
+            } finally { 
+                it.close(); 
+            } 
+
+            SimpleFeatureCollection collection = new ListFeatureCollection(featureType, featureList);
+            DataStore dataStore = DataUtilities.dataStore( collection );
+
+            featureCollection = collection;
+            cachedFeature = null;
+            lastRow = -1;
+            userLayer.setInlineFeatureDatastore(dataStore);
+
+        } catch (IOException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        } 
+
+        this.fireTableStructureChanged();
+        this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.inlineFeatureUpdated();
+        }
+    }
+
+    /**
+     * Removes the feature.
+     *
+     * @param selectedRow the selected row
+     */
+    public void removeFeature(int selectedRow) {
+        if((selectedRow < 0) || (selectedRow >= getRowCount()))
+        {
+            return;
+        }
+
+        SimpleFeatureType featureType = userLayer.getInlineFeatureType();
+
+        String typeName = userLayer.getInlineFeatureType().getTypeName();
+        try {
+            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+
+            SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType); 
+
+            ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
+
+            SimpleFeatureIterator it = featureSource.getFeatures().features();
+            try {
+                int index = 0;
+                while (it.hasNext()) { 
+                    SimpleFeature sf = it.next();
+
+                    if(index != selectedRow)
+                    {
+                        List<Object> attributeValueList = sf.getAttributes();
+                        sfb.addAll(attributeValueList);
+                        featureList.add(sfb.buildFeature(null));
+                    }
+                    index ++;
+                }
+            } finally { 
+                it.close(); 
+            } 
+
+            SimpleFeatureCollection collection = new ListFeatureCollection(featureType, featureList);
+            DataStore dataStore = DataUtilities.dataStore( collection );
+
+            featureCollection = collection;
+            cachedFeature = null;
+            lastRow = -1;
+            userLayer.setInlineFeatureDatastore(dataStore);
+
+        } catch (IOException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        } 
+
+        this.fireTableStructureChanged();
+        this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.inlineFeatureUpdated();
+        }
+    }
+
+    /**
+     * Sets the table.
+     *
+     * @param featureTable the new table
+     * @param crsComboBox the crs combo box
+     */
+    public void setTable(JTable featureTable, ValueComboBox crsComboBox) {
+        this.featureTable = featureTable;
+        this.crsComboBox = crsComboBox;
+    }
+
+    /**
+     * Gets the selected CRS code.
+     *
+     * @return the selected CRS code
+     */
+    public String getSelectedCRSCode() {
+        String crsCode = null;
+        if(crsComboBox != null)
+        {
+            if(crsComboBox.getSelectedValue() != null)
+            {
+                crsCode = crsComboBox.getSelectedValue().getKey();
+            }
+        }
+        return crsCode;
     }
 }

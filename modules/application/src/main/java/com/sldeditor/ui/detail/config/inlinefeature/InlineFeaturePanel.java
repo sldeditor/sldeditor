@@ -56,12 +56,9 @@ import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import com.sldeditor.ui.menucombobox.ArrowIcon;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class InlineFeaturePanel.
@@ -96,6 +93,8 @@ public class InlineFeaturePanel extends JPanel {
 
     /** The populating flag. */
     private boolean populatingFlag = false;
+
+    private JButton removeFeatureButton;
 
     /**
      * Instantiates a new inline feature panel.
@@ -137,36 +136,14 @@ public class InlineFeaturePanel extends JPanel {
         featureTable.setAutoscrolls(true);
         featureTable.getTableHeader().setReorderingAllowed(false);
         featureTable.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
-        ListSelectionModel selectionModel = featureTable.getSelectionModel();
+        model.setTable(featureTable, crsComboBox);
 
+        ListSelectionModel selectionModel = featureTable.getSelectionModel();
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if(!e.getValueIsAdjusting())
                 {
-                    int row = featureTable.getSelectedRow();
-                    if(row >= 0)
-                    {
-                        int column = featureTable.getSelectedColumn();
-
-                        if(column == model.getGeometryFieldIndex())
-                        {
-                            WKTDialog wktDialog = new WKTDialog();
-
-                            String geometryString = (String) model.getValueAt(row, column).toString();
-                            if(wktDialog.showDialog(geometryString))
-                            {
-                                String crsCode = null;
-                                if(crsComboBox.getSelectedValue() != null)
-                                {
-                                    crsCode = crsComboBox.getSelectedValue().getKey();
-                                }
-                                Geometry geometry = WKTConversion.convertToGeometry(wktDialog.getWKTString(), crsCode);
-
-                                model.updateGeometry(row, geometry);
-                            }
-                        }
-                        featureTable.clearSelection();
-                    }
+                    removeFeatureButton.setEnabled(true);
                 }
             }
         });
@@ -186,10 +163,28 @@ public class InlineFeaturePanel extends JPanel {
         addFeaturePanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(FieldConfigBase.class, "InlineFeature.features")));
 
         JButton addButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.addfeature"));
+        addButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addNewFeature();
+                removeFeatureButton.setEnabled(false);
+            }
+        });
         addFeaturePanel.add(addButton);
 
-        JButton removeButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.removefeature"));
-        addFeaturePanel.add(removeButton);
+        removeFeatureButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.removefeature"));
+        removeFeatureButton.setEnabled(false);
+        removeFeatureButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = featureTable.getSelectedRow();
+                model.removeFeature(selectedRow);
+                removeFeatureButton.setEnabled(false);
+            }
+        });
+        addFeaturePanel.add(removeFeatureButton);
 
         bottomPanel.add(addFeaturePanel);
 
