@@ -70,20 +70,6 @@ public class WKTGeometryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#getNoOfSegments()}.
-     */
-    @Test
-    public void testGetNoOfSegments() {
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addSegmentList(int, com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList)}.
-     */
-    @Test
-    public void testAddSegmentList() {
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewSegment()}.
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewSegment(int)}.
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#isEmpty()}.
@@ -150,7 +136,7 @@ public class WKTGeometryTest {
         g.removeSegment(1, 2);
         int actualSize = g.getSegmentList(1).size();
         assertEquals(4, actualSize);
-        
+
         actualValue = g.getSegmentName(0);
         assertTrue(actualValue.compareTo(String.format("%s %d", expectedListItem, expectedIndex + 1)) == 0);
 
@@ -159,16 +145,42 @@ public class WKTGeometryTest {
         g.setGeometryType(wktType);
         actualValue = g.getSegmentName(0);
         assertTrue(actualValue.compareTo(String.format("%s %d", Localisation.getString(WKTGeometry.class, "WKTDialog.partShape"), expectedIndex + 1)) == 0);
-        
+
         assertNull(g.getSegmentList(-4));
         assertNull(g.getSegmentList(43));
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#getSegmentName(int)}.
+     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#hashCode()}.
      */
     @Test
-    public void testGetSegmentName() {
+    public void testHashCode() {
+        WKTGeometry g = new WKTGeometry();
+        String expectedListItem = "listitem";
+        WKTType wktType = new WKTType("name", false, 5, expectedListItem, false, true); 
+        g.setGeometryType(wktType);
+        g.addNewShape();
+        g.addNewShape();
+        g.addNewShape();
+
+        WKTGeometry g2 = new WKTGeometry();
+        g2.setGeometryType(wktType);
+        g2.addNewShape();
+        g2.addNewShape();
+
+        assertTrue(g.hashCode() != g2.hashCode());
+        
+        assertTrue(g.equals(g));
+        assertFalse(g.equals(null));
+        assertFalse(g.equals(expectedListItem));
+
+        WKTGeometry g3 = new WKTGeometry();
+        WKTType wktType2 = new WKTType("name", false, 5, expectedListItem, true, true); 
+        g3.setGeometryType(wktType2);
+        g3.addNewShape();
+        g3.addNewShape();
+        g3.addNewShape();
+        assertFalse(g.equals(g3));
     }
 
 }

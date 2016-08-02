@@ -77,7 +77,8 @@ public class WKTSegmentList {
 
         if(!wktPointList.isEmpty())
         {
-            if(!pointToAdd.equals(wktPointList.get(wktPointList.size() - 1)))
+            WKTPoint previousPoint = wktPointList.get(wktPointList.size() - 1);
+            if(!pointToAdd.equals(previousPoint))
             {
                 wktPointList.add(pointToAdd);
             }
@@ -95,16 +96,17 @@ public class WKTSegmentList {
      * @return the WKT string
      */
     public String getWKTString() {
-        return getWKTString(false);
+        return getWKTString(true, false);
     }
 
     /**
      * Gets the WKT string.
      *
+     * @param useBrackets the use brackets
      * @param makeFirstLastTheSame the make first last the same
      * @return the WKT string
      */
-    public String getWKTString(boolean makeFirstLastTheSame) {
+    public String getWKTString(boolean useBrackets, boolean makeFirstLastTheSame) {
         StringBuilder sb = new StringBuilder();
 
         List<WKTPoint> copyList = new ArrayList<WKTPoint>(wktPointList);
@@ -116,7 +118,10 @@ public class WKTSegmentList {
             }
         }
 
-        sb.append("(");
+        if(useBrackets)
+        {
+            sb.append("(");
+        }
         int index = 0;
         for(WKTPoint point : copyList)
         {
@@ -125,12 +130,85 @@ public class WKTSegmentList {
                 sb.append(", ");
             }
 
-            sb.append(point.getX());
+            sb.append(fmt(point.getX()));
             sb.append(" ");
-            sb.append(point.getY());
+            sb.append(fmt(point.getY()));
             index ++;
         }
-        sb.append(")");
+        if(useBrackets)
+        {
+            sb.append(")");
+        }
         return sb.toString();
+    }
+
+    /**
+     * Formats a double in a string, if there are no decimal places
+     * then returned as an integer.
+     *
+     * @param doubleValue the double value
+     * @return the string representation
+     */
+    private static String fmt(double doubleValue)
+    {
+        if(doubleValue == (long) doubleValue)
+        {
+            return String.format("%d", (long)doubleValue);
+        }
+        else
+        {
+            return String.format("%s", doubleValue);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((wktPointList == null) ? 0 : wktPointList.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WKTSegmentList other = (WKTSegmentList) obj;
+        if (wktPointList == null) {
+            if (other.wktPointList != null)
+                return false;
+        } else if (!wktPointList.equals(other.wktPointList))
+            return false;
+        return true;
+    }
+
+    /**
+     * Removes last point if the first and last point are the same
+     */
+    public void removeIfFirstLastSame() {
+
+        if(wktPointList != null)
+        {
+            if(wktPointList.size() > 1)
+            {
+                WKTPoint firstPoint = wktPointList.get(0);
+                WKTPoint lastPoint = wktPointList.get(wktPointList.size() - 1);
+                
+                if(firstPoint.equals(lastPoint))
+                {
+                    wktPointList.remove(wktPointList.size() - 1);
+                }
+            }
+        }
     }
 }

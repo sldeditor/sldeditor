@@ -148,4 +148,53 @@ public class WKTType
     public boolean doFirstLastHaveToBeSame() {
         return doFirstLastHaveToBeSame;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (canHaveMultipleShapes ? 1231 : 1237);
+        result = prime * result + (doFirstLastHaveToBeSame ? 1231 : 1237);
+        result = prime * result + ((listItem == null) ? 0 : listItem.hashCode());
+        result = prime * result + (multipleCoordinates ? 1231 : 1237);
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + numOfPoints;
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WKTType other = (WKTType) obj;
+        if (canHaveMultipleShapes != other.canHaveMultipleShapes)
+            return false;
+        if (doFirstLastHaveToBeSame != other.doFirstLastHaveToBeSame)
+            return false;
+        if (listItem == null) {
+            if (other.listItem != null)
+                return false;
+        } else if (!listItem.equals(other.listItem))
+            return false;
+        if (multipleCoordinates != other.multipleCoordinates)
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (numOfPoints != other.numOfPoints)
+            return false;
+        return true;
+    }
 };

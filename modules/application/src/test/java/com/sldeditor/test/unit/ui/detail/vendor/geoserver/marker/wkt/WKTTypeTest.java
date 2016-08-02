@@ -76,6 +76,18 @@ public class WKTTypeTest {
                 listItem, 
                 doFirstLastHaveToBeSame);
         assertFalse(wktType2.canHaveMultipleShapes());
+
+        assertFalse(wktType.equals(wktType2));
+
+        WKTType wktTypeCopy = new WKTType(name, 
+                multipleCoordinates,
+                numOfPoints,
+                listItem, 
+                canHaveMultipleShapes,
+                doFirstLastHaveToBeSame);
+        assertEquals(wktType, wktTypeCopy);
+
+        assertTrue(wktType.hashCode() != wktType2.hashCode());
     }
 
 }

@@ -57,7 +57,7 @@ public class WKTSegmentListTest {
         segmentList.addPoint(new WKTPoint(pos1));
 
         String actualValue = segmentList.getWKTString();
-        assertTrue(actualValue.compareTo("(1.0 1.0)") == 0);
+        assertTrue(actualValue.compareTo("(1 1)") == 0);
 
         List<WKTPoint> ptList = new ArrayList<WKTPoint>();
         ptList.add(new WKTPoint(pos1));
@@ -66,13 +66,13 @@ public class WKTSegmentListTest {
         ptList.add(new WKTPoint(pos4));
         segmentList.setWktPointList(ptList);
         actualValue = segmentList.getWKTString();
-        assertTrue(actualValue.compareTo("(1.0 1.0, 2.0 2.0, 3.0 3.0, 4.0 4.0)") == 0);
+        assertTrue(actualValue.compareTo("(1 1, 2 2, 3 3, 4 4)") == 0);
 
-        actualValue = segmentList.getWKTString(false);
-        assertTrue(actualValue.compareTo("(1.0 1.0, 2.0 2.0, 3.0 3.0, 4.0 4.0)") == 0);
+        actualValue = segmentList.getWKTString(false, false);
+        assertTrue(actualValue.compareTo("1 1, 2 2, 3 3, 4 4") == 0);
 
-        actualValue = segmentList.getWKTString(true);
-        assertTrue(actualValue.compareTo("(1.0 1.0, 2.0 2.0, 3.0 3.0, 4.0 4.0, 1.0 1.0)") == 0);
+        actualValue = segmentList.getWKTString(false, true);
+        assertTrue(actualValue.compareTo("1 1, 2 2, 3 3, 4 4, 1 1") == 0);
 
         ptList.add(new WKTPoint(pos1));
         segmentList.setWktPointList(ptList);

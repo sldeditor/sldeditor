@@ -49,7 +49,7 @@ public class WKTGeometry {
     }
 
     /**
-     * Sets the valid.
+     * Sets the is valid flag.
      *
      * @param valid the new valid
      */
@@ -234,6 +234,46 @@ public class WKTGeometry {
      */
     public boolean isEmpty() {
         return (geometryType == null) || segmentList.isEmpty();
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((geometryType == null) ? 0 : geometryType.hashCode());
+        result = prime * result + ((segmentList == null) ? 0 : segmentList.hashCode());
+        result = prime * result + (valid ? 1231 : 1237);
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WKTGeometry other = (WKTGeometry) obj;
+        if (geometryType == null) {
+            if (other.geometryType != null)
+                return false;
+        } else if (!geometryType.equals(other.geometryType))
+            return false;
+        if (segmentList == null) {
+            if (other.segmentList != null)
+                return false;
+        } else if (!segmentList.equals(other.segmentList))
+            return false;
+        if (valid != other.valid)
+            return false;
+        return true;
     }
 
 }
