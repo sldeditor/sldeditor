@@ -264,7 +264,7 @@ public class SLDTreeTools {
         btnNewRaster.setIcon(getResourceIcon("button/raster.png"));
         btnNewRaster.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addRaster();
+                addNewRaster();
             }
         });
         buttonPanel.add(btnNewRaster);
@@ -641,7 +641,7 @@ public class SLDTreeTools {
     /**
      * Adds the new raster symbolizer.
      */
-    public void addRaster() {
+    public void addNewRaster() {
         if(symbolTree == null)
         {
             return;

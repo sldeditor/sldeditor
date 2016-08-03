@@ -58,7 +58,9 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
     public static final String OUTLINE_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline");
 
     /**
-     * Gets the tree string.
+     * Gets the tree string.<p>
+     * Code just returns image outline prefix regardless of symbolizer type, 
+     * doesn't just restrict to line and polygon
      *
      * @param node the node
      * @param nodeObject the node object
@@ -75,18 +77,16 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
 
         if(symbol != null)
         {
+            name = symbol.getName();
+
+            if((name == null) || name.isEmpty())
+            {
+                name = defaultString(symbol);
+            }
+
             if(imageOutline(node))
             {
-                name = String.format("%s - %s", OUTLINE_NAME, defaultString(symbol));
-            }
-            else
-            {
-                name = symbol.getName();
-
-                if((name == null) || name.isEmpty())
-                {
-                    name = defaultString(symbol);
-                }
+                name = String.format("%s - %s", OUTLINE_NAME, name);
             }
         }
 
@@ -104,7 +104,7 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
         if(node != null)
         {
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
-            
+
             if(parentNode != null)
             {
                 if(parentNode.getUserObject() instanceof RasterSymbolizer)

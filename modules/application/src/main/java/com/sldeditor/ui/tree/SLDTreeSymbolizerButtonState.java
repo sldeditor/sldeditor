@@ -54,7 +54,7 @@ public class SLDTreeSymbolizerButtonState {
         boolean enabled = false;
         if(overallEnableSymbolizersOverride)
         {
-            enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.POLYGON);
+            enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.POINT);
         }
         return enabled;
     }
@@ -70,7 +70,7 @@ public class SLDTreeSymbolizerButtonState {
         boolean enabled = false;
         if(overallEnableSymbolizersOverride)
         {
-            enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.POLYGON);
+            enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.LINE);
         }
         return enabled;
     }
