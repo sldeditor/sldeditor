@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.widgets;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +25,6 @@ import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.preferences.PrefManager;
@@ -63,7 +60,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
     @SuppressWarnings("unchecked")
     public ValueComboBox()
     {
-        setRenderer( new ItemRenderer() );
+        setRenderer( new ComboBoxRenderer() );
         putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
     }
 
@@ -179,34 +176,5 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
      */
     public ValueComboBoxData getFirstItem() {
         return this.getItemAt(0);
-    }
-
-    /**
-     * Renders combo box items.
-     */
-    class ItemRenderer extends BasicComboBoxRenderer
-    {
-
-        /** The Constant serialVersionUID. */
-        private static final long serialVersionUID = 1L;
-
-        /* (non-Javadoc)
-         * @see javax.swing.plaf.basic.BasicComboBoxRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
-         */
-        public Component getListCellRendererComponent(
-                @SuppressWarnings("rawtypes") JList list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus)
-        {
-            super.getListCellRendererComponent(list, value, index,
-                    isSelected, cellHasFocus);
-
-            if (value != null)
-            {
-                ValueComboBoxData item = (ValueComboBoxData)value;
-                setText( item.getText() );
-            }
-
-            return this;
-        }
     }
 }

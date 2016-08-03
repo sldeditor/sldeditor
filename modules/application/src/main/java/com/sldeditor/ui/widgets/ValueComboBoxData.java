@@ -18,6 +18,8 @@
  */
 package com.sldeditor.ui.widgets;
 
+import javax.swing.ImageIcon;
+
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 
@@ -32,10 +34,13 @@ public class ValueComboBoxData {
     private String key;
 
     /** The text. */
-    private String text;
+    private String text = null;
 
     /** The panel id. */
     private Class<?> panelId;
+
+    /** The image icon. */
+    private ImageIcon imageIcon = null;
 
     /** The vendor option. */
     private VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
@@ -84,6 +89,21 @@ public class ValueComboBoxData {
         this.text = text;
         this.panelId = panelId;
         this.vendorOptionVersion = vendorOptionVersion;
+    }
+
+    /**
+     * Instantiates a new value combo box data.
+     *
+     * @param key the key
+     * @param imageIcon the image icon
+     * @param panelId the panel id
+     */
+    public ValueComboBoxData(String key, ImageIcon imageIcon, Class<?> panelId) {
+        super();
+        this.key = key;
+        this.imageIcon = imageIcon;
+        this.panelId = panelId;
+        this.vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
     }
 
     /**
@@ -137,5 +157,14 @@ public class ValueComboBoxData {
     @Override
     public String toString() {
         return text;
+    }
+
+    /**
+     * Gets the image icon.
+     *
+     * @return the imageIcon
+     */
+    public ImageIcon getImageIcon() {
+        return imageIcon;
     }
 }

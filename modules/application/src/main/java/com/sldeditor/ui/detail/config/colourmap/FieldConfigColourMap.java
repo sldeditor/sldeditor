@@ -33,6 +33,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapImpl;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.colourramp.ColourRampConfigPanel;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -72,6 +73,9 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /** The remove button. */
     private JButton removeButton;
 
+    /** The colour ramp configuration panel. */
+    private ColourRampConfigPanel colourRampConfig = null;
+    
     /**
      * Instantiates a new field config string.
      *
@@ -105,13 +109,19 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     public void createUI(Box parentBox) {
 
         int xPos = getXPos();
-        int maxNoOfRows = 12;
-        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(maxNoOfRows), getLabel(), parentBox);
+        int maxNoOfConfigRows = 7;
+        int maxNoOfTableRows = 12;
+        int totalRows = maxNoOfConfigRows + maxNoOfTableRows;
+        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel(), parentBox);
+
+        colourRampConfig = new ColourRampConfigPanel(this, model);
+        colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfConfigRows));
+        fieldPanel.add(colourRampConfig);
 
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        table.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfRows - 2));
+        table.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2));
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -121,10 +131,10 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         model.setCellRenderer(table);
 
         JScrollPane scrollPanel = new JScrollPane(table);
-        scrollPanel.setBounds(xPos, BasePanel.WIDGET_HEIGHT, BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT * 10);
+        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2));
         fieldPanel.add(scrollPanel);
 
-        int buttonY = getRowY(maxNoOfRows - 1);
+        int buttonY = getRowY(totalRows - 1);
         //
         // Add button
         //
@@ -339,6 +349,10 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         {
             if(value != null)
             {
+                if(colourRampConfig != null)
+                {
+                    colourRampConfig.populate(value);
+                }
                 model.populate(value);
 
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
