@@ -54,47 +54,97 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
     /** The Constant DEFAULT_RASTER_NAME. */
     public static final String DEFAULT_RASTER_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.raster");
 
+    /** The Constant OUTLINE_NAME. */
+    public static final String OUTLINE_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline");
+
     /**
      * Gets the tree string.
      *
+     * @param node the node
      * @param nodeObject the node object
      * @return the tree string
      */
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
+     */
     @Override
-    public String getTreeString(Object nodeObject) {
+    public String getTreeString(DefaultMutableTreeNode node, Object nodeObject) {
         Symbolizer symbol = (Symbolizer) nodeObject;
 
         String name = null;
 
         if(symbol != null)
         {
-            name = symbol.getName();
-
-            if((name == null) || name.isEmpty())
+            if(imageOutline(node))
             {
-                if(symbol instanceof PointSymbolizer)
+                name = String.format("%s - %s", OUTLINE_NAME, defaultString(symbol));
+            }
+            else
+            {
+                name = symbol.getName();
+
+                if((name == null) || name.isEmpty())
                 {
-                    name = DEFAULT_MARKER_NAME;
-                }
-                else if(symbol instanceof TextSymbolizer)
-                {
-                    name = DEFAULT_TEXT_NAME;
-                }
-                else if(symbol instanceof LineSymbolizer)
-                {
-                    name = DEFAULT_LINE_NAME;
-                }
-                else if(symbol instanceof PolygonSymbolizer)
-                {
-                    name = DEFAULT_POLYGON_NAME;
-                }
-                else if(symbol instanceof RasterSymbolizer)
-                {
-                    name = DEFAULT_RASTER_NAME;
+                    name = defaultString(symbol);
                 }
             }
         }
 
+        return name;
+    }
+
+    /**
+     * Check to see if symbolizer is an image outline.
+     *
+     * @param node the node
+     * @return true, if successful
+     */
+    private boolean imageOutline(DefaultMutableTreeNode node) {
+        boolean isOutline = false;
+        if(node != null)
+        {
+            DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
+            
+            if(parentNode != null)
+            {
+                if(parentNode.getUserObject() instanceof RasterSymbolizer)
+                {
+                    isOutline = true;
+                }
+            }
+        }
+        return isOutline;
+    }
+
+    /**
+     * Default string.
+     *
+     * @param symbol the symbol
+     * @return the string
+     */
+    private String defaultString(Symbolizer symbol) {
+        String name = "";
+
+        if(symbol instanceof PointSymbolizer)
+        {
+            name = DEFAULT_MARKER_NAME;
+        }
+        else if(symbol instanceof TextSymbolizer)
+        {
+            name = DEFAULT_TEXT_NAME;
+        }
+        else if(symbol instanceof LineSymbolizer)
+        {
+            name = DEFAULT_LINE_NAME;
+        }
+        else if(symbol instanceof PolygonSymbolizer)
+        {
+            name = DEFAULT_POLYGON_NAME;
+        }
+        else if(symbol instanceof RasterSymbolizer)
+        {
+            name = DEFAULT_RASTER_NAME;
+        }
         return name;
     }
 

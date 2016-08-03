@@ -65,7 +65,6 @@ import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.tree.item.RasterSymbolizerImageOutline;
 import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 
 /**
@@ -226,7 +225,7 @@ public class SLDTreeTools {
         buttonPanel.add(btnNewLine);
 
         btnNewImageOutlineLine = new JButton();
-        btnNewImageOutlineLine.setIcon(getResourceIcon("button/line.png"));
+        btnNewImageOutlineLine.setIcon(getResourceIcon("button/imageoutline_line.png"));
         btnNewImageOutlineLine.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewImageOutlineLine();
@@ -244,7 +243,7 @@ public class SLDTreeTools {
         buttonPanel.add(btnNewPolygon);
 
         btnNewImageOutlinePolygon = new JButton();
-        btnNewImageOutlinePolygon.setIcon(getResourceIcon("button/polygon.png"));
+        btnNewImageOutlinePolygon.setIcon(getResourceIcon("button/imageoutline_polygon.png"));
         btnNewImageOutlinePolygon.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewImageOutlinePolygon();
@@ -272,7 +271,7 @@ public class SLDTreeTools {
 
         btnRemoveMarker = new JButton();
         btnRemoveMarker.setIcon(getResourceIcon("button/delete.png"));
-        btnRemoveMarker.setEnabled(false);
+        btnRemoveMarker.setEnabled(true);
         btnRemoveMarker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeItem();
@@ -818,10 +817,10 @@ public class SLDTreeTools {
 
         PolygonSymbolizer newPolygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
 
-        DefaultMutableTreeNode ruleNode = getRasterTreeNode();
+        DefaultMutableTreeNode rasterNode = getRasterTreeNode();
 
         SelectedSymbol.getInstance().addImageOutlineSymbolizerToRaster(newPolygonSymbolizer);
-        DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, newPolygonSymbolizer, true); 
+        DefaultMutableTreeNode newNode = sldTree.addObject(rasterNode, newPolygonSymbolizer, true); 
 
         if(newNode != null)
         {
@@ -1076,8 +1075,10 @@ public class SLDTreeTools {
             DefaultMutableTreeNode selectedNode, 
             GeometryTypeEnum currentGeometryType) {
         boolean addButtonEnabled = true;
+        boolean removeButtonEnabled = true;
         boolean addNamedLayerButtonEnabled = false;
         boolean addUserLayerButtonEnabled = false;
+        boolean showMoveButtons = true;
         boolean hasMoreThan1Item = false;
         boolean isFirstSelected = false;
         boolean isLastSelected = false;
@@ -1164,21 +1165,11 @@ public class SLDTreeTools {
                     }
                 }
             }
-            else if(obj instanceof RasterSymbolizerImageOutline)
+            else
             {
-                symbolizerButtonState.showSymbolizerButtons();
                 addButtonEnabled = false;
-
-                if(parentObj != null)
-                {
-                    //                    if(parentObj instanceof Rule)
-                    //                    {
-                    //                        Rule rule = (Rule) parentObj;
-                    //                        hasMoreThan1Item = rule.symbolizers().size() > 1;
-                    //                        isFirstSelected = (obj == rule.symbolizers().get(0));
-                    //                        isLastSelected = (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
-                    //                    }
-                }
+                removeButtonEnabled = false;
+                showMoveButtons = false;
             }
         }
 
@@ -1194,10 +1185,12 @@ public class SLDTreeTools {
         btnNewRaster.setVisible(symbolizerButtonState.isRasterVisible(parentObj, obj));
         btnNewText.setVisible(symbolizerButtonState.isTextVisible(parentObj, obj));
 
-        btnRemoveMarker.setEnabled(true);
+        btnRemoveMarker.setVisible(removeButtonEnabled);
 
         // Up / down buttons
+        btnMoveUp.setVisible(showMoveButtons);
         btnMoveUp.setEnabled(hasMoreThan1Item && !isFirstSelected);
+        btnMoveDown.setVisible(showMoveButtons);
         btnMoveDown.setEnabled(hasMoreThan1Item && !isLastSelected);
     }
 }

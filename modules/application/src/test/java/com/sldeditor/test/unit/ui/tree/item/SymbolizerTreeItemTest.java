@@ -47,41 +47,41 @@ public class SymbolizerTreeItemTest {
     @Test
     public void testGetTreeString() {
         SymbolizerTreeItem item = new SymbolizerTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         assertNull(actualValue);
 
         Symbolizer pointSymbolizer = DefaultSymbols.createDefaultPointSymbolizer();
-        actualValue = item.getTreeString(pointSymbolizer);
+        actualValue = item.getTreeString(null, pointSymbolizer);
         String expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         pointSymbolizer.setName(null);
-        actualValue = item.getTreeString(pointSymbolizer);
+        actualValue = item.getTreeString(null, pointSymbolizer);
         expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.marker");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer lineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
-        actualValue = item.getTreeString(lineSymbolizer);
+        actualValue = item.getTreeString(null, lineSymbolizer);
         expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.line");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer polygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
-        actualValue = item.getTreeString(polygonSymbolizer);
+        actualValue = item.getTreeString(null, polygonSymbolizer);
         expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.polygon");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer textSymbolizer = DefaultSymbols.createDefaultTextSymbolizer();
-        actualValue = item.getTreeString(textSymbolizer);
+        actualValue = item.getTreeString(null, textSymbolizer);
         expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.newText");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         textSymbolizer.setName("");
-        actualValue = item.getTreeString(textSymbolizer);
+        actualValue = item.getTreeString(null, textSymbolizer);
         expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.text");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer rasterSymbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
-        actualValue = item.getTreeString(rasterSymbolizer);
+        actualValue = item.getTreeString(null, rasterSymbolizer);
         expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.raster");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }

@@ -48,6 +48,7 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.TreeSelectionData;
@@ -68,7 +69,6 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
-import com.sldeditor.ui.tree.item.RasterSymbolizerImageOutline;
 import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 import com.sldeditor.ui.tree.item.TreeItemMap;
 
@@ -96,9 +96,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
     /** The display panel. */
     private SymbolizerSelectedInterface displayPanel = null;
-
-    /** The tree item map. */
-    private TreeItemMap treeItemMap = TreeItemMap.getInstance();
 
     /** The node map. */
     private Map<Object, DefaultMutableTreeNode> nodeMap = new HashMap<Object, DefaultMutableTreeNode>();
@@ -320,22 +317,30 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
                                             if(symbolizer instanceof RasterSymbolizer)
                                             {
-                                                RasterSymbolizerImageOutline imageOutline = SLDTreeLeafFactory.getInstance().getImageOutline(symbolizer);
-                                                LineSymbolizer outlineLineSymbolizer = imageOutline.getLineSymbolizer();
-                                                if(outlineLineSymbolizer != null)
-                                                {
-                                                    DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(symbolizerTreeNode, outlineLineSymbolizer, true);
+                                                // Handle the image outline symbolizer for raster symbols
+                                                Symbolizer outlineSymbolizer = ((RasterSymbolizer)symbolizer).getImageOutline();
 
-                                                    addObject(symbolizerImageOutlineLineNode, SLDTreeLeafFactory.getInstance().getStroke(outlineLineSymbolizer), true);
+                                                if(outlineSymbolizer instanceof LineSymbolizer)
+                                                {
+                                                    LineSymbolizer outlineLineSymbolizer = (LineSymbolizer) outlineSymbolizer;
+                                                    if(outlineLineSymbolizer != null)
+                                                    {
+                                                        DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(symbolizerTreeNode, outlineLineSymbolizer, true);
+
+                                                        addObject(symbolizerImageOutlineLineNode, SLDTreeLeafFactory.getInstance().getStroke(outlineLineSymbolizer), true);
+                                                    }
                                                 }
-
-                                                PolygonSymbolizer outlinePolygonSymbolizer = imageOutline.getPolygonSymbolizer();
-                                                if(outlinePolygonSymbolizer != null)
+                                                else if(outlineSymbolizer instanceof PolygonSymbolizer)
                                                 {
-                                                    DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(symbolizerTreeNode, outlinePolygonSymbolizer, true);
+                                                    PolygonSymbolizer outlinePolygonSymbolizer = (PolygonSymbolizer) outlineSymbolizer;
 
-                                                    addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getFill(outlinePolygonSymbolizer), true);
-                                                    addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getStroke(outlinePolygonSymbolizer), true);
+                                                    if(outlinePolygonSymbolizer != null)
+                                                    {
+                                                        DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(symbolizerTreeNode, outlinePolygonSymbolizer, true);
+
+                                                        addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getFill(outlinePolygonSymbolizer), true);
+                                                        addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getStroke(outlinePolygonSymbolizer), true);
+                                                    }
                                                 }
                                             }
                                         }
@@ -626,7 +631,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             Object nodeInfo = node.getUserObject();
             if(nodeInfo != null)
             {
-                SLDTreeItemInterface treeItem = treeItemMap.getValue(nodeInfo.getClass().getClass());
+                SLDTreeItemInterface treeItem = TreeItemMap.getInstance().getValue(nodeInfo.getClass());
 
                 if(treeItem != null)
                 {

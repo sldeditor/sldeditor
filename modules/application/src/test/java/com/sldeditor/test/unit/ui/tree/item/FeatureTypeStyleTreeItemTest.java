@@ -43,26 +43,26 @@ public class FeatureTypeStyleTreeItemTest {
     @Test
     public void testGetTreeString() {
         FeatureTypeStyleTreeItem item = new FeatureTypeStyleTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
 
-        actualValue = item.getTreeString(fts);
+        actualValue = item.getTreeString(null, fts);
         // Default feature type style sets name = name!
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), "name");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         fts.setName(null);
-        actualValue = item.getTreeString(fts);
+        actualValue = item.getTreeString(null, fts);
         // Default feature type style sets name = name!
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         fts.setName(expectedName);
-        actualValue = item.getTreeString(fts);
+        actualValue = item.getTreeString(null, fts);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);    }
 

@@ -105,7 +105,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
 
-        String name = getItemText(userObject);
+        String name = getItemText(node, userObject);
 
         boolean showCheckbox = showCheckbox(userObject);
         leaf = isLeaf(userObject);
@@ -164,10 +164,11 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     /**
      * Gets the item text.
      *
+     * @param node the node
      * @param userObject the user object
      * @return the item text
      */
-    public static String getItemText(Object userObject) {
+    public static String getItemText(DefaultMutableTreeNode node, Object userObject) {
         String name = null;
 
         if(userObject != null)
@@ -187,7 +188,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
 
                 if(treeItem != null)
                 {
-                    name = treeItem.getTreeString(userObject);
+                    name = treeItem.getTreeString(node, userObject);
                 }
             }
         }

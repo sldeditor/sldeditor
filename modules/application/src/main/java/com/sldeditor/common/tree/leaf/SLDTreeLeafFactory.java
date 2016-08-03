@@ -29,8 +29,6 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.style.Symbolizer;
 
-import com.sldeditor.ui.tree.item.RasterSymbolizerImageOutline;
-
 /**
  * A factory for creating SLDTreeLeaf objects.
  * 
@@ -304,21 +302,4 @@ public class SLDTreeLeafFactory
         }
         return raster;
     }
-
-    /**
-     * Gets the raster image outline symbolizer.
-     *
-     * @param symbolizer the symbolizer
-     * @return the image outline
-     */
-    public RasterSymbolizerImageOutline getImageOutline(Symbolizer symbolizer) {
-        RasterSymbolizer raster = getRaster(symbolizer);
-
-        if(raster!= null)
-        {
-            return new RasterSymbolizerImageOutline(raster);
-        }
-        return null;
-    }
-
 }

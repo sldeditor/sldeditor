@@ -37,10 +37,10 @@ public class RuleTreeItem implements SLDTreeItemInterface {
     private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.rule");
 
     /* (non-Javadoc)
-     * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(java.lang.Object)
+     * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
-    public String getTreeString(Object nodeObject) {
+    public String getTreeString(DefaultMutableTreeNode node, Object nodeObject) {
         Rule rule = (Rule)nodeObject;
 
         String name = "";
