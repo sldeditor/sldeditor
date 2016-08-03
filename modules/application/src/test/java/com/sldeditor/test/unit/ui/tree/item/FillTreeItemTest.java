@@ -46,16 +46,16 @@ public class FillTreeItemTest {
     @Test
     public void testGetTreeString() {
         FillTreeItem item = new FillTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.fill");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Fill fill = DefaultSymbols.createDefaultGraphicFill();
 
-        actualValue = item.getTreeString(fill);
+        actualValue = item.getTreeString(null, fill);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
-        actualValue = item.getTreeString(fill);
+        actualValue = item.getTreeString(null, fill);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 

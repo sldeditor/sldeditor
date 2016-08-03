@@ -43,24 +43,24 @@ public class RuleTreeItemTest {
     @Test
     public void testGetTreeString() {
         RuleTreeItem item = new RuleTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
         
         Rule rule = DefaultSymbols.createNewRule();
 
-        actualValue = item.getTreeString(rule);
+        actualValue = item.getTreeString(null, rule);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), Localisation.getString(SLDTreeTools.class, "TreeItem.newRule"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         rule.setName(null);
-        actualValue = item.getTreeString(rule);
+        actualValue = item.getTreeString(null, rule);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         rule.setName(expectedName);
-        actualValue = item.getTreeString(rule);
+        actualValue = item.getTreeString(null, rule);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }

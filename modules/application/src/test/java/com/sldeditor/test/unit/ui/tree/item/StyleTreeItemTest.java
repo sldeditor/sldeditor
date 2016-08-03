@@ -43,24 +43,24 @@ public class StyleTreeItemTest {
     @Test
     public void testGetTreeString() {
         StyleTreeItem item = new StyleTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.style"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
         
         Style style = DefaultSymbols.createNewStyle();
 
-        actualValue = item.getTreeString(style);
+        actualValue = item.getTreeString(null, style);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.style"), Localisation.getString(SLDTreeTools.class, "TreeItem.newStyle"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         style.setName(null);
-        actualValue = item.getTreeString(style);
+        actualValue = item.getTreeString(null, style);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.style"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         style.setName(expectedName);
-        actualValue = item.getTreeString(style);
+        actualValue = item.getTreeString(null, style);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.style"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }

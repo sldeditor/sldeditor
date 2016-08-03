@@ -104,6 +104,12 @@ public class SLDTreeTools {
     /** The new line button. */
     private JButton btnNewLine;
 
+    /** The new image outline polygon button. */
+    private JButton btnNewImageOutlinePolygon;
+
+    /** The new image outline line button. */
+    private JButton btnNewImageOutlineLine;
+
     /** The new marker button. */
     private JButton btnNewMarker;
 
@@ -133,6 +139,9 @@ public class SLDTreeTools {
 
     /** The object to render the selected symbol. */
     private List<RenderSymbolInterface> renderList = null;
+
+    /** The symbolizer button state. */
+    private SLDTreeSymbolizerButtonState symbolizerButtonState = new SLDTreeSymbolizerButtonState();
 
     /**
      * Instantiates a new SLD tree tool class.
@@ -215,6 +224,15 @@ public class SLDTreeTools {
         });
         buttonPanel.add(btnNewLine);
 
+        btnNewImageOutlineLine = new JButton();
+        btnNewImageOutlineLine.setIcon(getResourceIcon("button/imageoutline_line.png"));
+        btnNewImageOutlineLine.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addNewImageOutlineLine();
+            }
+        });
+        buttonPanel.add(btnNewImageOutlineLine);
+
         btnNewPolygon = new JButton();
         btnNewPolygon.setIcon(getResourceIcon("button/polygon.png"));
         btnNewPolygon.addActionListener(new ActionListener() {
@@ -223,6 +241,15 @@ public class SLDTreeTools {
             }
         });
         buttonPanel.add(btnNewPolygon);
+
+        btnNewImageOutlinePolygon = new JButton();
+        btnNewImageOutlinePolygon.setIcon(getResourceIcon("button/imageoutline_polygon.png"));
+        btnNewImageOutlinePolygon.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addNewImageOutlinePolygon();
+            }
+        });
+        buttonPanel.add(btnNewImageOutlinePolygon);
 
         btnNewText = new JButton();
         btnNewText.setIcon(getResourceIcon("button/text.png"));
@@ -237,14 +264,14 @@ public class SLDTreeTools {
         btnNewRaster.setIcon(getResourceIcon("button/raster.png"));
         btnNewRaster.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addRaster();
+                addNewRaster();
             }
         });
         buttonPanel.add(btnNewRaster);
 
         btnRemoveMarker = new JButton();
         btnRemoveMarker.setIcon(getResourceIcon("button/delete.png"));
-        btnRemoveMarker.setEnabled(false);
+        btnRemoveMarker.setEnabled(true);
         btnRemoveMarker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeItem();
@@ -342,8 +369,19 @@ public class SLDTreeTools {
         }
         else if(obj instanceof Symbolizer)
         {
-            SelectedSymbol.getInstance().removeSymbolizer((Symbolizer)obj);
-            removeTreeNode(lastNode);
+            DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) lastNode.getParent();
+            if(parentNode != null)
+            {
+                if(parentNode.getUserObject() instanceof RasterSymbolizer)
+                {
+                    SelectedSymbol.getInstance().removeRasterImageOutline((RasterSymbolizer)parentNode.getUserObject());
+                }
+                else
+                {
+                    SelectedSymbol.getInstance().removeSymbolizer((Symbolizer)obj);
+                }
+                removeTreeNode(lastNode);
+            }
         }
         else
         {
@@ -547,6 +585,27 @@ public class SLDTreeTools {
     }
 
     /**
+     * Gets the raster symbolizer tree node.
+     *
+     * @return the rule tree node
+     */
+    private DefaultMutableTreeNode getRasterTreeNode() {
+        if(symbolTree != null)
+        {
+            TreePath path = symbolTree.getSelectionPath();
+
+            DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+            Object obj = lastNode.getUserObject();
+
+            if(obj instanceof RasterSymbolizer)
+            {
+                return (DefaultMutableTreeNode) lastNode;
+            }
+        }
+        return rootNode;
+    }
+
+    /**
      * Adds the new marker symbolizer.
      */
     public void addNewMarker() {
@@ -582,7 +641,7 @@ public class SLDTreeTools {
     /**
      * Adds the new raster symbolizer.
      */
-    public void addRaster() {
+    public void addNewRaster() {
         if(symbolTree == null)
         {
             return;
@@ -677,6 +736,40 @@ public class SLDTreeTools {
     }
 
     /**
+     * Adds the new image outline line symbolizer.
+     */
+    public void addNewImageOutlineLine() {
+        if(symbolTree == null)
+        {
+            return;
+        }
+        // Store current state of the SLD before the add
+        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+        LineSymbolizer newLineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
+
+        DefaultMutableTreeNode ruleNode = getRasterTreeNode();
+
+        SelectedSymbol.getInstance().addImageOutlineSymbolizerToRaster(newLineSymbolizer);
+        DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, newLineSymbolizer, true); 
+
+        if(newNode != null)
+        {
+            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
+
+            // Select the item just added
+            TreePath newPath = getPath(newNode);
+
+            symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
+        }
+    }
+
+    /**
      * Adds the new polygon symbolizer.
      */
     public void addNewPolygon() {
@@ -693,6 +786,41 @@ public class SLDTreeTools {
 
         SelectedSymbol.getInstance().addSymbolizerToRule(newPolygonSymbolizer);
         DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, newPolygonSymbolizer, true); 
+
+        if(newNode != null)
+        {
+            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
+            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer), true);
+
+            // Select the item just added
+            TreePath newPath = getPath(newNode);
+
+            symbolTree.setSelectionPath(newPath);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
+        }
+    }
+
+    /**
+     * Adds the new image outline polygon symbolizer.
+     */
+    public void addNewImageOutlinePolygon() {
+        if(symbolTree == null)
+        {
+            return;
+        }
+        // Store current state of the SLD before the add
+        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+
+        PolygonSymbolizer newPolygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
+
+        DefaultMutableTreeNode rasterNode = getRasterTreeNode();
+
+        SelectedSymbol.getInstance().addImageOutlineSymbolizerToRaster(newPolygonSymbolizer);
+        DefaultMutableTreeNode newNode = sldTree.addObject(rasterNode, newPolygonSymbolizer, true); 
 
         if(newNode != null)
         {
@@ -946,18 +1074,23 @@ public class SLDTreeTools {
     public void setButtonState(DefaultMutableTreeNode parentNode,
             DefaultMutableTreeNode selectedNode, 
             GeometryTypeEnum currentGeometryType) {
-        boolean symbolizerButtonsEnabled = false;
         boolean addButtonEnabled = true;
+        boolean removeButtonEnabled = true;
         boolean addNamedLayerButtonEnabled = false;
         boolean addUserLayerButtonEnabled = false;
+        boolean showMoveButtons = true;
         boolean hasMoreThan1Item = false;
         boolean isFirstSelected = false;
         boolean isLastSelected = false;
 
+        symbolizerButtonState.setGeometryType(currentGeometryType);
+
+        Object obj = null;
+        Object parentObj = null;
+
         if(selectedNode != null)
         {
-            Object obj = selectedNode.getUserObject();
-            Object parentObj = null;
+            obj = selectedNode.getUserObject();
 
             if(parentNode != null)
             {
@@ -1005,7 +1138,7 @@ public class SLDTreeTools {
             }
             else if(obj instanceof Rule)
             {
-                symbolizerButtonsEnabled = true;
+                symbolizerButtonState.showSymbolizerButtons();
                 addButtonEnabled = false;
 
                 if(parentObj != null)
@@ -1018,16 +1151,25 @@ public class SLDTreeTools {
             }
             else if(obj instanceof Symbolizer)
             {
-                symbolizerButtonsEnabled = true;
+                symbolizerButtonState.showSymbolizerButtons();
                 addButtonEnabled = false;
 
                 if(parentObj != null)
                 {
-                    Rule rule = (Rule) parentObj;
-                    hasMoreThan1Item = rule.symbolizers().size() > 1;
-                    isFirstSelected = (obj == rule.symbolizers().get(0));
-                    isLastSelected = (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
+                    if(parentObj instanceof Rule)
+                    {
+                        Rule rule = (Rule) parentObj;
+                        hasMoreThan1Item = rule.symbolizers().size() > 1;
+                        isFirstSelected = (obj == rule.symbolizers().get(0));
+                        isLastSelected = (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
+                    }
                 }
+            }
+            else
+            {
+                addButtonEnabled = false;
+                removeButtonEnabled = false;
+                showMoveButtons = false;
             }
         }
 
@@ -1035,27 +1177,20 @@ public class SLDTreeTools {
         btnAddUserLayerButton.setVisible(addUserLayerButtonEnabled);
         btnAddButton.setVisible(addButtonEnabled);
 
-        if(symbolizerButtonsEnabled == false)
-        {
-            btnNewMarker.setVisible(false);
-            btnNewLine.setVisible(false);
-            btnNewPolygon.setVisible(false);
-            btnNewRaster.setVisible(false);
-            btnNewText.setVisible(false);
-        }
-        else
-        {
-            btnNewMarker.setVisible(currentGeometryType == GeometryTypeEnum.POINT);
-            btnNewLine.setVisible(currentGeometryType == GeometryTypeEnum.LINE);
-            btnNewPolygon.setVisible(currentGeometryType == GeometryTypeEnum.POLYGON);
-            btnNewRaster.setVisible(currentGeometryType == GeometryTypeEnum.RASTER);
-            btnNewText.setVisible(true);
-        }
+        btnNewMarker.setVisible(symbolizerButtonState.isMarkerVisible(parentObj, obj));
+        btnNewLine.setVisible(symbolizerButtonState.isLineVisible(parentObj, obj));
+        btnNewImageOutlineLine.setVisible(symbolizerButtonState.isImageOutlineLineVisible(parentObj, obj));
+        btnNewPolygon.setVisible(symbolizerButtonState.isPolygonVisible(parentObj, obj));
+        btnNewImageOutlinePolygon.setVisible(symbolizerButtonState.isImageOutlinePolygonVisible(parentObj, obj));
+        btnNewRaster.setVisible(symbolizerButtonState.isRasterVisible(parentObj, obj));
+        btnNewText.setVisible(symbolizerButtonState.isTextVisible(parentObj, obj));
 
-        btnRemoveMarker.setEnabled(true);
+        btnRemoveMarker.setVisible(removeButtonEnabled);
 
         // Up / down buttons
+        btnMoveUp.setVisible(showMoveButtons);
         btnMoveUp.setEnabled(hasMoreThan1Item && !isFirstSelected);
+        btnMoveDown.setVisible(showMoveButtons);
         btnMoveDown.setEnabled(hasMoreThan1Item && !isLastSelected);
     }
 }

@@ -156,7 +156,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
             boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject, symbolizer);
 
             checkBox.setSelected(selectedItem);
-            label.setText(ComponentCellRenderer.getItemText(userObject));
+            label.setText(ComponentCellRenderer.getItemText(node, userObject));
 
             return panel;
         }

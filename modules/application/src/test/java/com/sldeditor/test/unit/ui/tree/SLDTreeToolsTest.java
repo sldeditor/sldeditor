@@ -43,6 +43,7 @@ import org.geotools.styling.StyleImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizerImpl;
 import org.geotools.styling.UserLayer;
+import org.geotools.styling.UserLayerImpl;
 import org.junit.Test;
 
 import com.sldeditor.TreeSelectionData;
@@ -143,7 +144,7 @@ public class SLDTreeToolsTest {
         treeTools.addNewThing(null);
         treeTools.addNewThing(UserLayer.class);
         treeTools.addNewThing(NamedLayer.class);
-        treeTools.addRaster();
+        treeTools.addNewRaster();
         treeTools.moveItem(true);
         treeTools.removeItem();
     }
@@ -152,7 +153,7 @@ public class SLDTreeToolsTest {
      * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewThing()}.
      */
     @Test
-    public void testAddNewThing() {
+    public void testAddNewThingNamedLayer() {
 
         SLDTreeTools treeTools = new SLDTreeTools();
 
@@ -190,6 +191,87 @@ public class SLDTreeToolsTest {
         assertEquals(1, namedLayer.getChildCount());
 
         DefaultMutableTreeNode styleLayer = (DefaultMutableTreeNode) namedLayer.getChildAt(0);
+
+        assertEquals(StyleImpl.class, styleLayer.getUserObject().getClass());
+
+        // This should add a feature type style and select it
+        assertEquals(0, styleLayer.getChildCount());
+        treeTools.addNewThing(null);
+        assertEquals(1, styleLayer.getChildCount());
+
+        DefaultMutableTreeNode featureTypeStyle = (DefaultMutableTreeNode) styleLayer.getChildAt(0);
+
+        assertEquals(FeatureTypeStyleImpl.class, featureTypeStyle.getUserObject().getClass());
+
+        // This should add a rule and select it
+        assertEquals(0, featureTypeStyle.getChildCount());
+        treeTools.addNewThing(null);
+        assertEquals(1, featureTypeStyle.getChildCount());
+
+        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) featureTypeStyle.getChildAt(0);
+
+        assertEquals(RuleImpl.class, rule.getUserObject().getClass());
+
+        // This should do nothing
+        assertEquals(0, rule.getChildCount());
+        treeTools.addNewThing(null);
+        assertEquals(0, rule.getChildCount());
+
+        // Undo last add of rule to feature type style
+        UndoManager.getInstance().undo();
+        DefaultMutableTreeNode featureTypeStyleNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
+        assertEquals(FeatureTypeStyleImpl.class, featureTypeStyleNode.getUserObject().getClass());
+        assertEquals(0, featureTypeStyleNode.getChildCount());
+
+        // Undo last add of rule to feature type style
+        UndoManager.getInstance().redo();
+        featureTypeStyleNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
+        assertEquals(FeatureTypeStyleImpl.class, featureTypeStyleNode.getUserObject().getClass());
+        assertEquals(1, featureTypeStyleNode.getChildCount());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewThing()}.
+     */
+    @Test
+    public void testAddNewThingUserLayer() {
+
+        SLDTreeTools treeTools = new SLDTreeTools();
+
+        TestSLDTree sldTree = new TestSLDTree(null, treeTools);
+
+        treeTools.addNewThing(null);
+
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+
+        // Start off with just a top level SLD and no structure below it
+        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
+
+        SelectedSymbol.getInstance().setSld(sld);
+
+        sldTree.populateSLD();
+        sldTree.selectFirstSymbol();
+
+        DefaultMutableTreeNode rootNode = sldTree.getRootNode();
+
+        // Check it has no structure below just the root node
+        assertEquals(0, rootNode.getChildCount());
+
+        // Add a thing - a quick way of creating sld structure
+
+        // This should add a user layer and select it
+        treeTools.addNewThing(UserLayer.class);
+        assertEquals(1, rootNode.getChildCount());
+        DefaultMutableTreeNode userLayer = (DefaultMutableTreeNode) rootNode.getChildAt(0);
+
+        assertEquals(UserLayerImpl.class, userLayer.getUserObject().getClass());
+
+        // This should add a style and select it
+        assertEquals(0, userLayer.getChildCount());
+        treeTools.addNewThing(null);
+        assertEquals(1, userLayer.getChildCount());
+
+        DefaultMutableTreeNode styleLayer = (DefaultMutableTreeNode) userLayer.getChildAt(0);
 
         assertEquals(StyleImpl.class, styleLayer.getUserObject().getClass());
 
@@ -295,10 +377,10 @@ public class SLDTreeToolsTest {
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
-        treeTools.addRaster();
+        treeTools.addNewRaster();
 
-        DefaultMutableTreeNode marker = (DefaultMutableTreeNode) rule.getChildAt(0);
-        assertEquals(RasterSymbolizerImpl.class,marker.getUserObject().getClass());
+        DefaultMutableTreeNode rasterNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(RasterSymbolizerImpl.class, rasterNode.getUserObject().getClass());
     }
 
     /**
@@ -333,8 +415,8 @@ public class SLDTreeToolsTest {
 
         treeTools.addNewText();
 
-        DefaultMutableTreeNode marker = (DefaultMutableTreeNode) rule.getChildAt(0);
-        assertEquals(TextSymbolizerImpl.class,marker.getUserObject().getClass());
+        DefaultMutableTreeNode textNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(TextSymbolizerImpl.class, textNode.getUserObject().getClass());
     }
 
     /**
@@ -369,8 +451,8 @@ public class SLDTreeToolsTest {
 
         treeTools.addNewLine();
 
-        DefaultMutableTreeNode marker = (DefaultMutableTreeNode) rule.getChildAt(0);
-        assertEquals(LineSymbolizerImpl.class,marker.getUserObject().getClass());
+        DefaultMutableTreeNode lineNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(LineSymbolizerImpl.class, lineNode.getUserObject().getClass());
     }
 
     /**
@@ -405,10 +487,90 @@ public class SLDTreeToolsTest {
 
         treeTools.addNewPolygon();
 
-        DefaultMutableTreeNode marker = (DefaultMutableTreeNode) rule.getChildAt(0);
-        assertEquals(PolygonSymbolizerImpl.class,marker.getUserObject().getClass());
+        DefaultMutableTreeNode polygonNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(PolygonSymbolizerImpl.class, polygonNode.getUserObject().getClass());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewImageOutlinePolygon()}.
+     */
+    @Test
+    public void testAddNewImageOutlinePolygon() {
+        SLDTreeTools treeTools = new SLDTreeTools();
+
+        TestSLDTree sldTree = new TestSLDTree(null, treeTools);
+
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+
+        // Start off with just a top level SLD and no structure below it
+        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
+
+        SelectedSymbol.getInstance().setSld(sld);
+
+        sldTree.populateSLD();
+        sldTree.selectFirstSymbol();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+
+        DefaultMutableTreeNode rootNode = sldTree.getRootNode();
+
+        // Make sure we have a rule selected
+        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
+        assertEquals(RuleImpl.class, rule.getUserObject().getClass());
+        assertEquals(0, rule.getChildCount());
+
+        treeTools.addNewRaster();
+
+        DefaultMutableTreeNode rasterNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(RasterSymbolizerImpl.class, rasterNode.getUserObject().getClass());
+
+        treeTools.addNewImageOutlinePolygon();
+        DefaultMutableTreeNode imageOutlineNode = (DefaultMutableTreeNode) rasterNode.getChildAt(0);
+        assertEquals(PolygonSymbolizerImpl.class, imageOutlineNode.getUserObject().getClass());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewImageOutlineLine()}.
+     */
+    @Test
+    public void testAddNewImageOutlineLine() {
+        SLDTreeTools treeTools = new SLDTreeTools();
+
+        TestSLDTree sldTree = new TestSLDTree(null, treeTools);
+
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+
+        // Start off with just a top level SLD and no structure below it
+        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
+
+        SelectedSymbol.getInstance().setSld(sld);
+
+        sldTree.populateSLD();
+        sldTree.selectFirstSymbol();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+
+        DefaultMutableTreeNode rootNode = sldTree.getRootNode();
+
+        // Make sure we have a rule selected
+        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
+        assertEquals(RuleImpl.class, rule.getUserObject().getClass());
+        assertEquals(0, rule.getChildCount());
+
+        treeTools.addNewRaster();
+
+        DefaultMutableTreeNode rasterNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(RasterSymbolizerImpl.class, rasterNode.getUserObject().getClass());
+
+        treeTools.addNewImageOutlineLine();
+        DefaultMutableTreeNode imageOutlineNode = (DefaultMutableTreeNode) rasterNode.getChildAt(0);
+        assertEquals(LineSymbolizerImpl.class, imageOutlineNode.getUserObject().getClass());
+    }
+    
     /**
      * Check NamedLayers
      * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.

@@ -43,18 +43,18 @@ public class NameLayerTreeItemTest {
     @Test
     public void testGetTreeString() {
         NameLayerTreeItem item = new NameLayerTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
 
-        actualValue = item.getTreeString(namedLayer);
+        actualValue = item.getTreeString(null, namedLayer);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         namedLayer.setName(expectedName);
-        actualValue = item.getTreeString(namedLayer);
+        actualValue = item.getTreeString(null, namedLayer);
         expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }

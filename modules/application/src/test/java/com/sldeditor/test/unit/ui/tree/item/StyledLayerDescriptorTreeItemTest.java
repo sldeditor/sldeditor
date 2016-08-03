@@ -39,7 +39,7 @@ public class StyledLayerDescriptorTreeItemTest {
     @Test
     public void testGetTreeString() {
         StyledLayerDescriptorTreeItem item = new StyledLayerDescriptorTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = "SLD";
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }

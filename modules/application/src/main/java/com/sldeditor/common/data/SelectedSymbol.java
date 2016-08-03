@@ -31,6 +31,7 @@ import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.PolygonSymbolizerImpl;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
@@ -1104,5 +1105,38 @@ public class SelectedSymbol {
      */
     public void setValidSymbol(String key, boolean validSymbolFlag) {
         this.symbolData.setValidSymbol(key, validSymbolFlag);
+    }
+
+    /**
+     * Adds the symbolizer to raster.
+     *
+     * @param symbolizer the symbolizer
+     */
+    public void addImageOutlineSymbolizerToRaster(Symbolizer symbolizer) {
+        Symbolizer selectedSymbolizer = this.symbolData.getSymbolizer();
+        if(selectedSymbolizer == null)
+        {
+            ConsoleManager.getInstance().error(this, "symbolizer == null");
+        }
+        else
+        {
+            if(selectedSymbolizer instanceof RasterSymbolizer)
+            {
+                RasterSymbolizer rasterSymbolizer = (RasterSymbolizer) selectedSymbolizer;
+                rasterSymbolizer.setImageOutline(symbolizer);
+            }
+        }
+    }
+
+    /**
+     * Removes the raster image outline.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    public void removeRasterImageOutline(RasterSymbolizer rasterSymbolizer) {
+        if(rasterSymbolizer != null)
+        {
+            rasterSymbolizer.setImageOutline(null);
+        }
     }
 }

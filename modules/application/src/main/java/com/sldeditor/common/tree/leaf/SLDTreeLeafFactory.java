@@ -196,7 +196,7 @@ public class SLDTreeLeafFactory
         {
             return null;
         }
-        
+
         boolean currentValue = hasStroke(symbolizer);
 
         if(currentValue != selected)
@@ -302,5 +302,4 @@ public class SLDTreeLeafFactory
         }
         return raster;
     }
-
 }

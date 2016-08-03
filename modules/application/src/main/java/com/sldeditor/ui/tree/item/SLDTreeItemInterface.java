@@ -30,10 +30,11 @@ public interface SLDTreeItemInterface {
     /**
      * Gets the tree string.
      *
+     * @param node the node
      * @param nodeObject the node object
      * @return the tree string
      */
-    String getTreeString(Object nodeObject);
+    String getTreeString(DefaultMutableTreeNode node, Object nodeObject);
 
     /**
      * Item selected.

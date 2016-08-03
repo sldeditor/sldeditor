@@ -46,16 +46,16 @@ public class StrokeTreeItemTest {
     @Test
     public void testGetTreeString() {
         StrokeTreeItem item = new StrokeTreeItem();
-        String actualValue = item.getTreeString(null);
+        String actualValue = item.getTreeString(null, null);
         String expectedValue = Localisation.getString(SLDTreeTools.class, "TreeItem.stroke");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Stroke stroke = DefaultSymbols.createDefaultStroke();
 
-        actualValue = item.getTreeString(stroke);
+        actualValue = item.getTreeString(null, stroke);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
-        actualValue = item.getTreeString(stroke);
+        actualValue = item.getTreeString(null, stroke);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 
