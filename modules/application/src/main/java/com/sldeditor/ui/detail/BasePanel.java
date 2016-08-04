@@ -684,9 +684,12 @@ public class BasePanel extends JPanel {
     protected void registerForTextFieldButton(FieldId fieldId, FieldConfigStringButtonInterface listener)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        FieldConfigString textField = (FieldConfigString)fieldConfig;
+        if(fieldConfig != null)
+        {
+            FieldConfigString textField = (FieldConfigString)fieldConfig;
 
-        textField.addButtonPressedListener(listener);
+            textField.addButtonPressedListener(listener);
+        }
     }
 
     /**

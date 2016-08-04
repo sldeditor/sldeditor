@@ -121,6 +121,8 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
      */
     private void createTopPanel() {
         JPanel topPanel = new JPanel();
+        topPanel.setLayout(null);
+        topPanel.setPreferredSize(new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         add(topPanel, BorderLayout.NORTH);
 
         List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
@@ -146,7 +148,7 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
         }
         typeComboBox = new ValueComboBox();
         typeComboBox.initialiseSingle(dataList);
-        typeComboBox.setPreferredSize(new Dimension(BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT));
+        typeComboBox.setBounds(BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
         topPanel.add(typeComboBox);
         typeComboBox.addActionListener(new ActionListener(){
             @Override

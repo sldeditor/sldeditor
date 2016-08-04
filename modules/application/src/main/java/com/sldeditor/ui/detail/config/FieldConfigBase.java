@@ -1158,4 +1158,31 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public Class<?> getFunctionParameterType() {
         return functionParameterType;
     }
+
+    /**
+     * Adds the UI component to the field panel.
+     *
+     * @param component the component
+     * @param buffer the buffer
+     * @param width the width
+     * @param height the height
+     */
+    public void addUI(Component component, int buffer, int width, int height) {
+        if(fieldPanel != null)
+        {
+            int lastX = -1;
+
+            for(Component c : fieldPanel.getComponents())
+            {
+                int x = c.getX() + c.getWidth();
+
+                if(x > lastX)
+                {
+                    lastX = x;
+                }
+            }
+            component.setBounds(lastX + buffer, 0, width, height);
+            fieldPanel.add(component);
+        }
+    }
 }

@@ -31,9 +31,7 @@ import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ColorMap;
@@ -45,8 +43,12 @@ import com.sldeditor.colourramp.ColourRampConfigPanel;
 import com.sldeditor.colourramp.ColourRampPanelInterface;
 import com.sldeditor.colourramp.ColourRampUpdateInterface;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.config.FieldConfigInteger;
+import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.colourmap.ColourMapModel;
+import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -66,11 +68,11 @@ public class ColourRampPanel implements ColourRampPanelInterface {
     /** The data list. */
     private List<ColourRamp> rampDataList = null;
 
-    /** The max value spinner. */
-    private JSpinner maxValueSpinner;
+    /** The maximum value spinner. */
+    private FieldConfigInteger maxValueSpinner;
 
-    /** The min value spinner. */
-    private JSpinner minValueSpinner;
+    /** The minimum value spinner. */
+    private FieldConfigInteger minValueSpinner;
 
     /** The parent obj. */
     private ColourRampUpdateInterface parentObj = null;
@@ -97,13 +99,45 @@ public class ColourRampPanel implements ColourRampPanelInterface {
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
         createTopPanel();
-        createTablePanel();
+        createFieldPanel();
     }
 
     /**
-     * Creates the table panel.
+     * Creates the top panel.
      */
-    private void createTablePanel() {
+    private void createTopPanel() {
+        JPanel topPanel = new JPanel();
+        topPanel.setPreferredSize(new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
+        topPanel.setLayout(null);
+        panel.add(topPanel, BorderLayout.NORTH);
+
+        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+
+        if(rampDataList != null)
+        {
+            for(ColourRamp data : rampDataList)
+            {
+                String key = data.toString();
+                ValueComboBoxData valueData = new ValueComboBoxData(key, data.getImageIcon(), getClass());
+
+                dataList.add(valueData);
+                colourRampCache.put(key, data);
+            }
+        }
+        rampComboBox = new ValueComboBox();
+        rampComboBox.initialiseSingle(dataList);
+        rampComboBox.setBounds(BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
+        topPanel.add(rampComboBox);
+        rampComboBox.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }});
+    }
+
+    /**
+     * Creates the field panel.
+     */
+    private void createFieldPanel() {
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BorderLayout());
         panel.add(tablePanel, BorderLayout.CENTER);
@@ -112,18 +146,14 @@ public class ColourRampPanel implements ColourRampPanelInterface {
         tablePanel.add(dataPanel, BorderLayout.NORTH);
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
 
-        JPanel minValuePanel = new JPanel();
-        minValuePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        minValuePanel.setSize(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
-        JLabel labelMin = new JLabel(Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.minValue"));
-        labelMin.setPreferredSize(new Dimension(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT));
-        minValuePanel.add(labelMin);
-        minValueSpinner = new JSpinner();
-        minValueSpinner.setPreferredSize(new Dimension(BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT));
-        minValuePanel.add(minValueSpinner);
+        minValueSpinner = new FieldConfigInteger(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
+                Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.minValue"), true);
+        minValueSpinner.createUI();
+        FieldPanel fieldPanel = minValueSpinner.getPanel();
+        dataPanel.add(fieldPanel);
 
         JButton resetValueButton = new JButton(Localisation.getString(ColourRampConfigPanel.class, "ColourRampPanel.reset"));
-        minValuePanel.add(resetValueButton);
+        minValueSpinner.addUI(resetValueButton, 20,BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         resetValueButton.addActionListener(new ActionListener(){
 
             @Override
@@ -135,18 +165,10 @@ public class ColourRampPanel implements ColourRampPanelInterface {
                     populate(model.getColourMap());
                 }
             }});
-        dataPanel.add(minValuePanel);
-
-        JPanel maxValuePanel = new JPanel();
-        maxValuePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        maxValuePanel.setSize(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
-        JLabel labelMax = new JLabel(Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.maxValue"));
-        labelMax.setPreferredSize(new Dimension(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT));
-        maxValuePanel.add(labelMax);
-        maxValueSpinner = new JSpinner();
-        maxValueSpinner.setPreferredSize(new Dimension(BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT));
-        maxValuePanel.add(maxValueSpinner);
-        dataPanel.add(maxValuePanel);
+        maxValueSpinner = new FieldConfigInteger(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
+                Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.maxValue"), true);
+        maxValueSpinner.createUI();
+        dataPanel.add(maxValueSpinner.getPanel());
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -160,10 +182,8 @@ public class ColourRampPanel implements ColourRampPanelInterface {
                 if(parentObj != null)
                 {
                     ColourRampData data = new ColourRampData();
-                    Object maxValue = maxValueSpinner.getValue();
-                    data.setMaxValue((Integer)maxValue);
-                    Object minValue = minValueSpinner.getValue();
-                    data.setMinValue((Integer)minValue);
+                    data.setMaxValue(maxValueSpinner.getIntValue());
+                    data.setMinValue(minValueSpinner.getIntValue());
                     ValueComboBoxData selectedItem = (ValueComboBoxData) rampComboBox.getSelectedItem();
 
                     ColourRamp colourRamp = colourRampCache.get(selectedItem.getKey());
@@ -174,36 +194,6 @@ public class ColourRampPanel implements ColourRampPanelInterface {
             }});
         buttonPanel.add(applyButton);
         dataPanel.add(buttonPanel);
-    }
-
-    /**
-     * Creates the top panel.
-     */
-    private void createTopPanel() {
-        JPanel topPanel = new JPanel();
-        panel.add(topPanel, BorderLayout.NORTH);
-
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
-
-        if(rampDataList != null)
-        {
-            for(ColourRamp data : rampDataList)
-            {
-                String key = data.toString();
-                ValueComboBoxData valueData = new ValueComboBoxData(key, data.getImageIcon(), getClass());
-
-                dataList.add(valueData);
-                colourRampCache .put(key, data);
-            }
-        }
-        rampComboBox = new ValueComboBox();
-        rampComboBox.initialiseSingle(dataList);
-        rampComboBox.setPreferredSize(new Dimension(BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT));
-        topPanel.add(rampComboBox);
-        rampComboBox.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }});
     }
 
     /**
@@ -255,7 +245,7 @@ public class ColourRampPanel implements ColourRampPanelInterface {
      * @param spinner the spinner
      * @param colorMapEntry the color map entry
      */
-    private void populateValue(JSpinner spinner, ColorMapEntry colorMapEntry) {
+    private void populateValue(FieldConfigInteger spinner, ColorMapEntry colorMapEntry) {
         if(spinner == null)
         {
             return;
@@ -287,7 +277,7 @@ public class ColourRampPanel implements ColourRampPanelInterface {
             }
         }
 
-        spinner.setValue(quantity);
+        spinner.populateField(quantity);
     }
 
     /* (non-Javadoc)
