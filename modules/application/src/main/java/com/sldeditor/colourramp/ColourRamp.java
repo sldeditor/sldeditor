@@ -170,7 +170,7 @@ public class ColourRamp {
      */
     public Color getColour(ColourRampData data, int value, boolean reverseColours) {
 
-        int tmpRange = data.getMaxValue() - data.getMinValue();
+        int tmpRange = Math.abs(data.getMaxValue() - data.getMinValue());
 
         // Check to see if we have set up the gradient yet
         if((range != tmpRange) ||
