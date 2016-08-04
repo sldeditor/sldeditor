@@ -19,13 +19,13 @@
 
 package com.sldeditor.colourramp;
 
-import java.awt.Color;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.colourramp.ramp.ColourRampPanel;
+import com.sldeditor.common.xml.ParseXML;
+import com.sldeditor.common.xml.ui.ColourRampPresets;
 
 /**
  * A factory for creating ColourRamp objects.
@@ -33,6 +33,12 @@ import com.sldeditor.colourramp.ramp.ColourRampPanel;
  * @author Robert Ward (SCISYS)
  */
 public class ColourRampFactory {
+
+    /** The Constant COLOUR_RAMP_XML. */
+    private static final String COLOUR_RAMP_XML = "/colourramp/ColourRamp.xml";
+
+    /** The Constant OUTPUT_SCHEMA_RESOURCE. */
+    private static final String OUTPUT_SCHEMA_RESOURCE = "/xsd/colourramp.xsd";
 
     /** The colour ramp map. */
     private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap = new HashMap<ColourRampPanelInterface, List<ColourRamp>>();
@@ -44,23 +50,11 @@ public class ColourRampFactory {
     {
         if(colourRampMap.isEmpty())
         {
-            List<ColourRamp> dataList = new ArrayList<ColourRamp>();
+            ColourRampPresets colourRampXML = (ColourRampPresets) ParseXML.parseFile("", ColourRampFactory.COLOUR_RAMP_XML, OUTPUT_SCHEMA_RESOURCE, ColourRampPresets.class);
 
-            ColourRamp ramp1 = new ColourRamp();
-            ramp1.setColourRamp(Color.BLUE, Color.RED);
-            dataList.add(ramp1);
+            ColourRampPanel panel = new ColourRampPanel(colourRampXML.getTwoColourRampList());
 
-            ColourRamp ramp2 = new ColourRamp();
-            ramp2.setColourRamp(Color.WHITE, Color.GREEN);
-            dataList.add(ramp2);
-
-            ColourRamp ramp3 = new ColourRamp();
-            ramp3.setColourRamp(Color.CYAN, Color.RED);
-            dataList.add(ramp3);
-
-            ColourRampPanel panel = new ColourRampPanel(dataList);
-
-            colourRampMap.put(panel, dataList);
+            colourRampMap.put(panel, panel.getColourRampList());
         }
     }
 

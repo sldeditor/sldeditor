@@ -17,53 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.colourramp;
-
-import java.util.List;
-
-import javax.swing.JPanel;
-
-import org.geotools.styling.ColorMap;
-
 /**
- * The Interface ColourRampPanelInterface.
- *
  * @author Robert Ward (SCISYS)
+ *
  */
-public interface ColourRampPanelInterface {
-
-    /**
-     * Gets the title.
-     *
-     * @return the title
-     */
-    String getTitle();
-
-    /**
-     * Gets the panel.
-     *
-     * @return the panel
-     */
-    JPanel getPanel();
-
-    /**
-     * Populate.
-     *
-     * @param value the value
-     */
-    void populate(ColorMap value);
-
-    /**
-     * Sets the parent.
-     *
-     * @param parent the new parent
-     */
-    void setParent(ColourRampUpdateInterface parent);
-
-    /**
-     * Gets the colour ramp list.
-     *
-     * @return the colour ramp list
-     */
-    List<ColourRamp> getColourRampList();
-}
+package colourramp;

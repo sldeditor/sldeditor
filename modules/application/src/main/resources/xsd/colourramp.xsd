@@ -1,0 +1,82 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+
+    <!-- 
+         SLD Editor - The Open Source Java SLD Editor
+
+         Copyright (C) 2016, SCISYS UK Limited
+
+         This program is free software: you can redistribute it and/or modify
+         it under the terms of the GNU General Public License as published by
+         the Free Software Foundation, either version 3 of the License, or
+         (at your option) any later version.
+    
+         This program is distributed in the hope that it will be useful,
+         but WITHOUT ANY WARRANTY; without even the implied warranty of
+         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+         GNU General Public License for more details.
+    
+         You should have received a copy of the GNU General Public License
+         along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     -->
+
+    <!-- @author Robert Ward (SCISYS) -->
+
+    <xs:element name="ColourRampPresets">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>
+                    Provides colour ramp definitions
+                </xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="TwoColourRampList" type="XMLTwoColourRampList"
+                    maxOccurs="1" minOccurs="1">
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="XMLTwoColourRampList">
+        <xs:annotation>
+            <xs:documentation>
+                Definition of 2 colour ramps
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="TwoColourRamp" type="XMLTwoColourRamp"
+                maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        List of 2 colour ramps
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="XMLTwoColourRamp">
+        <xs:attribute type="ColourType" name="start" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    Start colour of ramp
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="ColourType" name="end" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    End colour of ramp
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="ColourType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="#[0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

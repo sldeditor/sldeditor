@@ -74,13 +74,16 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
         }
 
         ValueComboBoxData data = (ValueComboBoxData) value;
-        if(data.getImageIcon() != null)
+        if(data != null)
         {
-            setIcon(data.getImageIcon());
-        }
-        else
-        {
-            setText(data.getText());
+            if(data.getImageIcon() != null)
+            {
+                setIcon(data.getImageIcon());
+            }
+            else
+            {
+                setText(data.getText());
+            }
         }
 
         return this;

@@ -20,6 +20,7 @@
 package com.sldeditor.colourramp.ramp;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -48,7 +49,10 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.XMLTwoColourRamp;
+import com.sldeditor.common.xml.ui.XMLTwoColourRampList;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -97,11 +101,11 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
     /**
      * Instantiates a new colour ramp panel.
      *
-     * @param rampDataList the ramp data list
+     * @param xmlTwoColourRampList the ramp data list
      */
-    public ColourRampPanel(List<ColourRamp> rampDataList)
+    public ColourRampPanel(XMLTwoColourRampList xmlTwoColourRampList)
     {
-        this.rampDataList = rampDataList;
+        this.rampDataList = createColourRampList(xmlTwoColourRampList);
 
         createUI();
     }
@@ -421,7 +425,9 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
     }
 
     /**
-     * @param isSelected
+     * Reverse colour ramp.
+     *
+     * @param isSelected the is selected
      */
     private void reverseColourRamp(boolean isSelected) {
         int selectedIndex = rampComboBox.getSelectedIndex();
@@ -434,4 +440,35 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         setPopulating(false);
     }
 
+    /**
+     * Gets the colour ramp list.
+     *
+     * @return the colour ramp list
+     */
+    @Override
+    public List<ColourRamp> getColourRampList() {
+        return rampDataList;
+    }
+
+    /**
+     * Creates the colour ramp list.
+     *
+     * @param xmlTwoColourRampList the xml two colour ramp list
+     * @return the list
+     */
+    private List<ColourRamp> createColourRampList(XMLTwoColourRampList xmlTwoColourRampList) {
+        List<ColourRamp> colourRampList = new ArrayList<ColourRamp>();
+
+        for(XMLTwoColourRamp ramp : xmlTwoColourRampList.getTwoColourRamp())
+        {
+            ColourRamp colourRamp = new ColourRamp();
+
+            Color startColour = ColourUtils.toColour(ramp.getStart());
+            Color endColour = ColourUtils.toColour(ramp.getEnd());
+            colourRamp.setColourRamp(startColour, endColour);
+
+            colourRampList.add(colourRamp);
+        }
+        return colourRampList;
+    }
 }

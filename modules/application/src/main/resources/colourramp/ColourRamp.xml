@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ColourRampPresets>
+    <TwoColourRampList>
+        <TwoColourRamp start="#FF0000" end="#00FF00"/>
+        <TwoColourRamp start="#FFFFFF" end="#FF0000"/>
+        <TwoColourRamp start="#FFFFFF" end="#00FF00"/>
+        <TwoColourRamp start="#FFFFFF" end="#0000FF"/>
+        <TwoColourRamp start="#FF0000" end="#0000FF"/>
+        <TwoColourRamp start="#0000FF" end="#00FF00"/>
+        <TwoColourRamp start="#FF00FF" end="#00FF00"/>
+        <TwoColourRamp start="#000000" end="#FFFFFF"/>
+    </TwoColourRampList>
+</ColourRampPresets>

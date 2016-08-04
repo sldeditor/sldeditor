@@ -45,6 +45,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ColourRampPresets }
+     * 
+     */
+    public ColourRampPresets createColourRampPresets() {
+        return new ColourRampPresets();
+    }
+
+    /**
+     * Create an instance of {@link XMLTwoColourRampList }
+     * 
+     */
+    public XMLTwoColourRampList createXMLTwoColourRampList() {
+        return new XMLTwoColourRampList();
+    }
+
+    /**
      * Create an instance of {@link PanelConfig }
      * 
      */
@@ -122,6 +138,14 @@ public class ObjectFactory {
      */
     public XMLPanelTest createXMLPanelTest() {
         return new XMLPanelTest();
+    }
+
+    /**
+     * Create an instance of {@link XMLTwoColourRamp }
+     * 
+     */
+    public XMLTwoColourRamp createXMLTwoColourRamp() {
+        return new XMLTwoColourRamp();
     }
 
     /**
