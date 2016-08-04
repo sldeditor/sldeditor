@@ -21,7 +21,6 @@ package com.sldeditor.ui.widgets;
 import java.awt.Component;
 import java.awt.Dimension;
 
-import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -48,11 +47,10 @@ public class FieldPanel extends JPanel {
      *
      * @param xPos the x pos
      * @param labelString the label string
-     * @param parentBox the parent box
      * @param field the field
      */
-    public FieldPanel(int xPos, String labelString, Box parentBox, FieldConfigBase field) {
-        this(xPos, labelString, BasePanel.WIDGET_HEIGHT, parentBox, field);
+    public FieldPanel(int xPos, String labelString, FieldConfigBase field) {
+        this(xPos, labelString, BasePanel.WIDGET_HEIGHT, field);
     }
 
     /**
@@ -61,10 +59,9 @@ public class FieldPanel extends JPanel {
      * @param xPos the x pos
      * @param labelString the label string
      * @param height the height
-     * @param parentBox the parent box
      * @param field the field
      */
-    public FieldPanel(int xPos, String labelString, int height, Box parentBox, FieldConfigBase field) {
+    public FieldPanel(int xPos, String labelString, int height, FieldConfigBase field) {
         this.xPos = xPos;
         setLayout(null);
         internalCreateLabel(xPos, labelString);

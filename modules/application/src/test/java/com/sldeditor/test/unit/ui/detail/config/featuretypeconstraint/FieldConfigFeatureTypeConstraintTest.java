@@ -65,7 +65,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -83,7 +83,7 @@ public class FieldConfigFeatureTypeConstraintTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -105,7 +105,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         field.setTestValue(null, testValue);
         field.populateField(testValue);
 
-        field.createUI(null);
+        field.createUI();
         assertNull(field.getStringValue());
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
@@ -134,7 +134,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         field.revertToDefaultValue();
         assertTrue(field.getFeatureTypeConstraint().isEmpty());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(field.getFeatureTypeConstraint().isEmpty());
     }
@@ -196,7 +196,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
         field.undoAction(null);
         field.redoAction(null);
-        field.createUI(null);
+        field.createUI();
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FeatureTypeConstraint expectedValue1 = styleFactory.createFeatureTypeConstraint("Feature", 
@@ -251,7 +251,7 @@ public class FieldConfigFeatureTypeConstraintTest {
 
         field.extentUpdated();
 
-        field.createUI(null);
+        field.createUI();
         field.extentUpdated();
         // No testing
     }

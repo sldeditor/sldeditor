@@ -20,8 +20,6 @@ package com.sldeditor.ui.detail.config;
 
 import java.awt.Color;
 
-import javax.swing.Box;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
@@ -75,18 +73,16 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         colourButton = new ColourButton();
         colourButton.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);

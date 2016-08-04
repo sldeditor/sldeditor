@@ -59,7 +59,7 @@ public class FieldConfigDoubleTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -77,7 +77,7 @@ public class FieldConfigDoubleTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -98,7 +98,7 @@ public class FieldConfigDoubleTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -130,7 +130,7 @@ public class FieldConfigDoubleTest {
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.001);
 
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue) < 0.001);
@@ -175,7 +175,7 @@ public class FieldConfigDoubleTest {
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - 0.0) < 0.001);
 
-        field.createUI(null);
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - expectedDefaultValue) < 0.001);
@@ -231,7 +231,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
         field.attributeSelection(null);
 
-        field.createUI(null);
+        field.createUI();
         assertTrue(field.isEnabled());
         field.attributeSelection("test");
         assertFalse(field.isEnabled());
@@ -252,7 +252,7 @@ public class FieldConfigDoubleTest {
         field.redoAction(null);
 
         double expectedValue1 = 13.4;
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue1);
         assertTrue(Math.abs(field.getDoubleValue() - expectedValue1) < 0.001);
 
@@ -280,7 +280,7 @@ public class FieldConfigDoubleTest {
         boolean valueOnly = true;
         FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
-        field.createUI(null);
+        field.createUI();
         double minValue = 10.0;
         double maxValue = 20.0;
         double stepSize = 1.0;

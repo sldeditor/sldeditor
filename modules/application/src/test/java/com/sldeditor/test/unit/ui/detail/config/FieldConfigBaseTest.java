@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 
 import org.geotools.factory.CommonFactoryFinder;
@@ -118,7 +117,7 @@ public class FieldConfigBaseTest {
         }
 
         @Override
-        public void createUI(Box parentBox) {
+        public void createUI() {
         }
 
         @Override

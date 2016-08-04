@@ -66,7 +66,7 @@ public class FieldConfigTimePeriodTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -84,7 +84,7 @@ public class FieldConfigTimePeriodTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -137,7 +137,7 @@ public class FieldConfigTimePeriodTest {
         assertNotNull(actualExpression);
 
         // Try string values - erroneous
-        field.createUI(null);
+        field.createUI();
         String expectedValue = "test string value";
         field.setTestValue(null, expectedValue);
         actualExpression = field.callGenerateExpression();
@@ -190,7 +190,7 @@ public class FieldConfigTimePeriodTest {
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
     }
@@ -257,7 +257,7 @@ public class FieldConfigTimePeriodTest {
         FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), false);
         field.undoAction(null);
         field.redoAction(null);
-        field.createUI(null);
+        field.createUI();
 
         // Time period values
         String timePeriod1 = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";

@@ -73,7 +73,7 @@ public class FieldConfigFilenameTest {
         assertTrue(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertTrue(field.isEnabled());
 
         expectedValue = false;
@@ -91,7 +91,7 @@ public class FieldConfigFilenameTest {
         assertTrue(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -112,7 +112,7 @@ public class FieldConfigFilenameTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -133,7 +133,7 @@ public class FieldConfigFilenameTest {
         assertNull(field.getStringValue());
 
         // Create ui
-        field.createUI(null);
+        field.createUI();
         field.populateExpression((Double)null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
@@ -172,7 +172,7 @@ public class FieldConfigFilenameTest {
 
         field.revertToDefaultValue();
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
     }
 
@@ -280,7 +280,7 @@ public class FieldConfigFilenameTest {
         field.setValue(null, null, null);
         field.setValue(fieldConfigManager, null, null);
 
-        field.createUI(null);
+        field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
         field.setValue(null, null, marker);
@@ -319,7 +319,7 @@ public class FieldConfigFilenameTest {
 
         assertNull(field.getValue(null, null, false, false));
 
-        field.createUI(null);
+        field.createUI();
         List<GraphicalSymbol> actualValue = field.getValue(null, null, false, false);
         assertFalse(actualValue.isEmpty());
     }
@@ -339,24 +339,24 @@ public class FieldConfigFilenameTest {
         Class<?> panelId = FillDetails.class;
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        field.createUI(null);
+        field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         graphicFill = styleBuilder.createGraphic();
 

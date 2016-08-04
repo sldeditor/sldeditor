@@ -65,7 +65,7 @@ public class FieldConfigColourTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -83,7 +83,7 @@ public class FieldConfigColourTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -104,7 +104,7 @@ public class FieldConfigColourTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -144,7 +144,7 @@ public class FieldConfigColourTest {
         assertNull(field.getColourOpacityExpression());
 
         // Try string values - erroneous
-        field.createUI(null);
+        field.createUI();
         field.populateExpression("");
         String actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo("#000000") == 0);
@@ -210,7 +210,7 @@ public class FieldConfigColourTest {
         field.revertToDefaultValue();
         assertTrue(field.getStringValue().compareTo("") == 0);
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
     }
@@ -276,7 +276,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field = new FieldConfigColour(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true);
         field.undoAction(null);
         field.redoAction(null);
-        field.createUI(null);
+        field.createUI();
 
         String colour1 = "#123456";
         field.populateExpression(colour1);

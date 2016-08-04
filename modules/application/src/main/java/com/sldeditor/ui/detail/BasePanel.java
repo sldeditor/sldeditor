@@ -566,7 +566,7 @@ public class BasePanel extends JPanel {
             parentField.addFunction(field);
         }
 
-        field.createUI(parentBox);
+        field.createUI();
         addFieldConfig(field);
 
         fieldConfigManager.addField(field);

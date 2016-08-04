@@ -21,7 +21,6 @@ package com.sldeditor.ui.detail.config.transform;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -90,18 +89,16 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel());
 
         int width = BasePanel.FIELD_PANEL_WIDTH - xPos - 20;
         int height = BasePanel.WIDGET_HEIGHT * (NO_OF_ROWS - 1);

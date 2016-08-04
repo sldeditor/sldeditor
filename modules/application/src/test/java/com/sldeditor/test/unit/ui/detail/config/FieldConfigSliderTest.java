@@ -58,7 +58,7 @@ public class FieldConfigSliderTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -76,7 +76,7 @@ public class FieldConfigSliderTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -97,7 +97,7 @@ public class FieldConfigSliderTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -130,7 +130,7 @@ public class FieldConfigSliderTest {
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - defaultDefaultValue) < 0.001);
 
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue);
         actualValue = field.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedValue) < 0.001);
@@ -171,7 +171,7 @@ public class FieldConfigSliderTest {
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - defaultDefaultValue) < 0.001);
 
-        field.createUI(null);
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - expectedDefaultValue) < 0.001);
@@ -242,7 +242,7 @@ public class FieldConfigSliderTest {
         field.redoAction(null);
 
         double expectedValue1 = 0.13;
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue1);
         assertTrue(Math.abs(field.getDoubleValue() - expectedValue1) < 0.001);
 

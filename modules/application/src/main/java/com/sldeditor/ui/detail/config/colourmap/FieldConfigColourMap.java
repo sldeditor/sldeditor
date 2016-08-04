@@ -21,7 +21,6 @@ package com.sldeditor.ui.detail.config.colourmap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -102,17 +101,15 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
         int maxNoOfConfigRows = 7;
         int maxNoOfTableRows = 12;
         int totalRows = maxNoOfConfigRows + maxNoOfTableRows;
-        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel());
 
         colourRampConfig = new ColourRampConfigPanel(this, model);
         colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfConfigRows));

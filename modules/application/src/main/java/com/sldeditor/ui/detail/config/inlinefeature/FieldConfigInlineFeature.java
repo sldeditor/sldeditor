@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.detail.config.inlinefeature;
 
-import javax.swing.Box;
 import javax.swing.JTabbedPane;
 
 import org.geotools.styling.UserLayer;
@@ -78,17 +77,15 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel());
 
         inlineGML = new InlineGMLPreviewPanel(this, NO_OF_ROWS);
         inlineFeature = new InlineFeaturePanel(this, NO_OF_ROWS);

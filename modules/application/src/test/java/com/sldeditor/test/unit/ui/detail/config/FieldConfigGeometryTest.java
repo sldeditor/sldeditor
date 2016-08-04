@@ -59,7 +59,7 @@ public class FieldConfigGeometryTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -77,7 +77,7 @@ public class FieldConfigGeometryTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -98,7 +98,7 @@ public class FieldConfigGeometryTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -116,7 +116,7 @@ public class FieldConfigGeometryTest {
     public void testGenerateExpression() {
         FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", false, "button text");
 
-        field.createUI(null);
+        field.createUI();
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
         field.populateExpression((String)null);
@@ -153,7 +153,7 @@ public class FieldConfigGeometryTest {
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
         field.setDefaultValue(expectedDefaultValue);
@@ -223,7 +223,7 @@ public class FieldConfigGeometryTest {
         field.undoAction(null);
         field.redoAction(null);
 
-        field.createUI(null);
+        field.createUI();
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
         field.populateExpression((String)null);

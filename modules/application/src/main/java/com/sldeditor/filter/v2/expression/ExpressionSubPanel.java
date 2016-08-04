@@ -381,7 +381,7 @@ public class ExpressionSubPanel extends JPanel {
             System.err.println("Unknown type : " + node.getType());
         }
 
-        fieldConfig.createUI(box);
+        fieldConfig.createUI();
         fieldConfig.setFunctionParameterType(node.getType());
         fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
         {

@@ -65,7 +65,7 @@ public class FieldConfigBoundingBoxTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -83,7 +83,7 @@ public class FieldConfigBoundingBoxTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -104,7 +104,7 @@ public class FieldConfigBoundingBoxTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -139,7 +139,7 @@ public class FieldConfigBoundingBoxTest {
         assertNotNull(actualExpression);
 
         // Try string values - erroneous
-        field.createUI(null);
+        field.createUI();
         field.populateExpression("");
 
         CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
@@ -167,7 +167,7 @@ public class FieldConfigBoundingBoxTest {
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
     }
@@ -233,7 +233,7 @@ public class FieldConfigBoundingBoxTest {
         FieldConfigBoundingBox field = new FieldConfigBoundingBox(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true);
         field.undoAction(null);
         field.redoAction(null);
-        field.createUI(null);
+        field.createUI();
 
         CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
         ReferencedEnvelope envelope1 = new ReferencedEnvelope(0.0, 1.0, 51.0, 51.1, crs);

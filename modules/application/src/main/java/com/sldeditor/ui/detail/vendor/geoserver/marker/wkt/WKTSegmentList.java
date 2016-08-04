@@ -92,7 +92,6 @@ public class WKTSegmentList {
     /**
      * Gets the WKT string.
      *
-     * @param makeFirstLastTheSame the make first last the same
      * @return the WKT string
      */
     public String getWKTString() {

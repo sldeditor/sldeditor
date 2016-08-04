@@ -59,7 +59,7 @@ public class FieldConfigBooleanTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -77,7 +77,7 @@ public class FieldConfigBooleanTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -98,7 +98,7 @@ public class FieldConfigBooleanTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -118,7 +118,7 @@ public class FieldConfigBooleanTest {
         field.populateField(Boolean.TRUE);
         field.populateExpression(null);
 
-        field.createUI(null);
+        field.createUI();
         field.populateField(Boolean.TRUE);
         assertTrue(field.getBooleanValue());
 
@@ -142,7 +142,7 @@ public class FieldConfigBooleanTest {
         field.revertToDefaultValue();
         assertFalse(field.getBooleanValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertFalse(field.getBooleanValue());
 
@@ -226,7 +226,7 @@ public class FieldConfigBooleanTest {
         field.undoAction(null);
         field.redoAction(null);
 
-        field.createUI(null);
+        field.createUI();
         field.populateField(Boolean.TRUE);
         field.populateField(Boolean.FALSE);
         assertFalse(field.getBooleanValue());

@@ -25,7 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -168,13 +167,11 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
-        FieldPanel fieldPanel = createFieldPanel(getXPos(), getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(getXPos(), getLabel());
 
         createUIPanel(fieldPanel, start, 0, Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.from"));
         createUIPanel(fieldPanel, end, 1, Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.to"));

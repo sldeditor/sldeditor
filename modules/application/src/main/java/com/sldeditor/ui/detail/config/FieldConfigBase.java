@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 
 import org.geotools.factory.CommonFactoryFinder;
@@ -237,10 +236,8 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
-    public abstract void createUI(Box parentBox);
+    public abstract void createUI();
 
     /**
      * Gets the panel.
@@ -640,12 +637,11 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      *
      * @param xPos the x pos
      * @param fieldLabel the field label
-     * @param parentBox the parent box
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel(int xPos, String fieldLabel, Box parentBox)
+    protected FieldPanel createFieldPanel(int xPos, String fieldLabel)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, parentBox, this);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, this);
 
         return fieldPanel;
     }
@@ -656,12 +652,11 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param xPos the x pos
      * @param height the height
      * @param fieldLabel the field label
-     * @param parentBox the parent box
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel, Box parentBox)
+    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, height, parentBox, null);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, height, null);
 
         return fieldPanel;
     }

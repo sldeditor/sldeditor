@@ -66,7 +66,7 @@ public class FieldConfigSymbolTypeTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -84,7 +84,7 @@ public class FieldConfigSymbolTypeTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -105,7 +105,7 @@ public class FieldConfigSymbolTypeTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -133,7 +133,7 @@ public class FieldConfigSymbolTypeTest {
         assertNull(field.getSelectedValueObj());
         assertNull(field.getSelectedValue());
 
-        field.createUI(null);
+        field.createUI();
 
         String expectedValue1 = "circle";
         field.populateExpression(expectedValue1);
@@ -142,7 +142,7 @@ public class FieldConfigSymbolTypeTest {
         assertNull(actualValue1);
 
         FieldConfigMarker marker = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.ANGLE), "label", valueOnly, null, null, null);
-        marker.createUI(null);
+        marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
@@ -153,7 +153,7 @@ public class FieldConfigSymbolTypeTest {
 
         combinedSymbolList.add(new ValueComboBoxDataGroup(dataList));
 
-        field.createUI(null);
+        field.createUI();
         field.addField(marker);
         field.populate(null, combinedSymbolList);
         field.populateExpression(expectedValue1);
@@ -268,10 +268,10 @@ public class FieldConfigSymbolTypeTest {
         field.undoAction(null);
         field.redoAction(null);
 
-        field.createUI(null);
+        field.createUI();
 
         FieldConfigMarker marker = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.ANGLE), "label", valueOnly, null, null, null);
-        marker.createUI(null);
+        marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
@@ -282,7 +282,7 @@ public class FieldConfigSymbolTypeTest {
 
         combinedSymbolList.add(new ValueComboBoxDataGroup(dataList));
 
-        field.createUI(null);
+        field.createUI();
         field.addField(marker);
         field.populate(null, combinedSymbolList);
 

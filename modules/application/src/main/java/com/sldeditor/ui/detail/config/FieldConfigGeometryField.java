@@ -22,7 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
@@ -88,18 +87,16 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         attributeComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
 
