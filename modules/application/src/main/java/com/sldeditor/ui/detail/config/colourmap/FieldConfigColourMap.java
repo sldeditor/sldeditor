@@ -381,16 +381,6 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     }
 
     /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return ColorMap.class;
-    }
-
-    /**
      * Sets the field visible.
      *
      * @param visible the new visible state

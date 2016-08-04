@@ -205,17 +205,6 @@ public class FieldConfigSymbolTypeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

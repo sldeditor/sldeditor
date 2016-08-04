@@ -380,16 +380,6 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(String.class, new FieldId(FieldIdEnum.NAME), "test label");
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

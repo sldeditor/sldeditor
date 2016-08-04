@@ -162,17 +162,6 @@ public class FieldConfigGeometryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
-
-        assertEquals(Geometry.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

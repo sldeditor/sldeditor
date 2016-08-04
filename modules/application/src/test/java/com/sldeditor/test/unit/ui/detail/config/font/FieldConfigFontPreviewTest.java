@@ -177,17 +177,6 @@ public class FieldConfigFontPreviewTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(Font.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

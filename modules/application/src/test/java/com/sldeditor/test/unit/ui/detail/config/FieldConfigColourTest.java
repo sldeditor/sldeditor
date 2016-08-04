@@ -216,17 +216,6 @@ public class FieldConfigColourTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigColour field = new FieldConfigColour(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

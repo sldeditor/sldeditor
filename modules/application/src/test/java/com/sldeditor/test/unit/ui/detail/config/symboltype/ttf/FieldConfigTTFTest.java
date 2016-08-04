@@ -180,17 +180,6 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#justSelected()}.
      */
     @Test

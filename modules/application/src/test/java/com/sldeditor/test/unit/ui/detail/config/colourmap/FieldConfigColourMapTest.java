@@ -127,16 +127,6 @@ public class FieldConfigColourMapTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        FieldConfigColourMap field = new FieldConfigColourMap(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
-
-        assertEquals(ColorMap.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

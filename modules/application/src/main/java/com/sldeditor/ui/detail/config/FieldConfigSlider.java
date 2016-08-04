@@ -355,17 +355,6 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
         return copy;
     }
 
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Double.class;
-    }
-
     /**
      * Sets the field visible.
      *

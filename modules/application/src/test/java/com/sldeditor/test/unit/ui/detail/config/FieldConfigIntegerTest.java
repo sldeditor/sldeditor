@@ -173,17 +173,6 @@ public class FieldConfigIntegerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigInteger#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Integer.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigInteger#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

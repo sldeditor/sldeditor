@@ -162,17 +162,6 @@ public class FieldConfigStringTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test

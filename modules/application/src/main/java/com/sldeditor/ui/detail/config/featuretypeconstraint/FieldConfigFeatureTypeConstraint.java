@@ -497,16 +497,6 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     }
 
     /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return FeatureTypeConstraint.class;
-    }
-
-    /**
      * Sets the field visible.
      *
      * @param visible the new visible state

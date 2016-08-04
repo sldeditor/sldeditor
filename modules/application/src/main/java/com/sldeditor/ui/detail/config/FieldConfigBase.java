@@ -177,13 +177,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public abstract void populateExpression(Object objValue);
 
     /**
-     * Gets the class type that this field supports.
-     *
-     * @return the class type
-     */
-    public abstract Class<?> getClassType();
-
-    /**
      * Protected constructor.
      *
      * @param panelId the panel id

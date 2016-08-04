@@ -162,17 +162,6 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(Geometry.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#justSelected()}.
      */
     @Test

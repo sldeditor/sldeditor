@@ -173,17 +173,6 @@ public class FieldConfigBoundingBoxTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigBoundingBox field = new FieldConfigBoundingBox(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(ReferencedEnvelope.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

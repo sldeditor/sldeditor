@@ -158,17 +158,6 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isASingleValue()}.
      */
     @Test

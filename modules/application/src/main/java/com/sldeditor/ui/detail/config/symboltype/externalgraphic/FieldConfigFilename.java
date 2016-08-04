@@ -479,16 +479,6 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     }
 
     /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return String.class;
-    }
-
-    /**
      * Sets the field visible.
      *
      * @param visible the new visible state

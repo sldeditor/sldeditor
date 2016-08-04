@@ -458,16 +458,6 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     }
 
     /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return ReferencedEnvelope.class;
-    }
-
-    /**
      * Sets the field visible.
      *
      * @param visible the new visible state

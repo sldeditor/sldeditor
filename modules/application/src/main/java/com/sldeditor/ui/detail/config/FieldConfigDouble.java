@@ -382,16 +382,6 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     }
 
     /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Double.class;
-    }
-
-    /**
      * Sets the configuration.
      *
      * @param minValue the minimum value

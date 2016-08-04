@@ -198,17 +198,6 @@ public class FieldConfigDateTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Date.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

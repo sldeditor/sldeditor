@@ -507,16 +507,6 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     }
 
     /**
-     * Gets the class type.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Geometry.class;
-    }
-
-    /**
      * Sets the field visible.
      *
      * @param visible the new visible state

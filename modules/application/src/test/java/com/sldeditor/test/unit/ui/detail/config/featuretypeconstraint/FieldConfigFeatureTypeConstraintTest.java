@@ -140,16 +140,6 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(Geometry.class, new FieldId(FieldIdEnum.NAME), "label");
-
-        assertEquals(FeatureTypeConstraint.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

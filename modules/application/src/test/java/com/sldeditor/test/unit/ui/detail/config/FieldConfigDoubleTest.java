@@ -183,17 +183,6 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Double.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

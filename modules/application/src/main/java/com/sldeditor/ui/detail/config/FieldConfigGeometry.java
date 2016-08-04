@@ -145,7 +145,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(getClassType(), this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this));
         }
     }
 
@@ -384,17 +384,6 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
                     this.buttonText);
         }
         return copy;
-    }
-
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Geometry.class;
     }
 
     /**

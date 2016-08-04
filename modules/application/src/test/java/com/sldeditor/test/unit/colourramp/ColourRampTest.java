@@ -76,6 +76,7 @@ public class ColourRampTest {
         data.setMinValue(expectedMinValue);
 
         Color actualStart = ramp.getColour(data, expectedMinValue, false);
+        @SuppressWarnings("unused")
         Color actualEnd = ramp.getColour(data, expectedMaxValue, false);
 
         assertEquals(actualStart, expectedStart);

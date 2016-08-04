@@ -177,17 +177,6 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#justSelected()}.
      */
     @Test

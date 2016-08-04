@@ -164,17 +164,6 @@ public class FieldConfigBooleanTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Boolean.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

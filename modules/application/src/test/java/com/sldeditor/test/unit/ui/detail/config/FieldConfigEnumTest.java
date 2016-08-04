@@ -202,17 +202,6 @@ public class FieldConfigEnumTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigEnum#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigEnum#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

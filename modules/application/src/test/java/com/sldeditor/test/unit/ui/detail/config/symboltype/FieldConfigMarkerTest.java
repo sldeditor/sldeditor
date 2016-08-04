@@ -151,17 +151,6 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, null, null, null);
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

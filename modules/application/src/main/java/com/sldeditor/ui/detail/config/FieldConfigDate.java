@@ -405,16 +405,6 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     }
 
     /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Date.class;
-    }
-
-    /**
      * Sets the field visible.
      *
      * @param visible the new visible state

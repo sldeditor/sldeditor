@@ -113,11 +113,6 @@ public class FieldConfigBaseTest {
         }
 
         @Override
-        public Class<?> getClassType() {
-            return null;
-        }
-
-        @Override
         public void createUI() {
         }
 

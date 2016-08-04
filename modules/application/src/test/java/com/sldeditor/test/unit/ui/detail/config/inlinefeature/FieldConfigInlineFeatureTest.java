@@ -155,16 +155,6 @@ public class FieldConfigInlineFeatureTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(Geometry.class, new FieldId(FieldIdEnum.NAME));
-
-        assertEquals(String.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test

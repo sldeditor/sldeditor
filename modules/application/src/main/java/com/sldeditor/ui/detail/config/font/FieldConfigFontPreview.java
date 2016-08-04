@@ -345,17 +345,6 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
         return copy;
     }
 
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Font.class;
-    }
-
     /**
      * Sets the field visible.
      *

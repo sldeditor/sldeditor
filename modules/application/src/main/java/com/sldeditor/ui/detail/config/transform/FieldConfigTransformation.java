@@ -380,17 +380,6 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
         return copy;
     }
 
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return String.class;
-    }
-
     /**
      * Sets the field visible.
      *

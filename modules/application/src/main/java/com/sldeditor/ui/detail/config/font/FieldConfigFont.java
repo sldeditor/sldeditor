@@ -130,7 +130,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(getClassType(), this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Font.class, this));
         }
     }
 
@@ -399,17 +399,6 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Font.class;
     }
 
     /**

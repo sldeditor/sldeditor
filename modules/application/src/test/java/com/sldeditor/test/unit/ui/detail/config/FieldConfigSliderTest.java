@@ -179,17 +179,6 @@ public class FieldConfigSliderTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Double.class, field.getClassType());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
