@@ -73,17 +73,20 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
     {
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        valueMap.clear();
-        this.valueList.clear();
-
-        for(ValueComboBoxData data : valueList)
+        if(valueList != null)
         {
-            valueMap.put(data.getKey(), data);
+            valueMap.clear();
+            this.valueList.clear();
 
-            this.valueList.add(data);
+            for(ValueComboBoxData data : valueList)
+            {
+                valueMap.put(data.getKey(), data);
+
+                this.valueList.add(data);
+            }
+
+            update();
         }
-
-        update();
     }
 
     /**
@@ -114,6 +117,13 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
         Object selectedObj = getSelectedItem();
         if(selectedObj != null)
         {
+            if(selectedObj instanceof ValueComboBoxData)
+            {
+                ValueComboBoxData valueComboBoxData = valueMap.get(((ValueComboBoxData)selectedObj).getKey());
+
+                return valueComboBoxData;
+            }
+
             String selectedItem = selectedObj.toString();
 
             return getSelectedValue(selectedItem);
@@ -129,12 +139,15 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
      */
     public ValueComboBoxData getSelectedValue(String selectedItemValue)
     {
-        for(String key : valueMap.keySet())
+        if(selectedItemValue != null)
         {
-            ValueComboBoxData valueComboBoxData = valueMap.get(key);
-            if(valueComboBoxData.getText().compareTo(selectedItemValue) == 0)
+            for(String key : valueMap.keySet())
             {
-                return valueComboBoxData;
+                ValueComboBoxData valueComboBoxData = valueMap.get(key);
+                if(valueComboBoxData.getText().compareTo(selectedItemValue) == 0)
+                {
+                    return valueComboBoxData;
+                }
             }
         }
 

@@ -375,7 +375,7 @@ public class ColourMapModel extends AbstractTableModel {
         {
             for(ColourMapData row : colourMapList)
             {
-                Color colour = data.getColourRamp().getColour(data, row.getQuantity());
+                Color colour = data.getColourRamp().getColour(data, row.getQuantity(), data.reverseColours());
 
                 row.setColour(colour);
             }

@@ -129,6 +129,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="REMOTE_OWS_ONLINERESOURCE"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
  *     &lt;enumeration value="LAYER_FEATURE_CONSTRAINTS"/&gt;
+ *     &lt;enumeration value="COLOUR_RAMP_TYPE"/&gt;
+ *     &lt;enumeration value="COLOUR_RAMP_COLOUR"/&gt;
+ *     &lt;enumeration value="COLOUR_RAMP_REVERSE"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -246,7 +249,10 @@ public enum FieldIdEnum {
     REMOTE_OWS_SERVICE,
     REMOTE_OWS_ONLINERESOURCE,
     INLINE_FEATURE,
-    LAYER_FEATURE_CONSTRAINTS;
+    LAYER_FEATURE_CONSTRAINTS,
+    COLOUR_RAMP_TYPE,
+    COLOUR_RAMP_COLOUR,
+    COLOUR_RAMP_REVERSE;
 
     public String value() {
         return name();

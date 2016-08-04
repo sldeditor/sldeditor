@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import org.geotools.filter.LiteralExpressionImpl;
@@ -43,6 +44,10 @@ import com.sldeditor.colourramp.ColourRampConfigPanel;
 import com.sldeditor.colourramp.ColourRampPanelInterface;
 import com.sldeditor.colourramp.ColourRampUpdateInterface;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.undo.UndoActionInterface;
+import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoInterface;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
@@ -57,13 +62,16 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  *
  * @author Robert Ward (SCISYS)
  */
-public class ColourRampPanel implements ColourRampPanelInterface {
+public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInterface {
 
     /** The panel. */
     private JPanel panel = null;
 
     /** The ramp combo box. */
     private ValueComboBox rampComboBox;
+
+    /** The old colour ramp index. */
+    private Integer oldColourRampIndex = 0;
 
     /** The data list. */
     private List<ColourRamp> rampDataList = null;
@@ -79,6 +87,12 @@ public class ColourRampPanel implements ColourRampPanelInterface {
 
     /** The colour ramp cache. */
     private Map<String, ColourRamp> colourRampCache = new HashMap<String, ColourRamp>();
+
+    /** The reverse checkbox. */
+    private JCheckBox reverseCheckbox;
+
+    /** The is populating flag. */
+    private boolean isPopulating = false;
 
     /**
      * Instantiates a new colour ramp panel.
@@ -106,24 +120,14 @@ public class ColourRampPanel implements ColourRampPanelInterface {
      * Creates the top panel.
      */
     private void createTopPanel() {
+        final UndoActionInterface undoObj = this;
+
         JPanel topPanel = new JPanel();
         topPanel.setPreferredSize(new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         topPanel.setLayout(null);
         panel.add(topPanel, BorderLayout.NORTH);
 
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
-
-        if(rampDataList != null)
-        {
-            for(ColourRamp data : rampDataList)
-            {
-                String key = data.toString();
-                ValueComboBoxData valueData = new ValueComboBoxData(key, data.getImageIcon(), getClass());
-
-                dataList.add(valueData);
-                colourRampCache.put(key, data);
-            }
-        }
+        List<ValueComboBoxData> dataList = populateColourRamps(false);
         rampComboBox = new ValueComboBox();
         rampComboBox.initialiseSingle(dataList);
         rampComboBox.setBounds(BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -131,7 +135,56 @@ public class ColourRampPanel implements ColourRampPanelInterface {
         rampComboBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!isPopulating())
+                {
+                    Integer newValueObj = rampComboBox.getSelectedIndex();
+
+                    UndoManager.getInstance().addUndoEvent(new UndoEvent(undoObj, new FieldId(FieldIdEnum.COLOUR_RAMP_COLOUR), oldColourRampIndex, newValueObj));
+
+                    oldColourRampIndex = newValueObj;
+                }
             }});
+
+        reverseCheckbox = new JCheckBox(Localisation.getString(ColourRampConfigPanel.class, "ColourRampPanel.reverse"));
+        reverseCheckbox.setBounds(rampComboBox.getX() + rampComboBox.getWidth() + 20, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        reverseCheckbox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isSelected = reverseCheckbox.isSelected();
+                Boolean oldValueObj = Boolean.valueOf(!isSelected);
+                Boolean newValueObj = Boolean.valueOf(isSelected);
+
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(undoObj, new FieldId(FieldIdEnum.COLOUR_RAMP_REVERSE), oldValueObj, newValueObj));
+
+                reverseColourRamp(isSelected);
+            }});
+        topPanel.add(reverseCheckbox);
+    }
+
+    /**
+     * Populate colour ramps.
+     *
+     * @param reverseColours the reverse colours
+     * @return the list
+     */
+    private List<ValueComboBoxData> populateColourRamps(boolean reverseColours) {
+        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+        colourRampCache.clear();
+
+        if(rampDataList != null)
+        {
+            for(ColourRamp data : rampDataList)
+            {
+                String key = data.toString();
+                ValueComboBoxData valueData = new ValueComboBoxData(key, data.getImageIcon(reverseColours), getClass());
+
+                dataList.add(valueData);
+                colourRampCache.put(key, data);
+            }
+        }
+
+        return dataList;
     }
 
     /**
@@ -184,6 +237,7 @@ public class ColourRampPanel implements ColourRampPanelInterface {
                     ColourRampData data = new ColourRampData();
                     data.setMaxValue(maxValueSpinner.getIntValue());
                     data.setMinValue(minValueSpinner.getIntValue());
+                    data.setReverseColours(reverseCheckbox.isSelected());
                     ValueComboBoxData selectedItem = (ValueComboBoxData) rampComboBox.getSelectedItem();
 
                     ColourRamp colourRamp = colourRampCache.get(selectedItem.getKey());
@@ -286,6 +340,98 @@ public class ColourRampPanel implements ColourRampPanelInterface {
     @Override
     public void setParent(ColourRampUpdateInterface parent) {
         this.parentObj = parent;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
+     */
+    @Override
+    public void undoAction(UndoInterface undoRedoObject) {
+        if(undoRedoObject != null)
+        {
+            switch(undoRedoObject.getFieldId().getFieldId())
+            {
+            case COLOUR_RAMP_COLOUR:
+            {
+                int oldValue = ((Integer) undoRedoObject.getOldValue()).intValue();
+
+                rampComboBox.setSelectedIndex(oldValue);
+            }
+            break;
+            case COLOUR_RAMP_REVERSE:
+            {
+                Boolean oldValueObj = (Boolean) undoRedoObject.getOldValue();
+
+                reverseCheckbox.setSelected(oldValueObj.booleanValue());
+                reverseColourRamp(oldValueObj.booleanValue());
+            }
+            break;
+            default:
+                break;
+            }
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
+     */
+    @Override
+    public void redoAction(UndoInterface undoRedoObject) {
+        if(undoRedoObject != null)
+        {
+            switch(undoRedoObject.getFieldId().getFieldId())
+            {
+            case COLOUR_RAMP_COLOUR:
+            {
+                int newValue = ((Integer) undoRedoObject.getNewValue()).intValue();
+
+                rampComboBox.setSelectedIndex(newValue);
+            }
+            break;
+            case COLOUR_RAMP_REVERSE:
+            {
+                Boolean newValueObj = (Boolean) undoRedoObject.getNewValue();
+
+                reverseCheckbox.setSelected(newValueObj.booleanValue());
+                reverseColourRamp(newValueObj.booleanValue());
+            }
+            break;
+            default:
+                break;
+            }
+        }
+    }
+
+    /**
+     * Checks if the panel is being populated.
+     *
+     * @return the isPopulating
+     */
+    private boolean isPopulating() {
+        return isPopulating;
+    }
+
+    /**
+     * Sets the populating flag.
+     *
+     * @param isPopulating the isPopulating to set
+     */
+    private void setPopulating(boolean isPopulating) {
+        this.isPopulating = isPopulating;
+    }
+
+    /**
+     * @param isSelected
+     */
+    private void reverseColourRamp(boolean isSelected) {
+        int selectedIndex = rampComboBox.getSelectedIndex();
+
+        setPopulating(true);
+        List<ValueComboBoxData> dataList = populateColourRamps(isSelected);
+        rampComboBox.initialiseSingle(dataList);
+
+        rampComboBox.setSelectedIndex(selectedIndex);
+        setPopulating(false);
     }
 
 }

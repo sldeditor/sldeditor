@@ -37,6 +37,9 @@ public class ColourRampData {
     /** The max value. */
     private int maxValue = 0;
 
+    /** The reverse colours flag. */
+    private boolean reverseColours = false;
+
     /**
      * Instantiates a new colour ramp data.
      */
@@ -96,5 +99,23 @@ public class ColourRampData {
      */
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
+    }
+
+    /**
+     * Checks if is reverse colours.
+     *
+     * @return the reverseColours
+     */
+    public boolean reverseColours() {
+        return reverseColours;
+    }
+
+    /**
+     * Sets the reverse colours.
+     *
+     * @param reverseColours the reverseColours to set
+     */
+    public void setReverseColours(boolean reverseColours) {
+        this.reverseColours = reverseColours;
     }
 }

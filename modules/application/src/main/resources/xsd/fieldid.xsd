@@ -142,6 +142,10 @@
             <xs:enumeration value="INLINE_FEATURE" />
             <xs:enumeration value="LAYER_FEATURE_CONSTRAINTS" />
 
+            <xs:enumeration value="COLOUR_RAMP_TYPE" />
+            <xs:enumeration value="COLOUR_RAMP_COLOUR" />
+            <xs:enumeration value="COLOUR_RAMP_REVERSE" />
+
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

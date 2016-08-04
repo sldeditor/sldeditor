@@ -53,6 +53,9 @@ public class ColourRamp {
     /** The last min value. */
     private int lastMinValue = Integer.MIN_VALUE;
 
+    /** The reverse colours flag. */
+    private boolean lastReverseColoursFlag = false;
+
     /** The gradient image. */
     private BufferedImage gradientImage = null;
 
@@ -126,11 +129,12 @@ public class ColourRamp {
     /**
      * Gets the image icon.
      *
+     * @param reverseColours the reverse colours
      * @return the image icon
      */
-    public ImageIcon getImageIcon()
+    public ImageIcon getImageIcon(boolean reverseColours)
     {
-        BufferedImage bufferedImage = createImage(IMAGE_WIDTH);
+        BufferedImage bufferedImage = createImage(IMAGE_WIDTH, reverseColours);
 
         ImageIcon imageIcon = new ImageIcon(bufferedImage);
 
@@ -141,15 +145,15 @@ public class ColourRamp {
      * Creates the image.
      *
      * @param width the width
+     * @param reverseColours the reverse colours
      * @return the image icon
      */
-    private BufferedImage createImage(int width)
+    private BufferedImage createImage(int width, boolean reverseColours)
     {
         BufferedImage image = new BufferedImage(width, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
-        g2.setColor(getStartColour());
-        GradientPaint gradient = new GradientPaint(0, 0, getStartColour(),
-                width, 0, getEndColour());
+        GradientPaint gradient = new GradientPaint(0, 0, reverseColours ? getEndColour() : getStartColour(),
+                width, 0, reverseColours ? getStartColour() : getEndColour());
         g2.setPaint(gradient);
         g2.fillRect(0, 0, width, IMAGE_HEIGHT);
 
@@ -161,18 +165,22 @@ public class ColourRamp {
      *
      * @param data the data
      * @param value the value
+     * @param reverseColours the reverse colours
      * @return the colour
      */
-    public Color getColour(ColourRampData data, int value) {
+    public Color getColour(ColourRampData data, int value, boolean reverseColours) {
 
         int tmpRange = data.getMaxValue() - data.getMinValue();
 
         // Check to see if we have set up the gradient yet
-        if((range != tmpRange) || (lastMinValue != data.getMinValue()))
+        if((range != tmpRange) ||
+                (lastMinValue != data.getMinValue()) ||
+                (lastReverseColoursFlag != reverseColours))
         {
             range = tmpRange;
             lastMinValue = data.getMinValue();
-            gradientImage = createImage(range);
+            gradientImage = createImage(range, reverseColours);
+            lastReverseColoursFlag = reverseColours;
         }
         int pos = value - data.getMinValue();
 

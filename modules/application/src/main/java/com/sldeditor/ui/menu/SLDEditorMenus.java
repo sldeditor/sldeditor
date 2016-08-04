@@ -302,8 +302,14 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(Localisation.getString(SLDEditorMenus.class, "sld.files.filter") + " (*." + SLD_FILE_EXTENSION + ")", SLD_FILE_EXTENSION);
                 fileChooser.setFileFilter(filter);
                 File sldFile = SLDEditorFile.getInstance().getSLDData().getSLDFile();
-                fileChooser.setCurrentDirectory(sldFile.getParentFile());
-                fileChooser.setSelectedFile(sldFile);
+                if(sldFile != null)
+                {
+                    if(sldFile.getParentFile() != null)
+                    {
+                        fileChooser.setCurrentDirectory(sldFile.getParentFile());
+                    }
+                    fileChooser.setSelectedFile(sldFile);
+                }
                 int userSelection = fileChooser.showSaveDialog(appPanel);
 
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
@@ -494,7 +500,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
             application.updateWindowTitle(dataEditedFlag);
         }
     }
- 
+
     /**
      * Update undo redo state.
      *
