@@ -634,7 +634,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      */
     protected FieldPanel createFieldPanel(int xPos, String fieldLabel)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, this);
+        fieldPanel = new FieldPanel(xPos, fieldLabel);
 
         return fieldPanel;
     }
@@ -649,7 +649,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      */
     protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, height, null);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, height);
 
         return fieldPanel;
     }

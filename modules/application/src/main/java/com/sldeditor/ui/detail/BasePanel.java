@@ -73,9 +73,6 @@ public class BasePanel extends JPanel {
     /** The Constant PANEL_HEIGHT. */
     private static final int PANEL_HEIGHT = 750;
 
-    /** The Constant LAST_FIELD_INDEX. */
-    private static final int LAST_FIELD_INDEX = -1;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -419,7 +416,7 @@ public class BasePanel extends JPanel {
 
         for(GroupConfigInterface groupConfig : groupConfigList)
         {
-            populateGroup(parent, box, LAST_FIELD_INDEX, groupConfig, null, false);
+            populateGroup(parent, box, groupConfig, null);
         }
 
         if(scrollFrame == null)
@@ -469,18 +466,14 @@ public class BasePanel extends JPanel {
      *
      * @param parent the parent
      * @param parentBox the parent box
-     * @param index the index
      * @param groupConfig the group config
      * @param parentField the parent field
-     * @param isFunction the is function flag
      */
     private void populateGroup(UpdateSymbolInterface parent, 
             Box parentBox,
-            int index,
             GroupConfigInterface groupConfig, 
-            FieldConfigBase parentField,
-            boolean isFunction) {
-        index = groupConfig.createTitle(parentBox, index, parent);
+            FieldConfigBase parentField) {
+        groupConfig.createTitle(parentBox, parent);
         groupConfigMap.put(groupConfig.getId(), groupConfig);
 
         if(groupConfig instanceof GroupConfig)
@@ -498,15 +491,13 @@ public class BasePanel extends JPanel {
             {
                 field.setParent(parentField);
                 addField(parentBox,
-                        isFunction ? index : LAST_FIELD_INDEX, // If we are not adding function fields then append
-                                parentField,
-                                field);
-                index ++;
+                        parentField,
+                        field);
             }
 
             for(GroupConfig subGroup : group.getSubGroupList())
             {
-                populateGroup(parent, parentBox, index, subGroup, parentField, isFunction);
+                populateGroup(parent, parentBox, subGroup, parentField);
             }
         }
         else if(groupConfig instanceof MultiOptionGroup)
@@ -549,21 +540,14 @@ public class BasePanel extends JPanel {
      * Adds the field.
      *
      * @param parentBox the parent box
-     * @param index the index
      * @param parentField the parent field
      * @param field the field
      */
-    public void addField(Box parentBox, int index, FieldConfigBase parentField, FieldConfigBase field) {
+    public void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
 
         if(field == null)
         {
             return;
-        }
-
-        boolean isFunction = (index != LAST_FIELD_INDEX);
-        if(parentField != null)
-        {
-            parentField.addFunction(field);
         }
 
         field.createUI();
@@ -573,15 +557,14 @@ public class BasePanel extends JPanel {
 
         if(parentBox != null)
         {
-            parentBox.add(field.getPanel(), index);
+            parentBox.add(field.getPanel());
 
             // Add any custom panels
             if(field.getCustomPanels() != null)
             {
                 for(Component component : field.getCustomPanels())
                 {
-                    index ++;
-                    parentBox.add(component, isFunction ? index : LAST_FIELD_INDEX);
+                    parentBox.add(component);
                 }
             }
         }
@@ -822,7 +805,7 @@ public class BasePanel extends JPanel {
      * @param fieldConfig the field config
      */
     public void addFirstField(FieldConfigBase fieldConfig) {
-        addField(box, 0, null, fieldConfig);
+        addField(box, null, fieldConfig);
     }
 
     /**

@@ -57,7 +57,7 @@ public interface GroupConfigInterface {
      * @param textPanel the text panel
      * @param parent the parent
      */
-    int createTitle(Box textPanel, int index, UpdateSymbolInterface parent);
+    void createTitle(Box textPanel, UpdateSymbolInterface parent);
 
     /**
      * Enable group.

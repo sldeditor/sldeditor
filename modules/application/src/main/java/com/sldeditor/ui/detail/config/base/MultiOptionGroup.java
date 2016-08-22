@@ -167,7 +167,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
         box.add(GroupConfig.createSeparator());
 
-        fieldPanel = new FieldPanel(0, "", BasePanel.WIDGET_HEIGHT * 2, null);
+        fieldPanel = new FieldPanel(0, "", BasePanel.WIDGET_HEIGHT * 2);
         // Set up title
         if(isOptional())
         {
@@ -245,7 +245,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                 OptionGroup optionGroup = optionMap.get(value.getKey());
                 for(GroupConfig groupConfig : optionGroup.getGroupList())
                 {
-                    groupConfig.createTitle(optionBox, -1, null);
+                    groupConfig.createTitle(optionBox, null);
 
                     for(FieldConfigBase field : groupConfig.getFieldConfigList())
                     {
@@ -258,7 +258,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
                     for(GroupConfig subGroup : groupConfig.getSubGroupList())
                     {
-                        subGroup.createTitle(optionBox, -1, null);
+                        subGroup.createTitle(optionBox, null);
 
                         for(FieldConfigBase field : subGroup.getFieldConfigList())
                         {
@@ -335,7 +335,6 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * Creates the title.
      *
      * @param textPanel the text panel
-     * @param index the index
      * @param parent the parent
      * @return the int
      */
@@ -343,8 +342,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#createTitle(javax.swing.Box)
      */
     @Override
-    public int createTitle(Box textPanel, int index, UpdateSymbolInterface parent) {
-        return -1;
+    public void createTitle(Box textPanel, UpdateSymbolInterface parent) {
     }
 
     /**

@@ -47,10 +47,9 @@ public class FieldPanel extends JPanel {
      *
      * @param xPos the x pos
      * @param labelString the label string
-     * @param field the field
      */
-    public FieldPanel(int xPos, String labelString, FieldConfigBase field) {
-        this(xPos, labelString, BasePanel.WIDGET_HEIGHT, field);
+    public FieldPanel(int xPos, String labelString) {
+        this(xPos, labelString, BasePanel.WIDGET_HEIGHT);
     }
 
     /**
@@ -59,9 +58,8 @@ public class FieldPanel extends JPanel {
      * @param xPos the x pos
      * @param labelString the label string
      * @param height the height
-     * @param field the field
      */
-    public FieldPanel(int xPos, String labelString, int height, FieldConfigBase field) {
+    public FieldPanel(int xPos, String labelString, int height) {
         this.xPos = xPos;
         setLayout(null);
         internalCreateLabel(xPos, labelString);
