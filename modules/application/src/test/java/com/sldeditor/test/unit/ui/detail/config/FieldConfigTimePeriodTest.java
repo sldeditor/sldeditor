@@ -30,7 +30,6 @@ import org.geotools.temporal.object.DefaultPeriod;
 import org.geotools.temporal.object.DefaultPosition;
 import org.junit.Test;
 import org.opengis.filter.expression.Expression;
-import org.opengis.temporal.Period;
 
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;

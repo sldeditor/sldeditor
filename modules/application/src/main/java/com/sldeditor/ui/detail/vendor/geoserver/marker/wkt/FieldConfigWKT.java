@@ -50,7 +50,6 @@ import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class FieldConfigWKT wraps a text field GUI component and an optional

@@ -47,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigWKT.

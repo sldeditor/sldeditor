@@ -39,7 +39,6 @@ import javax.swing.text.DateFormatter;
 
 import org.geotools.temporal.object.DefaultPeriod;
 import org.opengis.filter.expression.Expression;
-import org.opengis.temporal.Period;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
