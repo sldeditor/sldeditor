@@ -158,7 +158,7 @@ public class BasePanel extends JPanel {
     private FunctionNameInterface functionManager = null;
 
     /** The padding component. */
-    private Component padding;
+    private Component padding = null;
 
     /**
      * Default constructor.
@@ -448,8 +448,11 @@ public class BasePanel extends JPanel {
      */
     private Dimension addPadding() {
         Dimension boxSize = box.getPreferredSize();
-        padding = Box.createVerticalStrut(PANEL_HEIGHT - (int)boxSize.getHeight());
-        box.add(padding);
+        if((PANEL_HEIGHT - (int)boxSize.getHeight()) < 1)
+        {
+            padding = Box.createVerticalStrut(PANEL_HEIGHT - (int)boxSize.getHeight());
+            box.add(padding);
+        }
         return boxSize;
     }
 
@@ -458,7 +461,10 @@ public class BasePanel extends JPanel {
      */
     private void removePadding()
     {
-        box.remove(padding);
+        if(padding != null)
+        {
+            box.remove(padding);
+        }
     }
 
     /**
@@ -490,9 +496,7 @@ public class BasePanel extends JPanel {
             for(FieldConfigBase field : fieldList)
             {
                 field.setParent(parentField);
-                addField(parentBox,
-                        parentField,
-                        field);
+                addField(parentBox, parentField, field);
             }
 
             for(GroupConfig subGroup : group.getSubGroupList())
@@ -543,7 +547,7 @@ public class BasePanel extends JPanel {
      * @param parentField the parent field
      * @param field the field
      */
-    public void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
+    private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
 
         if(field == null)
         {
@@ -797,15 +801,6 @@ public class BasePanel extends JPanel {
     public void refreshPanel() {
         revalidate();
         repaint();
-    }
-
-    /**
-     * Adds the first field.
-     *
-     * @param fieldConfig the field config
-     */
-    public void addFirstField(FieldConfigBase fieldConfig) {
-        addField(box, null, fieldConfig);
     }
 
     /**

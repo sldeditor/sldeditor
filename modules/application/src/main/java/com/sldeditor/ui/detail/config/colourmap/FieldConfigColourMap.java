@@ -44,7 +44,7 @@ import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigColourMap wraps a table GUI component and allows a colour map to be configured
+ * The Class FieldConfigColourMap wraps a table GUI component and allows a colour map to be configured.
  * <p>
  * Supports undo/redo functionality. 
  * <p>
