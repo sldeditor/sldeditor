@@ -188,7 +188,6 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @param box the box to add the components to
      * @param parent the parent object to be called when fields are changed
-     * @return the index of the next box item
      */
     @Override
     public void createTitle(Box box, UpdateSymbolInterface parent) {

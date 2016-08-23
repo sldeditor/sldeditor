@@ -70,9 +70,6 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  */
 public class BasePanel extends JPanel {
 
-    /** The Constant PANEL_HEIGHT. */
-    private static final int PANEL_HEIGHT = 750;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -158,7 +155,7 @@ public class BasePanel extends JPanel {
     private FunctionNameInterface functionManager = null;
 
     /** The padding component. */
-    private Component padding = null;
+    private BasePanelPadding padding = null;
 
     /**
      * Default constructor.
@@ -410,6 +407,7 @@ public class BasePanel extends JPanel {
             containingPanel.setLayout(new BorderLayout());
 
             box = Box.createVerticalBox();
+            padding = new BasePanelPadding(box);
 
             containingPanel.add(box, BorderLayout.CENTER);
         }
@@ -427,7 +425,7 @@ public class BasePanel extends JPanel {
                 containingPanel.setAutoscrolls(true);
 
                 // Create a vertical strut so all the fields are pushed to the top of the panel
-                Dimension boxSize = addPadding();
+                Dimension boxSize = padding.addPadding();
                 scrollFrame.setPreferredSize(boxSize);
                 preferredSize = boxSize;
 
@@ -438,32 +436,6 @@ public class BasePanel extends JPanel {
                 add(containingPanel, BorderLayout.CENTER);
                 preferredSize = this.getPreferredSize();
             }
-        }
-    }
-
-    /**
-     * Adds the padding.
-     *
-     * @return the dimension
-     */
-    private Dimension addPadding() {
-        Dimension boxSize = box.getPreferredSize();
-        if((PANEL_HEIGHT - (int)boxSize.getHeight()) < 1)
-        {
-            padding = Box.createVerticalStrut(PANEL_HEIGHT - (int)boxSize.getHeight());
-            box.add(padding);
-        }
-        return boxSize;
-    }
-
-    /**
-     * Removes the padding.
-     */
-    private void removePadding()
-    {
-        if(padding != null)
-        {
-            box.remove(padding);
         }
     }
 
@@ -723,7 +695,7 @@ public class BasePanel extends JPanel {
      */
     protected void appendPanel(BasePanel panel)
     {
-        removePadding();
+        padding.removePadding();
 
         logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
 
@@ -731,7 +703,7 @@ public class BasePanel extends JPanel {
         {
             box.add(panel.box.getComponent(index));
         }
-        addPadding();
+        padding.addPadding();
     }
 
     /**
@@ -741,20 +713,9 @@ public class BasePanel extends JPanel {
      */
     protected void removePanel(BasePanel panel)
     {
-        removePadding();
+        padding.removePadding();
         box.remove(panel.box);
-        addPadding();
-    }
-
-    /**
-     * Clear box.
-     */
-    protected void clearBox()
-    {
-        if(box != null)
-        {
-            box.removeAll();
-        }
+        padding.addPadding();
     }
 
     /**

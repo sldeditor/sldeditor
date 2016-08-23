@@ -336,7 +336,6 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @param textPanel the text panel
      * @param parent the parent
-     * @return the int
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#createTitle(javax.swing.Box)
