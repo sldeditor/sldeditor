@@ -24,6 +24,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -32,6 +33,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -39,6 +42,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.geotools.factory.GeoTools;
 
 import com.sldeditor.AppSplashScreen;
 import com.sldeditor.common.Controller;
@@ -51,6 +56,48 @@ import com.sldeditor.common.localisation.Localisation;
  * @author Robert Ward (SCISYS)
  */
 public class AboutDialog extends JDialog {
+
+    /**
+     * The Class TextPosition.
+     */
+    class TextPosition
+    {
+        /** The text string. */
+        private String textString;
+
+        /** The position. */
+        private Point position;
+
+        /**
+         * Instantiates a new text position.
+         *
+         * @param textString the text string
+         * @param position the position
+         */
+        public TextPosition(String textString, Point position) {
+            super();
+            this.textString = textString;
+            this.position = position;
+        }
+
+        /**
+         * Gets the text string.
+         *
+         * @return the textString
+         */
+        public String getTextString() {
+            return textString;
+        }
+
+        /**
+         * Gets the position.
+         *
+         * @return the position
+         */
+        public Point getPosition() {
+            return position;
+        }
+    }
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -85,7 +132,9 @@ public class AboutDialog extends JDialog {
 
         JLabel label = new JLabel();
         try {
-            BufferedImage image = mergeImageAndText(url, AppSplashScreen.getVersionString(), AppSplashScreen.getTextPosition());
+            List<TextPosition> textList = createTextList();
+
+            BufferedImage image = mergeImageAndText(url, textList);
             label.setIcon(new ImageIcon(image));
             label.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
         }
@@ -95,7 +144,7 @@ public class AboutDialog extends JDialog {
 
         getContentPane().add(label, BorderLayout.CENTER);
         setModalityType(ModalityType.APPLICATION_MODAL);
-        
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
 
@@ -103,23 +152,49 @@ public class AboutDialog extends JDialog {
     }
 
     /**
+     * Creates the text list.
+     *
+     * @return the list
+     */
+    private List<TextPosition> createTextList() {
+        List<TextPosition> textList = new ArrayList<TextPosition>();
+        
+        // Application version string
+        Point textPosition = AppSplashScreen.getTextPosition();
+        textList.add(new TextPosition(AppSplashScreen.getVersionString(), textPosition));
+
+        // GeoTools version string
+        Point p = new Point((int)textPosition.getX(), (int)(textPosition.getY() + AppSplashScreen.getFont().getSize2D()));
+        String geoToolsVersionString = String.format("%s GeoTools %s", Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"), GeoTools.getVersion().toString());
+        textList.add(new TextPosition(geoToolsVersionString, p));
+
+        return textList;
+    }
+
+    /**
      * Merge image and text.
      *
      * @param imageFilePath the image file path
-     * @param text the text
-     * @param textPosition the text position
+     * @param textList the text list
      * @return the byte[]
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static BufferedImage mergeImageAndText(URL imageFilePath,
-            String text, Point textPosition) throws IOException {
+            List<TextPosition> textList) throws IOException {
         BufferedImage im = ImageIO.read(imageFilePath);
         Graphics2D g2 = im.createGraphics();
         Font font = AppSplashScreen.getFont();
 
         g2.setFont(font);
+        g2.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.black);
-        g2.drawString(text, textPosition.x, textPosition.y);
+
+        for(TextPosition obj : textList)
+        {
+            g2.drawString(obj.textString, obj.position.x, obj.position.y);
+        }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         ImageIO.write(im, "png", baos);

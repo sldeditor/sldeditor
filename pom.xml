@@ -33,7 +33,7 @@
     <!-- =========================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>15.0</geotools.version>
+        <geotools.version>15.1</geotools.version>
         <slf4j.version>1.5.11</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <junit.version>4.12</junit.version>

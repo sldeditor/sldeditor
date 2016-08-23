@@ -33,7 +33,7 @@
         <app.main.class>com.sldeditor.exportdata.ExportSLD</app.main.class>
         <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
-        <geotools.version>15.0</geotools.version>
+        <geotools.version>15.1</geotools.version>
         <exporter.dest.folder>../bin</exporter.dest.folder>
     </properties>
 
