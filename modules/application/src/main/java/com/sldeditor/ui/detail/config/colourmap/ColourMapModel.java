@@ -191,8 +191,23 @@ public class ColourMapModel extends AbstractTableModel {
         }
         break;
         case COL_LABEL:
-            colourMapData.setLabel((String) aValue);
-            break;
+        {
+            String label = null;
+
+            if(aValue instanceof String)
+            {
+                // If the label is an empty string, set it to null
+                // so that the legend is displayed correctly
+                label = (String) aValue;
+
+                if(label.isEmpty())
+                {
+                    label = null;
+                }
+            }
+            colourMapData.setLabel(label);
+        }
+        break;
         case COL_RGB:
         {
             Color colour = ColourUtils.toColour((String) aValue);
@@ -316,13 +331,28 @@ public class ColourMapModel extends AbstractTableModel {
         double opacity = 1.0;
         int quantity = 0;
 
-        data.setColour(Color.black);
+        // Get last entry
+        if(!colourMapList.isEmpty())
+        {
+            ColourMapData lastEntry = colourMapList.get(colourMapList.size() - 1);
+            if(lastEntry != null)
+            {
+                quantity = lastEntry.getQuantity() + 1;
+            }
+        }
+
+        data.setColour(ColourUtils.createRandomColour());
         data.setOpacity(opacity);
         data.setQuantity(quantity);
 
         colourMapList.add(data);
 
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.colourMapUpdated();
+        }
     }
 
     /**
@@ -342,6 +372,11 @@ public class ColourMapModel extends AbstractTableModel {
             index --;
         }
         this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.colourMapUpdated();
+        }
     }
 
     /**

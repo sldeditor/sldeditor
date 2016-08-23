@@ -128,7 +128,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         model.setCellRenderer(table);
 
         JScrollPane scrollPanel = new JScrollPane(table);
-        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2));
+        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2) - getRowY(maxNoOfConfigRows));
         fieldPanel.add(scrollPanel);
 
         int buttonY = getRowY(totalRows - 1);

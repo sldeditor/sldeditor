@@ -172,6 +172,11 @@
             <version>${geotools.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.geoserver</groupId>
+            <artifactId>gs-wms</artifactId>
+            <version>${geoserver.version}</version>
+        </dependency>
+        <dependency>
             <groupId>it.geosolutions</groupId>
             <artifactId>geoserver-manager</artifactId>
             <version>${geoserver_manager.version}</version>

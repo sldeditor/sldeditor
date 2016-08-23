@@ -210,7 +210,8 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         dataPanel.add(fieldPanel);
 
         JButton resetValueButton = new JButton(Localisation.getString(ColourRampConfigPanel.class, "ColourRampPanel.reset"));
-        minValueSpinner.addUI(resetValueButton, 20,BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        minValueSpinner.addUI(resetValueButton, 20, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        minValueSpinner.populateField(0);
         resetValueButton.addActionListener(new ActionListener(){
 
             @Override
@@ -225,6 +226,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         maxValueSpinner = new FieldConfigInteger(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
                 Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.maxValue"), true);
         maxValueSpinner.createUI();
+        maxValueSpinner.populateField(100);
         dataPanel.add(maxValueSpinner.getPanel());
 
         JPanel buttonPanel = new JPanel();
