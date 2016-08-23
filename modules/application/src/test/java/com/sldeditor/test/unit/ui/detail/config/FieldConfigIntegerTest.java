@@ -59,7 +59,7 @@ public class FieldConfigIntegerTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -77,7 +77,7 @@ public class FieldConfigIntegerTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -98,7 +98,7 @@ public class FieldConfigIntegerTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -127,7 +127,7 @@ public class FieldConfigIntegerTest {
         field.populateExpression(null);
         assertEquals(0, field.getIntValue());
 
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue);
         assertEquals(expectedValue, field.getIntValue());
 
@@ -165,22 +165,11 @@ public class FieldConfigIntegerTest {
         field.revertToDefaultValue();
         assertEquals(0, field.getIntValue());
 
-        field.createUI(null);
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         assertEquals(expectedDefaultValue.intValue(), field.getIntValue());
         assertTrue(String.valueOf(expectedDefaultValue).compareTo(field.getStringValue()) == 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigInteger#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Integer.class, field.getClassType());
     }
 
     /**
@@ -221,7 +210,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field = new FieldConfigInteger(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
         field.attributeSelection(null);
 
-        field.createUI(null);
+        field.createUI();
         assertTrue(field.isEnabled());
         field.attributeSelection("test");
         assertFalse(field.isEnabled());
@@ -241,7 +230,7 @@ public class FieldConfigIntegerTest {
         field.redoAction(null);
 
         int expectedValue1 = 134;
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue1);
         assertEquals(expectedValue1, field.getIntValue());
 
@@ -269,7 +258,7 @@ public class FieldConfigIntegerTest {
         boolean valueOnly = true;
         FieldConfigInteger field = new FieldConfigInteger(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
 
-        field.createUI(null);
+        field.createUI();
         int minValue = 10;
         int maxValue = 20;
         int stepSize = 1;

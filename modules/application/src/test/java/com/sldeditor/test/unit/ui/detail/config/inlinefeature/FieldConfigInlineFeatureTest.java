@@ -64,7 +64,7 @@ public class FieldConfigInlineFeatureTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -82,7 +82,7 @@ public class FieldConfigInlineFeatureTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -104,7 +104,7 @@ public class FieldConfigInlineFeatureTest {
         field.setTestValue(null, testValue);
         field.populateField(testValue);
 
-        field.createUI(null);
+        field.createUI();
 
         UserLayer userLayer1 = DefaultSymbols.createNewUserLayer();
         field.populateField(userLayer1);
@@ -143,7 +143,7 @@ public class FieldConfigInlineFeatureTest {
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
         assertTrue(field.getStringValue().isEmpty());
@@ -152,16 +152,6 @@ public class FieldConfigInlineFeatureTest {
         field.setDefaultValue(expectedValue);
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(Geometry.class, new FieldId(FieldIdEnum.NAME));
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -211,7 +201,7 @@ public class FieldConfigInlineFeatureTest {
         FieldConfigInlineFeature field = new FieldConfigInlineFeature(Geometry.class, new FieldId(FieldIdEnum.NAME));
         field.undoAction(null);
         field.redoAction(null);
-        field.createUI(null);
+        field.createUI();
 
         DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
 

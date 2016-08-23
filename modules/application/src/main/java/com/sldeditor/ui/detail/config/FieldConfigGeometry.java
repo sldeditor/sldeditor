@@ -25,7 +25,6 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -82,18 +81,16 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         textField = new JTextField();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -148,7 +145,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(getClassType(), this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this));
         }
     }
 
@@ -387,17 +384,6 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
                     this.buttonText);
         }
         return copy;
-    }
-
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Geometry.class;
     }
 
     /**

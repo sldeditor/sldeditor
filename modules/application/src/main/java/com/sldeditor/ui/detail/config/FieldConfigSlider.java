@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.detail.config;
 
-import javax.swing.Box;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -70,19 +69,17 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
 
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         slider = new JSlider();
         slider.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -356,17 +353,6 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Double.class;
     }
 
     /**

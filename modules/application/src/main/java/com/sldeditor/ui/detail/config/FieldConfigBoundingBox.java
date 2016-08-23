@@ -25,7 +25,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -103,17 +102,15 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         int row = 0;
         xMinTextField = createRow(Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.minx"), xPos, fieldPanel, row);
@@ -458,16 +455,6 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return ReferencedEnvelope.class;
     }
 
     /**

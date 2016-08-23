@@ -323,6 +323,7 @@
                             <sources>
                                 <source>src/main/resources/xsd/paneldetails.xsd</source>
                                 <source>src/main/resources/xsd/symboltype.xsd</source>
+                                <source>src/main/resources/xsd/colourramp.xsd</source>
                                 <source>src/main/resources/xsd/testvalue.xsd</source>
                                 <source>src/main/resources/xsd/testoutput.xsd</source>
                             </sources>

@@ -276,7 +276,7 @@ public class FieldConfigGeometryFieldTest {
         assertTrue(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -325,7 +325,7 @@ public class FieldConfigGeometryFieldTest {
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
-        field.createUI(null);
+        field.createUI();
         TestDataSource testDataSource = new TestDataSource();
         @SuppressWarnings("unused")
         DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
@@ -373,20 +373,10 @@ public class FieldConfigGeometryFieldTest {
         @SuppressWarnings("unused")
         DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
 
-        field.createUI(null);
+        field.createUI();
         field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) == 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(String.class, new FieldId(FieldIdEnum.NAME), "test label");
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -431,7 +421,7 @@ public class FieldConfigGeometryFieldTest {
         field.undoAction(null);
         field.redoAction(null);
 
-        field.createUI(null);
+        field.createUI();
         field.undoAction(null);
         field.redoAction(null);
 

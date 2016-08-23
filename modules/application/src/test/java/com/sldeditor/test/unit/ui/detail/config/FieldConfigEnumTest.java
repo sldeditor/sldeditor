@@ -65,7 +65,7 @@ public class FieldConfigEnumTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -83,7 +83,7 @@ public class FieldConfigEnumTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -104,7 +104,7 @@ public class FieldConfigEnumTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -154,7 +154,7 @@ public class FieldConfigEnumTest {
         field.setTestValue(null, (String)null);
 
         // Now create the ui
-        field.createUI(null);
+        field.createUI();
         String expectedValue1 = "key2";
         field.populateField(expectedValue1);
         String actualValueString = field.getStringValue();
@@ -195,21 +195,10 @@ public class FieldConfigEnumTest {
         configList.add(s2);
 
         field.addConfig(configList);
-        field.createUI(null);
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) == 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigEnum#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -250,7 +239,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
         field.attributeSelection(null);
 
-        field.createUI(null);
+        field.createUI();
         assertTrue(field.isEnabled());
         field.attributeSelection("test");
         assertFalse(field.isEnabled());
@@ -279,7 +268,7 @@ public class FieldConfigEnumTest {
         field.addConfig(configList);
 
         // Now create the ui
-        field.createUI(null);
+        field.createUI();
 
         field.populateField("key3");
         Map<FieldId, Boolean> actualMap = field.getFieldEnableState();
@@ -320,7 +309,7 @@ public class FieldConfigEnumTest {
         field.addConfig(configList);
 
         // Now create the ui
-        field.createUI(null);
+        field.createUI();
         String expectedValue1 = "key2";
         field.populateField(expectedValue1);
 

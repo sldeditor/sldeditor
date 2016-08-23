@@ -21,7 +21,6 @@ package com.sldeditor.ui.detail.config;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JCheckBox;
 
 import org.opengis.filter.expression.Expression;
@@ -68,18 +67,16 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         checkBox = new JCheckBox("");
         checkBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -331,16 +328,6 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Boolean.class;
     }
 
     /**

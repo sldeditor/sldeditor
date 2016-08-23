@@ -110,7 +110,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigBoolean booleanField = new FieldConfigBoolean(Geometry.class, fieldId, "label", true);
-        booleanField.createUI(null);
+        booleanField.createUI();
         fieldConfigManager.add(fieldId, booleanField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -154,7 +154,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigEnum enumField = new FieldConfigEnum(Geometry.class, fieldId, "label", true);
         enumField.addConfig(configList);
-        enumField.createUI(null);
+        enumField.createUI();
         fieldConfigManager.add(fieldId, enumField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -186,7 +186,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigColour colourField = new FieldConfigColour(Geometry.class, fieldId, "label", true);
-        colourField.createUI(null);
+        colourField.createUI();
         fieldConfigManager.add(fieldId, colourField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -213,7 +213,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigColourMap colourMapField = new FieldConfigColourMap(Geometry.class, fieldId, "label");
-        colourMapField.createUI(null);
+        colourMapField.createUI();
         fieldConfigManager.add(fieldId, colourMapField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -246,7 +246,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigFont fontField = new FieldConfigFont(Geometry.class, fieldId, "label", true);
-        fontField.createUI(null);
+        fontField.createUI();
         fieldConfigManager.add(fieldId, fontField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -276,7 +276,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigString stringField = new FieldConfigString(Geometry.class, fieldId, "label", true, "button text");
-        stringField.createUI(null);
+        stringField.createUI();
         fieldConfigManager.add(fieldId, stringField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -309,7 +309,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigDouble doubleField = new FieldConfigDouble(Geometry.class, fieldId, "label", true);
-        doubleField.createUI(null);
+        doubleField.createUI();
         fieldConfigManager.add(fieldId, doubleField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -342,7 +342,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigInteger intField = new FieldConfigInteger(Geometry.class, fieldId, "label", true);
-        intField.createUI(null);
+        intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -376,7 +376,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigInteger intField = new FieldConfigInteger(Geometry.class, fieldId, "label", true);
-        intField.createUI(null);
+        intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -414,7 +414,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigString stringField = new FieldConfigString(Geometry.class, fieldId, "label", true, "button text");
-        stringField.createUI(null);
+        stringField.createUI();
         fieldConfigManager.add(fieldId, stringField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
@@ -455,7 +455,7 @@ public class FieldConfigPopulationTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
         FieldConfigInteger intField = new FieldConfigInteger(Geometry.class, fieldId, "label", true);
-        intField.createUI(null);
+        intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);

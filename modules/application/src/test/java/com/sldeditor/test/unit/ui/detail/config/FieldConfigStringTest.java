@@ -59,7 +59,7 @@ public class FieldConfigStringTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -77,7 +77,7 @@ public class FieldConfigStringTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -129,7 +129,7 @@ public class FieldConfigStringTest {
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
-        field.createUI(null);
+        field.createUI();
         String expectedValue = "test string value";
         field.setTestValue(null, expectedValue);
         actualExpression = field.callGenerateExpression();
@@ -156,20 +156,9 @@ public class FieldConfigStringTest {
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) == 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -184,7 +173,7 @@ public class FieldConfigStringTest {
         field.setTestValue(new FieldId(FieldIdEnum.ANCHOR_POINT_V), expectedTestValue);
         assertNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.setTestValue(new FieldId(FieldIdEnum.ANCHOR_POINT_V), expectedTestValue);
         assertTrue(expectedTestValue.compareTo(field.getStringValue()) == 0);
     }
@@ -244,7 +233,7 @@ public class FieldConfigStringTest {
         field.undoAction(null);
         field.redoAction(null);
 
-        field.createUI(null);
+        field.createUI();
         field.undoAction(null);
         field.redoAction(null);
 

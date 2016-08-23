@@ -70,7 +70,7 @@ public class FieldConfigTTFTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -88,7 +88,7 @@ public class FieldConfigTTFTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -114,7 +114,7 @@ public class FieldConfigTTFTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -136,7 +136,7 @@ public class FieldConfigTTFTest {
         assertNull(field.getStringValue());
 
         // Create ui
-        field.createUI(null);
+        field.createUI();
         field.populateExpression((Double)null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
@@ -175,19 +175,8 @@ public class FieldConfigTTFTest {
 
         field.revertToDefaultValue();
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -279,7 +268,7 @@ public class FieldConfigTTFTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
@@ -289,7 +278,7 @@ public class FieldConfigTTFTest {
         field.setValue(null, null, null);
         field.setValue(fieldConfigManager, null, null);
 
-        field.createUI(null);
+        field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star", Color.green, Color.black, 2.0);
 
@@ -310,7 +299,7 @@ public class FieldConfigTTFTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
@@ -320,7 +309,7 @@ public class FieldConfigTTFTest {
         List<GraphicalSymbol> actualValue = field.getValue(null, null, false, false);
         assertTrue(actualValue.isEmpty());
 
-        field.createUI(null);
+        field.createUI();
         actualValue = field.getValue(null, null, false, false);
         assertTrue(actualValue.isEmpty());
 

@@ -70,12 +70,6 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  */
 public class BasePanel extends JPanel {
 
-    /** The Constant PANEL_HEIGHT. */
-    private static final int PANEL_HEIGHT = 750;
-
-    /** The Constant LAST_FIELD_INDEX. */
-    private static final int LAST_FIELD_INDEX = -1;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -161,7 +155,7 @@ public class BasePanel extends JPanel {
     private FunctionNameInterface functionManager = null;
 
     /** The padding component. */
-    private Component padding;
+    private BasePanelPadding padding = null;
 
     /**
      * Default constructor.
@@ -413,13 +407,14 @@ public class BasePanel extends JPanel {
             containingPanel.setLayout(new BorderLayout());
 
             box = Box.createVerticalBox();
+            padding = new BasePanelPadding(box);
 
             containingPanel.add(box, BorderLayout.CENTER);
         }
 
         for(GroupConfigInterface groupConfig : groupConfigList)
         {
-            populateGroup(parent, box, LAST_FIELD_INDEX, groupConfig, null, false);
+            populateGroup(parent, box, groupConfig, null);
         }
 
         if(scrollFrame == null)
@@ -430,7 +425,7 @@ public class BasePanel extends JPanel {
                 containingPanel.setAutoscrolls(true);
 
                 // Create a vertical strut so all the fields are pushed to the top of the panel
-                Dimension boxSize = addPadding();
+                Dimension boxSize = padding.addPadding();
                 scrollFrame.setPreferredSize(boxSize);
                 preferredSize = boxSize;
 
@@ -445,42 +440,18 @@ public class BasePanel extends JPanel {
     }
 
     /**
-     * Adds the padding.
-     *
-     * @return the dimension
-     */
-    private Dimension addPadding() {
-        Dimension boxSize = box.getPreferredSize();
-        padding = Box.createVerticalStrut(PANEL_HEIGHT - (int)boxSize.getHeight());
-        box.add(padding);
-        return boxSize;
-    }
-
-    /**
-     * Removes the padding.
-     */
-    private void removePadding()
-    {
-        box.remove(padding);
-    }
-
-    /**
      * Populate group.
      *
      * @param parent the parent
      * @param parentBox the parent box
-     * @param index the index
      * @param groupConfig the group config
      * @param parentField the parent field
-     * @param isFunction the is function flag
      */
     private void populateGroup(UpdateSymbolInterface parent, 
             Box parentBox,
-            int index,
             GroupConfigInterface groupConfig, 
-            FieldConfigBase parentField,
-            boolean isFunction) {
-        index = groupConfig.createTitle(parentBox, index, parent);
+            FieldConfigBase parentField) {
+        groupConfig.createTitle(parentBox, parent);
         groupConfigMap.put(groupConfig.getId(), groupConfig);
 
         if(groupConfig instanceof GroupConfig)
@@ -497,16 +468,12 @@ public class BasePanel extends JPanel {
             for(FieldConfigBase field : fieldList)
             {
                 field.setParent(parentField);
-                addField(parentBox,
-                        isFunction ? index : LAST_FIELD_INDEX, // If we are not adding function fields then append
-                                parentField,
-                                field);
-                index ++;
+                addField(parentBox, parentField, field);
             }
 
             for(GroupConfig subGroup : group.getSubGroupList())
             {
-                populateGroup(parent, parentBox, index, subGroup, parentField, isFunction);
+                populateGroup(parent, parentBox, subGroup, parentField);
             }
         }
         else if(groupConfig instanceof MultiOptionGroup)
@@ -549,39 +516,31 @@ public class BasePanel extends JPanel {
      * Adds the field.
      *
      * @param parentBox the parent box
-     * @param index the index
      * @param parentField the parent field
      * @param field the field
      */
-    public void addField(Box parentBox, int index, FieldConfigBase parentField, FieldConfigBase field) {
+    private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
 
         if(field == null)
         {
             return;
         }
 
-        boolean isFunction = (index != LAST_FIELD_INDEX);
-        if(parentField != null)
-        {
-            parentField.addFunction(field);
-        }
-
-        field.createUI(parentBox);
+        field.createUI();
         addFieldConfig(field);
 
         fieldConfigManager.addField(field);
 
         if(parentBox != null)
         {
-            parentBox.add(field.getPanel(), index);
+            parentBox.add(field.getPanel());
 
             // Add any custom panels
             if(field.getCustomPanels() != null)
             {
                 for(Component component : field.getCustomPanels())
                 {
-                    index ++;
-                    parentBox.add(component, isFunction ? index : LAST_FIELD_INDEX);
+                    parentBox.add(component);
                 }
             }
         }
@@ -684,9 +643,12 @@ public class BasePanel extends JPanel {
     protected void registerForTextFieldButton(FieldId fieldId, FieldConfigStringButtonInterface listener)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        FieldConfigString textField = (FieldConfigString)fieldConfig;
+        if(fieldConfig != null)
+        {
+            FieldConfigString textField = (FieldConfigString)fieldConfig;
 
-        textField.addButtonPressedListener(listener);
+            textField.addButtonPressedListener(listener);
+        }
     }
 
     /**
@@ -733,7 +695,7 @@ public class BasePanel extends JPanel {
      */
     protected void appendPanel(BasePanel panel)
     {
-        removePadding();
+        padding.removePadding();
 
         logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
 
@@ -741,7 +703,7 @@ public class BasePanel extends JPanel {
         {
             box.add(panel.box.getComponent(index));
         }
-        addPadding();
+        padding.addPadding();
     }
 
     /**
@@ -751,20 +713,9 @@ public class BasePanel extends JPanel {
      */
     protected void removePanel(BasePanel panel)
     {
-        removePadding();
+        padding.removePadding();
         box.remove(panel.box);
-        addPadding();
-    }
-
-    /**
-     * Clear box.
-     */
-    protected void clearBox()
-    {
-        if(box != null)
-        {
-            box.removeAll();
-        }
+        padding.addPadding();
     }
 
     /**
@@ -811,15 +762,6 @@ public class BasePanel extends JPanel {
     public void refreshPanel() {
         revalidate();
         repaint();
-    }
-
-    /**
-     * Adds the first field.
-     *
-     * @param fieldConfig the field config
-     */
-    public void addFirstField(FieldConfigBase fieldConfig) {
-        addField(box, 0, null, fieldConfig);
     }
 
     /**

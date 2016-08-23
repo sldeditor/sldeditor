@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
-
 import org.apache.log4j.Logger;
 import org.opengis.filter.expression.Expression;
 
@@ -109,18 +107,16 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
@@ -482,16 +478,6 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return String.class;
     }
 
     /**

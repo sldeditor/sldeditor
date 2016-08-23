@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.detail.config.font;
 
-import javax.swing.Box;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -84,19 +83,17 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
         int height = getRowY(sampleTextLines);
         int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
-        FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel());
 
         textField = new JTextArea();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
@@ -346,17 +343,6 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Font.class;
     }
 
     /**

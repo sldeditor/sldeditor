@@ -79,7 +79,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertFalse(field.isEnabled());
 
         expectedValue = false;
@@ -97,7 +97,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertFalse(field2.isEnabled());
 
@@ -118,7 +118,7 @@ public class FieldConfigMarkerTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -148,17 +148,6 @@ public class FieldConfigMarkerTest {
         field.revertToDefaultValue();
 
         // Does nothing
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, null, null, null);
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -267,17 +256,17 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -322,17 +311,17 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -357,17 +346,17 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -392,17 +381,17 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -523,17 +512,17 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -575,17 +564,17 @@ public class FieldConfigMarkerTest {
 
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);

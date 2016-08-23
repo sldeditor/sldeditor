@@ -187,12 +187,10 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      * Creates the title components.
      *
      * @param box the box to add the components to
-     * @param index the start index to add the index to
      * @param parent the parent object to be called when fields are changed
-     * @return the index of the next box item
      */
     @Override
-    public int createTitle(Box box, int index, UpdateSymbolInterface parent) {
+    public void createTitle(Box box, UpdateSymbolInterface parent) {
 
         this.parentBox = box;
 
@@ -200,12 +198,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
         {
             Component separator = createSeparator();
             componentList.add(createSeparator());
-            box.add(separator, index);
-
-            if(index > -1)
-            {
-                index ++;
-            }
+            box.add(separator);
 
             Component component;
 
@@ -252,16 +245,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
             panel.setSize(size);
             panel.add(component);
 
-            box.add(panel, index);
+            box.add(panel);
             componentList.add(panel);
-
-            if(index > -1)
-            {
-                index ++;
-            }
         }
-
-        return index;
     }
 
     /**

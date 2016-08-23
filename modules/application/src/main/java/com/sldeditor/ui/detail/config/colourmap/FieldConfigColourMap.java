@@ -21,7 +21,6 @@ package com.sldeditor.ui.detail.config.colourmap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +32,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapImpl;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.colourramp.ColourRampConfigPanel;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -44,7 +44,7 @@ import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigColourMap wraps a table GUI component and allows a colour map to be configured
+ * The Class FieldConfigColourMap wraps a table GUI component and allows a colour map to be configured.
  * <p>
  * Supports undo/redo functionality. 
  * <p>
@@ -72,6 +72,9 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /** The remove button. */
     private JButton removeButton;
 
+    /** The colour ramp configuration panel. */
+    private ColourRampConfigPanel colourRampConfig = null;
+    
     /**
      * Instantiates a new field config string.
      *
@@ -98,20 +101,24 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
-        int maxNoOfRows = 12;
-        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(maxNoOfRows), getLabel(), parentBox);
+        int maxNoOfConfigRows = 7;
+        int maxNoOfTableRows = 12;
+        int totalRows = maxNoOfConfigRows + maxNoOfTableRows;
+        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel());
+
+        colourRampConfig = new ColourRampConfigPanel(this, model);
+        colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfConfigRows));
+        fieldPanel.add(colourRampConfig);
 
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        table.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfRows - 2));
+        table.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2));
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -121,10 +128,10 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         model.setCellRenderer(table);
 
         JScrollPane scrollPanel = new JScrollPane(table);
-        scrollPanel.setBounds(xPos, BasePanel.WIDGET_HEIGHT, BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT * 10);
+        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2));
         fieldPanel.add(scrollPanel);
 
-        int buttonY = getRowY(maxNoOfRows - 1);
+        int buttonY = getRowY(totalRows - 1);
         //
         // Add button
         //
@@ -339,6 +346,10 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         {
             if(value != null)
             {
+                if(colourRampConfig != null)
+                {
+                    colourRampConfig.populate(value);
+                }
                 model.populate(value);
 
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
@@ -367,16 +378,6 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
                     fieldConfigBase.getLabel());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return ColorMap.class;
     }
 
     /**

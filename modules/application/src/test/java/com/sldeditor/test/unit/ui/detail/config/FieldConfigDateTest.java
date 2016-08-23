@@ -67,7 +67,7 @@ public class FieldConfigDateTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -85,7 +85,7 @@ public class FieldConfigDateTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -106,7 +106,7 @@ public class FieldConfigDateTest {
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
-        field.createUI(null);
+        field.createUI();
         field.setVisible(expectedValue);
 
         expectedValue = false;
@@ -141,7 +141,7 @@ public class FieldConfigDateTest {
         assertNull(actualExpression);
 
         // Try string values - erroneous
-        field.createUI(null);
+        field.createUI();
         field.populateExpression("");
 
         SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -192,20 +192,9 @@ public class FieldConfigDateTest {
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
-
-        assertEquals(Date.class, field.getClassType());
     }
 
     /**
@@ -258,7 +247,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field = new FieldConfigDate(Date.class, new FieldId(FieldIdEnum.NAME), "label", false);
         field.undoAction(null);
         field.redoAction(null);
-        field.createUI(null);
+        field.createUI();
 
         SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String dateString1 = "10-01-2012 23:13:26";

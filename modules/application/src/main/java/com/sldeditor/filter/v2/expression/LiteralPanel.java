@@ -154,7 +154,7 @@ public class LiteralPanel extends JPanel {
 
         if(fieldConfig != null)
         {
-            fieldConfig.createUI(null);
+            fieldConfig.createUI();
             fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
                 @Override

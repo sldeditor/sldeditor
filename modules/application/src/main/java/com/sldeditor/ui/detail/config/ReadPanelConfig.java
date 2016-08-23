@@ -322,9 +322,9 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigColourMap)
         {
-            FieldConfigColourMap stringConfig = new FieldConfigColourMap(panelId, id, label);
+            FieldConfigColourMap colourMapConfig = new FieldConfigColourMap(panelId, id, label);
 
-            groupConfig.addField(stringConfig);
+            groupConfig.addField(colourMapConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigFeatureTypeConstraint)
         {

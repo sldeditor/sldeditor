@@ -73,7 +73,7 @@ public class FieldConfigWindBarbsTest {
         assertTrue(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertTrue(field.isEnabled());
 
         expectedValue = false;
@@ -91,7 +91,7 @@ public class FieldConfigWindBarbsTest {
         assertTrue(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -112,7 +112,7 @@ public class FieldConfigWindBarbsTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -132,7 +132,7 @@ public class FieldConfigWindBarbsTest {
         assertNull(field.getStringValue());
 
         // Create ui
-        field.createUI(null);
+        field.createUI();
         field.populateExpression((Double)null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
@@ -153,19 +153,8 @@ public class FieldConfigWindBarbsTest {
 
         field.revertToDefaultValue();
 
-        field.createUI(null);
+        field.createUI();
         field.revertToDefaultValue();
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(String.class, field.getClassType());
     }
 
     /**
@@ -268,7 +257,7 @@ public class FieldConfigWindBarbsTest {
         field.setValue(null, null, null);
         field.setValue(fieldConfigManager, null, null);
 
-        field.createUI(null);
+        field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
         field.setValue(null, null, marker);
@@ -322,17 +311,17 @@ public class FieldConfigWindBarbsTest {
 
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);

@@ -65,7 +65,7 @@ public class FieldConfigFontTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -83,7 +83,7 @@ public class FieldConfigFontTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -105,7 +105,7 @@ public class FieldConfigFontTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -129,7 +129,7 @@ public class FieldConfigFontTest {
         field.populateExpression((Font)null);
 
         String expectedValue = fontFamilies[0];
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue);
         String actualValue = field.getStringValue();
         assertTrue(expectedValue.compareTo(actualValue) == 0);
@@ -160,22 +160,11 @@ public class FieldConfigFontTest {
         String actualValue = field.getStringValue();
         assertNull(actualValue);
 
-        field.createUI(null);
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         actualValue = field.getStringValue();
         assertTrue(expectedDefaultValue.compareTo(actualValue) == 0);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(Font.class, field.getClassType());
     }
 
     /**
@@ -231,7 +220,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
 
         String expectedDefaultValue1 = fontFamilies[0];
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedDefaultValue1);
         String actualValue1 = field.getStringValue();
         assertTrue(expectedDefaultValue1.compareTo(actualValue1) == 0);

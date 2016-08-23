@@ -24,8 +24,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleBuilder;
@@ -84,18 +82,16 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
         final UndoActionInterface parentObj = this;
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         populateFontFamilyList();
 
@@ -134,7 +130,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(getClassType(), this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Font.class, this));
         }
     }
 
@@ -403,17 +399,6 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Font.class;
     }
 
     /**

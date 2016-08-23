@@ -119,7 +119,7 @@ public class SymbolTypeFactory {
         // Create the ui for the fields
         for(FieldState fieldConfig : symbolTypeFieldList)
         {
-            ((FieldConfigBase)fieldConfig).createUI(null);
+            ((FieldConfigBase)fieldConfig).createUI();
         }
 
         SOLID_FILL_VALUE = FieldConfigMarker.getSolidFillValue();

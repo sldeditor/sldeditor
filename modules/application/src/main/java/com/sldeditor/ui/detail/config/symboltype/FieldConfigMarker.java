@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Mark;
@@ -111,15 +109,13 @@ public class FieldConfigMarker extends FieldState {
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
-        createFieldPanel(0, "", parentBox);
+    public void createUI() {
+        createFieldPanel(0, "");
     }
 
     /**
@@ -563,16 +559,6 @@ public class FieldConfigMarker extends FieldState {
                     this.symbolSelectionField);
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return String.class;
     }
 
     /**

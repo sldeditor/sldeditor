@@ -63,7 +63,7 @@ public class FieldConfigFontPreviewTest {
         assertTrue(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -81,7 +81,7 @@ public class FieldConfigFontPreviewTest {
         assertTrue(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -103,7 +103,7 @@ public class FieldConfigFontPreviewTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -126,7 +126,7 @@ public class FieldConfigFontPreviewTest {
         field.populateExpression((Font)null);
 
         String expectedValue = fontFamilies[0];
-        field.createUI(null);
+        field.createUI();
         field.populateField(expectedValue);
         String actualValue = field.getStringValue();
         assertNotNull(actualValue);
@@ -168,23 +168,12 @@ public class FieldConfigFontPreviewTest {
         String actualValue = field.getStringValue();
         assertNull(actualValue);
 
-        field.createUI(null);
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         actualValue = field.getStringValue();
         // It returns the sample text
         assertNotNull(actualValue);
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(Font.class, field.getClassType());
     }
 
     /**

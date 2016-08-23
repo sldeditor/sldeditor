@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.geotools.factory.CommonFactoryFinder;
@@ -113,12 +113,7 @@ public class FieldConfigBaseTest {
         }
 
         @Override
-        public Class<?> getClassType() {
-            return null;
-        }
-
-        @Override
-        public void createUI(Box parentBox) {
+        public void createUI() {
         }
 
         @Override
@@ -698,4 +693,18 @@ public class FieldConfigBaseTest {
         assertEquals(expectedClass, field.getFunctionParameterType());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#addUI(java.awt.Component,int, int, int)}.
+     */
+    @Test
+    public void testAddUI() {
+        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        String expectedLabel = "test label";
+        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+
+        field.addUI(null, 10, 10, 10);
+
+        field.createUI();
+        field.addUI(new JButton(), 10, 10, 10);
+    }
 }

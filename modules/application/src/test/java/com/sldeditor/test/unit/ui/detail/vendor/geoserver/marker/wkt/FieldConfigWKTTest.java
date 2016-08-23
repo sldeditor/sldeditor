@@ -47,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigWKT.
@@ -74,7 +73,7 @@ public class FieldConfigWKTTest {
         assertFalse(field.isEnabled());
 
         // Create text field
-        field.createUI(null);
+        field.createUI();
         assertTrue(field.isEnabled());
 
         expectedValue = false;
@@ -92,7 +91,7 @@ public class FieldConfigWKTTest {
         assertFalse(field2.isEnabled());
 
         // Create text field
-        field2.createUI(null);
+        field2.createUI();
 
         assertTrue(field2.isEnabled());
 
@@ -113,7 +112,7 @@ public class FieldConfigWKTTest {
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
-        field.createUI(null);
+        field.createUI();
         expectedValue = false;
         field.setVisible(expectedValue);
     }
@@ -133,7 +132,7 @@ public class FieldConfigWKTTest {
         assertNull(field.getStringValue());
 
         // Create ui
-        field.createUI(null);
+        field.createUI();
         field.populateExpression((Double)null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
@@ -156,20 +155,9 @@ public class FieldConfigWKTTest {
 
         field.revertToDefaultValue();
 
-        field.createUI(null);
+        field.createUI();
 
         field.revertToDefaultValue();
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getClassType()}.
-     */
-    @Test
-    public void testGetClassType() {
-        boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-
-        assertEquals(Geometry.class, field.getClassType());
     }
 
     /**
@@ -265,7 +253,7 @@ public class FieldConfigWKTTest {
         field.setValue(null, null, null);
         field.setValue(fieldConfigManager, null, null);
 
-        field.createUI(null);
+        field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker1 = styleBuilder.createMark("star");
         field.setValue(null, null, marker1);
@@ -279,17 +267,17 @@ public class FieldConfigWKTTest {
 
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -346,17 +334,17 @@ public class FieldConfigWKTTest {
 
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
-        colourField.createUI(null);
+        colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
-        opacityField.createUI(null);
+        opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
-        symbolSelectionField.createUI(null);
+        symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
         fieldConfigManager.add(opacityFieldId, opacityField);
@@ -374,7 +362,7 @@ public class FieldConfigWKTTest {
         assertNotNull(actualValue);
         assertEquals(0, actualValue.size());
 
-        field2.createUI(null);
+        field2.createUI();
 
         // Try with symbol type of wkt shape
         actualMarkerSymbol = "wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))";

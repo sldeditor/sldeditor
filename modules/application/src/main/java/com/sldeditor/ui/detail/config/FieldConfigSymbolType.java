@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
@@ -112,10 +111,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * Creates the ui.
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         comboBox = new MenuComboBox(this);
         comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -536,16 +535,6 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return String.class;
     }
 
     /**

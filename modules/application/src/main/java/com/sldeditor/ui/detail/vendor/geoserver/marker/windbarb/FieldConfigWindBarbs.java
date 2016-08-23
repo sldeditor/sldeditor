@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
@@ -47,8 +45,8 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -87,16 +85,14 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
-        FieldPanel fieldPanel = createFieldPanel(0, "", parentBox);
+        FieldPanel fieldPanel = createFieldPanel(0, "");
         fieldPanel.setLayout(new BorderLayout());
         windBarbsPanel = new WindBarbDetails(this, FunctionManager.getInstance());
 
@@ -475,16 +471,6 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return String.class;
     }
 
     /**

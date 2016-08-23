@@ -34,6 +34,7 @@ import org.geotools.styling.ColorMapImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.colourramp.ramp.ColourRampData;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.utils.ColourUtils;
@@ -362,6 +363,25 @@ public class ColourMapModel extends AbstractTableModel {
             colourMap.addColorMapEntry(entry);
         }
         return colourMap;
+    }
+
+    /**
+     * Update colour ramp.
+     *
+     * @param data the data
+     */
+    public void updateColourRamp(ColourRampData data) {
+        if(data != null)
+        {
+            for(ColourMapData row : colourMapList)
+            {
+                Color colour = data.getColourRamp().getColour(data, row.getQuantity(), data.reverseColours());
+
+                row.setColour(colour);
+            }
+
+            this.fireTableDataChanged();
+        }
     }
 
 }

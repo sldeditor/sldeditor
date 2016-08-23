@@ -22,7 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -111,17 +110,15 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     @Override
-    public void createUI(Box parentBox) {
+    public void createUI() {
 
         int xPos = getXPos();
         int maxNoOfFilterRows = 6;
         int maxNoOfExtentRows = 6;
         int maxY = getRowY(maxNoOfFilterRows + maxNoOfExtentRows);
-        FieldPanel fieldPanel = createFieldPanel(xPos, maxY, getLabel(), parentBox);
+        FieldPanel fieldPanel = createFieldPanel(xPos, maxY, getLabel());
 
         createFilterTable(xPos, maxNoOfFilterRows, fieldPanel);
         createExtentTable(xPos, maxNoOfFilterRows, maxNoOfExtentRows, fieldPanel);
@@ -497,16 +494,6 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
                     fieldConfigBase.getLabel());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type supported.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return FeatureTypeConstraint.class;
     }
 
     /**

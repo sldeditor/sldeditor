@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
@@ -49,10 +47,9 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class FieldConfigWKT wraps a text field GUI component and an optional
@@ -101,12 +98,10 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
     /**
      * Creates the ui.
-     *
-     * @param parentBox the parent box
      */
     @Override
-    public void createUI(Box parentBox) {
-        FieldPanel fieldPanel = createFieldPanel(0, "", parentBox);
+    public void createUI() {
+        FieldPanel fieldPanel = createFieldPanel(0, "");
         fieldPanel.setLayout(new BorderLayout());
         wktPanel = new WKTDetails(this, FunctionManager.getInstance());
 
@@ -508,16 +503,6 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     fieldConfigBase.isValueOnly());
         }
         return copy;
-    }
-
-    /**
-     * Gets the class type.
-     *
-     * @return the class type
-     */
-    @Override
-    public Class<?> getClassType() {
-        return Geometry.class;
     }
 
     /**
