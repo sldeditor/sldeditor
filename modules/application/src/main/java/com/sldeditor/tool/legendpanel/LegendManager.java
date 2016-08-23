@@ -52,6 +52,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.geoserver.wms.GetLegendGraphicRequest;
+import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
 import org.geoserver.wms.legendgraphic.BufferedImageLegendGraphicBuilder;
 import org.geoserver.wms.legendgraphic.LegendUtils;
 import org.geoserver.wms.map.ImageUtils;
@@ -219,11 +220,11 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         request.setWidth(legendOptionData.getImageWidth());
         request.setHeight(legendOptionData.getImageHeight());
         request.setStrict(false);
-        request.setLayer((FeatureType)null);
         legendOptions.put("dpi", Integer.valueOf(legendOptionData.getDpi()));
-        legendOptions.put("antialias", String.valueOf(legendOptionData.isAntiAlias()));
-        legendOptions.put("fontAntiAliasing", String.valueOf(legendOptionData.isAntiAlias()));
-        legendOptions.put("forceLabels", String.valueOf(legendOptionData.showLabels()));
+        legendOptions.put("antialias", getBooleanValue(legendOptionData.isAntiAlias()));
+        legendOptions.put("fontAntiAliasing", getBooleanValue(legendOptionData.isAntiAlias()));
+        legendOptions.put("forceLabels", getBooleanValue(legendOptionData.showLabels()));
+        legendOptions.put("forceTitles", getBooleanValue(legendOptionData.showLabels()));
         legendOptions.put("imageSize", String.valueOf(legendOptionData.getImageSize()));
 
         request.setLegendOptions(legendOptions);
@@ -242,34 +243,55 @@ public class LegendManager implements LegendOptionDataUpdateInterface
                 createMultipleStyleLegend(sld, styleMap, selectedStyledLayer);
             }
 
-            for(String key : styleMap.keySet())
+            // Merge symbolizers into 1 image
+            if(!separateSymbolizers)
             {
-                Style style = styleMap.get(key);
-
-                if(!style.featureTypeStyles().isEmpty())
+                for(String key : styleMap.keySet())
                 {
-                    FeatureTypeStyle featureTypeStyle = style.featureTypeStyles().get(0);
-                    if(featureTypeStyle != null)
-                    {
-                        if(!featureTypeStyle.rules().isEmpty())
-                        {
-                            request.setStyle(style);
+                    Style style = styleMap.get(key);
 
-                            imageMap.put(key, legendBuilder.buildLegendGraphic(request));
+                    if(!style.featureTypeStyles().isEmpty())
+                    {
+                        FeatureTypeStyle featureTypeStyle = style.featureTypeStyles().get(0);
+                        if(featureTypeStyle != null)
+                        {
+                            if(!featureTypeStyle.rules().isEmpty())
+                            {
+                                LegendRequest legendEntryRequest = request.new LegendRequest();
+                                request.getLegends().add(legendEntryRequest);
+                                legendEntryRequest.setTitle(key);
+                                legendEntryRequest.setStyle(style);
+                            }
                         }
                     }
                 }
+
+                imageMap.put("", legendBuilder.buildLegendGraphic(request));
+            }
+            else
+            {
+                for(String key : styleMap.keySet())
+                {
+                    request.getLegends().clear();
+                    LegendRequest legendEntryRequest = request.new LegendRequest();
+                    legendEntryRequest.setStyle(styleMap.get(key));
+                    legendEntryRequest.setStyleName(key);
+                    request.getLegends().add(legendEntryRequest);
+                    imageMap.put(key, legendBuilder.buildLegendGraphic(request));
+                }
             }
         }
-
-        // Merge symbolizers into 1 image
-        if(!separateSymbolizers)
-        {
-            BufferedImage singleImage = mergeStyles(request, imageMap.values());
-            imageMap.clear();
-            imageMap.put("Style", singleImage);
-        }
         return imageMap;
+    }
+
+    /**
+     * Gets the string for a boolean value.
+     *
+     * @param flag the flag
+     * @return the boolean value
+     */
+    private static String getBooleanValue(boolean flag) {
+        return flag ? "on" : "off";
     }
 
     /**
@@ -496,6 +518,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
      * @param formatName the format name
      * @param destinationFile the output
      * @param dpi the dpi
+     * @return true, if successful
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private boolean saveGridImage(BufferedImage image, String formatName, File destinationFile, int dpi) throws IOException {
