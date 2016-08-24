@@ -27,7 +27,6 @@ import javax.swing.JScrollPane;
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
 import com.sldeditor.ui.render.RuleRenderOptions;
 
 /**
@@ -49,9 +48,6 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
     /** The scroll pane. */
     private JScrollPane scrollPane = null;
 
-    /** The legend option panel. */
-    private LegendOptionPanel legendOptionPanel = null;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -65,18 +61,6 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
         scrollPane.setAutoscrolls(true);
         scrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
         add(scrollPane, BorderLayout.CENTER);
-
-        legendOptionPanel = new LegendOptionPanel();
-
-        JScrollPane scrollOptionPanel = new JScrollPane(legendOptionPanel);
-        legendOptionPanel.setAutoscrolls(true);
-        scrollOptionPanel.setPreferredSize(new Dimension((int)legendOptionPanel.getPreferredSize().getWidth() + 20,
-                SCROLL_PANE_HEIGHT));
-        add(scrollOptionPanel, BorderLayout.EAST);
-
-        LegendManager mgr = LegendManager.getInstance();
-        legendOptionPanel.addListener(mgr);
-        mgr.addRendererRefresh(this);
     }
 
     /* (non-Javadoc)

@@ -19,11 +19,15 @@
 package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
@@ -31,6 +35,7 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.tool.legendpanel.LegendManager;
 import com.sldeditor.tool.legendpanel.LegendPanel;
+import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
@@ -109,12 +114,29 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
         RenderSymbolInterface renderSymbol = RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName()); 
 
-        symbolPanel.add(RenderPanelFactory.getRenderOptionPanel(renderSymbol, getRendererList()));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add((Component) renderSymbol);
+        panel.add(getLegendPanel());
 
+        symbolPanel.add(panel);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
         JPanel symbolTreePanel = getSymbolTree();
+        tabbedPane.addTab("Symbol", symbolTreePanel);
 
-        symbolPanel.add(symbolTreePanel);
-        symbolPanel.add(getLegendPanel());
+        LegendOptionPanel legendOptionPanel = new LegendOptionPanel();
+        JScrollPane scrollOptionPanel = new JScrollPane(legendOptionPanel);
+        legendOptionPanel.setAutoscrolls(true);
+        scrollOptionPanel.setPreferredSize(new Dimension((int)legendOptionPanel.getPreferredSize().getWidth() + 20,
+                200));
+
+        LegendManager mgr = LegendManager.getInstance();
+        legendOptionPanel.addListener(mgr);
+        mgr.addRendererRefresh(getLegendPanel());
+
+        tabbedPane.addTab("Configuration", scrollOptionPanel);
+        symbolPanel.add(tabbedPane);
 
         return symbolPanel;
     }
@@ -182,7 +204,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
             // Reset all field values
             panelSymbolizerDetails.preLoadSymbol();
         }
-        
+
         getSymbolTree().populateSLD();
         getSymbolTree().selectFirstSymbol();
     }

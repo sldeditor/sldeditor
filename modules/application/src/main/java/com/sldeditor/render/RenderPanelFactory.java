@@ -18,13 +18,8 @@
  */
 package com.sldeditor.render;
 
-import java.awt.Component;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
@@ -71,24 +66,6 @@ public class RenderPanelFactory {
 
             render.addSLDOutputListener(sldOutput);
         }
-    }
-
-    /**
-     * Returns the panel containing the render symbol and the render option panel.
-     *
-     * @param renderSymbol the render symbol
-     * @param rendererList the renderer list
-     * @return the combined panel
-     */
-    public static JPanel getRenderOptionPanel(RenderSymbolInterface renderSymbol, List<RenderSymbolInterface> rendererList) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add((Component) renderSymbol);
-
-        RenderOptionsPanel renderOptionPanel = new RenderOptionsPanel(renderSymbol, rendererList);
-        panel.add(renderOptionPanel);
-        
-        return panel;
     }
 
     /**
