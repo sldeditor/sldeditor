@@ -142,7 +142,7 @@ public class ExportHTML
 
                     List<String> legendFileNameList = new ArrayList<String>();
                     
-                    boolean result = LegendManager.getInstance().saveLegendImage(backgroundColour, sld, destinationFolder, layerName, showHeading, showFilename, legendFileNameList);
+                    boolean result = LegendManager.getInstance().saveLegendImage(sld, destinationFolder, layerName, showHeading, showFilename, legendFileNameList);
 
                     if(result)
                     {

@@ -19,19 +19,15 @@
 package com.sldeditor.tool.legendpanel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.IndexColorModel;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -54,15 +50,12 @@ import javax.swing.JPanel;
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
 import org.geoserver.wms.legendgraphic.BufferedImageLegendGraphicBuilder;
-import org.geoserver.wms.legendgraphic.LegendUtils;
-import org.geoserver.wms.map.ImageUtils;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayerImpl;
-import org.opengis.feature.type.FeatureType;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
@@ -111,15 +104,14 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     /**
      * Creates the legend.
      *
-     * @param backgroundColour the background colour
      * @param sld the sld
      * @param heading the heading
      * @param filename the filename
      * @return the buffered image
      */
-    public BufferedImage createLegend(Color backgroundColour, StyledLayerDescriptor sld, String heading, String filename)
+    public BufferedImage createLegend(StyledLayerDescriptor sld, String heading, String filename)
     {
-        Map<String, BufferedImage> map = createLegend(backgroundColour, sld, heading, filename, false);
+        Map<String, BufferedImage> map = createLegend(sld, heading, filename, false);
 
         if((map != null) && !map.isEmpty())
         {
@@ -134,58 +126,16 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         return null;
     }
 
-
-    /**
-     * Merge styles.
-     *
-     * @param request the request
-     * @param legendEntryList the legend entry list
-     * @return the buffered image
-     */
-    private BufferedImage mergeStyles(GetLegendGraphicRequest request, Collection<BufferedImage> legendEntryList) {
-        final boolean transparent = request.isTransparent();
-        final Color backgroundColor = LegendUtils.getBackgroundColor(request);
-        final Map<RenderingHints.Key, Object> hintsMap = new HashMap<RenderingHints.Key, Object>();
-
-        int totalWidth = 0;
-        int totalHeight = 0;
-
-        for(BufferedImage image : legendEntryList)
-        {
-            totalWidth = Math.max(totalWidth, image.getWidth());
-            totalHeight = totalHeight + image.getHeight();
-        }
-
-        // create the final image
-        BufferedImage finalLegend = ImageUtils.createImage(totalWidth, totalHeight, (IndexColorModel) null,
-                transparent);
-        Graphics2D finalGraphics = ImageUtils.prepareTransparency(transparent, backgroundColor,
-                finalLegend, hintsMap);
-
-        int y = 0;
-        for(BufferedImage image : legendEntryList)
-        {
-            finalGraphics.drawImage(image, 0, y, null);
-            y = y + image.getHeight();
-        }
-
-        finalGraphics.dispose();
-
-        return finalLegend;
-    }
-
     /**
      * Creates the legend.
      *
-     * @param backgroundColour the background colour
      * @param sld the sld
      * @param heading the heading
      * @param filename the filename
      * @param separateSymbolizers the separate symbolizers
      * @return the map
      */
-    public Map<String, BufferedImage> createLegend(Color backgroundColour,
-            StyledLayerDescriptor sld, 
+    public Map<String, BufferedImage> createLegend(StyledLayerDescriptor sld, 
             String heading, 
             String filename,
             boolean separateSymbolizers)
@@ -198,9 +148,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         // Set legend options
         //
         Map<String, Object> legendOptions = new HashMap<String, Object>();
-
-        // Set background colour
-        legendOptions.put("bgColor", ColourUtils.fromColour(backgroundColour));
 
         if(heading != null)
         {
@@ -219,12 +166,36 @@ public class LegendManager implements LegendOptionDataUpdateInterface
 
         request.setWidth(legendOptionData.getImageWidth());
         request.setHeight(legendOptionData.getImageHeight());
+        request.setTransparent(legendOptionData.isTransparent());
         request.setStrict(false);
+
+        legendOptions.put("bgColor", ColourUtils.fromColour(legendOptionData.getBackgroundColour()));
+        legendOptions.put("fontColor", ColourUtils.fromColour(legendOptionData.getLabelFontColour()));
+        Font font = legendOptionData.getLabelFont();
+        legendOptions.put("fontName", font.getFontName());
+        String styleValue = null;
+        if((font.getStyle() & java.awt.Font.BOLD) == java.awt.Font.BOLD)
+        {
+            styleValue = "bold";
+        }
+        if((font.getStyle() & java.awt.Font.ITALIC) == java.awt.Font.ITALIC)
+        {
+            styleValue = "italic";
+        }
+        if(styleValue != null)
+        {
+            legendOptions.put("fontStyle", styleValue);
+        }
+
+        legendOptions.put("fontSize", String.valueOf(font.getSize()));
         legendOptions.put("dpi", Integer.valueOf(legendOptionData.getDpi()));
-        legendOptions.put("antialias", getBooleanValue(legendOptionData.isAntiAlias()));
-        legendOptions.put("fontAntiAliasing", getBooleanValue(legendOptionData.isAntiAlias()));
-        legendOptions.put("forceLabels", getBooleanValue(legendOptionData.showLabels()));
-        legendOptions.put("forceTitles", getBooleanValue(legendOptionData.showLabels()));
+        legendOptions.put("antialias", getBooleanValueOnOff(legendOptionData.isAntiAlias()));
+        legendOptions.put("fontAntiAliasing", getBooleanValueOnOff(legendOptionData.isAntiAlias()));
+        legendOptions.put("forceLabels", getBooleanValueOnOff(legendOptionData.showLabels()));
+        legendOptions.put("forceTitles", getBooleanValueOnOff(legendOptionData.isShowTitle()));
+        legendOptions.put("bandInfo", getBooleanValueTrueFalse(legendOptionData.isBandInformation()));
+        legendOptions.put("border", getBooleanValueTrueFalse(legendOptionData.isBorder()));
+        legendOptions.put("borderColor", ColourUtils.fromColour(legendOptionData.getBorderColour()));
         legendOptions.put("imageSize", String.valueOf(legendOptionData.getImageSize()));
 
         request.setLegendOptions(legendOptions);
@@ -285,13 +256,23 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     }
 
     /**
-     * Gets the string for a boolean value.
+     * Gets the string on/off for a boolean value.
      *
      * @param flag the flag
      * @return the boolean value
      */
-    private static String getBooleanValue(boolean flag) {
+    private static String getBooleanValueOnOff(boolean flag) {
         return flag ? "on" : "off";
+    }
+
+    /**
+     * Gets the string true/false for a boolean value.
+     *
+     * @param flag the flag
+     * @return the boolean value
+     */
+    private static String getBooleanValueTrueFalse(boolean flag) {
+        return flag ? "true" : "false";
     }
 
     /**
@@ -443,7 +424,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     /**
      * Save legend image.
      *
-     * @param backgroundColour the background colour
      * @param sld the sld
      * @param destinationFolder the destination folder
      * @param layerName the layer name
@@ -452,8 +432,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
      * @param filenameList the filename list
      * @return true, if successful
      */
-    public boolean saveLegendImage(Color backgroundColour,
-            StyledLayerDescriptor sld,
+    public boolean saveLegendImage(StyledLayerDescriptor sld,
             File destinationFolder,
             String layerName,
             String heading,
@@ -463,7 +442,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         boolean ok = false;
 
         Map<String, BufferedImage> imageMap =
-                LegendManager.getInstance().createLegend(backgroundColour, sld, heading, filename, legendOptionData.splitSymbolizers());
+                LegendManager.getInstance().createLegend(sld, heading, filename, legendOptionData.splitSymbolizers());
 
         if(imageMap != null)
         {
@@ -614,6 +593,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+
         mainPanel.add(optionPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();

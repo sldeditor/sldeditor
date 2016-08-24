@@ -19,6 +19,9 @@
 package com.sldeditor.tool.legendpanel.option;
 
 import java.awt.Color;
+import java.awt.Font;
+
+import org.geoserver.wms.legendgraphic.LegendUtils;
 
 /**
  * Class encapsulating legend configuration data.
@@ -27,34 +30,64 @@ import java.awt.Color;
  */
 public class LegendOptionData
 {
-    
+
     /** The image width. */
     private int imageWidth = 20;
-    
+
     /** The image height. */
     private int imageHeight = 20;
-    
+
     /** The maintain aspect ratio. */
     private boolean maintainAspectRatio = true;
-    
+
     /** The anti alias. */
     private boolean antiAlias = true;
-    
+
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
-    
+
     /** The dpi. */
     private int dpi = 96;
-    
+
     /** The show labels flag. */
     private boolean showLabels = true;
-    
-    /** The image size expressed as a percentage. 100% = original image size*/
+
+    /** The show title flag. */
+    private boolean showTitle = true;
+
+    /** The image size expressed as a percentage. 100% = original image size */
     private int imageSize = 100;
 
     /** The split symbolizers, if true then legend entries are saved to individual files. */
     private boolean splitSymbolizers = false;
-    
+
+    /** The label font. */
+    private Font labelFont = LegendUtils.DEFAULT_FONT;
+
+    /** The label font colour. */
+    private Color labelFontColour = LegendUtils.DEFAULT_FONT_COLOR;
+
+    /** The border colour. */
+    private Color borderColour = LegendUtils.DEFAULT_BORDER_COLOR;
+
+    /** The border rule. */
+    private boolean borderRule = false;
+
+    /** The gray channel name. */
+    private String grayChannelName = "1";
+
+    /** The font anti aliasing. */
+    private boolean fontAntiAliasing = true;
+
+    /** The border flag. */
+    private boolean border = false;
+
+    /** The band information flag. */
+    private boolean bandInformation = false;
+
+    /** The transparent flag. */
+    private boolean transparent = false;
+
     /**
      * Gets the image width.
      *
@@ -64,7 +97,7 @@ public class LegendOptionData
     {
         return imageWidth;
     }
-    
+
     /**
      * Sets the image width.
      *
@@ -73,13 +106,13 @@ public class LegendOptionData
     public void setImageWidth(int imageWidth)
     {
         this.imageWidth = imageWidth;
-        
+
         if(maintainAspectRatio)
         {
             this.imageHeight = imageWidth;
         }
     }
-    
+
     /**
      * Gets the image height.
      *
@@ -89,7 +122,7 @@ public class LegendOptionData
     {
         return imageHeight;
     }
-    
+
     /**
      * Sets the image height.
      *
@@ -98,13 +131,13 @@ public class LegendOptionData
     public void setImageHeight(int imageHeight)
     {
         this.imageHeight = imageHeight;
-        
+
         if(maintainAspectRatio)
         {
             this.imageWidth = imageHeight;
         }
     }
-    
+
     /**
      * Checks if is maintain aspect ratio.
      *
@@ -114,7 +147,7 @@ public class LegendOptionData
     {
         return maintainAspectRatio;
     }
-    
+
     /**
      * Sets the maintain aspect ratio.
      *
@@ -124,7 +157,7 @@ public class LegendOptionData
     {
         this.maintainAspectRatio = maintainAspectRatio;
     }
-    
+
     /**
      * Gets the dpi.
      *
@@ -134,7 +167,7 @@ public class LegendOptionData
     {
         return dpi;
     }
-    
+
     /**
      * Sets the dpi.
      *
@@ -243,5 +276,194 @@ public class LegendOptionData
     public void setSplitSymbolizers(boolean splitSymbolizers)
     {
         this.splitSymbolizers = splitSymbolizers;
+    }
+
+    /**
+     * Checks if is show title.
+     *
+     * @return the showTitle
+     */
+    public boolean isShowTitle() {
+        return showTitle;
+    }
+
+    /**
+     * Sets the show title.
+     *
+     * @param showTitle the showTitle to set
+     */
+    public void setShowTitle(boolean showTitle) {
+        this.showTitle = showTitle;
+    }
+
+    /**
+     * Gets the label font.
+     *
+     * @return the labelFont
+     */
+    public Font getLabelFont() {
+        return labelFont;
+    }
+
+    /**
+     * Sets the label font.
+     *
+     * @param labelFont the labelFont to set
+     */
+    public void setLabelFont(Font labelFont) {
+        this.labelFont = labelFont;
+    }
+
+    /**
+     * Gets the label font colour.
+     *
+     * @return the labelFontColour
+     */
+    public Color getLabelFontColour() {
+        return labelFontColour;
+    }
+
+    /**
+     * Sets the label font colour.
+     *
+     * @param labelFontColour the labelFontColour to set
+     */
+    public void setLabelFontColour(Color labelFontColour) {
+        this.labelFontColour = labelFontColour;
+    }
+
+    /**
+     * Gets the border colour.
+     *
+     * @return the borderColour
+     */
+    public Color getBorderColour() {
+        return borderColour;
+    }
+
+    /**
+     * Sets the border colour.
+     *
+     * @param borderColour the borderColour to set
+     */
+    public void setBorderColour(Color borderColour) {
+        this.borderColour = borderColour;
+    }
+
+    /**
+     * Checks if is border rule.
+     *
+     * @return the borderRule
+     */
+    public boolean isBorderRule() {
+        return borderRule;
+    }
+
+    /**
+     * Sets the border rule.
+     *
+     * @param borderRule the borderRule to set
+     */
+    public void setBorderRule(boolean borderRule) {
+        this.borderRule = borderRule;
+    }
+
+    /**
+     * Gets the gray channel name.
+     *
+     * @return the grayChannelName
+     */
+    public String getGrayChannelName() {
+        return grayChannelName;
+    }
+
+    /**
+     * Sets the gray channel name.
+     *
+     * @param grayChannelName the grayChannelName to set
+     */
+    public void setGrayChannelName(String grayChannelName) {
+        this.grayChannelName = grayChannelName;
+    }
+
+    /**
+     * Checks if is font anti aliasing.
+     *
+     * @return the fontAntiAliasing
+     */
+    public boolean isFontAntiAliasing() {
+        return fontAntiAliasing;
+    }
+
+    /**
+     * Sets the font anti aliasing.
+     *
+     * @param fontAntiAliasing the fontAntiAliasing to set
+     */
+    public void setFontAntiAliasing(boolean fontAntiAliasing) {
+        this.fontAntiAliasing = fontAntiAliasing;
+    }
+
+    /**
+     * Checks if is border.
+     *
+     * @return the border
+     */
+    public boolean isBorder() {
+        return border;
+    }
+
+    /**
+     * Sets the border.
+     *
+     * @param border the border to set
+     */
+    public void setBorder(boolean border) {
+        this.border = border;
+    }
+
+    /**
+     * Checks if is band information.
+     *
+     * @return the bandInformation
+     */
+    public boolean isBandInformation() {
+        return bandInformation;
+    }
+
+    /**
+     * Sets the band information.
+     *
+     * @param bandInformation the bandInformation to set
+     */
+    public void setBandInformation(boolean bandInformation) {
+        this.bandInformation = bandInformation;
+    }
+
+    /**
+     * Checks if is show labels.
+     *
+     * @return the showLabels
+     */
+    public boolean isShowLabels() {
+        return showLabels;
+    }
+
+    /**
+     * Checks if flag is transparent.
+     *
+     * @return the transparent
+     */
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    /**
+     * Sets the transparent flag.
+     *
+     * @param transparent the transparent to set
+     */
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
     }  
 }

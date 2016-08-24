@@ -38,20 +38,20 @@ import com.sldeditor.ui.render.RuleRenderOptions;
 public class LegendPanel extends JPanel implements RenderSymbolInterface
 {
     /** The Constant SCROLL_PANE_HEIGHT. */
-    private static final int SCROLL_PANE_HEIGHT = 100;
+    private static final int SCROLL_PANE_HEIGHT = 150;
 
     /** The Constant SCROLL_PANE_WIDTH. */
     private static final int SCROLL_PANE_WIDTH = 100;
 
     /** The legend image panel. */
     private LegendPanelImage legendImagePanel = new LegendPanelImage();
-    
+
     /** The scroll pane. */
     private JScrollPane scrollPane = null;
-    
+
     /** The legend option panel. */
     private LegendOptionPanel legendOptionPanel = null;
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -60,15 +60,20 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
      */
     public LegendPanel() {
         setLayout(new BorderLayout(0, 0));
-        
+
         scrollPane = new JScrollPane(legendImagePanel);
         scrollPane.setAutoscrolls(true);
         scrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
         add(scrollPane, BorderLayout.CENTER);
-        
+
         legendOptionPanel = new LegendOptionPanel();
-        add(legendOptionPanel, BorderLayout.EAST);
-        
+
+        JScrollPane scrollOptionPanel = new JScrollPane(legendOptionPanel);
+        legendOptionPanel.setAutoscrolls(true);
+        scrollOptionPanel.setPreferredSize(new Dimension((int)legendOptionPanel.getPreferredSize().getWidth() + 20,
+                SCROLL_PANE_HEIGHT));
+        add(scrollOptionPanel, BorderLayout.EAST);
+
         LegendManager mgr = LegendManager.getInstance();
         legendOptionPanel.addListener(mgr);
         mgr.addRendererRefresh(this);

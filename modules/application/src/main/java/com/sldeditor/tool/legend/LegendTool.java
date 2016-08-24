@@ -208,9 +208,7 @@ public class LegendTool implements ToolInterface {
 
                 List<String> filenameList = new ArrayList<String>();
 
-                Color backgroundColour = PrefManager.getInstance().getPrefData().getBackgroundColour();
-
-                LegendManager.getInstance().saveLegendImage(backgroundColour, sld, destinationFolder, layerName, heading, filename, filenameList);
+                LegendManager.getInstance().saveLegendImage(sld, destinationFolder, layerName, heading, filename, filenameList);
             }
         }
     }
