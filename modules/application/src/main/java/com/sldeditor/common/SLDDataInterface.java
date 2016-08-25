@@ -26,6 +26,7 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
+import com.sldeditor.tool.legendpanel.option.LegendOptionData;
 
 /**
  * The Interface SLDDataInterface.
@@ -147,7 +148,7 @@ public interface SLDDataInterface {
     void setSldEditorFile(File sldEditorFile);
 
     /**
-     * Returns the SLD file
+     * Returns the SLD file.
      *
      * @return the file
      */
@@ -194,5 +195,19 @@ public interface SLDDataInterface {
      * @return the original format
      */
     SLDOutputFormatEnum getOriginalFormat();
+
+    /**
+     * Gets the legend options.
+     *
+     * @return the legend options
+     */
+    LegendOptionData getLegendOptions();
+
+    /**
+     * Sets the legend options.
+     *
+     * @param legendOptions the new legend options
+     */
+    void setLegendOptions(LegendOptionData legendOptions);
 
 }

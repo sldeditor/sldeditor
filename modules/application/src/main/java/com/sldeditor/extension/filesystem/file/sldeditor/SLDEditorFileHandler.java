@@ -66,6 +66,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterf
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.filter.v2.envvar.EnvVar;
+import com.sldeditor.tool.legendpanel.option.LegendOptionData;
 
 /**
  * Class that handles read/writing SLD Editor project files.
@@ -84,6 +85,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
     private static final String ENVVAR_NAME_ATTRIBUTE = "name";
     private static final String ENVVAR_TYPE_ATTRIBUTE = "type";
     private static final String VENDOR_OPTION_ELEMENT = "vendorOption";
+    private static final String LEGEND_OPTION_ELEMENT = "legend";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3193761375262410975L;
@@ -155,6 +157,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
             DataSourcePropertiesInterface dataSourceProperties = DataSourceProperties.decodeXML(document, SLDEditorFileHandler.DATASOURCE_ELEMENT);
             List<VersionData> vendorOptionList = extractVendorOptionData(document, SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
             List<EnvVar> envVarList = extractEnvironmentVariables(document, SLDEditorFileHandler.ENVVAR_ELEMENT);
+            LegendOptionData legendOption = LegendOptionData.decodeXML(document, SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
 
             File f = new File(sldFile);
             String sldContents = readFile(f, Charset.defaultCharset());
@@ -168,6 +171,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
             sldData.setReadOnly(false);
             sldData.setSldEditorFile(file);
             sldData.setEnvVarList(envVarList);
+            sldData.setLegendOptions(legendOption);
         } catch (ParserConfigurationException e) {
             ConsoleManager.getInstance().exception(this, e);
         } catch (SAXException e) {
@@ -385,6 +389,13 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
                     envVarListElement.appendChild(envVarElement);
                 }
+            }
+
+            // Write out the legend options
+            LegendOptionData legendOptions = sldData.getLegendOptions();
+            if(legendOptions != null)
+            {
+                legendOptions.encodeXML(doc, root, SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
             }
 
             // Output the XML file contents

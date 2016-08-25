@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.geotools.coverage.GridSampleDimension;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
@@ -138,9 +139,10 @@ public class RasterReader implements RasterReaderInterface {
         int[] dest = new int[1];
         List<Integer> valueList = new ArrayList<Integer>();
 
-        for(int x = 0; x < cov.getGridGeometry().getGridRange2D().getWidth(); x++)
+        GridEnvelope2D gridRange2D = cov.getGridGeometry().getGridRange2D();
+        for(int x = 0; x < gridRange2D.getWidth(); x++)
         {
-            for(int y = 0; y < cov.getGridGeometry().getGridRange2D().getHeight(); y++)
+            for(int y = 0; y < gridRange2D.getHeight(); y++)
             {
                 DirectPosition pos = new DirectPosition2D(x, y);
                 dest = cov.evaluate(pos, dest);

@@ -19,11 +19,11 @@
 package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
@@ -37,7 +37,6 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 import com.sldeditor.ui.tree.SLDTree;
-import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
  * The Class SingleLegendUI, coordinates creating all the necessary legend panels
@@ -88,11 +87,7 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
     private LegendOptionPanel getLegendOptionsPanel() {
         if(legendOptionPanel == null)
         {
-            legendOptionPanel = new LegendOptionPanel();
-
-            LegendManager mgr = LegendManager.getInstance();
-            legendOptionPanel.addListener(mgr);
-            mgr.addRendererRefresh(getLegendPanel());
+            legendOptionPanel = LegendManager.getInstance().createLegendOptionsPanel(getLegendPanel());
         }
 
         return legendOptionPanel;
@@ -105,7 +100,7 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      */
     public JPanel createLegendPanel() {
         JPanel legendPanel = new JPanel();
-        legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.Y_AXIS));
+        legendPanel.setLayout(new GridLayout(2, 1));
 
         legendPanel.add(getLegendPanel());
 
@@ -138,8 +133,8 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
     public SLDTree getSymbolTree() {
         if(sldTree == null)
         {
-            SLDTreeTools sldTreeTools = new SLDTreeTools();
-            sldTree = new SLDTree(getRendererList(), sldTreeTools);
+            // Create symbol tree without tool buttons
+            sldTree = new SLDTree(getRendererList(), null);
 
             // Register for updates to the SLD tree structure
             SelectedSymbol.getInstance().setTreeUpdateListener(sldTree);

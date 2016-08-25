@@ -20,6 +20,7 @@ package com.sldeditor.ui.tree;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +79,8 @@ import com.sldeditor.ui.tree.item.TreeItemMap;
  * @author Robert Ward (SCISYS)
  */
 public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpdatedInterface, DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
+
+    private static final int PANEL_HEIGHT = 350;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -179,6 +182,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         {
             treeTools.configure(this, symbolTree, treeModel, renderList);
             add(treeTools.getButtonPanel());
+        }
+        else
+        {
+            setPreferredSize(new Dimension(SLDTreeTools.getPanelWidth(), PANEL_HEIGHT));
         }
     }
 

@@ -145,7 +145,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
-    
+
     /**
      * Instantiates a new render panel.
      */
@@ -198,7 +198,10 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         super.paintComponent(g);
 
         g.setColor(backgroundColour);
-        g.fillRect(0, 0, ST_WIDTH - 1, ST_HEIGHT - 1);
+        int width = this.getWidth();
+        int height = this.getHeight();
+
+        g.fillRect(0, 0, width - 1, height - 1);
 
         if(validSymbol)
         {
@@ -212,12 +215,12 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             String displayString = dataLoaded ? INVALID_SYMBOL_STRING : NO_DATA_SOURCE;
             g.setColor(Color.black);
             Rectangle2D bounds = g.getFontMetrics().getStringBounds(displayString, g);
-            double x = (ST_WIDTH / 2) - (bounds.getWidth() / 2);
-            double y = (ST_HEIGHT / 2) - (bounds.getHeight() / 2);
+            double x = (width / 2) - (bounds.getWidth() / 2);
+            double y = (height / 2) - (bounds.getHeight() / 2);
             g.drawString(displayString, (int) x, (int)y);
         }
         g.setColor(Color.black);
-        g.drawRect(0, 0, ST_WIDTH - 1, ST_HEIGHT - 1);
+        g.drawRect(0, 0, width - 1, height - 1);
     }
 
     /**
@@ -232,7 +235,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             createFeature();
         }
 
-        Rectangle imageSize = new Rectangle(0, 0, ST_WIDTH, this.getHeight());
+        Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
 
         switch(geometryType)
         {

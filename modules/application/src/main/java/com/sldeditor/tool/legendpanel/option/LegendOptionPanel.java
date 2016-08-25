@@ -139,7 +139,6 @@ public class LegendOptionPanel extends JPanel
 
     private JLabel labelFontStyle;
 
-
     /**
      * Instantiates a new legend option panel.
      */
@@ -251,7 +250,7 @@ public class LegendOptionPanel extends JPanel
         chckboxAntiAlias.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
         chckboxAntiAlias.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                data.setAntiAlias(chckboxAntiAlias.isSelected());
+                data.setFontAntiAliasing(chckboxAntiAlias.isSelected());
                 notifyListeners();
             }
         });
@@ -518,7 +517,7 @@ public class LegendOptionPanel extends JPanel
         imageSizeSpinner.setValue(Integer.valueOf(optionData.getImageSize()));
 
         chckboxMaintainAspect.setSelected(optionData.isMaintainAspectRatio());
-        chckboxAntiAlias.setSelected(optionData.isAntiAlias());
+        chckboxAntiAlias.setSelected(optionData.isFontAntiAliasing());
         chckboxShowLabels.setSelected(optionData.showLabels());
         chckboxShowTitles.setSelected(optionData.isShowTitle());
         chckboxSeparateImages.setSelected(optionData.splitSymbolizers());
@@ -530,6 +529,7 @@ public class LegendOptionPanel extends JPanel
         labelFontColourButton.populate(optionData.getLabelFontColour());
         borderColourButton.populate(optionData.getBorderColour());
 
+        updateFieldStates();
         populateLabelFontDetails(optionData.getLabelFont());
     }
 
@@ -605,7 +605,6 @@ public class LegendOptionPanel extends JPanel
         if(listener != null)
         {
             listenerList.add(listener);
-            listener.registerPanel(this);
         }
     }
 

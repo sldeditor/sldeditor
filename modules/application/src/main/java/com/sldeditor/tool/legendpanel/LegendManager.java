@@ -82,8 +82,8 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     /** The Constant INCH_2_CM. */
     private static final double INCH_2_CM = 2.54;
 
-    /** The option panel list. */
-    private List<LegendOptionPanel> optionPanelList = new ArrayList<LegendOptionPanel>();
+    /** The legend option panel. */
+    private LegendOptionPanel legendOptionPanel = null;
 
     /**
      * Creates the legend.
@@ -155,6 +155,10 @@ public class LegendManager implements LegendOptionDataUpdateInterface
 
         legendOptions.put("bgColor", ColourUtils.fromColour(legendOptionData.getBackgroundColour()));
         legendOptions.put("fontColor", ColourUtils.fromColour(legendOptionData.getLabelFontColour()));
+
+        //
+        // Label Font
+        //
         Font font = legendOptionData.getLabelFont();
         legendOptions.put("fontName", font.getFontName());
         String styleValue = null;
@@ -173,8 +177,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
 
         legendOptions.put("fontSize", String.valueOf(font.getSize()));
         legendOptions.put("dpi", Integer.valueOf(legendOptionData.getDpi()));
-        legendOptions.put("antialias", getBooleanValueOnOff(legendOptionData.isAntiAlias()));
-        legendOptions.put("fontAntiAliasing", getBooleanValueOnOff(legendOptionData.isAntiAlias()));
+        legendOptions.put("fontAntiAliasing", getBooleanValueOnOff(legendOptionData.isFontAntiAliasing()));
         legendOptions.put("forceLabels", getBooleanValueOnOff(legendOptionData.showLabels()));
         legendOptions.put("forceTitles", getBooleanValueOnOff(legendOptionData.isShowTitle()));
         legendOptions.put("bandInfo", getBooleanValueTrueFalse(legendOptionData.isBandInformation()));
@@ -558,12 +561,38 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#registerPanel(com.sldeditor.ui.legend.option.LegendOptionPanel)
+    /**
+     * Creates the legend options panel.
+     *
+     * @param legendPanel the legend panel
+     * @return the legend option panel
      */
-    @Override
-    public void registerPanel(LegendOptionPanel panel)
+    public LegendOptionPanel createLegendOptionsPanel(LegendPanel legendPanel) {
+        if(legendOptionPanel == null)
+        {
+            legendOptionPanel = new LegendOptionPanel();
+
+            legendOptionPanel.addListener(this);
+            addRendererRefresh(legendPanel);
+        }
+        return legendOptionPanel;
+    }
+
+    /**
+     * Called when SLD loaded
+     *
+     * @param data the data
+     */
+    public void SLDLoaded(LegendOptionData data)
     {
-        optionPanelList.add(panel);
+        if(data != null)
+        {
+            updateLegendOptionData(data);
+
+            if(legendOptionPanel != null)
+            {
+                legendOptionPanel.updateData(data);
+            }
+        }
     }
 }

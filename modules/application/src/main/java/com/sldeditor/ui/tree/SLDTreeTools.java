@@ -74,6 +74,9 @@ import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
  */
 public class SLDTreeTools {
 
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 400;
+
     /** The symbol marker tree. */
     private JTree symbolTree = null;
 
@@ -177,7 +180,7 @@ public class SLDTreeTools {
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setPreferredSize(new Dimension(400, BasePanel.WIDGET_HEIGHT));
+        buttonPanel.setPreferredSize(new Dimension(PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         btnAddButton = new JButton("");
         btnAddButton.setIcon(getResourceIcon("button/add.png"));
         btnAddButton.addActionListener(new ActionListener() {
@@ -1192,5 +1195,14 @@ public class SLDTreeTools {
         btnMoveUp.setEnabled(hasMoreThan1Item && !isFirstSelected);
         btnMoveDown.setVisible(showMoveButtons);
         btnMoveDown.setEnabled(hasMoreThan1Item && !isLastSelected);
+    }
+
+    /**
+     * Gets the panel width.
+     *
+     * @return the panelWidth
+     */
+    public static int getPanelWidth() {
+        return PANEL_WIDTH;
     }
 }

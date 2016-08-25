@@ -32,11 +32,4 @@ public interface LegendOptionDataUpdateInterface
      * @param data the data
      */
     void updateLegendOptionData(LegendOptionData data);
-
-    /**
-     * Register panel.
-     *
-     * @param legendOptionPanel the legend option panel
-     */
-    void registerPanel(LegendOptionPanel legendOptionPanel);
 }

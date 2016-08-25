@@ -20,10 +20,10 @@ package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
@@ -102,32 +102,13 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      */
     public JPanel createSymbolSelectionPanel() {
         JPanel symbolPanel = new JPanel();
-        symbolPanel.setLayout(new BoxLayout(symbolPanel, BoxLayout.Y_AXIS));
+        symbolPanel.setLayout(new GridLayout(2, 1));
 
         RenderSymbolInterface renderSymbol = RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName()); 
-
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-//        panel.add((Component) renderSymbol);
-//        panel.add(getLegendPanel());
 
         symbolPanel.add((Component)renderSymbol);
 
         JPanel symbolTreePanel = getSymbolTree();
-//        JTabbedPane tabbedPane = new JTabbedPane();
-//        tabbedPane.addTab("Symbol", symbolTreePanel);
-//
-//        LegendOptionPanel legendOptionPanel = new LegendOptionPanel();
-//        JScrollPane scrollOptionPanel = new JScrollPane(legendOptionPanel);
-//        legendOptionPanel.setAutoscrolls(true);
-//        scrollOptionPanel.setPreferredSize(new Dimension((int)legendOptionPanel.getPreferredSize().getWidth() + 20,
-//                200));
-//
-//        LegendManager mgr = LegendManager.getInstance();
-//        legendOptionPanel.addListener(mgr);
-//        mgr.addRendererRefresh(getLegendPanel());
-//
-//        tabbedPane.addTab("Configuration", scrollOptionPanel);
         symbolPanel.add(symbolTreePanel);
 
         return symbolPanel;

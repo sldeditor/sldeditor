@@ -22,6 +22,13 @@ import java.awt.Color;
 import java.awt.Font;
 
 import org.geoserver.wms.legendgraphic.LegendUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.sldeditor.common.utils.ColourUtils;
 
 /**
  * Class encapsulating legend configuration data.
@@ -31,6 +38,60 @@ import org.geoserver.wms.legendgraphic.LegendUtils;
 public class LegendOptionData
 {
 
+    /** The Constant BACKGROUND_COLOUR. */
+    private static final String BACKGROUND_COLOUR = "backgroundColour";
+
+    /** The Constant BORDER_COLOUR. */
+    private static final String BORDER_COLOUR = "borderColour";
+
+    /** The Constant LABEL_FONT_COLOUR. */
+    private static final String LABEL_FONT_COLOUR = "labelFontColour";
+
+    /** The Constant LABEL_FONT. */
+    private static final String LABEL_FONT = "labelFont";
+
+    /** The Constant BACKGROUND_TRANSPARENT. */
+    private static final String BACKGROUND_TRANSPARENT = "transparent";
+
+    /** The Constant BAND_INFORMATION. */
+    private static final String BAND_INFORMATION = "bandInformation";
+
+    /** The Constant SHOW_BORDER. */
+    private static final String SHOW_BORDER = "border";
+
+    /** The Constant FONT_ANTI_ALIASING. */
+    private static final String FONT_ANTI_ALIASING = "fontAntiAliasing";
+
+    /** The Constant SPLIT_SYMBOLIZERS. */
+    private static final String SPLIT_SYMBOLIZERS = "splitSymbolizers";
+
+    /** The Constant SHOW_TITLE. */
+    private static final String SHOW_TITLE = "showTitle";
+
+    /** The Constant SHOW_LABELS. */
+    private static final String SHOW_LABELS = "showLabels";
+
+    /** The Constant MAINTAIN_ASPECT_RATIO. */
+    private static final String MAINTAIN_ASPECT_RATIO = "maintainAspectRatio";
+
+    /** The Constant IMAGE_SIZE. */
+    private static final String IMAGE_SIZE = "imageSize";
+
+    /** The Constant IMAGE_DPI. */
+    private static final String IMAGE_DPI = "dpi";
+
+    /** The Constant IMAGE_HEIGHT. */
+    private static final String IMAGE_HEIGHT = "imageHeight";
+
+    /** The Constant IMAGE_WIDTH. */
+    private static final String IMAGE_WIDTH = "imageWidth";
+
+    /** The Constant FONT_STYLE. */
+    private static final String FONT_STYLE = "style";
+
+    /** The Constant FONT_SIZE. */
+    private static final String FONT_SIZE = "size";
+
     /** The image width. */
     private int imageWidth = 20;
 
@@ -39,9 +100,6 @@ public class LegendOptionData
 
     /** The maintain aspect ratio. */
     private boolean maintainAspectRatio = true;
-
-    /** The anti alias. */
-    private boolean antiAlias = true;
 
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
@@ -69,12 +127,6 @@ public class LegendOptionData
 
     /** The border colour. */
     private Color borderColour = LegendUtils.DEFAULT_BORDER_COLOR;
-
-    /** The border rule. */
-    private boolean borderRule = false;
-
-    /** The gray channel name. */
-    private String grayChannelName = "1";
 
     /** The font anti aliasing. */
     private boolean fontAntiAliasing = true;
@@ -176,26 +228,6 @@ public class LegendOptionData
     public void setDpi(int dpi)
     {
         this.dpi = dpi;
-    }
-
-    /**
-     * Checks if is anti alias.
-     *
-     * @return true, if is anti alias
-     */
-    public boolean isAntiAlias()
-    {
-        return antiAlias;
-    }
-
-    /**
-     * Sets the anti alias.
-     *
-     * @param antiAlias the new anti alias
-     */
-    public void setAntiAlias(boolean antiAlias)
-    {
-        this.antiAlias = antiAlias;
     }
 
     /**
@@ -351,42 +383,6 @@ public class LegendOptionData
     }
 
     /**
-     * Checks if is border rule.
-     *
-     * @return the borderRule
-     */
-    public boolean isBorderRule() {
-        return borderRule;
-    }
-
-    /**
-     * Sets the border rule.
-     *
-     * @param borderRule the borderRule to set
-     */
-    public void setBorderRule(boolean borderRule) {
-        this.borderRule = borderRule;
-    }
-
-    /**
-     * Gets the gray channel name.
-     *
-     * @return the grayChannelName
-     */
-    public String getGrayChannelName() {
-        return grayChannelName;
-    }
-
-    /**
-     * Sets the gray channel name.
-     *
-     * @param grayChannelName the grayChannelName to set
-     */
-    public void setGrayChannelName(String grayChannelName) {
-        this.grayChannelName = grayChannelName;
-    }
-
-    /**
      * Checks if is font anti aliasing.
      *
      * @return the fontAntiAliasing
@@ -465,5 +461,251 @@ public class LegendOptionData
      */
     public void setTransparent(boolean transparent) {
         this.transparent = transparent;
+    }
+
+    /**
+     * Encode XML.
+     *
+     * @param doc the doc
+     * @param root the root
+     * @param elementName the legend option element
+     */
+    public void encodeXML(Document doc, Element root, String elementName) {
+        if((doc == null) || (root == null) || (elementName == null))
+        {
+            return;
+        }
+
+        Element lengendOptionElement = doc.createElement(elementName);
+
+        createElement(doc, lengendOptionElement, IMAGE_WIDTH, imageWidth);
+        createElement(doc, lengendOptionElement, IMAGE_HEIGHT, imageHeight);
+        createElement(doc, lengendOptionElement, IMAGE_DPI, dpi);
+        createElement(doc, lengendOptionElement, IMAGE_SIZE, imageSize);
+        createElement(doc, lengendOptionElement, MAINTAIN_ASPECT_RATIO, maintainAspectRatio);
+        createElement(doc, lengendOptionElement, SHOW_LABELS, showLabels);
+        createElement(doc, lengendOptionElement, SHOW_TITLE, showTitle);
+        createElement(doc, lengendOptionElement, SPLIT_SYMBOLIZERS, splitSymbolizers);
+        createElement(doc, lengendOptionElement, FONT_ANTI_ALIASING, fontAntiAliasing);
+        createElement(doc, lengendOptionElement, SHOW_BORDER, border);
+        createElement(doc, lengendOptionElement, BAND_INFORMATION, bandInformation);
+        createElement(doc, lengendOptionElement, BACKGROUND_TRANSPARENT, transparent);
+        createElement(doc, lengendOptionElement, LABEL_FONT, labelFont);
+        createElement(doc, lengendOptionElement, LABEL_FONT_COLOUR, labelFontColour);
+        createElement(doc, lengendOptionElement, BORDER_COLOUR, borderColour);
+        createElement(doc, lengendOptionElement, BACKGROUND_COLOUR, backgroundColour);
+
+        root.appendChild(lengendOptionElement);
+    }
+
+    /**
+     * Creates the XML element for a boolean value.
+     *
+     * @param doc the doc
+     * @param parentElement the parent element
+     * @param elementName the element name
+     * @param value the value
+     */
+    private void createElement(Document doc, Element parentElement, String elementName, boolean value) {
+        Element element = doc.createElement(elementName);
+        element.appendChild(doc.createTextNode(Boolean.toString(value)));
+
+        parentElement.appendChild(element);
     }  
+
+    /**
+     * Creates the XML element for an integer value.
+     *
+     * @param doc the doc
+     * @param parentElement the parent element
+     * @param elementName the element name
+     * @param value the value
+     */
+    private void createElement(Document doc, Element parentElement, String elementName, int value) {
+        Element element = doc.createElement(elementName);
+        element.appendChild(doc.createTextNode(Integer.toString(value)));
+
+        parentElement.appendChild(element);
+    }  
+
+    /**
+     * Creates the XML element for a colour value.
+     *
+     * @param doc the doc
+     * @param parentElement the parent element
+     * @param elementName the element name
+     * @param value the value
+     */
+    private void createElement(Document doc, Element parentElement, String elementName, Color value) {
+        Element element = doc.createElement(elementName);
+        element.appendChild(doc.createTextNode(ColourUtils.fromColour(value)));
+
+        parentElement.appendChild(element);
+    }  
+
+    /**
+     * Creates the XML element for a font value.
+     *
+     * @param doc the doc
+     * @param parentElement the parent element
+     * @param elementName the element name
+     * @param value the value
+     */
+    private void createElement(Document doc, Element parentElement, String elementName, Font value) {
+        Element element = doc.createElement(elementName);
+        element.setAttribute(FONT_SIZE, Integer.toString(value.getSize()));
+        element.setAttribute(FONT_STYLE, Integer.toString(value.getStyle()));
+        element.appendChild(doc.createTextNode(value.getName()));
+
+        parentElement.appendChild(element);
+    }  
+
+    /**
+     * Decode the legend options from XML.
+     *
+     * @param document the document
+     * @param elementName the element name
+     * @return the data source properties
+     */
+    public static LegendOptionData decodeXML(Document document, String elementName)
+    {
+        LegendOptionData legendOptionData = new LegendOptionData();
+
+        if((document != null) && (elementName != null))
+        {
+            NodeList nodeList = document.getElementsByTagName(elementName);
+            if(nodeList.getLength() > 0)
+            {
+                Node node = nodeList.item(0);
+
+                Node child = node.getFirstChild();
+
+                while(child != null)
+                {
+                    if(child.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                        String nodeName = child.getNodeName();
+                        if(nodeName.compareToIgnoreCase(IMAGE_WIDTH) == 0)
+                        {
+                            legendOptionData.setImageWidth(decodeIntElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(IMAGE_HEIGHT) == 0)
+                        {
+                            legendOptionData.setImageHeight(decodeIntElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(IMAGE_DPI) == 0)
+                        {
+                            legendOptionData.setDpi(decodeIntElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(IMAGE_SIZE) == 0)
+                        {
+                            legendOptionData.setImageSize(decodeIntElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(MAINTAIN_ASPECT_RATIO) == 0)
+                        {
+                            legendOptionData.setMaintainAspectRatio(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(SHOW_LABELS) == 0)
+                        {
+                            legendOptionData.setShowLabels(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(SHOW_TITLE) == 0)
+                        {
+                            legendOptionData.setShowTitle(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(SPLIT_SYMBOLIZERS) == 0)
+                        {
+                            legendOptionData.setSplitSymbolizers(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(FONT_ANTI_ALIASING) == 0)
+                        {
+                            legendOptionData.setFontAntiAliasing(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(SHOW_BORDER) == 0)
+                        {
+                            legendOptionData.setBorder(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(BAND_INFORMATION) == 0)
+                        {
+                            legendOptionData.setBandInformation(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(BACKGROUND_TRANSPARENT) == 0)
+                        {
+                            legendOptionData.setTransparent(decodeBooleanElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(LABEL_FONT) == 0)
+                        {
+                            legendOptionData.setLabelFont(decodeFontElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(LABEL_FONT_COLOUR) == 0)
+                        {
+                            legendOptionData.setLabelFontColour(decodeColourElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(BORDER_COLOUR) == 0)
+                        {
+                            legendOptionData.setBorderColour(decodeColourElement(document, child));
+                        }
+                        else if(nodeName.compareToIgnoreCase(BACKGROUND_COLOUR) == 0)
+                        {
+                            legendOptionData.setBackgroundColour(decodeColourElement(document, child));
+                        }
+                    }
+                    child = child.getNextSibling();
+                }
+            }
+        }
+        return legendOptionData;
+    }
+
+    /**
+     * Decode colour element.
+     *
+     * @param document the document
+     * @param child the child
+     * @return the color
+     */
+    private static Color decodeColourElement(Document document, Node child) {
+        return ColourUtils.toColour(child.getTextContent());
+    }
+
+    /**
+     * Decode font element.
+     *
+     * @param document the document
+     * @param child the child
+     * @return the font
+     */
+    private static Font decodeFontElement(Document document, Node child) {
+        String name = child.getTextContent();
+        NamedNodeMap attributes = child.getAttributes();
+        Node sizeNode = attributes.getNamedItem(FONT_SIZE);
+        Node styleNode = attributes.getNamedItem(FONT_STYLE);
+        int size = Integer.valueOf(sizeNode.getNodeValue()).intValue();
+        int style = Integer.valueOf(styleNode.getNodeValue()).intValue();
+        Font font = new Font(name, style, size);
+
+        return font;
+    }
+
+    /**
+     * Decode boolean element.
+     *
+     * @param document the document
+     * @param child the child
+     * @return true, if successful
+     */
+    private static boolean decodeBooleanElement(Document document, Node child) {
+        return Boolean.valueOf(child.getTextContent()).booleanValue();
+    }
+
+    /**
+     * Decode int element.
+     *
+     * @param document the document
+     * @param child the child
+     * @return the int
+     */
+    private static int decodeIntElement(Document document, Node child) {
+        return Integer.valueOf(child.getTextContent()).intValue();
+    }
 }
