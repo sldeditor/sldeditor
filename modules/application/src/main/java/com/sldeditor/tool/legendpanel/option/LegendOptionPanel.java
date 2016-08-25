@@ -18,6 +18,7 @@
  */
 package com.sldeditor.tool.legendpanel.option;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -25,11 +26,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
@@ -42,6 +44,7 @@ import org.geotools.styling.StyleBuilder;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.BasePanelPadding;
 import com.sldeditor.ui.iface.ColourNotifyInterface;
 import com.sldeditor.ui.widgets.ColourButton;
 
@@ -67,8 +70,11 @@ public class LegendOptionPanel extends JPanel
     /** The Constant FIELD_WIDTH. */
     private static final int FIELD_WIDTH = 50;
 
+    /** The Constant FIELD_WIDTH_EXTENDED. */
+    private static final int FIELD_WIDTH_EXTENDED = 150;
+
     /** The Constant PANEL_WIDTH. */
-    private static final int PANEL_WIDTH = 150;
+    private static final int PANEL_WIDTH = 250;
 
     /** The Constant PANEL_HEIGHT. */
     private static final int PANEL_HEIGHT = 20;
@@ -127,16 +133,27 @@ public class LegendOptionPanel extends JPanel
     /** The border colour button. */
     private ColourButton borderColourButton;
 
+    private JLabel labelFontName;
+
+    private JLabel labelFontSize;
+
+    private JLabel labelFontStyle;
+
 
     /**
      * Instantiates a new legend option panel.
      */
     public LegendOptionPanel() {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        setBorder(new EmptyBorder(5, 10, 5, 10) );//adds margin to panel
+        setLayout(new BorderLayout());
+
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.setBorder(new EmptyBorder(5, 10, 5, 10) );//adds margin to panel
+
+        Box box = Box.createVerticalBox();
 
         JPanel widthPanel = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.width"));
-        add(widthPanel);
+        box.add(widthPanel);
 
         heightSpinner = new JSpinner();
         heightSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -168,7 +185,7 @@ public class LegendOptionPanel extends JPanel
         // Height field
         //
         JPanel heightPanel = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.height"));
-        add(heightPanel);
+        box.add(heightPanel);
 
         heightSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
         heightPanel.add(heightSpinner);
@@ -190,7 +207,7 @@ public class LegendOptionPanel extends JPanel
         });
 
         JPanel panelMaintainAspect = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.linked"));
-        add(panelMaintainAspect);
+        box.add(panelMaintainAspect);
 
         chckboxMaintainAspect = new JCheckBox("");
         chckboxMaintainAspect.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -205,7 +222,7 @@ public class LegendOptionPanel extends JPanel
         // DPI field
         //
         JPanel panelDPI = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.dpi"));
-        add(panelDPI);
+        box.add(panelDPI);
 
         dpiSpinner = new JSpinner();
         dpiSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -228,7 +245,7 @@ public class LegendOptionPanel extends JPanel
         // Anti alias
         //
         JPanel panelAntiAlias = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.antiAlias"));
-        add(panelAntiAlias);
+        box.add(panelAntiAlias);
 
         chckboxAntiAlias = new JCheckBox("");
         chckboxAntiAlias.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -244,7 +261,7 @@ public class LegendOptionPanel extends JPanel
         // Show Labels
         //
         JPanel panelShowLabels = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showLabels"));
-        add(panelShowLabels);
+        box.add(panelShowLabels);
 
         chckboxShowLabels = new JCheckBox("");
         chckboxShowLabels.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -260,7 +277,7 @@ public class LegendOptionPanel extends JPanel
         // Show Titles
         //
         JPanel panelShowTitles = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showTitles"));
-        add(panelShowTitles);
+        box.add(panelShowTitles);
 
         chckboxShowTitles = new JCheckBox("");
         chckboxShowTitles.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -276,7 +293,7 @@ public class LegendOptionPanel extends JPanel
         // Image size
         //
         JPanel panelImageSize = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.imageSize"));
-        add(panelImageSize);
+        box.add(panelImageSize);
 
         imageSizeSpinner = new JSpinner();
         imageSizeSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -299,7 +316,7 @@ public class LegendOptionPanel extends JPanel
         // Separate images
         //
         JPanel panelSeparateImages = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.separate"));
-        add(panelSeparateImages);
+        box.add(panelSeparateImages);
 
         chckboxSeparateImages = new JCheckBox("");
         chckboxSeparateImages.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -315,7 +332,7 @@ public class LegendOptionPanel extends JPanel
         // Transparent
         //
         JPanel panelTransparent = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.transparent"));
-        add(panelTransparent);
+        box.add(panelTransparent);
 
         chckboxTransparent = new JCheckBox("");
         chckboxTransparent.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -334,7 +351,7 @@ public class LegendOptionPanel extends JPanel
         // Background colour
         //
         JPanel panelBackgroundColour = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.backgroundColour"));
-        add(panelBackgroundColour);
+        box.add(panelBackgroundColour);
 
         backgroundColourButton = new ColourButton();
         backgroundColourButton.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -355,20 +372,24 @@ public class LegendOptionPanel extends JPanel
         //
         JPanel panelLabelFont = new JPanel();
         panelLabelFont.setLayout(null);
-        panelLabelFont.setPreferredSize(new Dimension(PANEL_WIDTH, BasePanel.WIDGET_HEIGHT * 2));
+        panelLabelFont.setPreferredSize(new Dimension(PANEL_WIDTH, BasePanel.WIDGET_HEIGHT * 3));
 
-        add(panelLabelFont);
+        box.add(panelLabelFont);
 
         JButton labelFont = new JButton(Localisation.getString(LegendOptionPanel.class, "LegendOptionPanel.labelFont"));
         labelFont.setBounds(LABEL_X, 0, FIELD_X - LABEL_X, BasePanel.WIDGET_HEIGHT);
         panelLabelFont.add(labelFont);
 
-        JLabel labelFontName = new JLabel();
-        labelFontName.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        labelFontName = new JLabel();
+        labelFontName.setBounds(FIELD_X, 0, FIELD_WIDTH_EXTENDED, BasePanel.WIDGET_HEIGHT);
         panelLabelFont.add(labelFontName);
 
-        JLabel labelFontSize = new JLabel();
-        labelFontSize.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        labelFontStyle = new JLabel();
+        labelFontStyle.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        panelLabelFont.add(labelFontStyle);
+
+        labelFontSize = new JLabel();
+        labelFontSize.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT + BasePanel.WIDGET_HEIGHT, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
         panelLabelFont.add(labelFontSize);
 
         labelFont.addActionListener(new ActionListener() {
@@ -382,9 +403,9 @@ public class LegendOptionPanel extends JPanel
                 if (font != null) {
                     java.awt.Font newFont = FontUtils.getFont(font);
 
-                    labelFontName.setText(newFont.getFontName());
-                    labelFontSize.setText(String.valueOf(newFont.getSize()));
+                    populateLabelFontDetails(newFont);
                     data.setLabelFont(newFont);
+
                     notifyListeners();
                 }
             }});
@@ -393,7 +414,7 @@ public class LegendOptionPanel extends JPanel
         // Label font colour
         //
         JPanel panelLabelColour = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.labelFontColour"));
-        add(panelLabelColour);
+        box.add(panelLabelColour);
 
         labelFontColourButton = new ColourButton();
         labelFontColourButton.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -413,7 +434,7 @@ public class LegendOptionPanel extends JPanel
         // Show border
         //
         JPanel panelShowBorder = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showBorder"));
-        add(panelShowBorder);
+        box.add(panelShowBorder);
 
         chckboxShowBorder = new JCheckBox("");
         chckboxShowBorder.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -430,7 +451,7 @@ public class LegendOptionPanel extends JPanel
         // Border colour
         //
         JPanel panelBorderColour = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.borderColour"));
-        add(panelBorderColour);
+        box.add(panelBorderColour);
 
         borderColourButton = new ColourButton();
         borderColourButton.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -450,7 +471,7 @@ public class LegendOptionPanel extends JPanel
         // Show band information
         //
         JPanel panelShowBandInformation = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.bandInformation"));
-        add(panelShowBandInformation);
+        box.add(panelShowBandInformation);
 
         chckboxBandInformation = new JCheckBox("");
         chckboxBandInformation.setBounds(FIELD_CHECKBOX_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
@@ -461,6 +482,17 @@ public class LegendOptionPanel extends JPanel
             }
         });
         panelShowBandInformation.add(chckboxBandInformation);
+
+        BasePanelPadding padding = new BasePanelPadding(box);
+        p.add(box, BorderLayout.CENTER);
+
+        Dimension boxSize = padding.addPadding();
+
+        JScrollPane scrollLegendOptionPanel = new JScrollPane(p);
+        scrollLegendOptionPanel.setPreferredSize(boxSize);
+        p.setAutoscrolls(true);
+
+        this.add(scrollLegendOptionPanel, BorderLayout.CENTER);
 
         populate(data);
     }
@@ -497,6 +529,37 @@ public class LegendOptionPanel extends JPanel
         backgroundColourButton.populate(optionData.getBackgroundColour());
         labelFontColourButton.populate(optionData.getLabelFontColour());
         borderColourButton.populate(optionData.getBorderColour());
+
+        populateLabelFontDetails(optionData.getLabelFont());
+    }
+
+    /**
+     * Populate label font details.
+     *
+     * @param font the font
+     */
+    private void populateLabelFontDetails(java.awt.Font font) {
+        labelFontName.setText(font.getFontName());
+        String style;
+
+        if(font.isBold() && font.isItalic())
+        {
+            style = "Bold, Italic";
+        }
+        else if(font.isBold())
+        {
+            style = "Bold";
+        }
+        else if(font.isItalic())
+        {
+            style = "Italic";
+        }
+        else
+        {
+            style = "Plain";
+        }
+        labelFontStyle.setText(style);
+        labelFontSize.setText(String.valueOf(font.getSize()));
     }
 
     /**

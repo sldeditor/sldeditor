@@ -18,12 +18,7 @@
  */
 package com.sldeditor.tool.legendpanel;
 
-import java.awt.BorderLayout;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -43,9 +38,6 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
@@ -57,10 +49,8 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayerImpl;
 
-import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.tool.legendpanel.option.LegendOptionData;
@@ -74,12 +64,6 @@ import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
  */
 public class LegendManager implements LegendOptionDataUpdateInterface
 {
-    /** The Constant OPTIONS_DIALOG_WIDTH. */
-    private static final int OPTIONS_DIALOG_WIDTH = 300;
-
-    /** The Constant OPTIONS_DIALOG_HEIGHT. */
-    private static final int OPTIONS_DIALOG_HEIGHT = 200;
-
     /** The singleton instance. */
     private static LegendManager instance = null;
 
@@ -572,57 +556,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         {
             ConsoleManager.getInstance().exception(this, e);
         }
-    }
-
-    /**
-     * Display options panel.
-     */
-    public void displayOptionsPanel()
-    {
-        JFrame parentFrame = Controller.getInstance().getFrame();
-        JFrame frame = new JFrame(Localisation.getString(LegendManager.class, "LegendManager.optionDlgTitle"));
-        frame.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-
-        int x = parentFrame.getX() + (parentFrame.getWidth() / 2) - (OPTIONS_DIALOG_WIDTH / 2);
-        int y = parentFrame.getY() + (parentFrame.getHeight() / 2) - (OPTIONS_DIALOG_HEIGHT / 2);
-        frame.setBounds(x, y, OPTIONS_DIALOG_WIDTH, OPTIONS_DIALOG_HEIGHT);
-
-        LegendOptionPanel optionPanel = new LegendOptionPanel();
-        optionPanel.updateData(legendOptionData);
-        frame.setResizable(false);
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-
-        mainPanel.add(optionPanel, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-        JButton btnOk = new JButton(Localisation.getString(LegendManager.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                updateLegendOptionData(optionPanel.getData());
-
-                for(LegendOptionPanel panel : optionPanelList)
-                {
-                    panel.updateData(optionPanel.getData());
-                }
-            }
-        });
-        buttonPanel.add(btnOk);
-        JButton btnCancel = new JButton(Localisation.getString(LegendManager.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-            }
-        });
-        buttonPanel.add(btnCancel);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        frame.setContentPane(mainPanel);
-        frame.setVisible(true);
     }
 
     /* (non-Javadoc)

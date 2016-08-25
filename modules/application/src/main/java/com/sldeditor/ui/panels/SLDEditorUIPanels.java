@@ -23,6 +23,7 @@ import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
@@ -51,6 +52,9 @@ public class SLDEditorUIPanels
     /** The single symbol ui. */
     private SingleSymbolUI singleSymbolUI;
 
+    /** The single symbol ui. */
+    private SingleLegendUI singleLegendUI;
+
     /** The Constant MULTIPLE_SYMBOL. */
     private static final String MULTIPLE_SYMBOL = "Multiple Symbol";
 
@@ -63,14 +67,23 @@ public class SLDEditorUIPanels
     /** The no symbol ui. */
     private NoSymbolUI noSymbolUI;
 
-    /** The ui map. */
-    private Map<String, SymbolPanelInterface> uiMap = new HashMap<String, SymbolPanelInterface>();
+    /** The ui symbol map. */
+    private Map<String, SymbolPanelInterface> uiSymbolMap = new HashMap<String, SymbolPanelInterface>();
+
+    /** The ui legend map. */
+    private Map<String, SymbolPanelInterface> uiLegendMap = new HashMap<String, SymbolPanelInterface>();
 
     /** The panel data tab. */
     private JPanel panelDataTab = null;
 
     /** The outer panel data tab. */
     private JPanel outerPanelDataTab = null;
+
+    /** The outer panel legend tab. */
+    private JPanel outerPanelLegendTab = null;
+
+    /** The panel legend tab. */
+    private JPanel panelLegendTab = null;
 
     /** The data source config. */
     private DataSourceConfigPanel dataSourceConfig = null;
@@ -81,13 +94,23 @@ public class SLDEditorUIPanels
     public SLDEditorUIPanels()
     {
         singleSymbolUI = new SingleSymbolUI();
-        uiMap.put(SINGLE_SYMBOL, singleSymbolUI);
+        uiSymbolMap.put(SINGLE_SYMBOL, singleSymbolUI);
 
         multipleSymbolUI = new MultipleSymbolUI();
-        uiMap.put(MULTIPLE_SYMBOL, multipleSymbolUI);
+        uiSymbolMap.put(MULTIPLE_SYMBOL, multipleSymbolUI);
 
         noSymbolUI = new NoSymbolUI();
-        uiMap.put(NO_SYMBOL, noSymbolUI);
+        uiSymbolMap.put(NO_SYMBOL, noSymbolUI);
+
+        // Legend
+        singleLegendUI = new SingleLegendUI();
+        uiLegendMap.put(SINGLE_SYMBOL, singleLegendUI);
+
+        multipleSymbolUI = new MultipleSymbolUI();
+        uiLegendMap.put(MULTIPLE_SYMBOL, multipleSymbolUI);
+
+        noSymbolUI = new NoSymbolUI();
+        uiLegendMap.put(NO_SYMBOL, noSymbolUI);
     }
 
     /**
@@ -111,14 +134,26 @@ public class SLDEditorUIPanels
             selectedItem = NO_SYMBOL;
         }
 
-        SymbolPanelInterface panelUI = uiMap.get(selectedItem);
+        // Symbol panel
+        SymbolPanelInterface symbolPanelUI = uiSymbolMap.get(selectedItem);
 
-        if(panelUI != null)
+        if(symbolPanelUI != null)
         {
             CardLayout cl = (CardLayout)(panelDataTab.getLayout());
             cl.show(panelDataTab, selectedItem);
 
-            panelUI.populate(SelectedSymbol.getInstance());
+            symbolPanelUI.populate(SelectedSymbol.getInstance());
+        }
+
+        // Legend panel
+        SymbolPanelInterface legendPanelUI = uiLegendMap.get(selectedItem);
+
+        if(legendPanelUI != null)
+        {
+            CardLayout cl = (CardLayout)(panelLegendTab.getLayout());
+            cl.show(panelLegendTab, selectedItem);
+
+            legendPanelUI.populate(SelectedSymbol.getInstance());
         }
     }
 
@@ -134,9 +169,9 @@ public class SLDEditorUIPanels
         panelDataTab = new JPanel(false);
         panelDataTab.setLayout(new CardLayout());
 
-        for(String key : uiMap.keySet())
+        for(String key : uiSymbolMap.keySet())
         {
-            SymbolPanelInterface symbolPanel = uiMap.get(key);
+            SymbolPanelInterface symbolPanel = uiSymbolMap.get(key);
 
             JPanel panel = new JPanel(new BorderLayout());
 
@@ -194,6 +229,46 @@ public class SLDEditorUIPanels
     public GraphicPanelFieldManager getFieldDataManager()
     {
         return singleSymbolUI.getFieldDataManager();
+    }
+
+    /**
+     * Gets the legend data.
+     *
+     * @return the legend data
+     */
+    public JComponent getLegendData() {
+        outerPanelLegendTab = new JPanel();
+        outerPanelLegendTab.setLayout(new BorderLayout());
+
+        panelLegendTab = new JPanel(false);
+        panelLegendTab.setLayout(new CardLayout());
+
+        for(String key : uiLegendMap.keySet())
+        {
+            SymbolPanelInterface legendPanel = uiLegendMap.get(key);
+
+            JPanel panel = new JPanel(new BorderLayout());
+
+            if(legendPanel.addNorthPanel() != null)
+            {
+                panel.add(legendPanel.addNorthPanel(), BorderLayout.NORTH);
+            }
+
+            if(legendPanel.addWestPanel() != null)
+            {
+                panel.add(legendPanel.addWestPanel(), BorderLayout.WEST);
+            }
+
+            if(legendPanel.addCentrePanel() != null)
+            {
+                panel.add(legendPanel.addCentrePanel(), BorderLayout.CENTER);
+            }
+            panelLegendTab.add(panel, key);
+        }
+
+        outerPanelLegendTab.add(panelLegendTab, BorderLayout.CENTER);
+
+        return outerPanelLegendTab;
     }
 
 }

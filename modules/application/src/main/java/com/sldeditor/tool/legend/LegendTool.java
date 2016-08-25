@@ -65,9 +65,6 @@ public class LegendTool implements ToolInterface {
     /** The legend panel. */
     private JPanel legendPanel = null;
 
-    /** The btn options. */
-    private JButton btnOptions;
-
     /** The logger. */
     private static Logger logger = Logger.getLogger(LegendTool.class);
 
@@ -139,16 +136,6 @@ public class LegendTool implements ToolInterface {
                 }
             }
         });
-
-        btnOptions = new ToolButton(Localisation.getString(LegendTool.class, "LegendTool.options"),
-                "tool/legendoptions.png");
-        btnOptions.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LegendManager.getInstance().displayOptionsPanel();
-            }
-        });
-        legendPanel.add(btnOptions);
     }
 
     /**
