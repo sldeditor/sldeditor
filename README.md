@@ -17,7 +17,7 @@ Main features include:
   * Windbarbs
 * Integration with GeoServer
 * Map viewer
-* Ability to convert Esri MXD files to SLD files (requires separate licensed components not supplied as part of this project)
+* Ability to convert Esri MXD files to SLD files (requires separate licensed components not supplied as part of this project) [Build instructions here](https://github.com/robward-scisys/sldeditor/wiki/generatesld)
 
 ## Release
 A compiled single executable jar is available here :
