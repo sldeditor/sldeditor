@@ -50,7 +50,6 @@ import org.geotools.gce.image.WorldImageFormat;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.create.NewSLDPanel;
 
 /**
  * The Class ChooseRasterFormatPanel.
