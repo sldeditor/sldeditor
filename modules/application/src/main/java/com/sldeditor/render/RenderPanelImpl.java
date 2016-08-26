@@ -45,6 +45,7 @@ import org.geotools.map.FeatureLayer;
 import org.geotools.map.GridReaderLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.map.MapViewport;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.label.LabelCacheImpl;
@@ -131,8 +132,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     /** The data loaded. */
     private boolean dataLoaded = false;
 
-    /** The vector renderer. */
-    private GTRenderer vectorRenderer = new StreamingRenderer();
+    /** The renderer. */
+    private GTRenderer renderer = new StreamingRenderer();
 
     /** The geometry type. */
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
@@ -145,7 +146,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
-    
+
     /**
      * Instantiates a new render panel.
      */
@@ -198,7 +199,10 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         super.paintComponent(g);
 
         g.setColor(backgroundColour);
-        g.fillRect(0, 0, ST_WIDTH - 1, ST_HEIGHT - 1);
+        int width = this.getWidth();
+        int height = this.getHeight();
+
+        g.fillRect(0, 0, width - 1, height - 1);
 
         if(validSymbol)
         {
@@ -212,12 +216,12 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             String displayString = dataLoaded ? INVALID_SYMBOL_STRING : NO_DATA_SOURCE;
             g.setColor(Color.black);
             Rectangle2D bounds = g.getFontMetrics().getStringBounds(displayString, g);
-            double x = (ST_WIDTH / 2) - (bounds.getWidth() / 2);
-            double y = (ST_HEIGHT / 2) - (bounds.getHeight() / 2);
+            double x = (width / 2) - (bounds.getWidth() / 2);
+            double y = (height / 2) - (bounds.getHeight() / 2);
             g.drawString(displayString, (int) x, (int)y);
         }
         g.setColor(Color.black);
-        g.drawRect(0, 0, ST_WIDTH - 1, ST_HEIGHT - 1);
+        g.drawRect(0, 0, width - 1, height - 1);
     }
 
     /**
@@ -232,7 +236,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             createFeature();
         }
 
-        Rectangle imageSize = new Rectangle(0, 0, ST_WIDTH, this.getHeight());
+        Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
 
         switch(geometryType)
         {
@@ -263,26 +267,34 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         AbstractGridCoverage2DReader gridCoverage = dataSource.getGridCoverageReader();
 
+        if(gridCoverage == null)
+        {
+            validSymbol = false;
+        }
+
         GridReaderLayer rasterLayer = null;
+        MapViewport viewport = null;
         List<Layer> layerList = new ArrayList<Layer>();
         if(style != null)
         {
             rasterLayer = new GridReaderLayer(gridCoverage, style);
             layerList.add(rasterLayer);
+            viewport = new MapViewport(rasterLayer.getBounds());
         }
 
         boolean hasGeometry = true;
 
         MapContent map = new MapContent();
         map.addLayers(layerList);
+        map.setViewport(viewport);
         try {
             Map<Object,Object> hints = new HashMap<Object,Object>();
             hints.put(StreamingRenderer.DPI_KEY, dpi);
             // This ensures all the labelling is cleared
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
 
-            vectorRenderer.setRendererHints(hints);
-            vectorRenderer.setMapContent(map);
+            renderer.setRendererHints(hints);
+            renderer.setMapContent(map);
             BufferedImage image = new BufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
@@ -304,7 +316,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
                 else {
                     if(rasterLayer != null)
                     {
-                        vectorRenderer.paint(graphics, imageSize, rasterLayer.getBounds());
+                        ReferencedEnvelope bounds = rasterLayer.getBounds();
+                        renderer.paint(graphics, imageSize, bounds);
                     }
 
                     this.bImage = image;
@@ -431,8 +444,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             // This ensures all the labelling is cleared
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
 
-            vectorRenderer.setRendererHints(hints);
-            vectorRenderer.setMapContent(map);
+            renderer.setRendererHints(hints);
+            renderer.setMapContent(map);
             BufferedImage image = new BufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
@@ -452,7 +465,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
                     graphics.drawString(Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"), 10, y - 14);
                 }
                 else {
-                    vectorRenderer.paint(graphics, imageSize, bounds);
+                    renderer.paint(graphics, imageSize, bounds);
 
                     this.bImage = image;
                 }
@@ -479,9 +492,15 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         {
             DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
-            featureList = dataSource.getExampleFeatureSource();
-
-            dataLoaded = true;
+            if(geometryType == GeometryTypeEnum.RASTER)
+            {
+                dataLoaded = (dataSource.getGridCoverageReader() != null);
+            }
+            else
+            {
+                featureList = dataSource.getExampleFeatureSource();
+                dataLoaded = true;
+            }
         }
     }
 

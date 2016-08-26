@@ -20,7 +20,6 @@ package com.sldeditor.render;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
@@ -37,9 +36,6 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  * @author Robert Ward (SCISYS)
  */
 public class RenderSymbol {
-
-    /** The logger. */
-    private static Logger logger = Logger.getLogger(RenderSymbol.class);
 
     /** The render options. */
     private RuleRenderOptions renderOptions = new RuleRenderOptions();
@@ -108,8 +104,6 @@ public class RenderSymbol {
     private Style renderSymbol(Style style, FeatureTypeStyle ftsToRender, Rule ruleToRender, RuleRenderOptions options) {
 
         int symbolIndex = SelectedSymbol.getInstance().getSymbolIndex();
-
-        logger.debug(String.format("renderSymbol : Single Index : %d ", symbolIndex));
 
         RuleRenderVisitor visitor = new RuleRenderVisitor(ftsToRender,
                 ruleToRender,

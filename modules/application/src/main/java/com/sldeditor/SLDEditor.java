@@ -67,6 +67,7 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.layout.UILayoutFactory;
 import com.sldeditor.ui.layout.UILayoutInterface;
+import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 import com.sldeditor.ui.panels.SLDEditorUIPanels;
 import com.sldeditor.ui.tree.SLDTree;
@@ -575,6 +576,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                         PrefManager.getInstance().setPrefData(prefData);
                     }
 
+                    LegendManager.getInstance().SLDLoaded(firstObject.getLegendOptions());
                     SLDEditorFile.getInstance().fileOpenedSaved();
                 }
             }

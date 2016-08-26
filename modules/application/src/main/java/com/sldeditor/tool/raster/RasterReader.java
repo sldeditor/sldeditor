@@ -18,18 +18,23 @@
  */
 package com.sldeditor.tool.raster;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.geotools.coverage.GridSampleDimension;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.coverage.grid.GridEnvelope2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.geometry.DirectPosition2D;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
@@ -45,7 +50,6 @@ import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Literal;
-import org.opengis.geometry.DirectPosition;
 import org.opengis.style.ContrastMethod;
 
 import com.sldeditor.common.SLDDataInterface;
@@ -85,7 +89,15 @@ public class RasterReader implements RasterReaderInterface {
         AbstractGridFormat format = GridFormatFinder.findFormat(rasterFile);
         AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
 
-        Style style = createRGBStyle(reader);
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(rasterFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WritableRaster raster = img.getRaster();
+
+        Style style = createRGBStyle(reader, raster);
         sld = sf.createStyledLayerDescriptor();
         NamedLayer namedLayer = sf.createNamedLayer();
         namedLayer.addStyle(style);
@@ -104,9 +116,10 @@ public class RasterReader implements RasterReaderInterface {
      * Creates the rgb style.
      *
      * @param reader the reader
+     * @param raster 
      * @return the style
      */
-    private Style createRGBStyle(AbstractGridCoverage2DReader reader) {
+    private Style createRGBStyle(AbstractGridCoverage2DReader reader, WritableRaster raster) {
         RasterSymbolizer sym = sf.getDefaultRasterSymbolizer();
 
         GridCoverage2D cov = null;
@@ -119,7 +132,7 @@ public class RasterReader implements RasterReaderInterface {
         int numBands = cov.getNumSampleDimensions();
         if (numBands < 3)
         {
-            createRGBImageSymbol(sym, cov);
+            createRGBImageSymbol(sym, cov, raster);
         }
         else
         {
@@ -133,33 +146,42 @@ public class RasterReader implements RasterReaderInterface {
      *
      * @param sym the sym
      * @param cov the cov
+     * @param raster 
      */
-    private void createRGBImageSymbol(RasterSymbolizer sym, GridCoverage2D cov) {
-        int[] dest = new int[1];
-        List<Integer> valueList = new ArrayList<Integer>();
+    private void createRGBImageSymbol(RasterSymbolizer sym, GridCoverage2D cov, WritableRaster raster) {
+        double dest;
+        List<Double> valueList = new ArrayList<Double>();
 
-        for(int x = 0; x < cov.getGridGeometry().getGridRange2D().getWidth(); x++)
+        GridEnvelope2D gridRange2D = cov.getGridGeometry().getGridRange2D();
+        for(int x = 0; x < gridRange2D.getWidth(); x++)
         {
-            for(int y = 0; y < cov.getGridGeometry().getGridRange2D().getHeight(); y++)
+            for(int y = 0; y < gridRange2D.getHeight(); y++)
             {
-                DirectPosition pos = new DirectPosition2D(x, y);
-                dest = cov.evaluate(pos, dest);
+                try {
+                    dest = raster.getSampleDouble(x, y, 0);
 
-                if(!valueList.contains(dest[0]))
-                {
-                    valueList.add(dest[0]);
+                    if(!valueList.contains(dest))
+                    {
+                        valueList.add(dest);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
 
         ColorMapImpl colourMap = new ColorMapImpl();
 
-        for(Integer value : valueList)
+        // Sort the unique sample values in ascending order
+        Collections.sort(valueList);
+
+        // Create colour amp entries in the colour map for all the sample values
+        for(Double value : valueList)
         {
             ColorMapEntry entry = new ColorMapEntryImpl();
             Literal colourExpression = ff.literal(ColourUtils.fromColour(ColourUtils.createRandomColour()));
             entry.setColor(colourExpression);
-            entry.setQuantity(ff.literal(value.intValue()));
+            entry.setQuantity(ff.literal(value.doubleValue()));
 
             colourMap.addColorMapEntry(entry);
         }
@@ -169,9 +191,11 @@ public class RasterReader implements RasterReaderInterface {
     }
 
     /**
-     * @param sym
-     * @param cov
-     * @param numBands
+     * Creates the RGB channel symbol.
+     *
+     * @param sym the sym
+     * @param cov the cov
+     * @param numBands the num bands
      */
     private void createRGBChannelSymbol(RasterSymbolizer sym, GridCoverage2D cov, int numBands) {
         // Get the names of the bands

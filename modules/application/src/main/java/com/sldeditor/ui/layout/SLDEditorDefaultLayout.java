@@ -83,10 +83,16 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
         }
 
         // SLD symbol data panel
+        JComponent legendPanel = uiMgr.getLegendData();
         JComponent dataPanel = uiMgr.getSLDSymbolData();
 
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol"), null, dataPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol.tooltip"));
+
+        // Legend data panel
+
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend"), null, legendPanel,
+                Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend.tooltip"));
 
         // SLD raw data panel
         JComponent sldPanel = SLDTextArea.getPanel();

@@ -72,6 +72,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface
 
         CGrid grid = new CGrid(control);
         SingleCDockable symbol = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.symbol"), uiMgr.getSLDSymbolData());
+        SingleCDockable legend = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.legend"), (JPanel) uiMgr.getLegendData());
         SingleCDockable sld = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.sld"), SLDTextArea.getPanel());
         SingleCDockable map = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.map"), RenderPanelFactory.getMapRenderer());
         SingleCDockable dataSource = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.dataSource"), uiMgr.getDataSourceConfig());
@@ -79,6 +80,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         SingleCDockable console = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.console"), ConsoleManager.getInstance().getPanel());
 
         control.addDockable(sld);
+        control.addDockable(legend);
         control.addDockable(symbol);
         control.addDockable(map);
         control.addDockable(dataSource);
@@ -97,6 +99,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         }
 
         grid.add(1,0,2,4, sld);
+        grid.add(1,0,2,4, legend);
         grid.add(1,0,2,4, map);
         grid.add(1,0,2,4, dataSource);
         grid.add(1,0,2,4, symbol);

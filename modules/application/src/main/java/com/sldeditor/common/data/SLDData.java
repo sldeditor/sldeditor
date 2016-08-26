@@ -27,6 +27,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
+import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
  * Class the encapsulates data describing an SLD, includes:
@@ -78,6 +79,9 @@ public class SLDData implements SLDDataInterface
 
     /** The original format. */
     private SLDOutputFormatEnum originalFormat = SLDOutputFormatEnum.SLD;
+
+    /** The legend options. */
+    private LegendOptionData legendOptions = new LegendOptionData();
 
     /**
      * Constructor.
@@ -362,4 +366,28 @@ public class SLDData implements SLDDataInterface
         return originalFormat;
     }
 
+    /**
+     * Gets the legend options.
+     *
+     * @return the legendOptions
+     */
+    @Override
+    public LegendOptionData getLegendOptions() {
+        return legendOptions;
+    }
+
+    /**
+     * Sets the legend options.
+     *
+     * @param legendOptions the legendOptions to set
+     */
+    @Override
+    public void setLegendOptions(LegendOptionData legendOptions) {
+        this.legendOptions = legendOptions;
+        
+        if(this.legendOptions == null)
+        {
+            this.legendOptions = new LegendOptionData();
+        }
+    }
 }

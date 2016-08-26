@@ -16,20 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.legendpanel;
+package com.sldeditor.ui.legend;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,24 +38,24 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
+import org.geoserver.wms.GetLegendGraphicRequest;
+import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
+import org.geoserver.wms.legendgraphic.BufferedImageLegendGraphicBuilder;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayerImpl;
 
-import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.tool.legendpanel.option.LegendOptionData;
-import com.sldeditor.tool.legendpanel.option.LegendOptionDataUpdateInterface;
-import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
+import com.sldeditor.ui.legend.option.LegendOptionData;
+import com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface;
+import com.sldeditor.ui.legend.option.LegendOptionPanel;
 
 /**
  * Manager object, implemented as a singleton, that controls the creation of SLD legend images.
@@ -68,12 +64,6 @@ import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
  */
 public class LegendManager implements LegendOptionDataUpdateInterface
 {
-    /** The Constant OPTIONS_DIALOG_WIDTH. */
-    private static final int OPTIONS_DIALOG_WIDTH = 300;
-
-    /** The Constant OPTIONS_DIALOG_HEIGHT. */
-    private static final int OPTIONS_DIALOG_HEIGHT = 200;
-
     /** The singleton instance. */
     private static LegendManager instance = null;
 
@@ -92,60 +82,56 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     /** The Constant INCH_2_CM. */
     private static final double INCH_2_CM = 2.54;
 
-    /** The option panel list. */
-    private List<LegendOptionPanel> optionPanelList = new ArrayList<LegendOptionPanel>();
+    /** The legend option panel. */
+    private LegendOptionPanel legendOptionPanel = null;
 
     /**
      * Creates the legend.
      *
-     * @param backgroundColour the background colour
      * @param sld the sld
      * @param heading the heading
      * @param filename the filename
      * @return the buffered image
      */
-    public BufferedImage createLegend(Color backgroundColour, StyledLayerDescriptor sld, String heading, String filename)
+    public BufferedImage createLegend(StyledLayerDescriptor sld, String heading, String filename)
     {
-        Map<String, BufferedImage> map = createLegend(backgroundColour, sld, heading, filename, false);
+        Map<String, BufferedImage> map = createLegend(sld, heading, filename, false);
 
         if((map != null) && !map.isEmpty())
         {
-            String firstKey = map.keySet().iterator().next();
+            if(map.size() == 1)
+            {
+                String firstKey = map.keySet().iterator().next();
 
-            return map.get(firstKey);
+                return map.get(firstKey);
+            }
         }
 
         return null;
     }
 
-
     /**
      * Creates the legend.
      *
-     * @param backgroundColour the background colour
      * @param sld the sld
      * @param heading the heading
      * @param filename the filename
      * @param separateSymbolizers the separate symbolizers
      * @return the map
      */
-    public Map<String, BufferedImage> createLegend(Color backgroundColour,
-            StyledLayerDescriptor sld, 
+    public Map<String, BufferedImage> createLegend(StyledLayerDescriptor sld, 
             String heading, 
             String filename,
             boolean separateSymbolizers)
     {
-        Map<String, BufferedImage> imageMap = null;
+        Map<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 
-        LegendRequest request = new LegendRequest();
+        GetLegendGraphicRequest request = new GetLegendGraphicRequest();
 
         //
         // Set legend options
         //
-        Map<String, String> legendOptions = new HashMap<String, String>();
-
-        // Set background colour
-        legendOptions.put("bgColor", ColourUtils.fromColour(backgroundColour));
+        Map<String, Object> legendOptions = new HashMap<String, Object>();
 
         if(heading != null)
         {
@@ -164,52 +150,214 @@ public class LegendManager implements LegendOptionDataUpdateInterface
 
         request.setWidth(legendOptionData.getImageWidth());
         request.setHeight(legendOptionData.getImageHeight());
-        legendOptions.put("dpi", String.valueOf(legendOptionData.getDpi()));
-        legendOptions.put("antialias", String.valueOf(legendOptionData.isAntiAlias()));
-        legendOptions.put("fontAntiAliasing", String.valueOf(legendOptionData.isAntiAlias()));
-        legendOptions.put("forceLabels", String.valueOf(legendOptionData.showLabels()));
+        request.setTransparent(legendOptionData.isTransparent());
+        request.setStrict(false);
+
+        legendOptions.put("bgColor", ColourUtils.fromColour(legendOptionData.getBackgroundColour()));
+        legendOptions.put("fontColor", ColourUtils.fromColour(legendOptionData.getLabelFontColour()));
+
+        //
+        // Label Font
+        //
+        Font font = legendOptionData.getLabelFont();
+        legendOptions.put("fontName", font.getFontName());
+        String styleValue = null;
+        if((font.getStyle() & java.awt.Font.BOLD) == java.awt.Font.BOLD)
+        {
+            styleValue = "bold";
+        }
+        if((font.getStyle() & java.awt.Font.ITALIC) == java.awt.Font.ITALIC)
+        {
+            styleValue = "italic";
+        }
+        if(styleValue != null)
+        {
+            legendOptions.put("fontStyle", styleValue);
+        }
+
+        legendOptions.put("fontSize", String.valueOf(font.getSize()));
+        legendOptions.put("dpi", Integer.valueOf(legendOptionData.getDpi()));
+        legendOptions.put("fontAntiAliasing", getBooleanValueOnOff(legendOptionData.isFontAntiAliasing()));
+        legendOptions.put("forceLabels", getBooleanValueOnOff(legendOptionData.isShowLabels()));
+        legendOptions.put("forceTitles", getBooleanValueOnOff(legendOptionData.isShowTitle()));
+        legendOptions.put("bandInfo", getBooleanValueTrueFalse(legendOptionData.isBandInformation()));
+        legendOptions.put("border", getBooleanValueTrueFalse(legendOptionData.isBorder()));
+        legendOptions.put("borderColor", ColourUtils.fromColour(legendOptionData.getBorderColour()));
         legendOptions.put("imageSize", String.valueOf(legendOptionData.getImageSize()));
 
         request.setLegendOptions(legendOptions);
 
         if(sld != null)
         {
-            List<StyledLayer> styledLayerList = sld.layers();
-
-            for(StyledLayer styledLayer : styledLayerList)
+            Map<String, Style> styleMap = new LinkedHashMap<String, Style>();
+            StyledLayer selectedStyledLayer = SelectedSymbol.getInstance().getStyledLayer();
+            Style selectedStyle = SelectedSymbol.getInstance().getStyle();
+            if(selectedStyle != null)
             {
-                List<Style> styleList = null;
+                createSingleStyleLegend(styleMap, selectedStyledLayer, selectedStyle);
+            }
+            else
+            {
+                createMultipleStyleLegend(sld, styleMap, selectedStyledLayer);
+            }
 
-                if(styledLayer instanceof NamedLayerImpl)
+            // Merge symbolizers into 1 image
+            if(!separateSymbolizers)
+            {
+                for(String key : styleMap.keySet())
                 {
-                    NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
+                    Style style = styleMap.get(key);
 
-                    styleList = namedLayer.styles();
-                }
-                else if(styledLayer instanceof UserLayerImpl)
-                {
-                    UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
-
-                    styleList = userLayer.userStyles();
-                }
-
-                if(styleList != null)
-                {
-                    for(Style style : styleList)
+                    if(!style.featureTypeStyles().isEmpty())
                     {
-                        if(!style.featureTypeStyles().isEmpty())
+                        FeatureTypeStyle featureTypeStyle = style.featureTypeStyles().get(0);
+                        if(featureTypeStyle != null)
                         {
-                            if(style.featureTypeStyles().get(0) != null)
+                            if(!featureTypeStyle.rules().isEmpty())
                             {
-                                imageMap = legendBuilder.buildLegendGraphic(request, style, separateSymbolizers);
+                                LegendRequest legendEntryRequest = request.new LegendRequest();
+                                request.getLegends().add(legendEntryRequest);
+                                legendEntryRequest.setTitle(key);
+                                legendEntryRequest.setStyle(style);
                             }
                         }
                     }
                 }
+
+                imageMap.put("", legendBuilder.buildLegendGraphic(request));
+            }
+            else
+            {
+                for(String key : styleMap.keySet())
+                {
+                    request.getLegends().clear();
+                    LegendRequest legendEntryRequest = request.new LegendRequest();
+                    legendEntryRequest.setStyle(styleMap.get(key));
+                    legendEntryRequest.setStyleName(key);
+                    request.getLegends().add(legendEntryRequest);
+                    imageMap.put(key, legendBuilder.buildLegendGraphic(request));
+                }
             }
         }
-
         return imageMap;
+    }
+
+    /**
+     * Gets the string on/off for a boolean value.
+     *
+     * @param flag the flag
+     * @return the boolean value
+     */
+    private static String getBooleanValueOnOff(boolean flag) {
+        return flag ? "on" : "off";
+    }
+
+    /**
+     * Gets the string true/false for a boolean value.
+     *
+     * @param flag the flag
+     * @return the boolean value
+     */
+    private static String getBooleanValueTrueFalse(boolean flag) {
+        return flag ? "true" : "false";
+    }
+
+    /**
+     * Creates the legend for multiple SLD styles.
+     *
+     * @param sld the sld
+     * @param styleMap the style map
+     * @param selectedStyledLayer the selected styled layer
+     */
+    private void createMultipleStyleLegend(StyledLayerDescriptor sld, Map<String, Style> styleMap,
+            StyledLayer selectedStyledLayer) {
+        List<StyledLayer> styledLayerList = null;
+
+        if(selectedStyledLayer == null)
+        {
+            styledLayerList = sld.layers();
+        }
+        else
+        {
+            styledLayerList = new ArrayList<StyledLayer>();
+            styledLayerList.add(selectedStyledLayer);
+        }
+
+        for(StyledLayer styledLayer : styledLayerList)
+        {
+            List<Style> styleList = null;
+
+            if(styledLayer instanceof NamedLayerImpl)
+            {
+                NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
+
+                styleList = namedLayer.styles();
+            }
+            else if(styledLayer instanceof UserLayerImpl)
+            {
+                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
+
+                styleList = userLayer.userStyles();
+            }
+
+            if(styleList != null)
+            {
+                int count = 1;
+                for(Style style : styleList)
+                {
+                    String styleName;
+                    if(style.getName() != null)
+                    {
+                        styleName = style.getName();
+                    }
+                    else
+                    {
+                        styleName = String.format("Style %d", count);
+                    }
+                    styleMap.put(styleName, style);
+
+                    count ++;
+                }
+            }
+        }
+    }
+
+    /**
+     * Creates the legend for a single SLD style.
+     *
+     * @param styleMap the style map
+     * @param selectedStyledLayer the selected styled layer
+     * @param selectedStyle the selected style
+     */
+    private void createSingleStyleLegend(Map<String, Style> styleMap,
+            StyledLayer selectedStyledLayer, Style selectedStyle) {
+        // A style has been selected
+        List<Style> styleList = null;
+
+        if(selectedStyledLayer instanceof NamedLayerImpl)
+        {
+            NamedLayerImpl namedLayer = (NamedLayerImpl) selectedStyledLayer;
+
+            styleList = namedLayer.styles();
+        }
+        else if(selectedStyledLayer instanceof UserLayerImpl)
+        {
+            UserLayerImpl userLayer = (UserLayerImpl) selectedStyledLayer;
+
+            styleList = userLayer.userStyles();
+        }
+
+        String styleName;
+        if(selectedStyle.getName() != null)
+        {
+            styleName = selectedStyle.getName();
+        }
+        else
+        {
+            styleName = String.format("Style %d", styleList.indexOf(selectedStyle));
+        }
+
+        styleMap.put(styleName, selectedStyle);
     }
 
     /**
@@ -241,16 +389,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     }
 
     /**
-     * Adds the refresh.
-     *
-     * @param obj the obj
-     */
-    public void addRendererRefresh(RenderSymbolInterface obj)
-    {
-        refreshSymbol = obj;
-    }
-
-    /**
      * Gets the renderer update.
      *
      * @return the renderer update
@@ -263,7 +401,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     /**
      * Save legend image.
      *
-     * @param backgroundColour the background colour
      * @param sld the sld
      * @param destinationFolder the destination folder
      * @param layerName the layer name
@@ -272,8 +409,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
      * @param filenameList the filename list
      * @return true, if successful
      */
-    public boolean saveLegendImage(Color backgroundColour,
-            StyledLayerDescriptor sld,
+    public boolean saveLegendImage(StyledLayerDescriptor sld,
             File destinationFolder,
             String layerName,
             String heading,
@@ -283,7 +419,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         boolean ok = false;
 
         Map<String, BufferedImage> imageMap =
-                LegendManager.getInstance().createLegend(backgroundColour, sld, heading, filename, legendOptionData.splitSymbolizers());
+                LegendManager.getInstance().createLegend(sld, heading, filename, legendOptionData.splitSymbolizers());
 
         if(imageMap != null)
         {
@@ -338,6 +474,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
      * @param formatName the format name
      * @param destinationFile the output
      * @param dpi the dpi
+     * @return true, if successful
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private boolean saveGridImage(BufferedImage image, String formatName, File destinationFile, int dpi) throws IOException {
@@ -415,61 +552,37 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     }
 
     /**
-     * Display options panel.
+     * Creates the legend options panel.
+     *
+     * @param legendPanel the legend panel
+     * @return the legend option panel
      */
-    public void displayOptionsPanel()
-    {
-        JFrame parentFrame = Controller.getInstance().getFrame();
-        JFrame frame = new JFrame(Localisation.getString(LegendManager.class, "LegendManager.optionDlgTitle"));
-        frame.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+    public LegendOptionPanel createLegendOptionsPanel(LegendPanel legendPanel) {
+        if(legendOptionPanel == null)
+        {
+            legendOptionPanel = new LegendOptionPanel();
 
-        int x = parentFrame.getX() + (parentFrame.getWidth() / 2) - (OPTIONS_DIALOG_WIDTH / 2);
-        int y = parentFrame.getY() + (parentFrame.getHeight() / 2) - (OPTIONS_DIALOG_HEIGHT / 2);
-        frame.setBounds(x, y, OPTIONS_DIALOG_WIDTH, OPTIONS_DIALOG_HEIGHT);
-
-        LegendOptionPanel optionPanel = new LegendOptionPanel();
-        optionPanel.updateData(legendOptionData);
-        frame.setResizable(false);
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(optionPanel, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-        JButton btnOk = new JButton(Localisation.getString(LegendManager.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                updateLegendOptionData(optionPanel.getData());
-
-                for(LegendOptionPanel panel : optionPanelList)
-                {
-                    panel.updateData(optionPanel.getData());
-                }
-            }
-        });
-        buttonPanel.add(btnOk);
-        JButton btnCancel = new JButton(Localisation.getString(LegendManager.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-            }
-        });
-        buttonPanel.add(btnCancel);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        frame.setContentPane(mainPanel);
-        frame.setVisible(true);
+            legendOptionPanel.addListener(this);
+            refreshSymbol = legendPanel;
+        }
+        return legendOptionPanel;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#registerPanel(com.sldeditor.ui.legend.option.LegendOptionPanel)
+    /**
+     * Called when SLD loaded
+     *
+     * @param data the data
      */
-    @Override
-    public void registerPanel(LegendOptionPanel panel)
+    public void SLDLoaded(LegendOptionData data)
     {
-        optionPanelList.add(panel);
+        if(data != null)
+        {
+            updateLegendOptionData(data);
+
+            if(legendOptionPanel != null)
+            {
+                legendOptionPanel.updateData(data);
+            }
+        }
     }
 }

@@ -45,7 +45,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.html.ExportHTML;
-import com.sldeditor.tool.legendpanel.LegendManager;
+import com.sldeditor.ui.legend.LegendManager;
 
 /**
  * Groups all the legend tools together.
@@ -64,9 +64,6 @@ public class LegendTool implements ToolInterface {
 
     /** The legend panel. */
     private JPanel legendPanel = null;
-
-    /** The btn options. */
-    private JButton btnOptions;
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(LegendTool.class);
@@ -139,16 +136,6 @@ public class LegendTool implements ToolInterface {
                 }
             }
         });
-
-        btnOptions = new ToolButton(Localisation.getString(LegendTool.class, "LegendTool.options"),
-                "tool/legendoptions.png");
-        btnOptions.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LegendManager.getInstance().displayOptionsPanel();
-            }
-        });
-        legendPanel.add(btnOptions);
     }
 
     /**
@@ -208,9 +195,7 @@ public class LegendTool implements ToolInterface {
 
                 List<String> filenameList = new ArrayList<String>();
 
-                Color backgroundColour = PrefManager.getInstance().getPrefData().getBackgroundColour();
-
-                LegendManager.getInstance().saveLegendImage(backgroundColour, sld, destinationFolder, layerName, heading, filename, filenameList);
+                LegendManager.getInstance().saveLegendImage(sld, destinationFolder, layerName, heading, filename, filenameList);
             }
         }
     }
