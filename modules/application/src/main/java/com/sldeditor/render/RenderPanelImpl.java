@@ -267,6 +267,11 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         AbstractGridCoverage2DReader gridCoverage = dataSource.getGridCoverageReader();
 
+        if(gridCoverage == null)
+        {
+            validSymbol = false;
+        }
+
         GridReaderLayer rasterLayer = null;
         MapViewport viewport = null;
         List<Layer> layerList = new ArrayList<Layer>();
@@ -487,9 +492,15 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         {
             DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
-            featureList = dataSource.getExampleFeatureSource();
-
-            dataLoaded = true;
+            if(geometryType == GeometryTypeEnum.RASTER)
+            {
+                dataLoaded = (dataSource.getGridCoverageReader() != null);
+            }
+            else
+            {
+                featureList = dataSource.getExampleFeatureSource();
+                dataLoaded = true;
+            }
         }
     }
 
