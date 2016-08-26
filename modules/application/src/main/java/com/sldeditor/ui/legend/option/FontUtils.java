@@ -44,6 +44,10 @@ public class FontUtils {
         {
             size = Integer.valueOf((String)obj);
         }
+        else if(obj instanceof Double)
+        {
+            size = ((Double)obj).intValue();
+        }
         else
         {
             size = Integer.valueOf(((String)obj).toString());

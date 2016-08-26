@@ -251,16 +251,6 @@ public class LegendOptionData
     }
 
     /**
-     * Checks if is hide labels.
-     *
-     * @return true, if is hide labels
-     */
-    public boolean showLabels()
-    {
-        return showLabels;
-    }
-
-    /**
      * Sets the show labels flag.
      *
      * @param showLabels the new show labels

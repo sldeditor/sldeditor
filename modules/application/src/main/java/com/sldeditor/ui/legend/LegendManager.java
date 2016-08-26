@@ -178,7 +178,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
         legendOptions.put("fontSize", String.valueOf(font.getSize()));
         legendOptions.put("dpi", Integer.valueOf(legendOptionData.getDpi()));
         legendOptions.put("fontAntiAliasing", getBooleanValueOnOff(legendOptionData.isFontAntiAliasing()));
-        legendOptions.put("forceLabels", getBooleanValueOnOff(legendOptionData.showLabels()));
+        legendOptions.put("forceLabels", getBooleanValueOnOff(legendOptionData.isShowLabels()));
         legendOptions.put("forceTitles", getBooleanValueOnOff(legendOptionData.isShowTitle()));
         legendOptions.put("bandInfo", getBooleanValueTrueFalse(legendOptionData.isBandInformation()));
         legendOptions.put("border", getBooleanValueTrueFalse(legendOptionData.isBorder()));

@@ -518,7 +518,7 @@ public class LegendOptionPanel extends JPanel
 
         chckboxMaintainAspect.setSelected(optionData.isMaintainAspectRatio());
         chckboxAntiAlias.setSelected(optionData.isFontAntiAliasing());
-        chckboxShowLabels.setSelected(optionData.showLabels());
+        chckboxShowLabels.setSelected(optionData.isShowLabels());
         chckboxShowTitles.setSelected(optionData.isShowTitle());
         chckboxSeparateImages.setSelected(optionData.splitSymbolizers());
         chckboxShowBorder.setSelected(optionData.isBorder());
