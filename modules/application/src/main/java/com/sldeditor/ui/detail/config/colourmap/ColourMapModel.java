@@ -284,7 +284,16 @@ public class ColourMapModel extends AbstractTableModel {
                     }
                     else if(quantityValue instanceof String)
                     {
-                        quantity = Integer.valueOf((String) quantityValue);
+                        String quantityValueString = (String) quantityValue;
+
+                        if(quantityValueString.contains("."))
+                        {
+                            quantity = Double.valueOf(quantityValueString).intValue();
+                        }
+                        else
+                        {
+                            quantity = Integer.valueOf(quantityValueString);
+                        }
                     }
                 }
 

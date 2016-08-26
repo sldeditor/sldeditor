@@ -120,13 +120,6 @@ public class RasterTool implements ToolInterface {
                         SLDEditorFile.getInstance().setSLDData(sldData);
                         SLDEditorFile.getInstance().setDataSource(dsProperties);
 
-                        DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
-
-                        if(dataSource != null)
-                        {
-                            dataSource.connect(SLDEditorFile.getInstance());
-                        }
-
                         // Load sld
                         List<SLDDataInterface> sldFilesToLoad = new ArrayList<SLDDataInterface>();
                         sldFilesToLoad.add(sldData);

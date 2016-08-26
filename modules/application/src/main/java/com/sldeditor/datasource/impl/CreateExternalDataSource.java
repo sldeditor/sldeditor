@@ -26,7 +26,6 @@ import java.util.Map;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.coverage.grid.io.GridFormatFinder;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.shapefile.ShapefileDataStore;
@@ -36,6 +35,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryType;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -43,6 +43,9 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.impl.chooseraster.ChooseRasterFormatInterface;
+import com.sldeditor.datasource.impl.chooseraster.ChooseRasterFormatPanel;
+import com.sldeditor.datasource.impl.chooseraster.DetermineRasterFormat;
 
 /**
  * The Class CreateExternalDataSource.
@@ -143,7 +146,10 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                     if(rasterFilename != null)
                     {
                         File rasterFile = new File(rasterFilename);
-                        AbstractGridFormat format = GridFormatFinder.findFormat(rasterFile);
+
+                        ChooseRasterFormatInterface panel = new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
+
+                        AbstractGridFormat format = DetermineRasterFormat.choose(rasterFile, panel);
                         AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
                         dsInfo.setGridCoverageReader(reader);
                     }
@@ -156,7 +162,9 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
             if(!dsInfo.hasData())
             {
-                ConsoleManager.getInstance().error(this, "Failed to connect to data source : " + dataSourceProperties.getDebugConnectionString());
+                ConsoleManager.getInstance().error(this,
+                        Localisation.getField(CreateExternalDataSource.class, "CreateExternalDataSource.failedToConnect") + 
+                        dataSourceProperties.getDebugConnectionString());
             }
         }
         return dataSourceInfoList;

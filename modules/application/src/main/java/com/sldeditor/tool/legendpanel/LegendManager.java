@@ -389,16 +389,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface
     }
 
     /**
-     * Adds the refresh.
-     *
-     * @param obj the obj
-     */
-    public void addRendererRefresh(RenderSymbolInterface obj)
-    {
-        refreshSymbol = obj;
-    }
-
-    /**
      * Gets the renderer update.
      *
      * @return the renderer update
@@ -573,7 +563,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface
             legendOptionPanel = new LegendOptionPanel();
 
             legendOptionPanel.addListener(this);
-            addRendererRefresh(legendPanel);
+            refreshSymbol = legendPanel;
         }
         return legendOptionPanel;
     }

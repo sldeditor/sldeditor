@@ -45,6 +45,7 @@ import org.geotools.map.FeatureLayer;
 import org.geotools.map.GridReaderLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.map.MapViewport;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.renderer.GTRenderer;
 import org.geotools.renderer.label.LabelCacheImpl;
@@ -131,8 +132,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     /** The data loaded. */
     private boolean dataLoaded = false;
 
-    /** The vector renderer. */
-    private GTRenderer vectorRenderer = new StreamingRenderer();
+    /** The renderer. */
+    private GTRenderer renderer = new StreamingRenderer();
 
     /** The geometry type. */
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
@@ -267,25 +268,28 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         AbstractGridCoverage2DReader gridCoverage = dataSource.getGridCoverageReader();
 
         GridReaderLayer rasterLayer = null;
+        MapViewport viewport = null;
         List<Layer> layerList = new ArrayList<Layer>();
         if(style != null)
         {
             rasterLayer = new GridReaderLayer(gridCoverage, style);
             layerList.add(rasterLayer);
+            viewport = new MapViewport(rasterLayer.getBounds());
         }
 
         boolean hasGeometry = true;
 
         MapContent map = new MapContent();
         map.addLayers(layerList);
+        map.setViewport(viewport);
         try {
             Map<Object,Object> hints = new HashMap<Object,Object>();
             hints.put(StreamingRenderer.DPI_KEY, dpi);
             // This ensures all the labelling is cleared
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
 
-            vectorRenderer.setRendererHints(hints);
-            vectorRenderer.setMapContent(map);
+            renderer.setRendererHints(hints);
+            renderer.setMapContent(map);
             BufferedImage image = new BufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
@@ -307,7 +311,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
                 else {
                     if(rasterLayer != null)
                     {
-                        vectorRenderer.paint(graphics, imageSize, rasterLayer.getBounds());
+                        ReferencedEnvelope bounds = rasterLayer.getBounds();
+                        renderer.paint(graphics, imageSize, bounds);
                     }
 
                     this.bImage = image;
@@ -434,8 +439,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             // This ensures all the labelling is cleared
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
 
-            vectorRenderer.setRendererHints(hints);
-            vectorRenderer.setMapContent(map);
+            renderer.setRendererHints(hints);
+            renderer.setMapContent(map);
             BufferedImage image = new BufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
@@ -455,7 +460,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
                     graphics.drawString(Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"), 10, y - 14);
                 }
                 else {
-                    vectorRenderer.paint(graphics, imageSize, bounds);
+                    renderer.paint(graphics, imageSize, bounds);
 
                     this.bImage = image;
                 }
