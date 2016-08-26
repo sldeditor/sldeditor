@@ -52,28 +52,28 @@ public class FontUtilsTest {
         Font[] fonts = e.getAllFonts(); // Get the fonts
 
         // Plain font
-        Font javaFont = new Font(fonts[0].getName(), Font.PLAIN, 24);
+        Font javaFont = new Font(fonts[0].getFamily(), Font.PLAIN, 24);
 
         org.geotools.styling.Font geoToolsFonts = sb.createFont(javaFont);
         Font actualJavaFont = FontUtils.getFont(geoToolsFonts);
         assertEquals(actualJavaFont, javaFont);
 
         // Bold font
-        javaFont = new Font(fonts[0].getName(), Font.BOLD, 18);
+        javaFont = new Font(fonts[0].getFamily(), Font.BOLD, 18);
 
         geoToolsFonts = sb.createFont(javaFont);
         actualJavaFont = FontUtils.getFont(geoToolsFonts);
         assertEquals(actualJavaFont, javaFont);
 
         // Italic font
-        javaFont = new Font(fonts[0].getName(), Font.ITALIC, 18);
+        javaFont = new Font(fonts[0].getFamily(), Font.ITALIC, 18);
 
         geoToolsFonts = sb.createFont(javaFont);
         actualJavaFont = FontUtils.getFont(geoToolsFonts);
         assertEquals(actualJavaFont, javaFont);
 
         // Bold and italic font
-        javaFont = new Font(fonts[0].getName(), Font.BOLD | Font.ITALIC, 18);
+        javaFont = new Font(fonts[0].getFamily(), Font.BOLD | Font.ITALIC, 18);
 
         geoToolsFonts = sb.createFont(javaFont);
         actualJavaFont = FontUtils.getFont(geoToolsFonts);
