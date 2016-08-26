@@ -37,7 +37,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.tool.legendpanel.LegendManager;
+import com.sldeditor.ui.legend.LegendManager;
 
 /**
  * Exports a list of SLD object to html.

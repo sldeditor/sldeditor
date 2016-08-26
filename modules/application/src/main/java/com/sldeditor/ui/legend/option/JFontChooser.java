@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.tool.legendpanel.option;
+package com.sldeditor.ui.legend.option;
 
 /*
  * This is a copy of the org.geotools.swing.styling.JFontChooser class with public

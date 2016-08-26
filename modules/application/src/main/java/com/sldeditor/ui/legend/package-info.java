@@ -16,20 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.legendpanel.option;
 
 /**
- * The Interface LegendOptionDataUpdateInterface.
- * 
  * @author Robert Ward (SCISYS)
+ *
  */
-public interface LegendOptionDataUpdateInterface
-{
-    
-    /**
-     * Update legend option data.
-     *
-     * @param data the data
-     */
-    void updateLegendOptionData(LegendOptionData data);
-}
+package com.sldeditor.ui.legend;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.legendpanel;
+package com.sldeditor.ui.legend;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -44,7 +44,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
-import com.sldeditor.tool.legendpanel.filechooser.ImageFilter;
+import com.sldeditor.ui.legend.filechooser.ImageFilter;
 
 /**
  * Class to draw the legend image into.

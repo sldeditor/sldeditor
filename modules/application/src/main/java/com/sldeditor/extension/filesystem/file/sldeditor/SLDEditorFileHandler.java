@@ -66,7 +66,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterf
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.filter.v2.envvar.EnvVar;
-import com.sldeditor.tool.legendpanel.option.LegendOptionData;
+import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
  * Class that handles read/writing SLD Editor project files.

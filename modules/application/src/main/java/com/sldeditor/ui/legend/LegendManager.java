@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.legendpanel;
+package com.sldeditor.ui.legend;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -53,9 +53,9 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.tool.legendpanel.option.LegendOptionData;
-import com.sldeditor.tool.legendpanel.option.LegendOptionDataUpdateInterface;
-import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
+import com.sldeditor.ui.legend.option.LegendOptionData;
+import com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface;
+import com.sldeditor.ui.legend.option.LegendOptionPanel;
 
 /**
  * Manager object, implemented as a singleton, that controls the creation of SLD legend images.

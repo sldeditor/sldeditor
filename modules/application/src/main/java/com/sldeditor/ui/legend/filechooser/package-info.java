@@ -18,8 +18,7 @@
  */
 
 /**
- * Package that renders the symbol legend.
- * 
  * @author Robert Ward (SCISYS)
+ *
  */
-package com.sldeditor.tool.legendpanel;
+package com.sldeditor.ui.legend.filechooser;

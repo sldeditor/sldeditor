@@ -45,7 +45,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.html.ExportHTML;
-import com.sldeditor.tool.legendpanel.LegendManager;
+import com.sldeditor.ui.legend.LegendManager;
 
 /**
  * Groups all the legend tools together.

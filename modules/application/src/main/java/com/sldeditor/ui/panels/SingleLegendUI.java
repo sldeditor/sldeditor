@@ -29,13 +29,13 @@ import javax.swing.JPanel;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.render.RenderPanelFactory;
-import com.sldeditor.tool.legendpanel.LegendManager;
-import com.sldeditor.tool.legendpanel.LegendPanel;
-import com.sldeditor.tool.legendpanel.option.LegendOptionPanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
+import com.sldeditor.ui.legend.LegendManager;
+import com.sldeditor.ui.legend.LegendPanel;
+import com.sldeditor.ui.legend.option.LegendOptionPanel;
 import com.sldeditor.ui.tree.SLDTree;
 
 /**

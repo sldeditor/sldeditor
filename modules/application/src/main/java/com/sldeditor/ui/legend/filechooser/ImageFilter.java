@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
  *
@@ -47,95 +48,99 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package com.sldeditor.tool.legendpanel.filechooser;
+package com.sldeditor.ui.legend.filechooser;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.ImageIcon;
-
-import com.sldeditor.common.console.ConsoleManager;
+import javax.swing.filechooser.*;
 
 /**
- * Image file extension utility methods.
+ * Image file filter class, allows gif, jpg, tiff, or png files.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ImageFileExtensionUtils {
-    
-    /** The Constant jpg. */
-    public final static String jpg = "jpg";
-    
-    /** The Constant gif. */
-    public final static String gif = "gif";
-    
-    /** The Constant tif. */
-    public final static String tif = "tif";
-    
-    /** The Constant png. */
-    public final static String png = "png";
+public class ImageFilter extends FileFilter {
 
-    /** The description map. */
-    private static Map<String, String> descriptionMap = new HashMap<String, String>();
-    
-    /**
-     * Populates the description values
-     */
-    private static void populate()
-    {
-        if(descriptionMap.isEmpty())
-        {
-            descriptionMap.put(jpg, "JPEG (*.png)");
-            descriptionMap.put(gif, "GIF (*.gif)");
-            descriptionMap.put(tif, "TIFF (*.tif)");
-            descriptionMap.put(png, "PNG (*.png)");
-        }
-    }
-    /**
-     * Gets the extension of the file
-     *
-     * @param f the f
-     * @return the extension
-     */
-    public static String getExtension(File f) {
-        String ext = null;
-        String s = f.getName();
-        int i = s.lastIndexOf('.');
-
-        if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
-        }
-        return ext;
-    }
+    /** The filter string. */
+    private String filterString;
 
     /**
-     *  Returns an ImageIcon, or null if the path was invalid.
-     *
-     * @param path the path
-     * @return the image icon
-     */
-    protected static ImageIcon createImageIcon(String path)
-    {
-        java.net.URL imgURL = ImageFileExtensionUtils.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            ConsoleManager.getInstance().error(ImageFileExtensionUtils.class, "Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-    /**
-     * Gets the description.
+     * Constructor
      *
      * @param filterString the filter string
-     * @return the description
      */
-    public static String getDescription(String filterString)
+    public ImageFilter(String filterString)
     {
-        populate();
-        
-        return descriptionMap.get(filterString);
+        this.filterString = filterString;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
+     */
+    // Accept all directories and all gif, jpg, tiff, or png files.
+    public boolean accept(File f) {
+        if (f.isDirectory()) {
+            return true;
+        }
+
+        String extension = ImageFileExtensionUtils.getExtension(f);
+        if (extension != null) {
+            if (extension.equals(filterString))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.filechooser.FileFilter#getDescription()
+     */
+    public String getDescription() {
+        return ImageFileExtensionUtils.getDescription(filterString);
+    }
+
+    /**
+     * Gets the list of available filters.
+     *
+     * @return the filters
+     */
+    public static List<FileFilter> getFilters()
+    {
+        List<FileFilter> filterlist = new ArrayList<FileFilter>();
+
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.jpg));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.gif));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.tif));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.png));
+
+        return filterlist;
+    }
+
+    /**
+     * Gets the file extension.
+     *
+     * @return the file extension
+     */
+    public String getFileExtension()
+    {
+        return filterString;
+    }
+
+    /**
+     * Default extension.
+     *
+     * @return the string
+     */
+    public static String defaultExtension()
+    {
+        return ImageFileExtensionUtils.png;
     }
 }

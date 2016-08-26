@@ -26,7 +26,7 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
-import com.sldeditor.tool.legendpanel.option.LegendOptionData;
+import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
  * The Interface SLDDataInterface.

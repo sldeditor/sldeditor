@@ -18,8 +18,7 @@
  */
 
 /**
- * Dialog to allow user to select the legend options.
- * 
  * @author Robert Ward (SCISYS)
+ *
  */
-package com.sldeditor.tool.legendpanel.option;
+package com.sldeditor.ui.legend.option;

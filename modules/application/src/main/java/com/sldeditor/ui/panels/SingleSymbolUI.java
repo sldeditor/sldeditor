@@ -30,11 +30,11 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.render.RenderPanelFactory;
-import com.sldeditor.tool.legendpanel.LegendManager;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
+import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.ui.tree.SLDTreeTools;
 
