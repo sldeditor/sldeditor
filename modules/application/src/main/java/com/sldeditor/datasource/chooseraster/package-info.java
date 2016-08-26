@@ -16,25 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.datasource.impl.chooseraster;
-
-import java.util.Set;
-
-import org.geotools.coverage.grid.io.AbstractGridFormat;
 
 /**
- * The Interface ChooseRasterFormatInterface.
- *
  * @author Robert Ward (SCISYS)
+ *
  */
-public interface ChooseRasterFormatInterface {
-
-    /**
-     * Show panel.
-     *
-     * @param formatList the format list
-     * @return the abstract grid format
-     */
-    AbstractGridFormat showPanel(Set<AbstractGridFormat> formatList);
-
-}
+package com.sldeditor.datasource.chooseraster;

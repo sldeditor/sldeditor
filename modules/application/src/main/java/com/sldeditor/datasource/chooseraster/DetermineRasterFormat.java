@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.datasource.impl.chooseraster;
+package com.sldeditor.datasource.chooseraster;
 
 import java.io.File;
 import java.util.Iterator;
@@ -43,24 +43,27 @@ public class DetermineRasterFormat {
      * @return the abstract grid format
      */
     public static AbstractGridFormat choose(File rasterFile, ChooseRasterFormatInterface selectionPanel) {
-        final Set<AbstractGridFormat> formats = GridFormatFinder.findFormats(rasterFile, GeoTools.getDefaultHints());
-
-        if(formats.size() > 1)
+        if(rasterFile != null)
         {
-            if(selectionPanel != null)
+            final Set<AbstractGridFormat> formats = GridFormatFinder.findFormats(rasterFile, GeoTools.getDefaultHints());
+
+            if(formats.size() > 1)
             {
-                AbstractGridFormat selectedFormat = selectionPanel.showPanel(formats);
-                if(selectedFormat != null)
+                if(selectionPanel != null)
                 {
-                    return selectedFormat;
+                    AbstractGridFormat selectedFormat = selectionPanel.showPanel(formats);
+                    if(selectedFormat != null)
+                    {
+                        return selectedFormat;
+                    }
                 }
             }
-        }
 
-        // otherwise just pick the first
-        final Iterator<AbstractGridFormat> it = formats.iterator();
-        if (it.hasNext()) {
-            return it.next();
+            // otherwise just pick the first
+            final Iterator<AbstractGridFormat> it = formats.iterator();
+            if (it.hasNext()) {
+                return it.next();
+            }
         }
         return new UnknownFormat();
     }

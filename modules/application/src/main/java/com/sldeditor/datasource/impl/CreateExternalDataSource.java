@@ -43,9 +43,9 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.datasource.impl.chooseraster.ChooseRasterFormatInterface;
-import com.sldeditor.datasource.impl.chooseraster.ChooseRasterFormatPanel;
-import com.sldeditor.datasource.impl.chooseraster.DetermineRasterFormat;
+import com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface;
+import com.sldeditor.datasource.chooseraster.ChooseRasterFormatPanel;
+import com.sldeditor.datasource.chooseraster.DetermineRasterFormat;
 
 /**
  * The Class CreateExternalDataSource.
