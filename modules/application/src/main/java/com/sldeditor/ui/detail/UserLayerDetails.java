@@ -208,7 +208,10 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
                 {
                     DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-                    dataSource.updateUserLayers();
+                    if(dataSource != null)
+                    {
+                        dataSource.updateUserLayers();
+                    }
                 }
             }
 
