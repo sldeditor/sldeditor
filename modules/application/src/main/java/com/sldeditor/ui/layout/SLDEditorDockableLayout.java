@@ -71,8 +71,8 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         frame.add(control.getContentArea());
 
         CGrid grid = new CGrid(control);
-        SingleCDockable symbol = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.symbol"), uiMgr.getSLDSymbolData());
         SingleCDockable legend = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.legend"), (JPanel) uiMgr.getLegendData());
+        SingleCDockable symbol = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.symbol"), uiMgr.getSLDSymbolData());
         SingleCDockable sld = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.sld"), SLDTextArea.getPanel());
         SingleCDockable map = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.map"), RenderPanelFactory.getMapRenderer());
         SingleCDockable dataSource = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.dataSource"), uiMgr.getDataSourceConfig());
