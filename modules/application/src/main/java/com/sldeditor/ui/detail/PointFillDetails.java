@@ -30,11 +30,14 @@ public class PointFillDetails extends FillDetails {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant configFile. */
+    private static final String configFile = "PointFill.xml";
+
     /**
      * Instantiates a new point fill details.
      */
     public PointFillDetails(FunctionNameInterface functionManager) {
-        super(PointFillDetails.class, functionManager);
+        super(PointFillDetails.class, configFile, functionManager);
     }
 
 }

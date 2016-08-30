@@ -21,7 +21,7 @@
                 <Field id="FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_OPACITY" enabled="true" />
-                <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="STROKE_FILL_WIDTH" enabled="true" />
             </FieldList>
         </Value>
     </Panel>
@@ -41,7 +41,7 @@
                 <Field id="FILL_COLOUR" enabled="false" />
                 <Field id="STROKE_FILL_COLOUR" enabled="false" />
                 <Field id="STROKE_FILL_OPACITY" enabled="false" />
-                <Field id="STROKE_WIDTH" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
             </FieldList>
         </Value>
         <Value>
@@ -59,7 +59,7 @@
                 <Field id="FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_COLOUR" enabled="false" />
                 <Field id="STROKE_FILL_OPACITY" enabled="false" />
-                <Field id="STROKE_WIDTH" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
                 <Field id="STROKE_SYMBOL_SIZE" enabled="false" />
                 <Field id="STROKE_SYMBOL_ANGLE" enabled="false" />
                 <Field id="STROKE_SYMBOL_GAP" enabled="false" />
@@ -90,7 +90,7 @@
                 <Field id="FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_OPACITY" enabled="true" />
-                <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="STROKE_FILL_WIDTH" enabled="true" />
                 <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
                 <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
                 <Field id="STROKE_SYMBOL_GAP" enabled="true" />
@@ -109,6 +109,7 @@
                 <Field id="STROKE_STYLE" enabled="true" />
                 <Field id="STROKE_FILL_COLOUR" enabled="true" />
                 <Field id="STROKE_FILL_OPACITY" enabled="true" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
                 <Field id="STROKE_STROKE_COLOUR" enabled="false" />
                 <Field id="STROKE_STROKE_OPACITY" enabled="false" />
                 <Field id="STROKE_WIDTH" enabled="true" />
@@ -140,7 +141,7 @@
                 <Field id="STROKE_FILL_OPACITY" enabled="true" />
                 <Field id="STROKE_STROKE_COLOUR" enabled="true" />
                 <Field id="STROKE_STROKE_OPACITY" enabled="true" />
-                <Field id="STROKE_WIDTH" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="true" />
 
                 <Field id="STROKE_LINE_JOIN" enabled="true" />
                 <Field id="STROKE_LINE_CAP" enabled="true" />

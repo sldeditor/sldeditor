@@ -41,6 +41,7 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.PointFillDetails;
@@ -162,12 +163,12 @@ public class FieldConfigMarkerTest {
 
             public TestFieldConfigMarker(Class<?> panelId, FieldId id, String label,
                     boolean valueOnly,
-                    FieldId colourField, 
-                    FieldId opacityField,
+                    ColourFieldConfig fillFieldConfig,
+                    ColourFieldConfig strokeFieldConfig,
                     FieldId symbolSelectionField) {
                 super(panelId, id, label, valueOnly,
-                        colourField, 
-                        opacityField,
+                        fillFieldConfig, 
+                        strokeFieldConfig,
                         symbolSelectionField);
             }
 
@@ -235,7 +236,9 @@ public class FieldConfigMarkerTest {
     public void testGetFill() {
         // Test it with null values
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, null, null, null);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, null);
 
         assertNull(field.getStringValue());
 
@@ -255,6 +258,7 @@ public class FieldConfigMarkerTest {
 
         // Test it with non null values
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
+
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
         colourField.createUI();
         String expectedColourValue = "#012345";
@@ -272,7 +276,7 @@ public class FieldConfigMarkerTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field2 = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, colourFieldId, opacityFieldId, symbolSelectionFieldId);
+        FieldConfigMarker field2 = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, symbolSelectionFieldId);
         actualValue = field2.getFill(graphicFill, fieldConfigManager);
         assertNotNull(actualValue);
         LiteralExpressionImpl literalExpressionImpl = (LiteralExpressionImpl)actualValue.getColor();
@@ -283,8 +287,8 @@ public class FieldConfigMarkerTest {
 
         graphicFill = styleBuilder.createGraphic();
         actualValue = field2.getFill(graphicFill, fieldConfigManager);
-        assertTrue(actualValue.getColor().toString().compareTo(expectedColourValue) == 0);
-        assertTrue(actualValue.getOpacity().toString().compareTo(String.valueOf(expectedOpacityValue)) == 0);
+        assertNull(actualValue.getColor());
+        assertNull(actualValue.getOpacity());
     }
 
     /**
@@ -309,6 +313,8 @@ public class FieldConfigMarkerTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
+        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
         colourField.createUI();
@@ -327,7 +333,7 @@ public class FieldConfigMarkerTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, colourFieldId, opacityFieldId, symbolSelectionFieldId);
+        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, symbolSelectionFieldId);
 
         field.setSolidFill(null, null, null);
         field.setSolidFill(fieldConfigManager, null, null);
@@ -344,6 +350,8 @@ public class FieldConfigMarkerTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
+        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
         colourField.createUI();
@@ -362,7 +370,7 @@ public class FieldConfigMarkerTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, colourFieldId, opacityFieldId, symbolSelectionFieldId);
+        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, symbolSelectionFieldId);
 
         field.populateFieldOverrideMap(String.class, null);
         field.populateFieldOverrideMap(PointSymbolizerDetails.class, null);
@@ -379,6 +387,8 @@ public class FieldConfigMarkerTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
+        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
         colourField.createUI();
@@ -397,11 +407,11 @@ public class FieldConfigMarkerTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, colourFieldId, opacityFieldId, symbolSelectionFieldId);
+        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, symbolSelectionFieldId);
 
         assertTrue(field.getFieldList(null).isEmpty());
         assertFalse(field.getFieldList(fieldConfigManager).isEmpty());
-        assertEquals(2, field.getFieldList(fieldConfigManager).size());
+        assertEquals(6, field.getFieldList(fieldConfigManager).size());
     }
 
     /**
@@ -510,6 +520,8 @@ public class FieldConfigMarkerTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
+        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
         FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
         colourField.createUI();
@@ -528,7 +540,7 @@ public class FieldConfigMarkerTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field2 = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, colourFieldId, opacityFieldId, symbolSelectionFieldId);
+        FieldConfigMarker field2 = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, symbolSelectionFieldId);
 
         field2.setValue(null, null, null);
         field2.setValue(fieldConfigManager, null, null);
@@ -547,7 +559,10 @@ public class FieldConfigMarkerTest {
         StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, null, null, null);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+
+        FieldConfigMarker field = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, null);
 
         assertNull(field.getStringValue());
 
@@ -588,7 +603,7 @@ public class FieldConfigMarkerTest {
         assertNull(actualSymbol.getWellKnownName());
 
         // Try with symbol type of solid
-        FieldConfigMarker field2 = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, colourFieldId, opacityFieldId, symbolSelectionFieldId);
+        FieldConfigMarker field2 = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, fillConfig, strokeConfig, symbolSelectionFieldId);
 
         actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
         assertNotNull(actualValue);

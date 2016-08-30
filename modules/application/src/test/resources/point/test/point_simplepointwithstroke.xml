@@ -35,7 +35,7 @@
             <Disabled field="INITIAL_GAP"/>
             <LiteralDouble value="1.0" field="OPACITY"/>
             <LiteralString value="#000000" field="STROKE_FILL_COLOUR"/>
-            <LiteralDouble value="2.0" field="STROKE_WIDTH"/>
+            <LiteralDouble value="2.0" field="STROKE_FILL_WIDTH"/>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>

@@ -34,8 +34,8 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -57,10 +57,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class FieldConfigMarker extends FieldState {
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Marker.xml";
 
     /** The Constant NONE_SYMBOL_KEY. */
@@ -69,11 +66,11 @@ public class FieldConfigMarker extends FieldState {
     /** The Constant SOLID_SYMBOL. */
     private static final String SOLID_SYMBOL_KEY = "solid";
 
-    /** The colour field. */
-    private FieldId colourField;
+    /** The fill field config. */
+    private ColourFieldConfig fillFieldConfig;
 
-    /** The opacity field. */
-    private FieldId opacityField;
+    /** The stroke field config. */
+    private ColourFieldConfig strokeFieldConfig; 
 
     /** The symbol selection field. */
     private FieldId symbolSelectionField;
@@ -92,18 +89,18 @@ public class FieldConfigMarker extends FieldState {
      * @param id the id
      * @param label the label
      * @param valueOnly the value only
-     * @param colourField the colour field
-     * @param opacityField the opacity field
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
     public FieldConfigMarker(Class<?> panelId, FieldId id, String label, boolean valueOnly,
-            FieldId colourField, 
-            FieldId opacityField,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
             FieldId symbolSelectionField) {
         super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
 
-        this.colourField = colourField;
-        this.opacityField = opacityField;
+        this.fillFieldConfig = fillFieldConfig;
+        this.strokeFieldConfig = strokeFieldConfig;
         this.symbolSelectionField = symbolSelectionField;
     }
 
@@ -259,14 +256,14 @@ public class FieldConfigMarker extends FieldState {
 
         Expression fillColour = null;
 
-        FieldConfigBase field = fieldConfigManager.get(colourField);
+        FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
         if(field != null)
         {
             fillColour = ((FieldConfigColour)field).getColourExpression();
         }
 
         Expression fillColourOpacity = null;
-        field = fieldConfigManager.get(opacityField);
+        field = fieldConfigManager.get(fillFieldConfig.getOpacity());
         if(field != null)
         {
             fillColourOpacity = field.getExpression();
@@ -283,21 +280,21 @@ public class FieldConfigMarker extends FieldState {
         if(strokeEnabled)
         {
             Expression strokeColour = null;
-            field = fieldConfigManager.get(FieldIdEnum.STROKE_STROKE_COLOUR);
+            field = fieldConfigManager.get(strokeFieldConfig.getColour());
             if(field != null)
             {
                 strokeColour = ((FieldConfigColour)field).getColourExpression();
             }
 
             Expression strokeColourOpacity = null;
-            field = fieldConfigManager.get(FieldIdEnum.STROKE_STROKE_OPACITY);
+            field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
             if(field != null)
             {
                 strokeColourOpacity = field.getExpression();
             }
 
             Expression strokeWidth = null;
-            field = fieldConfigManager.get(FieldIdEnum.STROKE_WIDTH);
+            field = fieldConfigManager.get(strokeFieldConfig.getWidth());
             if(field != null)
             {
                 strokeWidth = field.getExpression();
@@ -334,7 +331,7 @@ public class FieldConfigMarker extends FieldState {
             return null;
         }
         Expression fillColour = null;
-        FieldConfigBase field = fieldConfigManager.get(colourField);
+        FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
         if(field != null)
         {
             if(field instanceof FieldConfigColour)
@@ -344,13 +341,15 @@ public class FieldConfigMarker extends FieldState {
         }
 
         Expression fillColourOpacity = null;
-        field = fieldConfigManager.get(opacityField);
+        field = fieldConfigManager.get(fillFieldConfig.getOpacity());
         if(field != null)
         {
             fillColourOpacity = field.getExpression();
         }
 
         GraphicFill _graphicFill = null;
+        Expression _fillColour = fillColour;
+        Expression _fillColourOpacity = fillColourOpacity;
         if(graphicFill != null)
         {
             List<GraphicalSymbol> symbolList = graphicFill.graphicalSymbols();
@@ -362,10 +361,12 @@ public class FieldConfigMarker extends FieldState {
                 if(mark.getWellKnownName() != null)
                 {
                     _graphicFill = graphicFill;
+                    _fillColour = null;
+                    _fillColourOpacity = null;
                 }
             }
         }
-        Fill fill = getStyleFactory().fill(_graphicFill, fillColour, fillColourOpacity);
+        Fill fill = getStyleFactory().fill(_graphicFill, _fillColour, _fillColourOpacity);
 
         return fill;
     }
@@ -386,19 +387,21 @@ public class FieldConfigMarker extends FieldState {
      *
      * @param fieldConfigManager the field config manager
      * @param expFillColour the new solid fill
-     * @param expFillColourOpacity the exp fill colour opacity
+     * @param expFillColourOpacity the expression fill colour opacity
      */
-    public void setSolidFill(GraphicPanelFieldManager fieldConfigManager, Expression expFillColour, Expression expFillColourOpacity) {
+    public void setSolidFill(GraphicPanelFieldManager fieldConfigManager,
+            Expression expFillColour,
+            Expression expFillColourOpacity) {
 
         if(fieldConfigManager != null)
         {
-            FieldConfigBase field = fieldConfigManager.get(colourField);
+            FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
             if(field != null)
             {
                 field.populate(expFillColour);
             }
-            
-            field = fieldConfigManager.get(opacityField);
+
+            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
             if(field != null)
             {
                 field.populate(expFillColourOpacity);
@@ -430,8 +433,24 @@ public class FieldConfigMarker extends FieldState {
 
         if(fieldConfigManager != null)
         {
-            map.put(colourField, fieldConfigManager.get(colourField));
-            map.put(opacityField, fieldConfigManager.get(opacityField));
+            if(fillFieldConfig != null)
+            {
+                map.put(fillFieldConfig.getColour(), fieldConfigManager.get(fillFieldConfig.getColour()));
+                map.put(fillFieldConfig.getOpacity(), fieldConfigManager.get(fillFieldConfig.getOpacity()));
+                if(fillFieldConfig.getWidth() != null)
+                {
+                    map.put(fillFieldConfig.getWidth(), fieldConfigManager.get(fillFieldConfig.getWidth()));
+                }
+            }
+            if(strokeFieldConfig != null)
+            {
+                map.put(strokeFieldConfig.getColour(), fieldConfigManager.get(strokeFieldConfig.getColour()));
+                map.put(strokeFieldConfig.getOpacity(), fieldConfigManager.get(strokeFieldConfig.getOpacity()));
+                if(strokeFieldConfig.getWidth() != null)
+                {
+                    map.put(strokeFieldConfig.getWidth(), fieldConfigManager.get(strokeFieldConfig.getWidth()));
+                }
+            }
         }
         return map;
     }
@@ -554,8 +573,8 @@ public class FieldConfigMarker extends FieldState {
                     fieldConfigBase.getFieldId(),
                     fieldConfigBase.getLabel(),
                     fieldConfigBase.isValueOnly(),
-                    this.colourField,
-                    this.opacityField,
+                    this.fillFieldConfig,
+                    this.strokeFieldConfig,
                     this.symbolSelectionField);
         }
         return copy;

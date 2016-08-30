@@ -6,27 +6,36 @@
             label="fillSymbol.symbol" />
         <FieldConfigDouble id="ANGLE" label="fillSymbol.angle" />
         <FieldConfigDouble id="SIZE" label="fillSymbol.size" defaultValue="5.0" minValue="0.1"/>
-        <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" />
+        <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
         <FieldConfigDouble id="INITIAL_GAP" label="fillSymbol.initialGap" />
         <FieldConfigDouble id="GAP" label="fillSymbol.gap" />
     </Group>
     <Group id="ANCHORPOINT" label="fillSymbol.anchorPoint"
         showLabel="true">
         <FieldConfigSlider id="ANCHOR_POINT_H"
-            label="fillSymbol.anchorPoint.x" />
+            label="fillSymbol.anchorPoint.x" defaultValue="0.0" />
         <FieldConfigSlider id="ANCHOR_POINT_V"
-            label="fillSymbol.anchorPoint.y" />
+            label="fillSymbol.anchorPoint.y" defaultValue="0.5" />
     </Group>
     <Group id="DISPLACEMENT" label="fillSymbol.displacement"
         showLabel="true">
         <FieldConfigDouble id="DISPLACEMENT_X"
-            label="fillSymbol.displacement.x" />
+            label="fillSymbol.displacement.x" defaultValue="0.0" />
         <FieldConfigDouble id="DISPLACEMENT_Y"
-            label="fillSymbol.displacement.y" />
+            label="fillSymbol.displacement.y" defaultValue="0.0" />
     </Group>
     <Group id="FILL" label="fillSymbol.fill" showLabel="true"
         option="true">
         <FieldConfigColour id="FILL_COLOUR" label="fillSymbol.fill.colour" />
+    </Group>
+    <Group id="STROKE" label="fillSymbol.stroke" showLabel="true"
+        option="true">
+        <FieldConfigColour id="STROKE_FILL_COLOUR"
+            label="fillSymbol.stroke.colour" />
+        <FieldConfigSlider id="STROKE_FILL_OPACITY"
+            label="fillSymbol.stroke.opacity" defaultValue="1.0" />
+        <FieldConfigDouble id="STROKE_FILL_WIDTH"
+            label="fillSymbol.stroke.width" defaultValue="1.0" />
     </Group>
 </PanelConfig>
 

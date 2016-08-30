@@ -100,7 +100,7 @@ public class FillDetailsTest {
         actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.01);
         actualValue = opacityField.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.5) < 0.01);
+        assertTrue(Math.abs(actualValue - 1.0) < 0.01);
     }
 
     /**
@@ -167,6 +167,6 @@ public class FillDetailsTest {
         actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.01);
         actualValue = opacityField.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.5) < 0.01);
+        assertTrue(Math.abs(actualValue - 1.0) < 0.01);
     }
 }

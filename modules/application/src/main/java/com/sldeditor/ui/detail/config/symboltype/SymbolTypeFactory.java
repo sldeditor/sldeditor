@@ -32,6 +32,7 @@ import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -93,18 +94,18 @@ public class SymbolTypeFactory {
      * Constructor.
      *
      * @param panelId the panel id
-     * @param colourField the colour field
-     * @param opacityField the opacity field
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the selection combo box
      */
     public SymbolTypeFactory(Class<?> panelId,
-            FieldId colourField, 
-            FieldId opacityField,
+            ColourFieldConfig fillFieldConfig, 
+            ColourFieldConfig strokeFieldConfig, 
             FieldId symbolSelectionField)
     {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false, colourField, opacityField, symbolSelectionField);
+        markerField = new FieldConfigMarker(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         externalImageField = new FieldConfigFilename(panelId, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), "", true);
         ttfField = new FieldConfigTTF(panelId, new FieldId(FieldIdEnum.TTF_SYMBOL), "", true);
         windBarbs = new FieldConfigWindBarbs(panelId, new FieldId(FieldIdEnum.WINDBARBS), "", true);

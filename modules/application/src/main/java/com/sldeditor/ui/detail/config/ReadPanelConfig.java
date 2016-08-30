@@ -446,7 +446,10 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigSlider)
         {
+            XMLFieldConfigSlider xmlSlider = (XMLFieldConfigSlider)xmlFieldConfig;
+
             FieldConfigSlider sliderConfig = new FieldConfigSlider(panelId, id, label, valueOnly);
+            sliderConfig.setDefaultValue(xmlSlider.getDefaultValue());
 
             groupConfig.addField(sliderConfig);
 

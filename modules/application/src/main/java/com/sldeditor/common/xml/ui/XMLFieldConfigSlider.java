@@ -10,6 +10,7 @@ package com.sldeditor.common.xml.ui;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -26,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType name="XMLFieldConfigSlider"&gt;
  *   &lt;complexContent&gt;
  *     &lt;extension base="{}XMLFieldConfigData"&gt;
+ *       &lt;attribute name="defaultValue" type="{http://www.w3.org/2001/XMLSchema}double" default="1.0" /&gt;
  *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -39,5 +41,35 @@ public class XMLFieldConfigSlider
     extends XMLFieldConfigData
 {
 
+    @XmlAttribute(name = "defaultValue")
+    protected Double defaultValue;
+
+    /**
+     * Gets the value of the defaultValue property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
+     */
+    public double getDefaultValue() {
+        if (defaultValue == null) {
+            return  1.0D;
+        } else {
+            return defaultValue;
+        }
+    }
+
+    /**
+     * Sets the value of the defaultValue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
+     */
+    public void setDefaultValue(Double value) {
+        this.defaultValue = value;
+    }
 
 }

@@ -35,6 +35,8 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * The Class FieldConfigSlider wraps a slider GUI component and an optional
  * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
+ * Values between 0.0 and 1.0.
+ * <p>
  * Supports undo/redo functionality. 
  * <p>
  * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
@@ -49,7 +51,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     /** The default value. */
     private double defaultValue = 0.5;
 
-    /** The max value. */
+    /** The maximum value. */
     private double maxValue = 1.0;
 
     /** The old value obj. */

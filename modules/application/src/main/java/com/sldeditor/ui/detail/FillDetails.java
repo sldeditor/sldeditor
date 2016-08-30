@@ -23,7 +23,9 @@ import java.util.List;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
+import org.geotools.styling.AnchorPointImpl;
 import org.geotools.styling.Displacement;
+import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.MarkImpl;
@@ -75,30 +77,34 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
     /**  The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
 
-    /** The Constant configFile. */
-    private static final String configFile = "PolygonFill.xml";
-
     /** The vendor option list allowed to be used. */
     private List<VersionData> vendorOptionOptionsList = new ArrayList<VersionData>();
 
     /** The vendor option fill factory. */
     private VendorOptionFillFactory vendorOptionFillFactory = null;
 
+    /** The default anchor point. */
+    private static AnchorPoint defaultAnchorPoint = new AnchorPointImpl();
+
+    /** The default displacement. */
+    private static Displacement defaultDisplacement = new DisplacementImpl();
+
     /**
      * Constructor.
      *
      * @param panelId the panel id
+     * @param configFile the config file
      * @param functionManager the function manager
      */
-    protected FillDetails(Class<?> panelId, FunctionNameInterface functionManager)
+    protected FillDetails(Class<?> panelId, String configFile, FunctionNameInterface functionManager)
     {
         super(panelId, functionManager);
 
         setUpdateSymbolListener(this);
 
         symbolTypeFactory = new SymbolTypeFactory(FillDetails.class,
-                new FieldId(FieldIdEnum.FILL_COLOUR),
-                new FieldId(FieldIdEnum.OPACITY),
+                new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 new FieldId(FieldIdEnum.SYMBOL_TYPE));
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(panelId);
@@ -230,6 +236,11 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                     expAnchorPointX = anchorPoint.getAnchorPointX();
                     expAnchorPointY = anchorPoint.getAnchorPointY();
                 }
+                else
+                {
+                    expAnchorPointX = defaultAnchorPoint.getAnchorPointX();
+                    expAnchorPointY = defaultAnchorPoint.getAnchorPointY();
+                }
 
                 // Offset
                 Displacement displacement = graphic.getDisplacement();
@@ -238,6 +249,11 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                 {
                     expDisplacementX = displacement.getDisplacementX();
                     expDisplacementY = displacement.getDisplacementY();
+                }
+                else
+                {
+                    expDisplacementX = defaultDisplacement.getDisplacementX();
+                    expDisplacementY = defaultDisplacement.getDisplacementY();
                 }
 
                 expOpacity = graphic.getOpacity();
@@ -292,7 +308,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
         fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), expStrokeColour);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_OPACITY, expStrokeColourOpacity);
-        fieldConfigVisitor.populateField(FieldIdEnum.STROKE_WIDTH, expStrokeWidth);
+        fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_WIDTH, expStrokeWidth);
 
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
 
@@ -365,7 +381,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         boolean hasFill = fillGroup.isPanelEnabled();
 
         GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.STROKE);
-        boolean hasStroke = strokeGroup.isPanelEnabled();
+        boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
         Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
         Expression size = fieldConfigVisitor.getExpression(FieldIdEnum.SIZE);
@@ -382,6 +398,12 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         {
             anchor = (AnchorPoint) getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
+
+            // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
+            if(DetailsUtilities.isSame(defaultAnchorPoint, anchor))
+            {
+                anchor = null;
+            }
         }
 
         //
@@ -393,7 +415,14 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         {
             displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
+
+            // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
+            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
+            {
+                displacement = null;
+            }
         }
+
         List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(fieldConfigManager, symbolType, hasFill, hasStroke, selectedFillPanelId);
 
         Graphic graphic = getStyleFactory().graphic(symbols, opacity, size, rotation, anchor, displacement);
@@ -414,7 +443,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         boolean hasFill = fillGroup.isPanelEnabled();
 
         GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.STROKE);
-        boolean hasStroke = strokeGroup.isPanelEnabled();
+        boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
         Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
         Expression size = fieldConfigVisitor.getExpression(FieldIdEnum.SIZE);
@@ -431,6 +460,12 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         {
             anchorPoint = (AnchorPoint) getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
+
+            // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
+            if(DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint))
+            {
+                anchorPoint = null;
+            }
         }
 
         //
@@ -443,6 +478,12 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         {
             displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
+
+            // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
+            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
+            {
+                displacement = null;
+            }
         }
 
         List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager, symbolType, hasFill, hasStroke, selectedFillPanelId);

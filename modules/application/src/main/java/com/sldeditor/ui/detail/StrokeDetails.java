@@ -24,7 +24,9 @@ import java.util.List;
 import org.geotools.filter.ConstantExpression;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
+import org.geotools.styling.AnchorPointImpl;
 import org.geotools.styling.Displacement;
+import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
@@ -76,6 +78,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     /**  The field enable state map, indicates which fields to enable. */
     private FieldEnableState fieldEnableState = null;
 
+    /** The default anchor point. */
+    private static AnchorPoint defaultAnchorPoint = new AnchorPointImpl();
+
+    /** The default displacement. */
+    private static Displacement defaultDisplacement = new DisplacementImpl();
+
     /**
      * Constructor.
      */
@@ -86,8 +94,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         setUpdateSymbolListener(this);
 
         fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new FieldId(FieldIdEnum.STROKE_FILL_COLOUR),
-                new FieldId(FieldIdEnum.STROKE_FILL_OPACITY),
+                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.STROKE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 new FieldId(FieldIdEnum.STROKE_STYLE));
 
         fieldEnableState = fillFactory.getFieldOverrides(this.getClass());
@@ -132,12 +140,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         Expression fillColour = colourField.getColourExpression();
         Expression fillColourOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_FILL_OPACITY);
 
-        FieldConfigBase fdmStrokeColour = fieldConfigManager.get(FieldIdEnum.STROKE_STROKE_COLOUR);
-        FieldConfigColour strokeColourField = (FieldConfigColour)fdmStrokeColour;
-
-        Expression strokeColour = strokeColourField.getColourExpression();
-        Expression strokeColourOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_STROKE_OPACITY);
-
         boolean isLine = true;
         if(symbolTypeValue != null)
         {
@@ -168,8 +170,20 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             AnchorPoint anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
+            // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
+            if(DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint))
+            {
+                anchorPoint = null;
+            }
+
             Displacement displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
+
+            // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
+            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
+            {
+                displacement = null;
+            }
 
             List<GraphicalSymbol> symbols = fillFactory.getValue(this.fieldConfigManager, symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
 
@@ -184,13 +198,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                     gap);
 
             stroke.setGraphicStroke(graphicStroke);
-
-            if(strokeColourEnabled)
-            {
-                stroke.setColor(strokeColour);
-                stroke.setOpacity(strokeColourOpacity);
-                stroke.setWidth(strokeWidth);
-            }
         }
         return stroke;
     }
@@ -397,6 +404,11 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                     expAnchorPointX = anchorPoint.getAnchorPointX();
                     expAnchorPointY = anchorPoint.getAnchorPointY();
                 }
+                else
+                {
+                    expAnchorPointX = defaultAnchorPoint.getAnchorPointX();
+                    expAnchorPointY = defaultAnchorPoint.getAnchorPointY();
+                }
 
                 // Displacement
                 Displacement displacement = graphicStroke.getDisplacement();
@@ -404,6 +416,11 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                 {
                     expDisplacementX = displacement.getDisplacementX();
                     expDisplacementY = displacement.getDisplacementY();
+                }
+                else
+                {
+                    expDisplacementX = defaultDisplacement.getDisplacementX();
+                    expDisplacementY = defaultDisplacement.getDisplacementY();
                 }
 
                 expGap = graphicStroke.getGap();

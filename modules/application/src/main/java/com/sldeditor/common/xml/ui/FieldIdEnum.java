@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="STROKE_STYLE"/&gt;
  *     &lt;enumeration value="STROKE_FILL_COLOUR"/&gt;
  *     &lt;enumeration value="STROKE_FILL_OPACITY"/&gt;
+ *     &lt;enumeration value="STROKE_FILL_WIDTH"/&gt;
  *     &lt;enumeration value="STROKE_WIDTH"/&gt;
  *     &lt;enumeration value="STROKE_LINE_JOIN"/&gt;
  *     &lt;enumeration value="STROKE_LINE_CAP"/&gt;
@@ -168,6 +169,7 @@ public enum FieldIdEnum {
     STROKE_STYLE,
     STROKE_FILL_COLOUR,
     STROKE_FILL_OPACITY,
+    STROKE_FILL_WIDTH,
     STROKE_WIDTH,
     STROKE_LINE_JOIN,
     STROKE_LINE_CAP,
