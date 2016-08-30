@@ -171,7 +171,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
-            if(defaultAnchorPoint.equals(anchorPoint))
+            if(DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint))
             {
                 anchorPoint = null;
             }
@@ -180,7 +180,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
-            if(defaultDisplacement.equals(displacement))
+            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
             {
                 displacement = null;
             }
