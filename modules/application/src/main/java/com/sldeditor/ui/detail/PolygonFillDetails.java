@@ -30,11 +30,14 @@ public class PolygonFillDetails extends FillDetails {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant configFile. */
+    private static final String configFile = "PolygonFill.xml";
+
     /**
      * Instantiates a new polygon fill details.
      */
     public PolygonFillDetails(FunctionNameInterface functionManager) {
-        super(PolygonFillDetails.class, functionManager);
+        super(PolygonFillDetails.class, configFile, functionManager);
     }
 
 }

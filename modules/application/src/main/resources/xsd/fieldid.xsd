@@ -47,6 +47,7 @@
             <xs:enumeration value="STROKE_STYLE" />
             <xs:enumeration value="STROKE_FILL_COLOUR" />
             <xs:enumeration value="STROKE_FILL_OPACITY" />
+            <xs:enumeration value="STROKE_FILL_WIDTH" />
             <xs:enumeration value="STROKE_WIDTH" />
             <xs:enumeration value="STROKE_LINE_JOIN" />
             <xs:enumeration value="STROKE_LINE_CAP" />

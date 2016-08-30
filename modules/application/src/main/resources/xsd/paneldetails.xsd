@@ -449,6 +449,13 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData">
+                <xs:attribute type="xs:double" name="defaultValue" use="optional" default="1.0" >
+                    <xs:annotation>
+                        <xs:documentation>
+                            Default value
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

@@ -13,16 +13,16 @@
     <Group id="ANCHORPOINT" label="fillSymbol.anchorPoint"
         showLabel="true">
         <FieldConfigSlider id="ANCHOR_POINT_H"
-            label="fillSymbol.anchorPoint.x" />
+            label="fillSymbol.anchorPoint.x" defaultValue="0.0" />
         <FieldConfigSlider id="ANCHOR_POINT_V"
-            label="fillSymbol.anchorPoint.y" />
+            label="fillSymbol.anchorPoint.y" defaultValue="0.5" />
     </Group>
     <Group id="DISPLACEMENT" label="fillSymbol.displacement"
         showLabel="true">
         <FieldConfigDouble id="DISPLACEMENT_X"
-            label="fillSymbol.displacement.x" />
+            label="fillSymbol.displacement.x" defaultValue="0.0" />
         <FieldConfigDouble id="DISPLACEMENT_Y"
-            label="fillSymbol.displacement.y" />
+            label="fillSymbol.displacement.y" defaultValue="0.0" />
     </Group>
     <Group id="FILL" label="fillSymbol.fill" showLabel="true"
         option="true">
@@ -33,8 +33,8 @@
         <FieldConfigColour id="STROKE_FILL_COLOUR"
             label="fillSymbol.stroke.colour" />
         <FieldConfigSlider id="STROKE_FILL_OPACITY"
-            label="fillSymbol.stroke.opacity" />
-        <FieldConfigDouble id="STROKE_WIDTH"
-            label="fillSymbol.stroke.width" />
+            label="fillSymbol.stroke.opacity" defaultValue="1.0" />
+        <FieldConfigDouble id="STROKE_FILL_WIDTH"
+            label="fillSymbol.stroke.width" defaultValue="1.0" />
     </Group>
 </PanelConfig>

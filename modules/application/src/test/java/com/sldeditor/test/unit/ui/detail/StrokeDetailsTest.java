@@ -33,6 +33,7 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
@@ -85,8 +86,8 @@ public class StrokeDetailsTest {
         Stroke stroke = styleFactory.getDefaultStroke();
 
         SymbolTypeFactory fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new FieldId(FieldIdEnum.STROKE_FILL_COLOUR),
-                new FieldId(FieldIdEnum.STROKE_FILL_OPACITY),
+                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 new FieldId(FieldIdEnum.STROKE_STYLE));
         fillFactory.populate(panel, panel.getFieldDataManager());
 
@@ -144,7 +145,7 @@ public class StrokeDetailsTest {
         actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.01);
         actualValue = opacityField.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.5) < 0.01);
+        assertTrue(Math.abs(actualValue - 1.0) < 0.01);
     }
 
     /**
@@ -218,7 +219,7 @@ public class StrokeDetailsTest {
         actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.01);
         actualValue = opacityField.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.5) < 0.01);
+        assertTrue(Math.abs(actualValue - 1.0) < 0.01);
     }
 
     /**
@@ -293,7 +294,7 @@ public class StrokeDetailsTest {
         actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 0.0) < 0.01);
         actualValue = opacityField.getDoubleValue();
-        assertTrue(Math.abs(actualValue - 0.5) < 0.01);
+        assertTrue(Math.abs(actualValue - 1.0) < 0.01);
     }
 
     /**
