@@ -16,42 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.common;
 
-import java.io.File;
-import java.util.List;
+package com.sldeditor.extension.filesystem;
 
-import org.geotools.styling.StyledLayerDescriptor;
-
-import com.sldeditor.common.SLDDataInterface;
+import javax.swing.event.TreeSelectionEvent;
 
 /**
- * The Interface LoadSLDInterface
- * 
+ * The Interface FileSelectionInterface.
+ *
  * @author Robert Ward (SCISYS)
  */
-public interface LoadSLDInterface {
+public interface FileSelectionInterface {
 
     /**
-     * Empty SLD.
-     */
-    void emptySLD();
-
-    /**
-     * Load sld from a string.
+     * Called when the file system tree selection has changed.
      *
-     * @param isFolder the is folder flag
-     * @param isDataSource the is data source flag
-     * @param sldFilesToLoad the sld files to load
-     * @return true, if successful
+     * @param e the e
      */
-    boolean loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad);
+    public void treeSelection(TreeSelectionEvent e);
 
-    /**
-     * Read sld file and return it.
-     *
-     * @param file the filename
-     * @return the styled layer descriptor
-     */
-    StyledLayerDescriptor readSLDFile(File file);
 }
