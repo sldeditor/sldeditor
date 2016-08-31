@@ -94,7 +94,7 @@ public class VectorTool implements ToolInterface {
         vectorPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(VectorTool.class, "VectorTool.title")));
 
         //
-        // Import raster
+        // Import vector
         //
         importVectorButton = new ToolButton(Localisation.getString(VectorTool.class, "VectorTool.import"),
                 "tool/importvector.png");
@@ -136,6 +136,9 @@ public class VectorTool implements ToolInterface {
                         {
                             dataSource.connect(SLDEditorFile.getInstance());
                         }
+
+                        // Clear the data change flag
+                        SLDEditorFile.getInstance().fileOpenedSaved();
 
                         // Load sld
                         List<SLDDataInterface> sldFilesToLoad = new ArrayList<SLDDataInterface>();

@@ -176,9 +176,26 @@
             <artifactId>gt-ysld</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+        
+        <!-- Using the GeoServer legend generation code causes a CRS factory    -->
+        <!-- to be loaded which results in no CRS codes when the user is asked  -->
+        <!-- in the JCRSChooser dialog.                                         -->
+        <!-- By excluding gs-main org.geoserver.platform.ServiceException and   -->
+        <!-- including gs-platform the desired result is achieved.              -->
         <dependency>
             <groupId>org.geoserver</groupId>
             <artifactId>gs-wms</artifactId>
+            <version>${geoserver.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.geoserver</groupId>
+                    <artifactId>gs-main</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.geoserver</groupId>
+            <artifactId>gs-platform</artifactId>
             <version>${geoserver.version}</version>
         </dependency>
         <dependency>
@@ -450,9 +467,8 @@
                 </executions>
             </plugin>
             <!-- =========================================================== -->
-            <!-- Using coveralls take the jacoco code coverage and upload 
-                to -->
-            <!-- https://coveralls.io/github/robward-scisys/sldeditor -->
+            <!-- Using coveralls take the jacoco code coverage and upload to -->
+            <!-- https://coveralls.io/github/robward-scisys/sldeditor        -->
             <!-- =========================================================== -->
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
