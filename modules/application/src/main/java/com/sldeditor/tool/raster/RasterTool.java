@@ -117,7 +117,7 @@ public class RasterTool implements ToolInterface {
                         // Raster file
                         DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance().getDataSource();
 
-                        DataSourceConnectorRasterFile dsc = new DataSourceConnectorRasterFile();
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorRasterFile.class);
 
                         dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFile.getAbsolutePath()));
 

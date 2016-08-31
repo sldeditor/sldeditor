@@ -117,7 +117,7 @@ public class VectorTool implements ToolInterface {
                         // Vector file
                         DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance().getDataSource();
 
-                        DataSourceConnectorShapeFile dsc = new DataSourceConnectorShapeFile();
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorShapeFile.class);
 
                         try {
                             dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(vectorFile.toURI().toURL().toString()));
