@@ -45,7 +45,7 @@ public class DataSourceConnectorComboBoxModelTest {
      */
     @Test
     public void testDataSourceConnectorComboBoxModel() {
-        Map<String, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
 
         DataSourceConnectorComboBoxModel dscModel = new DataSourceConnectorComboBoxModel(dscMap);
 

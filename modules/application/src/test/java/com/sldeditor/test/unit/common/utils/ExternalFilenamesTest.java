@@ -25,6 +25,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Test;
 
@@ -182,7 +183,71 @@ public class ExternalFilenamesTest {
     {
         String testValue = "abcxyz";
         String actual = ExternalFilenames.addFileExtensionSeparator(testValue);
-        
+
         assertEquals("." + testValue , actual);
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#convertURLToFile(java.lang.String)}.
+     */
+    @Test
+    public void testConvertURLToFile_String()
+    {
+        assertEquals("", ExternalFilenames.convertURLToFile((String)null));
+        String prefix;
+
+        String testFilenameValue = "";
+        if(OSValidator.isWindows())
+        {
+            testFilenameValue = "C:/tmp/test.txt";
+            prefix = "file:/";
+        }
+        else
+        {
+            testFilenameValue = "/tmp/test.txt";
+            prefix = "file:";
+        }
+        String actual = ExternalFilenames.convertURLToFile(testFilenameValue);
+
+        assertEquals(testFilenameValue, actual);
+
+        String testFullFilenameValue = prefix + testFilenameValue;
+        actual = ExternalFilenames.convertURLToFile(testFullFilenameValue);
+
+        assertEquals(testFilenameValue, actual);
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#convertURLToFile(java.net.URL)}.
+     */
+    @Test
+    public void testConvertURLToFile_URL()
+    {
+        assertEquals("", ExternalFilenames.convertURLToFile((URL)null));
+        String prefix;
+
+        String testFilenameStringValue = null;
+        if(OSValidator.isWindows())
+        {
+            testFilenameStringValue = "C:/tmp/test.txt";
+            prefix = "file:/";
+        }
+        else
+        {
+            testFilenameStringValue = "/tmp/test.txt";
+            prefix = "file:";
+        }
+
+
+        URL testFilenameValue = null;
+        try
+        {
+            testFilenameValue = new URL(prefix + testFilenameStringValue);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        String actual = ExternalFilenames.convertURLToFile(testFilenameValue);
+
+        assertEquals(testFilenameStringValue, actual);
     }
 }

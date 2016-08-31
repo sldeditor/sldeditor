@@ -211,24 +211,48 @@ public class ExternalFilenames {
     /**
      * Convert url to file path.
      *
-     * @param url the url
+     * @param url the url as an URL object
      * @return the string
      */
     public static String convertURLToFile(URL url) {
-        try {
-            int length = FILE_PREFIX.length();
-
-            if(OSValidator.isWindows())
-            {
-                length = WINDOWS_FILE_PREFIX.length();
-            }
-
-            String urlString = url.toString().substring(length);
-            return java.net.URLDecoder.decode(urlString, UTF_8_ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            ConsoleManager.getInstance().exception(ExternalFilenames.class, e);
-            return null;
+        if(url == null)
+        {
+            return "";
         }
+        return convertURLToFile(url.toString());
+    }
+
+    /**
+     * Convert url to file path.
+     *
+     * @param url the url as a string
+     * @return the string
+     */
+    public static String convertURLToFile(String url) {
+        if(url == null)
+        {
+            return "";
+        }
+
+        String prefix = FILE_PREFIX;
+        if(OSValidator.isWindows())
+        {
+            prefix = WINDOWS_FILE_PREFIX;
+        }
+
+        if(url.startsWith(prefix))
+        {
+            try {
+                int length = prefix.length();
+
+                String urlString = url.substring(length);
+                return java.net.URLDecoder.decode(urlString, UTF_8_ENCODING);
+            } catch (UnsupportedEncodingException e) {
+                ConsoleManager.getInstance().exception(ExternalFilenames.class, e);
+                return null;
+            }
+        }
+        return url;
     }
 
     /**

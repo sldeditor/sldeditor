@@ -19,6 +19,7 @@
 package com.sldeditor.ui.sldtext;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.render.RenderPanelFactory;
+import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -114,6 +116,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         optionsPanel.add(label);
 
         comboBox = new ValueComboBox();
+        comboBox.setPreferredSize(new Dimension(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT));
         comboBox.initialiseSingle(dataList);
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

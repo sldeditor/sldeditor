@@ -38,7 +38,7 @@ public class DataSourceConnectorComboBoxModel extends AbstractListModel<String> 
     private static final long serialVersionUID = 1L;
     
     /** The data source connector list. */
-    private Map<String, DataSourceConnectorInterface> dscMap = null;
+    private Map<Class<?>, DataSourceConnectorInterface> dscMap = null;
     
     /** The dsc display name list. */
     private List<String> dscDisplayNameList = new ArrayList<String>();
@@ -54,12 +54,13 @@ public class DataSourceConnectorComboBoxModel extends AbstractListModel<String> 
      *
      * @param dscMap the map of available data source connectors
      */
-    public DataSourceConnectorComboBoxModel(Map<String, DataSourceConnectorInterface> dscMap)
+    public DataSourceConnectorComboBoxModel(Map<Class<?>, DataSourceConnectorInterface> dscMap)
     {
         this.dscMap = dscMap;
         
-        for(String displayName : dscMap.keySet())
+        for(Class<?> key : dscMap.keySet())
         {
+            String displayName = dscMap.get(key).getDisplayName();
             dscDisplayNameList.add(displayName);
         }
     }

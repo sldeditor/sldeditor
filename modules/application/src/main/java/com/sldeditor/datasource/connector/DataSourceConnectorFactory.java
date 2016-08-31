@@ -38,9 +38,8 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
  */
 public class DataSourceConnectorFactory
 {
-
     /** The data connector map. */
-    private static Map<String, DataSourceConnectorInterface> dataConnectorMap = new LinkedHashMap<String, DataSourceConnectorInterface>();
+    private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap = new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
 
     /** The no data source. */
     private static DataSourceConnectorEmpty noDataSource;
@@ -50,7 +49,7 @@ public class DataSourceConnectorFactory
      *
      * @return the data source connector list
      */
-    public static Map<String, DataSourceConnectorInterface> getDataSourceConnectorList()
+    public static Map<Class<?>, DataSourceConnectorInterface> getDataSourceConnectorList()
     {
         if(dataConnectorMap.isEmpty())
         {
@@ -81,7 +80,7 @@ public class DataSourceConnectorFactory
      */
     private static void populate_internal(DataSourceConnectorInterface dataConnector)
     {
-        dataConnectorMap.put(dataConnector.getDisplayName(), dataConnector);
+        dataConnectorMap.put(dataConnector.getClass(), dataConnector);
     }
 
     /**
@@ -160,5 +159,20 @@ public class DataSourceConnectorFactory
             }
         }
         return fileExtension;
+    }
+
+    /**
+     * Gets the data source for the given class type.
+     *
+     * @param classType the class type
+     * @return the data source
+     */
+    public static DataSourceConnectorInterface getDataSource(Class<?> classType) {
+        if(dataConnectorMap.isEmpty())
+        {
+            populate();
+        }
+
+        return dataConnectorMap.get(classType);
     }
 }

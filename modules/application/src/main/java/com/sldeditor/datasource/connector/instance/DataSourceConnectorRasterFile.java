@@ -39,6 +39,7 @@ import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
@@ -99,16 +100,15 @@ public class DataSourceConnectorRasterFile implements DataSourceConnectorInterfa
     private void createUI()
     {
         dataSourceFieldPanel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) dataSourceFieldPanel.getLayout();
-        flowLayout.setVgap(0);
-        flowLayout.setHgap(0);
+        FlowLayout flowLayout = new FlowLayout();
+        dataSourceFieldPanel.setLayout(flowLayout);
 
         JButton btnNewData = new JButton(Localisation.getString(DataSourceConnectorRasterFile.class, "DataSourceConnectorRasterFile.data"));
         dataSourceFieldPanel.add(btnNewData);
 
-        dataSourceTextField = new JTextField();
+        dataSourceTextField = new JTextField(50);
+        dataSourceTextField.setEditable(false);
         dataSourceFieldPanel.add(dataSourceTextField);
-        dataSourceTextField.setColumns(50);
 
         btnNewData.addActionListener(new ActionListener() {
             @Override
@@ -192,7 +192,7 @@ public class DataSourceConnectorRasterFile implements DataSourceConnectorInterfa
     {
         if(dataSourceProperties != null)
         {
-            String filename = dataSourceProperties.getFilename();
+            String filename = ExternalFilenames.convertURLToFile(dataSourceProperties.getFilename());
             dataSourceTextField.setText(filename);
         }
     }
@@ -207,7 +207,7 @@ public class DataSourceConnectorRasterFile implements DataSourceConnectorInterfa
 
         if(dsProperties != null)
         {
-            dataSourceString = dsProperties.getFilename();
+            dataSourceString = ExternalFilenames.convertURLToFile(dsProperties.getFilename());
         }
 
         JFileChooser fileChooser = new JFileChooser();

@@ -29,6 +29,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.NodeInterface;
@@ -38,6 +39,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
@@ -164,7 +166,7 @@ public class VectorTool implements ToolInterface {
                         File vectorFile = fileTreeNode.getFile();
 
                         // Vector file
-                        DataSourceConnectorShapeFile dsc = new DataSourceConnectorShapeFile();
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorShapeFile.class);
 
                         DataSourcePropertiesInterface dsProperties = null;
                         try {
