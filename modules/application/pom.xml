@@ -402,9 +402,9 @@
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>
-                                <exclude>META-INF/ECLIPSEF.RSA</exclude>
-                                <exclude>META-INF/ECLIPSEF.SF</exclude>
-                                <exclude>META-INF/eclipse.inf</exclude>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
                             </excludes>
                         </filter>
                     </filters>
