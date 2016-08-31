@@ -130,6 +130,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** The data edited flag. */
     private boolean dataEditedFlag = false;
 
+    /** The under test flag. */
+    private static boolean underTestFlag = false;
+
     static {
         JAIExt.initJAIEXT();
     }
@@ -304,6 +307,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return the SLD editor
      */
     public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList, boolean underTest) {
+        underTestFlag = underTest;
         frame = new JFrame(generateApplicationTitleString());
 
         Controller.getInstance().setFrame(frame);
@@ -550,6 +554,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param isFolder the is folder flag
      * @param isDataSource the is data source flag
      * @param sldFilesToLoad the sld files to load
+     * @return true, if successful
      */
     @Override
     public boolean loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad)
@@ -564,7 +569,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                 if(firstObject != null)
                 {
-                    if(dataEditedFlag)
+                    if(dataEditedFlag && !isUnderTestFlag())
                     {
                         Object[] options = {Localisation.getString(SLDEditor.class, "common.discard"),
                                 Localisation.getString(SLDEditor.class, "common.cancel")};
@@ -718,5 +723,14 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
 
         return buff;
+    }
+
+    /**
+     * Checks if is under test flag.
+     *
+     * @return the underTestFlag
+     */
+    private static boolean isUnderTestFlag() {
+        return underTestFlag;
     }
 }
