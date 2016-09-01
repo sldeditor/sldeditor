@@ -38,6 +38,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -249,12 +250,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             {
                 mapContent = new MapContent();
                 mapPane.setMapContent(mapContent);
-            }
-
-            // Remove all layers
-            for(Layer layer : mapContent.layers())
-            {
-                mapContent.removeLayer(layer);
             }
 
             // Add the layers back with the updated style
@@ -605,5 +600,27 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         internal_mapPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         return internal_mapPane;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        if(dataStore == null)
+        {
+            return;
+        }
+
+        MapContent mapContent = mapPane.getMapContent();
+
+        if(mapContent != null)
+        {
+            // Remove all layers
+            for(Layer layer : mapContent.layers())
+            {
+                    mapContent.removeLayer(layer);
+            }
+        }
     }
 }

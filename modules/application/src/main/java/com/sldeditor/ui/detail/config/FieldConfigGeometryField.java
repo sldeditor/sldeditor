@@ -25,6 +25,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+import org.geotools.data.DataStore;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.function.PropertyExistsFunction;
@@ -423,6 +424,14 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      */
     @Override
     public void attributeSelection(String field) {
+        // Does nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Does nothing
     }
 }

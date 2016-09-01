@@ -28,6 +28,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DataAccessFactory;
+import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
@@ -274,11 +275,14 @@ public class DataSourceImpl implements DataSourceInterface {
     {
         if(dataSourceInfo != null)
         {
+            // Tell any listeners that the data store is about to be disposed of
+            notifyDataSourceAboutToUnloaded(dataSourceInfo.getDataStore());
             dataSourceInfo.unloadDataStore();
         }
 
         if(exampleDataSourceInfo != null)
         {
+            notifyDataSourceAboutToUnloaded(exampleDataSourceInfo.getDataStore());
             exampleDataSourceInfo.unloadDataStore();
         }
     }
@@ -496,6 +500,20 @@ public class DataSourceImpl implements DataSourceInterface {
         for(DataSourceUpdatedInterface listener : copyListenerList)
         {
             listener.dataSourceLoaded(getGeometryType(), this.connectedToDataSourceFlag);
+        }
+    }
+
+    /**
+     * Notify data source about to be unloaded.
+     *
+     * @param dataStore the data store to be unloaded
+     */
+    private void notifyDataSourceAboutToUnloaded(DataStore dataStore)
+    {
+        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<DataSourceUpdatedInterface>(listenerList);
+        for(DataSourceUpdatedInterface listener : copyListenerList)
+        {
+            listener.dataSourceAboutToUnloaded(dataStore);
         }
     }
 

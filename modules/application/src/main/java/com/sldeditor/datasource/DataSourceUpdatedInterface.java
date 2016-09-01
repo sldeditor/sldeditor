@@ -18,6 +18,8 @@
  */
 package com.sldeditor.datasource;
 
+import org.geotools.data.DataStore;
+
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
@@ -36,4 +38,11 @@ public interface DataSourceUpdatedInterface {
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
     void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag);
+    
+    /**
+     * Data source about to unloaded.
+     *
+     * @param dataStore the data store
+     */
+    void dataSourceAboutToUnloaded(DataStore dataStore);
 }

@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.type.GeometryDescriptorImpl;
 import org.geotools.styling.UserLayer;
@@ -82,6 +83,14 @@ public class DataSourceImplTest {
             hasBeenCalled = false;
 
             return tmp;
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+         */
+        @Override
+        public void dataSourceAboutToUnloaded(DataStore dataStore) {
+            // Does nothing
         }
     }
 

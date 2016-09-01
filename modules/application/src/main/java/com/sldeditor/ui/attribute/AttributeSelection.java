@@ -32,6 +32,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import org.geotools.data.DataStore;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.ConstantExpression;
 import org.geotools.filter.LiteralExpressionImpl;
@@ -448,6 +449,14 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         String newValueObj = (String)undoRedoObject.getNewValue();
 
         attributeChooserComboBox.setSelectedItem(newValueObj);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
     }
 
 }
