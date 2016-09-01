@@ -94,9 +94,6 @@ public class ReadPanelConfig implements PanelConfigInterface {
     /** The map of default field value. */
     private Map<FieldId, Object> defaultFieldMap = new HashMap<FieldId, Object>();
 
-    /** The field type. */
-    private Class<?> fieldType = String.class;
-
     /**
      * Default constructor
      */
@@ -587,14 +584,5 @@ public class ReadPanelConfig implements PanelConfigInterface {
     @Override
     public Map<FieldId, Object> getDefaultFieldMap() {
         return defaultFieldMap;
-    }
-
-    /**
-     * Sets the field type.
-     *
-     * @param fieldType the fieldType to set
-     */
-    public void setFieldType(Class<?> fieldType) {
-        this.fieldType = fieldType;
     }
 }
