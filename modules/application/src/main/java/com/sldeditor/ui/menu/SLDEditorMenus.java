@@ -297,7 +297,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         mntmSaveAsSLD.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Save SLD File");
+                fileChooser.setDialogTitle(Localisation.getString(SLDEditorMenus.class, "sld.save_sld_file"));
 
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(Localisation.getString(SLDEditorMenus.class, "sld.files.filter") + " (*." + SLD_FILE_EXTENSION + ")", SLD_FILE_EXTENSION);
                 fileChooser.setFileFilter(filter);

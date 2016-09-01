@@ -566,7 +566,7 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
-            } 
+            }
 
             this.fireTableStructureChanged();
             this.fireTableDataChanged();

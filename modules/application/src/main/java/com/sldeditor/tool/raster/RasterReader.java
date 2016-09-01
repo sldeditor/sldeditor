@@ -59,6 +59,7 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.common.utils.ExternalFilenames;
 
 /**
  * The Class RasterReader.
@@ -85,6 +86,11 @@ public class RasterReader implements RasterReaderInterface {
     @Override
     public SLDDataInterface createRasterSLDData(File rasterFile)
     {
+        if(rasterFile == null)
+        {
+            return null;
+        }
+
         StyledLayerDescriptor sld = null;
 
         AbstractGridFormat format = GridFormatFinder.findFormat(rasterFile);
@@ -95,30 +101,26 @@ public class RasterReader implements RasterReaderInterface {
             img = ImageIO.read(rasterFile);
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-
-        if(img != null)
-        {
-            WritableRaster raster = img.getRaster();
-
-            Style style = createRGBStyle(reader, raster);
-            sld = sf.createStyledLayerDescriptor();
-            NamedLayer namedLayer = sf.createNamedLayer();
-            namedLayer.addStyle(style);
-            sld.addStyledLayer(namedLayer);
-
-            StyleWrapper styleWrapper = new StyleWrapper(rasterFile.getName());
-            String sldContents = sldWriter.encodeSLD(sld);
-            SLDData sldData = new SLDData(styleWrapper, sldContents);
-            sldData.setSLDFile(rasterFile);
-            sldData.setReadOnly(false);
-
-            return sldData;
-        }
-        else
-        {
             return null;
         }
+
+        WritableRaster raster = img.getRaster();
+
+        Style style = createRGBStyle(reader, raster);
+        sld = sf.createStyledLayerDescriptor();
+        NamedLayer namedLayer = sf.createNamedLayer();
+        namedLayer.addStyle(style);
+        sld.addStyledLayer(namedLayer);
+
+        File sldFilename = ExternalFilenames.createSLDFilename(rasterFile);
+
+        StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
+        String sldContents = sldWriter.encodeSLD(sld);
+        SLDData sldData = new SLDData(styleWrapper, sldContents);
+        sldData.setSLDFile(sldFilename);
+        sldData.setReadOnly(false);
+
+        return sldData;
     }
 
     /**

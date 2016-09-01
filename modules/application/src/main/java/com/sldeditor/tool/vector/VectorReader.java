@@ -37,6 +37,7 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.datasource.impl.GeometryTypeMapping;
@@ -60,6 +61,11 @@ public class VectorReader implements VectorReaderInterface {
     @Override
     public SLDDataInterface createVectorSLDData(File vectorFile)
     {
+        if(vectorFile == null)
+        {
+            return null;
+        }
+
         StyledLayerDescriptor sld = null;
 
         Map<String, String> map = null;
@@ -85,7 +91,7 @@ public class VectorReader implements VectorReaderInterface {
             // Try connecting to a vector data source
             String typeName;
             GeometryTypeEnum geometryTypeEnum = GeometryTypeEnum.UNKNOWN;
-            
+
             try {
                 typeName = dataStore.getTypeNames()[0];
                 SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
@@ -116,10 +122,12 @@ public class VectorReader implements VectorReaderInterface {
             }
         }
 
-        StyleWrapper styleWrapper = new StyleWrapper(vectorFile.getName());
+        File sldFilename = ExternalFilenames.createSLDFilename(vectorFile);
+
+        StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
         String sldContents = sldWriter.encodeSLD(sld);
         SLDData sldData = new SLDData(styleWrapper, sldContents);
-        sldData.setSLDFile(vectorFile);
+        sldData.setSLDFile(sldFilename);
         sldData.setReadOnly(false);
 
         return sldData;

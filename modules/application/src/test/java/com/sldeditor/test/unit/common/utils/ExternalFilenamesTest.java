@@ -20,6 +20,7 @@ package com.sldeditor.test.unit.common.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -249,5 +250,26 @@ public class ExternalFilenamesTest {
         String actual = ExternalFilenames.convertURLToFile(testFilenameValue);
 
         assertEquals(testFilenameStringValue, actual);
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#createSLDFilename(java.io.File)}.
+     */
+    @Test
+    public void testCreateSLDFilename() {
+        assertNull(ExternalFilenames.createSLDFilename(null));
+
+        String initialFilename = "D:/tmp/test/out.shp";
+        String expectedFilename = new File("D:/tmp/test/out.sld").getAbsolutePath();
+        File initialFile = new File(initialFilename);
+
+        File actualFile = ExternalFilenames.createSLDFilename(initialFile);
+
+        assertTrue(actualFile.getAbsolutePath().compareTo(expectedFilename) == 0);
+
+        // Now try where filename already has the correct file extension
+        actualFile = ExternalFilenames.createSLDFilename(new File(expectedFilename));
+
+        assertTrue(actualFile.getAbsolutePath().compareTo(expectedFilename) == 0);
     }
 }

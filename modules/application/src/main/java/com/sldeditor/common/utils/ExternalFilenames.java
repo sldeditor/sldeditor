@@ -44,6 +44,9 @@ public class ExternalFilenames {
     /** The Constant FILE_PREFIX - URL file prefix. */
     private static final String FILE_PREFIX = "file:";
 
+    /** The Constant SLD_FILE_EXTENSION. */
+    private static final String SLD_FILE_EXTENSION = "sld";
+
     /** The format map. */
     private static Map<String, String> formatMap = new HashMap<String, String>();
 
@@ -264,5 +267,34 @@ public class ExternalFilenames {
     public static String addFileExtensionSeparator(String fileExtension)
     {
         return "." + fileExtension;
+    }
+
+    /**
+     * Creates the SLD filename.
+     *
+     * @param file the file
+     * @return the file
+     */
+    public static File createSLDFilename(File file) {
+        File newFile = null;
+        if(file != null)
+        {
+            String filename = file.getAbsolutePath();
+
+            String fileExtension = getFileExtension(filename);
+            if(SLD_FILE_EXTENSION.compareToIgnoreCase(fileExtension) == 0)
+            {
+                // The filename already has the correct SLD file extension
+                return file;
+            }
+            int endIndex = filename.length() - fileExtension.length();
+
+            // Remove existing file extension
+            filename = filename.substring(0, endIndex);
+
+            // Create new filename with sld file extension
+            newFile = new File(filename + SLD_FILE_EXTENSION);
+        }
+        return newFile;
     }
 }
