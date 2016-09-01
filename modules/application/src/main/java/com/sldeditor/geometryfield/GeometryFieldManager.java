@@ -76,7 +76,7 @@ public class GeometryFieldManager {
      *
      * @return single instance of GeometryFieldManager
      */
-    public static GeometryFieldManager getInstance()
+    public static synchronized GeometryFieldManager getInstance()
     {
         if(singletonInstance == null)
         {

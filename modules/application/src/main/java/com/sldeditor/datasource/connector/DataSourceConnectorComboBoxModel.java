@@ -36,19 +36,19 @@ public class DataSourceConnectorComboBoxModel extends AbstractListModel<String> 
 {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    
+
     /** The data source connector list. */
     private Map<Class<?>, DataSourceConnectorInterface> dscMap = null;
-    
+
     /** The dsc display name list. */
     private List<String> dscDisplayNameList = new ArrayList<String>();
-    
+
     /** The selected item. */
     private DataSourceConnectorInterface selectedItem = null;
-    
+
     /** The selected name. */
     private String selectedName = null;
-    
+
     /**
      * Instantiates a new data source connector combo box model.
      *
@@ -57,14 +57,14 @@ public class DataSourceConnectorComboBoxModel extends AbstractListModel<String> 
     public DataSourceConnectorComboBoxModel(Map<Class<?>, DataSourceConnectorInterface> dscMap)
     {
         this.dscMap = dscMap;
-        
+
         for(Class<?> key : dscMap.keySet())
         {
             String displayName = dscMap.get(key).getDisplayName();
             dscDisplayNameList.add(displayName);
         }
     }
-    
+
     /* (non-Javadoc)
      * @see javax.swing.ListModel#getSize()
      */
@@ -90,7 +90,20 @@ public class DataSourceConnectorComboBoxModel extends AbstractListModel<String> 
     public void setSelectedItem(Object anItem)
     {
         selectedName = (String)anItem;
-        selectedItem = dscMap.get(selectedName);
+        selectedItem = null;
+
+        if(selectedName != null)
+        {
+            for(Class<?> key : dscMap.keySet())
+            {
+                DataSourceConnectorInterface dsc = dscMap.get(key);
+                if(dsc.getDisplayName().compareTo(selectedName) == 0)
+                {
+                    selectedItem = dsc;
+                    break;
+                }
+            }
+        }
 
         fireContentsChanged(this, -1, -1);
     }

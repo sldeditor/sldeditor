@@ -96,7 +96,7 @@ public class ExtractAttributes {
     /**
      * Populate namespace map.
      */
-    private static void populateNamespaceMap()
+    private static synchronized void populateNamespaceMap()
     {
         if(namespaceMap == null)
         {

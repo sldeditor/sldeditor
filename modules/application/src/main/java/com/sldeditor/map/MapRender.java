@@ -480,13 +480,17 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        ReferencedEnvelope refEnv = new ReferencedEnvelope(targetGeometry.getMinY(), 
-                targetGeometry.getMaxY(), 
-                targetGeometry.getMinX(), 
-                targetGeometry.getMaxX(),
-                wgs84);
+        if(targetGeometry != null)
+        {
+            ReferencedEnvelope refEnv = new ReferencedEnvelope(targetGeometry.getMinY(), 
+                    targetGeometry.getMaxY(), 
+                    targetGeometry.getMinX(), 
+                    targetGeometry.getMaxX(),
+                    wgs84);
 
-        return refEnv;
+            return refEnv;
+        }
+        return null;
     }
 
     /**

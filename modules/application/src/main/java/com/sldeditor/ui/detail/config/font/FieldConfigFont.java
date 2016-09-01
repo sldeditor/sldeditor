@@ -137,7 +137,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     /**
      * Populate font family list.
      */
-    private void populateFontFamilyList() {
+    private synchronized void populateFontFamilyList() {
         if(fontFamilyList == null)
         {
             fontFamilyList = new ArrayList<ValueComboBoxData>();
