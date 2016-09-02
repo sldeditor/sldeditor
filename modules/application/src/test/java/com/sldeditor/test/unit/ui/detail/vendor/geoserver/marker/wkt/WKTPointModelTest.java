@@ -139,7 +139,6 @@ public class WKTPointModelTest {
         model.populate(segmentList);
         assertTrue(model.getRowCount() == 4);
 
-        wktType = new WKTType("name", false, 5, "", false, true); 
         model.populate(segmentList);
         assertTrue(model.getRowCount() == 4);
 

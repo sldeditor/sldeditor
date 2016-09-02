@@ -24,6 +24,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.geotools.data.DataStore;
+
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
@@ -101,5 +103,13 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
     public RuleRenderOptions getRuleRenderOptions() {
         // Do nothing
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
     }
 }

@@ -29,6 +29,7 @@ import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.geotools.data.DataStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.LineSymbolizerImpl;
@@ -103,6 +104,14 @@ public class SLDTreeToolsTest {
             renderSymbolCalled = false;
 
             return tmp;
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+         */
+        @Override
+        public void dataSourceAboutToUnloaded(DataStore dataStore) {
+            // Does nothing
         }
     }
 

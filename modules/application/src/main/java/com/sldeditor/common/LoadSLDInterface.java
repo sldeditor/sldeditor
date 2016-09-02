@@ -41,10 +41,11 @@ public interface LoadSLDInterface {
      * Load sld from a string.
      *
      * @param isFolder the is folder flag
-     * @param isDataSource the is data source flag 
+     * @param isDataSource the is data source flag
      * @param sldFilesToLoad the sld files to load
+     * @return true, if successful
      */
-    void loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad);
+    boolean loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad);
 
     /**
      * Read sld file and return it.

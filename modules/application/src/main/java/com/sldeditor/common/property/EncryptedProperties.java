@@ -71,7 +71,7 @@ public class EncryptedProperties extends Properties {
      *
      * @return single instance of EncryptedProperties
      */
-    public static EncryptedProperties getInstance()
+    public static synchronized EncryptedProperties getInstance()
     {
         if(instance == null)
         {

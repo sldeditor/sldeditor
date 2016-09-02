@@ -39,6 +39,7 @@ import javax.measure.unit.Unit;
 import javax.swing.JPanel;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.FeatureLayer;
@@ -604,4 +605,11 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         this.backgroundColour = backgroundColour;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
+    }
 }

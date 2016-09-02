@@ -160,7 +160,6 @@ public class SelectedSymbol {
     public void setSld(StyledLayerDescriptor sld) {
         this.sld = sld;
         symbolData.resetData();
-        logger.debug("Set SLD");
     }
 
     /**

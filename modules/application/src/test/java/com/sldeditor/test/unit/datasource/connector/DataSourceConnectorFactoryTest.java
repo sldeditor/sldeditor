@@ -50,7 +50,7 @@ public class DataSourceConnectorFactoryTest {
     @Test
     public void testGetDataSourceConnectorList() {
 
-        Map<String, DataSourceConnectorInterface> actual = DataSourceConnectorFactory.getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> actual = DataSourceConnectorFactory.getDataSourceConnectorList();
 
         assertFalse(actual.isEmpty());
     }

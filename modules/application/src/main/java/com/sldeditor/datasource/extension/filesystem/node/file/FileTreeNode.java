@@ -433,36 +433,43 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
     @Override
     public void fileAdded(Path f) {
 
-        String filename = f.getFileName().toString();
-        if(Files.isRegularFile(f))
+        if(f != null)
         {
-            // File added
-            if(validFile(filename))
+            Path path = f.getFileName();
+            if(path != null)
             {
-                try
+                String filename = path.toString();
+                if(Files.isRegularFile(f))
                 {
-                    addFile(filename);
+                    // File added
+                    if(validFile(filename))
+                    {
+                        try
+                        {
+                            addFile(filename);
 
+                            sort(this);
+                            FileSystemNodeManager.refreshNode(this);
+                        }
+                        catch (Throwable t) {
+                            // Ignore phantoms or access problems
+                        } 
+                    }
+                }
+                else
+                {
+                    // Folder added
+                    boolean descend = false;
+                    try {
+                        addFolder(descend, filename);
+                    }
+                    catch (Throwable t) {
+                        // Ignore phantoms or access problems
+                    }
                     sort(this);
                     FileSystemNodeManager.refreshNode(this);
                 }
-                catch (Throwable t) {
-                    // Ignore phantoms or access problems
-                } 
             }
-        }
-        else
-        {
-            // Folder added
-            boolean descend = false;
-            try {
-                addFolder(descend, filename);
-            }
-            catch (Throwable t) {
-                // Ignore phantoms or access problems
-            }
-            sort(this);
-            FileSystemNodeManager.refreshNode(this);
         }
     }
 
@@ -524,20 +531,27 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
     @Override
     public void fileDeleted(Path f) {
 
-        String filename = f.getFileName().toString();
-
-        for(int childIndex = 0; childIndex < this.getChildCount(); childIndex ++)
+        if(f != null)
         {
-            FileTreeNode childNode = (FileTreeNode) this.getChildAt(childIndex);
-
-            if(childNode.name.compareTo(filename) == 0)
+            Path path = f.getFileName();
+            if(path != null)
             {
-                this.remove(childIndex);
-                break;
+                String filename = path.toString();
+
+                for(int childIndex = 0; childIndex < this.getChildCount(); childIndex ++)
+                {
+                    FileTreeNode childNode = (FileTreeNode) this.getChildAt(childIndex);
+
+                    if(childNode.name.compareTo(filename) == 0)
+                    {
+                        this.remove(childIndex);
+                        break;
+                    }
+                }
+
+                FileSystemNodeManager.refreshNode(this);
             }
         }
-
-        FileSystemNodeManager.refreshNode(this);
     }
 
     /**

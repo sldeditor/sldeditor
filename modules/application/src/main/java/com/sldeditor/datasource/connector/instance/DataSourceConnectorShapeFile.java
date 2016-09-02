@@ -39,6 +39,7 @@ import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
@@ -59,10 +60,10 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
     private List<String> supportedFileTypeList = Arrays.asList(supportedFileTypes);
 
     /** The data source text field. */
-    private JTextField dataSourceTextField;
+    private JTextField dataSourceTextField = null;
 
     /** The data source field panel. */
-    private JPanel dataSourceFieldPanel;
+    private JPanel dataSourceFieldPanel = null;
 
     /** The data source. */
     private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
@@ -99,16 +100,15 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
     private void createUI()
     {
         dataSourceFieldPanel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) dataSourceFieldPanel.getLayout();
-        flowLayout.setVgap(0);
-        flowLayout.setHgap(0);
+        FlowLayout flowLayout = new FlowLayout();
+        dataSourceFieldPanel.setLayout(flowLayout);
 
         JButton btnNewData = new JButton(Localisation.getString(DataSourceConnectorShapeFile.class, "DataSourceConnectorShapeFile.data"));
         dataSourceFieldPanel.add(btnNewData);
 
-        dataSourceTextField = new JTextField();
+        dataSourceTextField = new JTextField(50);
+        dataSourceTextField.setEditable(false);
         dataSourceFieldPanel.add(dataSourceTextField);
-        dataSourceTextField.setColumns(50);
 
         btnNewData.addActionListener(new ActionListener() {
             @Override
@@ -192,7 +192,8 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
     {
         if(dataSourceProperties != null)
         {
-            dataSourceTextField.setText(dataSourceProperties.getFilename());
+            String filename = ExternalFilenames.convertURLToFile(dataSourceProperties.getFilename());
+            dataSourceTextField.setText(filename);
         }
     }
 
@@ -206,7 +207,7 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
 
         if(dsProperties != null)
         {
-            dataSourceString = dsProperties.getFilename();
+            dataSourceString = ExternalFilenames.convertURLToFile(dsProperties.getFilename());
         }
 
         JFileChooser fileChooser = new JFileChooser();
@@ -234,7 +235,7 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
                 {
                     dataSource.connect(SLDEditorFile.getInstance());
                 }
-            }           
+            }
         } catch (IOException e1) {
             ConsoleManager.getInstance().exception(this, e1);
         }

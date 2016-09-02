@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -126,6 +127,12 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** The render transform manager. */
     private RenderTransformManager renderTransformManager = new RenderTransformManager();
 
+    /** The data edited flag. */
+    private boolean dataEditedFlag = false;
+
+    /** The under test flag. */
+    private static boolean underTestFlag = false;
+
     static {
         JAIExt.initJAIEXT();
     }
@@ -186,6 +193,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
     /**
      * Sets the Mac OSX application icon.
+     *
+     * @return true, if successful
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private static boolean setOSXAppIcon() {
@@ -298,6 +307,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return the SLD editor
      */
     public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList, boolean underTest) {
+        underTestFlag = underTest;
         frame = new JFrame(generateApplicationTitleString());
 
         Controller.getInstance().setFrame(frame);
@@ -337,6 +347,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     @Override
     public void updateWindowTitle(boolean dataEditedFlag) {
+        this.dataEditedFlag  = dataEditedFlag;
         String docName = NO_SLDEDITOR_FILE_SET;
         File file = SLDEditorFile.getInstance().getSldEditorFile();
 
@@ -374,9 +385,10 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         if(newSLDList != null)
         {
-            this.loadSLDString(false, false, newSLDList);
-
-            uiMgr.populateUI(1);
+            if(this.loadSLDString(false, false, newSLDList))
+            {
+                uiMgr.populateUI(1);
+            }
         }
     }
 
@@ -542,10 +554,12 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param isFolder the is folder flag
      * @param isDataSource the is data source flag
      * @param sldFilesToLoad the sld files to load
+     * @return true, if successful
      */
     @Override
-    public void loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad)
+    public boolean loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad)
     {
+        boolean loadNewSymbol = true;
         if(!isFolder)
         {
             // Application can only support editing one SLD file at a time
@@ -555,29 +569,50 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                 if(firstObject != null)
                 {
-                    String layerName = firstObject.getLayerName();
-
-                    StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
-
-                    SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
-                    selectedSymbolInstance.setSld(sld);
-                    selectedSymbolInstance.setFilename(layerName);
-                    selectedSymbolInstance.setName(layerName);
-
-                    SLDEditorFile.getInstance().setSLDData(firstObject);
-                    dataSource.reset();
-
-                    dataSource.connect(SLDEditorFile.getInstance());
-
-                    if(SLDEditorFile.getInstance().getSldEditorFile() != null)
+                    if(dataEditedFlag && !isUnderTestFlag())
                     {
-                        PrefData prefData = PrefManager.getInstance().getPrefData();
-                        prefData.setVendorOptionVersionList(firstObject.getVendorOptionList());
-                        PrefManager.getInstance().setPrefData(prefData);
+                        Object[] options = {Localisation.getString(SLDEditor.class, "common.discard"),
+                                Localisation.getString(SLDEditor.class, "common.cancel")};
+
+                        int result = JOptionPane.showOptionDialog(frame,
+                                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChanges"),
+                                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChangesTitle"),
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE,
+                                null,
+                                options,
+                                options[1]);
+
+                        // If discard option selected then allow the new symbol to be loaded
+                        loadNewSymbol = (result == JOptionPane.OK_OPTION);
                     }
 
-                    LegendManager.getInstance().SLDLoaded(firstObject.getLegendOptions());
-                    SLDEditorFile.getInstance().fileOpenedSaved();
+                    if(loadNewSymbol)
+                    {
+                        String layerName = firstObject.getLayerName();
+
+                        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
+
+                        SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
+                        selectedSymbolInstance.setSld(sld);
+                        selectedSymbolInstance.setFilename(layerName);
+                        selectedSymbolInstance.setName(layerName);
+
+                        SLDEditorFile.getInstance().setSLDData(firstObject);
+                        dataSource.reset();
+
+                        dataSource.connect(SLDEditorFile.getInstance());
+
+                        if(SLDEditorFile.getInstance().getSldEditorFile() != null)
+                        {
+                            PrefData prefData = PrefManager.getInstance().getPrefData();
+                            prefData.setVendorOptionVersionList(firstObject.getVendorOptionList());
+                            PrefManager.getInstance().setPrefData(prefData);
+                        }
+
+                        LegendManager.getInstance().SLDLoaded(firstObject.getLegendOptions());
+                        SLDEditorFile.getInstance().fileOpenedSaved();
+                    }
                 }
             }
 
@@ -592,6 +627,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 Controller.getInstance().setPopulating(false);
             }
         }
+
+        return loadNewSymbol;
     }
 
     /**
@@ -686,5 +723,14 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
 
         return buff;
+    }
+
+    /**
+     * Checks if is under test flag.
+     *
+     * @return the underTestFlag
+     */
+    private static boolean isUnderTestFlag() {
+        return underTestFlag;
     }
 }

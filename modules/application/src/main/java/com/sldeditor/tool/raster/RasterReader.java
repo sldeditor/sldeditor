@@ -53,11 +53,13 @@ import org.opengis.filter.expression.Literal;
 import org.opengis.style.ContrastMethod;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.common.utils.ExternalFilenames;
 
 /**
  * The Class RasterReader.
@@ -84,6 +86,11 @@ public class RasterReader implements RasterReaderInterface {
     @Override
     public SLDDataInterface createRasterSLDData(File rasterFile)
     {
+        if(rasterFile == null)
+        {
+            return null;
+        }
+
         StyledLayerDescriptor sld = null;
 
         AbstractGridFormat format = GridFormatFinder.findFormat(rasterFile);
@@ -93,8 +100,10 @@ public class RasterReader implements RasterReaderInterface {
         try {
             img = ImageIO.read(rasterFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
+            return null;
         }
+
         WritableRaster raster = img.getRaster();
 
         Style style = createRGBStyle(reader, raster);
@@ -103,10 +112,12 @@ public class RasterReader implements RasterReaderInterface {
         namedLayer.addStyle(style);
         sld.addStyledLayer(namedLayer);
 
-        StyleWrapper styleWrapper = new StyleWrapper(rasterFile.getName());
+        File sldFilename = ExternalFilenames.createSLDFilename(rasterFile);
+
+        StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
         String sldContents = sldWriter.encodeSLD(sld);
         SLDData sldData = new SLDData(styleWrapper, sldContents);
-        sldData.setSLDFile(rasterFile);
+        sldData.setSLDFile(sldFilename);
         sldData.setReadOnly(false);
 
         return sldData;

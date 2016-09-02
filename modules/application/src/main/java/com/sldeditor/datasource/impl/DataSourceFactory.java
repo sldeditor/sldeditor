@@ -60,7 +60,7 @@ public class DataSourceFactory {
      * @param override the data source to override in the factory
      * @return the data source interface
      */
-    public static DataSourceInterface createDataSource(DataSourceInterface override)
+    public static synchronized DataSourceInterface createDataSource(DataSourceInterface override)
     {
         if(override != null)
         {
@@ -97,7 +97,7 @@ public class DataSourceFactory {
      * @param hint the hint
      * @return the example polygon interface
      */
-    public static ExamplePolygonInterface createExamplePolygon(String hint)
+    public static synchronized ExamplePolygonInterface createExamplePolygon(String hint)
     {
         if(examplePolygonImpl == null)
         {
@@ -112,7 +112,7 @@ public class DataSourceFactory {
      * @param object the object
      * @return the example line interface
      */
-    public static ExampleLineInterface createExampleLine(Object object) {
+    public static synchronized ExampleLineInterface createExampleLine(Object object) {
         if(exampleLineImpl == null)
         {
             exampleLineImpl = new ExampleLineImpl();
@@ -126,7 +126,7 @@ public class DataSourceFactory {
      * @param object the object
      * @return the example point interface
      */
-    public static ExamplePointInterface createExamplePoint(Object object) {
+    public static synchronized ExamplePointInterface createExamplePoint(Object object) {
         if(examplePointImpl == null)
         {
             examplePointImpl = new ExamplePointImpl();

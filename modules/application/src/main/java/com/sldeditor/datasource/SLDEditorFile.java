@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.geotools.data.DataStore;
 import org.geotools.styling.StyledLayerDescriptor;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
@@ -339,5 +340,13 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
 
             notifySLDEditorFileHasUpdated();
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
     }
 }

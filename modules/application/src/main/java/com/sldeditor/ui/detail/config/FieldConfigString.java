@@ -20,8 +20,8 @@ package com.sldeditor.ui.detail.config;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,23 +92,19 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         int xPos = getXPos();
         FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        textField = new JTextField();
+        textField = new TextFieldPropertyChange();
         textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(textField);
 
-        textField.addFocusListener(new FocusListener() {
-            private String originalValue = "";
+        textField.addPropertyChangeListener(TextFieldPropertyChange.TEXT_PROPERTY, new PropertyChangeListener() {
 
+            /* (non-Javadoc)
+             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+             */
             @Override
-            public void focusGained(FocusEvent e)
-            {
-                originalValue = textField.getText();
-            }
-
-            @Override
-            public void focusLost(FocusEvent e)
-            {
-                String newValueObj = textField.getText();
+            public void propertyChange(PropertyChangeEvent evt) {
+                String originalValue = (String) evt.getOldValue();
+                String newValueObj = (String) evt.getNewValue();
 
                 if(originalValue.compareTo(newValueObj) != 0)
                 {
@@ -118,7 +114,6 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
                     valueUpdated();
                 }
-
             }});
 
         if(buttonText != null)

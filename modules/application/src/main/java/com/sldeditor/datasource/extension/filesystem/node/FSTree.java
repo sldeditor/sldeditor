@@ -19,6 +19,11 @@
 package com.sldeditor.datasource.extension.filesystem.node;
 
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
+
+import com.sldeditor.extension.filesystem.FileSelectionInterface;
 
 /**
  * The file system tree class.
@@ -32,7 +37,10 @@ public class FSTree extends JTree
 
     /** The transfer handler. */
     private TreeTransferHandler transferHandler;
-    
+
+    /** The ignore selection flag. */
+    private boolean ignoreSelection = false;
+
     /**
      * Default constructor
      */
@@ -42,7 +50,7 @@ public class FSTree extends JTree
         setTransferHandler(transferHandler);
         setAutoscrolls(true);
     }
-    
+
     /**
      * Checks if a dragging operation is currently happening
      *
@@ -51,5 +59,60 @@ public class FSTree extends JTree
     public boolean isDragging()
     {
         return transferHandler.isDragging();
+    }
+
+    /**
+     * Sets the ignore selection flag state.
+     */
+    private void setIgnoreSelection(boolean value)
+    {
+        ignoreSelection = value;
+    }
+
+    /**
+     * Return ignore selection flag state.
+     *
+     * @return true, if successful
+     */
+    private boolean shouldIgnoreSelection()
+    {
+        return ignoreSelection;
+    }
+
+    /**
+     * Revert selection.
+     *
+     * @param previousSelectedPath the previous selected path
+     */
+    public void revertSelection(TreePath previousSelectedPath) {
+        setIgnoreSelection(true);
+        setSelectionPath(previousSelectedPath);
+    }
+
+    /**
+     * Sets the tree selection callback.
+     *
+     * @param fileSystemExtension the new tree selection
+     */
+    public void setTreeSelection(FileSelectionInterface fileSelection) {
+
+        addTreeSelectionListener(new TreeSelectionListener()
+        {
+            @Override
+            public void valueChanged(TreeSelectionEvent e)
+            {
+                if(!shouldIgnoreSelection())
+                {
+                    if(fileSelection != null)
+                    {
+                        fileSelection.treeSelection(e);
+                    }
+                }
+                else
+                {
+                    setIgnoreSelection(false);
+                }
+            }
+        });
     }
 }

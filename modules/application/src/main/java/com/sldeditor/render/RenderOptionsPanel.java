@@ -26,6 +26,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import org.geotools.data.DataStore;
+
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -153,5 +155,13 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
         {
             applyTransformationCheckBox.setEnabled(applyTransformEnabled);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
     }
 }

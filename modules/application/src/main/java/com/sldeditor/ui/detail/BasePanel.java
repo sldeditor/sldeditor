@@ -337,19 +337,7 @@ public class BasePanel extends JPanel {
      */
     protected void readConfigFile(UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, true, null);
-    }
-
-    /**
-     * Read config file.
-     *
-     * @param parent the parent
-     * @param filename the filename
-     * @param fieldType the field type
-     */
-    protected void readConfigFile(UpdateSymbolInterface parent, String filename, Class<?> fieldType)
-    {
-        internal_readConfigFile(parent.getClass(), parent, filename, true, fieldType);
+        internal_readConfigFile(parent.getClass(), parent, filename, true);
     }
 
     /**
@@ -360,7 +348,7 @@ public class BasePanel extends JPanel {
      */
     protected void readConfigFileNoScrollPane(UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, false, null);
+        internal_readConfigFile(parent.getClass(), parent, filename, false);
     }
 
     /**
@@ -370,13 +358,10 @@ public class BasePanel extends JPanel {
      * @param parent the parent
      * @param filename the filename
      * @param useScrollFrame the use scroll frame
-     * @param fieldType the field type
      */
-    private void internal_readConfigFile(Class<?> panelId, UpdateSymbolInterface parent, String filename, boolean useScrollFrame, Class<?> fieldType) {
+    private void internal_readConfigFile(Class<?> panelId, UpdateSymbolInterface parent, String filename, boolean useScrollFrame) {
 
         ReadPanelConfig readConfig = new ReadPanelConfig();
-
-        readConfig.setFieldType(fieldType);
 
         readConfig.read(panelId, filename);
 

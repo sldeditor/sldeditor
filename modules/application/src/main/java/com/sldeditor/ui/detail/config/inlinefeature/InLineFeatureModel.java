@@ -220,17 +220,20 @@ public class InLineFeatureModel extends AbstractTableModel {
                     ConsoleManager.getInstance().exception(this, e);
                 }
 
-                // Populate field names
-                List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
-                int index = 0;
-                for(AttributeDescriptor descriptor : descriptorList)
+                if(featureCollection != null)
                 {
-                    if(descriptor instanceof GeometryDescriptorImpl)
+                    // Populate field names
+                    List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
+                    int index = 0;
+                    for(AttributeDescriptor descriptor : descriptorList)
                     {
-                        geometryFieldIndex = index;
+                        if(descriptor instanceof GeometryDescriptorImpl)
+                        {
+                            geometryFieldIndex = index;
+                        }
+                        columnList.add(descriptor.getLocalName());
+                        index ++;
                     }
-                    columnList.add(descriptor.getLocalName());
-                    index ++;
                 }
             }
         }
@@ -563,7 +566,7 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
-            } 
+            }
 
             this.fireTableStructureChanged();
             this.fireTableDataChanged();

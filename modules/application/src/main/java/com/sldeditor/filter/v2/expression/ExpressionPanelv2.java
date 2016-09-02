@@ -44,6 +44,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.AttributeExpressionImpl;
@@ -879,5 +880,13 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
     @Override
     public List<VersionData> getVendorOptionList() {
         return vendorOptionList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
     }
 }

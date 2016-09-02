@@ -94,7 +94,7 @@ public class FileSystemWatcher implements Runnable {
      *
      * @return single instance of FileSystemWatcher
      */
-    public static FileSystemWatcher getInstance()
+    public static synchronized FileSystemWatcher getInstance()
     {
         if(instance == null)
         {

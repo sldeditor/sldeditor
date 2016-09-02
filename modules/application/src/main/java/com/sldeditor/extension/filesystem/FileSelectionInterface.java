@@ -16,33 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.datasource;
 
-import org.geotools.data.DataStore;
+package com.sldeditor.extension.filesystem;
 
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import javax.swing.event.TreeSelectionEvent;
 
 /**
- * The interface used to notify when the data source has updated,
- * either because a new data has been selected or the fields have
- * been updated.
- * 
+ * The Interface FileSelectionInterface.
+ *
  * @author Robert Ward (SCISYS)
  */
-public interface DataSourceUpdatedInterface {
+public interface FileSelectionInterface {
 
     /**
-     * Data source loaded.
+     * Called when the file system tree selection has changed.
      *
-     * @param geometryType the geometry type
-     * @param isConnectedToDataSourceFlag the is connected to data source flag
+     * @param e the e
      */
-    void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag);
-    
-    /**
-     * Data source about to unloaded.
-     *
-     * @param dataStore the data store
-     */
-    void dataSourceAboutToUnloaded(DataStore dataStore);
+    public void treeSelection(TreeSelectionEvent e);
+
 }

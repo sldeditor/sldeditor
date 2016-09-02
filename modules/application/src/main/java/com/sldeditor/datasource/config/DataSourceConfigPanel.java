@@ -39,6 +39,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 
+import org.geotools.data.DataStore;
+
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.localisation.Localisation;
@@ -126,7 +128,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         JLabel label = new JLabel(Localisation.getField(DataSourceConfigPanel.class, "DataSourceConfigPanel.field"));
         panel1.add(label);
 
-        Map<String, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
 
         dscModel = new DataSourceConnectorComboBoxModel(dscMap);
         dataSourceConnectorComboBox = new JComboBox<String>(dscModel);
@@ -150,11 +152,11 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         dscPanel = new JPanel();
         dscPanel.setLayout(new CardLayout());
 
-        for(String key : dscMap.keySet())
+        for(Class<?> key : dscMap.keySet())
         {
             DataSourceConnectorInterface dsConnector = dscMap.get(key);
             JPanel panelToAdd = dsConnector.getPanel();
-            dscPanel.add(panelToAdd, key);
+            dscPanel.add(panelToAdd, dsConnector.getDisplayName());
         }
         mainPanel.add(dscPanel, BorderLayout.CENTER);
 
@@ -396,5 +398,13 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         dataChanged = false;
 
         updateButtonState();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
     }
 }

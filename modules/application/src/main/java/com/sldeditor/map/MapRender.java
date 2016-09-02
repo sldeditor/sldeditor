@@ -38,6 +38,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -251,12 +252,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                 mapPane.setMapContent(mapContent);
             }
 
-            // Remove all layers
-            for(Layer layer : mapContent.layers())
-            {
-                mapContent.removeLayer(layer);
-            }
-
             // Add the layers back with the updated style
             if(sld != null)
             {
@@ -421,16 +416,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             }
         }
 
-        //        if(gridCoverage != null)
-        //        {
-        //            try {
-        //                GridCoverage2D grid = gridCoverage.;
-        //           //     refEnvList.add(gridCoverage.);
-        //            } catch (IOException e) {
-        //                ConsoleManager.getInstance().exception(MapRender.class, e);
-        //            }
-        //        }
-
         if(!refEnvList.isEmpty())
         {
             // Combine all the bounding boxes of all the layers
@@ -480,13 +465,17 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        ReferencedEnvelope refEnv = new ReferencedEnvelope(targetGeometry.getMinY(), 
-                targetGeometry.getMaxY(), 
-                targetGeometry.getMinX(), 
-                targetGeometry.getMaxX(),
-                wgs84);
+        if(targetGeometry != null)
+        {
+            ReferencedEnvelope refEnv = new ReferencedEnvelope(targetGeometry.getMinY(), 
+                    targetGeometry.getMaxY(), 
+                    targetGeometry.getMinX(), 
+                    targetGeometry.getMaxX(),
+                    wgs84);
 
-        return refEnv;
+            return refEnv;
+        }
+        return null;
     }
 
     /**
@@ -601,5 +590,27 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         internal_mapPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         return internal_mapPane;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        if(dataStore == null)
+        {
+            return;
+        }
+
+        MapContent mapContent = mapPane.getMapContent();
+
+        if(mapContent != null)
+        {
+            // Remove all layers
+            for(Layer layer : mapContent.layers())
+            {
+                    mapContent.removeLayer(layer);
+            }
+        }
     }
 }

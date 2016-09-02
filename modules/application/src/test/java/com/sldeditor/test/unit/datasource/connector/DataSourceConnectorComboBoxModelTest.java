@@ -30,6 +30,7 @@ import org.junit.Test;
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorComboBoxModel;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 
 /**
  * Unit test for DataSourceConnectorComboBoxModel class.
@@ -45,7 +46,7 @@ public class DataSourceConnectorComboBoxModelTest {
      */
     @Test
     public void testDataSourceConnectorComboBoxModel() {
-        Map<String, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
 
         DataSourceConnectorComboBoxModel dscModel = new DataSourceConnectorComboBoxModel(dscMap);
 
@@ -60,7 +61,8 @@ public class DataSourceConnectorComboBoxModelTest {
 
         assertEquals(actualItem2, dscModel.getSelectedItem());
 
-        assertEquals(dscMap.get(actualItem2), dscModel.getSelectedDSCItem());
+        DataSourceConnectorInterface actualDsc = dscMap.get(DataSourceConnectorShapeFile.class);
+        assertEquals(actualDsc, dscModel.getSelectedDSCItem());
     }
 
 }

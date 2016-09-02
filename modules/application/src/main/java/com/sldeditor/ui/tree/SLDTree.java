@@ -38,7 +38,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.apache.log4j.Logger;
+import org.geotools.data.DataStore;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayerImpl;
@@ -84,9 +84,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The logger. */
-    private static Logger logger = Logger.getLogger(SLDTree.class);
 
     /** The sld symbol structure tree. */
     private JTree symbolTree = null;
@@ -400,8 +397,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      */
     @Override
     public void textUpdated() {
-
-        logger.debug("Refreshing tree");
 
         int[] selectedRows = symbolTree.getSelectionRows();
         populateSLD();
@@ -727,4 +722,11 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         return this;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Does nothing
+    }
 }

@@ -189,6 +189,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
      * @param dataInputs the data inputs
      * @return the input parameter
      */
+    @SuppressWarnings("unused")
     private boolean getInputParameter(DataTypeEnum typeOfData, DataInputsType dataInputs) {
 
         for(Object dataInput : dataInputs.getInput())

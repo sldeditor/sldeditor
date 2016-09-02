@@ -42,6 +42,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface;
 import com.sldeditor.datasource.chooseraster.ChooseRasterFormatPanel;
@@ -145,7 +146,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                     String rasterFilename = map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
                     if(rasterFilename != null)
                     {
-                        File rasterFile = new File(rasterFilename);
+                        File rasterFile = new File(ExternalFilenames.convertURLToFile(rasterFilename));
 
                         ChooseRasterFormatInterface panel = new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
 

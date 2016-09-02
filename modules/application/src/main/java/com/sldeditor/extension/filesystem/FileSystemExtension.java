@@ -37,7 +37,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -62,7 +61,7 @@ import com.sldeditor.extension.ExtensionInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FileSystemExtension implements ExtensionInterface
+public class FileSystemExtension implements ExtensionInterface, FileSelectionInterface
 {
     /** The parent obj. */
     private LoadSLDInterface parentObj = null;
@@ -191,6 +190,10 @@ public class FileSystemExtension implements ExtensionInterface
         // Listen for Tree Selection Events
         tree.addTreeExpansionListener(new TreeExpansionListener()
         {
+
+            /* (non-Javadoc)
+             * @see javax.swing.event.TreeExpansionListener#treeExpanded(javax.swing.event.TreeExpansionEvent)
+             */
             public void treeExpanded(TreeExpansionEvent evt) { 
                 TreePath path = evt.getPath(); 
 
@@ -205,6 +208,9 @@ public class FileSystemExtension implements ExtensionInterface
                 }
             } 
 
+            /* (non-Javadoc)
+             * @see javax.swing.event.TreeExpansionListener#treeCollapsed(javax.swing.event.TreeExpansionEvent)
+             */
             public void treeCollapsed(TreeExpansionEvent evt) {
                 // Nothing to do 
             } 
@@ -212,59 +218,7 @@ public class FileSystemExtension implements ExtensionInterface
         }); 
 
         // Tree selection listener
-        tree.addTreeSelectionListener(new TreeSelectionListener()
-        {
-            @Override
-            public void valueChanged(TreeSelectionEvent e)
-            {
-                if(!tree.isDragging())
-                {
-                    List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-                    List<NodeInterface> nodeList = new ArrayList<NodeInterface>();
-                    boolean isDataSource = false;
-                    boolean isFolder = false;
-
-                    TreePath[] selectedPaths = tree.getSelectionPaths();
-
-                    if(selectedPaths != null)
-                    {
-                        for(TreePath selectedPath : selectedPaths)
-                        {
-                            Object o = selectedPath.getLastPathComponent();
-
-                            if(o instanceof NodeInterface)
-                            {
-                                NodeInterface handler = (NodeInterface)o;
-
-                                FileSystemInterface input = handler.getHandler();
-                                SelectedFiles selectedFiles = input.getSLDContents(handler);
-
-                                if(selectedFiles != null)
-                                {
-                                    isDataSource = selectedFiles.isDataSource();
-                                    isFolder |= selectedFiles.isFolder();
-                                    List<SLDDataInterface> handlerDataList = selectedFiles.getSldData();
-                                    if(handlerDataList != null)
-                                    {
-                                        sldDataList.addAll(handlerDataList);
-                                    }
-                                }
-
-                                nodeList.add(handler);
-                            }
-                        }
-
-                        toolMgr.setSelectedItems(nodeList, sldDataList);
-
-                        parentObj.loadSLDString(isFolder, isDataSource, sldDataList);
-                    }
-                    else
-                    {
-                        toolMgr.setSelectedItems(nodeList, sldDataList);
-                    }
-                }
-            }
-        });
+        tree.setTreeSelection(this);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
@@ -272,6 +226,65 @@ public class FileSystemExtension implements ExtensionInterface
 
         extensionPanel.add(panel, BorderLayout.CENTER);
         logger.debug("FileSystem initialise finished");
+    }
+
+    /**
+     * Called when the file system tree selection has changed.
+     *
+     * @param e the e
+     */
+    @Override
+    public void treeSelection(TreeSelectionEvent e)
+    {
+        if(!tree.isDragging())
+        {
+            List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
+            List<NodeInterface> nodeList = new ArrayList<NodeInterface>();
+            boolean isDataSource = false;
+            boolean isFolder = false;
+
+            TreePath[] selectedPaths = tree.getSelectionPaths();
+
+            if(selectedPaths != null)
+            {
+                for(TreePath selectedPath : selectedPaths)
+                {
+                    Object o = selectedPath.getLastPathComponent();
+
+                    if(o instanceof NodeInterface)
+                    {
+                        NodeInterface handler = (NodeInterface)o;
+
+                        FileSystemInterface input = handler.getHandler();
+                        SelectedFiles selectedFiles = input.getSLDContents(handler);
+
+                        if(selectedFiles != null)
+                        {
+                            isDataSource = selectedFiles.isDataSource();
+                            isFolder |= selectedFiles.isFolder();
+                            List<SLDDataInterface> handlerDataList = selectedFiles.getSldData();
+                            if(handlerDataList != null)
+                            {
+                                sldDataList.addAll(handlerDataList);
+                            }
+                        }
+
+                        nodeList.add(handler);
+                    }
+                }
+
+                toolMgr.setSelectedItems(nodeList, sldDataList);
+
+                if(!parentObj.loadSLDString(isFolder, isDataSource, sldDataList))
+                {
+                    tree.revertSelection(e.getOldLeadSelectionPath());
+                }
+            }
+            else
+            {
+                toolMgr.setSelectedItems(nodeList, sldDataList);
+            }
+        }
     }
 
     /**
