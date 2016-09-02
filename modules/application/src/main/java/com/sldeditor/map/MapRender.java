@@ -416,16 +416,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             }
         }
 
-        //        if(gridCoverage != null)
-        //        {
-        //            try {
-        //                GridCoverage2D grid = gridCoverage.;
-        //           //     refEnvList.add(gridCoverage.);
-        //            } catch (IOException e) {
-        //                ConsoleManager.getInstance().exception(MapRender.class, e);
-        //            }
-        //        }
-
         if(!refEnvList.isEmpty())
         {
             // Combine all the bounding boxes of all the layers
