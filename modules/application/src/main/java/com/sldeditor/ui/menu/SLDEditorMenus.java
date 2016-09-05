@@ -67,8 +67,11 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
     /** The instance. */
     private static SLDEditorMenus instance = null;
 
-    /** The menu save sld editor file. */
+    /** The menu save SLD editor file. */
     private JMenuItem menuSaveSLDEditorFile;
+
+    /** The menu save as SLD editor file. */
+    private JMenuItem menuSaveAsSLDEditorFile;
 
     /** The application. */
     private SLDEditorInterface application = null;
@@ -79,8 +82,11 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
     /** The redo menu item. */
     private JMenuItem menuItemRedo = null;
 
-    /** The menu save sld file. */
+    /** The menu save SLD file. */
     private JMenuItem menuSaveSLDFile;
+
+    /** The menu save as SLD file. */
+    private JMenuItem menuSaveAsSLDFile;
 
     /**
      * Instantiates a new SLD editor menus object.
@@ -293,8 +299,9 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         });
         mnSld.add(menuSaveSLDFile);
 
-        JMenuItem mntmSaveAsSLD = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.saveas"));
-        mntmSaveAsSLD.addActionListener(new ActionListener() {
+        menuSaveAsSLDFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.saveas"));
+        menuSaveAsSLDFile.setEnabled(false);
+        menuSaveAsSLDFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setDialogTitle(Localisation.getString(SLDEditorMenus.class, "sld.save_sld_file"));
@@ -331,7 +338,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                 }
             }
         });
-        mnSld.add(mntmSaveAsSLD);
+        mnSld.add(menuSaveAsSLDFile);
     }
 
     /**
@@ -345,6 +352,15 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         JMenu fileMenu = new JMenu(Localisation.getString(SLDEditorMenus.class, "file.menu"));
         menuBar.add(fileMenu);
 
+        // New
+        JMenuItem mntmNew = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "file.menu.new"));
+        mntmNew.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                application.chooseNewSLD();
+            }
+        });
+
+        // Open
         JMenuItem menuOpenSLDEditorFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.open"),
                 KeyEvent.VK_O);
 
@@ -376,6 +392,8 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                 }
             }
         });
+        
+        // Save
         menuSaveSLDEditorFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.save"), KeyEvent.VK_S);
         menuSaveSLDEditorFile.setEnabled(false);
         menuSaveSLDEditorFile.addActionListener(new ActionListener() {
@@ -394,8 +412,10 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
             }
         });
 
-        JMenuItem menuSaveAsSLDEditorFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.saveas"),
+        // Save as
+        menuSaveAsSLDEditorFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.saveas"),
                 KeyEvent.VK_A);
+        menuSaveAsSLDEditorFile.setEnabled(false);
         menuSaveAsSLDEditorFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -462,24 +482,18 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
             }
         });
 
-        JMenuItem mntmNew = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "file.menu.new"));
-        mntmNew.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                application.chooseNewSLD();
-            }
-        });
-        fileMenu.add(mntmNew);
-
-        fileMenu.add(menuOpenSLDEditorFile);
-        fileMenu.add(menuSaveSLDEditorFile);
-        fileMenu.add(menuSaveAsSLDEditorFile);
-
+        // Exit
         JMenuItem mntmExit = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "file.menu.exit"));
         mntmExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 application.exitApplication();
             }
         });
+
+        fileMenu.add(mntmNew);
+        fileMenu.add(menuOpenSLDEditorFile);
+        fileMenu.add(menuSaveSLDEditorFile);
+        fileMenu.add(menuSaveAsSLDEditorFile);
         fileMenu.add(mntmExit);
     }
 
@@ -494,6 +508,10 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
     {
         menuSaveSLDEditorFile.setEnabled((sldData.getSldEditorFile() != null) && dataEditedFlag);
         menuSaveSLDFile.setEnabled((sldData.getSLDFile() != null) && dataEditedFlag);
+
+        // Once a symbol is loaded Save As menu items are enabled
+        menuSaveAsSLDFile.setEnabled(true);
+        menuSaveAsSLDEditorFile.setEnabled(true);
 
         if(application != null)
         {
