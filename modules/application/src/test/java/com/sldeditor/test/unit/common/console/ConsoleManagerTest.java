@@ -119,6 +119,7 @@ public class ConsoleManagerTest {
     private int countOccurences(String prefix, String message) {
 
         File f = new File("consolemanagertest.log");
+        f.deleteOnExit();
         int count = 0;
 
         BufferedReader br;
@@ -138,8 +139,6 @@ public class ConsoleManagerTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        f.delete();
 
         return count;
     }
