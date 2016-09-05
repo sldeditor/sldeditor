@@ -321,14 +321,14 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <tasks>
+                            <target name="Remove unused shade plugin generated files">
                                 <delete>
                                     <fileset dir="${sldeditor.dest.folder}"
                                         includes="original-*.jar" />
                                     <fileset dir="${sldeditor.dest.folder}"
                                         includes="*-shaded.jar" />
                                 </delete>
-                            </tasks>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
