@@ -47,6 +47,7 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.vector.VectorTool;
 
 /**
  * The Class RasterTool.
@@ -111,6 +112,10 @@ public class RasterTool implements ToolInterface {
                         FileTreeNode fileTreeNode = (FileTreeNode) nodeTypeList.get(0);
 
                         File rasterFile = fileTreeNode.getFile();
+                        ConsoleManager.getInstance().information(this,
+                                String.format("%s : %s", 
+                                        Localisation.getString(RasterTool.class, "RasterTool.createSymbol"),
+                                        rasterFile.getAbsolutePath()));
                         SLDDataInterface sldData = rasterReader.createRasterSLDData(rasterFile);
                         LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
 
@@ -154,6 +159,11 @@ public class RasterTool implements ToolInterface {
                         FileTreeNode fileTreeNode = (FileTreeNode) nodeTypeList.get(0);
 
                         File rasterFile = fileTreeNode.getFile();
+
+                        ConsoleManager.getInstance().information(this, 
+                                String.format("%s : %s", 
+                                        Localisation.getString(VectorTool.class, "RasterTool.setDataSource"),
+                                        rasterFile.getAbsolutePath()));
 
                         // Raster file
                         DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorRasterFile.class);
