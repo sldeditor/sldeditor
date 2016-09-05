@@ -679,7 +679,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             }
         }
 
-    //    loadSLDString(false, false, sldDataList);
+        loadSLDString(false, false, sldDataList);
     }
 
     /**
