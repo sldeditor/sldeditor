@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.SplashScreen;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
@@ -121,6 +122,14 @@ public class AppSplashScreen
         {
             // draw the text
             splashGraphics.setPaint(Color.BLACK);
+            Font font = getFont();
+
+            splashGraphics.setFont(font);
+            splashGraphics.setRenderingHint(
+                    RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            splashGraphics.setColor(Color.black);
+
             splashGraphics.drawString(str, (int)getTextPosition().getX(), (int)getTextPosition().getY());
 
             // make sure it's displayed
