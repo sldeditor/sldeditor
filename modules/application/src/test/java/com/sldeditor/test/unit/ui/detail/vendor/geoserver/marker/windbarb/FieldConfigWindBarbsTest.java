@@ -284,6 +284,8 @@ public class FieldConfigWindBarbsTest {
 
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
         field.setValue(fieldConfigManager, null, externalGraphic);
+
+        f.delete();
     }
 
     /**
@@ -425,7 +427,7 @@ public class FieldConfigWindBarbsTest {
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
         FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-        
+
         field.setUpdateSymbolListener(null);
     }
 

@@ -108,9 +108,7 @@ public class YSLDToolTest {
         File testFile3 = null;
         try {
             testFile1 = File.createTempFile("invalid", ".tst");
-            testFile1.deleteOnExit();
             testFile3 = File.createTempFile("valid", ".ysld");
-            testFile3.deleteOnExit();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -164,6 +162,23 @@ public class YSLDToolTest {
         // SLD and YSLD should be enabled
         assertTrue(toSLD.isEnabled());
         assertTrue(toYSLD.isEnabled());
+
+        testFile1.delete();
+        testFile3.delete();
+
+        tidyUpTempFiles(sldData2.getSLDFile());
+        tidyUpTempFiles(sldData3.getSLDFile());
+    }
+
+    private void tidyUpTempFiles(File sldFile) {
+        String filename = sldFile.getAbsolutePath();
+        int index = filename.lastIndexOf('.');
+        filename = filename.substring(0, index);
+        
+        File sld = new File(filename + ".sld");
+        sld.delete();
+        File ysld = new File(filename + ".ysld");
+        ysld.delete();
     }
 
     /**
@@ -192,11 +207,8 @@ public class YSLDToolTest {
         File testFile3 = null;
         try {
             testFile1 = File.createTempFile("invalid", ".tst");
-            testFile1.deleteOnExit();
             testFile2 = File.createTempFile("valid", ".sld");
-            testFile2.deleteOnExit();
             testFile3 = File.createTempFile("valid", ".ysld");
-            testFile3.deleteOnExit();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -239,6 +251,10 @@ public class YSLDToolTest {
         } catch (SecurityException | FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        testFile1.delete();
+        testFile2.delete();
+        testFile3.delete();
     }
 
     /**
@@ -251,7 +267,6 @@ public class YSLDToolTest {
      */
     private static File stream2file (InputStream in, String suffix) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, suffix);
-        tempFile.deleteOnExit();
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }
@@ -296,7 +311,6 @@ public class YSLDToolTest {
                 sldData.setSLDFile(f);
 
                 SelectedSymbol.getInstance().setSld(SLDUtils.createSLDFromString(sldData));
-                f.deleteOnExit();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

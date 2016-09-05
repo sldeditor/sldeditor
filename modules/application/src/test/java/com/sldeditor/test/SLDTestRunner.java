@@ -126,7 +126,7 @@ public class SLDTestRunner
 
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
-        
+
         sldEditor = SLDEditor.createAndShowGUI(null, null, true);
     }
 
@@ -139,7 +139,6 @@ public class SLDTestRunner
      */
     public static File stream2file (InputStream in) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, SUFFIX);
-        tempFile.deleteOnExit();
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }
@@ -246,6 +245,7 @@ public class SLDTestRunner
             try {
                 f = stream2file(inputStream);
                 sldEditor.openFile(f.toURI().toURL());
+                f.delete();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

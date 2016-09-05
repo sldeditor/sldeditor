@@ -68,7 +68,6 @@ public class SLDUtilsTest {
     public void testReadSLDFile() {
         try {
             File tmpFile = File.createTempFile("test", ".sld");
-            tmpFile.deleteOnExit();
 
             FileWriter fileWriter = new FileWriter(tmpFile);
             fileWriter.write(expectedSld);
@@ -87,6 +86,7 @@ public class SLDUtilsTest {
             MarkImpl mark = (MarkImpl) pointSymbolizer.getGraphic().graphicalSymbols().get(0);
             assertEquals("circle", mark.getWellKnownName().toString());
 
+            tmpFile.delete();
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test file");

@@ -139,7 +139,7 @@ public class ConsoleManagerTest {
             e.printStackTrace();
         }
 
-        f.deleteOnExit();
+        f.delete();
 
         return count;
     }

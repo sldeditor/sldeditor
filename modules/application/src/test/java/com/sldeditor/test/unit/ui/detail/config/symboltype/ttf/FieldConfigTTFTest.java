@@ -163,6 +163,8 @@ public class FieldConfigTTFTest {
 
         field.populateExpression(expectedValue);
         assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
+
+        f.delete();
     }
 
     /**
@@ -272,7 +274,7 @@ public class FieldConfigTTFTest {
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
-        
+
         FieldConfigTTF field = new FieldConfigTTF(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
 
         field.setValue(null, null, null);
@@ -303,7 +305,7 @@ public class FieldConfigTTFTest {
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
-        
+
         FieldConfigTTF field = new FieldConfigTTF(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
 
         List<GraphicalSymbol> actualValue = field.getValue(null, null, false, false);
@@ -353,7 +355,7 @@ public class FieldConfigTTFTest {
     public void testGetFieldList() {
         boolean valueOnly = true;
         FieldConfigTTF field = new FieldConfigTTF(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
-        
+
         assertEquals(1, field.getFieldList(null).size());
     }
 

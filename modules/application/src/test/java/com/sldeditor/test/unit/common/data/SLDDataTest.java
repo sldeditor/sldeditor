@@ -155,7 +155,6 @@ public class SLDDataTest {
         File sldFile = null;
         try {
             sldFile = File.createTempFile("test", ".txt");
-            sldFile.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test SLD file");
@@ -167,6 +166,8 @@ public class SLDDataTest {
         String actualSldFile = data.getSLDFile().getAbsolutePath();
         assertEquals(expectedFile, actualSldFile);
         assertNull(data.getConnectionData());
+
+        sldFile.delete();
     }
 
     /**
@@ -251,13 +252,14 @@ public class SLDDataTest {
         File sldEditorFile = null;
         try {
             sldEditorFile = File.createTempFile("test", ".txt");
-            sldEditorFile.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test SLD Editor file");
         }
         data.setSldEditorFile(sldEditorFile);
         assertEquals(sldEditorFile, data.getSldEditorFile());
+
+        sldEditorFile.delete();
     }
 
     /**

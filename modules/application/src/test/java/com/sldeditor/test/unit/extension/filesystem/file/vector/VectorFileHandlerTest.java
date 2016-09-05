@@ -110,7 +110,6 @@ public class VectorFileHandlerTest {
 
             // Changes where the file is to be saved to
             File saveFile = File.createTempFile("test", ".sld");
-            saveFile.deleteOnExit();
 
             SLDData sldData = new SLDData(null, "");
 
@@ -118,6 +117,8 @@ public class VectorFileHandlerTest {
 
             assertFalse(handler.save(null));
             assertFalse(handler.save(sldData));
+
+            saveFile.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());
