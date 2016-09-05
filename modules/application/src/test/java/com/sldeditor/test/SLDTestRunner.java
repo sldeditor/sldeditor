@@ -244,7 +244,30 @@ public class SLDTestRunner
             File f = null;
             try {
                 f = stream2file(inputStream);
-                sldEditor.openFile(f.toURI().toURL());
+
+                int noOfRetries = 3;
+                int attempt = 0;
+
+                while(attempt < noOfRetries)
+                {
+                    try
+                    { 
+                        sldEditor.openFile(f.toURI().toURL());
+                        break;
+                    }
+                    catch(NullPointerException nullException)
+                    {
+                        StackTraceElement[] stackTraceElements = nullException.getStackTrace();
+
+                        System.out.println(stackTraceElements[0].getMethodName());
+
+                        //                    at javax.swing.tree.DefaultTreeSelectionModel.resetRowSelection(DefaultTreeSelectionModel.java:774)
+
+                        System.out.println("Attempt : " + attempt + 1);
+                        attempt ++;
+                    }
+                }
+
                 f.delete();
             } catch (IOException e1) {
                 e1.printStackTrace();
