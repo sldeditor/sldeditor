@@ -238,6 +238,11 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     {
         if(!tree.isDragging())
         {
+            if(parentObj != null)
+            {
+                parentObj.preLoad();
+            }
+
             List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
             List<NodeInterface> nodeList = new ArrayList<NodeInterface>();
             boolean isDataSource = false;

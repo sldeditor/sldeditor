@@ -591,6 +591,19 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                     {
                         String layerName = firstObject.getLayerName();
 
+                        File sldEditorFile = firstObject.getSldEditorFile();
+                        if(sldEditorFile != null)
+                        {
+                            ConsoleManager.getInstance().information(this,
+                                    String.format("%s : %s",
+                                            Localisation.getString(getClass(), "SLDEditor.loadedSLDEditorFile"),
+                                            sldEditorFile.getAbsolutePath()));
+                        }
+                        ConsoleManager.getInstance().information(this,
+                                String.format("%s : %s",
+                                        Localisation.getString(getClass(), "SLDEditor.loadedSLDFile"),
+                                        layerName));
+
                         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
 
                         SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
@@ -603,7 +616,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                         dataSource.connect(SLDEditorFile.getInstance());
 
-                        if(SLDEditorFile.getInstance().getSldEditorFile() != null)
+                        if(sldEditorFile != null)
                         {
                             PrefData prefData = PrefManager.getInstance().getPrefData();
                             prefData.setVendorOptionVersionList(firstObject.getVendorOptionList());
@@ -666,7 +679,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             }
         }
 
-        loadSLDString(false, false, sldDataList);
+    //    loadSLDString(false, false, sldDataList);
     }
 
     /**
@@ -732,5 +745,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     private static boolean isUnderTestFlag() {
         return underTestFlag;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.LoadSLDInterface#preLoad()
+     */
+    @Override
+    public void preLoad() {
+        ConsoleManager.getInstance().clear();
     }
 }

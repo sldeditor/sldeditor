@@ -143,4 +143,13 @@ public class ConsoleManagerTest {
 
         return count;
     }
+
+    /**
+     * Test method for {@link com.sldeditor.common.console.ConsoleManager#clear()}.
+     */
+    @Test
+    public void testClear() {
+        // Does nothing in the log file
+        ConsoleManager.getInstance().clear();
+    }
 }

@@ -26,8 +26,8 @@ import org.geotools.styling.StyledLayerDescriptor;
 import com.sldeditor.common.SLDDataInterface;
 
 /**
- * The Interface LoadSLDInterface
- * 
+ * The Interface LoadSLDInterface.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface LoadSLDInterface {
@@ -36,6 +36,11 @@ public interface LoadSLDInterface {
      * Empty SLD.
      */
     void emptySLD();
+
+    /**
+     * Method called when a new folder/file has been selected but not processed
+     */
+    void preLoad();
 
     /**
      * Load sld from a string.
@@ -54,4 +59,5 @@ public interface LoadSLDInterface {
      * @return the styled layer descriptor
      */
     StyledLayerDescriptor readSLDFile(File file);
+
 }

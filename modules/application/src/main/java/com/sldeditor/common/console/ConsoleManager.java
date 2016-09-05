@@ -153,4 +153,11 @@ public class ConsoleManager
 
         logger.error(sb.toString());
     }
+
+    /**
+     * Clear all displayed console messages.
+     */
+    public void clear() {
+        panel.clear();
+    }
 }
