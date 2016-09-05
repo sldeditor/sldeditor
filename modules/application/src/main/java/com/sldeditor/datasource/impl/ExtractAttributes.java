@@ -214,9 +214,10 @@ public class ExtractAttributes {
             {
                 Node node = nodeList.item(index);
 
+                @SuppressWarnings("unused")
                 String contents = node.getTextContent();
 
-                System.out.println(contents);
+            //    System.out.println(contents);
             }
         }
     }
