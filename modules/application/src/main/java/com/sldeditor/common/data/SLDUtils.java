@@ -163,5 +163,4 @@ public class SLDUtils {
         }
         return sld;
     }
-
 }
