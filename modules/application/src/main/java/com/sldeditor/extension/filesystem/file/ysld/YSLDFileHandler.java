@@ -192,7 +192,7 @@ public class YSLDFileHandler implements FileHandlerInterface
                     sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
                 }
 
-                String sldContents = sldWriter.encodeSLD(sld);
+                String sldContents = sldWriter.encodeSLD(null, sld);
 
                 SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
                 sldData.setSLDFile(f);
@@ -229,7 +229,7 @@ public class YSLDFileHandler implements FileHandlerInterface
         BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter(fileToSave));
-            String contents = ysldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            String contents = ysldWriter.encodeSLD(sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());
             out.write(contents);
             out.close();
         } catch (IOException e) {

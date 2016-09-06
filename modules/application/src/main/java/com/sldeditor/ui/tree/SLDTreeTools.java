@@ -343,7 +343,7 @@ public class SLDTreeTools {
         DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         Object obj = lastNode.getUserObject();
 
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         if(obj instanceof NamedLayer)
         {
@@ -400,7 +400,7 @@ public class SLDTreeTools {
             }
         }
 
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }
@@ -478,7 +478,7 @@ public class SLDTreeTools {
         Object obj = lastNode.getUserObject();
 
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         if(obj instanceof String)
         {
@@ -556,7 +556,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -618,7 +618,7 @@ public class SLDTreeTools {
         }
 
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         PointSymbolizer newPointSymbolizer = DefaultSymbols.createDefaultPointSymbolizer();
 
@@ -635,7 +635,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -650,7 +650,7 @@ public class SLDTreeTools {
             return;
         }
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         RasterSymbolizer newRasterSymbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
         DefaultMutableTreeNode ruleNode = getRuleTreeNode();
@@ -666,7 +666,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -682,7 +682,7 @@ public class SLDTreeTools {
         }
 
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         TextSymbolizer newTextSymbolizer = DefaultSymbols.createDefaultTextSymbolizer();
         DefaultMutableTreeNode ruleNode = getRuleTreeNode();
@@ -698,7 +698,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -713,7 +713,7 @@ public class SLDTreeTools {
             return;
         }
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         LineSymbolizer newLineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
 
@@ -732,7 +732,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -747,7 +747,7 @@ public class SLDTreeTools {
             return;
         }
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         LineSymbolizer newLineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
 
@@ -766,7 +766,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -781,7 +781,7 @@ public class SLDTreeTools {
             return;
         }
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         PolygonSymbolizer newPolygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
 
@@ -801,7 +801,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -816,7 +816,7 @@ public class SLDTreeTools {
             return;
         }
         // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         PolygonSymbolizer newPolygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
 
@@ -836,7 +836,7 @@ public class SLDTreeTools {
             symbolTree.setSelectionPath(newPath);
 
             // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
@@ -914,7 +914,7 @@ public class SLDTreeTools {
         int direction = moveUp ? -1 : 1;
 
         // Store current state of the SLD before the move
-        Object oldValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         if(obj instanceof StyledLayer)
         {
@@ -1053,7 +1053,7 @@ public class SLDTreeTools {
         }
 
         // Store current state of the SLD after the move
-        Object newValueObj = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
     }

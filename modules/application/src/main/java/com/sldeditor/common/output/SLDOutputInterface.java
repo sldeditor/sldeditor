@@ -20,6 +20,8 @@ package com.sldeditor.common.output;
 
 import org.geotools.styling.StyledLayerDescriptor;
 
+import com.sldeditor.common.SLDDataInterface;
+
 /**
  * The Interface SLDOutputInterface.
  * 
@@ -28,9 +30,10 @@ import org.geotools.styling.StyledLayerDescriptor;
 public interface SLDOutputInterface {
 
     /**
-     * Updated sld.
+     * Updated SLD.
      *
+     * @param sldData the sld data
      * @param sld the sld
      */
-    void updatedSLD(StyledLayerDescriptor sld);
+    void updatedSLD(SLDDataInterface sldData, StyledLayerDescriptor sld);
 }

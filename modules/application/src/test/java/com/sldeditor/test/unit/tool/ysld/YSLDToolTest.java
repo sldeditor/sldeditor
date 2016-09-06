@@ -304,7 +304,7 @@ public class YSLDToolTest {
                     // Convert YSLD to SLD string
                     SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
 
-                    sldContents = sldWriter.encodeSLD(sld);
+                    sldContents = sldWriter.encodeSLD(null, sld);
                 }
 
                 sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);

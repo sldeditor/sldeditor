@@ -167,7 +167,7 @@ public class YSLDTool implements ToolInterface {
 
             if(sld != null)
             {
-                String sldString = ysldWriter.encodeSLD(sld);
+                String sldString = ysldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
                 String ysldFilename = layerName + "." + YSLDTool.YSLD_FILE_EXTENSION;
                 String destinationFolder = sldData.getSLDFile().getParent();
@@ -209,7 +209,7 @@ public class YSLDTool implements ToolInterface {
 
             if(sld != null)
             {
-                String sldString = sldWriter.encodeSLD(sld);
+                String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
                 String sldFilename = layerName + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
                 String destinationFolder = sldData.getSLDFile().getParent();

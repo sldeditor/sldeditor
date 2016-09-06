@@ -18,6 +18,8 @@
  */
 package com.sldeditor.common.output;
 
+import java.net.URL;
+
 import org.geotools.styling.StyledLayerDescriptor;
 
 /**
@@ -28,10 +30,11 @@ import org.geotools.styling.StyledLayerDescriptor;
 public interface SLDWriterInterface {
 
     /**
-     * Encode sld to a string
+     * Encode sld to a string.
      *
+     * @param resourceLocator the resource locator
      * @param sld the sld to encode
      * @return the string encoded sld
      */
-    String encodeSLD(StyledLayerDescriptor sld);
+    String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld);
 }

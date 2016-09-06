@@ -706,7 +706,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             sldWriter = SLDWriterFactory.createWriter(null);
         }
 
-        String sldContents = sldWriter.encodeSLD(SelectedSymbol.getInstance().getSld());
+        String sldContents = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
         return sldContents;
     }

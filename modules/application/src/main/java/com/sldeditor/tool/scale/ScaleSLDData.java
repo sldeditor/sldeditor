@@ -345,7 +345,7 @@ public class ScaleSLDData {
                 maximumScaleUpdated = false;
             }
 
-            String sldContents = sldWriter.encodeSLD(this.sld);
+            String sldContents = sldWriter.encodeSLD(null, this.sld);
 
             sldData.updateSLDContents(sldContents);
         }

@@ -125,7 +125,7 @@ public class VectorReader implements VectorReaderInterface {
         File sldFilename = ExternalFilenames.createSLDFilename(vectorFile);
 
         StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
-        String sldContents = sldWriter.encodeSLD(sld);
+        String sldContents = sldWriter.encodeSLD(null, sld);
         SLDData sldData = new SLDData(styleWrapper, sldContents);
         sldData.setSLDFile(sldFilename);
         sldData.setReadOnly(false);

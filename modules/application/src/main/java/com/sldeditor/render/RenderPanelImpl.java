@@ -57,6 +57,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
+import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
@@ -66,6 +67,7 @@ import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -519,12 +521,13 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         if(validSymbol)
         {
             StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
-
+            SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+            
             if(sld != null)
             {
                 for(SLDOutputInterface sldOutput : sldOutputList)
                 {
-                    sldOutput.updatedSLD(sld);
+                    sldOutput.updatedSLD(sldData, sld);
                 }
 
                 renderSymbol((Style) renderSymbol.getRenderStyle(SelectedSymbol.getInstance()));

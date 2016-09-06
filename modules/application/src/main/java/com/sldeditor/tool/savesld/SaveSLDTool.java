@@ -149,7 +149,7 @@ public class SaveSLDTool implements ToolInterface {
             destinationFolder.mkdirs();
         }
 
-        logger.info(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.saveAllLayersFromMXD"));
+        logger.info(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.saveAllLayers"));
 
         for(SLDDataInterface sldData : sldDataList)
         {
@@ -159,7 +159,7 @@ public class SaveSLDTool implements ToolInterface {
 
             if(sld != null)
             {
-                String sldString = sldWriter.encodeSLD(sld);
+                String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
                 String sldFilename = layerName + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
                 File fileToSave = new File(destinationFolder, sldFilename);

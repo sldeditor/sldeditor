@@ -19,6 +19,7 @@
 package com.sldeditor.common;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import com.sldeditor.common.data.GeoServerConnection;
@@ -210,4 +211,17 @@ public interface SLDDataInterface {
      */
     void setLegendOptions(LegendOptionData legendOptions);
 
+    /**
+     * Sets the resource locator.
+     *
+     * @param resourceLocator the new resource locator
+     */
+    void setResourceLocator(URL resourceLocator);
+
+    /**
+     * Gets the resource locator.
+     *
+     * @return the resource locator
+     */
+    URL getResourceLocator();
 }

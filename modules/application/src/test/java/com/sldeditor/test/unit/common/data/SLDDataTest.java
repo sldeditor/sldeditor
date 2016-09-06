@@ -2,12 +2,15 @@ package com.sldeditor.test.unit.common.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +25,9 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
  * The unit test for SLDData.
@@ -230,6 +235,10 @@ public class SLDDataTest {
         SLDData data = new SLDData(null, null);
         data.setDataSourceProperties(dataSourceProperties);
         assertEquals(dataSourceProperties, data.getDataSourceProperties());
+
+        // Increase code coverage
+        data.setDataSourceProperties(dataSourceProperties);
+        assertEquals(dataSourceProperties, data.getDataSourceProperties());
     }
 
     /**
@@ -276,4 +285,56 @@ public class SLDDataTest {
         assertEquals(updateSldContents, data.getSld());
     }
 
+    /**
+     * Test original format
+     */
+    @Test
+    public void testOriginalFormat() {
+        SLDData data = new SLDData(null, null);
+        assertEquals(SLDOutputFormatEnum.SLD, data.getOriginalFormat());
+
+        SLDOutputFormatEnum expected = SLDOutputFormatEnum.YSLD;
+        data.setOriginalFormat(expected);
+        assertEquals(expected, data.getOriginalFormat());
+    }
+
+    /**
+     * Test resource locator
+     */
+    @Test
+    public void testResourceLocator() {
+        SLDData data = new SLDData(null, null);
+
+        assertNull(data.getResourceLocator());
+
+        try {
+            URL url = new URL("http://localhost:8080/geoserver");
+            data.setResourceLocator(url);
+
+            URL actualValue = data.getResourceLocator();
+
+            assertTrue(url.toExternalForm().compareTo(actualValue.toExternalForm()) == 0);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    /**
+     * Test legend options
+     */
+    @Test
+    public void testLegendOptions() {
+        SLDData data = new SLDData(null, null);
+
+        LegendOptionData legendOptions = null;
+        assertNotNull(data.getLegendOptions());
+        
+        data.setLegendOptions(legendOptions);
+        assertNotNull(data.getLegendOptions());
+
+        legendOptions = new LegendOptionData();
+        data.setLegendOptions(legendOptions);
+        assertEquals(legendOptions, data.getLegendOptions());
+    }
 }

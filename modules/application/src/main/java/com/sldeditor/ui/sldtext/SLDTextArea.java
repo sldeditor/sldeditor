@@ -22,6 +22,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +68,9 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
 
     /** The displayed sld. */
     private StyledLayerDescriptor displayedSld = null;
+
+    /** The resource locator. */
+    private URL resourceLocator = null;
 
     /**
      * Gets the panel.
@@ -146,12 +150,13 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
     }
 
     /* (non-Javadoc)
-     * @see com.sldeditor.output.SLDOutputInterface#updatedSLD(org.geotools.styling.StyledLayerDescriptor)
+     * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.SLDDataInterface, org.geotools.styling.StyledLayerDescriptor)
      */
     @Override
-    public void updatedSLD(StyledLayerDescriptor sld)
+    public void updatedSLD(SLDDataInterface sldData, StyledLayerDescriptor sld)
     {
-        displayedSld = sld;
+        this.displayedSld = sld;
+        this.resourceLocator  = sldData.getResourceLocator();
 
         outputText();
     }
@@ -163,12 +168,15 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
     {
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(outputFormat);
 
-        String encodedSLD = sldWriter.encodeSLD(displayedSld);
+        String encodedSLD = sldWriter.encodeSLD(resourceLocator, displayedSld);
         sldSourceTextArea.setText(encodedSLD);
     }
 
     /**
-     * Set the output format when a new file is loaded
+     * Set the output format when a new file is loaded.
+     *
+     * @param sldData the sld data
+     * @param dataEditedFlag the data edited flag
      */
     /* (non-Javadoc)
      * @see com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)

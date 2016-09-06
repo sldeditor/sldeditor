@@ -20,6 +20,7 @@ package com.sldeditor.common.output.impl;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URL;
 
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.ysld.Ysld;
@@ -47,7 +48,8 @@ public class YSLDWriterImpl implements SLDWriterInterface {
      * @param sld the sld
      * @return the YSLD string
      */
-    public String encodeSLD(StyledLayerDescriptor sld)
+    @Override
+    public String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld)
     {
         StringWriter out = new StringWriter();
         if(sld != null)

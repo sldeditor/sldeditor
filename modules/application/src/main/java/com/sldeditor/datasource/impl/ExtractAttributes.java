@@ -154,6 +154,7 @@ public class ExtractAttributes {
         {
             return null;
         }
+
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
         DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
@@ -170,7 +171,7 @@ public class ExtractAttributes {
             }
         }
 
-        String sldContents = sldWriter.encodeSLD(sldCopy);
+        String sldContents = sldWriter.encodeSLD(null, sldCopy);
         return sldContents;
     }
 
@@ -217,7 +218,7 @@ public class ExtractAttributes {
                 @SuppressWarnings("unused")
                 String contents = node.getTextContent();
 
-            //    System.out.println(contents);
+                //    System.out.println(contents);
             }
         }
     }
