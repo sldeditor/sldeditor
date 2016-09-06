@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
@@ -94,6 +95,19 @@ public class GeoServerConnectionTool implements ToolInterface
                     connectButton.setEnabled(false);
                     disconnectButton.setEnabled(false);
                     geoServerConnectState.connect(connectionList);
+
+                    for(GeoServerConnection connection : connectionList)
+                    {
+                        if(!geoServerConnectState.isConnected(connection))
+                        {
+                            String errorMessage = String.format("%s : %s (%s)",
+                                    Localisation.getString(GeoServerConnectionTool.class, "GeoServerConnectionTool.failedToConnect"),
+                                    connection.getConnectionName(),
+                                    connection.getUrl().toExternalForm() );
+                            ConsoleManager.getInstance().error(GeoServerConnectionTool.class, errorMessage);
+                            connectButton.setEnabled(true);
+                        }
+                    }
                 }
             }
         });
