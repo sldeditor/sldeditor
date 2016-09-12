@@ -1,6 +1,38 @@
 # Change Log
 
-## [0.2.0](https://github.com/robward-scisys/sldeditor/tree/0.2.0) (2016-07-18)
+## [0.3.0](https://github.com/robward-scisys/sldeditor/tree/0.3.0) (2016-09-12)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.2.0...0.3.0)
+
+**Implemented enhancements:**
+
+- Add dialog confirming discarding of edits [\#60](https://github.com/robward-scisys/sldeditor/issues/60)
+- Implement raster legend graphics [\#56](https://github.com/robward-scisys/sldeditor/issues/56)
+- Use GeoTools 15.1 [\#54](https://github.com/robward-scisys/sldeditor/issues/54)
+- Add colour ramp to be applied to raster symbols [\#51](https://github.com/robward-scisys/sldeditor/issues/51)
+- Add image outline support for raster symbols [\#49](https://github.com/robward-scisys/sldeditor/issues/49)
+- Provide a GUI for user layer inline features [\#47](https://github.com/robward-scisys/sldeditor/issues/47)
+- Implement user layer configuration [\#45](https://github.com/robward-scisys/sldeditor/issues/45)
+
+**Fixed bugs:**
+
+- Marker symbol stroke attributes not correct [\#58](https://github.com/robward-scisys/sldeditor/issues/58)
+- Handle inaccessible folders/drive letters in the file system [\#42](https://github.com/robward-scisys/sldeditor/issues/42)
+- Symbol not rendered after raster symbol assigned a data source. [\#36](https://github.com/robward-scisys/sldeditor/issues/36)
+
+**Closed issues:**
+
+- Unable to open .sld and .sldeditor [\#41](https://github.com/robward-scisys/sldeditor/issues/41)
+- Implement geometry field for all symbolizers. [\#40](https://github.com/robward-scisys/sldeditor/issues/40)
+
+**Merged pull requests:**
+
+- Iss58 marker symbol stroke [\#59](https://github.com/robward-scisys/sldeditor/pull/59) ([robward-scisys](https://github.com/robward-scisys))
+- Iss47 inline feature gui [\#48](https://github.com/robward-scisys/sldeditor/pull/48) ([robward-scisys](https://github.com/robward-scisys))
+- Iss45 implement userstyle [\#46](https://github.com/robward-scisys/sldeditor/pull/46) ([robward-scisys](https://github.com/robward-scisys))
+- Iss40 geometry field [\#44](https://github.com/robward-scisys/sldeditor/pull/44) ([robward-scisys](https://github.com/robward-scisys))
+- Iss42 handle inaccessible folders [\#43](https://github.com/robward-scisys/sldeditor/pull/43) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.2.0](https://github.com/robward-scisys/sldeditor/tree/v0.2.0) (2016-07-18)
 **Implemented enhancements:**
 
 - NewSLDPanel unit test should not display panel [\#35](https://github.com/robward-scisys/sldeditor/issues/35)
@@ -26,6 +58,7 @@
 
 **Merged pull requests:**
 
+- Release v0.2.0 [\#39](https://github.com/robward-scisys/sldeditor/pull/39) ([robward-scisys](https://github.com/robward-scisys))
 - Ignore NewSLDPanelTest [\#37](https://github.com/robward-scisys/sldeditor/pull/37) ([robward-scisys](https://github.com/robward-scisys))
 - Iss33 stroke symbol field state [\#34](https://github.com/robward-scisys/sldeditor/pull/34) ([robward-scisys](https://github.com/robward-scisys))
 - Remove FieldConfigBase.populateExpression\(\) opacity parameter [\#32](https://github.com/robward-scisys/sldeditor/pull/32) ([robward-scisys](https://github.com/robward-scisys))
