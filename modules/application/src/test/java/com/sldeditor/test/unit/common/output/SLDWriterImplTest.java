@@ -45,14 +45,14 @@ public class SLDWriterImplTest {
     public void testEncodeSLD() {
         SLDWriterImpl writer = new SLDWriterImpl();
 
-        String result = writer.encodeSLD(null);
+        String result = writer.encodeSLD(null, null);
         assertEquals("", result);
         SLDData sldData = new SLDData(null, expectedSld);
 
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
-        
-        result = writer.encodeSLD(sld);
+
+        // No resource locator
+        result = writer.encodeSLD(null, sld);
         assertTrue(!result.isEmpty());
     }
-
 }

@@ -18,12 +18,16 @@
  */
 package com.sldeditor.common.output.impl;
 
+import java.net.URL;
+
 import javax.xml.transform.TransformerException;
 
 import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SLDExternalImages;
 import com.sldeditor.common.output.SLDWriterInterface;
 
 /**
@@ -41,21 +45,32 @@ public class SLDWriterImpl implements SLDWriterInterface {
     }
 
     /**
-     * Encode sld to a string
+     * Encode sld to a string.
      *
+     * @param resourceLocator the resource locator
      * @param sld the sld
      * @return the string
      */
-    public String encodeSLD(StyledLayerDescriptor sld)
+    @Override
+    public String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld)
     {
         String xml = "";
 
         if(sld != null)
         {
+            DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
+            sld.accept(duplicator);
+            StyledLayerDescriptor sldCopy = (StyledLayerDescriptor)duplicator.getCopy();
+
+            if(resourceLocator != null)
+            {
+                SLDExternalImages.updateOnlineResources(resourceLocator, sldCopy);
+            }
+
             SLDTransformer transformer = new SLDTransformer();
             transformer.setIndentation(2);
             try {
-                xml = transformer.transform(sld);
+                xml = transformer.transform(sldCopy);
             } catch (TransformerException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
@@ -63,4 +78,6 @@ public class SLDWriterImpl implements SLDWriterInterface {
 
         return xml;
     }
+
+
 }

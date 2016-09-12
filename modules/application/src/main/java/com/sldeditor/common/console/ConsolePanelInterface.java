@@ -39,4 +39,9 @@ public interface ConsolePanelInterface
      * @param errorMessage the error message
      */
     public void addErrorMessage(String errorMessage);
+
+    /**
+     * Clear all displayed console messages.
+     */
+    public void clear();
 }

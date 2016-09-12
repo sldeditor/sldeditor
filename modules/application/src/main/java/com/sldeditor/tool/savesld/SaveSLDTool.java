@@ -18,25 +18,38 @@
  */
 package com.sldeditor.tool.savesld;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.geotools.data.DataUtilities;
 import org.geotools.styling.StyledLayerDescriptor;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SLDExternalImages;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
@@ -56,11 +69,11 @@ import com.sldeditor.tool.ToolPanel;
  */
 public class SaveSLDTool implements ToolInterface {
 
+    /** The Constant BUFFER_SIZE. */
+    private static final int BUFFER_SIZE = 4096;
+
     /** The logger. */
     private static Logger logger = Logger.getLogger(ToolPanel.class);
-
-    /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
 
     /** The save all sld. */
     private JButton saveAllSLD;
@@ -123,9 +136,16 @@ public class SaveSLDTool implements ToolInterface {
                 //
                 chooser.setAcceptAllFileFilterUsed(false);
 
+                // Save external images option
+                JPanel accessory = new JPanel();
+                JCheckBox isOpenBox = new JCheckBox(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.saveExternalImages"));
+                accessory.setLayout(new BorderLayout());
+                accessory.add(isOpenBox, BorderLayout.CENTER);
+                chooser.setAccessory(accessory);
+
                 if (chooser.showSaveDialog(saveAllSLD) == JFileChooser.APPROVE_OPTION) { 
 
-                    saveAllSLDToFolder(chooser.getSelectedFile());
+                    saveAllSLDToFolder(chooser.getSelectedFile(), isOpenBox.isSelected());
                 }
             }
         });
@@ -137,19 +157,19 @@ public class SaveSLDTool implements ToolInterface {
      * Save all to folder.
      *
      * @param destinationFolder the destination folder
+     * @param saveExternalResources the save external resources
      */
-    private void saveAllSLDToFolder(File destinationFolder) {
-        if(sldWriter == null)
-        {
-            sldWriter = SLDWriterFactory.createWriter(null);
-        }
+    private void saveAllSLDToFolder(File destinationFolder, boolean saveExternalResources) {
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
         if(!destinationFolder.exists())
         {
             destinationFolder.mkdirs();
         }
 
-        logger.info(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.saveAllLayersFromMXD"));
+        logger.info(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.saveAllSLD"));
+
+        boolean yesToAll = false;
 
         for(SLDDataInterface sldData : sldDataList)
         {
@@ -159,12 +179,12 @@ public class SaveSLDTool implements ToolInterface {
 
             if(sld != null)
             {
-                String sldString = sldWriter.encodeSLD(sld);
+                String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
                 String sldFilename = layerName + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
                 File fileToSave = new File(destinationFolder, sldFilename);
 
-                ConsoleManager.getInstance().information(this, Localisation.getField(SaveSLDTool.class, "SaveSLDTool.savingLayer") + " " + layerName);
+                ConsoleManager.getInstance().information(this, Localisation.getField(SaveSLDTool.class, "SaveSLDTool.savingSLDr") + " " + layerName);
                 BufferedWriter out;
                 try {
                     out = new BufferedWriter(new FileWriter(fileToSave));
@@ -172,7 +192,93 @@ public class SaveSLDTool implements ToolInterface {
                     out.close();
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                }       
+                }
+
+                // Save external images if requested
+                if(saveExternalResources)
+                {
+                    List<String> externalImageList = SLDExternalImages.getExternalImages(sldData.getResourceLocator(), sld);
+
+                    for(String externalImage : externalImageList)
+                    {
+                        File output = new File(destinationFolder, externalImage);
+
+                        File parentFolder = output.getParentFile();
+
+                        // Check to see if the destination folder exists
+                        if(!parentFolder.exists())
+                        {
+                            if(output.getParentFile().mkdirs())
+                            {
+                                ConsoleManager.getInstance().error(this,
+                                        Localisation.getField(SaveSLDTool.class, "SaveSLDTool.error1") + 
+                                        output.getAbsolutePath());
+                            }
+                        }
+
+                        if(parentFolder.exists())
+                        {
+                            boolean writeOutputFile = true;
+
+                            if(output.exists())
+                            {
+                                if(!yesToAll)
+                                {
+                                    Object[] options = {"Yes to All", "Yes", "No"};
+                                    int n = JOptionPane.showOptionDialog(Controller.getInstance().getFrame(),
+                                            "Overwrite destination file?\n" + output.getAbsolutePath(),
+                                            "Desintation file exists",
+                                            JOptionPane.YES_NO_CANCEL_OPTION,
+                                            JOptionPane.QUESTION_MESSAGE,
+                                            null,
+                                            options,
+                                            options[2]);
+
+                                    switch(n)
+                                    {
+                                    case 0:
+                                        yesToAll = true;
+                                        break;
+                                    case 1:
+                                        break;
+                                    case 2:
+                                    default:
+                                        writeOutputFile = false;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if(writeOutputFile)
+                            {
+                                try {
+                                    URL input = DataUtilities.extendURL(sldData.getResourceLocator(), externalImage);
+                                    URLConnection connection = input.openConnection();
+
+                                    InputStream inputStream = connection.getInputStream();
+                                    BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+
+                                    byte[] buffer = new byte[BUFFER_SIZE];
+                                    int n = - 1;
+
+                                    FileOutputStream outputStream = new FileOutputStream(output);
+                                    while ( (n = inputStream.read(buffer)) != -1) 
+                                    {
+                                        outputStream.write(buffer, 0, n);
+                                    }
+                                    in.close();
+                                    outputStream.close();
+                                    ConsoleManager.getInstance().information(this,
+                                            Localisation.getField(SaveSLDTool.class, "SaveSLDTool.savingExternalImage") + " " + externalImage);
+                                } catch (MalformedURLException e) {
+                                    ConsoleManager.getInstance().exception(this, e);
+                                } catch (IOException e) {
+                                    ConsoleManager.getInstance().exception(this, e);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

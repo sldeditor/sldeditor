@@ -111,6 +111,10 @@ public class VectorTool implements ToolInterface {
                         FileTreeNode fileTreeNode = (FileTreeNode) nodeTypeList.get(0);
 
                         File vectorFile = fileTreeNode.getFile();
+                        ConsoleManager.getInstance().information(this, 
+                                String.format("%s : %s", 
+                                        Localisation.getString(VectorTool.class, "VectorTool.createSymbol"),
+                                        vectorFile.getAbsolutePath()));
                         SLDDataInterface sldData = vectorReader.createVectorSLDData(vectorFile);
                         LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
 
@@ -167,6 +171,11 @@ public class VectorTool implements ToolInterface {
                         FileTreeNode fileTreeNode = (FileTreeNode) nodeTypeList.get(0);
 
                         File vectorFile = fileTreeNode.getFile();
+
+                        ConsoleManager.getInstance().information(this, 
+                                String.format("%s : %s", 
+                                        Localisation.getString(VectorTool.class, "VectorTool.setDataSource"),
+                                        vectorFile.getAbsolutePath()));
 
                         // Vector file
                         DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorShapeFile.class);

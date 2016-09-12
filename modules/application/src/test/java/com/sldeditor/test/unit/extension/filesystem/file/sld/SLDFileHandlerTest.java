@@ -95,7 +95,6 @@ public class SLDFileHandlerTest {
 
             // Changes where the file is to be saved to
             File saveFile = File.createTempFile("test", ".sld");
-            saveFile.deleteOnExit();
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 
@@ -103,6 +102,7 @@ public class SLDFileHandlerTest {
 
             assertFalse(handler.save(null));
             assertTrue(handler.save(sldData));
+            saveFile.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());

@@ -19,6 +19,7 @@
 package com.sldeditor.common.data;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import com.sldeditor.common.DataSourceFieldInterface;
@@ -82,6 +83,9 @@ public class SLDData implements SLDDataInterface
 
     /** The legend options. */
     private LegendOptionData legendOptions = new LegendOptionData();
+
+    /** The resource locator. */
+    private URL resourceLocator = null;
 
     /**
      * Constructor.
@@ -246,6 +250,10 @@ public class SLDData implements SLDDataInterface
      */
     public static String removeFileExtension(String s) {
 
+        if(s == null)
+        {
+            return null;
+        }
         String separator = System.getProperty("file.separator");
         String filename;
 
@@ -389,5 +397,25 @@ public class SLDData implements SLDDataInterface
         {
             this.legendOptions = new LegendOptionData();
         }
+    }
+
+    /**
+     * Sets the resource locator
+     *
+     * @param resourceLocator the resource locator
+     */
+    @Override
+    public void setResourceLocator(URL resourceLocator) {
+        this.resourceLocator = resourceLocator;
+    }
+
+    /**
+     * Gets the resource locator.
+     *
+     * @return the resource locator
+     */
+    @Override
+    public URL getResourceLocator() {
+        return resourceLocator;
     }
 }

@@ -46,10 +46,10 @@ import com.sldeditor.ui.legend.LegendManager;
  */
 public class ExportHTML
 {
-    
+
     /** The Constant HTML_TEMPLATE. */
     private static final String HTML_TEMPLATE = "/html/exportedmxd.html";
-    
+
     /** The Constant TEMPLATE_INSERT_CODE. */
     private static final String TEMPLATE_INSERT_CODE = "<!-- SLD Editor insert -->";
 
@@ -65,9 +65,9 @@ public class ExportHTML
      * @param backgroundColour the background colour
      */
     public static void save(File destinationFolder,
-        String filename,
-        List<SLDDataInterface> sldDataList, 
-        Color backgroundColour)
+            String filename,
+            List<SLDDataInterface> sldDataList, 
+            Color backgroundColour)
     {
         if(!destinationFolder.exists())
         {
@@ -84,9 +84,10 @@ public class ExportHTML
         {
             String htmlTemplate = null;
             BufferedReader reader = null;
+            File file = null;
             try
             {
-                File file = stream2file(inputStream);
+                file = stream2file(inputStream);
 
                 reader = new BufferedReader(new FileReader(file));
                 String         line = null;
@@ -127,7 +128,7 @@ public class ExportHTML
             for(SLDDataInterface sldData : sldDataList)
             {
                 StyleWrapper styleWrapper = sldData.getStyle();
-                
+
                 String layerName = styleWrapper.getStyle();
                 sb.append("  <tr>\n");
 
@@ -141,7 +142,7 @@ public class ExportHTML
                     String showFilename = null;
 
                     List<String> legendFileNameList = new ArrayList<String>();
-                    
+
                     boolean result = LegendManager.getInstance().saveLegendImage(sld, destinationFolder, layerName, showHeading, showFilename, legendFileNameList);
 
                     if(result)
@@ -152,11 +153,11 @@ public class ExportHTML
                 }
                 sb.append("  </tr>\n");
             }
-            
+
             if(htmlTemplate != null)
             {
                 htmlTemplate = htmlTemplate.replace(TEMPLATE_INSERT_CODE, sb.toString());
-                
+
                 PrintWriter out;
                 try
                 {
@@ -170,9 +171,11 @@ public class ExportHTML
                     ConsoleManager.getInstance().exception(ExportHTML.class, e);
                 }
             }
+
+            file.delete();
         }
     }
-    
+
     /**
      * Writes an InputStream to a temporary file.
      *
@@ -182,7 +185,6 @@ public class ExportHTML
      */
     private static File stream2file (InputStream in) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, SUFFIX);
-        tempFile.deleteOnExit();
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }

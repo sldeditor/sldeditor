@@ -160,6 +160,8 @@ public class FieldConfigFilenameTest {
 
         field.populateExpression(expectedValue);
         assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
+
+        f.delete();
     }
 
     /**
@@ -296,6 +298,8 @@ public class FieldConfigFilenameTest {
 
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
         field.setValue(fieldConfigManager, null, externalGraphic);
+        
+        f.delete();
     }
 
     /**

@@ -226,7 +226,7 @@ public class GeoServerClientTest {
         styledLayer.setName("test point sld");
 
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
-        String updatedSLDBody = sldWriter.encodeSLD(sld);
+        String updatedSLDBody = sldWriter.encodeSLD(null, sld);
         assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
 
         // Change the workspace name - invalid
@@ -245,7 +245,7 @@ public class GeoServerClientTest {
         // Update the contents
         styledLayer.setName("updated test point sld");
 
-        updatedSLDBody = sldWriter.encodeSLD(sld);
+        updatedSLDBody = sldWriter.encodeSLD(null, sld);
         assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
 
         // Check refresh workspace works

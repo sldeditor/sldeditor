@@ -87,11 +87,18 @@ public class TreeTransferHandler extends TransferHandler {
 
             for(TreePath path : paths)
             {
-                NodeInterface selection = (NodeInterface)path.getLastPathComponent();
+                if(path.getLastPathComponent() instanceof NodeInterface)
+                {
+                    NodeInterface selection = (NodeInterface)path.getLastPathComponent();
 
-                map.put(selection, path);
+                    map.put(selection, path);
+                }
             }
 
+            if(map.isEmpty())
+            {
+                return null;
+            }
             transferredDataItem = new TransferableDataItem(map);
             setDragging(true);
             return transferredDataItem;

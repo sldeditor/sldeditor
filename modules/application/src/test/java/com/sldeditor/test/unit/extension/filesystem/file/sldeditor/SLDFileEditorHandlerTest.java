@@ -94,7 +94,6 @@ public class SLDFileEditorHandlerTest {
 
             // Changes where the file is to be saved to
             File sldEditorFile = File.createTempFile("test", ".sldeditor");
-            sldEditorFile.deleteOnExit();
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 
@@ -109,11 +108,12 @@ public class SLDFileEditorHandlerTest {
             List<SLDDataInterface> actualSldDataList = editorFileHandler2.open(sldEditorFile);
 
             assertEquals(1, actualSldDataList.size());
-            
+
             FileTreeNode editorFileTreeNode = new FileTreeNode(sldEditorFile.getParentFile(), sldEditorFile.getName());
             List<SLDDataInterface> actualSldDataList2 = editorFileHandler2.getSLDContents(editorFileTreeNode);
             assertEquals(1, actualSldDataList2.size());
 
+            sldEditorFile.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());

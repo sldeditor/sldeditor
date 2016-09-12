@@ -32,7 +32,6 @@ import javax.swing.JTextArea;
  */
 public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
 {
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -84,5 +83,10 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
         textPane.setForeground(Color.RED);
         textPane.append(errorMessage);
         textPane.append("\n");
+    }
+
+    @Override
+    public void clear() {
+        textPane.setText("");
     }
 }

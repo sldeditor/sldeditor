@@ -64,7 +64,7 @@ public class FSTree extends JTree
     /**
      * Sets the ignore selection flag state.
      */
-    private void setIgnoreSelection(boolean value)
+    public void setIgnoreSelection(boolean value)
     {
         ignoreSelection = value;
     }
@@ -87,6 +87,7 @@ public class FSTree extends JTree
     public void revertSelection(TreePath previousSelectedPath) {
         setIgnoreSelection(true);
         setSelectionPath(previousSelectedPath);
+        setIgnoreSelection(false);
     }
 
     /**
@@ -108,10 +109,10 @@ public class FSTree extends JTree
                         fileSelection.treeSelection(e);
                     }
                 }
-                else
-                {
-                    setIgnoreSelection(false);
-                }
+//                else
+//                {
+//                    setIgnoreSelection(false);
+//                }
             }
         });
     }

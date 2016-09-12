@@ -574,6 +574,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                 }
             }
         }
+
         symbolTree.setSelectionPath(path);
 
         return true;

@@ -262,7 +262,7 @@ public class FieldConfigWKTTest {
         Mark marker2 = styleBuilder.createMark("wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", styleBuilder.createFill(), styleBuilder.createStroke());
 
         field.setValue(null, null, marker2);
-        
+
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
@@ -307,6 +307,8 @@ public class FieldConfigWKTTest {
         // Try unsupported symbol
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
         field.setValue(fieldConfigManager, null, externalGraphic);
+
+        f.delete();
     }
 
     /**

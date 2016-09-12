@@ -178,7 +178,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 group = getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
                 if(group != null)
                 {
-                    MultiOptionGroup contrastEnhancementGroup = (MultiOptionGroup) group;
+                    MultiOptionGroup channelSelectionGroup = (MultiOptionGroup) group;
 
                     ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
 
@@ -191,13 +191,13 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                         enableChannelSelection = ((channelSelection.getGrayChannel() != null) ||
                                 (rgbChannels[0] != null) || (rgbChannels[1] != null) || (rgbChannels[2] != null));
                     }
-                    group.enable(enableChannelSelection);
+                    channelSelectionGroup.enable(enableChannelSelection);
                     if(enableChannelSelection)
                     {
                         SelectedChannelType greyChannel = channelSelection.getGrayChannel();
                         if(greyChannel != null)
                         {
-                            contrastEnhancementGroup.setOption(GroupIdEnum.RASTER_GREY_CHANNEL_OPTION);
+                            channelSelectionGroup.setOption(GroupIdEnum.RASTER_GREY_CHANNEL_OPTION);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_GREY_CHANNEL,
                                     FieldIdEnum.RASTER_RGB_GREY_NAME,
@@ -210,7 +210,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                         {
                             SelectedChannelType[] rgbChannels = channelSelection.getRGBChannels();
 
-                            contrastEnhancementGroup.setOption(GroupIdEnum.RASTER_RGB_CHANNEL_OPTION);
+                            channelSelectionGroup.setOption(GroupIdEnum.RASTER_RGB_CHANNEL_OPTION);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_RED,
                                     FieldIdEnum.RASTER_RGB_RED_NAME,

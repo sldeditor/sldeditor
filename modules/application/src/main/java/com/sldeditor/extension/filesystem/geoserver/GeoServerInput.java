@@ -335,7 +335,10 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         if(client != null)
         {
             client.connect();
-            client.retrieveData();
+            if(client.isConnected())
+            {
+                client.retrieveData();
+            }
         }
     }
 

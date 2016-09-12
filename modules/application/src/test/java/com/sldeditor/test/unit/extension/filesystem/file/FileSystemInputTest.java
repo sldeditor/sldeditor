@@ -96,7 +96,6 @@ public class FileSystemInputTest {
 
             // Changes where the file is to be saved to
             File saveFile = File.createTempFile("test", ".sld");
-            saveFile.deleteOnExit();
 
             SLDData sldData = (SLDData) sldDataContentsList.get(0);
 
@@ -104,6 +103,8 @@ public class FileSystemInputTest {
 
             assertFalse(input.save(null));
             assertTrue(input.save(sldData));
+
+            saveFile.delete();
         }
         catch (SecurityException e)
         {

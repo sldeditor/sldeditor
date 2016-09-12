@@ -95,6 +95,8 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     /** The multi option group enabled flag. */
     private boolean multiOptionGroupEnabled = true;
 
+    private JCheckBox groupTitleCheckbox;
+
     /**
      * Sets the label.
      *
@@ -171,17 +173,17 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         // Set up title
         if(isOptional())
         {
-            JCheckBox groupTitle = new JCheckBox(getLabel());
-            groupTitle.setBounds(0, 0, GroupConfig.FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
-            groupTitle.setOpaque(true);
-            fieldPanel.add(groupTitle);
+            groupTitleCheckbox = new JCheckBox(getLabel());
+            groupTitleCheckbox.setBounds(0, 0, GroupConfig.FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
+            groupTitleCheckbox.setOpaque(true);
+            fieldPanel.add(groupTitleCheckbox);
             multiOptionGroupEnabled = false;
 
-            groupTitle.addActionListener(new ActionListener(){
+            groupTitleCheckbox.addActionListener(new ActionListener(){
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    enable(groupTitle.isSelected());
+                    enable(groupTitleCheckbox.isSelected());
                 }});
         }
         else
@@ -355,6 +357,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     @Override
     public void enable(boolean enable) {
         multiOptionGroupEnabled = enable;
+        groupTitleCheckbox.setSelected(enable);
         comboBox.setEnabled(enable);
 
         if(enable)

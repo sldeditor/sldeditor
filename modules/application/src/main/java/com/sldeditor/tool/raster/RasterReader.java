@@ -56,6 +56,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.utils.ColourUtils;
@@ -94,7 +95,18 @@ public class RasterReader implements RasterReaderInterface {
         StyledLayerDescriptor sld = null;
 
         AbstractGridFormat format = GridFormatFinder.findFormat(rasterFile);
-        AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
+        AbstractGridCoverage2DReader reader = null;
+        
+        try
+        {
+            reader = format.getReader(rasterFile);
+        }
+        catch(UnsupportedOperationException e)
+        {
+            ConsoleManager.getInstance().error(this, 
+                    Localisation.getField(RasterTool.class, "RasterReader.unknownFormat") + rasterFile.getAbsolutePath());
+            return null;
+        }
 
         BufferedImage img = null;
         try {
@@ -115,7 +127,7 @@ public class RasterReader implements RasterReaderInterface {
         File sldFilename = ExternalFilenames.createSLDFilename(rasterFile);
 
         StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
-        String sldContents = sldWriter.encodeSLD(sld);
+        String sldContents = sldWriter.encodeSLD(null, sld);
         SLDData sldData = new SLDData(styleWrapper, sldContents);
         sldData.setSLDFile(sldFilename);
         sldData.setReadOnly(false);

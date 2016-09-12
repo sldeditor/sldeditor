@@ -95,7 +95,6 @@ public class YSLDFileHandlerTest {
 
             // Changes where the file is to be saved to
             File saveFile = File.createTempFile("test", ".ysld");
-            saveFile.deleteOnExit();
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 
@@ -103,6 +102,8 @@ public class YSLDFileHandlerTest {
 
             assertFalse(handler.save(null));
             assertTrue(handler.save(sldData));
+
+            saveFile.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());

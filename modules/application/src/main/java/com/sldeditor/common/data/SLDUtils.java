@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.geotools.data.DataUtilities;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.DefaultResourceLocator;
 import org.geotools.styling.SLDParser;
@@ -41,6 +42,9 @@ import com.sldeditor.common.console.ConsoleManager;
  * @author Robert Ward (SCISYS)
  */
 public class SLDUtils {
+
+    /** The Constant STYLES_PATH. */
+    private static final String STYLES_PATH = "styles/";
 
     /**
      * Creates a StyledLayerDescriptor object containing a SLD from a string.
@@ -61,20 +65,12 @@ public class SLDUtils {
 
         SLDParser styleReader = new SLDParser(styleFactory, stream);
 
-        URL url = null;
-        try {
-            File sldFile = sldData.getSLDFile();
-            if(sldFile != null)
-            {
-                url = sldFile.toURI().toURL();
-            }
-        } catch (MalformedURLException e) {
-            ConsoleManager.getInstance().exception(SLDUtils.class, e);
-        }
+        URL resourceLocator = getResourceLocator(sldData);
 
-        setResourcelocator(styleReader, url);
+        sldData.setResourceLocator(resourceLocator);
+        setResourcelocator(styleReader, resourceLocator);
         StyledLayerDescriptor sld = null;
-        
+
         try
         {
             sld = styleReader.parseSLD();
@@ -88,12 +84,46 @@ public class SLDUtils {
     }
 
     /**
-     * Sets the resource locator so that relative external graphic files can be found
+     * Gets the resource locator.
+     *
+     * @param sldData the sld data
+     * @return the resource locator
+     */
+    public static URL getResourceLocator(SLDDataInterface sldData) {
+        GeoServerConnection geoServer = sldData.getConnectionData();
+
+        URL resourceLocator = null;
+
+        if(geoServer != null)
+        {
+            try {
+                resourceLocator = DataUtilities.extendURL(geoServer.getUrl(), STYLES_PATH);
+            } catch (MalformedURLException e) {
+                ConsoleManager.getInstance().exception(SLDUtils.class, e);
+            }
+        }
+        else
+        {
+            try {
+                File sldFile = sldData.getSLDFile();
+                if(sldFile != null)
+                {
+                    resourceLocator = sldFile.getParentFile().toURI().toURL();
+                }
+            } catch (MalformedURLException e) {
+                ConsoleManager.getInstance().exception(SLDUtils.class, e);
+            }
+        }
+        return resourceLocator;
+    }
+
+    /**
+     * Sets the resource locator so that relative external graphic files can be found.
      *
      * @param styleReader the new resource locator
      * @param url the url
      */
-    private static void setResourcelocator(SLDParser styleReader, URL url)
+    public static void setResourcelocator(SLDParser styleReader, URL url)
     {
         DefaultResourceLocator resourceLocator = new DefaultResourceLocator();
 
@@ -133,5 +163,4 @@ public class SLDUtils {
         }
         return sld;
     }
-
 }

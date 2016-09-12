@@ -50,7 +50,7 @@ public class PropertyManagerTest {
         String stringKey = "test string key";
         String stringValue = "string test value";
         propertyManager.updateValue(stringKey, stringValue);
-        
+
         String defaultStringValue = "default string value";
         String actualStringResult = propertyManager.getStringValue(stringKey, defaultStringValue);
         assertEquals(stringValue, actualStringResult);
@@ -70,7 +70,7 @@ public class PropertyManagerTest {
         String key = "test boolean key";
         boolean value = true;
         propertyManager.updateValue(key, value);
-        
+
         boolean defaultValue = false;
         boolean actualResult = propertyManager.getBooleanValue(key, defaultValue);
         assertEquals(value, actualResult);
@@ -88,17 +88,16 @@ public class PropertyManagerTest {
     public void testReadConfig() {
         PropertyManager nullPropertyManager = new PropertyManager(null);
         nullPropertyManager.readConfig();
-        
+
         File file = null;
         try {
             file = File.createTempFile("test", ".properties");
-            file.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test property temporary file");
         }
         PropertyManager propertyManager = new PropertyManager(file);
-        
+
         String stringKey = "string key";
         String stringValue = "test string value";
         propertyManager.updateValue(stringKey, stringValue);
@@ -125,24 +124,26 @@ public class PropertyManagerTest {
             propertyManager.updateValue(stringMultipleKey, index, value);
             index ++;
         }
-        
+
         PropertyManager testPropertyManager = new PropertyManager(file);
         testPropertyManager.readConfig();
-        
+
         Color actualColourResult = testPropertyManager.getColourValue(colourKey, Color.black);
         assertEquals(colourValue, actualColourResult);
 
         boolean actualBooleanResult = testPropertyManager.getBooleanValue(booleanKey, false);
         assertEquals(booleanValue, actualBooleanResult);
-        
+
         String actualStringResult = testPropertyManager.getStringValue(stringKey, "");
         assertEquals(stringValue, actualStringResult);
-        
+
         List<String> actualStringList = testPropertyManager.getStringListValue(stringListKey);
         assertEquals(stringList, actualStringList);
 
         actualStringList = testPropertyManager.getMultipleValues(stringMultipleKey);
         assertEquals(stringList, actualStringList);
+
+        file.delete();
     }
 
     /**
@@ -155,7 +156,7 @@ public class PropertyManagerTest {
         double expectedValue = 42.0;
         String stringValue = Double.toString(expectedValue);
         propertyManager.updateValue(stringKey, stringValue);
-        
+
         double defaultValue = 0.0;
         double actualResult = propertyManager.getDoubleValue(stringKey, defaultValue);
         assertTrue(Math.abs(actualResult - expectedValue) < 0.001);
@@ -164,12 +165,12 @@ public class PropertyManagerTest {
 
         actualResult = propertyManager.getDoubleValue(newKey, defaultValue);
         assertTrue(Math.abs(actualResult - defaultValue) < 0.001);
-        
+
         propertyManager.updateValue(stringKey, "not a double");
         actualResult = propertyManager.getDoubleValue(stringKey, defaultValue);
         assertTrue(Math.abs(actualResult - defaultValue) < 0.001);
     }
-    
+
     /**
      * Test method for {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.util.List)}.
      */
@@ -181,9 +182,9 @@ public class PropertyManagerTest {
         stringList.add("item 1");
         stringList.add("item 2");
         stringList.add("item 3");
-        
+
         propertyManager.updateValue(stringKey, stringList);
-        
+
         List<String> actualStringResult = propertyManager.getStringListValue(stringKey);
         assertEquals(stringList, actualStringResult);
 
@@ -204,14 +205,14 @@ public class PropertyManagerTest {
         stringList.add("item 1");
         stringList.add("item 2");
         stringList.add("item 3");
-        
+
         int index = 0;
         for(String value : stringList)
         {
             propertyManager.updateValue(stringKey, index, value);
             index ++;
         }
-        
+
         List<String> actualStringResult = propertyManager.getMultipleValues(stringKey);
         assertEquals(stringList, actualStringResult);
 
@@ -230,7 +231,7 @@ public class PropertyManagerTest {
         String key = "test colour key";
         Color value = Color.CYAN;
         propertyManager.updateValue(key, value);
-        
+
         Color defaultValue = Color.MAGENTA;
         Color actualResult = propertyManager.getColourValue(key, defaultValue);
         assertEquals(value, actualResult);

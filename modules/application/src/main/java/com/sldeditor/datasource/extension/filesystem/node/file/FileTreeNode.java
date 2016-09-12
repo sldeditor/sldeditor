@@ -67,7 +67,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
     /**  File object for this node. */
     private boolean isRoot = false;
 
-    private Path path;
+    /** The path, declared as a string to get round sun.nio.fs.WindowsPath not being serialiable. */
+    private String path;
 
     /** The name of the node. */
     private String name;
@@ -119,14 +120,16 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
         this.name = name;
 
         // See if this node exists and whether it is a directory
-        path = Paths.get(parent.toString(), name);
-        isDir = Files.isDirectory(path); 
+        Path pathPath = Paths.get(parent.toString(), name);
+        path = pathPath.toString();
+
+        isDir = Files.isDirectory(pathPath); 
 
         setUserObject(this.name);
 
         if(isDir())
         {
-            FileSystemWatcher.getInstance().addWatch(this, path);
+            FileSystemWatcher.getInstance().addWatch(this, pathPath);
             fileWatcherSet = true;
         }
     } 
@@ -148,7 +151,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
 
         this.name = parent.toString();
 
-        path = parent;
+        Path pathPath = parent;
+        path = pathPath.toString();
 
         isDir = true; 
 
@@ -206,7 +210,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
 
                 DirectoryStream<Path> stream = null;
                 try {
-                    stream = Files.newDirectoryStream( path );
+                    Path pathPath = Paths.get(path);
+                    stream = Files.newDirectoryStream( pathPath );
                 } catch (AccessDeniedException e) {
                     // Access was denied
                 } catch (NotDirectoryException e) {
@@ -259,7 +264,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
 
                     if(isDir() && !fileWatcherSet)
                     {
-                        FileSystemWatcher.getInstance().addWatch(this, path);
+                        Path pathPath = Paths.get(path);
+                        FileSystemWatcher.getInstance().addWatch(this, pathPath);
                         fileWatcherSet = true;
                     }
 
@@ -280,7 +286,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
      * @throws FileNotFoundException the file not found exception
      */
     private void addFolder(boolean descend, String name) throws FileNotFoundException {
-        FileTreeNode node = new FileTreeNode(path, name);
+        Path pathPath = Paths.get(path);
+        FileTreeNode node = new FileTreeNode(pathPath, name);
         this.add(node);
         if (descend) {
             node.populateDirectories(false); 
@@ -294,8 +301,9 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
      * @throws FileNotFoundException the file not found exception
      */
     private void addFile(String name) throws FileNotFoundException {
+        Path pathPath = Paths.get(path);
 
-        FileTreeNode node = new FileTreeNode(path, name);
+        FileTreeNode node = new FileTreeNode(pathPath, name);
         this.add(node);
 
         FileHandlerInterface handler = fileHandlerMap.get(ExternalFilenames.getFileExtension(name));
@@ -341,7 +349,8 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
      */
     public File getFile()
     {
-        return path.toFile();
+        Path pathPath = Paths.get(path);
+        return pathPath.toFile();
     }
 
     /**

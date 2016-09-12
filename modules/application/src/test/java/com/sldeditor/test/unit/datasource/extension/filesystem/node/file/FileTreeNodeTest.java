@@ -86,26 +86,25 @@ public class FileTreeNodeTest {
             assertEquals(name, node.getName());
             assertEquals(DataFlavourManager.FOLDER_DATAITEM_FLAVOR, node.getDataFlavour());
 
-            File tmpFile = File.createTempFile("sldeditor", ".abc", folder);
-            tmpFile.deleteOnExit();
+            File tmpFile1 = File.createTempFile("sldeditor", ".abc", folder);
 
             Thread.sleep(1000);
 
             // Has a file extension not expecting
             assertEquals(0, node.getChildCount());
 
-            tmpFile = File.createTempFile("sldeditor", ".test", folder);
-            tmpFile.deleteOnExit();
+            File tmpFile2 = File.createTempFile("sldeditor", ".test", folder);
 
             Thread.sleep(10000);
             assertEquals(1, node.getChildCount());
 
-            tmpFile.delete();
+            tmpFile2.delete();
 
             Thread.sleep(10000);
             assertEquals(0, node.getChildCount());
 
             assertEquals(folder.getAbsolutePath(), node.getDestinationText());
+            tmpFile1.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());

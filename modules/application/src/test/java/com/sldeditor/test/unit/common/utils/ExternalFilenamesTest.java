@@ -54,7 +54,6 @@ public class ExternalFilenamesTest {
         File tempSLDFile = null;
         try {
             tempSLDFile = File.createTempFile("test", ".sld");
-            tempSLDFile.deleteOnExit();
         } catch (IOException e1) {
             e1.printStackTrace();
             fail("Couldn't create temp test file");
@@ -77,7 +76,6 @@ public class ExternalFilenamesTest {
         File absolutePathGraphicsFile = null;
         try {
             absolutePathGraphicsFile = File.createTempFile("test", ".png");
-            absolutePathGraphicsFile.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
             fail("Couldn't create temp test file");
@@ -100,6 +98,9 @@ public class ExternalFilenamesTest {
             fail(e.getMessage());
         }
         assertEquals(expectedResult, actualResult);
+        
+        tempSLDFile.delete();
+        absolutePathGraphicsFile.delete();
     }
 
     /**
@@ -113,7 +114,6 @@ public class ExternalFilenamesTest {
         File tempSLDFile = null;
         try {
             tempSLDFile = File.createTempFile("test", ".sld");
-            tempSLDFile.deleteOnExit();
         } catch (IOException e1) {
             e1.printStackTrace();
             fail("Couldn't create temp test file");
@@ -149,6 +149,8 @@ public class ExternalFilenamesTest {
             e.printStackTrace();
             fail(e.getMessage());
         }
+
+        tempSLDFile.delete();
     }
 
     /**

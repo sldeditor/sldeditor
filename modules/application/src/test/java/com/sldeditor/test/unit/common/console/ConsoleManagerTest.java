@@ -119,6 +119,7 @@ public class ConsoleManagerTest {
     private int countOccurences(String prefix, String message) {
 
         File f = new File("consolemanagertest.log");
+        f.deleteOnExit();
         int count = 0;
 
         BufferedReader br;
@@ -139,8 +140,15 @@ public class ConsoleManagerTest {
             e.printStackTrace();
         }
 
-        f.deleteOnExit();
-
         return count;
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.console.ConsoleManager#clear()}.
+     */
+    @Test
+    public void testClear() {
+        // Does nothing in the log file
+        ConsoleManager.getInstance().clear();
     }
 }
