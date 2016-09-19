@@ -423,6 +423,11 @@ public class FilterManager implements FilterNameInterface {
      */
     @Override
     public FilterConfigInterface getFilterConfig(Filter filter) {
+        if(filter == null)
+        {
+            return null;
+        }
+
         Class<?> filterClassTypeName = null;
 
         if(filter instanceof FilterExtendedInterface)
