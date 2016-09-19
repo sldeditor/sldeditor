@@ -23,6 +23,11 @@ public class ExtractGeometryField {
      */
     public static Expression getGeometryField(FieldConfigPopulation fieldConfigVisitor) {
 
+        if(fieldConfigVisitor == null)
+        {
+            return null;
+        }
+
         Expression geometryExpression = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
         if(!validGeometryFieldName(geometryExpression))
         {
