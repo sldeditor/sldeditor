@@ -230,6 +230,11 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      */
     @Override
     public Expression createExpression(EnvVar envVar) {
+        if(envVar == null)
+        {
+            return null;
+        }
+
         Function function = ff.function("env", ff.literal(envVar.getName()));
 
         return function;
