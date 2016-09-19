@@ -93,6 +93,10 @@ public class FilterName {
      * @return the parameter
      */
     public FilterNameParameter getParameter(int index) {
+        if((index < 0) || (index >= parameterList.size()))
+        {
+            return null;
+        }
         return parameterList.get(index);
     }
 }

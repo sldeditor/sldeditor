@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.filter.v2.envvar;
+package com.sldeditor.test.unit.filter.v2.expression;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
