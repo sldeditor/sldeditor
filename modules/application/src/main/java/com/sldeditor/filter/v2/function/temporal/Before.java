@@ -129,7 +129,16 @@ public class Before implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        BeforeImpl filter = new BeforeExtended(parameterList.get(0), parameterList.get(1));
+        BeforeImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new BeforeExtended();
+        }
+        else
+        {
+            filter = new BeforeExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

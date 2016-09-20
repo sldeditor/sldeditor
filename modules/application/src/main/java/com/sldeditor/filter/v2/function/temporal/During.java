@@ -129,7 +129,16 @@ public class During implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        DuringImpl filter = new DuringExtended(parameterList.get(0), parameterList.get(1));
+        DuringImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new DuringExtended();
+        }
+        else
+        {
+            filter = new DuringExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

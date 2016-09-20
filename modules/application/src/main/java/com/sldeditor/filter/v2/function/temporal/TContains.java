@@ -129,7 +129,16 @@ public class TContains implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        TContainsImpl filter = new TContainsExtended(parameterList.get(0), parameterList.get(1));
+        TContainsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new TContainsExtended();
+        }
+        else
+        {
+            filter = new TContainsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

@@ -65,27 +65,81 @@ public class GeometryTests {
 
     /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.BBox}.
+     */
+    @Test
+    public void testBBox() {
+        testClass(new BBox());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Contains}.
+     */
+    @Test
+    public void testContains() {
+        testClass(new Contains());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Crosses}.
+     */
+    @Test
+    public void testCrosses() {
+        testClass(new Crosses());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Disjoint}.
+     */
+    @Test
+    public void testDisjoint() {
+        testClass(new Disjoint());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.DWithin}.
+     */
+    @Test
+    public void testDWithin() {
+        testClass(new DWithin());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Equals}.
+     */
+    @Test
+    public void testEquals() {
+        testClass(new Equals());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Intersects}.
+     */
+    @Test
+    public void testIntersects() {
+        testClass(new Intersects());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Overlaps}.
+     */
+    @Test
+    public void testOverlaps() {
+        testClass(new Overlaps());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Touches}.
+     */
+    @Test
+    public void testTouches() {
+        testClass(new Touches());
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.geometry.Within}.
      */
     @Test
-    public void test() {
-        testClass(new BBox());
-        testClass(new Contains());
-        testClass(new Crosses());
-        testClass(new Disjoint());
-        testClass(new DWithin());
-        testClass(new Equals());
-        testClass(new Intersects());
-        testClass(new Overlaps());
-        testClass(new Touches());
+    public void testWithin() {
         testClass(new Within());
     }
 

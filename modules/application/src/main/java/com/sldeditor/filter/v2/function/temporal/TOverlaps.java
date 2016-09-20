@@ -129,7 +129,16 @@ public class TOverlaps implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        TOverlapsImpl filter = new TOverlapsExtended(parameterList.get(0), parameterList.get(1));
+        TOverlapsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new TOverlapsExtended();
+        }
+        else
+        {
+            filter = new TOverlapsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

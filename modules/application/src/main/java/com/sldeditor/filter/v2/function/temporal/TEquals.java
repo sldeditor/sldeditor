@@ -129,7 +129,16 @@ public class TEquals implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        TEqualsImpl filter = new TEqualsExtended(parameterList.get(0), parameterList.get(1));
+        TEqualsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new TEqualsExtended();
+        }
+        else
+        {
+            filter = new TEqualsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

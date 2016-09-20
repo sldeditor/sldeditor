@@ -128,7 +128,16 @@ public class Beyond implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        BeyondImpl filter = new BeyondExtended(parameterList.get(0), parameterList.get(1));
+        BeyondImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new BeyondExtended();
+        }
+        else
+        {
+            filter = new BeyondExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

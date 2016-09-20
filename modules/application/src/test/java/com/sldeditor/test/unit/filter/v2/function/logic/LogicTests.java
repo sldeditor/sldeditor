@@ -51,13 +51,25 @@ public class LogicTests {
 
     /**
      * <p>{@link com.sldeditor.filter.v2.function.logic.And}.
+     */
+    @Test
+    public void testAnd() {
+        testClass(new And(), 2);
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.logic.Or}.
+     */
+    @Test
+    public void testOr() {
+        testClass(new Or(), 2);
+    }
+
+    /**
      * <p>{@link com.sldeditor.filter.v2.function.logic.Not}.
      */
     @Test
-    public void test() {
-        testClass(new And(), 2);
-        testClass(new Or(), 2);
+    public void testNot() {
         testClass(new Not(), 1);
     }
 
