@@ -46,6 +46,7 @@ public class Not implements FilterConfigInterface {
         /**
          * Instantiates a new not extended.
          */
+        @SuppressWarnings("deprecation")
         public NotExtended()
         {
             super();

@@ -43,7 +43,7 @@ public class IsLike implements FilterConfigInterface {
      */
     public class IsLikeExtended extends LikeFilterImpl implements FilterExtendedInterface
     {
-        
+
         /**
          * Instantiates a new checks if is like extended.
          */
@@ -138,18 +138,26 @@ public class IsLike implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        LiteralExpressionImpl pattern = (LiteralExpressionImpl)parameterList.get(1);
-        LiteralExpressionImpl wildcardMulti = (LiteralExpressionImpl)parameterList.get(2);
-        LiteralExpressionImpl wildcardSingle = (LiteralExpressionImpl)parameterList.get(3);
-        LiteralExpressionImpl escape = (LiteralExpressionImpl)parameterList.get(4);
-        LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(5);
+        LikeFilterImpl filter = null;
+        if((parameterList == null) || parameterList.size() != 6)
+        {
+            filter = new IsLikeExtended();
+        }
+        else
+        {
+            LiteralExpressionImpl pattern = (LiteralExpressionImpl)parameterList.get(1);
+            LiteralExpressionImpl wildcardMulti = (LiteralExpressionImpl)parameterList.get(2);
+            LiteralExpressionImpl wildcardSingle = (LiteralExpressionImpl)parameterList.get(3);
+            LiteralExpressionImpl escape = (LiteralExpressionImpl)parameterList.get(4);
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(5);
 
-        LikeFilterImpl filter = new IsLikeExtended(parameterList.get(0),
-                (String)pattern.getValue(),
-                (String)wildcardMulti.getValue(),
-                (String)wildcardSingle.getValue(),
-                (String)escape.getValue(),
-                (Boolean)matchCase.getValue());
+            filter = new IsLikeExtended(parameterList.get(0),
+                    (String)pattern.getValue(),
+                    (String)wildcardMulti.getValue(),
+                    (String)wildcardSingle.getValue(),
+                    (String)escape.getValue(),
+                    (Boolean)matchCase.getValue());
+        }
 
         return filter;
     }

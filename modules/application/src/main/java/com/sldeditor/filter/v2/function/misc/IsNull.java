@@ -42,7 +42,7 @@ public class IsNull implements FilterConfigInterface {
      */
     public class IsNullExtended extends IsNullImpl implements FilterExtendedInterface
     {
-        
+
         /**
          * Instantiates a new checks if is null extended.
          */
@@ -126,8 +126,16 @@ public class IsNull implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        IsNullImpl filter = new IsNullExtended(parameterList.get(0));
+        IsNullImpl filter = null;
 
+        if((parameterList == null) || parameterList.isEmpty())
+        {
+            filter = new IsNullExtended();
+        }
+        else
+        {
+            filter = new IsNullExtended(parameterList.get(0));
+        }
         return filter;
     }
 

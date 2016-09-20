@@ -45,7 +45,6 @@ import com.sldeditor.filter.v2.function.geometry.Within;
 
 /**
  * Unit test for the following classes:
- * <p>{@link com.sldeditor.filter.v2.function.geometry.BBox}
  * <p>{@link com.sldeditor.filter.v2.function.geometry.BBox}.
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Contains}.
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Crosses}.
