@@ -26,6 +26,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
@@ -36,25 +37,48 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsNull implements FilterConfigInterface {
 
-    public class IsNullExtended extends IsNullImpl
+    /**
+     * The Class IsNullExtended.
+     */
+    public class IsNullExtended extends IsNullImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new checks if is null extended.
+         */
         public IsNullExtended()
         {
             super(null);
         }
 
+        /**
+         * Instantiates a new checks if is null extended.
+         *
+         * @param expression1 the expression 1
+         */
         public IsNullExtended(Expression expression1)
         {
             super(expression1);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.CompareFilterImpl#toString()
+         */
         public String toString() {
             return "[ IsNull " + getExpression() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return IsNullImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsNull()
     {

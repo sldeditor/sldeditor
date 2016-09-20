@@ -27,6 +27,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
@@ -37,25 +38,49 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class TOverlaps implements FilterConfigInterface {
 
-    public class TOverlapsExtended extends TOverlapsImpl
+    /**
+     * The Class TOverlapsExtended.
+     */
+    public class TOverlapsExtended extends TOverlapsImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new t overlaps extended.
+         */
         public TOverlapsExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new t overlaps extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public TOverlapsExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " TOverlaps " + getExpression2() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return TOverlapsImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public TOverlaps()
     {

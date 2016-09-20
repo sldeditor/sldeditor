@@ -27,6 +27,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
@@ -37,25 +38,49 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class TEquals implements FilterConfigInterface {
 
-    public class TEqualsExtended extends TEqualsImpl
+    /**
+     * The Class TEqualsExtended.
+     */
+    public class TEqualsExtended extends TEqualsImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new t equals extended.
+         */
         public TEqualsExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new t equals extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public TEqualsExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " TEquals " + getExpression2() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return TEqualsImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public TEquals()
     {

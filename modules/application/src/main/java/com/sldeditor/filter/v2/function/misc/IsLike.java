@@ -27,6 +27,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
@@ -37,26 +38,54 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsLike implements FilterConfigInterface {
 
-    public class IsLikeExtended extends LikeFilterImpl
+    /**
+     * The Class IsLikeExtended.
+     */
+    public class IsLikeExtended extends LikeFilterImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new checks if is like extended.
+         */
         public IsLikeExtended()
         {
             super(null);
         }
 
+        /**
+         * Instantiates a new checks if is like extended.
+         *
+         * @param expr the expr
+         * @param pattern the pattern
+         * @param wildcardMulti the wildcard multi
+         * @param wildcardSingle the wildcard single
+         * @param escape the escape
+         * @param matchCase the match case
+         */
         public IsLikeExtended(Expression expr, String pattern, String wildcardMulti, String wildcardSingle, String escape, boolean matchCase)
         {
             super(expr, pattern, wildcardMulti, wildcardSingle, escape);
             setMatchCase(matchCase);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.LikeFilterImpl#toString()
+         */
         public String toString() {
             return "[ Like " + getExpression() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return LikeFilterImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsLike()
     {

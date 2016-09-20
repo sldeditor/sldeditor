@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.measure.unit.Unit;
+
 import org.apache.log4j.Logger;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.DefaultFunctionFactory;
@@ -37,6 +39,8 @@ import org.opengis.filter.expression.Literal;
 import org.opengis.parameter.Parameter;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.function.geometry.BBox;
 import com.sldeditor.filter.v2.function.geometry.Contains;
 import com.sldeditor.filter.v2.function.geometry.Crosses;
@@ -72,6 +76,7 @@ import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
+import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
@@ -128,7 +133,7 @@ public class FilterManager implements FilterNameInterface {
     /**
      * Instantiates a new filter manager.
      */
-    public FilterManager()
+    private FilterManager()
     {
         initialise();
     }
@@ -191,6 +196,8 @@ public class FilterManager implements FilterNameInterface {
         Class<?>[] allowedGeometryTypes = {Geometry.class, LineString.class, Point.class, MultiPoint.class, LinearRing.class};
         Class<?>[] allowedDateTypes = {Date.class};
         Class<?>[] allowedClassifierTypes = {RangedClassifier.class, Classifier.class};
+        Class<?>[] allowedUnitTypes = {Unit.class};
+        Class<?>[] allowedComparableTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class, Date.class, String.class, Boolean.class};
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
         populateAllowedTypes(Double.class, allowedDoubleTypes);
@@ -202,6 +209,8 @@ public class FilterManager implements FilterNameInterface {
         populateAllowedTypes(Geometry.class, allowedGeometryTypes);
         populateAllowedTypes(Date.class, allowedDateTypes);
         populateAllowedTypes(Classifier.class, allowedClassifierTypes);
+        populateAllowedTypes(Unit.class, allowedUnitTypes);
+        populateAllowedTypes(Comparable.class, allowedComparableTypes);
     }
 
     /**
@@ -288,100 +297,123 @@ public class FilterManager implements FilterNameInterface {
      * Convert function parameters to ui components.
      *
      * @param panelId the panel id
-     * @param fieldId the field id
      * @param functionName the function name
      * @return the list of ui components to display
      */
     @Override
-    public List<GroupConfigInterface> convertParameters(Class<?> panelId, FieldId fieldId, FunctionName functionName) {
+    public List<GroupConfigInterface> convertParameters(Class<?> panelId, FunctionName functionName) {
         List<GroupConfigInterface> groupConfigList = new ArrayList<GroupConfigInterface>();
-        GroupConfig groupConfig = new GroupConfig();
 
-        StringBuilder funcPrototypeStringBuilder = new StringBuilder();
-        funcPrototypeStringBuilder.append(functionName.getName());
-        funcPrototypeStringBuilder.append("(");
-
-        for(int index = 0; index < functionName.getArgumentCount(); index ++)
+        if(functionName != null)
         {
-            String label = functionName.getArgumentNames().get(index);
-            Parameter<?> parameterType = functionName.getArguments().get(index);
+            GroupConfig groupConfig = new GroupConfig();
 
-            boolean valueOnly = false;
-            FieldId id = FieldId.getUnknownValue();
+            StringBuilder funcPrototypeStringBuilder = new StringBuilder();
+            funcPrototypeStringBuilder.append(functionName.getName());
+            funcPrototypeStringBuilder.append("(");
 
-            if(index > 0)
-            {
-                funcPrototypeStringBuilder.append(", ");
-            }
-            Class<?> type = parameterType.getType();
-            funcPrototypeStringBuilder.append(type.getSimpleName());
+            int argCount = functionName.getArgumentCount();
 
-            FieldConfigBase fieldConfig = null;
-            if(type == java.lang.Number.class)
+            if(functionName.getArgumentCount() < 0)
             {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
-            }
-            else if(type == Double.class)
-            {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
-            }
-            else if(type == Float.class)
-            {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
-            }
-            else if(type == Integer.class)
-            {
-                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
-            }
-            else if(type == Long.class)
-            {
-                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
-            }
-            else if(type == String.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Object.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Boolean.class)
-            {
-                fieldConfig = new FieldConfigBoolean(panelId, id, label, valueOnly);
-            }
-            else if(type == Geometry.class)
-            {
-                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
-            }
-            else if(type == LineString.class)
-            {
-                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Date.class)
-            {
-                fieldConfig = new FieldConfigDate(panelId, id, label, valueOnly);
-            }
-            else if(type == Class.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Classifier.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Unknown function type : " + type.getName());
+                argCount *= -1;
             }
 
-            groupConfig.addField(fieldConfig);
+            for(int index = 0; index < argCount; index ++)
+            {
+                int argIndex = index;
+                if(argIndex >= functionName.getArguments().size())
+                {
+                    argIndex = functionName.getArguments().size() - 1;
+                }
+                String label = functionName.getArgumentNames().get(argIndex);
+                Parameter<?> parameterType = functionName.getArguments().get(argIndex);
+
+                boolean valueOnly = false;
+                FieldId id = FieldId.getUnknownValue();
+
+                if(index > 0)
+                {
+                    funcPrototypeStringBuilder.append(", ");
+                }
+                Class<?> type = parameterType.getType();
+                funcPrototypeStringBuilder.append(type.getSimpleName());
+
+                FieldConfigBase fieldConfig = null;
+                if(type == java.lang.Number.class)
+                {
+                    fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+                }
+                else if(type == Double.class)
+                {
+                    fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+                }
+                else if(type == Float.class)
+                {
+                    fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+                }
+                else if(type == Integer.class)
+                {
+                    fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
+                }
+                else if(type == Long.class)
+                {
+                    fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
+                }
+                else if(type == String.class)
+                {
+                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                }
+                else if(type == Object.class)
+                {
+                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                }
+                else if(type == Boolean.class)
+                {
+                    fieldConfig = new FieldConfigBoolean(panelId, id, label, valueOnly);
+                }
+                else if(type == Geometry.class)
+                {
+                    fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
+                }
+                else if(type == LineString.class)
+                {
+                    fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
+                }
+                else if(type == Date.class)
+                {
+                    fieldConfig = new FieldConfigDate(panelId, id, label, valueOnly);
+                }
+                else if(type == Class.class)
+                {
+                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                }
+                else if(type == Classifier.class)
+                {
+                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                }
+                else if(type == Unit.class)
+                {
+                    fieldConfig = new FieldConfigMapUnits(panelId, id, label, valueOnly);
+                }
+                else if(type == Comparable.class)
+                {
+                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                }
+                else
+                {
+                    ConsoleManager.getInstance().error(this, Localisation.getField(ExpressionPanelv2.class, "FilterManager.error1") + type.getName());
+                }
+
+                groupConfig.addField(fieldConfig);
+            }
+
+            funcPrototypeStringBuilder.append(")");
+
+            groupConfig.setLabel(funcPrototypeStringBuilder.toString());
+
+            groupConfigList.add(groupConfig);
         }
-
-        funcPrototypeStringBuilder.append(")");
-
-        groupConfig.setLabel(funcPrototypeStringBuilder.toString());
-
-        groupConfigList.add(groupConfig);
 
         return groupConfigList;
     }

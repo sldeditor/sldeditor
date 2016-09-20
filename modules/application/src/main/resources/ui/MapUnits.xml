@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapUnits>
+    <FieldConfigEnum id="UOM" label="*standard.UOM">
+        <ValueList>
+            <Value>
+                <Item id="" label="*standard.UOM.mapUnits" />
+                <Item id="pixel" label="*standard.UOM.pixels" />
+                <Item id="metre" label="*standard.UOM.metre" />
+                <Item id="foot" label="*standard.UOM.foot" />
+            </Value>
+        </ValueList>
+    </FieldConfigEnum>
+</MapUnits>

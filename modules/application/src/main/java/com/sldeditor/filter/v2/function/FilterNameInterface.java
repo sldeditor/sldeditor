@@ -24,7 +24,6 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 
 /**
@@ -47,17 +46,16 @@ public interface FilterNameInterface {
      * @param functionName the function name
      * @return the expression
      */
-    Expression createExpression(FunctionName functionName);
+    Expression createExpression(FunctionName functionName);     
 
     /**
      * Convert function parameters to ui components.
      *
      * @param panelId the panel id
-     * @param fieldId the field id
      * @param functionName the function name
      * @return the list of ui components to display
      */
-    List<GroupConfigInterface> convertParameters(Class<?> panelId, FieldId fieldId, FunctionName functionName);
+    List<GroupConfigInterface> convertParameters(Class<?> panelId, FunctionName functionName);
 
     /**
      * Gets the function type for the given function name.

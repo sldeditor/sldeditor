@@ -353,6 +353,7 @@
                                 <source>src/main/resources/xsd/colourramp.xsd</source>
                                 <source>src/main/resources/xsd/testvalue.xsd</source>
                                 <source>src/main/resources/xsd/testoutput.xsd</source>
+                                <source>src/main/resources/xsd/mapunits.xsd</source>
                             </sources>
                             <packageName>com.sldeditor.common.xml.ui</packageName>
                             <outputDirectory>src/main/java</outputDirectory>
