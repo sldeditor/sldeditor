@@ -30,24 +30,11 @@ import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.filter.function.RangedClassifier;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.filter.Filter;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
 import org.opengis.filter.expression.Literal;
-import org.opengis.parameter.Parameter;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoolean;
-import com.sldeditor.ui.detail.config.FieldConfigDate;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigGeometry;
-import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.base.GroupConfig;
-import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -69,9 +56,6 @@ public class FunctionManager implements FunctionNameInterface {
 
     /** The function name map. */
     private Map<String, FunctionName> functionNameMap = new HashMap<String, FunctionName>();
-
-    /** The function class name map. */
-    private Map<String, FunctionName> functionClassNameMap = new HashMap<String, FunctionName>();
 
     /** The function factory. */
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
@@ -116,7 +100,6 @@ public class FunctionManager implements FunctionNameInterface {
             logger.debug(function.getName());
 
             functionNameMap.put(function.getName(), function);
-            functionClassNameMap.put(function.getName(), function);
 
             for(int index = 0; index < function.getArgumentCount(); index ++)
             {
@@ -234,108 +217,6 @@ public class FunctionManager implements FunctionNameInterface {
     }
 
     /**
-     * Convert function parameters to ui components.
-     *
-     * @param panelId the panel id
-     * @param fieldId the field id
-     * @param functionName the function name
-     * @return the list of ui components to display
-     */
-    @Override
-    public List<GroupConfigInterface> convertParameters(Class<?> panelId, FieldId fieldId, FunctionName functionName) {
-        List<GroupConfigInterface> groupConfigList = new ArrayList<GroupConfigInterface>();
-        GroupConfig groupConfig = new GroupConfig();
-
-        StringBuilder funcPrototypeStringBuilder = new StringBuilder();
-        funcPrototypeStringBuilder.append(functionName.getName());
-        funcPrototypeStringBuilder.append("(");
-
-        for(int index = 0; index < functionName.getArgumentCount(); index ++)
-        {
-            String label = functionName.getArgumentNames().get(index);
-            Parameter<?> parameterType = functionName.getArguments().get(index);
-
-            boolean valueOnly = false;
-            FieldId id = FieldId.getUnknownValue();
-
-            if(index > 0)
-            {
-                funcPrototypeStringBuilder.append(", ");
-            }
-            Class<?> type = parameterType.getType();
-            funcPrototypeStringBuilder.append(type.getSimpleName());
-
-            FieldConfigBase fieldConfig = null;
-            if(type == java.lang.Number.class)
-            {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
-            }
-            else if(type == Double.class)
-            {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
-            }
-            else if(type == Float.class)
-            {
-                fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
-            }
-            else if(type == Integer.class)
-            {
-                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
-            }
-            else if(type == Long.class)
-            {
-                fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
-            }
-            else if(type == String.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Object.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Boolean.class)
-            {
-                fieldConfig = new FieldConfigBoolean(panelId, id, label, valueOnly);
-            }
-            else if(type == Geometry.class)
-            {
-                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
-            }
-            else if(type == LineString.class)
-            {
-                fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Date.class)
-            {
-                fieldConfig = new FieldConfigDate(panelId, id, label, valueOnly);
-            }
-            else if(type == Class.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else if(type == Classifier.class)
-            {
-                fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Unknown function type : " + type.getName());
-            }
-
-            groupConfig.addField(fieldConfig);
-        }
-
-        funcPrototypeStringBuilder.append(")");
-
-        groupConfig.setLabel(funcPrototypeStringBuilder.toString());
-
-        groupConfigList.add(groupConfig);
-
-        return groupConfigList;
-    }
-
-    /**
      * Gets the function type.
      *
      * @param functionName the function name
@@ -351,18 +232,6 @@ public class FunctionManager implements FunctionNameInterface {
         }
 
         return function.getReturn().getType();
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @param functionName the function name
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter(FunctionName functionName) {
-        // Does nothing
-        return null;
     }
 
 }
