@@ -38,18 +38,35 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsLessThan implements FilterConfigInterface {
 
+    /**
+     * The Class IsLessThanExtended.
+     */
     public class IsLessThanExtended extends IsLessThenImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new checks if is less than extended.
+         */
         public IsLessThanExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new checks if is less than extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         * @param matchCase the match case
+         */
         public IsLessThanExtended(Expression expression1, Expression expression2, boolean matchCase)
         {
             super(expression1, expression2, matchCase);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IsLessThenImpl.class;
@@ -57,7 +74,7 @@ public class IsLessThan implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsLessThan()
     {
@@ -106,9 +123,18 @@ public class IsLessThan implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+        IsLessThenImpl filter = null;
 
-        IsLessThenImpl filter = new IsLessThanExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        if((parameterList == null) || (parameterList.size() != 3))
+        {
+            filter = new IsLessThanExtended();
+        }
+        else
+        {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+
+            filter = new IsLessThanExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        }
 
         return filter;
     }
