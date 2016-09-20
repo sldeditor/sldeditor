@@ -163,7 +163,8 @@ public class FieldConfigTimePeriodTest {
         field.populateField((TimePeriod)null);
         field.populateField(period);
         actualExpression = field.callGenerateExpression();
-        assertTrue(period.getString().compareTo(actualExpression.toString()) == 0);
+        String expectedPeriod = period.getString();
+        assertTrue(expectedPeriod.compareTo(actualExpression.toString()) == 0);
 
         TimePeriod timePeriodObj = new TimePeriod();
         timePeriodObj.decode(timePeriod);
@@ -255,7 +256,7 @@ public class FieldConfigTimePeriodTest {
 
         field.populateField(period1);
 
-        String timePeriod2 = "P 0 Y 0 M 1 D 0 H 32 M 9 S / 08-07-2016T09:42:06Z";
+        String timePeriod2 = "P 1 D 32 M 9 S / 08-07-2016T09:42:06Z";
         TimePeriod period2 = new TimePeriod();
         period2.decode(timePeriod2);
         String expectedPeriod2 = period2.getString();
@@ -268,6 +269,6 @@ public class FieldConfigTimePeriodTest {
 
         UndoManager.getInstance().redo();
         actualValue = field.getStringValue();
-        assertTrue(actualValue.compareTo(expectedPeriod2) == 0);
+        assertTrue(actualValue.replace(" ",  "").compareTo(expectedPeriod2.replace(" ",  "")) == 0);
     }
 }
