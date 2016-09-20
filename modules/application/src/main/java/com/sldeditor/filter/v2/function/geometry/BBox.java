@@ -38,22 +38,41 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class BBox implements FilterConfigInterface {
 
+    /**
+     * The Class BBoxExtended.
+     */
     public class BBoxExtended extends BBOXImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new b box extended.
+         */
         public BBoxExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new b box extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public BBoxExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " BBox " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return BBOXImpl.class;
@@ -61,7 +80,7 @@ public class BBox implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public BBox()
     {
@@ -110,8 +129,16 @@ public class BBox implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        BBOXImpl filter = new BBoxExtended(parameterList.get(0), parameterList.get(1));
+        BBOXImpl filter = null;
 
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new BBoxExtended();
+        }
+        else
+        {
+            filter = new BBoxExtended(parameterList.get(0), parameterList.get(1));
+        }
         return filter;
     }
 

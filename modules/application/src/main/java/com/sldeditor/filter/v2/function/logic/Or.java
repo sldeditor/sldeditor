@@ -38,22 +38,40 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class Or implements FilterConfigInterface {
 
+    /**
+     * The Class OrExtended.
+     */
     public class OrExtended extends OrImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new or extended.
+         */
         public OrExtended()
         {
             super(new ArrayList<Filter>());
         }
 
+        /**
+         * Instantiates a new or extended.
+         *
+         * @param children the children
+         */
         public OrExtended(List<Filter> children)
         {
             super(children);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.LogicFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + this.getChildren() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return OrImpl.class;
@@ -61,7 +79,7 @@ public class Or implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Or()
     {
@@ -121,7 +139,16 @@ public class Or implements FilterConfigInterface {
      */
     @Override
     public Filter createLogicFilter(List<Filter> filterList) {
-        OrImpl filter = new OrExtended(filterList);
+        OrImpl filter = null;
+
+        if((filterList == null) || (filterList.size() != 2))
+        {
+            filter = new OrExtended();
+        }
+        else
+        {
+            filter = new OrExtended(filterList);
+        }
 
         return filter;
     }

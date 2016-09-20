@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Contains implements FilterConfigInterface {
 
+    /**
+     * The Class ContainsExtended.
+     */
     public class ContainsExtended extends ContainsImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new contains extended.
+         */
         public ContainsExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new contains extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public ContainsExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Contains " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return ContainsImpl.class;
@@ -61,7 +80,7 @@ public class Contains implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Contains()
     {
@@ -110,7 +129,16 @@ public class Contains implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        ContainsImpl filter = new ContainsExtended(parameterList.get(0), parameterList.get(1));
+        ContainsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new ContainsExtended();
+        }
+        else
+        {
+            filter = new ContainsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

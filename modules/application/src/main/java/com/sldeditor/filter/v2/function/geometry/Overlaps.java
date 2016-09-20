@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Overlaps implements FilterConfigInterface {
 
+    /**
+     * The Class OverlapsExtended.
+     */
     public class OverlapsExtended extends OverlapsImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new overlaps extended.
+         */
         public OverlapsExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new overlaps extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public OverlapsExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Overlaps " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return OverlapsImpl.class;
@@ -61,7 +80,7 @@ public class Overlaps implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Overlaps()
     {
@@ -110,7 +129,16 @@ public class Overlaps implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        OverlapsImpl filter = new OverlapsExtended(parameterList.get(0), parameterList.get(1));
+        OverlapsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new OverlapsExtended();
+        }
+        else
+        {
+            filter = new OverlapsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

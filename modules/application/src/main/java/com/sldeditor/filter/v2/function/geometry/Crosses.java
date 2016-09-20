@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Crosses implements FilterConfigInterface {
 
+    /**
+     * The Class CrossesExtended.
+     */
     public class CrossesExtended extends CrossesImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new crosses extended.
+         */
         public CrossesExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new crosses extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public CrossesExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Crosses " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return CrossesImpl.class;
@@ -61,7 +80,7 @@ public class Crosses implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Crosses()
     {
@@ -110,7 +129,16 @@ public class Crosses implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        CrossesImpl filter = new CrossesExtended(parameterList.get(0), parameterList.get(1));
+        CrossesImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new CrossesExtended();
+        }
+        else
+        {
+            filter = new CrossesExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

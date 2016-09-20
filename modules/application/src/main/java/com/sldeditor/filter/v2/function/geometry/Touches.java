@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Touches implements FilterConfigInterface {
 
+    /**
+     * The Class TouchesExtended.
+     */
     public class TouchesExtended extends TouchesImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new touches extended.
+         */
         public TouchesExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new touches extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public TouchesExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Touches " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return TouchesImpl.class;
@@ -61,7 +80,7 @@ public class Touches implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Touches()
     {
@@ -110,7 +129,16 @@ public class Touches implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        TouchesImpl filter = new TouchesExtended(parameterList.get(0), parameterList.get(1));
+        TouchesImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new TouchesExtended();
+        }
+        else
+        {
+            filter = new TouchesExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

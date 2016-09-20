@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Within implements FilterConfigInterface {
 
+    /**
+     * The Class WithinExtended.
+     */
     public class WithinExtended extends WithinImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new within extended.
+         */
         public WithinExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new within extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public WithinExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Within " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return WithinImpl.class;
@@ -61,7 +80,7 @@ public class Within implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Within()
     {
@@ -110,7 +129,16 @@ public class Within implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        WithinImpl filter = new WithinExtended(parameterList.get(0), parameterList.get(1));
+        WithinImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new WithinExtended();
+        }
+        else
+        {
+            filter = new WithinExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }
