@@ -228,10 +228,10 @@ public class SLDExternalImages {
                     URI uri = null;
                     try {
                         uri = new URI(currentValue);
+                        externalImageList.add(uri.toASCIIString());
                     } catch (URISyntaxException e) {
                         ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
                     }
-                    externalImageList.add(uri.toASCIIString());
                 }
                 else
                 {

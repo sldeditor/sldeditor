@@ -172,7 +172,10 @@ public class ExportHTML
                 }
             }
 
-            file.delete();
+            if(file != null)
+            {
+                file.delete();
+            }
         }
     }
 

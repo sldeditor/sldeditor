@@ -64,10 +64,10 @@ public class Duration
     private static final String YEAR_SUFFIX = "Y";
 
     /** The date format. */
-    private static DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+    private DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
     /** The time format. */
-    private static DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+    private DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 
     /** The date. */
     private Date date = new Date();

@@ -19,7 +19,6 @@
 package com.sldeditor.ui.detail.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,6 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue.FieldList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueField;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueItem;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
-import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
@@ -53,17 +51,9 @@ public class ReadMapUnits implements PanelConfigInterface {
     /** The Constant SCHEMA_RESOURCE. */
     private static final String SCHEMA_RESOURCE = "/xsd/mapunits.xsd";
 
-    /** The vendor option version. */
-    private VendorOptionVersion vendorOptionVersion = null;
-
-    /** The group list. */
-    private List<GroupConfigInterface> groupList = new ArrayList<GroupConfigInterface>();
-
     /** The panel title. */
     private String panelTitle;
 
-    /** The map of default field value. */
-    private Map<FieldId, Object> defaultFieldMap = new HashMap<FieldId, Object>();
 
     /**
      * Default constructor
@@ -79,12 +69,11 @@ public class ReadMapUnits implements PanelConfigInterface {
      *
      * @param panelId the panel id
      * @param resourceString the resource string
+     * @param fieldConfigMapUnits the field config map units
      * @return true, if successful
      */
-    public boolean read(Class<?> panelId, String resourceString)
+    public boolean read(Class<?> panelId, String resourceString, FieldConfigMapUnits fieldConfigMapUnits)
     {
-        groupList = new ArrayList<GroupConfigInterface>();
-
         MapUnits mapUnits = (MapUnits) ParseXML.parseUIFile(resourceString, SCHEMA_RESOURCE, MapUnits.class);
 
         if(mapUnits == null)
@@ -102,34 +91,23 @@ public class ReadMapUnits implements PanelConfigInterface {
             }
         }
 
-        XMLFieldConfigData xmlFieldConfig = null;
+        XMLFieldConfigData xmlFieldConfig = mapUnits.getFieldConfigEnum();
         if(xmlFieldConfig instanceof XMLFieldConfigEnum)
         {
-            GroupConfig groupConfig = new GroupConfig();
-
-            FieldId id = new FieldId(xmlFieldConfig.getId());
-            String label = getLocalisedText(localisationClass, xmlFieldConfig.getLabel());
-            boolean valueOnly = xmlFieldConfig.isValueOnly();
             String defaultValue = xmlFieldConfig.getDefault();
-
-            FieldConfigMapUnits valueConfig = new FieldConfigMapUnits(panelId, id, label, valueOnly);
 
             XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum)xmlFieldConfig).getValueList();
 
             List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId, valueList);
 
-            valueConfig.addConfig(configList);
+            fieldConfigMapUnits.addConfig(configList);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
             if(defaultValueObj != null)
             {
-                valueConfig.setDefaultValue(defaultValueObj);
-                defaultFieldMap.put(id, defaultValueObj);
+                fieldConfigMapUnits.setDefaultValue(defaultValueObj);
             }
-
-            groupConfig.addField(valueConfig);
-            groupList.add(groupConfig);
         }
 
         return true;
@@ -223,7 +201,7 @@ public class ReadMapUnits implements PanelConfigInterface {
     @Override
     public VendorOptionVersion getVendorOptionVersion()
     {
-        return vendorOptionVersion;
+        return null;
     }
 
     /**
@@ -234,7 +212,7 @@ public class ReadMapUnits implements PanelConfigInterface {
     @Override
     public List<GroupConfigInterface> getGroupList()
     {
-        return groupList;
+        return null;
     }
 
     /**
@@ -254,6 +232,6 @@ public class ReadMapUnits implements PanelConfigInterface {
      */
     @Override
     public Map<FieldId, Object> getDefaultFieldMap() {
-        return defaultFieldMap;
+        return null;
     }
 }

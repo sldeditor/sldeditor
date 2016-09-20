@@ -138,6 +138,7 @@ public class FilterManagerTest {
         for(FunctionName functionName : functionNameList)
         {
             list = FilterManager.getInstance().convertParameters(panelId, functionName);
+            System.out.println(functionName.getName());
             assertEquals(1, list.size());
             GroupConfig groupConfig = (GroupConfig) list.get(0);
             String prototype = groupConfig.getLabel();

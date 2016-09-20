@@ -285,7 +285,10 @@ public class FieldConfigWindBarbsTest {
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
         field.setValue(fieldConfigManager, null, externalGraphic);
 
-        f.delete();
+        if(f != null)
+        {
+            f.delete();
+        }
     }
 
     /**

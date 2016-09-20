@@ -42,7 +42,7 @@ public class FieldConfigMapUnits extends FieldConfigEnum {
 
         ReadMapUnits readMapUnits = new ReadMapUnits();
 
-        readMapUnits.read(panelId, filename);
+        readMapUnits.read(panelId, filename, this);
 
     }
 
