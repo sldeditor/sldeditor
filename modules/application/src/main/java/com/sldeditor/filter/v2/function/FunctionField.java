@@ -144,7 +144,11 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
             model.addElement("");
 
-            for(String name : functionNameMap.keySet())
+            // Sort function names alphabetically
+            List<String> functionNameList = new ArrayList<String>(functionNameMap.keySet());
+            java.util.Collections.sort(functionNameList);
+
+            for(String name : functionNameList)
             {
                 model.addElement(name);
             }
