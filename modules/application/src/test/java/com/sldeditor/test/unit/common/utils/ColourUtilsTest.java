@@ -38,16 +38,6 @@ import com.sldeditor.common.utils.ColourUtils;
 public class ColourUtilsTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ColourUtils#toHex(int, int, int)}.
-     */
-    @Test
-    public void testToHex() {
-        String actualString = ColourUtils.toHex(255, 34, 12);
-        
-        assertEquals("#FF220C", actualString);
-    }
-
-    /**
      * Test method for {@link com.sldeditor.common.utils.ColourUtils#fromColour(java.awt.Color)}.
      */
     @Test
