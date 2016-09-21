@@ -159,9 +159,9 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
             }
         }
 
-        populateScaleRange(rangeSet);
         fieldConfigVisitor.populateTextField(FieldIdEnum.MINIMUM_SCALE, minScaleText);
         fieldConfigVisitor.populateTextField(FieldIdEnum.MAXIMUM_SCALE, maxScaleText);
+        populateScaleRange(rangeSet);
     }
 
     /**
