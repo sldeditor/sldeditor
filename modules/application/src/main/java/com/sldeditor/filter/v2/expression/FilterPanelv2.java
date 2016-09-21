@@ -21,15 +21,11 @@ package com.sldeditor.filter.v2.expression;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -43,10 +39,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DataStore;
-import org.geotools.data.FeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.BinaryComparisonAbstract;
 import org.geotools.filter.FidFilterImpl;
@@ -54,15 +47,8 @@ import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
-import org.geotools.filter.function.FilterFunction_strConcat;
 import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.styling.UserLayer;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.PropertyDescriptor;
 import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Not;
 import org.opengis.filter.PropertyIsBetween;
 import org.opengis.filter.PropertyIsGreaterThan;
@@ -73,21 +59,15 @@ import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 
 import com.sldeditor.common.Controller;
-import com.sldeditor.common.DataSourceFieldInterface;
-import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
-import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
-import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.FilterPanelInterface;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterManager;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class FilterPanelv2.
@@ -95,214 +75,6 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Robert Ward (SCISYS)
  */
 public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface, DataSourceUpdatedInterface, FilterPanelInterface {
-
-    /**
-     * The Class TestDataSourceImpl.
-     */
-    public static class TestDataSourceImpl implements DataSourceInterface {
-
-        /** The listener list. */
-        private List<DataSourceUpdatedInterface> listenerList = new ArrayList<DataSourceUpdatedInterface>();
-
-        /**
-         * Adds the listener.
-         *
-         * @param listener the listener
-         */
-        @Override
-        public void addListener(DataSourceUpdatedInterface listener) {
-            listenerList.add(listener);
-        }
-
-        /**
-         * Connect.
-         *
-         * @param editorFile the editor file
-         */
-        @Override
-        public void connect(SLDEditorFileInterface editorFile) {
-        }
-
-        /**
-         * Reset.
-         */
-        @Override
-        public void reset() {
-        }
-
-        /**
-         * Gets the feature source.
-         *
-         * @return the feature source
-         */
-        @Override
-        public FeatureSource<SimpleFeatureType, SimpleFeature> getFeatureSource() {
-            return null;
-        }
-
-        /**
-         * Gets the attributes.
-         *
-         * @param expectedDataType the expected data type
-         * @return the attributes
-         */
-        @Override
-        public List<String> getAttributes(Class<?> expectedDataType) {
-            List<String> attributeList = new ArrayList<String>();
-
-            if(expectedDataType == Date.class)
-            {
-                attributeList.add("Date_1");
-                attributeList.add("Date_2");
-            }
-            else if(expectedDataType == Number.class)
-            {
-                attributeList.add("Integer_1");
-                attributeList.add("Double_2");
-            }
-            else if(expectedDataType == Geometry.class)
-            {
-                attributeList.add("Geometry_1");
-            }
-            else if(expectedDataType == String.class)
-            {
-                attributeList.add("String_1");
-                attributeList.add("String_2");
-                attributeList.add("String_3");
-            }
-            else
-            {
-                attributeList.add("Date_1");
-                attributeList.add("Date_2");
-                attributeList.add("Integer_1");
-                attributeList.add("Double_2");
-                attributeList.add("Geometry_1");
-                attributeList.add("String_1");
-                attributeList.add("String_2");
-                attributeList.add("String_3");
-            }
-
-            return attributeList;
-        }
-
-        /**
-         * Gets the geometry type.
-         *
-         * @return the geometry type
-         */
-        @Override
-        public GeometryTypeEnum getGeometryType() {
-            return null;
-        }
-
-        /**
-         * Read attributes.
-         *
-         * @param attributeData the attribute data
-         */
-        @Override
-        public void readAttributes(DataSourceAttributeListInterface attributeData) {
-        }
-
-        /**
-         * Gets the data connector properties.
-         *
-         * @return the data connector properties
-         */
-        @Override
-        public DataSourcePropertiesInterface getDataConnectorProperties() {
-            return null;
-        }
-
-        /**
-         * Gets the available data store list.
-         *
-         * @return the available data store list
-         */
-        @Override
-        public List<String> getAvailableDataStoreList() {
-            return null;
-        }
-
-        /**
-         * Update fields.
-         *
-         * @param attributeData the attribute data
-         */
-        @Override
-        public void updateFields(DataSourceAttributeListInterface attributeData) {
-        }
-
-        /**
-         * Adds the field.
-         *
-         * @param dataSourceField the data source field
-         */
-        @Override
-        public void addField(DataSourceFieldInterface dataSourceField) {
-        }
-
-        /**
-         * Sets the data source creation.
-         *
-         * @param internalDataSource the internal data source
-         * @param externalDataSource the external data source
-         */
-        @Override
-        public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
-                CreateDataSourceInterface externalDataSource,
-                CreateDataSourceInterface inlineDataSource) {
-        }
-
-        /**
-         * Gets the property descriptor list.
-         *
-         * @return the property descriptor list
-         */
-        @Override
-        public Collection<PropertyDescriptor> getPropertyDescriptorList() {
-            return null;
-        }
-
-        /**
-         * Notify data source loaded.
-         */
-        public void notifyDataSourceLoaded()
-        {
-            for(DataSourceUpdatedInterface listener : listenerList)
-            {
-                listener.dataSourceLoaded(getGeometryType(), false);
-            }
-        }
-
-        /**
-         * Removes the listener.
-         *
-         * @param listener the listener
-         */
-        @Override
-        public void removeListener(DataSourceUpdatedInterface listener) {
-        }
-
-        @Override
-        public AbstractGridCoverage2DReader getGridCoverageReader() {
-            return null;
-        }
-
-        @Override
-        public FeatureSource<SimpleFeatureType, SimpleFeature> getExampleFeatureSource() {
-            return null;
-        }
-
-        @Override
-        public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
-            return null;
-        }
-
-        @Override
-        public void updateUserLayers() {
-        }
-    }
 
     /** The Constant EMPTY_PANEL. */
     private static final String EMPTY_PANEL = "EMPTY";
@@ -509,48 +281,6 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         textArea = new JTextArea();
         textArea.setEditable(false);
         scrollPane_1.setViewportView(textArea);
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                TestDataSourceImpl testDataSource = new TestDataSourceImpl();
-                @SuppressWarnings("unused")
-                DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
-
-                FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
-
-                FilterPanelv2 panel = new FilterPanelv2(null);
-                FilterFunction_strConcat expression = new FilterFunction_strConcat();
-                List<Expression> paramList = new ArrayList<Expression>();
-                paramList.add(ff.literal("abc"));
-                paramList.add(ff.literal("xyz"));
-                expression.setParameters(paramList);
-                Class<?> type = String.class;
-
-                testDataSource.notifyDataSourceLoaded();
-
-                try {
-                    //  Filter result = CQL.toFilter("Date_1 DOES-NOT-EXIST" );
-                    Filter result = CQL.toFilter("Date_1 EXISTS" );
-                    panel.showFilterDialog(type, result);
-                }
-                catch (CQLException e) {
-                    e.printStackTrace();
-                }
-
-                System.exit(0);
-            }
-        });
     }
 
     /**
