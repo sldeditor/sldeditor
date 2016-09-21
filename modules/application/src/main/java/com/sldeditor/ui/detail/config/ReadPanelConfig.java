@@ -47,6 +47,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigGeometry;
 import com.sldeditor.common.xml.ui.XMLFieldConfigGeometryField;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInlineFeature;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInteger;
+import com.sldeditor.common.xml.ui.XMLFieldConfigMapUnit;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
 import com.sldeditor.common.xml.ui.XMLFieldConfigString;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSymbolType;
@@ -473,6 +474,20 @@ public class ReadPanelConfig implements PanelConfigInterface {
             List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId, valueList);
 
             valueConfig.addConfig(configList);
+
+            String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
+
+            if(defaultValueObj != null)
+            {
+                valueConfig.setDefaultValue(defaultValueObj);
+                defaultFieldMap.put(id, defaultValueObj);
+            }
+
+            groupConfig.addField(valueConfig);
+        }
+        else if(xmlFieldConfig instanceof XMLFieldConfigMapUnit)
+        {
+            FieldConfigMapUnits valueConfig = new FieldConfigMapUnits(panelId, id, label, valueOnly);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 

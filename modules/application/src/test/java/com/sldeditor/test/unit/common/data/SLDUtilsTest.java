@@ -76,16 +76,15 @@ public class SLDUtilsTest {
         assertEquals("circle", mark.getWellKnownName().toString());
 
         // Check resource locator
-        URL url = null;
         try {
-            url = file.getParentFile().toURI().toURL();
+            URL url = file.getParentFile().toURI().toURL();
+            String actualResourceLocator = sldData.getResourceLocator().toExternalForm();
+            String expectedResourcelocator = url.toExternalForm();
+            assertTrue(expectedResourcelocator.compareTo(actualResourceLocator) == 0);
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            fail();
         }
-
-        String actualResourceLocator = sldData.getResourceLocator().toExternalForm();
-        String expectedResourcelocator = url.toExternalForm();
-        assertTrue(expectedResourcelocator.compareTo(actualResourceLocator) == 0);
     }
 
     @Test

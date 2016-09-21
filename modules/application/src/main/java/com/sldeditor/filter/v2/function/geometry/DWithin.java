@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class DWithin implements FilterConfigInterface {
 
+    /**
+     * The Class DWithinExtended.
+     */
     public class DWithinExtended extends DWithinImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new d within extended.
+         */
         public DWithinExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new d within extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public DWithinExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.CartesianDistanceFilter#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " DWithin " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return DWithinImpl.class;
@@ -61,7 +80,7 @@ public class DWithin implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public DWithin()
     {
@@ -110,7 +129,16 @@ public class DWithin implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        DWithinImpl filter = new DWithinExtended(parameterList.get(0), parameterList.get(1));
+        DWithinImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new DWithinExtended();
+        }
+        else
+        {
+            filter = new DWithinExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

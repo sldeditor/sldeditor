@@ -85,6 +85,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MapUnits }
+     * 
+     */
+    public MapUnits createMapUnits() {
+        return new MapUnits();
+    }
+
+    /**
+     * Create an instance of {@link XMLFieldConfigEnum }
+     * 
+     */
+    public XMLFieldConfigEnum createXMLFieldConfigEnum() {
+        return new XMLFieldConfigEnum();
+    }
+
+    /**
      * Create an instance of {@link XMLSymbolTypeConfig }
      * 
      */
@@ -205,11 +221,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link XMLFieldConfigEnum }
+     * Create an instance of {@link XMLFieldConfigMapUnit }
      * 
      */
-    public XMLFieldConfigEnum createXMLFieldConfigEnum() {
-        return new XMLFieldConfigEnum();
+    public XMLFieldConfigMapUnit createXMLFieldConfigMapUnit() {
+        return new XMLFieldConfigMapUnit();
     }
 
     /**

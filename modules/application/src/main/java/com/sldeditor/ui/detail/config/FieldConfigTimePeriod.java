@@ -122,7 +122,6 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         /** The panel. */
         private JPanel panel;
 
-
         /**
          * Return true if all the fields are configured.
          *
@@ -590,6 +589,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
                     minutes = (int) panel.minuteSpinner.getValue();
                     seconds = (int) panel.secondSpinner.getValue();
                 }
+
                 duration.setDuration(years, months, days, hours, minutes, seconds);
             }
         }

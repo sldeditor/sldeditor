@@ -42,13 +42,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "XMLFieldConfigData")
 @XmlSeeAlso({
+    XMLFieldConfigEnum.class,
     XMLFieldConfigSymbolType.class,
     XMLFieldConfigDouble.class,
     XMLFieldConfigColourMap.class,
     XMLFieldConfigTransformation.class,
     XMLFieldConfigInlineFeature.class,
     XMLFieldConfigFeatureTypeConstraint.class,
-    XMLFieldConfigEnum.class,
+    XMLFieldConfigMapUnit.class,
     XMLFieldConfigString.class,
     XMLFieldConfigGeometryField.class,
     XMLFieldConfigFont.class,

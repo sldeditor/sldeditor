@@ -37,18 +37,35 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsBetween implements FilterConfigInterface {
 
+    /**
+     * The Class IsBetweenExtended.
+     */
     public class IsBetweenExtended extends IsBetweenImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new checks if is between extended.
+         */
         public IsBetweenExtended()
         {
             super(null, null, null);
         }
 
+        /**
+         * Instantiates a new checks if is between extended.
+         *
+         * @param lower the lower
+         * @param expression the expression
+         * @param upper the upper
+         */
         public IsBetweenExtended(Expression lower, Expression expression, Expression upper)
         {
             super(lower, expression, upper);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IsBetweenImpl.class;
@@ -56,7 +73,7 @@ public class IsBetween implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsBetween()
     {
@@ -105,7 +122,16 @@ public class IsBetween implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        IsBetweenImpl filter = new IsBetweenExtended(parameterList.get(0), parameterList.get(1), parameterList.get(2));
+        IsBetweenImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 3))
+        {
+            filter = new IsBetweenExtended();
+        }
+        else
+        {
+            filter = new IsBetweenExtended(parameterList.get(0), parameterList.get(1), parameterList.get(2));
+        }
 
         return filter;
     }

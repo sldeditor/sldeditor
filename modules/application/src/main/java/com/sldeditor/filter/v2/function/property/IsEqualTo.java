@@ -38,18 +38,35 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsEqualTo implements FilterConfigInterface {
 
+    /**
+     * The Class IsEqualToExtended.
+     */
     public class IsEqualToExtended extends IsEqualsToImpl implements FilterExtendedInterface
     {
+
+        /**
+         * Instantiates a new checks if is equal to extended.
+         */
         public IsEqualToExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new checks if is equal to extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         * @param matchCase the match case
+         */
         public IsEqualToExtended(Expression expression1, Expression expression2, boolean matchCase)
         {
             super(expression1, expression2, matchCase);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IsEqualsToImpl.class;
@@ -57,7 +74,7 @@ public class IsEqualTo implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsEqualTo()
     {
@@ -71,7 +88,7 @@ public class IsEqualTo implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("PropertyIsEqualTo", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
         filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
         filterName.addParameter(new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
 
@@ -106,10 +123,18 @@ public class IsEqualTo implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+        IsEqualsToImpl filter = null;
 
-        IsEqualsToImpl filter = new IsEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        if((parameterList == null) || (parameterList.size() != 3))
+        {
+            filter = new IsEqualToExtended();
+        }
+        else
+        {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
 
+            filter = new IsEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        }
         return filter;
     }
 

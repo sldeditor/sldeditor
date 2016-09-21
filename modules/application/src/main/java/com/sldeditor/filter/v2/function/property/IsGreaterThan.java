@@ -37,18 +37,34 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsGreaterThan implements FilterConfigInterface {
 
+    /**
+     * The Class IsGreaterThanExtended.
+     */
     public class IsGreaterThanExtended extends IsGreaterThanImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new checks if is greater than extended.
+         */
         public IsGreaterThanExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new checks if is greater than extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public IsGreaterThanExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IsGreaterThanImpl.class;
@@ -56,7 +72,7 @@ public class IsGreaterThan implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsGreaterThan()
     {
@@ -104,7 +120,16 @@ public class IsGreaterThan implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        IsGreaterThanImpl filter = new IsGreaterThanExtended(parameterList.get(0), parameterList.get(1));
+        IsGreaterThanImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() < 3))
+        {
+            filter = new IsGreaterThanExtended();
+        }
+        else
+        {
+            filter = new IsGreaterThanExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

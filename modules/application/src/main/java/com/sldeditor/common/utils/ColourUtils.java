@@ -21,6 +21,7 @@ package com.sldeditor.common.utils;
 import java.awt.Color;
 import java.util.Random;
 
+import org.geotools.styling.SLD;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -30,44 +31,9 @@ import org.opengis.filter.expression.Expression;
  */
 public class ColourUtils
 {
-    
+
     /** The random number generator. */
     private static Random rand = new Random();
-    
-    /**
-     * Returns a web browser-friendly HEX value representing the colour in the default sRGB
-     * ColorModel.
-     * <p>Returns null if r,g,b and inputs are not in the range 0-255.
-     *
-     * @param r red
-     * @param g green
-     * @param b blue
-     * @return a browser-friendly HEX value
-     */
-    public static String toHex(int r, int g, int b) {
-        if((r >= 0) && (r <= 255) && (g >= 0) && (g <= 255) && (b >= 0) && (b <= 255))
-        {
-            return "#" + toBrowserHexValue(r) + toBrowserHexValue(g) + toBrowserHexValue(b);
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    /**
-     * To browser hex value.
-     *
-     * @param number the number
-     * @return the string
-     */
-    private static String toBrowserHexValue(int number) {
-        StringBuilder builder = new StringBuilder(Integer.toHexString(number & 0xff));
-        while (builder.length() < 2) {
-            builder.insert(0, "0");
-        }
-        return builder.toString().toUpperCase();
-    }
 
     /**
      * Create a #rrggbb string From colour.
@@ -82,30 +48,23 @@ public class ColourUtils
         {
             return null;
         }
-        String colourString = toHex(colour.getRed(), colour.getGreen(), colour.getBlue());
-        return colourString;
+
+        return SLD.toHTMLColor(colour);
     }
-    
+
     /**
      * Converts colour string to colour.
      *
-     * @param hexString the hex string
+     * @param htmlColour the html colour
      * @return the colour
      */
-    public static Color toColour(String hexString)
+    public static Color toColour(String htmlColour)
     {
         Color colour = null;
 
-        if((hexString != null) && (hexString.length() == 7) && (hexString.startsWith("#")))
+        if((htmlColour != null) && (htmlColour.length() == 7) && (htmlColour.startsWith("#")))
         {
-            String redSubString = hexString.substring(1, 3);
-            int red = Integer.parseInt(redSubString, 16);
-            String greeSubString = hexString.substring(3, 5);
-            int green = Integer.parseInt(greeSubString, 16);
-            String blueSubString = hexString.substring(5, 7);
-            int blue = Integer.parseInt(blueSubString, 16);
-
-            colour = new Color(red, green, blue);
+            colour = SLD.toColor(htmlColour);
         }
 
         return colour;
@@ -125,16 +84,16 @@ public class ColourUtils
         {
             return 0;
         }
-        
+
         String tmpColour = colourExpression.toString();
-        
+
         if(tmpColour.startsWith("#"))
         {
             tmpColour = colourExpression.toString().substring(1);
         }
-        
+
         int colour = Integer.parseInt(tmpColour, 16);
-        
+
         return colour;
     }
 
@@ -147,9 +106,9 @@ public class ColourUtils
         float r = rand.nextFloat();
         float g = rand.nextFloat();
         float b = rand.nextFloat();
-        
+
         Color randomColor = new Color(r, g, b);
-        
+
         return randomColor;
     }
 }

@@ -21,8 +21,6 @@ package com.sldeditor.filter.v2.expression;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -30,20 +28,10 @@ import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.opengis.filter.expression.Expression;
-import org.opengis.geometry.BoundingBox;
 
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoolean;
-import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
-import com.sldeditor.ui.detail.config.FieldConfigDate;
-import com.sldeditor.ui.detail.config.FieldConfigEnum;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -110,47 +98,7 @@ public class LiteralPanel extends JPanel {
             remove(fieldConfig.getPanel());
         }
 
-        String valueText = Localisation.getString(ExpressionPanelv2.class, "LiteralPanel.value");
-
-        if(node.getType() == Date.class)
-        {
-            fieldConfig = new FieldConfigDate(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-        }
-        else if(node.getType() == TimePeriod.class)
-        {
-            fieldConfig = new FieldConfigTimePeriod(null, new FieldId(FieldIdEnum.FUNCTION), true);
-        }
-        else if(node.getType() == String.class)
-        {
-            fieldConfig = new FieldConfigString(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null);
-        }
-        else if(node.getType() == Boolean.class)
-        {
-            fieldConfig = new FieldConfigBoolean(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-        }
-        else if(node.getType() == BoundingBox.class)
-        {
-            fieldConfig = new FieldConfigBoundingBox(null, new FieldId(FieldIdEnum.FUNCTION), null, true);
-        }
-        else if(node.getType() == StringBuilder.class)
-        {
-            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-
-            List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
-            SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);
-
-            for(String enumValue : enumValueList)
-            {
-                symbolTypeConfig.addOption(enumValue, enumValue);
-            }
-            configList.add(symbolTypeConfig);
-            fieldConfigEnum.addConfig(configList);
-            fieldConfig = fieldConfigEnum;
-        }
-        else
-        {
-            System.err.println("Unknown field type : " + node.getType());
-        }
+        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "LiteralPanel.value", node.getType(), enumValueList);
 
         if(fieldConfig != null)
         {

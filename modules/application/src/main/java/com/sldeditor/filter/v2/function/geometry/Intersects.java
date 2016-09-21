@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Intersects implements FilterConfigInterface {
 
+    /**
+     * The Class IntersectsExtended.
+     */
     public class IntersectsExtended extends IntersectsImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new intersects extended.
+         */
         public IntersectsExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new intersects extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public IntersectsExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Intersects " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IntersectsImpl.class;
@@ -61,7 +80,7 @@ public class Intersects implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Intersects()
     {
@@ -110,7 +129,16 @@ public class Intersects implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        IntersectsImpl filter = new IntersectsExtended(parameterList.get(0), parameterList.get(1));
+        IntersectsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new IntersectsExtended();
+        }
+        else
+        {
+            filter = new IntersectsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

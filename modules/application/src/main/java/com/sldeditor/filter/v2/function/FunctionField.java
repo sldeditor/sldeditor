@@ -37,14 +37,12 @@ import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
  * Panel to be able to edit FunctionField objects.
@@ -70,9 +68,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
     /** The function name mgr. */
     private FunctionNameInterface functionNameMgr = null;
-
-    /** The field. */
-    private FieldConfigBase field = null;
 
     /**
      * Gets the panel name.
@@ -144,7 +139,11 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
             model.addElement("");
 
-            for(String name : functionNameMap.keySet())
+            // Sort function names alphabetically
+            List<String> functionNameList = new ArrayList<String>(functionNameMap.keySet());
+            java.util.Collections.sort(functionNameList);
+
+            for(String name : functionNameList)
             {
                 model.addElement(name);
             }
@@ -179,19 +178,26 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      */
     public void setFunction(Expression expression) {
 
-        if(expression instanceof FunctionExpressionImpl)
+        if(expression == null)
         {
-            FunctionExpressionImpl functionExpression = (FunctionExpressionImpl) expression;
-            FunctionName function = functionExpression.getFunctionName();
-
-            String functionName = function.getName();
-            oldValueObj = functionName;
-
-            functionComboBox.setSelectedItem(functionName);
+            functionComboBox.setSelectedIndex(-1);
         }
         else
         {
-            ConsoleManager.getInstance().error(this, Localisation.getString(FunctionField.class, "DataSourceAttributePanel.error1"));
+            if(expression instanceof FunctionExpressionImpl)
+            {
+                FunctionExpressionImpl functionExpression = (FunctionExpressionImpl) expression;
+                FunctionName function = functionExpression.getFunctionName();
+
+                String functionName = function.getName();
+                oldValueObj = functionName;
+
+                functionComboBox.setSelectedItem(functionName);
+            }
+            else
+            {
+                ConsoleManager.getInstance().error(this, Localisation.getString(FunctionField.class, "DataSourceAttributePanel.error1"));
+            }
         }
     }
 
@@ -213,33 +219,11 @@ public class FunctionField extends JPanel implements UndoActionInterface {
             if(expression != null)
             {
                 List<Expression> params = new ArrayList<Expression>();
-                if(field != null)
-                {
-                    List<FieldConfigBase> functionFields = field.getFunctionFields();
-                    if(functionFields != null)
-                    {
-                        for(FieldConfigBase functionField : functionFields)
-                        {
-                            Expression functionFieldExpression = functionField.getExpression();
-
-                            if(functionFieldExpression != null)
-                            {
-                                params.add(functionFieldExpression);
-                            }
-                        }
-                    }
-                }
 
                 boolean validSymbolFlag = (params.size() == functionName.getArgumentCount());
                 if(validSymbolFlag)
                 {
                     expression.setParameters(params);
-                }
-
-                if(field != null)
-                {
-                    String key = String.format("%s@%s", field.getClass().getName(), Integer.toHexString(field.hashCode()));
-                    SelectedSymbol.getInstance().setValidSymbol(key, validSymbolFlag);
                 }
             }
         }
@@ -249,29 +233,29 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
             if(expression != null)
             {
-                List<Expression> params = new ArrayList<Expression>();
-                List<FieldConfigBase> functionFields = field.getFunctionFields();
-                if(functionFields != null)
-                {
-                    for(FieldConfigBase functionField : functionFields)
-                    {
-                        Expression functionFieldExpression = functionField.getExpression();
-
-                        if(functionFieldExpression != null)
-                        {
-                            params.add(functionFieldExpression);
-                        }
-                    }
-                }
-
-                boolean validSymbolFlag = (params.size() == functionName.getArgumentCount());
-                if(validSymbolFlag)
-                {
-                    expression.setParameters(params);
-                }
-
-                String key = String.format("%s@%s", field.getClass().getName(), Integer.toHexString(field.hashCode()));
-                SelectedSymbol.getInstance().setValidSymbol(key, validSymbolFlag);
+                //                List<Expression> params = new ArrayList<Expression>();
+                //                List<FieldConfigBase> functionFields = field.getFunctionFields();
+                //                if(functionFields != null)
+                //                {
+                //                    for(FieldConfigBase functionField : functionFields)
+                //                    {
+                //                        Expression functionFieldExpression = functionField.getExpression();
+                //
+                //                        if(functionFieldExpression != null)
+                //                        {
+                //                            params.add(functionFieldExpression);
+                //                        }
+                //                    }
+                //                }
+                //
+                //                boolean validSymbolFlag = (params.size() == functionName.getArgumentCount());
+                //                if(validSymbolFlag)
+                //                {
+                //                    expression.setParameters(params);
+                //                }
+                //
+                //                String key = String.format("%s@%s", field.getClass().getName(), Integer.toHexString(field.hashCode()));
+                //                SelectedSymbol.getInstance().setValidSymbol(key, validSymbolFlag);
             }
         }
 

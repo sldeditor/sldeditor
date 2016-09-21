@@ -27,6 +27,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
@@ -37,25 +38,49 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class After implements FilterConfigInterface {
 
-    public class AfterExtended extends AfterImpl
+    /**
+     * The Class AfterExtended.
+     */
+    public class AfterExtended extends AfterImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new after extended.
+         */
         public AfterExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new after extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public AfterExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " After " + getExpression2() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return AfterImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public After()
     {
@@ -104,7 +129,16 @@ public class After implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        AfterImpl filter = new AfterExtended(parameterList.get(0), parameterList.get(1));
+        AfterImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new AfterExtended();
+        }
+        else
+        {
+            filter = new AfterExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

@@ -107,9 +107,18 @@ public class IsNotEqualTo implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+        IsNotEqualToImpl filter = null;
 
-        IsNotEqualToImpl filter = new IsNotEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        if((parameterList == null) || (parameterList.size() != 3))
+        {
+            filter = new IsNotEqualToExtended();
+        }
+        else
+        {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+
+            filter = new IsNotEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        }
 
         return filter;
     }

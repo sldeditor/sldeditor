@@ -38,22 +38,41 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class Equals implements FilterConfigInterface {
 
+    /**
+     * The Class EqualsExtended.
+     */
     public class EqualsExtended extends EqualsImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new equals extended.
+         */
         public EqualsExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new equals extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public EqualsExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Equals " + getExpression2() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return EqualsImpl.class;
@@ -61,7 +80,7 @@ public class Equals implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Equals()
     {
@@ -110,7 +129,16 @@ public class Equals implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        EqualsImpl filter = new EqualsExtended(parameterList.get(0), parameterList.get(1));
+        EqualsImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new EqualsExtended();
+        }
+        else
+        {
+            filter = new EqualsExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

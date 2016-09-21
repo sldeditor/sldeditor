@@ -17,9 +17,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package com.sldeditor.ui.detail.config;
+
 /**
- * Package to handle geometry fields
- * 
+ * The Class FieldConfigMapUnits.
+ *
  * @author Robert Ward (SCISYS)
  */
-package com.sldeditor.geometryfield;
+public class FieldConfigMapUnits extends FieldConfigEnum {
+
+    /** The filename. */
+    private final String filename = "MapUnits.xml";
+
+    /**
+     * Instantiates a new field config map units.
+     *
+     * @param panelId the panel id
+     * @param id the id
+     * @param label the label
+     * @param valueOnly the value only
+     */
+    public FieldConfigMapUnits(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+        super(panelId, id, label, valueOnly);
+
+        ReadMapUnits readMapUnits = new ReadMapUnits();
+
+        readMapUnits.read(panelId, filename, this);
+
+    }
+
+}

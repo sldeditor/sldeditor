@@ -1,0 +1,47 @@
+<xs:schema attributeFormDefault="unqualified"
+    elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+
+    <!-- 
+         SLD Editor - The Open Source Java SLD Editor
+
+         Copyright (C) 2016, SCISYS UK Limited
+
+         This program is free software: you can redistribute it and/or modify
+         it under the terms of the GNU General Public License as published by
+         the Free Software Foundation, either version 3 of the License, or
+         (at your option) any later version.
+    
+         This program is distributed in the hope that it will be useful,
+         but WITHOUT ANY WARRANTY; without even the implied warranty of
+         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+         GNU General Public License for more details.
+    
+         You should have received a copy of the GNU General Public License
+         along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     -->
+
+    <!-- @author Robert Ward (SCISYS) -->
+
+    <xs:include schemaLocation="paneldetails.xsd" />
+
+    <xs:element name="MapUnits">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>
+                    Describes how panel is made up
+                </xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="FieldConfigEnum" type="XMLFieldConfigEnum" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="localisation" use="optional" >
+                <xs:annotation>
+                    <xs:documentation>
+                        Localisation class, informing application which localisation file to use.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

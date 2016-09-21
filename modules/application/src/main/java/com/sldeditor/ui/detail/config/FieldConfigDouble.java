@@ -59,6 +59,9 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     /** The no of decimal places. */
     private int noOfDecimalPlaces = 3;
 
+    /** The configuration set. */
+    private boolean configurationSet = false;
+
     /**
      * Instantiates a new field config double.
      *
@@ -84,7 +87,14 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
         int xPos = getXPos();
         FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        spinner = new DecimalSpinner(minValue, maxValue, stepSize, noOfDecimalPlaces);
+        if(configurationSet)
+        {
+            spinner = new DecimalSpinner(minValue, maxValue, stepSize, noOfDecimalPlaces);
+        }
+        else
+        {
+            spinner = new DecimalSpinner();
+        }
         spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(spinner);
 
@@ -398,6 +408,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
         this.maxValue = maxValue;
         this.stepSize = stepSize;
         this.noOfDecimalPlaces = noOfDecimalPlaces;
+        this.configurationSet = true;
     }
 
     /**

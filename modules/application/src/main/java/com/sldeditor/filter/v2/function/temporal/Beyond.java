@@ -26,35 +26,60 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
 /**
- * The Class Meets.
+ * The Class Beyond.
  *
  * @author Robert Ward (SCISYS)
  */
 public class Beyond implements FilterConfigInterface {
 
-    public class BeyondExtended extends BeyondImpl
+    /**
+     * The Class BeyondExtended.
+     */
+    public class BeyondExtended extends BeyondImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new beyond extended.
+         */
         public BeyondExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new beyond extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public BeyondExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.CartesianDistanceFilter#toString()
+         */
         public String toString() {
-            return "[ " + getExpression1() + " Meets " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " Beyond " + getExpression2() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return BeyondImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Beyond()
     {
@@ -103,7 +128,16 @@ public class Beyond implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        BeyondImpl filter = new BeyondExtended(parameterList.get(0), parameterList.get(1));
+        BeyondImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new BeyondExtended();
+        }
+        else
+        {
+            filter = new BeyondExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

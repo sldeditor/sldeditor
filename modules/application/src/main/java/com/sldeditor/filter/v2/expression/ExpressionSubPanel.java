@@ -23,8 +23,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.Box;
@@ -37,12 +35,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.function.EnvFunction;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableField;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -51,18 +47,8 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoolean;
-import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
-import com.sldeditor.ui.detail.config.FieldConfigDate;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigEnum;
-import com.sldeditor.ui.detail.config.FieldConfigGeometry;
-import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldId;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class ExpressionSubPanel.
@@ -166,7 +152,7 @@ public class ExpressionSubPanel extends JPanel {
         }
 
         Class<?> updatedFieldType = (fieldType == StringBuilder.class) ? String.class : fieldType;
-        
+
         if(dataSourceAttributePanel != null)
         {
             dataSourceAttributePanel.setDataType(updatedFieldType);
@@ -319,103 +305,49 @@ public class ExpressionSubPanel extends JPanel {
             return;
         }
 
-        String valueText = Localisation.getString(ExpressionPanelv2.class, "ExpressionSubPanel.value");
-        if(node.getType() == Geometry.class)
+        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value", node.getType(), enumValueList);
+
+        if(fieldConfig != null)
         {
-            fieldConfig = new FieldConfigGeometry(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null);
-        }
-        else if(node.getType() == Date.class)
-        {
-            fieldConfig = new FieldConfigDate(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-        }
-        else if(node.getType() == ReferencedEnvelope.class)
-        {
-            fieldConfig = new FieldConfigBoundingBox(null, new FieldId(FieldIdEnum.FUNCTION), "", true);
-        }
-        else if((node.getType() == String.class) ||
-                (node.getType() == Object.class))
-        {
-            fieldConfig = new FieldConfigString(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true, null);
-        }
-        else if(node.getType() == Boolean.class)
-        {
-            fieldConfig = new FieldConfigBoolean(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-        }
-        else if(node.getType() == Integer.class)
-        {
-            fieldConfig = new FieldConfigInteger(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-        }
-        else if(node.getType() == Double.class)
-        {
-            fieldConfig = new FieldConfigDouble(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-        }
-        else if(node.getType() == Number.class)
-        {
-            Class<?> filterType = TypeManager.getInstance().getDataType();
-            if((filterType == Float.class) || (filterType == Double.class))
+            fieldConfig.createUI();
+            fieldConfig.setFunctionParameterType(node.getType());
+            fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
-                fieldConfig = new FieldConfigDouble(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
+                @Override
+                public void dataChanged(FieldId changedField) {
+                    buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
+                    updateButtonState(true);
+                }
+            });
+            panelLiteral.add(fieldConfig.getPanel());
+
+            Expression expression = node.getExpression();
+
+            // Reset the fields
+            dataSourceAttributePanel.setAttribute(null);
+            functionPanel.setFunction(null);
+
+            if(expression instanceof AttributeExpressionImpl)
+            {
+                dataSourceAttributePanel.setAttribute(expression);
+                buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
+            }
+            else if(expression instanceof EnvFunction)
+            {
+                envVarField.setEnvironmentVariable(expression);
+                buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
+            }
+            else if(expression instanceof FunctionExpressionImpl)
+            {
+                functionPanel.setFunction(expression);
+                buttonGroup.setSelected(rdbtnFunction.getModel(), true);
             }
             else
             {
-                fieldConfig = new FieldConfigInteger(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-            }
-        }
-        else if(node.getType() == StringBuilder.class)
-        {
-            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, new FieldId(FieldIdEnum.FUNCTION), valueText, true);
-
-            List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
-            SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);
-
-            for(String enumValue : enumValueList)
-            {
-                symbolTypeConfig.addOption(enumValue, enumValue);
-            }
-            configList.add(symbolTypeConfig);
-            fieldConfigEnum.addConfig(configList);
-            fieldConfig = fieldConfigEnum;
-        }
-        else
-        {
-            System.err.println("Unknown type : " + node.getType());
-        }
-
-        fieldConfig.createUI();
-        fieldConfig.setFunctionParameterType(node.getType());
-        fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
-        {
-            @Override
-            public void dataChanged(FieldId changedField) {
+                fieldConfig.populate(expression);
                 buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
-                updateButtonState(true);
             }
-        });
-        panelLiteral.add(fieldConfig.getPanel());
-
-        Expression expression = node.getExpression();
-
-        if(expression instanceof AttributeExpressionImpl)
-        {
-            dataSourceAttributePanel.setAttribute(expression);
-            buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
         }
-        else if(expression instanceof EnvFunction)
-        {
-            envVarField.setEnvironmentVariable(expression);
-            buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
-        }
-        else if(expression instanceof FunctionExpressionImpl)
-        {
-            functionPanel.setFunction(expression);
-            buttonGroup.setSelected(rdbtnFunction.getModel(), true);
-        }
-        else
-        {
-            fieldConfig.populate(expression);
-            buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
-        }
-
         Dimension boxSize = box.getPreferredSize();
         setPreferredSize(boxSize);
         revalidate();

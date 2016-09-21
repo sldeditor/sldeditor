@@ -38,26 +38,43 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsLessThanEqualTo implements FilterConfigInterface {
 
+    /**
+     * The Class IsLessThanOrEqualToExtended.
+     */
     public class IsLessThanOrEqualToExtended extends IsLessThenOrEqualToImpl implements FilterExtendedInterface
     {
+
+        /**
+         * Instantiates a new checks if is less than or equal to extended.
+         */
         public IsLessThanOrEqualToExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new checks if is less than or equal to extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         * @param matchCase the match case
+         */
         public IsLessThanOrEqualToExtended(Expression expression1, Expression expression2, boolean matchCase)
         {
             super(expression1, expression2, matchCase);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IsLessThenOrEqualToImpl.class;
         }
     }
-    
+
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsLessThanEqualTo()
     {
@@ -106,10 +123,19 @@ public class IsLessThanEqualTo implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
-        
-        IsLessThenOrEqualToImpl filter = new IsLessThanOrEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
-        
+        IsLessThenOrEqualToImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 3))
+        {
+            filter = new IsLessThanOrEqualToExtended();
+        }
+        else
+        {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+
+            filter = new IsLessThanOrEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        }
+
         return filter;
     }
 

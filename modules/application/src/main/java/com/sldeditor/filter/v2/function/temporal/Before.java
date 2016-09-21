@@ -27,6 +27,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
@@ -37,25 +38,49 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class Before implements FilterConfigInterface {
 
-    public class BeforeExtended extends BeforeImpl
+    /**
+     * The Class BeforeExtended.
+     */
+    public class BeforeExtended extends BeforeImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new before extended.
+         */
         public BeforeExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new before extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         */
         public BeforeExtended(Expression expression1, Expression expression2)
         {
             super(expression1, expression2);
         }
 
+        /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
         public String toString() {
             return "[ " + getExpression1() + " Before " + getExpression2() + " ]";
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
+        @Override
+        public Class<?> getOriginalFilter() {
+            return BeforeImpl.class;
         }
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Before()
     {
@@ -104,7 +129,16 @@ public class Before implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        BeforeImpl filter = new BeforeExtended(parameterList.get(0), parameterList.get(1));
+        BeforeImpl filter = null;
+
+        if((parameterList == null) || (parameterList.size() != 2))
+        {
+            filter = new BeforeExtended();
+        }
+        else
+        {
+            filter = new BeforeExtended(parameterList.get(0), parameterList.get(1));
+        }
 
         return filter;
     }

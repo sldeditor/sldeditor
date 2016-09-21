@@ -38,22 +38,40 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class And implements FilterConfigInterface {
 
+    /**
+     * The Class AndExtended.
+     */
     public class AndExtended extends AndImpl implements FilterExtendedInterface
     {
+
+        /**
+         * Instantiates a new and extended.
+         */
         public AndExtended()
         {
             super(new ArrayList<Filter>());
         }
 
+        /**
+         * Instantiates a new and extended.
+         *
+         * @param children the children
+         */
         public AndExtended(List<Filter> children)
         {
             super(children);
         }
 
+        /* (non-Javadoc)
+         * @see org.geotools.filter.LogicFilterImpl#toString()
+         */
         public String toString() {
             return "[ " + this.getChildren() + " ]";
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return AndImpl.class;
@@ -61,7 +79,7 @@ public class And implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public And()
     {
@@ -121,7 +139,16 @@ public class And implements FilterConfigInterface {
      */
     @Override
     public Filter createLogicFilter(List<Filter> filterList) {
-        AndImpl filter = new AndExtended(filterList);
+        AndImpl filter = null;
+
+        if((filterList == null) || (filterList.size() != 2))
+        {
+            filter = new AndExtended();
+        }
+        else
+        {
+            filter = new AndExtended(filterList);
+        }
 
         return filter;
     }

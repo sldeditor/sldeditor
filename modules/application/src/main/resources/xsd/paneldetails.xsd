@@ -108,6 +108,7 @@
                     <xs:element name="FieldConfigInteger"       type="XMLFieldConfigInteger" />
                     <xs:element name="FieldConfigInlineFeature" type="XMLFieldConfigInlineFeature" />
                     <xs:element name="FieldConfigFeatureTypeConstraint" type="XMLFieldConfigFeatureTypeConstraint" />
+                    <xs:element name="FieldConfigMapUnit"       type="XMLFieldConfigMapUnit" />
                     <xs:element name="Group" type="XMLGroupConfig" />
                 </xs:choice>
             </xs:extension>
@@ -262,6 +263,18 @@
         <xs:annotation>
             <xs:documentation>
                 Configuration for an feature type constraint field
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigMapUnit">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for a drop down list of map units
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>

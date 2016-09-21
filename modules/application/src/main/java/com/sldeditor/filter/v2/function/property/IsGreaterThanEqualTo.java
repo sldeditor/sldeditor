@@ -38,18 +38,35 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsGreaterThanEqualTo implements FilterConfigInterface {
 
+    /**
+     * The Class IsGreaterThanOrEqualToExtended.
+     */
     public class IsGreaterThanOrEqualToExtended extends IsGreaterThanOrEqualToImpl implements FilterExtendedInterface
     {
+        
+        /**
+         * Instantiates a new checks if is greater than or equal to extended.
+         */
         public IsGreaterThanOrEqualToExtended()
         {
             super(null, null);
         }
 
+        /**
+         * Instantiates a new checks if is greater than or equal to extended.
+         *
+         * @param expression1 the expression 1
+         * @param expression2 the expression 2
+         * @param matchCase the match case
+         */
         public IsGreaterThanOrEqualToExtended(Expression expression1, Expression expression2, boolean matchCase)
         {
             super(expression1, expression2, matchCase);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return IsGreaterThanOrEqualToImpl.class;
@@ -57,7 +74,7 @@ public class IsGreaterThanEqualTo implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public IsGreaterThanEqualTo()
     {
@@ -106,9 +123,18 @@ public class IsGreaterThanEqualTo implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter(List<Expression> parameterList) {
-        LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+        IsGreaterThanOrEqualToImpl filter = null;
 
-        IsGreaterThanOrEqualToImpl filter = new IsGreaterThanOrEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        if((parameterList == null) || (parameterList.size() != 3))
+        {
+            filter = new IsGreaterThanOrEqualToExtended();
+        }
+        else
+        {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+
+            filter = new IsGreaterThanOrEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+        }
 
         return filter;
     }

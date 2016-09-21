@@ -37,18 +37,34 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class Not implements FilterConfigInterface {
 
+    /**
+     * The Class NotExtended.
+     */
     public class NotExtended extends NotImpl implements FilterExtendedInterface
     {
+
+        /**
+         * Instantiates a new not extended.
+         */
+        @SuppressWarnings("deprecation")
         public NotExtended()
         {
-            super(null);
+            super();
         }
 
+        /**
+         * Instantiates a new not extended.
+         *
+         * @param filter the filter
+         */
         public NotExtended(Filter filter)
         {
             super(filter);
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
+         */
         @Override
         public Class<?> getOriginalFilter() {
             return NotImpl.class;
@@ -56,7 +72,7 @@ public class Not implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public Not()
     {
@@ -115,14 +131,15 @@ public class Not implements FilterConfigInterface {
      */
     @Override
     public Filter createLogicFilter(List<Filter> filterList) {
-        Filter childFilter = null;
-        if(filterList.size() == 1)
+        NotImpl filter = null;
+        if((filterList == null) || filterList.isEmpty())
         {
-            childFilter = filterList.get(0);
+            filter = new NotExtended();
         }
-
-        NotImpl filter = new NotExtended(childFilter);
-
+        else
+        {
+            filter = new NotExtended(filterList.get(0));
+        }
         return filter;
     }
 }
