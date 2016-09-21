@@ -631,7 +631,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      * Display result.
      */
     private void displayResult() {
-        String result = "";
+        String result = Localisation.getString(ExpressionPanelv2.class, "FilterPanelv2.invalidResult");
         if(rootNode instanceof FilterNode)
         {
             overallFilter = addFilter((FilterNode)rootNode);

@@ -229,7 +229,14 @@ public class ExpressionNode extends DefaultMutableTreeNode {
             FunctionName functionName = functionExpression.getFunctionName();
 
             TypeManager.getInstance().setDataType(functionName.getReturn().getType());
-            for(int index = 0; index < functionName.getArgumentCount(); index ++)
+            int argCount = functionName.getArgumentCount();
+
+            if(functionName.getArgumentCount() < 0)
+            {
+                argCount *= -1;
+            }
+            
+            for(int index = 0; index < argCount; index ++)
             {
                 ExpressionNode childNode = new ExpressionNode();
                 Parameter<?> parameter = functionName.getArguments().get(index);

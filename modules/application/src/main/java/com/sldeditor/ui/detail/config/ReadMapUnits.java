@@ -129,7 +129,7 @@ public class ReadMapUnits implements PanelConfigInterface {
         {
             if(text.startsWith("*"))
             {
-                return Localisation.getString(ReadMapUnits.class, text.substring(1));
+                return Localisation.getString(ReadPanelConfig.class, text.substring(1));
             }
             return Localisation.getString(localisationClass, text);
         }

@@ -88,7 +88,7 @@ public class IsEqualTo implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("PropertyIsEqualTo", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
         filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
         filterName.addParameter(new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
 
