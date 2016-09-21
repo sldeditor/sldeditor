@@ -32,7 +32,7 @@ public class AttributeUtils {
     private static final String ATTRIBUTE_END = "</ogc:PropertyName>";
     
     /**
-     * Checks if is string is actually an attribute.
+     * Checks if string is actually an attribute.
      *
      * @param objValue the obj value
      * @return true, if is attribute
