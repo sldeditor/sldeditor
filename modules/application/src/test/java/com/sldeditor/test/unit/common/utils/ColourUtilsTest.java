@@ -55,7 +55,7 @@ public class ColourUtilsTest {
     @Test
     public void testToColour() {
         Color actualColour = ColourUtils.toColour("#123456");
-        
+
         int red = actualColour.getRed();
         assertEquals(18, red);
         int green = actualColour.getGreen();
@@ -72,7 +72,7 @@ public class ColourUtilsTest {
 
         actualColour = ColourUtils.toColour("123456");
         assertNull(actualColour);
-        
+
         actualColour = ColourUtils.toColour("1234567");
         assertNull(actualColour);
     }
@@ -82,9 +82,9 @@ public class ColourUtilsTest {
      */
     @Test
     public void testGetIntColour() {
-        
+
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        
+
         Expression colourExpression = ff.literal("#FF00FF");
         int colourValue = ColourUtils.getIntColour(colourExpression);
         assertEquals(0xff00ff, colourValue);
@@ -92,4 +92,14 @@ public class ColourUtilsTest {
         colourValue = ColourUtils.getIntColour(null);
     }
 
+    /**
+     * Test method for {@link com.sldeditor.common.utils.ColourUtils#createRandomColour()}.
+     */
+    @Test
+    public void testCreateRandomColour() {
+
+        Color colour = ColourUtils.createRandomColour();
+        
+        assertNotNull(colour);
+    }
 }
