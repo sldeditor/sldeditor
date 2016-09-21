@@ -54,7 +54,7 @@ public class PanelField {
      * Gets the field.
      *
      * @param classType the class type
-     * @param string the string
+     * @param valueTextLocalisation the value text localisation
      * @param nodeType the node type
      * @param enumValueList the enum value list
      * @return the field

@@ -93,7 +93,7 @@ public class FSTree extends JTree
     /**
      * Sets the tree selection callback.
      *
-     * @param fileSystemExtension the new tree selection
+     * @param fileSelection the new tree selection
      */
     public void setTreeSelection(FileSelectionInterface fileSelection) {
 
