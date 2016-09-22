@@ -42,12 +42,11 @@ One of the aims of the application is to work in a connected/disconnected enviro
 The project was presented at [![FOSS4G UK 2016](http://uk.osgeo.org/foss4guk2016/images/foss4guk_2016_logo.png)](http://uk.osgeo.org/foss4guk2016/)
 
 ## Project State
-The application is not complete, however is at the stage where I need to know whether there is enough interest from the open source GIS community to complete it.<p>
+The application is nearing a version 1.0.<p>
 
-The architecture has evolved, parts of it have been rewritten several times because:
-* it didn’t deliver the right functionality 
-* I thought it could be done better (either I had a better idea or trying to improve maintenance)
-* I was experimenting.
+There are some further GeoServer vendor options yet to be implemented.
+
+Further testing is needed to ensure the application is rock solid.
 
 There will be some work needed to understand why some symbols don’t display. I’m thinking windbarbs where I believe I’m passing the correct data but the symbol is not rendered.
 
