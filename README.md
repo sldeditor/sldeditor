@@ -24,7 +24,8 @@ Main features include:
 
 ## Release
 A compiled single executable jar is available here :
-* [SLDEditor Release 0.3.0](https://github.com/robward-scisys/sldeditor/releases/download/v0.3.0/SLDEditor.jar) (MD5 : 45043a89109e83f95b6a7b4c4aadc6c2)
+* [SLDEditor Release 0.4.1](https://github.com/robward-scisys/sldeditor/releases/download/v0.4.1/SLDEditor.jar
+* ) (MD5 : 90df875193dd41899ed56508b9905900)
 
 ## Background
 I’ve been developing the application for about 18 months as a side project. The idea started when SciSys did some consultancy work and put together a proposal for an organisation to migrate from an Esri system to an OpenLayers/GeoServer stack. When it came to migrating ~1250 layers we didn’t know what number to put down for symbol conversion to SLD.  When you looked at the numbers this was a large percentage of the overall cost and something needed to be done to reduce it if we were going to be competitive in doing migrations to open source GIS systems.
