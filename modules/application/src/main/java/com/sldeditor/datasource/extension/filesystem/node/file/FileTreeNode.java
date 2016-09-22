@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.Icon;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -67,7 +69,7 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
     /**  File object for this node. */
     private boolean isRoot = false;
 
-    /** The path, declared as a string to get round sun.nio.fs.WindowsPath not being serialiable. */
+    /** The path, declared as a string to get round sun.nio.fs.WindowsPath not being serialisable. */
     private String path;
 
     /** The name of the node. */
@@ -290,7 +292,7 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
         FileTreeNode node = new FileTreeNode(pathPath, name);
         this.add(node);
         if (descend) {
-            node.populateDirectories(false); 
+            node.populateDirectories(false);
         }
     }
 
@@ -589,5 +591,27 @@ public class FileTreeNode extends DefaultMutableTreeNode implements NodeInterfac
      */
     public void setFileCategory(FileTreeNodeTypeEnum fileCategory) {
         this.fileCategory = fileCategory;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.NodeInterface#getIcon()
+     */
+    @Override
+    public Icon getIcon() {
+        if(!isDir)
+        {
+            FileHandlerInterface handler = fileHandlerMap.get(ExternalFilenames.getFileExtension(name));
+            if(handler != null)
+            {
+                return handler.getIcon(path, name);
+            }
+        }
+        else
+        {
+            File f = new File(path);
+            return FileSystemView.getFileSystemView().getSystemIcon(f);
+        }
+
+        return null;
     }
 }

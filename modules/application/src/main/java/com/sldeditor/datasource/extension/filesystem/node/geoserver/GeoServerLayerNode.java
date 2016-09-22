@@ -20,6 +20,7 @@ package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
 
+import javax.swing.Icon;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.sldeditor.common.NodeInterface;
@@ -91,6 +92,12 @@ public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeIn
      */
     @Override
     public String getDestinationText() {
+        return null;
+    }
+
+    @Override
+    public Icon getIcon() {
+        // TODO Auto-generated method stub
         return null;
     }
 }
