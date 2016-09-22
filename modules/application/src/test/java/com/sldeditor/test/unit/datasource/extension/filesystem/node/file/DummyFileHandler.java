@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.sldeditor.common.NodeInterface;
@@ -117,6 +118,14 @@ public class DummyFileHandler implements FileHandlerInterface
     @Override
     public boolean isDataSource() {
         return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Icon getIcon(String path, String filename) {
+        return null;
     }
     
 }

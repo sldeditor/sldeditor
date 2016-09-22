@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.sldeditor.common.NodeInterface;
@@ -163,5 +165,14 @@ public class VectorFileHandler implements FileHandlerInterface
     @Override
     public boolean isDataSource() {
         return true;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Icon getIcon(String path, String filename) {
+        File f = new File(path);
+        return FileSystemView.getFileSystemView().getSystemIcon(f);
     }
 }

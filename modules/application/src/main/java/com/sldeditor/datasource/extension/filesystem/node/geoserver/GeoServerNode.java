@@ -19,7 +19,10 @@
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.sldeditor.common.NodeInterface;
@@ -42,6 +45,12 @@ public class GeoServerNode extends DefaultMutableTreeNode implements NodeInterfa
     
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The Constant RESOURCE_ICON. */
+    private static final String RESOURCE_ICON = "ui/filesystemicons/geoservernode.png";
+
+    /** The tree icon. */
+    private Icon treeIcon = null;
 
     /**
      * Instantiates a new GeoServerNode
@@ -92,5 +101,19 @@ public class GeoServerNode extends DefaultMutableTreeNode implements NodeInterfa
     @Override
     public String getDestinationText() {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.NodeInterface#getIcon()
+     */
+    @Override
+    public Icon getIcon() {
+        if(treeIcon == null)
+        {
+            URL url = GeoServerOverallNode.class.getClassLoader().getResource(RESOURCE_ICON);
+
+            treeIcon = new ImageIcon(url);
+        }
+        return treeIcon;
     }
 }
