@@ -19,7 +19,10 @@
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.sldeditor.common.NodeInterface;
@@ -49,7 +52,13 @@ public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements No
     
     /** The is style flag (true = style, false = layer). */
     private boolean isStyle = false;
-    
+
+    /** The Constant RESOURCE_ICON. */
+    private static final String RESOURCE_ICON = "ui/filesystemicons/geoserverworkspace.png";
+
+    /** The tree icon. */
+    private Icon treeIcon = null;
+
     /**
      * Instantiates a new geo server workspace node.
      *
@@ -134,5 +143,16 @@ public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements No
      */
     public boolean isStyle() {
         return isStyle;
+    }
+
+    @Override
+    public Icon getIcon() {
+        if(treeIcon == null)
+        {
+            URL url = GeoServerOverallNode.class.getClassLoader().getResource(RESOURCE_ICON);
+
+            treeIcon = new ImageIcon(url);
+        }
+        return treeIcon;
     }
 }

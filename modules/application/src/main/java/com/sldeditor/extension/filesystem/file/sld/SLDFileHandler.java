@@ -22,6 +22,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.sldeditor.common.NodeInterface;
@@ -53,6 +56,12 @@ public class SLDFileHandler implements FileHandlerInterface
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3122710411389246976L;
 
+    /** The Constant RESOURCE_ICON. */
+    private static final String RESOURCE_ICON = "ui/filesystemicons/sld.png";
+
+    /** The tree icon SLD. */
+    private Icon treeIcon = null;
+
     /* (non-Javadoc)
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
@@ -66,7 +75,7 @@ public class SLDFileHandler implements FileHandlerInterface
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface,  DefaultTreeModel treeModel, FileTreeNode node)
+    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node)
     {
         // Do nothing
         return false;
@@ -231,5 +240,19 @@ public class SLDFileHandler implements FileHandlerInterface
     @Override
     public boolean isDataSource() {
         return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Icon getIcon(String path, String filename) {
+        if(treeIcon == null)
+        {
+            URL url = SLDFileHandler.class.getClassLoader().getResource(RESOURCE_ICON);
+
+            treeIcon = new ImageIcon(url);
+        }
+        return treeIcon;
     }
 }

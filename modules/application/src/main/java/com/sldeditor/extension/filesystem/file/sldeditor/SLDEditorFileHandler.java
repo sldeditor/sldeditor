@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -65,6 +68,7 @@ import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.impl.DataSourceProperties;
+import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.ui.legend.option.LegendOptionData;
 
@@ -86,6 +90,12 @@ public class SLDEditorFileHandler implements FileHandlerInterface
     private static final String ENVVAR_TYPE_ATTRIBUTE = "type";
     private static final String VENDOR_OPTION_ELEMENT = "vendorOption";
     private static final String LEGEND_OPTION_ELEMENT = "legend";
+
+    /** The Constant RESOURCE_ICON. */
+    private static final String RESOURCE_ICON = "ui/filesystemicons/sldeditor.png";
+
+    /** The tree icon SLD. */
+    private Icon treeIcon = null;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3193761375262410975L;
@@ -466,5 +476,19 @@ public class SLDEditorFileHandler implements FileHandlerInterface
     @Override
     public boolean isDataSource() {
         return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Icon getIcon(String path, String filename) {
+        if(treeIcon == null)
+        {
+            URL url = SLDFileHandler.class.getClassLoader().getResource(RESOURCE_ICON);
+
+            treeIcon = new ImageIcon(url);
+        }
+        return treeIcon;
     }
 }

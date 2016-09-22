@@ -82,7 +82,7 @@ public class RenderTransformationManager {
         GeoServerConnection connection = new GeoServerConnection();
         connection.setConnectionName("Test");
         try {
-            connection.setUrl(new URL("http://cd-gis01-soc1.tcadev.local:8080/geoserver"));
+            connection.setUrl(new URL("http://localhost/geoserver"));
             connection.setUserName("admin");
             connection.setPassword("geoserver");
 

@@ -20,6 +20,8 @@ package com.sldeditor.common;
 
 import java.awt.datatransfer.DataFlavor;
 
+import javax.swing.Icon;
+
 import com.sldeditor.common.filesystem.FileSystemInterface;
 
 /**
@@ -50,4 +52,11 @@ public interface NodeInterface
      * @return the destination text
      */
     String getDestinationText();
+
+    /**
+     * Gets the icon.
+     *
+     * @return the icon
+     */
+    Icon getIcon();
 }
