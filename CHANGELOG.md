@@ -1,10 +1,29 @@
 # Change Log
 
-## [0.3.0](https://github.com/robward-scisys/sldeditor/tree/0.3.0) (2016-09-12)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.2.0...0.3.0)
+## [0.4.1](https://github.com/robward-scisys/sldeditor/tree/0.4.1) (2016-09-22)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.3.0...0.4.1)
 
 **Implemented enhancements:**
 
+- Set icons for the file system tree [\#70](https://github.com/robward-scisys/sldeditor/issues/70)
+- Added filesystem icons [\#72](https://github.com/robward-scisys/sldeditor/pull/72) ([robward-scisys](https://github.com/robward-scisys))
+- Iss68 more unit tests [\#69](https://github.com/robward-scisys/sldeditor/pull/69) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Create more unit tests [\#68](https://github.com/robward-scisys/sldeditor/issues/68)
+- Create release 0.4.0-SNAPSHOT [\#66](https://github.com/robward-scisys/sldeditor/issues/66)
+
+**Merged pull requests:**
+
+- Updated version to 0.4.0-SNAPSHOT in pom.xml [\#67](https://github.com/robward-scisys/sldeditor/pull/67) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.3.0](https://github.com/robward-scisys/sldeditor/tree/v0.3.0) (2016-09-12)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.2.0...v0.3.0)
+
+**Implemented enhancements:**
+
+- Testing for release 0.3.0 [\#62](https://github.com/robward-scisys/sldeditor/issues/62)
 - Add dialog confirming discarding of edits [\#60](https://github.com/robward-scisys/sldeditor/issues/60)
 - Implement raster legend graphics [\#56](https://github.com/robward-scisys/sldeditor/issues/56)
 - Use GeoTools 15.1 [\#54](https://github.com/robward-scisys/sldeditor/issues/54)
@@ -12,12 +31,21 @@
 - Add image outline support for raster symbols [\#49](https://github.com/robward-scisys/sldeditor/issues/49)
 - Provide a GUI for user layer inline features [\#47](https://github.com/robward-scisys/sldeditor/issues/47)
 - Implement user layer configuration [\#45](https://github.com/robward-scisys/sldeditor/issues/45)
+- Release v0.3.0 [\#65](https://github.com/robward-scisys/sldeditor/pull/65) ([robward-scisys](https://github.com/robward-scisys))
+- Iss62 version 0 3 0 tyre kick [\#63](https://github.com/robward-scisys/sldeditor/pull/63) ([robward-scisys](https://github.com/robward-scisys))
+- Iss60 discard edits dialog [\#61](https://github.com/robward-scisys/sldeditor/pull/61) ([robward-scisys](https://github.com/robward-scisys))
+- Iss56 raster legend [\#57](https://github.com/robward-scisys/sldeditor/pull/57) ([robward-scisys](https://github.com/robward-scisys))
+- Updated to use GeoTools 15.1 [\#55](https://github.com/robward-scisys/sldeditor/pull/55) ([robward-scisys](https://github.com/robward-scisys))
+- Iss51 raster colour ramp [\#52](https://github.com/robward-scisys/sldeditor/pull/52) ([robward-scisys](https://github.com/robward-scisys))
+- Iss49 raster image outline [\#50](https://github.com/robward-scisys/sldeditor/pull/50) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
+- Testing for release 0.3.0 [\#62](https://github.com/robward-scisys/sldeditor/issues/62)
 - Marker symbol stroke attributes not correct [\#58](https://github.com/robward-scisys/sldeditor/issues/58)
 - Handle inaccessible folders/drive letters in the file system [\#42](https://github.com/robward-scisys/sldeditor/issues/42)
 - Symbol not rendered after raster symbol assigned a data source. [\#36](https://github.com/robward-scisys/sldeditor/issues/36)
+- Iss62 version 0 3 0 tyre kick [\#63](https://github.com/robward-scisys/sldeditor/pull/63) ([robward-scisys](https://github.com/robward-scisys))
 
 **Closed issues:**
 
