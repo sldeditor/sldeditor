@@ -19,6 +19,7 @@ Main features include:
   * Windbarbs
 * Integration with GeoServer
 * Map viewer
+* YSLD import and export facility
 * Ability to convert Esri MXD files to SLD files (requires separate licensed components not supplied as part of this project) [Build instructions here](https://github.com/robward-scisys/sldeditor/wiki/generatesld)
 
 ## Release
