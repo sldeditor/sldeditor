@@ -22,6 +22,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.geotools.styling.StyledLayerDescriptor;
@@ -69,6 +72,12 @@ public class YSLDFileHandler implements FileHandlerInterface
     /** The ysld writer. */
     private SLDWriterInterface ysldWriter = null;
 
+    /** The Constant RESOURCE_ICON. */
+    private static final String RESOURCE_ICON = "ui/filesystemicons/ysld.png";
+
+    /** The tree icon SLD. */
+    private Icon treeIcon = null;
+    
     /* (non-Javadoc)
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
@@ -263,5 +272,19 @@ public class YSLDFileHandler implements FileHandlerInterface
     @Override
     public boolean isDataSource() {
         return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Icon getIcon(String path, String filename) {
+        if(treeIcon == null)
+        {
+            URL url = YSLDFileHandler.class.getClassLoader().getResource(RESOURCE_ICON);
+
+            treeIcon = new ImageIcon(url);
+        }
+        return treeIcon;
     }
 }

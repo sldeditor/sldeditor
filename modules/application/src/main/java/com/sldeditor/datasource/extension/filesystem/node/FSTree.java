@@ -49,6 +49,10 @@ public class FSTree extends JTree
         transferHandler = new TreeTransferHandler();
         setTransferHandler(transferHandler);
         setAutoscrolls(true);
+
+        FSTreeCellRenderer cellRenderer = new FSTreeCellRenderer();
+        setCellRenderer(cellRenderer);
+
     }
 
     /**
@@ -109,10 +113,6 @@ public class FSTree extends JTree
                         fileSelection.treeSelection(e);
                     }
                 }
-//                else
-//                {
-//                    setIgnoreSelection(false);
-//                }
             }
         });
     }

@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.sldeditor.common.NodeInterface;
@@ -92,4 +93,13 @@ public interface FileHandlerInterface extends Serializable
      * @return true, if is data source
      */
     boolean isDataSource();
+
+    /**
+     * Gets the icon.
+     *
+     * @param path the path
+     * @param filename the filename
+     * @return the icon
+     */
+    Icon getIcon(String path, String filename);
 }
