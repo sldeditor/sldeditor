@@ -28,10 +28,12 @@ import javax.swing.JTextArea;
 import org.geotools.process.function.ProcessFunction;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.rendertransformation.RenderTransformationDialog;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -119,23 +121,18 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
         buttonEdit.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                TransformationInterface impl = TransformationExchange.getInstance().getImpl();
+                ProcessFunction expression = showTransformationDialog(processFunction);
 
-                if(impl != null)
+                if(expression != null)
                 {
-                    ProcessFunction expression = impl.showTransformationDialog(processFunction);
+                    ProcessFunction newValueObj = processFunction;
+                    processFunction = expression;
 
-                    if(expression != null)
-                    {
-                        ProcessFunction newValueObj = processFunction;
-                        processFunction = expression;
+                    textField.setText(ParameterFunctionUtils.getString(processFunction));
 
-                        textField.setText(ParameterFunctionUtils.getString(processFunction));
+                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
-                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                        valueUpdated();
-                    }
+                    valueUpdated();
                 }
             }
         });
@@ -162,6 +159,24 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
 
         buttonClear.setBounds((int)buttonEdit.getBounds().getMaxX() + 5, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(buttonClear);
+    }
+
+    /**
+     * Show transformation dialog.
+     *
+     * @param existingProcessFunction the existing process function
+     * @return the process function
+     */
+    private ProcessFunction showTransformationDialog(ProcessFunction existingProcessFunction) {
+        ProcessFunction processFunction = null;
+        RenderTransformationDialog dlg = new RenderTransformationDialog(GeoServerConnectionManager.getInstance());
+
+        if(dlg.showDialog(existingProcessFunction))
+        {
+            processFunction = dlg.getTransformationProcessFunction();
+        }
+
+        return processFunction;
     }
 
     /**
