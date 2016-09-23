@@ -51,29 +51,29 @@ public class ProcessFunctionParameterValue
     }
 
     /** The name. */
-    String name;
+    public String name;
 
     /** The data type. */
-    String dataType;
+    public String dataType;
 
     /** The type. */
-    Class<?> type = null;
+    public Class<?> type = null;
 
     /** The optional flag. */
-    Boolean optional = false;
+    public Boolean optional = false;
 
     /** The included flag. */
-    Boolean included = false;
+    public Boolean included = false;
 
     /** The value. */
-    Object value = null;
+    public Object value = null;
 
     /** The min occurrences. */
-    int minOccurences = 1;
+    public int minOccurences = 1;
 
     /** The max occurrences. */
-    int maxOccurences = 1;
+    public int maxOccurences = 1;
 
     /** The enum value list. */
-    List<String> enumValueList = null;
+    public List<String> enumValueList = null;
 }
