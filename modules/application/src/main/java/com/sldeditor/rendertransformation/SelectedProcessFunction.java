@@ -157,12 +157,8 @@ public class SelectedProcessFunction {
      * @return the string
      */
     public static String extractLocalFunctionName(String functionName) {
-        String functionNameString;
-        if(functionName == null)
-        {
-            functionNameString = functionName;
-        }
-        else
+        String functionNameString = null;
+        if(functionName != null)
         {
             String[] components = functionName.split(":");
             if(components.length == 2)
