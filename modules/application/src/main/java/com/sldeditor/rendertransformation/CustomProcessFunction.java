@@ -73,23 +73,26 @@ public class CustomProcessFunction {
             populateDataMap();
         }
 
-        for(int index = 0; index < selectedCustomFunction.getDataInputs().getInput().size(); index ++)
+        if(selectedCustomFunction != null)
         {
-            InputDescriptionType input = (InputDescriptionType) selectedCustomFunction.getDataInputs().getInput().get(index);
+            for(int index = 0; index < selectedCustomFunction.getDataInputs().getInput().size(); index ++)
+            {
+                InputDescriptionType input = (InputDescriptionType) selectedCustomFunction.getDataInputs().getInput().get(index);
 
-            ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
+                ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
 
-            value.name = input.getIdentifier().getValue();
-            getType(input, value);
-            value.optional = isOptional(input);
-            value.type = dataTypeMap.get(value.dataType);
+                value.name = input.getIdentifier().getValue();
+                getType(input, value);
+                value.optional = isOptional(input);
+                value.type = dataTypeMap.get(value.dataType);
 
-            value.minOccurences = input.getMinOccurs().intValue();
-            value.maxOccurences = input.getMaxOccurs().intValue();
+                value.minOccurences = input.getMinOccurs().intValue();
+                value.maxOccurences = input.getMaxOccurs().intValue();
 
-            valueList.add(value);
+                valueList.add(value);
+            }
         }
-         return valueList;
+        return valueList;
     }
 
     /**
@@ -164,6 +167,7 @@ public class CustomProcessFunction {
                     else
                     {
                         value.type = String.class;
+                        value.value = ff.literal(defaultValue);
                     }
                 }
             }

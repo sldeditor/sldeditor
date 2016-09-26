@@ -139,7 +139,7 @@ public class RenderTransformationDialog extends JDialog {
      */
     public RenderTransformationDialog(GeoServerConnectionManagerInterface geoServerConnectionManager)
     {
-        super(Controller.getInstance().getFrame(), "Render Transformation", true);
+        super(Controller.getInstance().getFrame(), Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.title"), true);
 
         this.geoServerConnectionManager = geoServerConnectionManager;
 

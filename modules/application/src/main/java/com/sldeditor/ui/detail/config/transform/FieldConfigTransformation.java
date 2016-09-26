@@ -28,10 +28,12 @@ import javax.swing.JTextArea;
 import org.geotools.process.function.ProcessFunction;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.rendertransformation.RenderTransformationDialog;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -119,23 +121,18 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
         buttonEdit.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                TransformationInterface impl = TransformationExchange.getInstance().getImpl();
+                ProcessFunction expression = showTransformationDialog(processFunction);
 
-                if(impl != null)
+                if(expression != null)
                 {
-                    ProcessFunction expression = impl.showTransformationDialog(processFunction);
+                    ProcessFunction newValueObj = processFunction;
+                    processFunction = expression;
 
-                    if(expression != null)
-                    {
-                        ProcessFunction newValueObj = processFunction;
-                        processFunction = expression;
+                    textField.setText(ParameterFunctionUtils.getString(processFunction));
 
-                        textField.setText(ParameterFunctionUtils.getString(processFunction));
+                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
-                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                        valueUpdated();
-                    }
+                    valueUpdated();
                 }
             }
         });
@@ -162,6 +159,24 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
 
         buttonClear.setBounds((int)buttonEdit.getBounds().getMaxX() + 5, 0, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(buttonClear);
+    }
+
+    /**
+     * Show transformation dialog.
+     *
+     * @param existingProcessFunction the existing process function
+     * @return the process function
+     */
+    private ProcessFunction showTransformationDialog(ProcessFunction existingProcessFunction) {
+        ProcessFunction processFunction = null;
+        RenderTransformationDialog dlg = new RenderTransformationDialog(GeoServerConnectionManager.getInstance());
+
+        if(dlg.showDialog(existingProcessFunction))
+        {
+            processFunction = dlg.getTransformationProcessFunction();
+        }
+
+        return processFunction;
     }
 
     /**
@@ -309,11 +324,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if(undoRedoObject != null)
         {
-            String oldValue = (String)undoRedoObject.getOldValue();
+            if(textField != null)
+            {
+                if(undoRedoObject.getOldValue() instanceof String)
+                {
+                    String oldValue = (String)undoRedoObject.getOldValue();
 
-            textField.setText(oldValue);
+                    textField.setText(oldValue);
+                }
+            }
         }
     }
 
@@ -325,11 +346,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if(undoRedoObject != null)
         {
-            String newValue = (String)undoRedoObject.getNewValue();
+            if(textField != null)
+            {
+                if(undoRedoObject.getNewValue() instanceof String)
+                {
+                    String newValue = (String)undoRedoObject.getNewValue();
 
-            textField.setText(newValue);
+                    textField.setText(newValue);
+                }
+            }
         }
     }
 
@@ -371,12 +398,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigTransformation copy = new FieldConfigTransformation(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                this.editButtonText,
-                this.clearButtonText);
+        FieldConfigTransformation copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigTransformation(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly(),
+                    this.editButtonText,
+                    this.clearButtonText);
+        }
         return copy;
     }
 

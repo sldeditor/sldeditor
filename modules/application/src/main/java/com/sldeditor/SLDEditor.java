@@ -63,7 +63,6 @@ import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.generated.Version;
 import com.sldeditor.map.MapRender;
-import com.sldeditor.rendertransformation.RenderTransformManager;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.layout.UILayoutFactory;
@@ -123,9 +122,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
     /** The sld writer. */
     private SLDWriterInterface sldWriter = null;
-
-    /** The render transform manager. */
-    private RenderTransformManager renderTransformManager = new RenderTransformManager();
 
     /** The data edited flag. */
     private boolean dataEditedFlag = false;
@@ -232,9 +228,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public SLDEditor(String filename, List<String> extensionArgList) {
 
         UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
-
-        // Register the render transform manager
-        renderTransformManager.register();
 
         PropertyManagerInterface propertyManager = PropertyManagerFactory.getInstance();
         propertyManager.readConfig();

@@ -35,6 +35,7 @@ import org.geotools.ows.ServiceException;
 import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
+import com.sldeditor.common.localisation.Localisation;
 
 import net.opengis.ows11.DomainMetadataType;
 import net.opengis.wps10.ComplexDataCombinationsType;
@@ -146,6 +147,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
         }
         catch (ServiceException e) {
             ConsoleManager.getInstance().exception(this, e);
+            ConsoleManager.getInstance().error(this, Localisation.getString(GeoServerWPSClient.class, "GeoServerWPSClient.noCapabilities"));
         }
         catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);

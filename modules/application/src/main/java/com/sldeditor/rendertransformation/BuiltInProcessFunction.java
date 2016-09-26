@@ -48,20 +48,24 @@ public class BuiltInProcessFunction {
      * @param selectedProcessFunctionData the selected process function data
      * @return the list
      */
-    public List<ProcessFunctionParameterValue> extractParameters(FunctionName functionName, ProcessFunction selectedProcessFunctionData) {
+    public List<ProcessFunctionParameterValue> extractParameters(FunctionName functionName, 
+            ProcessFunction selectedProcessFunctionData) {
 
         List<ProcessFunctionParameterValue> valueList = new ArrayList<ProcessFunctionParameterValue>();
 
         // Populate the parameter definitions first.
         // This ensures if there is parameter data missing we 
         // don't miss populating the parameter definition.
-        for(Parameter<?> parameter : functionName.getArguments())
+        if(functionName != null)
         {
-            ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
+            for(Parameter<?> parameter : functionName.getArguments())
+            {
+                ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
 
-            populateParameterDefinition(parameter, value);
+                populateParameterDefinition(parameter, value);
 
-            valueList.add(value);
+                valueList.add(value);
+            }
         }
 
         // Now populate any parameter values we have
@@ -77,7 +81,7 @@ public class BuiltInProcessFunction {
 
                     ProcessFunctionParameterValue value = findParameterValue(valueList, paramName.toString());
 
-                    if(parameterList.size() > 1)
+                    if((parameterList.size() > 1) && (value != null))
                     {
                         Expression paramValue = parameterList.get(1);
 
@@ -132,15 +136,19 @@ public class BuiltInProcessFunction {
                     value.enumValueList.add(stringValue);
                 }
                 value.type = StringBuilder.class;
-                value.value = ff.literal(parameter.getDefaultValue().toString());
+                if(parameter.getDefaultValue() != null)
+                {
+                    value.value = ff.literal(parameter.getDefaultValue().toString());
+                }
             }
             else
             {
                 value.type = parameter.getType();
-                
+
                 if(parameter.getDefaultValue() != null)
                 {
-                    value.value = ff.literal(parameter.getDefaultValue());
+                    Object defaultValue = parameter.getDefaultValue();
+                    value.value = ff.literal(defaultValue);
                 }
             }
             value.optional = !parameter.isRequired();
