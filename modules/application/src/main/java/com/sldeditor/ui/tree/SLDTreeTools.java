@@ -630,6 +630,8 @@ public class SLDTreeTools {
         // Select the item just added
         if(newNode != null)
         {
+            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPointSymbolizer), true);
+
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
