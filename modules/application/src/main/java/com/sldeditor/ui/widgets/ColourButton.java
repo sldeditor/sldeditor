@@ -165,9 +165,18 @@ public class ColourButton extends JButton {
         g2.setColor(colour);
         g2.fillRect(0, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
 
+        g2.setColor(ColourUtils.getTextColour(colour));
+        String htmlColour = ColourUtils.fromColour(colour);
+        int width = g2.getFontMetrics().stringWidth(htmlColour);
+        int height = g2.getFontMetrics().getHeight();
+        int x = (this.getWidth() / 2 ) - (width / 2);
+        int y = this.getHeight() - ((this.getHeight() / 2 ) - (height / 2));
+        g2.drawString(htmlColour, x, y);
         setContentAreaFilled(false);
         setOpaque(true);
         setBorderPainted(false);
+        
+        repaint();
     }
 
     /**

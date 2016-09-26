@@ -111,4 +111,25 @@ public class ColourUtils
 
         return randomColor;
     }
+
+    /**
+     * Gets the text colour.
+     *
+     * @param colour the colour
+     * @return the text colour
+     */
+    public static Color getTextColour(Color colour)
+    {
+        // Counting the perceptive luminance - human eye favours green colour... 
+        double a = 1.0 - ( 0.299 * colour.getRed() + 0.587 * colour.getGreen() + 0.114 * colour.getBlue()) / 255.0;
+
+        if (a < 0.5)
+        {
+           return Color.black;
+        }
+        else
+        {
+           return Color.white;
+        }
+    }
 }

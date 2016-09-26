@@ -26,10 +26,14 @@ import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
+import org.geotools.factory.CommonFactoryFinder;
 import org.junit.Test;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.colourramp.ColourRamp;
 import com.sldeditor.colourramp.ramp.ColourRampData;
+import com.sldeditor.common.utils.ColourUtils;
 
 /**
  * Unit test for ColourRamp class.
@@ -68,29 +72,30 @@ public class ColourRampTest {
         ImageIcon icon2 = ramp.getImageIcon(true);
         assertNotNull(icon2);
 
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
         ColourRampData data = new ColourRampData();
-        int expectedMinValue = 1;
-        int expectedMaxValue = 10;
+        Expression expectedMinValue = ff.literal(1);
+        Expression expectedMaxValue = ff.literal(10);
         data.setColourRamp(ramp);
-        data.setMaxValue(expectedMaxValue);
-        data.setMinValue(expectedMinValue);
+        data.setMinValue(1);
+        data.setMaxValue(10);
 
-        Color actualStart = ramp.getColour(data, expectedMinValue, false);
+        Expression actualStart = ramp.getColour(data, expectedMinValue, false);
         @SuppressWarnings("unused")
-        Color actualEnd = ramp.getColour(data, expectedMaxValue, false);
+        Expression actualEnd = ramp.getColour(data, expectedMaxValue, false);
 
-        assertEquals(actualStart, expectedStart);
+        assertEquals(ColourUtils.toColour(actualStart.toString()), expectedStart);
 
         // Can't test end value
-        //      assertEquals(actualEnd, expectedEnd2);
+        // assertEquals(ColourUtils.toColour(actualEnd.toString()), expectedEnd2);
 
         // Reverse colours
         actualStart = ramp.getColour(data, expectedMinValue, true);
         actualEnd = ramp.getColour(data, expectedMaxValue, true);
 
-        assertEquals(actualStart, expectedEnd2);
+        assertEquals(ColourUtils.toColour(actualStart.toString()), expectedEnd2);
         // Can't test end value
-        //        assertEquals(actualEnd, expectedStart);
+        //        assertEquals(ColourUtils.toColour(actualEnd.toString()), expectedStart);
     }
 
 }

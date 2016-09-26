@@ -138,6 +138,11 @@
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" />
 
+            <xs:enumeration value="RASTER_COLOURMAP_ENTRY_LABEL" />
+            <xs:enumeration value="RASTER_COLOURMAP_ENTRY_COLOUR" />
+            <xs:enumeration value="RASTER_COLOURMAP_ENTRY_OPACITY" />
+            <xs:enumeration value="RASTER_COLOURMAP_ENTRY_QUANTITY" />
+
             <xs:enumeration value="REMOTE_OWS_SERVICE" />
             <xs:enumeration value="REMOTE_OWS_ONLINERESOURCE" />
             <xs:enumeration value="INLINE_FEATURE" />

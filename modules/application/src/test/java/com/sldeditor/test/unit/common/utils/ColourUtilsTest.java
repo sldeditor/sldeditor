@@ -99,7 +99,16 @@ public class ColourUtilsTest {
     public void testCreateRandomColour() {
 
         Color colour = ColourUtils.createRandomColour();
-        
+
         assertNotNull(colour);
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.utils.ColourUtils#getTextColour(java.awt.Color)}.
+     */
+    @Test
+    public void testGetTextColour() {
+        assertEquals(Color.black, ColourUtils.getTextColour(Color.white));
+        assertEquals(Color.white, ColourUtils.getTextColour(Color.black));
     }
 }

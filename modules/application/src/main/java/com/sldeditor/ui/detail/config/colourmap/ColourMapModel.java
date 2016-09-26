@@ -26,7 +26,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapEntryImpl;
@@ -35,7 +34,7 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.colourramp.ramp.ColourRampData;
-import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -59,14 +58,11 @@ public class ColourMapModel extends AbstractTableModel {
     /** The Constant COL_COLOUR. */
     private static final int COL_COLOUR = 2;
 
-    /** The Constant COL_RGB. */
-    private static final int COL_RGB = 3;
-
     /** The Constant COL_OPACITY. */
-    private static final int COL_OPACITY = 4;
+    private static final int COL_OPACITY = 3;
 
     /** The Constant COL_QUANTITY. */
-    private static final int COL_QUANTITY = 5;
+    private static final int COL_QUANTITY = 4;
 
     /** The colour map list. */
     private List<ColourMapData> colourMapList = new ArrayList<ColourMapData>();
@@ -92,7 +88,6 @@ public class ColourMapModel extends AbstractTableModel {
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.number"));
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.label"));
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.colour"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.rgb"));
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.opacity"));
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.value"));
     }
@@ -135,8 +130,6 @@ public class ColourMapModel extends AbstractTableModel {
         case COL_LABEL:
             return colourMapData.getLabel();
         case COL_COLOUR:
-            break;
-        case COL_RGB:
             return colourMapData.getColourString();
         case COL_OPACITY:
             return colourMapData.getOpacity();
@@ -172,68 +165,6 @@ public class ColourMapModel extends AbstractTableModel {
     }
 
     /**
-     * Sets the value at.
-     *
-     * @param aValue the a value
-     * @param rowIndex the row index
-     * @param columnIndex the column index
-     */
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        ColourMapData colourMapData = colourMapList.get(rowIndex);
-
-        switch(columnIndex)
-        {
-        case COL_COLOUR:
-        {
-            Color colour = (Color) aValue;
-            colourMapData.setColour(colour);
-        }
-        break;
-        case COL_LABEL:
-        {
-            String label = null;
-
-            if(aValue instanceof String)
-            {
-                // If the label is an empty string, set it to null
-                // so that the legend is displayed correctly
-                label = (String) aValue;
-
-                if(label.isEmpty())
-                {
-                    label = null;
-                }
-            }
-            colourMapData.setLabel(label);
-        }
-        break;
-        case COL_RGB:
-        {
-            Color colour = ColourUtils.toColour((String) aValue);
-            colourMapData.setColour(colour);
-        }
-        break;
-        case COL_OPACITY:
-            colourMapData.setOpacity((double) aValue);
-            break;
-        case COL_QUANTITY:
-            colourMapData.setQuantity((int) aValue);
-            break;
-        case COL_NUMBER:
-        default:
-            break;
-        }
-
-        this.fireTableDataChanged();
-
-        if(parentObj != null)
-        {
-            parentObj.colourMapUpdated();
-        }
-    }
-
-    /**
      * Populate.
      *
      * @param value the value
@@ -250,59 +181,12 @@ public class ColourMapModel extends AbstractTableModel {
 
             ColourMapData data = new ColourMapData();
 
-            if(colourExpression != null)
-            {
-                String colourString = (String) ((LiteralExpressionImpl)colourExpression).getValue();
-                double opacity = 1.0;
-                if(opacityExpression != null)
-                {
-                    Object opacityValue = ((LiteralExpressionImpl)opacityExpression).getValue();
-                    if(opacityValue instanceof Double)
-                    {
-                        opacity = (double) opacityValue;
-                    }
-                    else if(opacityValue instanceof String)
-                    {
-                        opacity = Double.valueOf((String)opacityValue);
-                    }
-                    else
-                    {
-                        ConsoleManager.getInstance().error(this, "Unknown opacity type" + opacityValue.getClass().getName());
-                    }
-                }
-                int quantity = 1;
-                if(quantityExpression != null)
-                {
-                    Object quantityValue = ((LiteralExpressionImpl)quantityExpression).getValue();
-                    if(quantityValue instanceof Integer)
-                    {
-                        quantity = ((Integer) quantityValue).intValue();
-                    }
-                    else if(quantityValue instanceof Double)
-                    {
-                        quantity = ((Double) quantityValue).intValue();
-                    }
-                    else if(quantityValue instanceof String)
-                    {
-                        String quantityValueString = (String) quantityValue;
 
-                        if(quantityValueString.contains("."))
-                        {
-                            quantity = Double.valueOf(quantityValueString).intValue();
-                        }
-                        else
-                        {
-                            quantity = Integer.valueOf(quantityValueString);
-                        }
-                    }
-                }
-
-                data.setColour(ColourUtils.toColour(colourString));
-                data.setOpacity(opacity);
-                data.setQuantity(quantity);
-                data.setLabel(label);
-                colourMapList.add(data);
-            }
+            data.setColour(colourExpression);
+            data.setOpacity(opacityExpression);
+            data.setQuantity(quantityExpression);
+            data.setLabel(label);
+            colourMapList.add(data);
         }
         this.fireTableDataChanged();
     }
@@ -314,9 +198,6 @@ public class ColourMapModel extends AbstractTableModel {
      */
     public void setCellRenderer(JTable table) {
         table.getColumnModel().getColumn(COL_COLOUR).setCellRenderer(new ColourTableCellRenderer(this));
-        table.getColumnModel().getColumn(COL_COLOUR).setCellEditor(new ColourEditor(this));
-        table.getColumnModel().getColumn(COL_QUANTITY).setCellEditor(new SpinnerEditor());
-        table.getColumnModel().getColumn(COL_OPACITY).setCellEditor(new SpinnerEditor(0.0, 1.0, 0.01));
     }
 
     /**
@@ -337,8 +218,7 @@ public class ColourMapModel extends AbstractTableModel {
     public void addNewEntry() {
         ColourMapData data = new ColourMapData();
 
-        double opacity = 1.0;
-        int quantity = 0;
+        Expression quantity = ff.literal(0);
 
         // Get last entry
         if(!colourMapList.isEmpty())
@@ -346,12 +226,12 @@ public class ColourMapModel extends AbstractTableModel {
             ColourMapData lastEntry = colourMapList.get(colourMapList.size() - 1);
             if(lastEntry != null)
             {
-                quantity = lastEntry.getQuantity() + 1;
+                quantity = lastEntry.getNextQuantity();
             }
         }
 
-        data.setColour(ColourUtils.createRandomColour());
-        data.setOpacity(opacity);
+        data.setColour(ff.literal(ColourUtils.createRandomColour()));
+        data.setOpacity(ff.literal(DefaultSymbols.defaultColourOpacity()));
         data.setQuantity(quantity);
 
         colourMapList.add(data);
@@ -366,6 +246,9 @@ public class ColourMapModel extends AbstractTableModel {
 
     /**
      * Removes the selected colour map entries.
+     *
+     * @param minSelectionIndex the min selection index
+     * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
         if((maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= colourMapList.size()))
@@ -398,15 +281,26 @@ public class ColourMapModel extends AbstractTableModel {
 
         for(ColourMapData data : colourMapList)
         {
-            ColorMapEntry entry = new ColorMapEntryImpl();
-            entry.setColor(ff.literal(data.getColourString()));
-            entry.setOpacity(ff.literal(data.getOpacity()));
-            entry.setQuantity(ff.literal(Integer.valueOf(data.getQuantity()).toString()));
-            entry.setLabel(data.getLabel());
+            ColorMapEntry entry = createColourMapEntry(data);
 
             colourMap.addColorMapEntry(entry);
         }
         return colourMap;
+    }
+
+    /**
+     * Creates the colour map entry.
+     *
+     * @param data the data
+     * @return the color map entry
+     */
+    private ColorMapEntry createColourMapEntry(ColourMapData data) {
+        ColorMapEntry entry = new ColorMapEntryImpl();
+        entry.setColor(data.getColourExpression());
+        entry.setOpacity(data.getOpacity());
+        entry.setQuantity(data.getQuantity());
+        entry.setLabel(data.getLabel());
+        return entry;
     }
 
     /**
@@ -419,7 +313,7 @@ public class ColourMapModel extends AbstractTableModel {
         {
             for(ColourMapData row : colourMapList)
             {
-                Color colour = data.getColourRamp().getColour(data, row.getQuantity(), data.reverseColours());
+                Expression colour = data.getColourRamp().getColour(data, row.getQuantity(), data.reverseColours());
 
                 row.setColour(colour);
             }
@@ -428,4 +322,43 @@ public class ColourMapModel extends AbstractTableModel {
         }
     }
 
+    /**
+     * Gets the colour map entry.
+     *
+     * @param selectedRow the selected row
+     * @return the colour map entry
+     */
+    public ColorMapEntry getColourMapEntry(int selectedRow) {
+        if((selectedRow < 0) || (selectedRow >= colourMapList.size()))
+        {
+            return null;
+        }
+        ColourMapData colourMapData = colourMapList.get(selectedRow);
+
+        return createColourMapEntry(colourMapData);
+    }
+
+    /**
+     * Update colour map entry.
+     *
+     * @param selectedRow the selected row
+     * @param newData the new data
+     */
+    public void updateColourMapEntry(int selectedRow, ColourMapData newData) {
+        if((selectedRow >= 0) && (selectedRow < colourMapList.size()))
+        {
+            ColourMapData existingColourMapData = colourMapList.get(selectedRow);
+            if(existingColourMapData != null)
+            {
+                existingColourMapData.update(newData);
+            }
+        }
+
+        this.fireTableDataChanged();
+
+        if(parentObj != null)
+        {
+            parentObj.colourMapUpdated();
+        }
+    }
 }
