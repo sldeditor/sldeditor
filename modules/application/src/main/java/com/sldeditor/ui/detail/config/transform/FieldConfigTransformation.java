@@ -324,11 +324,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if(undoRedoObject != null)
         {
-            String oldValue = (String)undoRedoObject.getOldValue();
+            if(textField != null)
+            {
+                if(undoRedoObject.getOldValue() instanceof String)
+                {
+                    String oldValue = (String)undoRedoObject.getOldValue();
 
-            textField.setText(oldValue);
+                    textField.setText(oldValue);
+                }
+            }
         }
     }
 
@@ -340,11 +346,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        if(textField != null)
+        if(undoRedoObject != null)
         {
-            String newValue = (String)undoRedoObject.getNewValue();
+            if(textField != null)
+            {
+                if(undoRedoObject.getNewValue() instanceof String)
+                {
+                    String newValue = (String)undoRedoObject.getNewValue();
 
-            textField.setText(newValue);
+                    textField.setText(newValue);
+                }
+            }
         }
     }
 
@@ -386,12 +398,17 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigTransformation copy = new FieldConfigTransformation(fieldConfigBase.getPanelId(),
-                fieldConfigBase.getFieldId(),
-                fieldConfigBase.getLabel(),
-                fieldConfigBase.isValueOnly(),
-                this.editButtonText,
-                this.clearButtonText);
+        FieldConfigTransformation copy = null;
+
+        if(fieldConfigBase != null)
+        {
+            copy = new FieldConfigTransformation(fieldConfigBase.getPanelId(),
+                    fieldConfigBase.getFieldId(),
+                    fieldConfigBase.getLabel(),
+                    fieldConfigBase.isValueOnly(),
+                    this.editButtonText,
+                    this.clearButtonText);
+        }
         return copy;
     }
 
