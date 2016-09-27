@@ -60,6 +60,12 @@ import com.sldeditor.ui.tree.SLDTreeTools;
  */
 public class DefaultSymbols {
 
+    /** The Constant DEFAULT_MARKER_SYMBOL_SIZE. */
+    private static final double DEFAULT_MARKER_SYMBOL_SIZE = 10.0;
+
+    /** The Constant DEFAULT_MARKER_SYMBOL. */
+    private static final String DEFAULT_MARKER_SYMBOL = "circle";
+
     /** The Constant DEFAULT_COLOUR_OPACITY. */
     private static final float DEFAULT_COLOUR_OPACITY = 1.0f;
 
@@ -93,15 +99,15 @@ public class DefaultSymbols {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Stroke stroke = null;
-        AnchorPoint anchorPoint = styleFactory.anchorPoint(ff.literal(0.0), ff.literal(0.0));
-        Displacement displacement = styleFactory.createDisplacement(ff.literal(0.0), ff.literal(0.0));
+        AnchorPoint anchorPoint = null;
+        Displacement displacement = null;
         Fill fill = styleFactory.createFill(ff.literal(DEFAULT_MARKER_COLOUR));
-        GraphicalSymbol symbol = styleFactory.mark(ff.literal("circle"), fill, stroke);
+        GraphicalSymbol symbol = styleFactory.mark(ff.literal(DEFAULT_MARKER_SYMBOL), fill, stroke);
 
         symbolList.add(symbol);
         Graphic graphic = styleFactory.graphic(symbolList,
-                ff.literal(1.0),
-                ff.literal(10.0), 
+                ff.literal(DEFAULT_COLOUR_OPACITY),
+                ff.literal(DEFAULT_MARKER_SYMBOL_SIZE), 
                 ff.literal(0.0),
                 anchorPoint,
                 displacement);
