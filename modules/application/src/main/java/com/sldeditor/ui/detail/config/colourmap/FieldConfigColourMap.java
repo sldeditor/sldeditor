@@ -41,6 +41,7 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -76,17 +77,16 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /** The colour ramp configuration panel. */
     private ColourRampConfigPanel colourRampConfig = null;
 
+    /** The colour map entry panel. */
     private ColourMapEntryPanel colourMapEntryPanel;
 
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
+     * @param commonData the common data
      */
-    public FieldConfigColourMap(Class<?> panelId, FieldId id, String label) {
-        super(panelId, id, label, true);
+    public FieldConfigColourMap(FieldConfigCommonData commonData) {
+        super(commonData);
 
         model = new ColourMapModel(this);
     }
@@ -392,9 +392,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigColourMap(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel());
+            copy = new FieldConfigColourMap(fieldConfigBase.getCommonData());
         }
         return copy;
     }

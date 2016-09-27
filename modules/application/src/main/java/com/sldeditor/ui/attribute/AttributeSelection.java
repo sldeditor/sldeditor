@@ -24,9 +24,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -51,6 +49,7 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
+import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 
 /**
  * A panel to allow the user to specify whether field's contents is either:
@@ -72,9 +71,6 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
 
     /** The selected listeners. */
     private List<AttributeButtonSelectionInterface> selectedListeners = new ArrayList<AttributeButtonSelectionInterface>();
-
-    /** The ui map. */
-    private Map<String, JPanel> uiMap = new LinkedHashMap<String, JPanel>();
 
     /** The outer panel. */
     private JPanel outerPanel;
@@ -114,14 +110,35 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param expectedDataType the expected data type
      * @param field the field
+     * @param allowedExpressionTypes the allowed expression types
      */
-    public AttributeSelection(Class<?> expectedDataType, FieldConfigBase field) {
+    private AttributeSelection(Class<?> expectedDataType,
+            FieldConfigBase field, 
+            List<ExpressionTypeEnum> allowedExpressionTypes) {
 
         this.field = field;
-        DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         setLayout(new BorderLayout(0, 0));
         setPreferredSize(new Dimension(100, BasePanel.WIDGET_HEIGHT));
-        createUI(expectedDataType);
+
+        List<String> allowedList = new ArrayList<String>();
+        if(allowedExpressionTypes.contains(ExpressionTypeEnum.E_VALUE))
+        {
+            allowedList.add(ValueSubPanel.getPanelName());
+        }
+
+        if(allowedExpressionTypes.contains(ExpressionTypeEnum.E_ATTRIBUTE))
+        {
+            allowedList.add(DataSourceAttributePanel.getPanelName());
+        }
+
+        if(allowedExpressionTypes.contains(ExpressionTypeEnum.E_EXPRESSION))
+        {
+            allowedList.add(ExpressionSubPanel.getPanelName());
+        }
+
+        createUI(expectedDataType, allowedList);
+
+        DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         if(dataSource != null)
         {
             dataSource.addListener(this);
@@ -135,16 +152,20 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      */
     public void addListener(AttributeButtonSelectionInterface listener)
     {
-        selectedListeners.add(listener);
+        if(!selectedListeners.contains(listener))
+        {
+            selectedListeners.add(listener);
+        }
     }
 
     /**
      * Creates the ui.
      *
      * @param expectedDataType the expected data type
+     * @param allowedList the allowed list
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void createUI(Class<?> expectedDataType) {
+    private void createUI(Class<?> expectedDataType, List<String> allowedList) {
         final UndoActionInterface thisObj = this;
 
         outerPanel = new JPanel();
@@ -157,12 +178,8 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
 
         dataSourceAttributePanel = createDataSourceAttributePanel(expectedDataType);
 
-        uiMap.put(ValueSubPanel.getPanelName(), valuePanel);
-        uiMap.put(DataSourceAttributePanel.getPanelName(), dataSourceAttributePanel);
-        uiMap.put(ExpressionSubPanel.getPanelName(), expressionPanel);
-
         attributeChooserComboBox = new JComboBox<String>();
-        attributeChooserComboBox.setModel(new DefaultComboBoxModel(uiMap.keySet().toArray()));
+        attributeChooserComboBox.setModel(new DefaultComboBoxModel(allowedList.toArray()));
         attributeChooserComboBox.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -459,4 +476,28 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         // Does nothing
     }
 
+    /**
+     * Creates the all attributes, value, attribute and expression.
+     *
+     * @param expectedDataType the expected data type
+     * @param field the field
+     * @param rasterSymbol the raster symbol
+     * @return the attribute selection object
+     */
+    public static AttributeSelection createAttributes(Class<?> expectedDataType,
+            FieldConfigBase field,
+            boolean rasterSymbol)
+    {
+        List<ExpressionTypeEnum> allowedList = new ArrayList<ExpressionTypeEnum>();
+        allowedList.add(ExpressionTypeEnum.E_VALUE);
+        if(!rasterSymbol)
+        {
+            allowedList.add(ExpressionTypeEnum.E_ATTRIBUTE);
+        }
+        allowedList.add(ExpressionTypeEnum.E_EXPRESSION);
+
+        AttributeSelection obj = new AttributeSelection(expectedDataType, field, allowedList);
+
+        return obj;
+    }
 }

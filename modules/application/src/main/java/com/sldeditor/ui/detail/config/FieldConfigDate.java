@@ -84,13 +84,10 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     /**
      * Instantiates a new field config slider.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigDate(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigDate(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -140,7 +137,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
     }
 
@@ -396,10 +393,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
         FieldConfigDate copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigDate(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigDate(getCommonData());
         }
         return copy;
     }

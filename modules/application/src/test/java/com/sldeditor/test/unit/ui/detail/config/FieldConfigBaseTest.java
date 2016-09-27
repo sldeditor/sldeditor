@@ -53,6 +53,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
@@ -72,9 +73,8 @@ public class FieldConfigBaseTest {
     class TestFieldConfigBase extends FieldConfigBase
     {
 
-        public TestFieldConfigBase(Class<?> panelId, FieldId fieldId, String label,
-                boolean valueOnly) {
-            super(panelId, fieldId, label, valueOnly);
+        public TestFieldConfigBase(FieldConfigCommonData commonData) {
+            super(commonData);
         }
 
         @Override
@@ -122,10 +122,7 @@ public class FieldConfigBaseTest {
 
             if(fieldConfigBase != null)
             {
-                copy = new FieldConfigString(fieldConfigBase.getPanelId(),
-                        fieldConfigBase.getFieldId(),
-                        fieldConfigBase.getLabel(),
-                        fieldConfigBase.isValueOnly(),
+                copy = new FieldConfigString(fieldConfigBase.getCommonData(),
                         "");
             }
             return copy;
@@ -247,7 +244,7 @@ public class FieldConfigBaseTest {
     public void testGetFieldId() {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, "test label", valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, "test label", valueOnly));
 
         assertEquals(expectedFieldId, field.getFieldId());
     }
@@ -260,7 +257,7 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertTrue(expectedLabel.compareTo(field.getLabel()) == 0);
     }
@@ -273,12 +270,12 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertEquals(valueOnly, field.isValueOnly());
 
         valueOnly = false;
-        field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertEquals(valueOnly, field.isValueOnly());
     }
@@ -291,7 +288,7 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertNull(field.getPanel());
     }
@@ -305,7 +302,7 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertNull(field.getCustomPanels());
 
@@ -325,9 +322,9 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
-        AttributeSelection attributeSelectionPanel = new AttributeSelection(String.class, field);
+        AttributeSelection attributeSelectionPanel = AttributeSelection.createAttributes(String.class, field, false);
         attributeSelectionPanel.setEnabled(true);
         field.testAttributeSelectionPanel(attributeSelectionPanel);
         field.testSetValueFieldState();
@@ -359,7 +356,7 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -384,7 +381,7 @@ public class FieldConfigBaseTest {
     public void testValueUpdated() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -402,7 +399,7 @@ public class FieldConfigBaseTest {
     public void testAttributeUpdated() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -427,7 +424,7 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, valueOnly);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
 
         int expectedColumn = 42;
 
@@ -442,7 +439,7 @@ public class FieldConfigBaseTest {
     public void testExpressionUpdated() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -467,7 +464,7 @@ public class FieldConfigBaseTest {
     public void testFunctionUpdated() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -495,9 +492,9 @@ public class FieldConfigBaseTest {
     public void testPopulateExpressionExpression() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
-        AttributeSelection attributeSelectionPanel = new AttributeSelection(String.class, field);
+        AttributeSelection attributeSelectionPanel = AttributeSelection.createAttributes(String.class, field, false);
         field.testAttributeSelectionPanel(attributeSelectionPanel);
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
@@ -543,7 +540,7 @@ public class FieldConfigBaseTest {
     public void testIsASingleValue() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         assertTrue(field.isASingleValue());
     }
@@ -556,7 +553,7 @@ public class FieldConfigBaseTest {
     public void testFireExpressionUpdated() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         TestExpressionUpdateInterface testExpressionUpdate = new TestExpressionUpdateInterface();
 
@@ -574,7 +571,7 @@ public class FieldConfigBaseTest {
     public void testPopulateFieldString() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         field.populateField("");
         field.setTestValue(expectedFieldId, "");
@@ -622,7 +619,7 @@ public class FieldConfigBaseTest {
     public void testDuplicate() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
         field.setIndentColumn(42);
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
@@ -631,35 +628,6 @@ public class FieldConfigBaseTest {
         FieldConfigString copy = (FieldConfigString) field.duplicate();
         assertNotNull(copy);
         assertEquals(field.getIndentColumn(), copy.getIndentColumn());
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#addFunction(com.sldeditor.ui.detail.config.FieldConfigBase)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getNoOfFunctionFields()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getFunctionFields()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getAllFunctionFields()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#removeFunctionFields()}.
-     */
-    @Test
-    public void testAddFunction() {
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
-
-        field.addFunction(null);
-        assertEquals(0, field.getNoOfFunctionFields());
-        assertEquals(0, field.getAllFunctionFields().size());
-
-        FieldConfigString functionField = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", false, "button text");
-
-        field.addFunction(functionField);
-        assertEquals(1, field.getNoOfFunctionFields());
-        assertEquals(functionField, field.getFunctionFields().get(0));
-        assertEquals(1, field.getAllFunctionFields().size());
-
-        field.removeFunctionFields();
-        assertEquals(0, field.getNoOfFunctionFields());
-        assertEquals(0, field.getAllFunctionFields().size());
     }
 
     /**
@@ -672,7 +640,7 @@ public class FieldConfigBaseTest {
 
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         field.setGroupComponents(groupConfigList);
         field.removeFunctionFields();
@@ -686,7 +654,7 @@ public class FieldConfigBaseTest {
     public void testSetFunctionParameterType() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         Class<Double> expectedClass = Double.class;
         field.setFunctionParameterType(expectedClass);
@@ -700,7 +668,7 @@ public class FieldConfigBaseTest {
     public void testAddUI() {
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(String.class, expectedFieldId, expectedLabel, false);
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
 
         field.addUI(null, 10, 10, 10);
 

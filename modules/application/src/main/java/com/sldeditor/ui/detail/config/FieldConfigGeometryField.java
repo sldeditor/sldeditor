@@ -76,14 +76,12 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
 
     /**
-     * Default constructor
+     * Default constructor.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
+     * @param commonData the common data
      */
-    public FieldConfigGeometryField(Class<?> panelId, FieldId id, String label) {
-        super(panelId, id, label, true);
+    public FieldConfigGeometryField(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -340,9 +338,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigGeometryField(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel());
+            copy = new FieldConfigGeometryField(fieldConfigBase.getCommonData());
         }
         return copy;
     }

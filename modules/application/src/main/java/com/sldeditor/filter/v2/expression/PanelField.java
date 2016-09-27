@@ -32,6 +32,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
@@ -68,55 +69,56 @@ public class PanelField {
 
         String valueText = Localisation.getString(classType, valueTextLocalisation);
         FieldId fieldId = new FieldId(FieldIdEnum.FUNCTION);
-
+        FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText, true);
+        
         if(nodeType == Geometry.class)
         {
-            fieldConfig = new FieldConfigGeometry(null, fieldId, valueText, true, null);
+            fieldConfig = new FieldConfigGeometry(commonData, null);
         }
         else if(nodeType == Date.class)
         {
-            fieldConfig = new FieldConfigDate(null, fieldId, valueText, true);
+            fieldConfig = new FieldConfigDate(commonData);
         }
         else if(nodeType == ReferencedEnvelope.class)
         {
-            fieldConfig = new FieldConfigBoundingBox(null, fieldId, "", true);
+            fieldConfig = new FieldConfigBoundingBox(commonData);
         }
         else if((nodeType == String.class) ||
                 (nodeType == Object.class))
         {
-            fieldConfig = new FieldConfigString(null, fieldId, valueText, true, null);
+            fieldConfig = new FieldConfigString(commonData, null);
         }
         else if(nodeType == Boolean.class)
         {
-            fieldConfig = new FieldConfigBoolean(null, fieldId, valueText, true);
+            fieldConfig = new FieldConfigBoolean(commonData);
         }
         else if(nodeType == Integer.class)
         {
-            fieldConfig = new FieldConfigInteger(null, fieldId, valueText, true);
+            fieldConfig = new FieldConfigInteger(commonData);
         }
         else if(nodeType == Double.class)
         {
-            fieldConfig = new FieldConfigDouble(null, fieldId, valueText, true);
+            fieldConfig = new FieldConfigDouble(commonData);
         }
         else if(nodeType == Number.class)
         {
             Class<?> filterType = TypeManager.getInstance().getDataType();
             if((filterType == Float.class) || (filterType == Double.class))
             {
-                fieldConfig = new FieldConfigDouble(null, fieldId, valueText, true);
+                fieldConfig = new FieldConfigDouble(commonData);
             }
             else
             {
-                fieldConfig = new FieldConfigInteger(null, fieldId, valueText, true);
+                fieldConfig = new FieldConfigInteger(commonData);
             }
         }
         else if(nodeType == Unit.class)
         {
-            fieldConfig = new FieldConfigMapUnits(null, fieldId, null, true);
+            fieldConfig = new FieldConfigMapUnits(commonData);
         }
         else if(nodeType == StringBuilder.class)
         {
-            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(null, fieldId, valueText, true);
+            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(commonData);
 
             List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
             SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);

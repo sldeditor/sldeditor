@@ -30,6 +30,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.vividsolutions.jts.geom.Geometry;
@@ -50,7 +51,7 @@ public class FieldConfigGeometryTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -69,7 +70,7 @@ public class FieldConfigGeometryTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigGeometry field2 = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        FieldConfigGeometry field2 = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
 
         // Text field will not have been created
         expectedValue = true;
@@ -94,7 +95,7 @@ public class FieldConfigGeometryTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -114,7 +115,7 @@ public class FieldConfigGeometryTest {
      */
     @Test
     public void testGenerateExpression() {
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", false, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true), "button text");
 
         field.createUI();
         field.setTestValue(null, (String)null);
@@ -147,7 +148,7 @@ public class FieldConfigGeometryTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
 
         String expectedDefaultValue = "default value";
         field.revertToDefaultValue();
@@ -170,8 +171,8 @@ public class FieldConfigGeometryTest {
 
         class TestFieldConfigGeometry extends FieldConfigGeometry
         {
-            public TestFieldConfigGeometry(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText) {
-                super(panelId, id, label, valueOnly, buttonText);
+            public TestFieldConfigGeometry(FieldConfigCommonData commonData, String buttonText) {
+                super(commonData, buttonText);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -180,7 +181,7 @@ public class FieldConfigGeometryTest {
             }
         }
 
-        TestFieldConfigGeometry field = new TestFieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        TestFieldConfigGeometry field = new TestFieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
         FieldConfigGeometry copy = (TestFieldConfigGeometry) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -196,7 +197,7 @@ public class FieldConfigGeometryTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
         field.attributeSelection(null);
 
         // Does nothing
@@ -208,7 +209,7 @@ public class FieldConfigGeometryTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", false, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", false), "button text");
         field.undoAction(null);
         field.redoAction(null);
 
@@ -257,7 +258,7 @@ public class FieldConfigGeometryTest {
     @Test
     public void testAddButtonPressedListener() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly, "button text");
+        FieldConfigGeometry field = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly), "button text");
 
         field.addButtonPressedListener(null);
     }

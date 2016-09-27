@@ -77,13 +77,10 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     /**
      * Instantiates a new field config enum.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigEnum(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigEnum(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -137,7 +134,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
 
         if(dataList != null)
@@ -472,10 +469,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigEnum(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigEnum(fieldConfigBase.getCommonData());
         }
         return copy;
     }

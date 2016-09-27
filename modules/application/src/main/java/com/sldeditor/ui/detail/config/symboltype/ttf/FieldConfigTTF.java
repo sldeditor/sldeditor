@@ -45,6 +45,7 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
@@ -87,13 +88,10 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigTTF(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigTTF(FieldConfigCommonData commonData) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
     }
 
     /**
@@ -512,10 +510,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigTTF(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigTTF(fieldConfigBase.getCommonData());
         }
         return copy;
     }

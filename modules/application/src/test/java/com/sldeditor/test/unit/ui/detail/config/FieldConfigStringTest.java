@@ -30,6 +30,7 @@ import org.opengis.filter.expression.Expression;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldId;
 
@@ -50,7 +51,7 @@ public class FieldConfigStringTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -69,7 +70,7 @@ public class FieldConfigStringTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigString field2 = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field2 = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         // Text field will not have been created
         expectedValue = true;
@@ -94,7 +95,7 @@ public class FieldConfigStringTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -114,9 +115,8 @@ public class FieldConfigStringTest {
         class TestFieldConfigString extends FieldConfigString
         {
 
-            public TestFieldConfigString(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly, String buttonText) {
-                super(panelId, id, label, valueOnly, buttonText);
+            public TestFieldConfigString(FieldConfigCommonData commonData, String buttonText) {
+                super(commonData, buttonText);
             }
 
             public Expression callGenerateExpression()
@@ -125,7 +125,7 @@ public class FieldConfigStringTest {
             }
         }
 
-        TestFieldConfigString field = new TestFieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        TestFieldConfigString field = new TestFieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -149,7 +149,7 @@ public class FieldConfigStringTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         String expectedDefaultValue = "default value";
         field.setDefaultValue(expectedDefaultValue);
@@ -167,7 +167,7 @@ public class FieldConfigStringTest {
     @Test
     public void testSetTestValueFieldIdString() {
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         String expectedTestValue = "test value";
         field.setTestValue(new FieldId(FieldIdEnum.ANCHOR_POINT_V), expectedTestValue);
@@ -188,9 +188,8 @@ public class FieldConfigStringTest {
         class TestFieldConfigString extends FieldConfigString
         {
 
-            public TestFieldConfigString(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly, String buttonText) {
-                super(panelId, id, label, valueOnly, buttonText);
+            public TestFieldConfigString(FieldConfigCommonData commonData, String buttonText) {
+                super(commonData, buttonText);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -199,7 +198,7 @@ public class FieldConfigStringTest {
             }
         }
 
-        TestFieldConfigString field = new TestFieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        TestFieldConfigString field = new TestFieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
         FieldConfigString copy = (FieldConfigString) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -215,7 +214,7 @@ public class FieldConfigStringTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         field.attributeSelection("field");
         // Does nothing
@@ -228,7 +227,7 @@ public class FieldConfigStringTest {
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
 
         field.undoAction(null);
         field.redoAction(null);
@@ -258,7 +257,7 @@ public class FieldConfigStringTest {
     @Test
     public void testAddButtonPressedListener() {
         boolean valueOnly = true;
-        FieldConfigString field = new FieldConfigString(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "button text");
+        FieldConfigString field = new FieldConfigString(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "button text");
         field.addButtonPressedListener(null);
     }
 

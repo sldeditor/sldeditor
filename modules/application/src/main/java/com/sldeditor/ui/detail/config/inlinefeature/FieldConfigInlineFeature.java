@@ -32,6 +32,7 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -68,11 +69,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
+     * @param commonData the common data
      */
-    public FieldConfigInlineFeature(Class<?> panelId, FieldId id) {
-        super(panelId, id, "", true);
+    public FieldConfigInlineFeature(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -339,8 +339,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
         FieldConfigInlineFeature copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigInlineFeature(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId());
+            copy = new FieldConfigInlineFeature(fieldConfigBase.getCommonData());
         }
         return copy;
     }

@@ -173,7 +173,7 @@ public class ColourRamp {
      * Gets the colour.
      *
      * @param data the data
-     * @param value the value
+     * @param quantityExpression the quantity expression
      * @param reverseColours the reverse colours
      * @return the colour
      */

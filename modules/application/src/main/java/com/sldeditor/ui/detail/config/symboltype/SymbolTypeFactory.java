@@ -38,6 +38,7 @@ import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
@@ -105,11 +106,11 @@ public class SymbolTypeFactory {
     {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        externalImageField = new FieldConfigFilename(panelId, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), "", true);
-        ttfField = new FieldConfigTTF(panelId, new FieldId(FieldIdEnum.TTF_SYMBOL), "", true);
-        windBarbs = new FieldConfigWindBarbs(panelId, new FieldId(FieldIdEnum.WINDBARBS), "", true);
-        wktShape = new FieldConfigWKT(panelId, new FieldId(FieldIdEnum.WKT), "", true);
+        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), "", true));
+        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.TTF_SYMBOL), "", true));
+        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.WINDBARBS), "", true));
+        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.WKT), "", true));
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);

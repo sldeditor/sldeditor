@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
 
@@ -54,7 +55,7 @@ public class FieldConfigFontPreviewTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFontPreview field = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -73,7 +74,7 @@ public class FieldConfigFontPreviewTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigFontPreview field2 = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFontPreview field2 = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -98,7 +99,7 @@ public class FieldConfigFontPreviewTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFontPreview field = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -118,7 +119,7 @@ public class FieldConfigFontPreviewTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFontPreview field = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
@@ -161,7 +162,7 @@ public class FieldConfigFontPreviewTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFontPreview field = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         String expectedDefaultValue = fontFamilies[2];
         field.revertToDefaultValue();
@@ -186,9 +187,8 @@ public class FieldConfigFontPreviewTest {
         class TestFieldConfigFontPreview extends FieldConfigFontPreview
         {
 
-            public TestFieldConfigFontPreview(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly) {
-                super(panelId, id, label, valueOnly);
+            public TestFieldConfigFontPreview(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -197,7 +197,7 @@ public class FieldConfigFontPreviewTest {
             }
         }
 
-        TestFieldConfigFontPreview field = new TestFieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        TestFieldConfigFontPreview field = new TestFieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
         FieldConfigFontPreview copy = (FieldConfigFontPreview) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -213,7 +213,7 @@ public class FieldConfigFontPreviewTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFontPreview field = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         field.attributeSelection("field");
         // Does nothing
@@ -225,7 +225,7 @@ public class FieldConfigFontPreviewTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigFontPreview field = new FieldConfigFontPreview(String.class, new FieldId(FieldIdEnum.NAME), "test label", true);
+        FieldConfigFontPreview field = new FieldConfigFontPreview(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", false));
         field.undoAction(null);
         field.redoAction(null);
         

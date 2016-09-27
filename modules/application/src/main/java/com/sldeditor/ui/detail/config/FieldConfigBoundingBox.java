@@ -80,13 +80,10 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /**
      * Instantiates a new field config boolean.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigBoundingBox(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigBoundingBox(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -125,7 +122,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Boolean.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Boolean.class, this, isRasterSymbol()));
         }
     }
 
@@ -449,10 +446,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         FieldConfigBoundingBox copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigBoundingBox(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigBoundingBox(fieldConfigBase.getCommonData());
         }
         return copy;
     }

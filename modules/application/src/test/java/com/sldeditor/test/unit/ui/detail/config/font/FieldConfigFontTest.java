@@ -34,6 +34,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 
@@ -56,7 +57,7 @@ public class FieldConfigFontTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -75,7 +76,7 @@ public class FieldConfigFontTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigFont field2 = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field2 = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -100,7 +101,7 @@ public class FieldConfigFontTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -121,7 +122,7 @@ public class FieldConfigFontTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         field.setTestValue(null, (String)null);
         field.populateField((String)null);
@@ -153,7 +154,7 @@ public class FieldConfigFontTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         String expectedDefaultValue = fontFamilies[2];
         field.revertToDefaultValue();
@@ -177,9 +178,8 @@ public class FieldConfigFontTest {
         class TestFieldConfigFont extends FieldConfigFont
         {
 
-            public TestFieldConfigFont(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly) {
-                super(panelId, id, label, valueOnly);
+            public TestFieldConfigFont(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -188,7 +188,7 @@ public class FieldConfigFontTest {
             }
         }
 
-        TestFieldConfigFont field = new TestFieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        TestFieldConfigFont field = new TestFieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
         FieldConfigFont copy = (FieldConfigFont) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -204,7 +204,7 @@ public class FieldConfigFontTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         field.attributeSelection("field");
         // Does nothing
@@ -217,7 +217,7 @@ public class FieldConfigFontTest {
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
 
         String expectedDefaultValue1 = fontFamilies[0];
         field.createUI();

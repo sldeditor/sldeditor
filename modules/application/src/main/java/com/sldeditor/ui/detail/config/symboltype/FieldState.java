@@ -34,6 +34,7 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -60,19 +61,13 @@ public abstract class FieldState extends FieldConfigBase {
     /**
      * Instantiates a new field state.
      *
-     * @param panelId the panel id
-     * @param fieldId the field id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param resourceFile the resource file
      */
-    protected FieldState(Class<?> panelId, 
-            FieldId fieldId, 
-            String label, 
-            boolean valueOnly,
+    protected FieldState(FieldConfigCommonData commonData,
             String resourceFile)
     {
-        super(panelId, fieldId, label, valueOnly);
+        super(commonData);
         this.resourceFile = resourceFile;
     }
 

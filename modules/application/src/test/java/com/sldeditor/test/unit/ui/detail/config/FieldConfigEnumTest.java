@@ -35,6 +35,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
@@ -56,7 +57,7 @@ public class FieldConfigEnumTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -75,7 +76,7 @@ public class FieldConfigEnumTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigEnum field2 = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field2 = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -100,7 +101,7 @@ public class FieldConfigEnumTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -140,7 +141,7 @@ public class FieldConfigEnumTest {
         configList.add(s2);
 
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
         field.addConfig(null);
@@ -171,7 +172,7 @@ public class FieldConfigEnumTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
 
         String expectedDefaultValue = "key6";
         field.revertToDefaultValue();
@@ -210,8 +211,8 @@ public class FieldConfigEnumTest {
 
         class TestFieldConfigEnum extends FieldConfigEnum
         {
-            public TestFieldConfigEnum(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-                super(panelId, id, label, valueOnly);
+            public TestFieldConfigEnum(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -220,7 +221,7 @@ public class FieldConfigEnumTest {
             }
         }
 
-        TestFieldConfigEnum field = new TestFieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        TestFieldConfigEnum field = new TestFieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
         FieldConfigEnum copy = (FieldConfigEnum) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -236,7 +237,7 @@ public class FieldConfigEnumTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
         field.attributeSelection(null);
 
         field.createUI();
@@ -263,7 +264,7 @@ public class FieldConfigEnumTest {
         configList.add(s1);
 
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
 
         field.addConfig(configList);
 
@@ -302,7 +303,7 @@ public class FieldConfigEnumTest {
         configList.add(s2);
 
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
         field.addConfig(null);
         assertNull(field.getStringValue());
 

@@ -36,6 +36,7 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.rendertransformation.RenderTransformationDialog;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -75,15 +76,15 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param editButtonText the edit button text
      * @param clearButtonText the clear button text
      */
-    public FieldConfigTransformation(Class<?> panelId, FieldId id, String label, boolean valueOnly, String editButtonText, String clearButtonText) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigTransformation(FieldConfigCommonData commonData,
+            String editButtonText,
+            String clearButtonText)
+    {
+        super(commonData);
 
         this.editButtonText = editButtonText;
         this.clearButtonText = clearButtonText;
@@ -402,10 +403,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigTransformation(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly(),
+            copy = new FieldConfigTransformation(fieldConfigBase.getCommonData(),
                     this.editButtonText,
                     this.clearButtonText);
         }

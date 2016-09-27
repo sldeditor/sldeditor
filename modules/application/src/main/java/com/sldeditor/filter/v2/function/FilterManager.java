@@ -72,6 +72,7 @@ import com.sldeditor.filter.v2.function.temporal.TEquals;
 import com.sldeditor.filter.v2.function.temporal.TOverlaps;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
@@ -340,65 +341,66 @@ public class FilterManager implements FilterNameInterface {
                 funcPrototypeStringBuilder.append(type.getSimpleName());
 
                 FieldConfigBase fieldConfig = null;
+                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly);
                 if(type == java.lang.Number.class)
                 {
-                    fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigDouble(commonData);
                 }
                 else if(type == Double.class)
                 {
-                    fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigDouble(commonData);
                 }
                 else if(type == Float.class)
                 {
-                    fieldConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigDouble(commonData);
                 }
                 else if(type == Integer.class)
                 {
-                    fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigInteger(commonData);
                 }
                 else if(type == Long.class)
                 {
-                    fieldConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigInteger(commonData);
                 }
                 else if(type == String.class)
                 {
-                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigString(commonData, null);
                 }
                 else if(type == Object.class)
                 {
-                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigString(commonData, null);
                 }
                 else if(type == Boolean.class)
                 {
-                    fieldConfig = new FieldConfigBoolean(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigBoolean(commonData);
                 }
                 else if(type == Geometry.class)
                 {
-                    fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigGeometry(commonData, null);
                 }
                 else if(type == LineString.class)
                 {
-                    fieldConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigGeometry(commonData, null);
                 }
                 else if(type == Date.class)
                 {
-                    fieldConfig = new FieldConfigDate(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigDate(commonData);
                 }
                 else if(type == Class.class)
                 {
-                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigString(commonData, null);
                 }
                 else if(type == Classifier.class)
                 {
-                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigString(commonData, null);
                 }
                 else if(type == Unit.class)
                 {
-                    fieldConfig = new FieldConfigMapUnits(panelId, id, label, valueOnly);
+                    fieldConfig = new FieldConfigMapUnits(commonData);
                 }
                 else if(type == Comparable.class)
                 {
-                    fieldConfig = new FieldConfigString(panelId, id, label, valueOnly, null);
+                    fieldConfig = new FieldConfigString(commonData, null);
                 }
                 else
                 {

@@ -39,6 +39,7 @@ import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
@@ -85,19 +86,16 @@ public class FieldConfigMarker extends FieldState {
     /**
      * Constructor.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param fillFieldConfig the fill field config
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigMarker(Class<?> panelId, FieldId id, String label, boolean valueOnly,
+    public FieldConfigMarker(FieldConfigCommonData commonData,
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldId symbolSelectionField) {
-        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
 
         this.fillFieldConfig = fillFieldConfig;
         this.strokeFieldConfig = strokeFieldConfig;
@@ -569,10 +567,7 @@ public class FieldConfigMarker extends FieldState {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigMarker(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly(),
+            copy = new FieldConfigMarker(fieldConfigBase.getCommonData(),
                     this.fillFieldConfig,
                     this.strokeFieldConfig,
                     this.symbolSelectionField);

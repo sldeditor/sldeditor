@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
@@ -64,7 +65,7 @@ public class FieldConfigTransformationTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -83,7 +84,7 @@ public class FieldConfigTransformationTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigTransformation field2 = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field2 = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         // Text field will not have been created
         expectedValue = true;
@@ -108,7 +109,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -128,9 +129,8 @@ public class FieldConfigTransformationTest {
 
         class TestFieldConfigTransformation extends FieldConfigTransformation
         {
-            public TestFieldConfigTransformation(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly, String editButtonText, String clearButtonText) {
-                super(panelId, id, label, valueOnly, editButtonText, clearButtonText);
+            public TestFieldConfigTransformation(FieldConfigCommonData commonData, String editButtonText, String clearButtonText) {
+                super(commonData, editButtonText, clearButtonText);
             }
 
             public Expression callGenerateExpression()
@@ -139,7 +139,7 @@ public class FieldConfigTransformationTest {
             }
         }
 
-        TestFieldConfigTransformation field = new TestFieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -220,7 +220,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         String expectedDefaultValue = "default value";
         field.setDefaultValue(expectedDefaultValue);
@@ -252,7 +252,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testSetTestValueFieldIdString() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         String expectedTestValue = "test value";
         field.setTestValue(new FieldId(FieldIdEnum.ANCHOR_POINT_V), expectedTestValue);
@@ -273,9 +273,8 @@ public class FieldConfigTransformationTest {
         class TestFieldConfigTransformation extends FieldConfigTransformation
         {
 
-            public TestFieldConfigTransformation(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly, String editButtonText, String clearButtonText) {
-                super(panelId, id, label, valueOnly, editButtonText, clearButtonText);
+            public TestFieldConfigTransformation(FieldConfigCommonData commonData, String editButtonText, String clearButtonText) {
+                super(commonData, editButtonText, clearButtonText);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -284,7 +283,7 @@ public class FieldConfigTransformationTest {
             }
         }
 
-        TestFieldConfigTransformation field = new TestFieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
         FieldConfigTransformation copy = (FieldConfigTransformation) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -300,7 +299,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         field.attributeSelection("field");
         // Does nothing
@@ -313,7 +312,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly, "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
 
         field.undoAction(null);
         field.redoAction(null);

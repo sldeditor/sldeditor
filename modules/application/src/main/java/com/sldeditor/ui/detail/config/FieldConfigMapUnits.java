@@ -32,18 +32,14 @@ public class FieldConfigMapUnits extends FieldConfigEnum {
     /**
      * Instantiates a new field config map units.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigMapUnits(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigMapUnits(FieldConfigCommonData commonData) {
+        super(commonData);
 
         ReadMapUnits readMapUnits = new ReadMapUnits();
 
-        readMapUnits.read(panelId, filename, this);
-
+        readMapUnits.read(commonData.getPanelId(), filename, this);
     }
 
 }

@@ -31,6 +31,7 @@ import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldId;
@@ -69,7 +70,7 @@ public class GraphicPanelFieldManagerTest {
 
         // Now try with a field
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        FieldConfigString stringField = new FieldConfigString(String.class, expectedFieldId, "test label", false, "button text");
+        FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
 
         mgr.addField(null);
         mgr.addField(stringField);
@@ -92,7 +93,7 @@ public class GraphicPanelFieldManagerTest {
         mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        FieldConfigString stringField = new FieldConfigString(String.class, expectedFieldId, "test label", false, "button text");
+        FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr.addField(stringField);
         assertTrue(mgr.getFields(FieldConfigBoolean.class).isEmpty());
 
@@ -110,7 +111,7 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr1 = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        FieldConfigString stringField = new FieldConfigString(String.class, expectedFieldId, "test label", false, "button text");
+        FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr1.addField(stringField);
         assertTrue(mgr1.getFields(FieldConfigBoolean.class).isEmpty());
 
@@ -121,7 +122,7 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr2 = new GraphicPanelFieldManager(expectedPanelId2);
 
         FieldId expectedFieldId2 = new FieldId(FieldIdEnum.ANGLE);
-        FieldConfigDouble doubleField = new FieldConfigDouble(Double.class, expectedFieldId2, "test label", false);
+        FieldConfigDouble doubleField = new FieldConfigDouble(new FieldConfigCommonData(Double.class, expectedFieldId2, "test label", false));
         mgr2.addField(doubleField);
         assertEquals(1, mgr2.getFields(FieldConfigDouble.class).size());
 
@@ -145,7 +146,7 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        FieldConfigString stringField = new FieldConfigString(String.class, expectedFieldId, "test label", false, "button text");
+        FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr.addField(stringField);
 
         MultiOptionGroup multiOption = new MultiOptionGroup();
@@ -170,7 +171,7 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        FieldConfigString stringField = new FieldConfigString(String.class, expectedFieldId, "test label", false, "button text");
+        FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr.addField(stringField);
 
         GroupConfig multiOption = new GroupConfig();
@@ -194,7 +195,7 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
-        FieldConfigString stringField = new FieldConfigString(String.class, expectedFieldId, "test label", false, "button text");
+        FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
 
         mgr.removeField(null);
         // Does n't exists yet

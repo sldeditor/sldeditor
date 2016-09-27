@@ -37,6 +37,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigString;
@@ -87,7 +88,7 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
      * Instantiates a new colour map entry panel.
      *
      * @param panelId the panel id
-     * @param model the model
+     * @param parent the parent
      */
     public ColourMapEntryPanel(Class<?> panelId, ColourMapEntryUpdateInterface parent)
     {
@@ -106,22 +107,22 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
         setBorder(title);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        label = new FieldConfigString(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_LABEL), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.label"), true, null);
+        label = new FieldConfigString(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_LABEL), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.label"), true), null);
         label.createUI();
         label.addDataChangedListener(this);
         add(label.getPanel());
 
-        colour = new FieldConfigColour(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_COLOUR), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.colour"), false);
+        colour = new FieldConfigColour(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_COLOUR), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.colour"), false));
         colour.createUI();
         colour.addDataChangedListener(this);
         add(colour.getPanel());
 
-        opacity = new FieldConfigSlider(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_OPACITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.opacity"), false);
+        opacity = new FieldConfigSlider(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_OPACITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.opacity"), false));
         opacity.createUI();
         opacity.addDataChangedListener(this);
         add(opacity.getPanel());
 
-        quantity = new FieldConfigDouble(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_QUANTITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.quantity"), false);
+        quantity = new FieldConfigDouble(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_QUANTITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.quantity"), false));
         quantity.createUI();
         quantity.addDataChangedListener(this);
         add(quantity.getPanel());

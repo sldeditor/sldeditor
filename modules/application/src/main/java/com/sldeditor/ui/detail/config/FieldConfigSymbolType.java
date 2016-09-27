@@ -98,13 +98,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     /**
      * Instantiates a new FieldConfigSymbolType.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigSymbolType(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigSymbolType(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -125,7 +122,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
 
         // Create 
@@ -529,10 +526,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigSymbolType(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigSymbolType(fieldConfigBase.getCommonData());
         }
         return copy;
     }

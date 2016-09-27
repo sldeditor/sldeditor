@@ -41,6 +41,7 @@ import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.filter.FilterPanelInterface;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -86,12 +87,10 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
+     * @param commonData the common data
      */
-    public FieldConfigFeatureTypeConstraint(Class<?> panelId, FieldId id, String label) {
-        super(panelId, id, label, true);
+    public FieldConfigFeatureTypeConstraint(FieldConfigCommonData commonData) {
+        super(commonData);
 
         filterModel = new FeatureTypeConstraintModel(this);
         extentModel = new ExtentModel(this);
@@ -489,9 +488,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigFeatureTypeConstraint(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel());
+            copy = new FieldConfigFeatureTypeConstraint(fieldConfigBase.getCommonData());
         }
         return copy;
     }

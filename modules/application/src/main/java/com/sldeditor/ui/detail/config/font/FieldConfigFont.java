@@ -35,6 +35,7 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
@@ -71,13 +72,10 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigFont(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigFont(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -130,7 +128,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Font.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Font.class, this, isRasterSymbol()));
         }
     }
 
@@ -393,10 +391,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigFont(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigFont(fieldConfigBase.getCommonData());
         }
         return copy;
     }

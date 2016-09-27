@@ -59,13 +59,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /**
      * Instantiates a new field config double.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigInteger(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigInteger(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -87,7 +84,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
 
         spinner.registerObserver(new SpinnerNotifyInterface() {
@@ -359,10 +356,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigInteger(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigInteger(fieldConfigBase.getCommonData());
 
             FieldConfigInteger intFieldConfig = (FieldConfigInteger)fieldConfigBase;
             copy.setConfig(intFieldConfig.minValue, 

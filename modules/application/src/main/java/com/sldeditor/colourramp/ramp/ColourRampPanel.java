@@ -54,6 +54,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.XMLTwoColourRamp;
 import com.sldeditor.common.xml.ui.XMLTwoColourRampList;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.colourmap.ColourMapModel;
@@ -203,8 +204,8 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         tablePanel.add(dataPanel, BorderLayout.NORTH);
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
 
-        minValueSpinner = new FieldConfigInteger(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
-                Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.minValue"), true);
+        minValueSpinner = new FieldConfigInteger(new FieldConfigCommonData(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
+                Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.minValue"), true));
         minValueSpinner.createUI();
         FieldPanel fieldPanel = minValueSpinner.getPanel();
         dataPanel.add(fieldPanel);
@@ -223,8 +224,8 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                     populate(model.getColourMap());
                 }
             }});
-        maxValueSpinner = new FieldConfigInteger(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
-                Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.maxValue"), true);
+        maxValueSpinner = new FieldConfigInteger(new FieldConfigCommonData(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
+                Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.maxValue"), true));
         maxValueSpinner.createUI();
         maxValueSpinner.populateField(100);
         dataPanel.add(maxValueSpinner.getPanel());

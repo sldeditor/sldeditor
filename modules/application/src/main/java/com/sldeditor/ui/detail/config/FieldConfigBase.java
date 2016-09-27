@@ -71,16 +71,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public abstract class FieldConfigBase implements FieldConfigValuePopulateInterface, TestValueVisitor, AttributeButtonSelectionInterface, ExpressionUpdateInterface {
-
-    /** The id if the field. */
-    private FieldId fieldId = null;
-
-    /** The field label. */
-    private String label;
-
-    /** The value only flag: <ul> <li>true - do not display a value/attribute/expression drop down list</li> <li>false- display a value/attribute/expression drop down list</li> </ul>. */
-    private boolean valueOnly = true;
+public abstract class FieldConfigBase extends FieldConfigCommonData implements FieldConfigValuePopulateInterface, TestValueVisitor, AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
     /** The panel. */
     private FieldPanel fieldPanel = null;
@@ -115,9 +106,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     /** The expression update listener. */
     private ExpressionUpdateInterface expressionUpdateListener = null;
 
-    /** The panel id the field is on. */
-    private Class<?> panelId = null;
-
     /** The parent field config. */
     private FieldConfigBase parentFieldConfig = null;
 
@@ -133,8 +121,14 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     /** The function parameter type. */
     private Class<?> functionParameterType = null;
 
-    /** The field index. */
-    private static int fieldIndex = 0;
+    /**
+     * Instantiates a new field config base.
+     *
+     * @param commonData the common data
+     */
+    public FieldConfigBase(FieldConfigCommonData commonData) {
+        super(commonData);
+    }
 
     /**
      * Sets the field enabled state.
@@ -177,60 +171,19 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public abstract void populateExpression(Object objValue);
 
     /**
-     * Protected constructor.
-     *
-     * @param panelId the panel id
-     * @param fieldId the field id
-     * @param label the label
-     * @param valueOnly the value only
-     */
-    protected FieldConfigBase(Class<?> panelId, FieldId fieldId, String label, boolean valueOnly) {
-        this.panelId = panelId;
-        this.fieldId = fieldId;
-        this.label = label;
-        this.valueOnly = valueOnly;
-    }
-
-    /**
-     * Gets the field id.
-     *
-     * @return the field id
-     */
-    public FieldId getFieldId() {
-        return fieldId;
-    }
-
-    /**
-     * Sets the field id.
-     *
-     * @param fieldId2 the new field id
-     */
-    private void setFieldId(FieldId fieldId2) {
-        fieldId = fieldId2;
-    }
-
-    /**
-     * Gets the label.
-     *
-     * @return the label
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Returns the value only flag.
-     *
-     * @return true, if is value only
-     */
-    public boolean isValueOnly() {
-        return valueOnly;
-    }
-
-    /**
      * Creates the ui.
      */
     public abstract void createUI();
+
+    /**
+     * Gets the common data.
+     *
+     * @return the common data
+     */
+    public FieldConfigCommonData getCommonData()
+    {
+        return (FieldConfigCommonData)this;
+    }
 
     /**
      * Gets the panel.
@@ -310,7 +263,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
         {
             for(UpdateSymbolInterface listener : updateSymbolListenerList)
             {
-                listener.dataChanged(fieldId);
+                listener.dataChanged(getFieldId());
             }
         }
     }
@@ -661,15 +614,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      */
     protected FilterFactory getFilterFactory() {
         return ff;
-    }
-
-    /**
-     * Gets the panel id.
-     *
-     * @return the panel id
-     */
-    public Class<?> getPanelId() {
-        return panelId;
     }
 
     /**
@@ -1033,27 +977,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
         int x = getIndentColumn() * 20;
 
         return x;
-    }
-
-    /**
-     * Adds the function.
-     *
-     * @param functionField the function field
-     */
-    public void addFunction(FieldConfigBase functionField) {
-        if(functionField != null)
-        {
-            functionField.setIndentColumn((getIndentColumn() + 1));
-            functionList.add(functionField);
-
-            fieldIndex = fieldIndex  + 1;
-            functionField.revertToDefaultValue();
-            FieldId fieldId = new FieldId();
-            fieldId.setFieldId(getFieldId().getFieldId());
-            fieldId.setIndex(fieldIndex);
-
-            functionField.setFieldId(fieldId);
-        }
     }
 
     /**

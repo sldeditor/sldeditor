@@ -60,13 +60,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     /**
      * Instantiates a new field config slider.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigSlider(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigSlider(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -106,7 +103,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
     }
 
@@ -349,10 +346,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigSlider(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigSlider(fieldConfigBase.getCommonData());
         }
         return copy;
     }
