@@ -107,22 +107,22 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
         setBorder(title);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        label = new FieldConfigString(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_LABEL), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.label"), true), null);
+        label = new FieldConfigString(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_LABEL), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.label"), true, true), null);
         label.createUI();
         label.addDataChangedListener(this);
         add(label.getPanel());
 
-        colour = new FieldConfigColour(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_COLOUR), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.colour"), false));
+        colour = new FieldConfigColour(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_COLOUR), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.colour"), false, true));
         colour.createUI();
         colour.addDataChangedListener(this);
         add(colour.getPanel());
 
-        opacity = new FieldConfigSlider(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_OPACITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.opacity"), false));
+        opacity = new FieldConfigSlider(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_OPACITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.opacity"), false, true));
         opacity.createUI();
         opacity.addDataChangedListener(this);
         add(opacity.getPanel());
 
-        quantity = new FieldConfigDouble(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_QUANTITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.quantity"), false));
+        quantity = new FieldConfigDouble(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.RASTER_COLOURMAP_ENTRY_QUANTITY), Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.quantity"), false, true));
         quantity.createUI();
         quantity.addDataChangedListener(this);
         add(quantity.getPanel());
