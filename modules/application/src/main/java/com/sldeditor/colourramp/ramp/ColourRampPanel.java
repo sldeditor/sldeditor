@@ -56,7 +56,6 @@ import com.sldeditor.common.xml.ui.XMLTwoColourRampList;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.colourmap.ColourMapModel;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
@@ -144,7 +143,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                 {
                     Integer newValueObj = rampComboBox.getSelectedIndex();
 
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(undoObj, new FieldId(FieldIdEnum.COLOUR_RAMP_COLOUR), oldColourRampIndex, newValueObj));
+                    UndoManager.getInstance().addUndoEvent(new UndoEvent(undoObj, FieldIdEnum.COLOUR_RAMP_COLOUR, oldColourRampIndex, newValueObj));
 
                     oldColourRampIndex = newValueObj;
                 }
@@ -160,7 +159,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                 Boolean oldValueObj = Boolean.valueOf(!isSelected);
                 Boolean newValueObj = Boolean.valueOf(isSelected);
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(undoObj, new FieldId(FieldIdEnum.COLOUR_RAMP_REVERSE), oldValueObj, newValueObj));
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(undoObj, FieldIdEnum.COLOUR_RAMP_REVERSE, oldValueObj, newValueObj));
 
                 reverseColourRamp(isSelected);
             }});
@@ -204,7 +203,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         tablePanel.add(dataPanel, BorderLayout.NORTH);
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
 
-        minValueSpinner = new FieldConfigInteger(new FieldConfigCommonData(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
+        minValueSpinner = new FieldConfigInteger(new FieldConfigCommonData(getClass(), FieldIdEnum.UNKNOWN,
                 Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.minValue"), true));
         minValueSpinner.createUI();
         FieldPanel fieldPanel = minValueSpinner.getPanel();
@@ -224,7 +223,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                     populate(model.getColourMap());
                 }
             }});
-        maxValueSpinner = new FieldConfigInteger(new FieldConfigCommonData(getClass(), new FieldId(FieldIdEnum.UNKNOWN),
+        maxValueSpinner = new FieldConfigInteger(new FieldConfigCommonData(getClass(), FieldIdEnum.UNKNOWN,
                 Localisation.getField(ColourRampConfigPanel.class, "ColourRampPanel.maxValue"), true));
         maxValueSpinner.createUI();
         maxValueSpinner.populateField(100);
@@ -356,7 +355,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
     public void undoAction(UndoInterface undoRedoObject) {
         if(undoRedoObject != null)
         {
-            switch(undoRedoObject.getFieldId().getFieldId())
+            switch(undoRedoObject.getFieldId())
             {
             case COLOUR_RAMP_COLOUR:
             {
@@ -386,7 +385,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
     public void redoAction(UndoInterface undoRedoObject) {
         if(undoRedoObject != null)
         {
-            switch(undoRedoObject.getFieldId().getFieldId())
+            switch(undoRedoObject.getFieldId())
             {
             case COLOUR_RAMP_COLOUR:
             {

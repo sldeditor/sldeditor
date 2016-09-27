@@ -43,7 +43,6 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 
 /**
@@ -62,7 +61,7 @@ public class FieldConfigTTFTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -81,7 +80,7 @@ public class FieldConfigTTFTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigTTF field2 = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field2 = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -110,7 +109,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -130,7 +129,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.populateExpression((Double)null);
         field.populateField((String)null);
@@ -174,7 +173,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.revertToDefaultValue();
 
@@ -188,7 +187,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.justSelected();
     }
@@ -213,12 +212,12 @@ public class FieldConfigTTFTest {
             }
         }
 
-        TestFieldConfigTTF field = new TestFieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        TestFieldConfigTTF field = new TestFieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigTTF copy = (FieldConfigTTF) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigTTF) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -229,7 +228,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.attributeSelection("field");
         // Does nothing
@@ -241,7 +240,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
     }
@@ -252,7 +251,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
@@ -268,14 +267,14 @@ public class FieldConfigTTFTest {
 
         Class<?> panelId = FillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
-        FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
+        FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
 
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.setValue(null, null, null);
         field.setValue(fieldConfigManager, null, null);
@@ -299,14 +298,14 @@ public class FieldConfigTTFTest {
 
         Class<?> panelId = FillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
-        FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
+        FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
 
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         List<GraphicalSymbol> actualValue = field.getValue(null, null, false, false);
         assertTrue(actualValue.isEmpty());
@@ -325,7 +324,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertNull(field.getFill(null, null));
     }
@@ -336,7 +335,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertNull(field.getBasePanel());
     }
@@ -354,7 +353,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(1, field.getFieldList(null).size());
     }
@@ -365,7 +364,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertFalse(field.accept(null));
 
@@ -386,7 +385,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.setUpdateSymbolListener(null);
     }
@@ -397,7 +396,7 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetConfigField() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly));
+        FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(field, field.getConfigField());
     }

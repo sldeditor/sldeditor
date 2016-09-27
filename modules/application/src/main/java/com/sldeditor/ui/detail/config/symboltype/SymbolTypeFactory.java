@@ -40,7 +40,6 @@ import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
@@ -89,7 +88,7 @@ public class SymbolTypeFactory {
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The selection combo box. */
-    private FieldId selectionComboBox = null;
+    private FieldIdEnum selectionComboBox = null;
 
     /**
      * Constructor.
@@ -102,15 +101,15 @@ public class SymbolTypeFactory {
     public SymbolTypeFactory(Class<?> panelId,
             ColourFieldConfig fillFieldConfig, 
             ColourFieldConfig strokeFieldConfig, 
-            FieldId symbolSelectionField)
+            FieldIdEnum symbolSelectionField)
     {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.FILL_COLOUR), "", false), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), "", true));
-        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.TTF_SYMBOL), "", true));
-        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.WINDBARBS), "", true));
-        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, new FieldId(FieldIdEnum.WKT), "", true));
+        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true));
+        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true));
+        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true));
+        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true));
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);
@@ -155,10 +154,10 @@ public class SymbolTypeFactory {
 
             fillPanel.updateFieldConfig(panel.getBasePanel());
 
-            Map<FieldId, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
+            Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
             if(map != null)
             {
-                for(FieldId panelField : map.keySet())
+                for(FieldIdEnum panelField : map.keySet())
                 {
                     fieldConfigManager.add(panelField, map.get(panelField));
                 }
@@ -190,10 +189,10 @@ public class SymbolTypeFactory {
 
             strokePanel.updateFieldConfig(panel.getBasePanel());
 
-            Map<FieldId, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
+            Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
             if(map != null)
             {
-                for(FieldId fieldId : map.keySet())
+                for(FieldIdEnum fieldId : map.keySet())
                 {
                     fieldConfigManager.add(fieldId, map.get(fieldId));
                 }

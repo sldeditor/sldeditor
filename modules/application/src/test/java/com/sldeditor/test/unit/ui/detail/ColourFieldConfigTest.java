@@ -47,9 +47,9 @@ public class ColourFieldConfigTest {
         FieldIdEnum strokeFillWidth = FieldIdEnum.STROKE_FILL_WIDTH;
         ColourFieldConfig config = new ColourFieldConfig(strokeFillColour, strokeFillOpacity, strokeFillWidth);
 
-        assertEquals(strokeFillColour, config.getColour().getFieldId());
-        assertEquals(strokeFillOpacity, config.getOpacity().getFieldId());
-        assertEquals(strokeFillWidth, config.getWidth().getFieldId());
+        assertEquals(strokeFillColour, config.getColour());
+        assertEquals(strokeFillOpacity, config.getOpacity());
+        assertEquals(strokeFillWidth, config.getWidth());
     }
 
 }

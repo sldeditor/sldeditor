@@ -26,7 +26,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * The Interface TestValueVisitor, part of a visitor pattern to allow test values to
@@ -42,7 +42,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, String testValue);
+    public void setTestValue(FieldIdEnum fieldId, String testValue);
 
     /**
      * Sets the test integer value.
@@ -50,7 +50,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, int testValue);
+    public void setTestValue(FieldIdEnum fieldId, int testValue);
 
     /**
      * Sets the test double value.
@@ -58,7 +58,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, double testValue);
+    public void setTestValue(FieldIdEnum fieldId, double testValue);
 
     /**
      * Sets the test boolean value.
@@ -66,7 +66,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, boolean testValue);
+    public void setTestValue(FieldIdEnum fieldId, boolean testValue);
 
     /**
      * Sets the test colour map value.
@@ -74,7 +74,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, ColorMap testValue);
+    public void setTestValue(FieldIdEnum fieldId, ColorMap testValue);
 
     /**
      * Sets the test feature type constraint map value.
@@ -82,7 +82,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, List<FeatureTypeConstraint> testValue);
+    public void setTestValue(FieldIdEnum fieldId, List<FeatureTypeConstraint> testValue);
 
     /**
      * Sets the test attribute/expression value.
@@ -90,7 +90,7 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, Expression testValue);
+    public void setTestValue(FieldIdEnum fieldId, Expression testValue);
 
     /**
      * Sets the test reference envelope value.
@@ -98,5 +98,5 @@ public interface TestValueVisitor {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue);
+    public void setTestValue(FieldIdEnum fieldId, ReferencedEnvelope testValue);
 }

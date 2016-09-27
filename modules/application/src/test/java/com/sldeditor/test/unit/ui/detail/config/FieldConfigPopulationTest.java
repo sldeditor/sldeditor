@@ -51,7 +51,6 @@ import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
 import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
@@ -70,7 +69,7 @@ public class FieldConfigPopulationTest {
      */
     @Test
     public void testFieldConfigPopulation() {
-        FieldId fieldId = new FieldId();
+        FieldIdEnum fieldId = FieldIdEnum.UNKNOWN;
         FieldConfigPopulation obj = new FieldConfigPopulation(null);
         obj.populateBooleanField(fieldId, Boolean.TRUE);
         obj.populateComboBoxField(fieldId, "");
@@ -82,7 +81,7 @@ public class FieldConfigPopulationTest {
         obj.populateIntegerField(fieldId, (Integer)null);
         obj.populateField(fieldId, (Expression)null);
         obj.populateUserLayer(fieldId, (UserLayer)null);
-        obj.populateFieldTypeConstraint(fieldId.getFieldId(), (List<FeatureTypeConstraint>)null);
+        obj.populateFieldTypeConstraint(fieldId, (List<FeatureTypeConstraint>)null);
         
         assertNull(obj.getExpression(fieldId));
         assertFalse(obj.getBoolean(fieldId));
@@ -105,8 +104,7 @@ public class FieldConfigPopulationTest {
     public void testBoolean() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -119,7 +117,6 @@ public class FieldConfigPopulationTest {
         Boolean expectedValue = Boolean.TRUE;
         obj.populateBooleanField(fieldId, expectedValue);
         assertEquals(expectedValue.booleanValue(), obj.getBoolean(fieldId));
-        assertEquals(expectedValue.booleanValue(), obj.getBoolean(fieldEnum));
 
         // This shouldn't work as it does not know about the field
         assertFalse(obj.getBoolean(wrongFieldEnum));
@@ -139,8 +136,7 @@ public class FieldConfigPopulationTest {
     public void testComboBox() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -149,8 +145,8 @@ public class FieldConfigPopulationTest {
         s1.addOption("key1", "Value 1");
         s1.addOption("key2", "Value 2");
         s1.addOption("key3", "Value 3");
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_H), true);
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_V), false);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_H, true);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_V, false);
         configList.add(s1);
 
         FieldConfigEnum enumField = new FieldConfigEnum(new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
@@ -163,7 +159,6 @@ public class FieldConfigPopulationTest {
         String expectedValue = "key2";
         obj.populateComboBoxField(fieldId, expectedValue);
         assertTrue(expectedValue.compareTo(obj.getComboBox(fieldId).getKey()) == 0);
-        assertTrue(expectedValue.compareTo(obj.getComboBox(fieldEnum).getKey()) == 0);
 
         // This shouldn't work as it does not know about the field
         assertNull(obj.getComboBox(wrongFieldEnum));
@@ -181,8 +176,7 @@ public class FieldConfigPopulationTest {
     public void testColour() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -196,7 +190,7 @@ public class FieldConfigPopulationTest {
         Expression colour = styleBuilder.colorExpression(Color.red);
 
         obj.populateColourField(fieldId, colour);
-        obj.populateColourField(new FieldId(wrongFieldEnum), colour);
+        obj.populateColourField(wrongFieldEnum, colour);
     }
 
     /**
@@ -208,8 +202,7 @@ public class FieldConfigPopulationTest {
     public void testColourMap() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -226,9 +219,8 @@ public class FieldConfigPopulationTest {
         entry.setColor(styleBuilder.colorExpression(Color.PINK));
         entry.setQuantity(styleBuilder.literalExpression(2.3));
         expectedValue.addColorMapEntry(entry);
-        obj.populateColourMapField(fieldEnum, expectedValue);
+        obj.populateColourMapField(fieldId, expectedValue);
         assertEquals(expectedValue.getColorMapEntries().length, obj.getColourMap(fieldId).getColorMapEntries().length);
-        assertEquals(expectedValue.getColorMapEntries().length, obj.getColourMap(fieldEnum).getColorMapEntries().length);
 
         // This shouldn't work as it does not know about the field
         obj.populateColourMapField(wrongFieldEnum, expectedValue);
@@ -241,8 +233,7 @@ public class FieldConfigPopulationTest {
     public void testFont() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -255,7 +246,7 @@ public class FieldConfigPopulationTest {
         StyleBuilder styleBuilder = new StyleBuilder();
 
         Font expectedValue = styleBuilder.createFont(java.awt.Font.decode(null));
-        obj.populateFontField(fieldEnum, expectedValue);
+        obj.populateFontField(fieldId, expectedValue);
 
         // This shouldn't work as it does not know about the field
         obj.populateFontField(wrongFieldEnum, expectedValue);
@@ -271,8 +262,7 @@ public class FieldConfigPopulationTest {
     public void testString() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -285,7 +275,6 @@ public class FieldConfigPopulationTest {
         String expectedValue = "test string";
         obj.populateTextField(fieldId, expectedValue);
         assertTrue(expectedValue.compareTo(obj.getText(fieldId)) == 0);
-        assertTrue(expectedValue.compareTo(obj.getText(fieldEnum)) == 0);
 
         // This shouldn't work as it does not know about the field
         assertTrue("".compareTo(obj.getText(wrongFieldEnum)) == 0);
@@ -304,8 +293,7 @@ public class FieldConfigPopulationTest {
     public void testDouble() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -318,14 +306,13 @@ public class FieldConfigPopulationTest {
         double expectedValue = 1.256;
         obj.populateDoubleField(fieldId, expectedValue);
         assertTrue(Math.abs(expectedValue - obj.getDouble(fieldId)) < 0.001);
-        assertTrue(Math.abs(expectedValue - obj.getDouble(fieldEnum)) < 0.001);
 
         // This shouldn't work as it does not know about the field
         assertTrue(Math.abs(obj.getDouble(wrongFieldEnum) - 0.0) < 0.001);
 
         // Try with null - should revert to default value (0.0)
         obj.populateDoubleField(fieldId, null);
-        assertTrue(Math.abs(obj.getDouble(fieldEnum) - 0.0) < 0.001);
+        assertTrue(Math.abs(obj.getDouble(fieldId) - 0.0) < 0.001);
     }
 
     /**
@@ -337,8 +324,7 @@ public class FieldConfigPopulationTest {
     public void testInteger() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -351,14 +337,13 @@ public class FieldConfigPopulationTest {
         int expectedValue = 1256;
         obj.populateIntegerField(fieldId, expectedValue);
         assertEquals(expectedValue, obj.getInteger(fieldId));
-        assertEquals(expectedValue, obj.getInteger(fieldEnum));
 
         // This shouldn't work as it does not know about the field
         assertEquals(0, obj.getInteger(wrongFieldEnum));
 
         // Try with null - should revert to default value (0.0)
         obj.populateIntegerField(fieldId, null);
-        assertEquals(0, obj.getInteger(fieldEnum));
+        assertEquals(0, obj.getInteger(fieldId));
     }
 
     /**
@@ -371,8 +356,7 @@ public class FieldConfigPopulationTest {
     public void testExpression() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -392,7 +376,7 @@ public class FieldConfigPopulationTest {
 
         assertEquals(expectedValue, ((Integer)actualValue.getValue()).intValue());
 
-        actualValue = (LiteralExpressionImpl) obj.getExpression(fieldEnum);
+        actualValue = (LiteralExpressionImpl) obj.getExpression(fieldId);
         assertEquals(expectedValue, ((Integer)actualValue.getValue()).intValue());
 
         // This shouldn't work as it does not know about the field
@@ -409,8 +393,7 @@ public class FieldConfigPopulationTest {
      */
     @Test
     public void testIsTreeDataUpdated() {
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -432,7 +415,7 @@ public class FieldConfigPopulationTest {
         stringField.populateField(expectedValue);
 
         // Data is different so flag should have changed
-        assertTrue(expectedValue.compareTo(obj.getText(fieldEnum)) == 0);
+        assertTrue(expectedValue.compareTo(obj.getText(fieldId)) == 0);
         assertTrue(obj.isTreeDataUpdated());
         obj.resetTreeDataUpdated();
         assertFalse(obj.isTreeDataUpdated());
@@ -450,8 +433,7 @@ public class FieldConfigPopulationTest {
     public void testGetFieldConfig() {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
 
-        FieldIdEnum fieldEnum = FieldIdEnum.DESCRIPTION;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.DESCRIPTION;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
@@ -462,7 +444,7 @@ public class FieldConfigPopulationTest {
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
 
         assertNotNull(obj.getFieldConfig(fieldId));
-        assertNull(obj.getFieldConfig(new FieldId(wrongFieldEnum)));
+        assertNull(obj.getFieldConfig(wrongFieldEnum));
     }
 
 }

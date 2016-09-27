@@ -69,7 +69,6 @@ import com.sldeditor.common.xml.ui.XMLVendorOption;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -358,7 +357,7 @@ public class SLDTestRunner
                                     else
                                     {
                                         XMLFieldBase testValue = (XMLFieldBase) xmlTestValueObj;
-                                        FieldId fieldId = new FieldId(testValue.getField());
+                                        FieldIdEnum fieldId = testValue.getField();
                                         String outputText = "Checking : " + fieldId;
                                         System.out.println(outputText);
                                         Assert.assertNotNull(outputText, fieldId);
@@ -446,7 +445,7 @@ public class SLDTestRunner
                                             }
                                             else
                                             {
-                                                if(colourFieldsList.contains(fieldId.getFieldId()))
+                                                if(colourFieldsList.contains(fieldId))
                                                 {
                                                     FieldConfigColour fieldColour = (FieldConfigColour)fieldConfig;
 
@@ -456,13 +455,13 @@ public class SLDTestRunner
                                                 {
                                                     expression = fieldConfig.getExpression();
 
-                                                    if(fieldId.getFieldId() == FieldIdEnum.SYMBOL_TYPE)
+                                                    if(fieldId == FieldIdEnum.SYMBOL_TYPE)
                                                     {
                                                         String string = expression.toString();
 
                                                         expression = ff.literal(string.replace(File.separatorChar, '/'));
                                                     }
-                                                    else if(fieldId.getFieldId() == FieldIdEnum.FONT_FAMILY)
+                                                    else if(fieldId == FieldIdEnum.FONT_FAMILY)
                                                     {
                                                         // Handle the case where a font is not available on all operating systems
                                                         String string = expression.toString();
@@ -490,7 +489,7 @@ public class SLDTestRunner
                                                         }
                                                         else if(literalValue.getClass() == String.class)
                                                         {
-                                                            if(fieldId.getFieldId() == FieldIdEnum.FONT_FAMILY)
+                                                            if(fieldId == FieldIdEnum.FONT_FAMILY)
                                                             {
                                                                 // Handle the case where a font is not available on all operating systems
                                                                 checkLiteralValue(outputText, expression, getFontForOS());
@@ -592,9 +591,9 @@ public class SLDTestRunner
      * @param field the field
      * @return true, if successful
      */
-    private boolean comparingFilename(FieldId field)
+    private boolean comparingFilename(FieldIdEnum field)
     {
-        return filenameList.contains(field.getFieldId());
+        return filenameList.contains(field);
     }
 
     /**

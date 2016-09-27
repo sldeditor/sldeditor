@@ -39,7 +39,6 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint;
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -57,7 +56,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -80,7 +79,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testSetVisible() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -100,10 +99,10 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testGenerateExpression() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         List<FeatureTypeConstraint> testValue = null;
         field.populate(null);
-        field.setTestValue(null, testValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
         field.populateField(testValue);
 
         field.createUI();
@@ -119,7 +118,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         field.populateField(testValue);
         assertEquals(expectedValue1, field.getFeatureTypeConstraint().get(0));
 
-        field.setTestValue(null, testValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
         assertEquals(expectedValue1, field.getFeatureTypeConstraint().get(0));
 
         field.populateExpression((String)null);    
@@ -130,7 +129,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.revertToDefaultValue();
         assertTrue(field.getFeatureTypeConstraint().isEmpty());
@@ -157,12 +156,12 @@ public class FieldConfigFeatureTypeConstraintTest {
             }
         }
 
-        TestFieldConfigFeatureTypeConstraint field = new TestFieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", false));
+        TestFieldConfigFeatureTypeConstraint field = new TestFieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false));
         FieldConfigFeatureTypeConstraint copy = (FieldConfigFeatureTypeConstraint) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigFeatureTypeConstraint) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -172,7 +171,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         field.attributeSelection(null);
 
         // Does nothing
@@ -184,7 +183,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -217,9 +216,9 @@ public class FieldConfigFeatureTypeConstraintTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
 
     /**
@@ -227,7 +226,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testFeatureTypeConstraintUpdated() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.featureTypeConstraintUpdated();
         // No testing
@@ -238,7 +237,7 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testExtentUpdated() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.extentUpdated();
 

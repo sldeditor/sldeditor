@@ -42,7 +42,6 @@ import com.sldeditor.ui.attribute.AttributeUtils;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -184,7 +183,7 @@ UpdateSymbolInterface {
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 
@@ -306,7 +305,7 @@ UpdateSymbolInterface {
      * @param fieldId the field id
      * @param testValue the test value
      */
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateExpression(testValue);
 
         updateSymbol();

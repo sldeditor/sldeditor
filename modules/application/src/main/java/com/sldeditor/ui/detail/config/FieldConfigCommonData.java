@@ -19,6 +19,8 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+
 /**
  * The Class FieldConfigCommonData.
  *
@@ -29,8 +31,8 @@ public class FieldConfigCommonData {
     /** The panel id. */
     private Class<?> panelId;
 
-    /** The id. */
-    private FieldId id;
+    /** The field id. */
+    private FieldIdEnum id;
 
     /** The label. */
     private String label;
@@ -50,7 +52,7 @@ public class FieldConfigCommonData {
      * @param valueOnly the value only
      * @param rasterSymbol the raster symbol
      */
-    public FieldConfigCommonData(Class<?> panelId, FieldId id, String label, boolean valueOnly,
+    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly,
             boolean rasterSymbol) {
         super();
         this.panelId = panelId;
@@ -68,7 +70,7 @@ public class FieldConfigCommonData {
      * @param label the label
      * @param valueOnly the value only
      */
-    public FieldConfigCommonData(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
+    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly) {
         super();
         this.panelId = panelId;
         this.id = id;
@@ -103,7 +105,7 @@ public class FieldConfigCommonData {
      *
      * @return the field id
      */
-    public FieldId getFieldId() {
+    public FieldIdEnum getFieldId() {
         return id;
     }
 

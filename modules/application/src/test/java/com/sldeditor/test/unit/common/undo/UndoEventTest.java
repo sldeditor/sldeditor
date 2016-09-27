@@ -25,7 +25,6 @@ import org.junit.Test;
 
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * Unit test for UndoEvent class.
@@ -45,7 +44,7 @@ public class UndoEventTest {
         Double oldValue = Double.valueOf(22.0);
         Double newValue = Double.valueOf(42.0);
 
-        FieldId expectedField = new FieldId(FieldIdEnum.ANGLE);
+        FieldIdEnum expectedField = FieldIdEnum.ANGLE;
         UndoEvent undoEvent = new UndoEvent(parent, expectedField, oldValue, newValue);
 
         assertEquals(expectedField, undoEvent.getFieldId());
@@ -81,7 +80,7 @@ public class UndoEventTest {
         String expectedField = "one more";
         UndoEvent undoEvent = new UndoEvent(parent, expectedField, oldValue, newValue);
 
-        assertEquals(FieldIdEnum.UNKNOWN, undoEvent.getFieldId().getFieldId());
+        assertEquals(FieldIdEnum.UNKNOWN, undoEvent.getFieldId());
         assertEquals(oldValue, undoEvent.getOldValue());
         assertEquals(newValue, undoEvent.getNewValue());
 

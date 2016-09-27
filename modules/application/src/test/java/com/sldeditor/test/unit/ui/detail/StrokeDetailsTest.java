@@ -40,7 +40,6 @@ import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
 
@@ -88,7 +87,7 @@ public class StrokeDetailsTest {
         SymbolTypeFactory fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
                 new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
-                new FieldId(FieldIdEnum.STROKE_STYLE));
+                FieldIdEnum.STROKE_STYLE);
         fillFactory.populate(panel, panel.getFieldDataManager());
 
         Expression symbolType = ff.literal("star");

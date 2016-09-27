@@ -36,6 +36,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
@@ -495,7 +496,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
 
         valueUpdated();

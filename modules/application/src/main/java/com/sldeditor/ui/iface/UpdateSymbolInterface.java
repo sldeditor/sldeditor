@@ -18,7 +18,7 @@
  */
 package com.sldeditor.ui.iface;
 
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * The Interface UpdateSymbolInterface.
@@ -32,5 +32,5 @@ public interface UpdateSymbolInterface {
      *
      * @param changedField the changed field
      */
-    void dataChanged(FieldId changedField);
+    void dataChanged(FieldIdEnum changedField);
 }

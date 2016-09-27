@@ -41,7 +41,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -59,7 +58,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     private static final long serialVersionUID = 1L;
 
     /** The field map. */
-    private Map<FieldId, String> fieldMap = new HashMap<FieldId, String>();
+    private Map<FieldIdEnum, String> fieldMap = new HashMap<FieldIdEnum, String>();
 
     /** The parent obj. */
     private UpdateSymbolInterface parentObj = null;
@@ -73,11 +72,11 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     {
         super(panelId, functionManager);
 
-        fieldMap.put(new FieldId(FieldIdEnum.RANDOM_FILL_ACTIVATE), "random");
-        fieldMap.put(new FieldId(FieldIdEnum.RANDOM_FILL_TILE_SIZE), "random-tile-size");
-        fieldMap.put(new FieldId(FieldIdEnum.RANDOM_FILL_ROTATION), "random-rotation");
-        fieldMap.put(new FieldId(FieldIdEnum.RANDOM_FILL_SYMBOL_COUNT), "random-symbol-count");
-        fieldMap.put(new FieldId(FieldIdEnum.RANDOM_FILL_RANDOM_SEED), "random-seed");
+        fieldMap.put(FieldIdEnum.RANDOM_FILL_ACTIVATE, "random");
+        fieldMap.put(FieldIdEnum.RANDOM_FILL_TILE_SIZE, "random-tile-size");
+        fieldMap.put(FieldIdEnum.RANDOM_FILL_ROTATION, "random-rotation");
+        fieldMap.put(FieldIdEnum.RANDOM_FILL_SYMBOL_COUNT, "random-symbol-count");
+        fieldMap.put(FieldIdEnum.RANDOM_FILL_RANDOM_SEED, "random-seed");
 
         createUI();
 
@@ -105,7 +104,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldId)
      */
     @Override
-    public void dataChanged(FieldId changedField)
+    public void dataChanged(FieldIdEnum changedField)
     {
         handleFieldState(changedField);
 
@@ -152,7 +151,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param field the field
      * @param key the key
      */
-    protected void internalPopulate(Map<String, String> options, FieldId field, String key)
+    protected void internalPopulate(Map<String, String> options, FieldIdEnum field, String key)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
@@ -186,7 +185,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_populateDoubleField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -209,7 +208,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_populateBooleanField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -232,7 +231,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_populateIntegerField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -255,7 +254,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_populateEnumField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -276,7 +275,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param field the field
      * @param key the key
      */
-    private void internalUpdateSymbol(Map<String, String> options, FieldId field, String key)
+    private void internalUpdateSymbol(Map<String, String> options, FieldIdEnum field, String key)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
@@ -310,7 +309,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_updateSymbolEnumField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         ValueComboBoxData value = fieldConfigVisitor.getComboBox(field);
 
@@ -345,7 +344,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_updateSymbolDoubleField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         double value = fieldConfigVisitor.getDouble(field);
 
@@ -369,7 +368,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_updateSymbolIntegerField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         int value = fieldConfigVisitor.getInteger(field);
 
@@ -393,7 +392,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      * @param key the key
      */
     private void internal_updateSymbolBooleanField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         boolean value = fieldConfigVisitor.getBoolean(field);
 
@@ -448,7 +447,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     {       
         Map<String, String> options = polygonSymbolizer.getOptions();
 
-        for(FieldId key : fieldMap.keySet())
+        for(FieldIdEnum key : fieldMap.keySet())
         {
             internalUpdateSymbol(options, key, fieldMap.get(key));
         }
@@ -469,7 +468,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
             options = polygonSymbolizer.getOptions();
         }
 
-        for(FieldId key : fieldMap.keySet())
+        for(FieldIdEnum key : fieldMap.keySet())
         {
             internalPopulate(options, key, fieldMap.get(key));
         }

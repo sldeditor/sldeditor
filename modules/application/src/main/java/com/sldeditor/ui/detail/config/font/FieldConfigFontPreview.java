@@ -28,10 +28,10 @@ import org.opengis.filter.expression.Literal;
 
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -240,7 +240,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
     }
 

@@ -44,6 +44,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.xml.TestValueVisitor;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -782,7 +783,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         // Do nothing
     }
 
@@ -793,7 +794,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, int testValue) {
+    public void setTestValue(FieldIdEnum fieldId, int testValue) {
         // Do nothing
     }
 
@@ -804,7 +805,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, double testValue) {
+    public void setTestValue(FieldIdEnum fieldId, double testValue) {
         // Do nothing
     }
 
@@ -815,7 +816,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, boolean testValue) {
+    public void setTestValue(FieldIdEnum fieldId, boolean testValue) {
         // Do nothing
     }
 
@@ -826,7 +827,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ColorMap testValue) {
+    public void setTestValue(FieldIdEnum fieldId, ColorMap testValue) {
         // Do nothing
     }
 
@@ -837,7 +838,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, List<FeatureTypeConstraint> testValue) {
+    public void setTestValue(FieldIdEnum fieldId, List<FeatureTypeConstraint> testValue) {
         // Do nothing
     }
 
@@ -848,7 +849,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, Expression testValue) {
+    public void setTestValue(FieldIdEnum fieldId, Expression testValue) {
         populate(testValue);
     }
 
@@ -859,7 +860,7 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue)
+    public void setTestValue(FieldIdEnum fieldId, ReferencedEnvelope testValue)
     {
         // Do nothing
     }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * The Class FieldEnableState, stores the configuration for
@@ -13,7 +13,7 @@ import com.sldeditor.ui.detail.config.FieldId;
 public class FieldEnableState {
 
     /** The enabled field state map. */
-    private Map<String, Map<String, List<FieldId> > > enabledFieldStateMap = new HashMap<String, Map<String, List<FieldId> > >();
+    private Map<String, Map<String, List<FieldIdEnum> > > enabledFieldStateMap = new HashMap<String, Map<String, List<FieldIdEnum> > >();
 
     /**
      * Adds the for the given panel the field enable state for a menu option.
@@ -22,13 +22,13 @@ public class FieldEnableState {
      * @param menuOption the menu option
      * @param fieldList the field list
      */
-    public void add(String panelName, String menuOption, List<FieldId> fieldList) {
+    public void add(String panelName, String menuOption, List<FieldIdEnum> fieldList) {
 
-        Map<String, List<FieldId> > menuOptionFieldMap = enabledFieldStateMap.get(panelName);
+        Map<String, List<FieldIdEnum> > menuOptionFieldMap = enabledFieldStateMap.get(panelName);
 
         if(menuOptionFieldMap == null)
         {
-            menuOptionFieldMap = new HashMap<String, List<FieldId> >();
+            menuOptionFieldMap = new HashMap<String, List<FieldIdEnum> >();
             enabledFieldStateMap.put(panelName, menuOptionFieldMap);
         }
 
@@ -42,12 +42,12 @@ public class FieldEnableState {
      * @param selectedItem the selected item
      * @return the field id list
      */
-    public List<FieldId> getFieldIdList(String panelName, String selectedItem) {
-        Map<String, List<FieldId> > panelMap = enabledFieldStateMap.get(panelName);
+    public List<FieldIdEnum> getFieldIdList(String panelName, String selectedItem) {
+        Map<String, List<FieldIdEnum> > panelMap = enabledFieldStateMap.get(panelName);
 
         if(panelMap != null)
         {
-            List<FieldId> list = panelMap.get(selectedItem);
+            List<FieldIdEnum> list = panelMap.get(selectedItem);
 
             return list;
         }

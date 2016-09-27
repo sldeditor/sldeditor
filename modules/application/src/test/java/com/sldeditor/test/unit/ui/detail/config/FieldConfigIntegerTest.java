@@ -32,7 +32,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The unit test for FieldConfigInteger.
@@ -51,7 +50,7 @@ public class FieldConfigIntegerTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -70,7 +69,7 @@ public class FieldConfigIntegerTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigInteger field2 = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field2 = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -95,7 +94,7 @@ public class FieldConfigIntegerTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -116,13 +115,13 @@ public class FieldConfigIntegerTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         int expectedValue = 1;
         field.populateField(expectedValue);
         assertEquals(0, field.getIntValue());
 
-        field.setTestValue(null, expectedValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue);
         assertEquals(0, field.getIntValue());
 
         field.populateExpression(null);
@@ -133,7 +132,7 @@ public class FieldConfigIntegerTest {
         assertEquals(expectedValue, field.getIntValue());
 
         int expectedValue2 = 134;
-        field.setTestValue(null, expectedValue2);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue2);
         assertEquals(expectedValue2, field.getIntValue());
 
         Integer expectedValue3a = Integer.valueOf(42);
@@ -160,7 +159,7 @@ public class FieldConfigIntegerTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         Integer expectedDefaultValue = 42;
         field.revertToDefaultValue();
@@ -192,12 +191,12 @@ public class FieldConfigIntegerTest {
             }
         }
 
-        TestFieldConfigInteger field = new TestFieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        TestFieldConfigInteger field = new TestFieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigInteger copy = (FieldConfigInteger) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigInteger) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -208,7 +207,7 @@ public class FieldConfigIntegerTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         field.createUI();
@@ -226,7 +225,7 @@ public class FieldConfigIntegerTest {
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -236,7 +235,7 @@ public class FieldConfigIntegerTest {
         assertEquals(expectedValue1, field.getIntValue());
 
         int expectedValue2 = 9876;
-        field.setTestValue(null, expectedValue2);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue2);
         assertEquals(expectedValue2, field.getIntValue());
 
         UndoManager.getInstance().undo();
@@ -246,9 +245,9 @@ public class FieldConfigIntegerTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
 
     /**
@@ -257,7 +256,7 @@ public class FieldConfigIntegerTest {
     @Test
     public void testSetConfig() {
         boolean valueOnly = true;
-        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigInteger field = new FieldConfigInteger(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.createUI();
         int minValue = 10;

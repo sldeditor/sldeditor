@@ -45,7 +45,6 @@ import com.sldeditor.filter.v2.FilterString;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -87,7 +86,7 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
      * @return the j panel
      */
     private void createFilter() {
-        FieldId filterFieldId = new FieldId(FieldIdEnum.FILTER);
+        FieldIdEnum filterFieldId = FieldIdEnum.FILTER;
         FieldConfigBase fieldConfig = fieldConfigManager.get(filterFieldId);
         if(fieldConfig != null)
         {
@@ -269,7 +268,7 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 

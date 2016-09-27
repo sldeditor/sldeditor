@@ -86,7 +86,7 @@ public class FillDetailsTest {
         double opacity = 0.15;
         opacityField.populateField(opacity);
 
-        panel.dataChanged(null);
+        panel.dataChanged(FieldIdEnum.UNKNOWN);
 
         double actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedAngle) < 0.01);
@@ -153,7 +153,7 @@ public class FillDetailsTest {
         double opacity = 0.15;
         opacityField.populateField(opacity);
 
-        panel.dataChanged(null);
+        panel.dataChanged(FieldIdEnum.UNKNOWN);
 
         double actualValue = angleField.getDoubleValue();
         assertTrue(Math.abs(actualValue - expectedAngle) < 0.01);

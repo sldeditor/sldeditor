@@ -40,6 +40,7 @@ import org.opengis.parameter.Parameter;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.function.geometry.BBox;
 import com.sldeditor.filter.v2.function.geometry.Contains;
@@ -79,7 +80,6 @@ import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.vividsolutions.jts.geom.Geometry;
@@ -331,7 +331,7 @@ public class FilterManager implements FilterNameInterface {
                 Parameter<?> parameterType = functionName.getArguments().get(argIndex);
 
                 boolean valueOnly = false;
-                FieldId id = FieldId.getUnknownValue();
+                FieldIdEnum id = FieldIdEnum.UNKNOWN;
 
                 if(index > 0)
                 {

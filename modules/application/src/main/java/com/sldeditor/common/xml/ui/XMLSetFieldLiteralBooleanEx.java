@@ -19,7 +19,6 @@
 package com.sldeditor.common.xml.ui;
 
 import com.sldeditor.common.xml.TestValueVisitor;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The Class XMLSetFieldLiteralBooleanEx.
@@ -35,7 +34,7 @@ public class XMLSetFieldLiteralBooleanEx extends XMLSetFieldLiteralBoolean imple
      * @param fieldId the field id
      */
     @Override
-    public void accept(TestValueVisitor visitor, FieldId fieldId) {
+    public void accept(TestValueVisitor visitor, FieldIdEnum fieldId) {
         visitor.setTestValue(fieldId, this.value);
       }
 }

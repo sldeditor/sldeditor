@@ -31,7 +31,6 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -49,8 +48,7 @@ public class ExtractGeometryFieldTest {
     public void testGetGeometryField() {
         assertNull(ExtractGeometryField.getGeometryField(null));
 
-        FieldIdEnum fieldEnum = FieldIdEnum.GEOMETRY;
-        FieldId fieldId = new FieldId(fieldEnum);
+        FieldIdEnum fieldId = FieldIdEnum.GEOMETRY;
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(Geometry.class);
 

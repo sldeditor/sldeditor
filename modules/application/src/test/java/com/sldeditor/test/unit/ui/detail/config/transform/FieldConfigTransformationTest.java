@@ -44,7 +44,6 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 
@@ -65,7 +64,7 @@ public class FieldConfigTransformationTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +83,7 @@ public class FieldConfigTransformationTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigTransformation field2 = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field2 = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         // Text field will not have been created
         expectedValue = true;
@@ -109,7 +108,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -139,13 +138,13 @@ public class FieldConfigTransformationTest {
             }
         }
 
-        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
         field.createUI();
         String expectedValue1 = "test string value";
-        field.setTestValue(null, expectedValue1);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue1);
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedValue1.compareTo(actualExpression.toString()) == 0);
 
@@ -220,7 +219,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         String expectedDefaultValue = "default value";
         field.setDefaultValue(expectedDefaultValue);
@@ -252,14 +251,14 @@ public class FieldConfigTransformationTest {
     @Test
     public void testSetTestValueFieldIdString() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         String expectedTestValue = "test value";
-        field.setTestValue(new FieldId(FieldIdEnum.ANCHOR_POINT_V), expectedTestValue);
+        field.setTestValue(FieldIdEnum.ANCHOR_POINT_V, expectedTestValue);
         assertNull(field.getStringValue());
 
         field.createUI();
-        field.setTestValue(new FieldId(FieldIdEnum.ANCHOR_POINT_V), expectedTestValue);
+        field.setTestValue(FieldIdEnum.ANCHOR_POINT_V, expectedTestValue);
         assertTrue(expectedTestValue.compareTo(field.getStringValue()) == 0);
     }
 
@@ -283,12 +282,12 @@ public class FieldConfigTransformationTest {
             }
         }
 
-        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
         FieldConfigTransformation copy = (FieldConfigTransformation) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigTransformation) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -299,7 +298,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         field.attributeSelection("field");
         // Does nothing
@@ -312,7 +311,7 @@ public class FieldConfigTransformationTest {
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
 
         field.undoAction(null);
         field.redoAction(null);
@@ -322,13 +321,13 @@ public class FieldConfigTransformationTest {
         field.redoAction(null);
 
         String expectedTestValue = "test value";
-        field.setTestValue(null, expectedTestValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedTestValue);
         assertTrue(expectedTestValue.compareTo(field.getStringValue()) == 0);
 
         String expectedUndoTestValue = "undo value";
         String expectedRedoTestValue = "redo value";
 
-        UndoEvent undoEvent = new UndoEvent(null, new FieldId(), expectedUndoTestValue, expectedRedoTestValue);
+        UndoEvent undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, expectedUndoTestValue, expectedRedoTestValue);
         field.undoAction(undoEvent);
         assertTrue(expectedUndoTestValue.compareTo(field.getStringValue()) == 0);
 
@@ -336,7 +335,7 @@ public class FieldConfigTransformationTest {
         assertTrue(expectedRedoTestValue.compareTo(field.getStringValue()) == 0);
         
         // Increase code coverage status
-        undoEvent = new UndoEvent(null, new FieldId(), Integer.valueOf(0), Double.valueOf(10.0));
+        undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, Integer.valueOf(0), Double.valueOf(10.0));
         field.undoAction(undoEvent);
         field.redoAction(undoEvent);
     }

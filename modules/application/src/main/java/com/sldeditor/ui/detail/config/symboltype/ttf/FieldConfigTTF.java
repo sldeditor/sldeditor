@@ -47,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -356,11 +355,11 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the field map
      */
     @Override
-    public Map<FieldId, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
     {
-        Map<FieldId, FieldConfigBase> map = new HashMap<FieldId, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
-        map.put(new FieldId(FieldIdEnum.TTF_SYMBOL), this);
+        map.put(FieldIdEnum.TTF_SYMBOL, this);
 
         return map;
     }
@@ -481,7 +480,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
     }
 

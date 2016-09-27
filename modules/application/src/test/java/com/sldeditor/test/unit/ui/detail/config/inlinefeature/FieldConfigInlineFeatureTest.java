@@ -37,7 +37,6 @@ import com.sldeditor.test.unit.datasource.impl.DummyInlineSLDFile;
 import com.sldeditor.test.unit.datasource.impl.DummyInlineSLDFile2;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import com.vividsolutions.jts.geom.Geometry;
@@ -56,7 +55,7 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -79,7 +78,7 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testSetVisible() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -99,10 +98,10 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testGenerateExpression() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
         String testValue = null;
         field.populate(null);
-        field.setTestValue(null, testValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
         field.populateField(testValue);
 
         field.createUI();
@@ -121,7 +120,7 @@ public class FieldConfigInlineFeatureTest {
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(expectedValue2) == 0);
 
-        field.setTestValue(null, expectedValue2);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue2);
         actualValue = field.getStringValue();
         // The fids are different
         assertTrue(expectedValue2.compareTo(actualValue) != 0);
@@ -139,7 +138,7 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -172,12 +171,12 @@ public class FieldConfigInlineFeatureTest {
             }
         }
 
-        TestFieldConfigInlineFeature field = new TestFieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "", true));
+        TestFieldConfigInlineFeature field = new TestFieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "", true));
         FieldConfigInlineFeature copy = (FieldConfigInlineFeature) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigInlineFeature) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -187,7 +186,7 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
         field.attributeSelection(null);
 
         // Does nothing
@@ -199,7 +198,7 @@ public class FieldConfigInlineFeatureTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -228,9 +227,9 @@ public class FieldConfigInlineFeatureTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(42.0), Integer.valueOf(11)));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(42.0), Integer.valueOf(11)));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(454.0), Integer.valueOf(69)));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(454.0), Integer.valueOf(69)));
     }
 
 }

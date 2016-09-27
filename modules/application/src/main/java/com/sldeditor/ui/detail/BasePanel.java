@@ -42,6 +42,7 @@ import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -50,7 +51,6 @@ import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.PanelConfigInterface;
 import com.sldeditor.ui.detail.config.ReadPanelConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
@@ -146,7 +146,7 @@ public class BasePanel extends JPanel {
     private VendorOptionVersion vendorOptionVersion = null;
 
     /** The map of default field value. */
-    private Map<FieldId, Object> defaultFieldMap = null;
+    private Map<FieldIdEnum, Object> defaultFieldMap = null;
 
     /** The containing panel. */
     private JPanel containingPanel;
@@ -325,7 +325,7 @@ public class BasePanel extends JPanel {
     {
         if(updateSymbolListener != null)
         {
-            updateSymbolListener.dataChanged(FieldId.getUnknownValue());
+            updateSymbolListener.dataChanged(FieldIdEnum.UNKNOWN);
         }
     }
 
@@ -536,7 +536,7 @@ public class BasePanel extends JPanel {
      *
      * @param fieldId the field id
      */
-    protected void handleFieldState(FieldId fieldId)
+    protected void handleFieldState(FieldIdEnum fieldId)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
@@ -545,10 +545,10 @@ public class BasePanel extends JPanel {
             {
                 FieldConfigEnum fieldEnum = (FieldConfigEnum)fieldConfig;
 
-                Map<FieldId, Boolean> stateMap = fieldEnum.getFieldEnableState();
+                Map<FieldIdEnum, Boolean> stateMap = fieldEnum.getFieldEnableState();
                 if(stateMap != null)
                 {
-                    for(FieldId fieldKey : stateMap.keySet())
+                    for(FieldIdEnum fieldKey : stateMap.keySet())
                     {
                         enableField(fieldKey, stateMap.get(fieldKey));
                     }
@@ -571,10 +571,10 @@ public class BasePanel extends JPanel {
         {
             FieldConfigEnum fieldEnum = (FieldConfigEnum)field;
 
-            Map<FieldId, Boolean> stateMap = fieldEnum.getFieldEnableState();
+            Map<FieldIdEnum, Boolean> stateMap = fieldEnum.getFieldEnableState();
             if(stateMap != null)
             {
-                for(FieldId fieldKey : stateMap.keySet())
+                for(FieldIdEnum fieldKey : stateMap.keySet())
                 {
                     enableField(fieldKey, stateMap.get(fieldKey));
                 }
@@ -588,7 +588,7 @@ public class BasePanel extends JPanel {
      * @param fieldId the field id
      * @param enable the enable flag
      */
-    protected void enableField(FieldId fieldId, boolean enable)
+    protected void enableField(FieldIdEnum fieldId, boolean enable)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
@@ -606,7 +606,7 @@ public class BasePanel extends JPanel {
      *
      * @param fieldId the field id
      */
-    protected void setDefaultValue(FieldId fieldId)
+    protected void setDefaultValue(FieldIdEnum fieldId)
     {
         if(fieldConfigManager != null)
         {
@@ -625,7 +625,7 @@ public class BasePanel extends JPanel {
      * @param fieldId the field id
      * @param listener the listener
      */
-    protected void registerForTextFieldButton(FieldId fieldId, FieldConfigStringButtonInterface listener)
+    protected void registerForTextFieldButton(FieldIdEnum fieldId, FieldConfigStringButtonInterface listener)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
@@ -736,7 +736,7 @@ public class BasePanel extends JPanel {
      * @param fieldId the field id
      * @return the default field value
      */
-    protected Object getDefaultFieldValue(FieldId fieldId)
+    protected Object getDefaultFieldValue(FieldIdEnum fieldId)
     {
         return defaultFieldMap.get(fieldId);
     }

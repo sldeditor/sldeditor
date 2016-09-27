@@ -24,6 +24,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import com.sldeditor.ui.widgets.DecimalSpinner;
@@ -324,7 +325,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, double testValue) {
+    public void setTestValue(FieldIdEnum fieldId, double testValue) {
         populateField(testValue);
     }
 

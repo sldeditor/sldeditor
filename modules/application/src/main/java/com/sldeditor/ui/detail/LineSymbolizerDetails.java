@@ -26,7 +26,6 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -110,7 +109,7 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
      * @see com.sldeditor.marker.ui.UpdateSymbolInterface#dataChanged()
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 

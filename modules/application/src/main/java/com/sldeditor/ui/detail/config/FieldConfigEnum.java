@@ -32,6 +32,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -60,7 +61,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     private Map<String, ValueComboBoxData> comboDataMap = new HashMap<String, ValueComboBoxData>();
 
     /** The field map. */
-    private Map<Class<?>, Map<FieldId, Boolean> > fieldMap = new HashMap<Class<?>, Map<FieldId, Boolean> >();
+    private Map<Class<?>, Map<FieldIdEnum, Boolean> > fieldMap = new HashMap<Class<?>, Map<FieldIdEnum, Boolean> >();
 
     /** The default value. */
     private String defaultValue = "";
@@ -349,7 +350,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @return the field enable state
      */
-    public Map<FieldId, Boolean> getFieldEnableState()
+    public Map<FieldIdEnum, Boolean> getFieldEnableState()
     {
         ValueComboBoxData value = getEnumValue();
         if(value == null)
@@ -420,7 +421,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
 
         valueUpdated();

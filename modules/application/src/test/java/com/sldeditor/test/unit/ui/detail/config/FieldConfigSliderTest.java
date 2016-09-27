@@ -32,7 +32,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The unit test for FieldConfigSlider.
@@ -50,7 +49,7 @@ public class FieldConfigSliderTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -69,7 +68,7 @@ public class FieldConfigSliderTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigSlider field2 = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field2 = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -94,7 +93,7 @@ public class FieldConfigSliderTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -115,7 +114,7 @@ public class FieldConfigSliderTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         double defaultDefaultValue = 0.5;
         double expectedValue = 1.0;
@@ -165,7 +164,7 @@ public class FieldConfigSliderTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         double defaultDefaultValue = 0.5; 
         Double expectedDefaultValue = 0.42;
@@ -198,12 +197,12 @@ public class FieldConfigSliderTest {
             }
         }
 
-        TestFieldConfigSlider field = new TestFieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        TestFieldConfigSlider field = new TestFieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigSlider copy = (FieldConfigSlider) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigSlider) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -214,7 +213,7 @@ public class FieldConfigSliderTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Do nothing
@@ -227,7 +226,7 @@ public class FieldConfigSliderTest {
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigSlider field = new FieldConfigSlider(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -247,9 +246,9 @@ public class FieldConfigSliderTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
 
 }

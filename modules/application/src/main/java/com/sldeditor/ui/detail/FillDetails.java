@@ -49,7 +49,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
@@ -105,7 +104,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         symbolTypeFactory = new SymbolTypeFactory(FillDetails.class,
                 new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
                 new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
-                new FieldId(FieldIdEnum.SYMBOL_TYPE));
+                FieldIdEnum.SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(panelId);
 
@@ -154,7 +153,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      * @param changedField the changed field
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 
@@ -302,11 +301,11 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V, expAnchorPointY);
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X, expDisplacementX);
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y, expDisplacementY);
-        fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.FILL_COLOUR), expFillColour);
+        fieldConfigVisitor.populateColourField(FieldIdEnum.FILL_COLOUR, expFillColour);
         fieldConfigVisitor.populateField(FieldIdEnum.OPACITY, expOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.GAP, expGap);
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
-        fieldConfigVisitor.populateColourField(new FieldId(FieldIdEnum.STROKE_FILL_COLOUR), expStrokeColour);
+        fieldConfigVisitor.populateColourField(FieldIdEnum.STROKE_FILL_COLOUR, expStrokeColour);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_OPACITY, expStrokeColourOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_WIDTH, expStrokeWidth);
 
@@ -533,15 +532,14 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      */
     private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem)
     {
-        List<FieldId> list = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+        List<FieldIdEnum> list = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
 
         for(FieldConfigBase fieldConfig : this.getFieldConfigList())
         {
-            FieldId fieldId = fieldConfig.getFieldId();
-            FieldIdEnum field = fieldId.getFieldId();
-            if((field != FieldIdEnum.SYMBOL_TYPE) && (list != null))
+            FieldIdEnum fieldId = fieldConfig.getFieldId();
+            if((fieldId != FieldIdEnum.SYMBOL_TYPE) && (list != null))
             {
-                if(field != FieldIdEnum.UNKNOWN)
+                if(fieldId != FieldIdEnum.UNKNOWN)
                 {
                     boolean disable = !list.contains(fieldId);
                     fieldConfig.setFieldStateOverride(disable);

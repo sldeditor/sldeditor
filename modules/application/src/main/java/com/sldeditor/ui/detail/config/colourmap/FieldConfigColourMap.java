@@ -39,10 +39,10 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -345,7 +345,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ColorMap testValue) {
+    public void setTestValue(FieldIdEnum fieldId, ColorMap testValue) {
         populateField(testValue);
     }
 

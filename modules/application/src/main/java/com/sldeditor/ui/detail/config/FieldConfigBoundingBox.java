@@ -43,6 +43,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
@@ -409,7 +410,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue) {
+    public void setTestValue(FieldIdEnum fieldId, ReferencedEnvelope testValue) {
         populateField(testValue);
 
         valueUpdated();

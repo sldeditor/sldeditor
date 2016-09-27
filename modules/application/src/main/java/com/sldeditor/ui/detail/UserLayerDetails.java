@@ -35,7 +35,6 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -129,7 +128,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol(changedField);
     }
 
@@ -138,15 +137,15 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
      *
      * @param changedField the changed field
      */
-    private void updateSymbol(FieldId changedField) {
+    private void updateSymbol(FieldIdEnum changedField) {
         if(!Controller.getInstance().isPopulating())
         {
             UserLayer userLayer = getStyleFactory().createUserLayer();
-            String name = fieldConfigVisitor.getText(new FieldId(FieldIdEnum.NAME));
+            String name = fieldConfigVisitor.getText(FieldIdEnum.NAME);
             userLayer.setName(name);
 
             // Feature type constraints
-            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor.getFeatureTypeConstraint(new FieldId(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS));
+            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor.getFeatureTypeConstraint(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS);
             if((ftcList != null) && !ftcList.isEmpty())
             {
                 FeatureTypeConstraint[] ftcArray = new FeatureTypeConstraint[ftcList.size()];
@@ -205,7 +204,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
             // Update inline data sources if the inline data changed, reduces creation of datasources
             if(changedField != null)
             {
-                if(changedField.getFieldId() == FieldIdEnum.INLINE_FEATURE)
+                if(changedField == FieldIdEnum.INLINE_FEATURE)
                 {
                     DataSourceInterface dataSource = DataSourceFactory.getDataSource();
                     if(dataSource != null)

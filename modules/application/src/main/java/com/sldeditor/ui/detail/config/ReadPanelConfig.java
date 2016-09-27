@@ -28,6 +28,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ParseXML;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.PanelConfig;
 import com.sldeditor.common.xml.ui.XMLFieldConfigBoolean;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColour;
@@ -93,7 +94,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
     private String panelTitle;
 
     /** The map of default field value. */
-    private Map<FieldId, Object> defaultFieldMap = new HashMap<FieldId, Object>();
+    private Map<FieldIdEnum, Object> defaultFieldMap = new HashMap<FieldIdEnum, Object>();
 
     /**
      * Default constructor
@@ -293,7 +294,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
      */
     private void addField(Class<?> localisationClass, Class<?> panelId, GroupConfig groupConfig, XMLFieldConfigData xmlFieldConfig) {
 
-        FieldId id = new FieldId(xmlFieldConfig.getId());
+        FieldIdEnum id = xmlFieldConfig.getId();
         String label = getLocalisedText(localisationClass, xmlFieldConfig.getLabel());
         boolean valueOnly = xmlFieldConfig.isValueOnly();
         String defaultValue = xmlFieldConfig.getDefault();
@@ -552,7 +553,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             for(XMLFieldConfigEnumValueField field : fieldList.getField())
             {
-                config.addField(new FieldId(field.getId()), field.isEnabled());
+                config.addField(field.getId(), field.isEnabled());
             }
         }
         return config;
@@ -596,7 +597,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the defaultFieldMap
      */
     @Override
-    public Map<FieldId, Object> getDefaultFieldMap() {
+    public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return defaultFieldMap;
     }
 }

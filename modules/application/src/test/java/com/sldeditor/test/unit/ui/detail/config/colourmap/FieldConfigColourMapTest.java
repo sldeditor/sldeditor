@@ -25,7 +25,6 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -43,7 +42,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -66,7 +65,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testSetVisible() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -87,10 +86,10 @@ public class FieldConfigColourMapTest {
     @Test
     public void testGenerateExpression() {
 
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         ColorMap testValue = null;
         field.populate(null);
-        field.setTestValue(null, testValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
         field.populateField(testValue);
 
         field.createUI();
@@ -105,7 +104,7 @@ public class FieldConfigColourMapTest {
         ColorMapEntryImpl entry = new ColorMapEntryImpl();
         entry.setColor(ff.literal("#001122"));
         expectedValue2.addColorMapEntry(entry);
-        field.setTestValue(null, expectedValue2);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue2);
         assertEquals(expectedValue2.getColorMapEntries().length, field.getColourMap().getColorMapEntries().length);
 
         field.populateExpression((String)null);
@@ -116,7 +115,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.revertToDefaultValue();
         assertNull(field.getColourMap());
@@ -145,12 +144,12 @@ public class FieldConfigColourMapTest {
             }
         }
 
-        TestFieldConfigColourMap field = new TestFieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        TestFieldConfigColourMap field = new TestFieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         FieldConfigColourMap copy = (FieldConfigColourMap) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigColourMap) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -160,7 +159,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         field.attributeSelection(null);
 
         // Does nothing
@@ -172,7 +171,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -196,9 +195,9 @@ public class FieldConfigColourMapTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
 
     /**
@@ -206,7 +205,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testGetStringValue() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         assertNull(field.getStringValue());
     }
@@ -215,7 +214,7 @@ public class FieldConfigColourMapTest {
      */
     @Test
     public void testColourMapUpdated() {
-        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", true));
+        FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.createUI();
         field.colourMapUpdated();

@@ -28,7 +28,6 @@ import org.junit.Test;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * Unit test for UndoManager class.
@@ -50,11 +49,11 @@ public class UndoManagerTest {
         UndoManager instance = UndoManager.getInstance();
         instance.addListener(listener);
 
-        UndoEvent event1 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event2 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event3 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DISPLACEMENT_Y), Integer.valueOf(20), Integer.valueOf(900));
-        UndoEvent event4 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DEFAULT_STYLE), Boolean.TRUE, Boolean.FALSE);
-        UndoEvent event5 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.HALO_RADIUS), Double.valueOf(44.3), Double.valueOf(67.5));
+        UndoEvent event1 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event2 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event3 = new UndoEvent(parentListener, FieldIdEnum.DISPLACEMENT_Y, Integer.valueOf(20), Integer.valueOf(900));
+        UndoEvent event4 = new UndoEvent(parentListener, FieldIdEnum.DEFAULT_STYLE, Boolean.TRUE, Boolean.FALSE);
+        UndoEvent event5 = new UndoEvent(parentListener, FieldIdEnum.HALO_RADIUS, Double.valueOf(44.3), Double.valueOf(67.5));
 
         instance.addUndoEvent(event1);
         assertTrue(listener.undoAllowed);
@@ -121,7 +120,7 @@ public class UndoManagerTest {
         assertEquals(event1, parentListener.redoAction);
 
         // Add new event when the undo pointer is not at the end
-        UndoEvent event10 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ALIGN), Integer.valueOf(19), Integer.valueOf(20));
+        UndoEvent event10 = new UndoEvent(parentListener, FieldIdEnum.ALIGN, Integer.valueOf(19), Integer.valueOf(20));
 
         // Expecting the undo events from the pointer onwards to be deleted and replaced with new event
         parentListener.undoAction = null;
@@ -148,11 +147,11 @@ public class UndoManagerTest {
 
         UndoManager.getInstance().addListener(listener);
 
-        UndoEvent event1 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event2 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event3 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DISPLACEMENT_Y), Integer.valueOf(20), Integer.valueOf(900));
-        UndoEvent event4 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DEFAULT_STYLE), Boolean.TRUE, Boolean.FALSE);
-        UndoEvent event5 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.HALO_RADIUS), Double.valueOf(44.3), Double.valueOf(67.5));
+        UndoEvent event1 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event2 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event3 = new UndoEvent(parentListener, FieldIdEnum.DISPLACEMENT_Y, Integer.valueOf(20), Integer.valueOf(900));
+        UndoEvent event4 = new UndoEvent(parentListener, FieldIdEnum.DEFAULT_STYLE, Boolean.TRUE, Boolean.FALSE);
+        UndoEvent event5 = new UndoEvent(parentListener, FieldIdEnum.HALO_RADIUS, Double.valueOf(44.3), Double.valueOf(67.5));
 
         UndoManager.getInstance().addUndoEvent(event1);
         UndoManager.getInstance().addUndoEvent(event2);
@@ -175,11 +174,11 @@ public class UndoManagerTest {
 
         UndoManager.getInstance().addListener(listener);
 
-        UndoEvent event1 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event2 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event3 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DISPLACEMENT_Y), Integer.valueOf(20), Integer.valueOf(900));
-        UndoEvent event4 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DEFAULT_STYLE), Boolean.TRUE, Boolean.FALSE);
-        UndoEvent event5 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.HALO_RADIUS), Double.valueOf(44.3), Double.valueOf(67.5));
+        UndoEvent event1 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event2 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event3 = new UndoEvent(parentListener, FieldIdEnum.DISPLACEMENT_Y, Integer.valueOf(20), Integer.valueOf(900));
+        UndoEvent event4 = new UndoEvent(parentListener, FieldIdEnum.DEFAULT_STYLE, Boolean.TRUE, Boolean.FALSE);
+        UndoEvent event5 = new UndoEvent(parentListener, FieldIdEnum.HALO_RADIUS, Double.valueOf(44.3), Double.valueOf(67.5));
 
         UndoManager.getInstance().addUndoEvent(event1);
         assertTrue(listener.undoAllowed);
@@ -211,11 +210,11 @@ public class UndoManagerTest {
         DummyPopulating populationCheck = new DummyPopulating();
         UndoManager.getInstance().setPopulationCheck(populationCheck);
 
-        UndoEvent event1 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event2 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.ANCHOR_POINT_H), Integer.valueOf(2), Integer.valueOf(3));
-        UndoEvent event3 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DISPLACEMENT_Y), Integer.valueOf(20), Integer.valueOf(900));
-        UndoEvent event4 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.DEFAULT_STYLE), Boolean.TRUE, Boolean.FALSE);
-        UndoEvent event5 = new UndoEvent(parentListener, new FieldId(FieldIdEnum.HALO_RADIUS), Double.valueOf(44.3), Double.valueOf(67.5));
+        UndoEvent event1 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event2 = new UndoEvent(parentListener, FieldIdEnum.ANCHOR_POINT_H, Integer.valueOf(2), Integer.valueOf(3));
+        UndoEvent event3 = new UndoEvent(parentListener, FieldIdEnum.DISPLACEMENT_Y, Integer.valueOf(20), Integer.valueOf(900));
+        UndoEvent event4 = new UndoEvent(parentListener, FieldIdEnum.DEFAULT_STYLE, Boolean.TRUE, Boolean.FALSE);
+        UndoEvent event5 = new UndoEvent(parentListener, FieldIdEnum.HALO_RADIUS, Double.valueOf(44.3), Double.valueOf(67.5));
 
         UndoManager.getInstance().addUndoEvent(event1);
         assertTrue(listener.undoAllowed);

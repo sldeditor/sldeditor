@@ -37,10 +37,10 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -222,7 +222,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
 
                         if(parent != null)
                         {
-                            parent.dataChanged(FieldId.getUnknownValue());
+                            parent.dataChanged(FieldIdEnum.UNKNOWN);
                         }
                     }
                 });

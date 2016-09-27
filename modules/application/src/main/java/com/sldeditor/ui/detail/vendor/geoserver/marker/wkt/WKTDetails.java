@@ -36,7 +36,6 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -77,7 +76,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     private void createUI() {
         readConfigFileNoScrollPane(this, "symboltype/WKT.xml");
 
-        registerForTextFieldButton(new FieldId(FieldIdEnum.WKT), this);
+        registerForTextFieldButton(FieldIdEnum.WKT, this);
     }
 
     /**
@@ -115,7 +114,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 
@@ -226,7 +225,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             
             fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, wktString);
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, new FieldId(FieldIdEnum.WKT), oldValueObj, wktString));
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.WKT, oldValueObj, wktString));
 
             oldValueObj = wktString;
 

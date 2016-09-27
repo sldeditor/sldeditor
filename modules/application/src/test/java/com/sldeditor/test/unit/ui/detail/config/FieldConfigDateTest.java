@@ -39,7 +39,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -59,7 +58,7 @@ public class FieldConfigDateTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -78,7 +77,7 @@ public class FieldConfigDateTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigDate field2 = new FieldConfigDate(new FieldConfigCommonData(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigDate field2 = new FieldConfigDate(new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -103,7 +102,7 @@ public class FieldConfigDateTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -137,7 +136,7 @@ public class FieldConfigDateTest {
             }
         }
 
-        TestFieldConfigDate field = new TestFieldConfigDate(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        TestFieldConfigDate field = new TestFieldConfigDate(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -168,7 +167,7 @@ public class FieldConfigDateTest {
         assertTrue(dateFormat1aString.compareTo(actualExpression.toString()) == 0);
 
         String dateTime2 = "23-05-2015 11:56:47";
-        field.setTestValue(null, dateTime2);
+        field.setTestValue(FieldIdEnum.UNKNOWN, dateTime2);
         Date dateTime21 = null;
         try {
             dateTime21 = f.parse(dateTime2);
@@ -187,7 +186,7 @@ public class FieldConfigDateTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         String expectedDefaultValue = "default value";
         field.revertToDefaultValue();
@@ -217,12 +216,12 @@ public class FieldConfigDateTest {
             }
         }
 
-        TestFieldConfigDate field = new TestFieldConfigDate(new FieldConfigCommonData(Geometry.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        TestFieldConfigDate field = new TestFieldConfigDate(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigDate copy = (FieldConfigDate) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigDate) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -233,7 +232,7 @@ public class FieldConfigDateTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly));
+        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Does nothing
@@ -245,7 +244,7 @@ public class FieldConfigDateTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, new FieldId(FieldIdEnum.NAME), "label", false));
+        FieldConfigDate field = new FieldConfigDate(new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -282,9 +281,9 @@ public class FieldConfigDateTest {
         assertTrue(actualValue.compareTo(dateFormat2String) == 0);
 
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), "", "new"));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
 
 }

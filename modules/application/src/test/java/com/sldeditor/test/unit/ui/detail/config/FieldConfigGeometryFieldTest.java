@@ -38,7 +38,6 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometryField;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -268,7 +267,7 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -291,7 +290,7 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testSetVisible() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -322,7 +321,7 @@ public class FieldConfigGeometryFieldTest {
             }
         }
 
-        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", false));
+        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -334,7 +333,7 @@ public class FieldConfigGeometryFieldTest {
         field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
 
         String expectedValue = "";
-        field.setTestValue(null, expectedValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue);
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
 
@@ -363,7 +362,7 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
 
         TestDataSource testDataSource = new TestDataSource();
         String expectedDefaultValue = testDataSource.getDefaultGeometryField();
@@ -399,13 +398,13 @@ public class FieldConfigGeometryFieldTest {
             }
         }
 
-        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", true));
+        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
 
         FieldConfigGeometryField copy = (FieldConfigGeometryField) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigGeometryField) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -417,7 +416,7 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
 
         field.undoAction(null);
         field.redoAction(null);
@@ -433,13 +432,13 @@ public class FieldConfigGeometryFieldTest {
         field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
 
         String expectedTestValue = testDataSource.getDefaultGeometryField();
-        field.setTestValue(null, expectedTestValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedTestValue);
         assertTrue(expectedTestValue.compareTo(field.getStringValue()) == 0);
 
         String expectedUndoTestValue = "";
         String expectedRedoTestValue = testDataSource.getDefaultGeometryField();
 
-        UndoEvent undoEvent = new UndoEvent(null, new FieldId(), expectedUndoTestValue, expectedRedoTestValue);
+        UndoEvent undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, expectedUndoTestValue, expectedRedoTestValue);
         field.undoAction(undoEvent);
         assertTrue(expectedUndoTestValue.compareTo(field.getStringValue()) == 0);
 
@@ -452,7 +451,7 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class, new FieldId(FieldIdEnum.NAME), "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
 
         field.attributeSelection("field");
         // Does nothing

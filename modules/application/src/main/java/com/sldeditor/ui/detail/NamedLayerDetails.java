@@ -30,7 +30,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -88,7 +87,7 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 
@@ -98,12 +97,12 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
     private void updateSymbol() {
         if(!Controller.getInstance().isPopulating())
         {
-            String name = fieldConfigVisitor.getText(new FieldId(FieldIdEnum.NAME));
+            String name = fieldConfigVisitor.getText(FieldIdEnum.NAME);
             NamedLayer namedLayer = getStyleFactory().createNamedLayer();
             namedLayer.setName(name);
 
             // Feature type constraints
-            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor.getFeatureTypeConstraint(new FieldId(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS));
+            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor.getFeatureTypeConstraint(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS);
             if((ftcList != null) && !ftcList.isEmpty())
             {
                 FeatureTypeConstraint[] ftcArray = new FeatureTypeConstraint[ftcList.size()];

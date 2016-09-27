@@ -23,7 +23,6 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.xml.TestValueVisitor;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The Class XMLSetFieldAttributeEx.
@@ -42,7 +41,7 @@ public class XMLSetFieldAttributeEx extends XMLSetFieldAttribute implements XMLS
      * @param fieldId the field id
      */
     @Override
-    public void accept(TestValueVisitor visitor, FieldId fieldId) {
+    public void accept(TestValueVisitor visitor, FieldIdEnum fieldId) {
 
         Expression attributeExpression = ff.property(this.attribute);
 

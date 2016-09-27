@@ -34,7 +34,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 
@@ -60,22 +59,22 @@ public class GraphicPanelFieldManagerTest {
     public void testGraphicPanelFieldManager() {
         // Try with a null panel id
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(null);
-        assertNull(mgr.get(new FieldId(FieldIdEnum.FILTER)));
+        assertNull(mgr.get(FieldIdEnum.FILTER));
 
         Class<?> expectedPanelId = StrokeDetails.class;
         mgr = new GraphicPanelFieldManager(expectedPanelId);
 
-        assertEquals(FieldId.getUnknownValue().getFieldId(), mgr.getFieldEnum(FillDetails.class, null).getFieldId());
+        assertEquals(FieldIdEnum.UNKNOWN, mgr.getFieldEnum(FillDetails.class, null));
         assertEquals(expectedPanelId, mgr.getComponentId());
 
         // Now try with a field
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
 
         mgr.addField(null);
         mgr.addField(stringField);
-        FieldId actualFieldId = mgr.getFieldEnum(expectedPanelId, stringField);
-        assertEquals(expectedFieldId.getFieldId(), actualFieldId.getFieldId());
+        FieldIdEnum actualFieldId = mgr.getFieldEnum(expectedPanelId, stringField);
+        assertEquals(expectedFieldId, actualFieldId);
         assertNull(mgr.getData(null, null));
         assertNull(mgr.getData(expectedPanelId, null));
         assertEquals(stringField, mgr.getData(expectedPanelId, actualFieldId));
@@ -92,7 +91,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId = StrokeDetails.class;
         mgr = new GraphicPanelFieldManager(expectedPanelId);
 
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr.addField(stringField);
         assertTrue(mgr.getFields(FieldConfigBoolean.class).isEmpty());
@@ -110,7 +109,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId = StrokeDetails.class;
         GraphicPanelFieldManager mgr1 = new GraphicPanelFieldManager(expectedPanelId);
 
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr1.addField(stringField);
         assertTrue(mgr1.getFields(FieldConfigBoolean.class).isEmpty());
@@ -121,7 +120,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId2 = FillDetails.class;
         GraphicPanelFieldManager mgr2 = new GraphicPanelFieldManager(expectedPanelId2);
 
-        FieldId expectedFieldId2 = new FieldId(FieldIdEnum.ANGLE);
+        FieldIdEnum expectedFieldId2 = FieldIdEnum.ANGLE;
         FieldConfigDouble doubleField = new FieldConfigDouble(new FieldConfigCommonData(Double.class, expectedFieldId2, "test label", false));
         mgr2.addField(doubleField);
         assertEquals(1, mgr2.getFields(FieldConfigDouble.class).size());
@@ -129,11 +128,11 @@ public class GraphicPanelFieldManagerTest {
         // Add manager 2 to manager 1
         mgr1.add(mgr2);
 
-        FieldId actualFieldId = mgr1.getFieldEnum(expectedPanelId, stringField);
-        assertEquals(expectedFieldId.getFieldId(), actualFieldId.getFieldId());
+        FieldIdEnum actualFieldId = mgr1.getFieldEnum(expectedPanelId, stringField);
+        assertEquals(expectedFieldId, actualFieldId);
 
         actualFieldId = mgr1.getFieldEnum(expectedPanelId2, doubleField);
-        assertEquals(expectedFieldId2.getFieldId(), actualFieldId.getFieldId());
+        assertEquals(expectedFieldId2, actualFieldId);
     }
 
     /**
@@ -145,7 +144,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId = StrokeDetails.class;
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr.addField(stringField);
 
@@ -170,7 +169,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId = StrokeDetails.class;
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
         mgr.addField(stringField);
 
@@ -194,7 +193,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId = StrokeDetails.class;
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
-        FieldId expectedFieldId = new FieldId(FieldIdEnum.NAME);
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         FieldConfigString stringField = new FieldConfigString(new FieldConfigCommonData(String.class, expectedFieldId, "test label", false), "button text");
 
         mgr.removeField(null);
@@ -202,12 +201,12 @@ public class GraphicPanelFieldManagerTest {
         mgr.removeField(stringField);
 
         mgr.addField(stringField);
-        FieldId actualFieldId = mgr.getFieldEnum(expectedPanelId, stringField);
+        FieldIdEnum actualFieldId = mgr.getFieldEnum(expectedPanelId, stringField);
         assertEquals(stringField, mgr.getData(expectedPanelId, actualFieldId));
 
         mgr.removeField(stringField);
         actualFieldId = mgr.getFieldEnum(expectedPanelId, stringField);
-        assertEquals(FieldIdEnum.UNKNOWN, actualFieldId.getFieldId());
+        assertEquals(FieldIdEnum.UNKNOWN, actualFieldId);
     }
 
 }

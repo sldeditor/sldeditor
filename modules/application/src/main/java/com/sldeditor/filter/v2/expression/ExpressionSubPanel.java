@@ -39,6 +39,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableField;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -47,7 +48,6 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -314,7 +314,7 @@ public class ExpressionSubPanel extends JPanel {
             fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
                 @Override
-                public void dataChanged(FieldId changedField) {
+                public void dataChanged(FieldIdEnum changedField) {
                     buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
                     updateButtonState(true);
                 }

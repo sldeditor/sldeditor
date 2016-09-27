@@ -30,8 +30,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -106,7 +106,7 @@ public class LiteralPanel extends JPanel {
             fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
                 @Override
-                public void dataChanged(FieldId changedField) {
+                public void dataChanged(FieldIdEnum changedField) {
                     updateButtonState(true);
                 }
             });
