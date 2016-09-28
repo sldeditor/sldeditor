@@ -58,6 +58,9 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
     /** The expression being configured. */
     private Expression storedExpression = null;
 
+    /** The is raster symbol flag. */
+    private boolean isRasterSymbol = false;
+
     /**
      * Gets the panel name.
      *
@@ -73,9 +76,8 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      *
      * @param parentObj the parent obj
      * @param expectedDataType the expected data type
-     * @param isRasterSymbol the is raster symbol flag
      */
-    public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType, boolean isRasterSymbol)
+    public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType)
     {
         setLayout(new BorderLayout(0, 0));
 
@@ -96,20 +98,20 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
                 if(expressionPanel.showDialog())
                 {
                     Expression expression = expressionPanel.getExpression();
-                    
-                    populateExpression(expression);
+
+                    populateExpression(expression, isRasterSymbol);
 
                     if(parentObj != null)
                     {
                         parentObj.updateSymbol();
                     }
 
-//                    String expressionString = expressionPanel.getExpressionString();
-//
-//                    if(expressionString != null)
-//                    {
-//                        createExpression(expressionString);
-//                    }
+                    //                    String expressionString = expressionPanel.getExpressionString();
+                    //
+                    //                    if(expressionString != null)
+                    //                    {
+                    //                        createExpression(expressionString);
+                    //                    }
                 }
             }
         });
@@ -131,7 +133,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
             try {
                 expression = CQL.toExpression(expressionTextField.getText());
             } catch (CQLException e) {
-           //     ConsoleManager.getInstance().exception(this, e);
+                //     ConsoleManager.getInstance().exception(this, e);
             }
             return expression;
         }
@@ -143,9 +145,12 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      * Populate expression.
      *
      * @param expression the expression
+     * @param isRasterSymbol the is raster symbol flag
      */
-    public void populateExpression(Expression expression) {
+    public void populateExpression(Expression expression, boolean isRasterSymbol) {
         this.storedExpression = expression;
+        this.isRasterSymbol = isRasterSymbol;
+
         String expressionString = "";
 
         if(expression != null)

@@ -1102,4 +1102,16 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
             fieldPanel.add(component);
         }
     }
+
+    /**
+     * Update attribute selection.
+     *
+     * @param isRasterSymbol the is raster symbol flag
+     */
+    public void updateAttributeSelection(boolean isRasterSymbol) {
+        if(attributeSelectionPanel != null)
+        {
+            attributeSelectionPanel.updateAttributeSelection(isRasterSymbol);
+        }
+    }
 }

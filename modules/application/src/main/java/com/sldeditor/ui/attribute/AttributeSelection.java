@@ -49,7 +49,6 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
-import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 
 /**
  * A panel to allow the user to specify whether field's contents is either:
@@ -96,6 +95,9 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
     /** The field. */
     private FieldConfigBase field = null;
 
+    /** The is raster symbol flag. */
+    private boolean isRasterSymbol = false;
+
     /**
      * Gets the panel width.
      *
@@ -110,33 +112,20 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param expectedDataType the expected data type
      * @param field the field
-     * @param allowedExpressionTypes the allowed expression types
      */
     private AttributeSelection(Class<?> expectedDataType,
-            FieldConfigBase field, 
-            List<ExpressionTypeEnum> allowedExpressionTypes) {
+            FieldConfigBase field) {
 
         this.field = field;
+        if(field != null)
+        {
+            this.isRasterSymbol = field.isRasterSymbol();
+        }
+
         setLayout(new BorderLayout(0, 0));
         setPreferredSize(new Dimension(100, BasePanel.WIDGET_HEIGHT));
 
-        List<String> allowedList = new ArrayList<String>();
-        if(allowedExpressionTypes.contains(ExpressionTypeEnum.E_VALUE))
-        {
-            allowedList.add(ValueSubPanel.getPanelName());
-        }
-
-        if(allowedExpressionTypes.contains(ExpressionTypeEnum.E_ATTRIBUTE))
-        {
-            allowedList.add(DataSourceAttributePanel.getPanelName());
-        }
-
-        if(allowedExpressionTypes.contains(ExpressionTypeEnum.E_EXPRESSION))
-        {
-            allowedList.add(ExpressionSubPanel.getPanelName());
-        }
-
-        createUI(expectedDataType, allowedList, field.isRasterSymbol());
+        createUI(expectedDataType);
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         if(dataSource != null)
@@ -162,11 +151,9 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * Creates the ui.
      *
      * @param expectedDataType the expected data type
-     * @param allowedList the allowed list
-     * @param isRasterSymbol the is raster symbol
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void createUI(Class<?> expectedDataType, List<String> allowedList, boolean isRasterSymbol) {
+    @SuppressWarnings({ "unchecked" })
+    private void createUI(Class<?> expectedDataType) {
         final UndoActionInterface thisObj = this;
 
         outerPanel = new JPanel();
@@ -175,12 +162,11 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
 
         valuePanel = createValuePanel(false);
 
-        expressionPanel = createExpressionPanel(expectedDataType, isRasterSymbol);
+        expressionPanel = createExpressionPanel(expectedDataType);
 
         dataSourceAttributePanel = createDataSourceAttributePanel(expectedDataType);
 
         attributeChooserComboBox = new JComboBox<String>();
-        attributeChooserComboBox.setModel(new DefaultComboBoxModel(allowedList.toArray()));
         attributeChooserComboBox.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -217,11 +203,10 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * Creates the expression panel.
      *
      * @param expectedDataType the expected data type
-     * @param isRasterSymbol the is raster symbol flag
      * @return the j panel
      */
-    private ExpressionSubPanel createExpressionPanel(Class<?> expectedDataType, boolean isRasterSymbol) {
-        ExpressionSubPanel panel = new ExpressionSubPanel(this, expectedDataType, isRasterSymbol);
+    private ExpressionSubPanel createExpressionPanel(Class<?> expectedDataType) {
+        ExpressionSubPanel panel = new ExpressionSubPanel(this, expectedDataType);
         outerPanel.add(panel, ExpressionSubPanel.getPanelName());
 
         return panel;
@@ -308,7 +293,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
             }
             else
             {
-                expressionPanel.populateExpression(expression);
+                expressionPanel.populateExpression(expression, isRasterSymbol);
             }
         }
     }
@@ -490,16 +475,33 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
             FieldConfigBase field,
             boolean rasterSymbol)
     {
-        List<ExpressionTypeEnum> allowedList = new ArrayList<ExpressionTypeEnum>();
-        allowedList.add(ExpressionTypeEnum.E_VALUE);
-        if(!rasterSymbol)
-        {
-            allowedList.add(ExpressionTypeEnum.E_ATTRIBUTE);
-        }
-        allowedList.add(ExpressionTypeEnum.E_EXPRESSION);
-
-        AttributeSelection obj = new AttributeSelection(expectedDataType, field, allowedList);
+        AttributeSelection obj = new AttributeSelection(expectedDataType, field);
+        obj.updateAttributeSelection(rasterSymbol);
 
         return obj;
+    }
+
+    /**
+     * Update attribute selection.
+     *
+     * @param isRasterSymbol the is raster symbol
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void updateAttributeSelection(boolean isRasterSymbol) {
+        this.isRasterSymbol = isRasterSymbol;
+
+        List<String> allowedItemList = new ArrayList<String>();
+        allowedItemList.add(ValueSubPanel.getPanelName());
+
+        if(!isRasterSymbol)
+        {
+            allowedItemList.add(DataSourceAttributePanel.getPanelName());
+        }
+        allowedItemList.add(ExpressionSubPanel.getPanelName());
+
+        if(attributeChooserComboBox != null)
+        {
+            attributeChooserComboBox.setModel(new DefaultComboBoxModel(allowedItemList.toArray()));
+        }
     }
 }

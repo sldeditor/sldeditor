@@ -1140,11 +1140,29 @@ public class SelectedSymbol {
     }
 
     /**
-     * Checks if is raster symbol.
+     * Checks if the selected Style contains a raster symbol.
      *
      * @return true, if is raster symbol
      */
     public boolean isRasterSymbol() {
+        Style style = getStyle();
+
+        if(style != null)
+        {
+            for(FeatureTypeStyle fts : style.featureTypeStyles())
+            {
+                for(Rule rule : fts.rules())
+                {
+                    for(Symbolizer symbolizer : rule.symbolizers())
+                    {
+                        if(symbolizer instanceof RasterSymbolizer)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 }
