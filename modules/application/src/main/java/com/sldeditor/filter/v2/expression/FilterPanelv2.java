@@ -163,13 +163,14 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      *
      * @param title the title
      * @param fieldType the field type
+     * @param isRasterSymbol the is raster symbol flag
      */
     @Override
-    public void configure(String title, Class<?> fieldType) {
+    public void configure(String title, Class<?> fieldType, boolean isRasterSymbol) {
 
         setTitle(title);
 
-        expressionPanel.setDataType(fieldType);
+        expressionPanel.setDataType(fieldType, isRasterSymbol);
         propertyPanel.setDataType(fieldType);
         envVarPanel.setDataType(fieldType);
 

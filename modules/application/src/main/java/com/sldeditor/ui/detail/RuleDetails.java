@@ -97,7 +97,9 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
                 public void actionPerformed(ActionEvent e) {
                     FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
 
-                    filterPanel.configure(Localisation.getString(RuleDetails.class, "RuleDetails.panelTitle"), Object.class);
+                    String panelTitle = Localisation.getString(RuleDetails.class, "RuleDetails.panelTitle");
+                    filterPanel.configure(panelTitle, Object.class,
+                            SelectedSymbol.getInstance().isRasterSymbol());
 
                     Rule rule = SelectedSymbol.getInstance().getRule();
                     if(rule != null)

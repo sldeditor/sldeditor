@@ -35,6 +35,8 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
 import org.opengis.filter.expression.Literal;
 
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -167,15 +169,23 @@ public class FunctionManager implements FunctionNameInterface {
      * Gets the function name list for the given parameter type
      * A expectedType of null returns all functions.
      *
-     * @param expectedType the expected type, restrict functions with this return type 
+     * @param expectedType the expected type, restrict functions with this return type
+     * @param functionNameFilterList the function name filter list
      * @return the function name list
      */
     @Override
-    public List<FunctionName> getFunctionNameList(Class<?> expectedType)
+    public List<FunctionName> getFunctionNameList(Class<?> expectedType,
+            List<FunctionNameFilterInterface> functionNameFilterList)
     {
         if(expectedType == null)
         {
             return functionNameList;
+        }
+
+        if(functionNameFilterList == null)
+        {
+            functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+            functionNameFilterList.add(new FunctionNameFilterAll());
         }
 
         List<FunctionName> list = new ArrayList<FunctionName>();
@@ -187,13 +197,32 @@ public class FunctionManager implements FunctionNameInterface {
             {
                 Class<?> returnType = functionName.getReturn().getType();
 
-                if(allowedTypes.contains(returnType))
+                if(allowedTypes.contains(returnType) && matchesFilter(functionName, functionNameFilterList))
                 {
                     list.add(functionName);
                 }
             }
         }
         return list;
+    }
+
+    /**
+     * Checks to see if FunctionName matches filter.
+     *
+     * @param functionName the function name
+     * @param functionNameFilterList the function name filter list
+     * @return true, if successful
+     */
+    private boolean matchesFilter(FunctionName functionName,
+            List<FunctionNameFilterInterface> functionNameFilterList) {
+        for(FunctionNameFilterInterface filter : functionNameFilterList)
+        {
+            if(filter.accept(functionName))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

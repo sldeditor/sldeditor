@@ -96,11 +96,18 @@ public class ReadPanelConfig implements PanelConfigInterface {
     /** The map of default field value. */
     private Map<FieldIdEnum, Object> defaultFieldMap = new HashMap<FieldIdEnum, Object>();
 
+    /** The is raster symbol flag. */
+    private boolean isRasterSymbol = false;
+
     /**
-     * Default constructor
+     * Default constructor.
+     *
+     * @param isRasterSymbol the is raster symbol
      */
-    public ReadPanelConfig()
+    public ReadPanelConfig(boolean isRasterSymbol)
     {
+        this.isRasterSymbol = isRasterSymbol;
+
         // Force it so that standard fields are always loaded
         Localisation.preload(ReadPanelConfig.class);
     }
@@ -299,7 +306,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         boolean valueOnly = xmlFieldConfig.isValueOnly();
         String defaultValue = xmlFieldConfig.getDefault();
 
-        FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly);
+        FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly, isRasterSymbol);
 
         if(xmlFieldConfig instanceof XMLFieldConfigString)
         {

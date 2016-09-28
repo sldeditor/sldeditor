@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +35,8 @@ import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.function.FunctionManager;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 
 /**
  * Unit test for FunctionManager class.
@@ -64,16 +67,19 @@ public class FunctionManagerTest {
                 count ++;
             }
         }
-        List<FunctionName> actualList = FunctionManager.getInstance().getFunctionNameList(Number.class);
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+        functionNameFilterList.add(new FunctionNameFilterAll());
+
+        List<FunctionName> actualList = FunctionManager.getInstance().getFunctionNameList(Number.class, functionNameFilterList);
 
         assertEquals(count, actualList.size());
 
         // Try with null
-        actualList = FunctionManager.getInstance().getFunctionNameList(null);
+        actualList = FunctionManager.getInstance().getFunctionNameList(null, null);
         assertEquals(functionNameList.size(), actualList.size());
 
         // Try with non-matching class
-        actualList = FunctionManager.getInstance().getFunctionNameList(FunctionManagerTest.class);
+        actualList = FunctionManager.getInstance().getFunctionNameList(FunctionManagerTest.class, functionNameFilterList);
         assertTrue(actualList.isEmpty());
     }
 
@@ -103,7 +109,10 @@ public class FunctionManagerTest {
         Class<?> returnType = FunctionManager.getInstance().getFunctionType(null);
         assertNull(returnType);
 
-        List<FunctionName> functionNameList = FunctionManager.getInstance().getFunctionNameList(null);
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+        functionNameFilterList.add(new FunctionNameFilterAll());
+
+        List<FunctionName> functionNameList = FunctionManager.getInstance().getFunctionNameList(null, functionNameFilterList);
         for(FunctionName functionName : functionNameList)
         {
             returnType = FunctionManager.getInstance().getFunctionType(functionName.getName());

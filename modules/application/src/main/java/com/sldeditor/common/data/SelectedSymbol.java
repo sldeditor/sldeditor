@@ -1138,4 +1138,13 @@ public class SelectedSymbol {
             rasterSymbolizer.setImageOutline(null);
         }
     }
+
+    /**
+     * Checks if is raster symbol.
+     *
+     * @return true, if is raster symbol
+     */
+    public boolean isRasterSymbol() {
+        return false;
+    }
 }

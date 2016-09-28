@@ -136,7 +136,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
             allowedList.add(ExpressionSubPanel.getPanelName());
         }
 
-        createUI(expectedDataType, allowedList);
+        createUI(expectedDataType, allowedList, field.isRasterSymbol());
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         if(dataSource != null)
@@ -163,9 +163,10 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param expectedDataType the expected data type
      * @param allowedList the allowed list
+     * @param isRasterSymbol the is raster symbol
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void createUI(Class<?> expectedDataType, List<String> allowedList) {
+    private void createUI(Class<?> expectedDataType, List<String> allowedList, boolean isRasterSymbol) {
         final UndoActionInterface thisObj = this;
 
         outerPanel = new JPanel();
@@ -174,7 +175,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
 
         valuePanel = createValuePanel(false);
 
-        expressionPanel = createExpressionPanel(expectedDataType);
+        expressionPanel = createExpressionPanel(expectedDataType, isRasterSymbol);
 
         dataSourceAttributePanel = createDataSourceAttributePanel(expectedDataType);
 
@@ -216,10 +217,11 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * Creates the expression panel.
      *
      * @param expectedDataType the expected data type
+     * @param isRasterSymbol the is raster symbol flag
      * @return the j panel
      */
-    private ExpressionSubPanel createExpressionPanel(Class<?> expectedDataType) {
-        ExpressionSubPanel panel = new ExpressionSubPanel(this, expectedDataType);
+    private ExpressionSubPanel createExpressionPanel(Class<?> expectedDataType, boolean isRasterSymbol) {
+        ExpressionSubPanel panel = new ExpressionSubPanel(this, expectedDataType, isRasterSymbol);
         outerPanel.add(panel, ExpressionSubPanel.getPanelName());
 
         return panel;

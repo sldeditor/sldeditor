@@ -347,7 +347,7 @@ public class RenderTransformationDialog extends JDialog {
     /**
      * Handle table selection event.
      *
-     * @param e the e
+     * @param e the list selection event
      */
     private void handleTableSelectionEvent(ListSelectionEvent e) {
         int row = functionParameterTable.getSelectedRow();
@@ -370,7 +370,7 @@ public class RenderTransformationDialog extends JDialog {
         if(column == 3)
         {
             String title = String.format("%s - %s : %s", value.name, Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.type"), value.dataType);
-            expressionPanel.configure(title, value.type);
+            expressionPanel.configure(title, value.type, false);
             expressionPanel.populate((Expression)value.value, value.enumValueList);
             if(expressionPanel.showDialog())
             {

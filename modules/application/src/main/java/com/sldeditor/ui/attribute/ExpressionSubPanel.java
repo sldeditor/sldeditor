@@ -73,8 +73,9 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      *
      * @param parentObj the parent obj
      * @param expectedDataType the expected data type
+     * @param isRasterSymbol the is raster symbol flag
      */
-    public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType)
+    public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType, boolean isRasterSymbol)
     {
         setLayout(new BorderLayout(0, 0));
 
@@ -86,7 +87,9 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
             public void actionPerformed(ActionEvent e) {
                 ExpressionPanelInterface expressionPanel = ExpressionPanelFactory.getExpressionPanel(null);
 
-                expressionPanel.configure(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"), expectedDataType);
+                expressionPanel.configure(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"),
+                        expectedDataType,
+                        isRasterSymbol);
 
                 expressionPanel.populate(storedExpression, null);
 

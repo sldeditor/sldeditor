@@ -143,8 +143,9 @@ public class ExpressionSubPanel extends JPanel {
      * Sets the data type for the ui fields.
      *
      * @param fieldType the new data type
+     * @param isRasterSymbol the is raster symbol flag
      */
-    public void setDataType(Class<?> fieldType)
+    public void setDataType(Class<?> fieldType, boolean isRasterSymbol)
     {
         if(envVarField != null)
         {
@@ -160,7 +161,7 @@ public class ExpressionSubPanel extends JPanel {
 
         if(functionPanel != null)
         {
-            functionPanel.setDataType(updatedFieldType);
+            functionPanel.setDataType(updatedFieldType, isRasterSymbol);
         }
     }
 

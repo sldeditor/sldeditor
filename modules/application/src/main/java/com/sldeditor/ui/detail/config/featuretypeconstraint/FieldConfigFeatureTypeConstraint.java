@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -208,7 +209,10 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
                         {
                             FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
 
-                            filterPanel.configure(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.filterPanel"), Object.class);
+                            String panelTitle = Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.filterPanel");
+                            filterPanel.configure(panelTitle,
+                                    Object.class,
+                                    SelectedSymbol.getInstance().isRasterSymbol());
 
                             filterPanel.populate(ftc.getFilter());
 

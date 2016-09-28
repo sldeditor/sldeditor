@@ -84,7 +84,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        readConfigFile(this, "Raster.xml");
+        readRasterConfigFile(this, "Raster.xml");
 
         createVendorOptionPanel();
     }
@@ -154,9 +154,6 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
             if(rasterSymbolizer != null)
             {
                 populateStandardData(rasterSymbolizer);
-
-                // Geometry
-                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, rasterSymbolizer.getGeometry());
 
                 // Opacity
                 fieldConfigVisitor.populateField(FieldIdEnum.RASTER_OPACITY, rasterSymbolizer.getOpacity());

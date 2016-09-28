@@ -337,7 +337,18 @@ public class BasePanel extends JPanel {
      */
     protected void readConfigFile(UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, true);
+        internal_readConfigFile(parent.getClass(), parent, filename, true, false);
+    }
+
+    /**
+     * Read raster panel configuration file.
+     *
+     * @param parent the parent
+     * @param filename the filename
+     */
+    protected void readRasterConfigFile(UpdateSymbolInterface parent, String filename)
+    {
+        internal_readConfigFile(parent.getClass(), parent, filename, true, true);
     }
 
     /**
@@ -348,7 +359,7 @@ public class BasePanel extends JPanel {
      */
     protected void readConfigFileNoScrollPane(UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, false);
+        internal_readConfigFile(parent.getClass(), parent, filename, false, false);
     }
 
     /**
@@ -358,10 +369,15 @@ public class BasePanel extends JPanel {
      * @param parent the parent
      * @param filename the filename
      * @param useScrollFrame the use scroll frame
+     * @param isRasterSymbol the is raster symbol
      */
-    private void internal_readConfigFile(Class<?> panelId, UpdateSymbolInterface parent, String filename, boolean useScrollFrame) {
+    private void internal_readConfigFile(Class<?> panelId, 
+            UpdateSymbolInterface parent,
+            String filename,
+            boolean useScrollFrame,
+            boolean isRasterSymbol) {
 
-        ReadPanelConfig readConfig = new ReadPanelConfig();
+        ReadPanelConfig readConfig = new ReadPanelConfig(isRasterSymbol);
 
         readConfig.read(panelId, filename);
 

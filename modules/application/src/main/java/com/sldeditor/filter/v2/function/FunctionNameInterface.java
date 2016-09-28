@@ -23,6 +23,8 @@ import java.util.List;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
+
 /**
  * The Interface FunctionNameInterface.
  *
@@ -33,10 +35,12 @@ public interface FunctionNameInterface {
     /**
      * Gets the function name list.
      *
-     * @param expectedType the expected type, restrict functions with this return type 
+     * @param expectedType the expected type, restrict functions with this return type
+     * @param functionNameFilterList the function name filter list
      * @return the function name list
      */
-    List<FunctionName> getFunctionNameList(Class<?> expectedType);
+    List<FunctionName> getFunctionNameList(Class<?> expectedType,
+            List<FunctionNameFilterInterface> functionNameFilterList);
 
     /**
      * Creates the expression.
