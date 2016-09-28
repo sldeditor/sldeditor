@@ -95,9 +95,6 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
     /** The field. */
     private FieldConfigBase field = null;
 
-    /** The is raster symbol flag. */
-    private boolean isRasterSymbol = false;
-
     /**
      * Gets the panel width.
      *
@@ -117,10 +114,6 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
             FieldConfigBase field) {
 
         this.field = field;
-        if(field != null)
-        {
-            this.isRasterSymbol = field.isRasterSymbol();
-        }
 
         setLayout(new BorderLayout(0, 0));
         setPreferredSize(new Dimension(100, BasePanel.WIDGET_HEIGHT));
@@ -293,7 +286,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
             }
             else
             {
-                expressionPanel.populateExpression(expression, isRasterSymbol);
+                expressionPanel.populateExpression(expression);
             }
         }
     }
@@ -488,7 +481,6 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void updateAttributeSelection(boolean isRasterSymbol) {
-        this.isRasterSymbol = isRasterSymbol;
 
         List<String> allowedItemList = new ArrayList<String>();
         allowedItemList.add(ValueSubPanel.getPanelName());

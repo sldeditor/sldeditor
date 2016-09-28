@@ -158,6 +158,7 @@ public class ExpressionSubPanel extends JPanel {
         {
             dataSourceAttributePanel.setDataType(updatedFieldType);
         }
+        panelAttribute.setVisible(!isRasterSymbol);
 
         if(functionPanel != null)
         {

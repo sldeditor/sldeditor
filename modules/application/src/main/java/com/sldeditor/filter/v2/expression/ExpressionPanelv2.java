@@ -178,7 +178,6 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
 
         expressionPanel.setDataType(fieldType, isRasterSymbol);
         propertyPanel.setDataType(fieldType);
-        propertyPanel.setVisible(!isRasterSymbol);
         envVarPanel.setDataType(fieldType);
 
         textArea.setText("");

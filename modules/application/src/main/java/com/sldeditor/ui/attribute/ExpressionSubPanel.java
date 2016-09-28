@@ -30,6 +30,7 @@ import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
@@ -57,9 +58,6 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
 
     /** The expression being configured. */
     private Expression storedExpression = null;
-
-    /** The is raster symbol flag. */
-    private boolean isRasterSymbol = false;
 
     /**
      * Gets the panel name.
@@ -91,7 +89,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
 
                 expressionPanel.configure(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"),
                         expectedDataType,
-                        isRasterSymbol);
+                        SelectedSymbol.getInstance().isRasterSymbol());
 
                 expressionPanel.populate(storedExpression, null);
 
@@ -99,7 +97,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
                 {
                     Expression expression = expressionPanel.getExpression();
 
-                    populateExpression(expression, isRasterSymbol);
+                    populateExpression(expression);
 
                     if(parentObj != null)
                     {
@@ -147,9 +145,8 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      * @param expression the expression
      * @param isRasterSymbol the is raster symbol flag
      */
-    public void populateExpression(Expression expression, boolean isRasterSymbol) {
+    public void populateExpression(Expression expression) {
         this.storedExpression = expression;
-        this.isRasterSymbol = isRasterSymbol;
 
         String expressionString = "";
 
