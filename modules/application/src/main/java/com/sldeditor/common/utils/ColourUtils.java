@@ -20,6 +20,8 @@ package com.sldeditor.common.utils;
 
 import java.awt.Color;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.geotools.styling.SLD;
 import org.opengis.filter.expression.Expression;
@@ -31,6 +33,12 @@ import org.opengis.filter.expression.Expression;
  */
 public class ColourUtils
 {
+
+    /** The Constant HEX_PATTERN. */
+    private static final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+
+    /** The html colour pattern. */
+    private static Pattern htmlColourPattern;
 
     /** The random number generator. */
     private static Random rand = new Random();
@@ -62,7 +70,7 @@ public class ColourUtils
     {
         Color colour = null;
 
-        if((htmlColour != null) && (htmlColour.length() == 7) && (htmlColour.startsWith("#")))
+        if(validColourString(htmlColour))
         {
             colour = SLD.toColor(htmlColour);
         }
@@ -125,11 +133,32 @@ public class ColourUtils
 
         if (a < 0.5)
         {
-           return Color.black;
+            return Color.black;
         }
         else
         {
-           return Color.white;
+            return Color.white;
         }
+    }
+
+    /**
+     * Check to if string is a valid html colour.
+     *
+     * @param htmlColour the html colour
+     * @return true, if successful
+     */
+    public static boolean validColourString(String htmlColour) {
+        if(htmlColour == null)
+        {
+            return false;
+        }
+
+        if(htmlColourPattern == null)
+        {
+            htmlColourPattern = Pattern.compile(HEX_PATTERN);
+        }
+
+        Matcher matcher = htmlColourPattern.matcher(htmlColour);
+        return matcher.matches();
     }
 }

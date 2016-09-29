@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.config.colourmap;
 import java.awt.Color;
 
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
@@ -84,9 +85,21 @@ public class ColourMapData {
         if(colourExpression instanceof LiteralExpressionImpl)
         {
             colourString = ((LiteralExpressionImpl)colourExpression).toString();
-        }
 
-        this.colour = ColourUtils.toColour(colourString);
+            if(ColourUtils.validColourString(colourString))
+            {
+                this.colour = ColourUtils.toColour(colourString);
+            }
+            else
+            {
+                this.colour = Color.white;
+            }
+        }
+        else if(colourExpression instanceof FunctionExpressionImpl)
+        {
+            colourString = ((FunctionExpressionImpl)colourExpression).toString();
+            this.colour = Color.white;
+        }
     }
 
     /**
