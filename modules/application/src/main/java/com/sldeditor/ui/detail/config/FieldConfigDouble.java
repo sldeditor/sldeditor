@@ -46,13 +46,13 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     private DecimalSpinner spinner;
 
     /** The default value. */
-    private double defaultValue = 0.0;
+    private Double defaultValue = 0.0;
 
     /** The minimum value. */
-    private double minValue = Double.MIN_VALUE;
+    private Double minValue = Double.MIN_VALUE;
 
     /** The maximum value. */
-    private double maxValue = Double.MAX_VALUE;
+    private Double maxValue = Double.MAX_VALUE;
 
     /** The step size. */
     private double stepSize = 1.0;
