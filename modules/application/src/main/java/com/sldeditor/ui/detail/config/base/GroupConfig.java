@@ -401,4 +401,12 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     public List<Component> getComponentList() {
         return componentList;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
+    }
 }

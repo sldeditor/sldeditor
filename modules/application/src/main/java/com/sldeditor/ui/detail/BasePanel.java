@@ -483,12 +483,7 @@ public class BasePanel extends JPanel {
 
             fieldConfigManager.addMultiOptionGroup(multiOption);
 
-            List<FieldConfigBase> multiOptionFieldConfigList = multiOption.createUI(fieldConfigManager, parentBox, parent.getClass());
-            for(FieldConfigBase fieldConfig : multiOptionFieldConfigList)
-            {
-                addFieldConfig(fieldConfig);
-                fieldConfigManager.addField(fieldConfig);
-            }
+            multiOption.createUI(fieldConfigManager, parentBox, parent.getClass());
 
             for(OptionGroup optionGroup : multiOption.getGroupList())
             {
@@ -497,6 +492,14 @@ public class BasePanel extends JPanel {
                     List<FieldConfigBase> fieldList = optionGroupConfig.getFieldConfigList();
 
                     fieldConfigManager.addGroup(optionGroupConfig);
+
+                    // Create field user interface
+                    for(FieldConfigBase field : fieldList)
+                    {
+                        addFieldConfig(field);
+
+                        fieldConfigManager.addField(field);
+                    }
 
                     // Register for notifications when data has changed
                     registerForSymbolUpdates(fieldList, parent);
@@ -507,6 +510,19 @@ public class BasePanel extends JPanel {
                     {
                         fieldConfigManager.addGroup(subOptionGroupConfig);
                         groupConfigMap.put(subOptionGroupConfig.getId(), subOptionGroupConfig);
+
+                        List<FieldConfigBase> subOptionGroupFieldList = subOptionGroupConfig.getFieldConfigList();
+
+                        // Register for notifications when data has changed
+                        registerForSymbolUpdates(subOptionGroupFieldList, parent);
+
+                        // Create field user interface
+                        for(FieldConfigBase field : subOptionGroupFieldList)
+                        {
+                            addFieldConfig(field);
+
+                            fieldConfigManager.addField(field);
+                        }
                     }
                 }
             }

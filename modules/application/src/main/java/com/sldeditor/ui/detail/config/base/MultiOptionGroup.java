@@ -88,13 +88,16 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     /** The field config manager. */
     private GraphicPanelFieldManager fieldConfigManager = null;
 
+    /** The parent box. */
     private Box parentBox = null;
 
+    /** The field panel. */
     private FieldPanel fieldPanel;
 
     /** The multi option group enabled flag. */
     private boolean multiOptionGroupEnabled = true;
 
+    /** The group title checkbox. */
     private JCheckBox groupTitleCheckbox;
 
     /**
@@ -148,8 +151,11 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param group the group
      */
     public void addGroup(OptionGroup group) {
-        this.optionMap.put(group.getId().toString(), group);
-        this.optionList.add(group);
+        if(group != null)
+        {
+            this.optionMap.put(group.getId().toString(), group);
+            this.optionList.add(group);
+        }
     }
 
     /**
@@ -158,14 +164,11 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param fieldConfigManager the field config manager
      * @param box the box
      * @param panelId the panel id
-     * @return the field panel
      */
-    public List<FieldConfigBase> createUI(GraphicPanelFieldManager fieldConfigManager, Box box, Class<?> panelId) {
+    public void createUI(GraphicPanelFieldManager fieldConfigManager, Box box, Class<?> panelId) {
         final UndoActionInterface parentObj = this;
         this.fieldConfigManager = fieldConfigManager;
         this.parentBox = box;
-
-        List<FieldConfigBase> fdmList = new ArrayList<FieldConfigBase>();
 
         box.add(GroupConfig.createSeparator());
 
@@ -214,8 +217,6 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         });
 
         box.add(fieldPanel);
-
-        return fdmList;
     }
 
     /**
@@ -252,6 +253,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                     for(FieldConfigBase field : groupConfig.getFieldConfigList())
                     {
                         field.createUI();
+                        field.revertToDefaultValue();
                         FieldPanel component = field.getPanel();
                         optionBox.add(component);
                         fieldConfigManager.addField(field);
@@ -265,6 +267,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                         for(FieldConfigBase field : subGroup.getFieldConfigList())
                         {
                             field.createUI();
+                            field.revertToDefaultValue();
                             FieldPanel component = field.getPanel();
                             optionBox.add(component);
                             fieldConfigManager.addField(field);
@@ -502,5 +505,13 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     @Override
     public void removeFromUI() {
         // Does nothing
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
     }
 }

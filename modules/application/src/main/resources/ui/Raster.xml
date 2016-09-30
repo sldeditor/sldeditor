@@ -27,7 +27,7 @@
         <FieldConfigSlider id="RASTER_CONTRAST_NORMALIZE"
             label="raster.contrast.normalize" />
         <FieldConfigSlider id="RASTER_CONTRAST_GAMMAVALUE"
-            label="raster.contrast.gammavalue" />
+            label="raster.contrast.gammavalue"  defaultValue="1.0" />
     </Group>
     <MultiOptionGroup id="RASTER_CHANNELSELECTION"
         label="raster.channelselection" showLabel="true" option="true">
@@ -39,7 +39,7 @@
                     label="raster.rgb.channel.name" valueOnly="true"/>
                 <Group id="RASTER_RGB_CHANNEL_RED_CONTRAST" label="raster.rgb.channel.constrast"
                     showLabel="true">
-                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
                     <FieldConfigEnum id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" label="raster.channel.constrast.method">
                         <ValueList>
                             <Value>
@@ -59,7 +59,7 @@
                     label="raster.rgb.channel.name" valueOnly="true"/>
                 <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST" label="raster.rgb.channel.constrast"
                     showLabel="true">
-                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
                     <FieldConfigEnum id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" label="raster.channel.constrast.method">
                         <ValueList>
                             <Value>
@@ -79,7 +79,7 @@
                     label="raster.rgb.channel.name" valueOnly="true"/>
                 <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST" label="raster.rgb.channel.constrast"
                     showLabel="true">
-                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
                     <FieldConfigEnum id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" label="raster.channel.constrast.method">
                         <ValueList>
                             <Value>
@@ -102,7 +102,7 @@
                     label="raster.rgb.channel.name" valueOnly="true"/>
                 <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST" label="raster.rgb.channel.constrast"
                     showLabel="true">
-                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" label="raster.contrast.gammavalue" />
+                    <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
                     <FieldConfigEnum id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" label="raster.channel.constrast.method">
                         <ValueList>
                             <Value>

@@ -467,7 +467,8 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
             {
                 Expression gammaExpression = fieldConfigVisitor.getExpression(gammaField);
                 ValueComboBoxData method = fieldConfigVisitor.getComboBox(methodField);
-                contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaExpression, method.getKey());
+                contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaExpression, 
+                        (method == null) ? null : method.getKey());
             }
 
             channelType = getStyleFactory().createSelectedChannelType(channelName, contrastEnhancement);

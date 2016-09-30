@@ -1114,4 +1114,12 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
             attributeSelectionPanel.updateAttributeSelection(isRasterSymbol);
         }
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("%s : (%s) %s", getClass().getName(), getFieldId().toString(), getLabel());
+    }
 }
