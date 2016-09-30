@@ -1,11 +1,38 @@
 # Change Log
 
-## [0.4.1](https://github.com/robward-scisys/sldeditor/tree/0.4.1) (2016-09-22)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.3.0...0.4.1)
+## [0.4.2](https://github.com/robward-scisys/sldeditor/tree/0.4.2) (2016-09-30)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.1...0.4.2)
+
+**Implemented enhancements:**
+
+- Make colour map entries in raster symbolizer accept expressions [\#79](https://github.com/robward-scisys/sldeditor/issues/79)
+- Release 0.4.1 [\#73](https://github.com/robward-scisys/sldeditor/issues/73)
+
+**Fixed bugs:**
+
+- Default anchor point and displacement values are not correct [\#82](https://github.com/robward-scisys/sldeditor/issues/82)
+- Marker not visible in SLD tree when adding a new marker [\#80](https://github.com/robward-scisys/sldeditor/issues/80)
+- New point markers now use default anchor point and displacement [\#83](https://github.com/robward-scisys/sldeditor/pull/83) ([robward-scisys](https://github.com/robward-scisys))
+- When adding marker, marker symbol can now be edited [\#81](https://github.com/robward-scisys/sldeditor/pull/81) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Unit tests for render transformations [\#77](https://github.com/robward-scisys/sldeditor/issues/77)
+- Update version to 0.5.0-SNAPSHOT [\#75](https://github.com/robward-scisys/sldeditor/issues/75)
+
+**Merged pull requests:**
+
+- Iss79 colour map entry expressions [\#84](https://github.com/robward-scisys/sldeditor/pull/84) ([robward-scisys](https://github.com/robward-scisys))
+- Iss77 render transformation unit tests [\#78](https://github.com/robward-scisys/sldeditor/pull/78) ([robward-scisys](https://github.com/robward-scisys))
+- Update version to 0.5.0-SNAPSHOT [\#76](https://github.com/robward-scisys/sldeditor/pull/76) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.4.1](https://github.com/robward-scisys/sldeditor/tree/v0.4.1) (2016-09-22)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.3.0...v0.4.1)
 
 **Implemented enhancements:**
 
 - Set icons for the file system tree [\#70](https://github.com/robward-scisys/sldeditor/issues/70)
+- Create release 0.3.0 [\#64](https://github.com/robward-scisys/sldeditor/issues/64)
 - Added filesystem icons [\#72](https://github.com/robward-scisys/sldeditor/pull/72) ([robward-scisys](https://github.com/robward-scisys))
 - Iss68 more unit tests [\#69](https://github.com/robward-scisys/sldeditor/pull/69) ([robward-scisys](https://github.com/robward-scisys))
 
@@ -16,6 +43,7 @@
 
 **Merged pull requests:**
 
+- Release v0.4.1 [\#74](https://github.com/robward-scisys/sldeditor/pull/74) ([robward-scisys](https://github.com/robward-scisys))
 - Updated version to 0.4.0-SNAPSHOT in pom.xml [\#67](https://github.com/robward-scisys/sldeditor/pull/67) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.3.0](https://github.com/robward-scisys/sldeditor/tree/v0.3.0) (2016-09-12)
