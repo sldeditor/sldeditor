@@ -77,7 +77,7 @@ public class LegendOptionPanel extends JPanel
     private static final int PANEL_WIDTH = 250;
 
     /** The Constant PANEL_HEIGHT. */
-    private static final int PANEL_HEIGHT = 20;
+    private static final int PANEL_HEIGHT = BasePanel.WIDGET_HEIGHT;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -353,7 +353,7 @@ public class LegendOptionPanel extends JPanel
         box.add(panelBackgroundColour);
 
         backgroundColourButton = new ColourButton();
-        backgroundColourButton.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        backgroundColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         panelBackgroundColour.add(backgroundColourButton);
         backgroundColourButton.registerObserver(new ColourNotifyInterface() {
             @Override
@@ -416,7 +416,7 @@ public class LegendOptionPanel extends JPanel
         box.add(panelLabelColour);
 
         labelFontColourButton = new ColourButton();
-        labelFontColourButton.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        labelFontColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         panelLabelColour.add(labelFontColourButton);
         labelFontColourButton.registerObserver(new ColourNotifyInterface() {
             @Override
@@ -453,7 +453,7 @@ public class LegendOptionPanel extends JPanel
         box.add(panelBorderColour);
 
         borderColourButton = new ColourButton();
-        borderColourButton.setBounds(FIELD_X, 0, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        borderColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         panelBorderColour.add(borderColourButton);
         borderColourButton.registerObserver(new ColourNotifyInterface() {
             @Override
