@@ -26,6 +26,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ParseXML;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.MapUnits;
 import com.sldeditor.common.xml.ui.XMLFieldConfigData;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnum;
@@ -187,7 +188,7 @@ public class ReadMapUnits implements PanelConfigInterface {
         {
             for(XMLFieldConfigEnumValueField field : fieldList.getField())
             {
-                config.addField(new FieldId(field.getId()), field.isEnabled());
+                config.addField(field.getId(), field.isEnabled());
             }
         }
         return config;
@@ -231,7 +232,7 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @return the defaultFieldMap
      */
     @Override
-    public Map<FieldId, Object> getDefaultFieldMap() {
+    public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return null;
     }
 }

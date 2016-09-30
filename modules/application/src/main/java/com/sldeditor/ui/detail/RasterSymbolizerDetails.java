@@ -41,7 +41,6 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -85,7 +84,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        readConfigFile(this, "Raster.xml");
+        readRasterConfigFile(this, "Raster.xml");
 
         createVendorOptionPanel();
     }
@@ -155,9 +154,6 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
             if(rasterSymbolizer != null)
             {
                 populateStandardData(rasterSymbolizer);
-
-                // Geometry
-                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, rasterSymbolizer.getGeometry());
 
                 // Opacity
                 fieldConfigVisitor.populateField(FieldIdEnum.RASTER_OPACITY, rasterSymbolizer.getOpacity());
@@ -485,7 +481,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      * @param changedField the changed field
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 

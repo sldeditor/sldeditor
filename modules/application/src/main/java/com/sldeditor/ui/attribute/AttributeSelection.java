@@ -24,9 +24,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -73,9 +71,6 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
     /** The selected listeners. */
     private List<AttributeButtonSelectionInterface> selectedListeners = new ArrayList<AttributeButtonSelectionInterface>();
 
-    /** The ui map. */
-    private Map<String, JPanel> uiMap = new LinkedHashMap<String, JPanel>();
-
     /** The outer panel. */
     private JPanel outerPanel;
 
@@ -115,13 +110,17 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * @param expectedDataType the expected data type
      * @param field the field
      */
-    public AttributeSelection(Class<?> expectedDataType, FieldConfigBase field) {
+    private AttributeSelection(Class<?> expectedDataType,
+            FieldConfigBase field) {
 
         this.field = field;
-        DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+
         setLayout(new BorderLayout(0, 0));
         setPreferredSize(new Dimension(100, BasePanel.WIDGET_HEIGHT));
+
         createUI(expectedDataType);
+
+        DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         if(dataSource != null)
         {
             dataSource.addListener(this);
@@ -135,7 +134,10 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      */
     public void addListener(AttributeButtonSelectionInterface listener)
     {
-        selectedListeners.add(listener);
+        if(!selectedListeners.contains(listener))
+        {
+            selectedListeners.add(listener);
+        }
     }
 
     /**
@@ -143,7 +145,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param expectedDataType the expected data type
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     private void createUI(Class<?> expectedDataType) {
         final UndoActionInterface thisObj = this;
 
@@ -157,12 +159,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
 
         dataSourceAttributePanel = createDataSourceAttributePanel(expectedDataType);
 
-        uiMap.put(ValueSubPanel.getPanelName(), valuePanel);
-        uiMap.put(DataSourceAttributePanel.getPanelName(), dataSourceAttributePanel);
-        uiMap.put(ExpressionSubPanel.getPanelName(), expressionPanel);
-
         attributeChooserComboBox = new JComboBox<String>();
-        attributeChooserComboBox.setModel(new DefaultComboBoxModel(uiMap.keySet().toArray()));
         attributeChooserComboBox.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -459,4 +456,44 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         // Does nothing
     }
 
+    /**
+     * Creates the all attributes, value, attribute and expression.
+     *
+     * @param expectedDataType the expected data type
+     * @param field the field
+     * @param rasterSymbol the raster symbol
+     * @return the attribute selection object
+     */
+    public static AttributeSelection createAttributes(Class<?> expectedDataType,
+            FieldConfigBase field,
+            boolean rasterSymbol)
+    {
+        AttributeSelection obj = new AttributeSelection(expectedDataType, field);
+        obj.updateAttributeSelection(rasterSymbol);
+
+        return obj;
+    }
+
+    /**
+     * Update attribute selection.
+     *
+     * @param isRasterSymbol the is raster symbol
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void updateAttributeSelection(boolean isRasterSymbol) {
+
+        List<String> allowedItemList = new ArrayList<String>();
+        allowedItemList.add(ValueSubPanel.getPanelName());
+
+        if(!isRasterSymbol)
+        {
+            allowedItemList.add(DataSourceAttributePanel.getPanelName());
+        }
+        allowedItemList.add(ExpressionSubPanel.getPanelName());
+
+        if(attributeChooserComboBox != null)
+        {
+            attributeChooserComboBox.setModel(new DefaultComboBoxModel(allowedItemList.toArray()));
+        }
+    }
 }

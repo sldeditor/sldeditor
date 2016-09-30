@@ -34,13 +34,14 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -73,7 +74,7 @@ public class FieldConfigMarker extends FieldState {
     private ColourFieldConfig strokeFieldConfig; 
 
     /** The symbol selection field. */
-    private FieldId symbolSelectionField;
+    private FieldIdEnum symbolSelectionField;
 
     //
     // Vendor Option for marker symbols
@@ -85,19 +86,16 @@ public class FieldConfigMarker extends FieldState {
     /**
      * Constructor.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param fillFieldConfig the fill field config
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigMarker(Class<?> panelId, FieldId id, String label, boolean valueOnly,
+    public FieldConfigMarker(FieldConfigCommonData commonData,
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
-            FieldId symbolSelectionField) {
-        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
 
         this.fillFieldConfig = fillFieldConfig;
         this.strokeFieldConfig = strokeFieldConfig;
@@ -427,9 +425,9 @@ public class FieldConfigMarker extends FieldState {
      * @return the field map
      */
     @Override
-    public Map<FieldId, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
     {
-        Map<FieldId, FieldConfigBase> map = new HashMap<FieldId, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
         if(fieldConfigManager != null)
         {
@@ -569,10 +567,7 @@ public class FieldConfigMarker extends FieldState {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigMarker(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly(),
+            copy = new FieldConfigMarker(fieldConfigBase.getCommonData(),
                     this.fillFieldConfig,
                     this.strokeFieldConfig,
                     this.symbolSelectionField);

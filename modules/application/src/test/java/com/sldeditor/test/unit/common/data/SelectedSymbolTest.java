@@ -35,6 +35,7 @@ import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactoryImpl;
@@ -452,5 +453,92 @@ public class SelectedSymbolTest {
         String filename = "test filename";
         SelectedSymbol.getInstance().setFilename(filename);
         assertEquals(filename, SelectedSymbol.getInstance().getFilename());
+    }
+
+    @Test
+    public void testIsRasterSymbol()
+    {
+        SelectedSymbol.destroyInstance();
+        SelectedSymbol instance = SelectedSymbol.getInstance();
+
+        // Create point symbolizer
+        StyledLayerDescriptor sld = DefaultSymbols.createNewPoint();
+        instance.createNewSLD(sld);
+
+        instance.setSld(sld);
+
+        // No selection made
+        assertFalse(instance.isRasterSymbol());
+
+        Style style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+
+        instance.setStyle(style);
+        assertFalse(instance.isRasterSymbol());
+
+        // Create polygon symbolizer
+        SelectedSymbol.destroyInstance();
+        instance = SelectedSymbol.getInstance();
+
+        sld = DefaultSymbols.createNewPolygon();
+        instance.createNewSLD(sld);
+
+        instance.setSld(sld);
+
+        // No selection made
+        assertFalse(instance.isRasterSymbol());
+
+        style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+
+        instance.setStyle(style);
+        assertFalse(instance.isRasterSymbol());
+
+        // Create line symbolizer
+        SelectedSymbol.destroyInstance();
+        instance = SelectedSymbol.getInstance();
+
+        sld = DefaultSymbols.createNewLine();
+        instance.createNewSLD(sld);
+
+        instance.setSld(sld);
+
+        // No selection made
+        assertFalse(instance.isRasterSymbol());
+
+        style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+
+        instance.setStyle(style);
+        assertFalse(instance.isRasterSymbol());
+
+        // Create raster symbolizer
+        SelectedSymbol.destroyInstance();
+        instance = SelectedSymbol.getInstance();
+
+        sld = DefaultSymbols.createNewRaster();
+        instance.createNewSLD(sld);
+
+        instance.setSld(sld);
+
+        // No selection made
+        assertFalse(instance.isRasterSymbol());
+
+        style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+
+        instance.setStyle(style);
+        assertTrue(instance.isRasterSymbol());
+    }
+
+    @Test
+    public void testRemoveRasterImageOutline()
+    {
+        SelectedSymbol.destroyInstance();
+        SelectedSymbol instance = SelectedSymbol.getInstance();
+
+        instance.removeRasterImageOutline(null);
+
+        RasterSymbolizer rasterSymbol = DefaultSymbols.createDefaultRasterSymbolizer();
+        rasterSymbol.setImageOutline(DefaultSymbols.createDefaultLineSymbolizer());
+        instance.removeRasterImageOutline(rasterSymbol);
+
+        assertNull(rasterSymbol.getImageOutline());
     }
 }

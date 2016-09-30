@@ -30,6 +30,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.ColourNotifyInterface;
 import com.sldeditor.ui.widgets.ColourButton;
@@ -62,13 +63,10 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
     /**
      * Instantiates a new field config colour.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigColour(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigColour(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -90,7 +88,7 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
 
         colourButton.registerObserver(new ColourNotifyInterface() {
@@ -353,7 +351,7 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         if(colourButton != null)
         {
             colourButton.populate(testValue, null);
@@ -378,10 +376,7 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
         FieldConfigColour copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigColour(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigColour(fieldConfigBase.getCommonData());
         }
         return copy;
     }

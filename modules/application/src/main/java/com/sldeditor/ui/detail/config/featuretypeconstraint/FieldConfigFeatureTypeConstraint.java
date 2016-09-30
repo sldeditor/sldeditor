@@ -32,16 +32,18 @@ import javax.swing.event.ListSelectionListener;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.filter.FilterPanelInterface;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -86,12 +88,10 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
+     * @param commonData the common data
      */
-    public FieldConfigFeatureTypeConstraint(Class<?> panelId, FieldId id, String label) {
-        super(panelId, id, label, true);
+    public FieldConfigFeatureTypeConstraint(FieldConfigCommonData commonData) {
+        super(commonData);
 
         filterModel = new FeatureTypeConstraintModel(this);
         extentModel = new ExtentModel(this);
@@ -209,7 +209,10 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
                         {
                             FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
 
-                            filterPanel.configure(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.filterPanel"), Object.class);
+                            String panelTitle = Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.filterPanel");
+                            filterPanel.configure(panelTitle,
+                                    Object.class,
+                                    SelectedSymbol.getInstance().isRasterSymbol());
 
                             filterPanel.populate(ftc.getFilter());
 
@@ -451,7 +454,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, List<FeatureTypeConstraint> testValue) {
+    public void setTestValue(FieldIdEnum fieldId, List<FeatureTypeConstraint> testValue) {
         populateField(testValue);
     }
 
@@ -489,9 +492,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigFeatureTypeConstraint(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel());
+            copy = new FieldConfigFeatureTypeConstraint(fieldConfigBase.getCommonData());
         }
         return copy;
     }

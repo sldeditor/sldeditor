@@ -18,7 +18,7 @@
  */
 package com.sldeditor.common.undo;
 
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * The Interface UndoInferface.
@@ -32,7 +32,7 @@ public interface UndoInterface
      *
      * @return the field id
      */
-    public FieldId getFieldId();
+    public FieldIdEnum getFieldId();
 
     /**
      * Gets the old value.

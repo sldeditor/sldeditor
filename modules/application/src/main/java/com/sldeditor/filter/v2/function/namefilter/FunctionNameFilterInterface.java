@@ -16,35 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.common.xml.ui;
 
-import org.geotools.factory.CommonFactoryFinder;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
+package com.sldeditor.filter.v2.function.namefilter;
 
-import com.sldeditor.common.xml.TestValueVisitor;
+import org.opengis.filter.capability.FunctionName;
 
 /**
- * The Class XMLSetFieldExpressionEx.
+ * The Interface FunctionNameFilterInterface.
  *
  * @author Robert Ward (SCISYS)
  */
-public class XMLSetFieldExpressionEx extends XMLSetFieldExpression implements XMLSetFieldLiteralInterface {
-
-    /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+public interface FunctionNameFilterInterface {
 
     /**
-     * Method to part of the visitor pattern.
+     * Method to determine whether to accept the supplied function name.
      *
-     * @param visitor the visitor
-     * @param fieldId the field id
+     * @param functionName the function name
+     * @return true, if successful
      */
-    @Override
-    public void accept(TestValueVisitor visitor, FieldIdEnum fieldId) {
-
-        Expression expression = ff.property(this.expression);
-
-        visitor.setTestValue(fieldId, expression);
-    }
+    boolean accept(FunctionName functionName);
 }

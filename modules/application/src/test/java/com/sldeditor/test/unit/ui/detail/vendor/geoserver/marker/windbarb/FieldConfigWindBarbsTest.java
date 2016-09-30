@@ -43,9 +43,9 @@ import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
 
 /**
@@ -64,7 +64,7 @@ public class FieldConfigWindBarbsTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -83,7 +83,7 @@ public class FieldConfigWindBarbsTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -107,7 +107,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -125,7 +125,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.setTestValue(null, (String)null);
         field.populateExpression((Double)null);
@@ -149,7 +149,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.revertToDefaultValue();
 
@@ -163,7 +163,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testIsASingleValue() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertFalse(field.isASingleValue());
     }
@@ -174,7 +174,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.justSelected();
     }
@@ -188,9 +188,8 @@ public class FieldConfigWindBarbsTest {
 
         class TestFieldConfigWindBarbs extends FieldConfigWindBarbs
         {
-            public TestFieldConfigWindBarbs(Class<?> panelId, FieldId id, String label,
-                    boolean valueOnly) {
-                super(panelId, id, label, valueOnly);
+            public TestFieldConfigWindBarbs(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -199,12 +198,12 @@ public class FieldConfigWindBarbsTest {
             }
         }
 
-        TestFieldConfigWindBarbs field = new TestFieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        TestFieldConfigWindBarbs field = new TestFieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigWindBarbs copy = (FieldConfigWindBarbs) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigWindBarbs) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -215,7 +214,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.attributeSelection("field");
         // Does nothing
@@ -227,7 +226,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
     }
@@ -238,7 +237,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
@@ -252,7 +251,7 @@ public class FieldConfigWindBarbsTest {
 
         GraphicPanelFieldManager fieldConfigManager = null;
 
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.setValue(null, null, null);
         field.setValue(fieldConfigManager, null, null);
@@ -299,7 +298,7 @@ public class FieldConfigWindBarbsTest {
         StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertNull(field.getStringValue());
 
@@ -314,18 +313,18 @@ public class FieldConfigWindBarbsTest {
         String actualMarkerSymbol = "solid";
         symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
 
-        FieldId colourFieldId = new FieldId(FieldIdEnum.FILL_COLOUR);
-        FieldConfigColour colourField = new FieldConfigColour(panelId, colourFieldId, "", false);
+        FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
+        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldId opacityFieldId = new FieldId(FieldIdEnum.OPACITY);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(panelId, colourFieldId, "", false);
+        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldId symbolSelectionFieldId = new FieldId(FieldIdEnum.SYMBOL_TYPE);
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(panelId, colourFieldId, "", false);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -340,7 +339,7 @@ public class FieldConfigWindBarbsTest {
         assertTrue(actualSymbol.getWellKnownName().toString().compareTo("solid") == 0);
 
         // Try with symbol type of solid
-        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
         assertNotNull(actualValue);
@@ -375,7 +374,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertNull(field.getFill(null, null));
     }
@@ -386,7 +385,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertNull(field.getBasePanel());
     }
@@ -397,7 +396,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(4, field.getFieldList(null).size());
     }
@@ -408,7 +407,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertFalse(field.accept(null));
 
@@ -429,7 +428,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.setUpdateSymbolListener(null);
     }
@@ -440,7 +439,7 @@ public class FieldConfigWindBarbsTest {
     @Test
     public void testGetConfigField() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(String.class, new FieldId(FieldIdEnum.NAME), "test label", valueOnly);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         assertEquals(field, field.getConfigField());
     }

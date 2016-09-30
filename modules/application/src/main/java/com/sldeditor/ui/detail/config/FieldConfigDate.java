@@ -38,6 +38,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -84,13 +85,10 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     /**
      * Instantiates a new field config slider.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigDate(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigDate(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -140,7 +138,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
     }
 
@@ -358,7 +356,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         try {
             Date date = dtf.parse(testValue);
             populateField(date);
@@ -396,10 +394,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
         FieldConfigDate copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigDate(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigDate(getCommonData());
         }
         return copy;
     }

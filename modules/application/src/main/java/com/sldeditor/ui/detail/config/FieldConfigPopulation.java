@@ -66,45 +66,12 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param value the value
      */
-    public void populateBooleanField(FieldId fieldId, Boolean value) {
+    public void populateBooleanField(FieldIdEnum fieldId, Boolean value) {
         if(fieldConfigManager == null)
         {
             return;
         }
 
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-
-        if(value != null)
-        {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-        }
-        else
-        {
-            fieldConfig.revertToDefaultValue();
-        }
-    }
-
-    /**
-     * Populate boolean field.
-     *
-     * @param fieldIdEnum the field id enum
-     * @param value the value
-     */
-    public void populateBooleanField(FieldIdEnum fieldIdEnum, Boolean value) {
-        populateBooleanField(new FieldId(fieldIdEnum), value);
-    }
-
-    /**
-     * Populate combo box field.
-     *
-     * @param fieldId the field id
-     * @param value the value
-     */
-    public void populateComboBoxField(FieldId fieldId, String value) {
-        if(fieldConfigManager == null)
-        {
-            return;
-        }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
         if(value != null)
@@ -120,11 +87,24 @@ public class FieldConfigPopulation {
     /**
      * Populate combo box field.
      *
-     * @param fieldIdEnum the field id enum
+     * @param fieldId the field id
      * @param value the value
      */
-    public void populateComboBoxField(FieldIdEnum fieldIdEnum, String value) {
-        populateComboBoxField(new FieldId(fieldIdEnum), value);
+    public void populateComboBoxField(FieldIdEnum fieldId, String value) {
+        if(fieldConfigManager == null)
+        {
+            return;
+        }
+        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+
+        if(value != null)
+        {
+            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
+        }
+        else
+        {
+            fieldConfig.revertToDefaultValue();
+        }
     }
 
     /**
@@ -133,7 +113,7 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param colour the colour
      */
-    public void populateColourField(FieldId fieldId, Expression colour)
+    public void populateColourField(FieldIdEnum fieldId, Expression colour)
     {
         if(fieldConfigManager == null)
         {
@@ -206,7 +186,7 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param value the value
      */
-    public void populateTextField(FieldId fieldId, String value)
+    public void populateTextField(FieldIdEnum fieldId, String value)
     {
         if(fieldConfigManager == null)
         {
@@ -227,33 +207,10 @@ public class FieldConfigPopulation {
     /**
      * Populate text field.
      *
-     * @param fieldIdEnum the field id enum
-     * @param value the value
-     */
-    public void populateTextField(FieldIdEnum fieldIdEnum, String value)
-    {
-        FieldId fieldId = new FieldId(fieldIdEnum);
-        populateTextField(fieldId, value);
-    }
-
-    /**
-     * Populate user layer.
-     *
-     * @param fieldIdEnum the field id enum
-     * @param value the user layer
-     */
-    public void populateUserLayer(FieldIdEnum fieldIdEnum, UserLayer value) {
-        FieldId fieldId = new FieldId(fieldIdEnum);
-        populateUserLayer(fieldId, value);
-    }
-
-    /**
-     * Populate text field.
-     *
      * @param fieldId the field id
      * @param value the user layer
      */
-    public void populateUserLayer(FieldId fieldId, UserLayer value)
+    public void populateUserLayer(FieldIdEnum fieldId, UserLayer value)
     {
         if(fieldConfigManager == null)
         {
@@ -276,7 +233,7 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param value the value
      */
-    public void populateDoubleField(FieldId fieldId, Double value) {
+    public void populateDoubleField(FieldIdEnum fieldId, Double value) {
         if(fieldConfigManager == null)
         {
             return;
@@ -299,7 +256,7 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param value the value
      */
-    public void populateIntegerField(FieldId fieldId, Integer value) {
+    public void populateIntegerField(FieldIdEnum fieldId, Integer value) {
         if(fieldConfigManager == null)
         {
             return;
@@ -322,7 +279,7 @@ public class FieldConfigPopulation {
      * @param fieldId the field
      * @param value the value
      */
-    public void populateField(FieldId fieldId, Expression value)
+    public void populateField(FieldIdEnum fieldId, Expression value)
     {
         if(fieldConfigManager == null)
         {
@@ -340,25 +297,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Populate field.
-     *
-     * @param fieldIdEnum the field id enum
-     * @param value the value
-     */
-    public void populateField(FieldIdEnum fieldIdEnum, Expression value)
-    {
-        FieldId fieldId = new FieldId(fieldIdEnum);
-
-        populateField(fieldId, value);
-    }
-
-    /**
      * Gets the expression from a field.
      *
      * @param fieldId the field id
      * @return the expression
      */
-    public Expression getExpression(FieldId fieldId) {
+    public Expression getExpression(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
@@ -371,24 +315,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the expression.
-     *
-     * @param fieldIdEnum the field id enum
-     * @return the expression
-     */
-    public Expression getExpression(FieldIdEnum fieldIdEnum) {
-        FieldId fieldId = new FieldId(fieldIdEnum);
-
-        return getExpression(fieldId);
-    }
-
-    /**
      * Gets the boolean field value.
      *
      * @param fieldId the field id
      * @return the boolean
      */
-    public boolean getBoolean(FieldId fieldId) {
+    public boolean getBoolean(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -402,22 +334,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the boolean.
-     *
-     * @param fieldIdEnum the field id enum
-     * @return the boolean
-     */
-    public boolean getBoolean(FieldIdEnum fieldIdEnum) {
-        return getBoolean(new FieldId(fieldIdEnum));
-    }
-
-    /**
      * Gets the integer field value.
      *
      * @param fieldId the field id
      * @return the integer
      */
-    public int getInteger(FieldId fieldId) {
+    public int getInteger(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -431,22 +353,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the integer.
-     *
-     * @param fieldIdEnum the field id enum
-     * @return the integer
-     */
-    public int getInteger(FieldIdEnum fieldIdEnum) {
-        return getInteger(new FieldId(fieldIdEnum));
-    }
-
-    /**
      * Gets the double field value.
      *
      * @param fieldId the field id
      * @return the double
      */
-    public double getDouble(FieldId fieldId) {
+    public double getDouble(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -460,22 +372,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the double field value.
-     *
-     * @param fieldIdEnum the field id enum
-     * @return the double
-     */
-    public double getDouble(FieldIdEnum fieldIdEnum) {
-        return getDouble(new FieldId(fieldIdEnum));
-    }
-
-    /**
      * Gets the text field value.
      *
      * @param fieldId the field id
      * @return the text
      */
-    public String getText(FieldId fieldId) {
+    public String getText(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -491,22 +393,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the feature type constraint.
-     *
-     * @return the feature type constraint
-     */
-    public List<FeatureTypeConstraint> getFeatureTypeConstraint(FieldIdEnum fieldIdEnum)
-    {
-        return getFeatureTypeConstraint(new FieldId(fieldIdEnum));
-    }
-
-    /**
      * Gets the list of feature type constraints
      *
      * @param fieldId the field id
      * @return the list of feature type constraints
      */
-    public List<FeatureTypeConstraint> getFeatureTypeConstraint(FieldId fieldId) {
+    public List<FeatureTypeConstraint> getFeatureTypeConstraint(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -520,22 +412,12 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the text field value.
-     *
-     * @param fieldIdEnum the field id enum
-     * @return the text
-     */
-    public String getText(FieldIdEnum fieldIdEnum) {
-        return getText(new FieldId(fieldIdEnum));
-    }
-
-    /**
      * Gets the combo box field value.
      *
      * @param fieldId the field id
      * @return the combo box
      */
-    public ValueComboBoxData getComboBox(FieldId fieldId) {
+    public ValueComboBoxData getComboBox(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -551,20 +433,10 @@ public class FieldConfigPopulation {
     /**
      * Gets the colour map.
      *
-     * @param fieldIdEnum the field id enum
-     * @return the colour map
-     */
-    public ColorMap getColourMap(FieldIdEnum fieldIdEnum) {
-        return getColourMap(new FieldId(fieldIdEnum));
-    }
-
-    /**
-     * Gets the colour map.
-     *
      * @param fieldId the field id
      * @return the colour map
      */
-    public ColorMap getColourMap(FieldId fieldId) {
+    public ColorMap getColourMap(FieldIdEnum fieldId) {
         if(fieldConfigManager != null)
         {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
@@ -575,16 +447,6 @@ public class FieldConfigPopulation {
             }
         }
         return null;
-    }
-
-    /**
-     * Gets the combo box.
-     *
-     * @param fieldIdEnum the field id enum
-     * @return the combo box
-     */
-    public ValueComboBoxData getComboBox(FieldIdEnum fieldIdEnum) {
-        return getComboBox(new FieldId(fieldIdEnum));
     }
 
     /**
@@ -640,7 +502,7 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @return the field config
      */
-    public FieldConfigBase getFieldConfig(FieldId fieldId) {
+    public FieldConfigBase getFieldConfig(FieldIdEnum fieldId) {
         FieldConfigBase fieldConfig = null;
         if(fieldConfigManager != null)
         {

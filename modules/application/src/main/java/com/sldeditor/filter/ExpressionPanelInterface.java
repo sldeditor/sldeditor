@@ -34,8 +34,9 @@ public interface ExpressionPanelInterface {
      *
      * @param title the title
      * @param fieldType the field type
+     * @param isRasterSymbol the is raster symbol flag
      */
-    public void configure(String title, Class<?> fieldType);
+    public void configure(String title, Class<?> fieldType, boolean isRasterSymbol);
 
     /**
      * Show dialog.

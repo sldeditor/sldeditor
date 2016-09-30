@@ -42,6 +42,9 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 
 /**
@@ -114,11 +117,25 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      * Sets the field data types.
      *
      * @param fieldType the new data type
+     * @param isRasterSymbol the is raster symbol
      */
-    public void setDataType(Class<?> fieldType) {
+    public void setDataType(Class<?> fieldType, boolean isRasterSymbol) {
         functionNameMap.clear();
 
-        List<FunctionName> functionNameList = functionNameMgr.getFunctionNameList(fieldType);
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+
+        if(isRasterSymbol)
+        {
+            functionNameFilterList.add(new FunctionNameFilterRaster());
+        }
+        else
+        {
+            functionNameFilterList.add(new FunctionNameFilterAll());
+        }
+
+        List<FunctionName> functionNameList = functionNameMgr.getFunctionNameList(fieldType,
+                functionNameFilterList);
+
         for(FunctionName functionName : functionNameList)
         {
             String functionNameString = functionName.getName();

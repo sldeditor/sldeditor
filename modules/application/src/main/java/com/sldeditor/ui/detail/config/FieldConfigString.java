@@ -34,6 +34,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -67,14 +68,11 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param buttonText the button text
      */
-    public FieldConfigString(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigString(FieldConfigCommonData commonData, String buttonText) {
+        super(commonData);
 
         this.buttonText = buttonText;
     }
@@ -140,7 +138,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
     }
 
@@ -336,7 +334,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
     }
 
@@ -371,10 +369,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigString(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly(),
+            copy = new FieldConfigString(fieldConfigBase.getCommonData(),
                     this.buttonText);
         }
         return copy;

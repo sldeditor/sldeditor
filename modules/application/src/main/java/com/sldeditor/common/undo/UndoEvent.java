@@ -18,7 +18,7 @@
  */
 package com.sldeditor.common.undo;
 
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Class that encapsulates an undo/redo event.
@@ -32,7 +32,7 @@ public class UndoEvent implements UndoInterface
     private UndoActionInterface parentObj = null;
 
     /** The field id. */
-    private FieldId fieldId = FieldId.getUnknownValue();
+    private FieldIdEnum fieldId = FieldIdEnum.UNKNOWN;
 
     /** The custom text. */
     private String customText = null;
@@ -54,7 +54,7 @@ public class UndoEvent implements UndoInterface
      * @param oldValue the old value
      * @param newValue the new value
      */
-    public UndoEvent(UndoActionInterface parentObj, FieldId fieldId, Object oldValue, Object newValue)
+    public UndoEvent(UndoActionInterface parentObj, FieldIdEnum fieldId, Object oldValue, Object newValue)
     {
         this.parentObj = parentObj;
         this.fieldId = fieldId;
@@ -113,7 +113,7 @@ public class UndoEvent implements UndoInterface
      * @return the field id
      */
     @Override
-    public FieldId getFieldId()
+    public FieldIdEnum getFieldId()
     {
         return fieldId;
     }

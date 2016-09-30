@@ -45,6 +45,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.Duration;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.detail.BasePanel;
@@ -155,12 +156,10 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     /**
      * Instantiates a new field config time period.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly) {
-        super(panelId, id, null, valueOnly);
+    public FieldConfigTimePeriod(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -179,7 +178,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         fieldPanel.setPreferredSize(preferredSize);
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
     }
 
@@ -679,7 +678,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         if(testValue != null)
         {
             TimePeriod period = new TimePeriod();
@@ -757,9 +756,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         FieldConfigTimePeriod copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigTimePeriod(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigTimePeriod(fieldConfigBase.getCommonData());
         }
         return copy;
     }

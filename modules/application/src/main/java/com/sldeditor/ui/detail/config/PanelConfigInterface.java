@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 
 /**
@@ -57,5 +58,5 @@ public interface PanelConfigInterface {
      *
      * @return the defaultFieldMap
      */
-    Map<FieldId, Object> getDefaultFieldMap();
+    Map<FieldIdEnum, Object> getDefaultFieldMap();
 }

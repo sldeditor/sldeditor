@@ -58,7 +58,11 @@ public class DecimalSpinner extends JSpinner {
      * Instantiates a new decimal spinner with default values.
      */
     public DecimalSpinner() {
-        createUI(0.0, Double.MAX_VALUE, DEFAULT_STEPSIZE, DEFAULT_NO_OF_DECIMAL_PLACES);
+        createUI(0.0,
+                null,
+                null,
+                DEFAULT_STEPSIZE,
+                DEFAULT_NO_OF_DECIMAL_PLACES);
     }
 
     /**
@@ -70,19 +74,20 @@ public class DecimalSpinner extends JSpinner {
      * @param noOfDecimalPlaces the no of decimal places
      */
     public DecimalSpinner(double min, double max, double stepSize, double noOfDecimalPlaces) {
-        createUI(min, max, stepSize, noOfDecimalPlaces);
+        createUI(min, min, max, stepSize, noOfDecimalPlaces);
     }
 
     /**
      * Creates the ui.
      *
+     * @param initialValue the initial value
      * @param min the min
      * @param max the max
      * @param stepSize the step size
      * @param noOfDecimalPlaces the no of decimal places
      */
-    private void createUI(double min, double max, double stepSize, double noOfDecimalPlaces) {
-        SpinnerNumberModel model = new SpinnerNumberModel(min, min, max, stepSize);
+    private void createUI(Double initialValue, Double min, Double max, Double stepSize, double noOfDecimalPlaces) {
+        SpinnerNumberModel model = new SpinnerNumberModel(initialValue, min, max, stepSize);
         setModel(model);
 
         JSpinner.NumberEditor editor = (JSpinner.NumberEditor)getEditor();

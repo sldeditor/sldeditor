@@ -36,8 +36,8 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.Duration;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The unit test for FieldConfigTimePeriod.
@@ -56,7 +56,7 @@ public class FieldConfigTimePeriodTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -75,7 +75,7 @@ public class FieldConfigTimePeriodTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigTimePeriod field2 = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        FieldConfigTimePeriod field2 = new FieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -100,7 +100,7 @@ public class FieldConfigTimePeriodTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -121,8 +121,8 @@ public class FieldConfigTimePeriodTest {
 
         class TestFieldConfigTimePeriod extends FieldConfigTimePeriod
         {
-            public TestFieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly) {
-                super(panelId, id, valueOnly);
+            public TestFieldConfigTimePeriod(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public Expression callGenerateExpression()
@@ -131,14 +131,14 @@ public class FieldConfigTimePeriodTest {
             }
         }
 
-        TestFieldConfigTimePeriod field = new TestFieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        TestFieldConfigTimePeriod field = new TestFieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
         Expression actualExpression = field.callGenerateExpression();
         assertNotNull(actualExpression);
 
         // Try string values - erroneous
         field.createUI();
         String expectedValue = "test string value";
-        field.setTestValue(null, expectedValue);
+        field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue);
         actualExpression = field.callGenerateExpression();
         assertNotNull(actualExpression);
 
@@ -150,8 +150,8 @@ public class FieldConfigTimePeriodTest {
         // Time period values
         String timePeriod = "07-07-2016T17:42:27Z / 08-07-2016T17:42:27Z";
 
-        field.setTestValue(null, (String)null);
-        field.setTestValue(null, timePeriod);
+        field.setTestValue(FieldIdEnum.UNKNOWN, (String)null);
+        field.setTestValue(FieldIdEnum.UNKNOWN, timePeriod);
         actualExpression = field.callGenerateExpression();
         assertTrue(timePeriod.compareTo(actualExpression.toString()) == 0);
 
@@ -184,7 +184,7 @@ public class FieldConfigTimePeriodTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
 
         String expectedDefaultValue = "default value";
         field.revertToDefaultValue();
@@ -205,8 +205,8 @@ public class FieldConfigTimePeriodTest {
         class TestFieldConfigTimePeriod extends FieldConfigTimePeriod
         {
 
-            public TestFieldConfigTimePeriod(Class<?> panelId, FieldId id, boolean valueOnly) {
-                super(panelId, id, valueOnly);
+            public TestFieldConfigTimePeriod(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -215,12 +215,12 @@ public class FieldConfigTimePeriodTest {
             }
         }
 
-        TestFieldConfigTimePeriod field = new TestFieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        TestFieldConfigTimePeriod field = new TestFieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
         FieldConfigTimePeriod copy = (FieldConfigTimePeriod) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigTimePeriod) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertNull(copy.getLabel());
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -231,7 +231,7 @@ public class FieldConfigTimePeriodTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), valueOnly);
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
         field.attributeSelection(null);
 
         // Does nothing
@@ -243,7 +243,7 @@ public class FieldConfigTimePeriodTest {
      */
     @Test
     public void testUndoAction() {
-        FieldConfigTimePeriod field = new FieldConfigTimePeriod(String.class, new FieldId(FieldIdEnum.NAME), false);
+        FieldConfigTimePeriod field = new FieldConfigTimePeriod(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, true));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();

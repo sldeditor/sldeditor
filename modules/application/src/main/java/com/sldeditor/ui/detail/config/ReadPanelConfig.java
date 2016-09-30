@@ -28,6 +28,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ParseXML;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.PanelConfig;
 import com.sldeditor.common.xml.ui.XMLFieldConfigBoolean;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColour;
@@ -93,13 +94,20 @@ public class ReadPanelConfig implements PanelConfigInterface {
     private String panelTitle;
 
     /** The map of default field value. */
-    private Map<FieldId, Object> defaultFieldMap = new HashMap<FieldId, Object>();
+    private Map<FieldIdEnum, Object> defaultFieldMap = new HashMap<FieldIdEnum, Object>();
+
+    /** The is raster symbol flag. */
+    private boolean isRasterSymbol = false;
 
     /**
-     * Default constructor
+     * Default constructor.
+     *
+     * @param isRasterSymbol the is raster symbol
      */
-    public ReadPanelConfig()
+    public ReadPanelConfig(boolean isRasterSymbol)
     {
+        this.isRasterSymbol = isRasterSymbol;
+
         // Force it so that standard fields are always loaded
         Localisation.preload(ReadPanelConfig.class);
     }
@@ -293,19 +301,18 @@ public class ReadPanelConfig implements PanelConfigInterface {
      */
     private void addField(Class<?> localisationClass, Class<?> panelId, GroupConfig groupConfig, XMLFieldConfigData xmlFieldConfig) {
 
-        FieldId id = new FieldId(xmlFieldConfig.getId());
+        FieldIdEnum id = xmlFieldConfig.getId();
         String label = getLocalisedText(localisationClass, xmlFieldConfig.getLabel());
         boolean valueOnly = xmlFieldConfig.isValueOnly();
         String defaultValue = xmlFieldConfig.getDefault();
+
+        FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly, isRasterSymbol);
 
         if(xmlFieldConfig instanceof XMLFieldConfigString)
         {
             XMLFieldConfigString xmlStringFieldConfig = (XMLFieldConfigString) xmlFieldConfig;
 
-            FieldConfigString stringConfig = new FieldConfigString(panelId, 
-                    id, 
-                    label,
-                    valueOnly,
+            FieldConfigString stringConfig = new FieldConfigString(commonData,
                     getLocalisedText(localisationClass, xmlStringFieldConfig.getButtonText()));
 
             groupConfig.addField(stringConfig);
@@ -320,19 +327,19 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigColourMap)
         {
-            FieldConfigColourMap colourMapConfig = new FieldConfigColourMap(panelId, id, label);
+            FieldConfigColourMap colourMapConfig = new FieldConfigColourMap(commonData);
 
             groupConfig.addField(colourMapConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigFeatureTypeConstraint)
         {
-            FieldConfigFeatureTypeConstraint stringConfig = new FieldConfigFeatureTypeConstraint(panelId, id, label);
+            FieldConfigFeatureTypeConstraint stringConfig = new FieldConfigFeatureTypeConstraint(commonData);
 
             groupConfig.addField(stringConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigGeometryField)
         {
-            FieldConfigGeometryField geometryFieldConfig = new FieldConfigGeometryField(panelId, id, label);
+            FieldConfigGeometryField geometryFieldConfig = new FieldConfigGeometryField(commonData);
 
             DataSourceInterface dataSource = DataSourceFactory.getDataSource();
             if(dataSource != null)
@@ -344,19 +351,19 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigFont)
         {
-            FieldConfigFont fontConfig = new FieldConfigFont(panelId, id, label, valueOnly);
+            FieldConfigFont fontConfig = new FieldConfigFont(commonData);
 
             groupConfig.addField(fontConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigInlineFeature)
         {
-            FieldConfigInlineFeature inlineFeatureConfig = new FieldConfigInlineFeature(panelId, id);
+            FieldConfigInlineFeature inlineFeatureConfig = new FieldConfigInlineFeature(commonData);
 
             groupConfig.addField(inlineFeatureConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigFontPreview)
         {
-            FieldConfigFontPreview fontPreviewConfig = new FieldConfigFontPreview(panelId, id, label, valueOnly);
+            FieldConfigFontPreview fontPreviewConfig = new FieldConfigFontPreview(commonData);
 
             groupConfig.addField(fontPreviewConfig);
         }
@@ -364,7 +371,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             XMLFieldConfigTransformation xmlTransformationFieldConfig = (XMLFieldConfigTransformation) xmlFieldConfig;
 
-            FieldConfigTransformation transformationConfig = new FieldConfigTransformation(panelId, id, label, true, 
+            FieldConfigTransformation transformationConfig = new FieldConfigTransformation(commonData, 
                     getLocalisedText(localisationClass, xmlTransformationFieldConfig.getEditButtonText()), 
                     getLocalisedText(localisationClass, xmlTransformationFieldConfig.getClearButtonText()));
 
@@ -374,7 +381,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             XMLFieldConfigGeometry xmlGeometryFieldConfig = (XMLFieldConfigGeometry) xmlFieldConfig;
 
-            FieldConfigGeometry geometryConfig = new FieldConfigGeometry(panelId, id, label, valueOnly, getLocalisedText(localisationClass, xmlGeometryFieldConfig.getButtonText()));
+            FieldConfigGeometry geometryConfig = new FieldConfigGeometry(commonData, getLocalisedText(localisationClass, xmlGeometryFieldConfig.getButtonText()));
 
             groupConfig.addField(geometryConfig);
 
@@ -388,7 +395,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigBoolean)
         {
-            FieldConfigBoolean boolConfig = new FieldConfigBoolean(panelId, id, label, valueOnly);
+            FieldConfigBoolean boolConfig = new FieldConfigBoolean(commonData);
 
             groupConfig.addField(boolConfig);
 
@@ -402,7 +409,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigDouble)
         {
-            FieldConfigDouble doubleConfig = new FieldConfigDouble(panelId, id, label, valueOnly);
+            FieldConfigDouble doubleConfig = new FieldConfigDouble(commonData);
 
             XMLFieldConfigDouble xmlDouble = (XMLFieldConfigDouble)xmlFieldConfig;
             doubleConfig.setDefaultValue(xmlDouble.getDefaultValue());
@@ -422,7 +429,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             XMLFieldConfigInteger xmlInteger = (XMLFieldConfigInteger)xmlFieldConfig;
 
-            FieldConfigInteger integerConfig = new FieldConfigInteger(panelId, id, label, valueOnly);
+            FieldConfigInteger integerConfig = new FieldConfigInteger(commonData);
             integerConfig.setDefaultValue(xmlInteger.getDefaultValue());
             integerConfig.setConfig(xmlInteger.getMinValue(), xmlInteger.getMaxValue(), xmlInteger.getStepSize());
 
@@ -438,7 +445,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigColour)
         {
-            FieldConfigColour colourConfig = new FieldConfigColour(panelId, id, label, valueOnly);
+            FieldConfigColour colourConfig = new FieldConfigColour(commonData);
 
             groupConfig.addField(colourConfig);
         }
@@ -446,7 +453,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             XMLFieldConfigSlider xmlSlider = (XMLFieldConfigSlider)xmlFieldConfig;
 
-            FieldConfigSlider sliderConfig = new FieldConfigSlider(panelId, id, label, valueOnly);
+            FieldConfigSlider sliderConfig = new FieldConfigSlider(commonData);
             sliderConfig.setDefaultValue(xmlSlider.getDefaultValue());
 
             groupConfig.addField(sliderConfig);
@@ -461,13 +468,13 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigSymbolType)
         {
-            FieldConfigSymbolType fillSymbolConfig = new FieldConfigSymbolType(panelId, id, label, valueOnly);
+            FieldConfigSymbolType fillSymbolConfig = new FieldConfigSymbolType(commonData);
 
             groupConfig.addField(fillSymbolConfig);
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigEnum)
         {
-            FieldConfigEnum valueConfig = new FieldConfigEnum(panelId, id, label, valueOnly);
+            FieldConfigEnum valueConfig = new FieldConfigEnum(commonData);
 
             XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum)xmlFieldConfig).getValueList();
 
@@ -487,7 +494,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigMapUnit)
         {
-            FieldConfigMapUnits valueConfig = new FieldConfigMapUnits(panelId, id, label, valueOnly);
+            FieldConfigMapUnits valueConfig = new FieldConfigMapUnits(commonData);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
@@ -553,7 +560,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         {
             for(XMLFieldConfigEnumValueField field : fieldList.getField())
             {
-                config.addField(new FieldId(field.getId()), field.isEnabled());
+                config.addField(field.getId(), field.isEnabled());
             }
         }
         return config;
@@ -597,7 +604,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the defaultFieldMap
      */
     @Override
-    public Map<FieldId, Object> getDefaultFieldMap() {
+    public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return defaultFieldMap;
     }
 }

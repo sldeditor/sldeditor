@@ -46,7 +46,6 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExternalGraphicFilter;
@@ -92,7 +91,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     private void createUI() {
         readConfigFileNoScrollPane(this, "symboltype/ExternalGraphicSymbol.xml");
 
-        registerForTextFieldButton(new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), this);
+        registerForTextFieldButton(FieldIdEnum.EXTERNAL_GRAPHIC, this);
     }
 
     /**
@@ -130,7 +129,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 
@@ -218,7 +217,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), oldValueObj, externalFileURL));
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
         try {
             oldValueObj = new URL(externalFileURL.toExternalForm());
         } catch (MalformedURLException e) {
@@ -241,7 +240,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), oldValueObj, externalFileURL));
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
         try {
             oldValueObj = new URL(externalFileURL.toExternalForm());
         } catch (MalformedURLException e) {
@@ -353,7 +352,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
                 populateExpression(externalFileURL.toExternalForm());
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), oldValueObj, externalFileURL));
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
                 oldValueObj = externalFileURL;
 
                 if(parentObj != null)

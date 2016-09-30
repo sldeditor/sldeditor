@@ -35,6 +35,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
@@ -76,14 +77,12 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
 
     /**
-     * Default constructor
+     * Default constructor.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
+     * @param commonData the common data
      */
-    public FieldConfigGeometryField(Class<?> panelId, FieldId id, String label) {
-        super(panelId, id, label, true);
+    public FieldConfigGeometryField(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -292,7 +291,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -340,9 +339,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigGeometryField(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel());
+            copy = new FieldConfigGeometryField(fieldConfigBase.getCommonData());
         }
         return copy;
     }

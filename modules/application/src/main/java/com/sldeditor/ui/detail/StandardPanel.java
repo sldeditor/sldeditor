@@ -32,6 +32,7 @@ import org.opengis.style.Rule;
 import org.opengis.util.InternationalString;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -159,6 +160,7 @@ public class StandardPanel extends BasePanel {
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
         if(uomFieldConfig != null)
         {
+            uomFieldConfig.updateAttributeSelection(SelectedSymbol.getInstance().isRasterSymbol());
             String uomString = UnitsOfMeasure.getInstance().convert(standardData.unit);
             fieldConfigVisitor.populateField(FieldIdEnum.UOM, getFilterFactory().literal(uomString));
         }

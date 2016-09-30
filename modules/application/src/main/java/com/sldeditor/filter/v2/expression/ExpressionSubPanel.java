@@ -39,6 +39,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableField;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -47,7 +48,6 @@ import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -143,8 +143,9 @@ public class ExpressionSubPanel extends JPanel {
      * Sets the data type for the ui fields.
      *
      * @param fieldType the new data type
+     * @param isRasterSymbol the is raster symbol flag
      */
-    public void setDataType(Class<?> fieldType)
+    public void setDataType(Class<?> fieldType, boolean isRasterSymbol)
     {
         if(envVarField != null)
         {
@@ -157,10 +158,11 @@ public class ExpressionSubPanel extends JPanel {
         {
             dataSourceAttributePanel.setDataType(updatedFieldType);
         }
+        panelAttribute.setVisible(!isRasterSymbol);
 
         if(functionPanel != null)
         {
-            functionPanel.setDataType(updatedFieldType);
+            functionPanel.setDataType(updatedFieldType, isRasterSymbol);
         }
     }
 
@@ -314,7 +316,7 @@ public class ExpressionSubPanel extends JPanel {
             fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
                 @Override
-                public void dataChanged(FieldId changedField) {
+                public void dataChanged(FieldIdEnum changedField) {
                     buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
                     updateButtonState(true);
                 }

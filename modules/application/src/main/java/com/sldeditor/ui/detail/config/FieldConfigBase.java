@@ -44,6 +44,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.xml.TestValueVisitor;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -71,16 +72,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public abstract class FieldConfigBase implements FieldConfigValuePopulateInterface, TestValueVisitor, AttributeButtonSelectionInterface, ExpressionUpdateInterface {
-
-    /** The id if the field. */
-    private FieldId fieldId = null;
-
-    /** The field label. */
-    private String label;
-
-    /** The value only flag: <ul> <li>true - do not display a value/attribute/expression drop down list</li> <li>false- display a value/attribute/expression drop down list</li> </ul>. */
-    private boolean valueOnly = true;
+public abstract class FieldConfigBase extends FieldConfigCommonData implements FieldConfigValuePopulateInterface, TestValueVisitor, AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
     /** The panel. */
     private FieldPanel fieldPanel = null;
@@ -115,9 +107,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     /** The expression update listener. */
     private ExpressionUpdateInterface expressionUpdateListener = null;
 
-    /** The panel id the field is on. */
-    private Class<?> panelId = null;
-
     /** The parent field config. */
     private FieldConfigBase parentFieldConfig = null;
 
@@ -133,8 +122,14 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     /** The function parameter type. */
     private Class<?> functionParameterType = null;
 
-    /** The field index. */
-    private static int fieldIndex = 0;
+    /**
+     * Instantiates a new field config base.
+     *
+     * @param commonData the common data
+     */
+    public FieldConfigBase(FieldConfigCommonData commonData) {
+        super(commonData);
+    }
 
     /**
      * Sets the field enabled state.
@@ -177,60 +172,19 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     public abstract void populateExpression(Object objValue);
 
     /**
-     * Protected constructor.
-     *
-     * @param panelId the panel id
-     * @param fieldId the field id
-     * @param label the label
-     * @param valueOnly the value only
-     */
-    protected FieldConfigBase(Class<?> panelId, FieldId fieldId, String label, boolean valueOnly) {
-        this.panelId = panelId;
-        this.fieldId = fieldId;
-        this.label = label;
-        this.valueOnly = valueOnly;
-    }
-
-    /**
-     * Gets the field id.
-     *
-     * @return the field id
-     */
-    public FieldId getFieldId() {
-        return fieldId;
-    }
-
-    /**
-     * Sets the field id.
-     *
-     * @param fieldId2 the new field id
-     */
-    private void setFieldId(FieldId fieldId2) {
-        fieldId = fieldId2;
-    }
-
-    /**
-     * Gets the label.
-     *
-     * @return the label
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Returns the value only flag.
-     *
-     * @return true, if is value only
-     */
-    public boolean isValueOnly() {
-        return valueOnly;
-    }
-
-    /**
      * Creates the ui.
      */
     public abstract void createUI();
+
+    /**
+     * Gets the common data.
+     *
+     * @return the common data
+     */
+    public FieldConfigCommonData getCommonData()
+    {
+        return (FieldConfigCommonData)this;
+    }
 
     /**
      * Gets the panel.
@@ -310,7 +264,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
         {
             for(UpdateSymbolInterface listener : updateSymbolListenerList)
             {
-                listener.dataChanged(fieldId);
+                listener.dataChanged(getFieldId());
             }
         }
     }
@@ -664,15 +618,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
     }
 
     /**
-     * Gets the panel id.
-     *
-     * @return the panel id
-     */
-    public Class<?> getPanelId() {
-        return panelId;
-    }
-
-    /**
      * Sets the parent.
      *
      * @param parentFieldConfig the new parent
@@ -838,7 +783,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         // Do nothing
     }
 
@@ -849,7 +794,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, int testValue) {
+    public void setTestValue(FieldIdEnum fieldId, int testValue) {
         // Do nothing
     }
 
@@ -860,7 +805,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, double testValue) {
+    public void setTestValue(FieldIdEnum fieldId, double testValue) {
         // Do nothing
     }
 
@@ -871,7 +816,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, boolean testValue) {
+    public void setTestValue(FieldIdEnum fieldId, boolean testValue) {
         // Do nothing
     }
 
@@ -882,7 +827,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ColorMap testValue) {
+    public void setTestValue(FieldIdEnum fieldId, ColorMap testValue) {
         // Do nothing
     }
 
@@ -893,7 +838,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, List<FeatureTypeConstraint> testValue) {
+    public void setTestValue(FieldIdEnum fieldId, List<FeatureTypeConstraint> testValue) {
         // Do nothing
     }
 
@@ -904,7 +849,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, Expression testValue) {
+    public void setTestValue(FieldIdEnum fieldId, Expression testValue) {
         populate(testValue);
     }
 
@@ -915,7 +860,7 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue)
+    public void setTestValue(FieldIdEnum fieldId, ReferencedEnvelope testValue)
     {
         // Do nothing
     }
@@ -1033,27 +978,6 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
         int x = getIndentColumn() * 20;
 
         return x;
-    }
-
-    /**
-     * Adds the function.
-     *
-     * @param functionField the function field
-     */
-    public void addFunction(FieldConfigBase functionField) {
-        if(functionField != null)
-        {
-            functionField.setIndentColumn((getIndentColumn() + 1));
-            functionList.add(functionField);
-
-            fieldIndex = fieldIndex  + 1;
-            functionField.revertToDefaultValue();
-            FieldId fieldId = new FieldId();
-            fieldId.setFieldId(getFieldId().getFieldId());
-            fieldId.setIndex(fieldIndex);
-
-            functionField.setFieldId(fieldId);
-        }
     }
 
     /**
@@ -1176,6 +1100,18 @@ public abstract class FieldConfigBase implements FieldConfigValuePopulateInterfa
             }
             component.setBounds(lastX + buffer, 0, width, height);
             fieldPanel.add(component);
+        }
+    }
+
+    /**
+     * Update attribute selection.
+     *
+     * @param isRasterSymbol the is raster symbol flag
+     */
+    public void updateAttributeSelection(boolean isRasterSymbol) {
+        if(attributeSelectionPanel != null)
+        {
+            attributeSelectionPanel.updateAttributeSelection(isRasterSymbol);
         }
     }
 }

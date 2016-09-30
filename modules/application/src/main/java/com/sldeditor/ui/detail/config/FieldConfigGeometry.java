@@ -34,6 +34,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.vividsolutions.jts.geom.Geometry;
@@ -67,14 +68,11 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param buttonText the button text
      */
-    public FieldConfigGeometry(Class<?> panelId, FieldId id, String label, boolean valueOnly, String buttonText) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigGeometry(FieldConfigCommonData commonData, String buttonText) {
+        super(commonData);
 
         this.buttonText = buttonText;
     }
@@ -145,7 +143,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this, isRasterSymbol()));
         }
     }
 
@@ -343,7 +341,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
     }
 
@@ -377,10 +375,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
         FieldConfigGeometry copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigGeometry(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly(),
+            copy = new FieldConfigGeometry(fieldConfigBase.getCommonData(),
                     this.buttonText);
         }
         return copy;

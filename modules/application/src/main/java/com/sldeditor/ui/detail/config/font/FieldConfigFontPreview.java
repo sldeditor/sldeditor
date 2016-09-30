@@ -28,9 +28,10 @@ import org.opengis.filter.expression.Literal;
 
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -72,13 +73,10 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigFontPreview(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigFontPreview(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -242,7 +240,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
     }
 
@@ -337,10 +335,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigFontPreview(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigFontPreview(fieldConfigBase.getCommonData());
         }
         return copy;
     }

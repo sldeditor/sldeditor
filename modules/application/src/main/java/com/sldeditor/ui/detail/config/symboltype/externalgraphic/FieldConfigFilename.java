@@ -40,8 +40,8 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -80,13 +80,10 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigFilename(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigFilename(FieldConfigCommonData commonData) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
     }
 
     /**
@@ -334,11 +331,11 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the field map
      */
     @Override
-    public Map<FieldId, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
     {
-        Map<FieldId, FieldConfigBase> map = new HashMap<FieldId, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
-        map.put(new FieldId(FieldIdEnum.EXTERNAL_GRAPHIC), this);
+        map.put(FieldIdEnum.EXTERNAL_GRAPHIC, this);
 
         return map;
     }
@@ -416,7 +413,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
     }
 
@@ -470,10 +467,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigFilename(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigFilename(fieldConfigBase.getCommonData());
         }
         return copy;
     }

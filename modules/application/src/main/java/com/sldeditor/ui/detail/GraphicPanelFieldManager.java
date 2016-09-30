@@ -26,7 +26,6 @@ import java.util.Map;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
@@ -40,7 +39,7 @@ import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 public class GraphicPanelFieldManager {
 
     /** The field configuration map. */
-    private Map<Class<?>, Map<FieldId, FieldConfigBase> > fieldConfigMap = new HashMap<Class<?>, Map<FieldId, FieldConfigBase> >();
+    private Map<Class<?>, Map<FieldIdEnum, FieldConfigBase> > fieldConfigMap = new HashMap<Class<?>, Map<FieldIdEnum, FieldConfigBase> >();
 
     /** The map of groups. */
     private Map<Class<?>, Map<GroupIdEnum, GroupConfigInterface> > groupMap = new HashMap<Class<?>, Map<GroupIdEnum, GroupConfigInterface>>();
@@ -57,7 +56,7 @@ public class GraphicPanelFieldManager {
     {
         this.panelId = panelId;
 
-        Map<FieldId, FieldConfigBase> fieldMap = new HashMap<FieldId, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> fieldMap = new HashMap<FieldIdEnum, FieldConfigBase>();
 
         fieldConfigMap.put(this.panelId, fieldMap);
     }
@@ -80,13 +79,13 @@ public class GraphicPanelFieldManager {
      * @param fieldId the field
      * @param fieldConfig the field configuration
      */
-    public void add(FieldId fieldId, FieldConfigBase fieldConfig)
+    public void add(FieldIdEnum fieldId, FieldConfigBase fieldConfig)
     {
-        Map<FieldId, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
+        Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
 
         if(panelMap == null)
         {
-            panelMap = new HashMap<FieldId, FieldConfigBase>();
+            panelMap = new HashMap<FieldIdEnum, FieldConfigBase>();
         }
         panelMap.put(fieldId, fieldConfig);
     }
@@ -97,9 +96,9 @@ public class GraphicPanelFieldManager {
      * @param field the field
      * @return the field data manager
      */
-    public FieldConfigBase get(FieldId field)
+    public FieldConfigBase get(FieldIdEnum field)
     {
-        Map<FieldId, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
+        Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
 
         if(panelMap != null)
         {
@@ -110,17 +109,6 @@ public class GraphicPanelFieldManager {
 
 
     /**
-     * Gets the.
-     *
-     * @param field the field
-     * @return the field config base
-     */
-    public FieldConfigBase get(FieldIdEnum field)
-    {
-        return get(new FieldId(field));
-    }
-
-    /**
      * Gets the fields for the given class type, if class type is null then all are returned
      *
      * @param fieldType the field type
@@ -129,7 +117,7 @@ public class GraphicPanelFieldManager {
     public List<FieldConfigBase> getFields(Class<?> fieldType)
     {
         List<FieldConfigBase> fieldList = new ArrayList<FieldConfigBase>();
-        Map<FieldId, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
+        Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
 
         if(panelMap != null)
         {
@@ -152,13 +140,13 @@ public class GraphicPanelFieldManager {
      * @param fieldConfigToFind the field configuration to find
      * @return the field enum
      */
-    public FieldId getFieldEnum(Class<?> panelId, FieldConfigBase fieldConfigToFind)
+    public FieldIdEnum getFieldEnum(Class<?> panelId, FieldConfigBase fieldConfigToFind)
     {
-        Map<FieldId, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
+        Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
 
         if(panelMap != null)
         {
-            for(FieldId key : panelMap.keySet())
+            for(FieldIdEnum key : panelMap.keySet())
             {
                 FieldConfigBase fieldConfig = panelMap.get(key);
 
@@ -168,7 +156,7 @@ public class GraphicPanelFieldManager {
                 }
             }
         }
-        return FieldId.getUnknownValue();
+        return FieldIdEnum.UNKNOWN;
     }
 
     /**
@@ -180,17 +168,17 @@ public class GraphicPanelFieldManager {
     {
         if(fieldConfigManager != null)
         {
-            Map<FieldId, FieldConfigBase> componentMapToAdd = fieldConfigManager.fieldConfigMap.get(fieldConfigManager.panelId);
-            Map<FieldId, FieldConfigBase> componentMap = this.fieldConfigMap.get(fieldConfigManager.panelId);
+            Map<FieldIdEnum, FieldConfigBase> componentMapToAdd = fieldConfigManager.fieldConfigMap.get(fieldConfigManager.panelId);
+            Map<FieldIdEnum, FieldConfigBase> componentMap = this.fieldConfigMap.get(fieldConfigManager.panelId);
 
             if(componentMap == null)
             {
-                Map<FieldId, FieldConfigBase> value = fieldConfigManager.fieldConfigMap.get(fieldConfigManager.panelId);
+                Map<FieldIdEnum, FieldConfigBase> value = fieldConfigManager.fieldConfigMap.get(fieldConfigManager.panelId);
                 this.fieldConfigMap.put(fieldConfigManager.panelId, value);
             }
             else
             {
-                for(FieldId fieldId : componentMapToAdd.keySet())
+                for(FieldIdEnum fieldId : componentMapToAdd.keySet())
                 {
                     FieldConfigBase dataToAdd = componentMapToAdd.get(fieldId);
 
@@ -237,11 +225,11 @@ public class GraphicPanelFieldManager {
      * @return the data
      */
     public FieldConfigBase getData(Class<?> requestedPanelId, 
-            FieldId requestedField)
+            FieldIdEnum requestedField)
     {
         FieldConfigBase retVal = null;
 
-        Map<FieldId, FieldConfigBase> panelMap = fieldConfigMap.get(requestedPanelId);
+        Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(requestedPanelId);
 
         if(panelMap != null)
         {
@@ -336,7 +324,7 @@ public class GraphicPanelFieldManager {
     public void removeField(FieldConfigBase fieldConfig) {
         if(fieldConfig != null)
         {
-            Map<FieldId, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
+            Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
 
             if(panelMap != null)
             {

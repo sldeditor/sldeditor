@@ -43,6 +43,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
@@ -80,13 +81,10 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /**
      * Instantiates a new field config boolean.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigBoundingBox(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigBoundingBox(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -125,7 +123,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Boolean.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Boolean.class, this, isRasterSymbol()));
         }
     }
 
@@ -412,7 +410,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, ReferencedEnvelope testValue) {
+    public void setTestValue(FieldIdEnum fieldId, ReferencedEnvelope testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -449,10 +447,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         FieldConfigBoundingBox copy = null;
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigBoundingBox(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigBoundingBox(fieldConfigBase.getCommonData());
         }
         return copy;
     }

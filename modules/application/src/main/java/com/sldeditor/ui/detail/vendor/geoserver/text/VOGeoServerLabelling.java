@@ -41,7 +41,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -59,7 +58,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     private static final long serialVersionUID = 1L;
 
     /** The field map. */
-    private Map<FieldId, String> fieldMap = new HashMap<FieldId, String>();
+    private Map<FieldIdEnum, String> fieldMap = new HashMap<FieldIdEnum, String>();
 
     /** The parent obj. */
     private UpdateSymbolInterface parentObj = null;
@@ -73,23 +72,23 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     {
         super(panelId, functionManager);
 
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_ALLOW_OVERRUNS), TextSymbolizer2.ALLOW_OVERRUNS_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_AUTO_WRAP), TextSymbolizer2.AUTO_WRAP_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_CONFLICT_RESOLUTION), TextSymbolizer2.CONFLICT_RESOLUTION_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_FOLLOW_LINE), TextSymbolizer2.FOLLOW_LINE_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_FORCE_LEFT_TO_RIGHT), TextSymbolizer2.FORCE_LEFT_TO_RIGHT_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_GOODNESS_OF_FIT), TextSymbolizer2.GOODNESS_OF_FIT_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_GRAPHIC_MARGIN), TextSymbolizer2.GRAPHIC_MARGIN_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_GRAPHIC_RESIZE), TextSymbolizer2.GRAPHIC_RESIZE_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_GROUP), TextSymbolizer2.GROUP_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_LABEL_ALL_GROUP), TextSymbolizer2.LABEL_ALL_GROUP_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_LABEL_REPEAT), TextSymbolizer2.LABEL_REPEAT_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_MAX_ANGLE_DELTA), TextSymbolizer2.MAX_ANGLE_DELTA_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_MAX_DISPLACEMENT), TextSymbolizer2.MAX_DISPLACEMENT_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_MIN_GROUP_DISTANCE), TextSymbolizer2.MIN_GROUP_DISTANCE_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_PARTIALS), TextSymbolizer2.PARTIALS_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_POLYGONALIGN), TextSymbolizer2.POLYGONALIGN_KEY);
-        fieldMap.put(new FieldId(FieldIdEnum.LABEL_SPACE_AROUND), TextSymbolizer2.SPACE_AROUND_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_ALLOW_OVERRUNS, TextSymbolizer2.ALLOW_OVERRUNS_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_AUTO_WRAP, TextSymbolizer2.AUTO_WRAP_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_CONFLICT_RESOLUTION, TextSymbolizer2.CONFLICT_RESOLUTION_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_FOLLOW_LINE, TextSymbolizer2.FOLLOW_LINE_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_FORCE_LEFT_TO_RIGHT, TextSymbolizer2.FORCE_LEFT_TO_RIGHT_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_GOODNESS_OF_FIT, TextSymbolizer2.GOODNESS_OF_FIT_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_GRAPHIC_MARGIN, TextSymbolizer2.GRAPHIC_MARGIN_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_GRAPHIC_RESIZE, TextSymbolizer2.GRAPHIC_RESIZE_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_GROUP, TextSymbolizer2.GROUP_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_LABEL_ALL_GROUP, TextSymbolizer2.LABEL_ALL_GROUP_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_LABEL_REPEAT, TextSymbolizer2.LABEL_REPEAT_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_MAX_ANGLE_DELTA, TextSymbolizer2.MAX_ANGLE_DELTA_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_MAX_DISPLACEMENT, TextSymbolizer2.MAX_DISPLACEMENT_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_MIN_GROUP_DISTANCE, TextSymbolizer2.MIN_GROUP_DISTANCE_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_PARTIALS, TextSymbolizer2.PARTIALS_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_POLYGONALIGN, TextSymbolizer2.POLYGONALIGN_KEY);
+        fieldMap.put(FieldIdEnum.LABEL_SPACE_AROUND, TextSymbolizer2.SPACE_AROUND_KEY);
 
         createUI();
     }
@@ -125,7 +124,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldId)
      */
     @Override
-    public void dataChanged(FieldId changedField)
+    public void dataChanged(FieldIdEnum changedField)
     {
         if(parentObj != null)
         {
@@ -174,7 +173,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     {
         Map<String, String> options = textSymbolizer.getOptions();
 
-        for(FieldId key : fieldMap.keySet())
+        for(FieldIdEnum key : fieldMap.keySet())
         {
             internalPopulate(options, key, fieldMap.get(key));
         }
@@ -187,7 +186,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param field the field
      * @param key the key
      */
-    private void internalPopulate(Map<String, String> options, FieldId field, String key)
+    private void internalPopulate(Map<String, String> options, FieldIdEnum field, String key)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
@@ -221,7 +220,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_populateDoubleField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -244,7 +243,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_populateBooleanField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -267,7 +266,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_populateIntegerField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -290,7 +289,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_populateEnumField(Map<String, String> options,
-            FieldId fieldId, 
+            FieldIdEnum fieldId, 
             String key)
     {
         if((options != null) && options.containsKey(key))
@@ -317,7 +316,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     {
         Map<String, String> options = textSymbolizer.getOptions();
 
-        for(FieldId key : fieldMap.keySet())
+        for(FieldIdEnum key : fieldMap.keySet())
         {
             internalUpdateSymbol(options, key, fieldMap.get(key));
         }
@@ -330,7 +329,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param field the field
      * @param key the key
      */
-    private void internalUpdateSymbol(Map<String, String> options, FieldId field, String key)
+    private void internalUpdateSymbol(Map<String, String> options, FieldIdEnum field, String key)
     {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
@@ -364,7 +363,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_updateSymbolEnumField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         ValueComboBoxData value = fieldConfigVisitor.getComboBox(field);
 
@@ -399,7 +398,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_updateSymbolDoubleField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         double value = fieldConfigVisitor.getDouble(field);
 
@@ -423,7 +422,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_updateSymbolIntegerField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         int value = fieldConfigVisitor.getInteger(field);
 
@@ -447,7 +446,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @param key the key
      */
     private void internal_updateSymbolBooleanField(Map<String, String> options,
-            FieldId field, String key)
+            FieldIdEnum field, String key)
     {
         boolean value = fieldConfigVisitor.getBoolean(field);
 

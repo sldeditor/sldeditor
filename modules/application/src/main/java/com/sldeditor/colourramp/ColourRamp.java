@@ -28,7 +28,13 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
+
 import com.sldeditor.colourramp.ramp.ColourRampData;
+import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.ui.detail.BasePanel;
 
 /**
@@ -43,6 +49,9 @@ public class ColourRamp {
 
     /** The Constant IMAGE_HEIGHT. */
     private static final int IMAGE_HEIGHT = BasePanel.WIDGET_HEIGHT;
+
+    /** The filter factory. */
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
 
     /** The colour list. */
     private List<Color> colourList = new ArrayList<Color>();
@@ -164,33 +173,45 @@ public class ColourRamp {
      * Gets the colour.
      *
      * @param data the data
-     * @param value the value
+     * @param quantityExpression the quantity expression
      * @param reverseColours the reverse colours
      * @return the colour
      */
-    public Color getColour(ColourRampData data, int value, boolean reverseColours) {
+    public Expression getColour(ColourRampData data, Expression quantityExpression, boolean reverseColours) {
 
-        int tmpRange = Math.abs(data.getMaxValue() - data.getMinValue());
-
-        // Check to see if we have set up the gradient yet
-        if((range != tmpRange) ||
-                (lastMinValue != data.getMinValue()) ||
-                (lastReverseColoursFlag != reverseColours))
+        Expression expression = null;
+        if(quantityExpression instanceof LiteralExpressionImpl)
         {
-            range = tmpRange;
-            lastMinValue = data.getMinValue();
-            gradientImage = createImage(range, reverseColours);
-            lastReverseColoursFlag = reverseColours;
-        }
-        int pos = value - data.getMinValue();
+            int value = Integer.valueOf(quantityExpression.toString());
 
-        if(pos >= range)
-        {
-            pos = range - 1;
-        }
-        int rgb = gradientImage.getRGB(pos, 0);
-        Color colour = new Color(rgb);
+            int tmpRange = Math.abs(data.getMaxValue() - data.getMinValue());
 
-        return colour;
+            // Check to see if we have set up the gradient yet
+            if((range != tmpRange) ||
+                    (lastMinValue != data.getMinValue()) ||
+                    (lastReverseColoursFlag != reverseColours))
+            {
+                range = tmpRange;
+                lastMinValue = data.getMinValue();
+                gradientImage = createImage(range, reverseColours);
+                lastReverseColoursFlag = reverseColours;
+            }
+            int pos = value - data.getMinValue();
+
+            if(pos >= range)
+            {
+                pos = range - 1;
+            }
+
+            if(pos < 0)
+            {
+                pos = 0;
+            }
+            int rgb = gradientImage.getRGB(pos, 0);
+            Color colour = new Color(rgb);
+
+            expression = ff.literal(ColourUtils.fromColour(colour));
+        }
+        return expression;
     }
 }

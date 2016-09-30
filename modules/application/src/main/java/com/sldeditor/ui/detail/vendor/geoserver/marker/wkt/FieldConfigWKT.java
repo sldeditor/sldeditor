@@ -45,8 +45,8 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -87,13 +87,10 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigWKT(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigWKT(FieldConfigCommonData commonData) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
     }
 
     /**
@@ -354,11 +351,11 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the field map
      */
     @Override
-    public Map<FieldId, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
     {
-        Map<FieldId, FieldConfigBase> map = new HashMap<FieldId, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
-        map.put(new FieldId(FieldIdEnum.WKT), this);
+        map.put(FieldIdEnum.WKT, this);
 
         return map;
     }
@@ -453,7 +450,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         if(wktPanel != null)
         {
             wktPanel.populateExpression(testValue);
@@ -497,10 +494,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigWKT(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigWKT(fieldConfigBase.getCommonData());
         }
         return copy;
     }

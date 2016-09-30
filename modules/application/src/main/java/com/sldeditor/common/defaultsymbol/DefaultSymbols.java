@@ -422,4 +422,36 @@ public class DefaultSymbols {
         Stroke stroke = styleFactory.getDefaultStroke();
         return stroke;
     }
+
+    /**
+     * Creates the new raster symbol.
+     *
+     * @return the styled layer descriptor
+     */
+    public static StyledLayerDescriptor createNewRaster() {
+        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
+
+        NamedLayer namedLayer = styleFactory.createNamedLayer();
+
+        sld.addStyledLayer(namedLayer);
+
+        Style style = styleFactory.createStyle();
+        namedLayer.addStyle(style);
+
+        List<FeatureTypeStyle> ftsList = style.featureTypeStyles();
+
+        FeatureTypeStyle fts = styleFactory.createFeatureTypeStyle();
+
+        ftsList.add(fts);
+
+        Rule rule = styleFactory.createRule();
+
+        fts.rules().add(rule);
+
+        RasterSymbolizer raster = createDefaultRasterSymbolizer();
+
+        rule.symbolizers().add(raster);
+
+        return sld;
+    }
 }

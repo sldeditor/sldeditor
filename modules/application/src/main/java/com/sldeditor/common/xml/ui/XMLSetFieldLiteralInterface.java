@@ -19,7 +19,6 @@
 package com.sldeditor.common.xml.ui;
 
 import com.sldeditor.common.xml.TestValueVisitor;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The Interface XMLSetFieldLiteralInterface.
@@ -34,6 +33,6 @@ public interface XMLSetFieldLiteralInterface {
      * @param visitor the visitor
      * @param fieldId the field id
      */
-    public void accept(TestValueVisitor visitor, FieldId fieldId);
+    public void accept(TestValueVisitor visitor, FieldIdEnum fieldId);
 
 }

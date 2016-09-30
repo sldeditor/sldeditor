@@ -30,6 +30,7 @@ import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
@@ -86,14 +87,16 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
             public void actionPerformed(ActionEvent e) {
                 ExpressionPanelInterface expressionPanel = ExpressionPanelFactory.getExpressionPanel(null);
 
-                expressionPanel.configure(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"), expectedDataType);
+                expressionPanel.configure(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"),
+                        expectedDataType,
+                        SelectedSymbol.getInstance().isRasterSymbol());
 
                 expressionPanel.populate(storedExpression, null);
 
                 if(expressionPanel.showDialog())
                 {
                     Expression expression = expressionPanel.getExpression();
-                    
+
                     populateExpression(expression);
 
                     if(parentObj != null)
@@ -101,12 +104,12 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
                         parentObj.updateSymbol();
                     }
 
-//                    String expressionString = expressionPanel.getExpressionString();
-//
-//                    if(expressionString != null)
-//                    {
-//                        createExpression(expressionString);
-//                    }
+                    //                    String expressionString = expressionPanel.getExpressionString();
+                    //
+                    //                    if(expressionString != null)
+                    //                    {
+                    //                        createExpression(expressionString);
+                    //                    }
                 }
             }
         });
@@ -128,7 +131,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
             try {
                 expression = CQL.toExpression(expressionTextField.getText());
             } catch (CQLException e) {
-           //     ConsoleManager.getInstance().exception(this, e);
+                //     ConsoleManager.getInstance().exception(this, e);
             }
             return expression;
         }
@@ -140,9 +143,11 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      * Populate expression.
      *
      * @param expression the expression
+     * @param isRasterSymbol the is raster symbol flag
      */
     public void populateExpression(Expression expression) {
         this.storedExpression = expression;
+
         String expressionString = "";
 
         if(expression != null)

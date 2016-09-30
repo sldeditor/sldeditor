@@ -43,8 +43,8 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -74,13 +74,10 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     /**
      * Instantiates a new field config string.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigWindBarbs(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigWindBarbs(FieldConfigCommonData commonData) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
     }
 
     /**
@@ -331,14 +328,14 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the field map
      */
     @Override
-    public Map<FieldId, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
     {
-        Map<FieldId, FieldConfigBase> map = new HashMap<FieldId, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
-        map.put(new FieldId(FieldIdEnum.WINDBARBS), this);
-        map.put(new FieldId(FieldIdEnum.WINDBARB_WINDSPEED), this);
-        map.put(new FieldId(FieldIdEnum.WINDBARB_WINDSPEED_UNITS), this);
-        map.put(new FieldId(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE), this);
+        map.put(FieldIdEnum.WINDBARBS, this);
+        map.put(FieldIdEnum.WINDBARB_WINDSPEED, this);
+        map.put(FieldIdEnum.WINDBARB_WINDSPEED_UNITS, this);
+        map.put(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE, this);
 
         return map;
     }
@@ -446,7 +443,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         if(windBarbsPanel != null)
         {
             windBarbsPanel.setTestValue(fieldId, testValue);
@@ -465,10 +462,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigWindBarbs(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData());
         }
         return copy;
     }

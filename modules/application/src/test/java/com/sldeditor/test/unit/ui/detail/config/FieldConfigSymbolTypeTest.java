@@ -35,8 +35,8 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
@@ -57,7 +57,7 @@ public class FieldConfigSymbolTypeTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -76,7 +76,7 @@ public class FieldConfigSymbolTypeTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigSymbolType field2 = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field2 = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -101,7 +101,7 @@ public class FieldConfigSymbolTypeTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -125,10 +125,10 @@ public class FieldConfigSymbolTypeTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.populateExpression(null);
-        field.setTestValue(null, (String)null);
+        field.setTestValue(FieldIdEnum.UNKNOWN, (String)null);
         assertNull(field.getEnumValue());
         assertNull(field.getSelectedValueObj());
         assertNull(field.getSelectedValue());
@@ -141,7 +141,7 @@ public class FieldConfigSymbolTypeTest {
         String actualValue1 = field.getStringValue();
         assertNull(actualValue1);
 
-        FieldConfigMarker marker = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.ANGLE), "label", valueOnly, null, null, null);
+        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
         marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
@@ -198,7 +198,7 @@ public class FieldConfigSymbolTypeTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.revertToDefaultValue();
         // Does nothing
@@ -213,8 +213,8 @@ public class FieldConfigSymbolTypeTest {
 
         class TestFieldConfigSymbolType extends FieldConfigSymbolType
         {
-            public TestFieldConfigSymbolType(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-                super(panelId, id, label, valueOnly);
+            public TestFieldConfigSymbolType(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -223,12 +223,12 @@ public class FieldConfigSymbolTypeTest {
             }
         }
 
-        TestFieldConfigSymbolType field = new TestFieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        TestFieldConfigSymbolType field = new TestFieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigSymbolType copy = (FieldConfigSymbolType) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigSymbolType) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -239,7 +239,7 @@ public class FieldConfigSymbolTypeTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Do nothing
@@ -253,13 +253,13 @@ public class FieldConfigSymbolTypeTest {
     public void testUndoAction() {
         UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
 
         field.createUI();
 
-        FieldConfigMarker marker = new FieldConfigMarker(String.class, new FieldId(FieldIdEnum.ANGLE), "label", valueOnly, null, null, null);
+        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
         marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
@@ -304,9 +304,9 @@ public class FieldConfigSymbolTypeTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(0),  Double.valueOf(23)));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(0),  Double.valueOf(23)));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME),  Double.valueOf(0),  Double.valueOf(54)));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME,  Double.valueOf(0),  Double.valueOf(54)));
         UndoManager.getInstance().setPopulationCheck(null);
     }
 
@@ -316,7 +316,7 @@ public class FieldConfigSymbolTypeTest {
     @Test
     public void testOptionSelected() {
         boolean valueOnly = true;
-        FieldConfigSymbolType field = new FieldConfigSymbolType(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigSymbolType field = new FieldConfigSymbolType(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.optionSelected(null);
     }

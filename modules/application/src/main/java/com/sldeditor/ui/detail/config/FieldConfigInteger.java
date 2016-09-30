@@ -24,6 +24,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -59,13 +60,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /**
      * Instantiates a new field config double.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigInteger(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigInteger(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -87,7 +85,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
 
         spinner.registerObserver(new SpinnerNotifyInterface() {
@@ -310,7 +308,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, int testValue) {
+    public void setTestValue(FieldIdEnum fieldId, int testValue) {
         populateField(testValue);
     }
 
@@ -359,10 +357,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigInteger(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigInteger(fieldConfigBase.getCommonData());
 
             FieldConfigInteger intFieldConfig = (FieldConfigInteger)fieldConfigBase;
             copy.setConfig(intFieldConfig.minValue, 

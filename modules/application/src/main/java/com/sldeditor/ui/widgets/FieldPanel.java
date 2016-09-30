@@ -74,11 +74,14 @@ public class FieldPanel extends JPanel {
      *
      * @param classType the class type
      * @param field the field
+     * @param rasterSymbol the raster symbol
      * @return the attribute selection
      */
-    public AttributeSelection internalCreateAttrButton(Class<?> classType, FieldConfigBase field) {
+    public AttributeSelection internalCreateAttrButton(Class<?> classType, 
+            FieldConfigBase field,
+            boolean rasterSymbol) {
 
-        AttributeSelection buttonAttrLabel = new AttributeSelection(classType, field);
+        AttributeSelection buttonAttrLabel = AttributeSelection.createAttributes(classType, field, rasterSymbol);
         buttonAttrLabel.setBounds(xPos + BasePanel.ATTRIBUTE_BTN_X, 0, AttributeSelection.getPanelWidth(), BasePanel.WIDGET_HEIGHT);
         add(buttonAttrLabel);
 

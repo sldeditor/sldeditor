@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import com.sldeditor.common.utils.ColourUtils;
+
 /**
  * The Class ColourTableCellRenderer.
  *
@@ -66,6 +68,7 @@ public class ColourTableCellRenderer extends DefaultTableCellRenderer {
         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         label.setBackground(colour);
+        label.setForeground(ColourUtils.getTextColour(colour));
 
         return label;
     }

@@ -20,7 +20,6 @@
 package com.sldeditor.ui.detail;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The Class ColourFieldConfig.
@@ -30,13 +29,13 @@ import com.sldeditor.ui.detail.config.FieldId;
 public class ColourFieldConfig {
 
     /** The colour field. */
-    private FieldId colour;
+    private FieldIdEnum colour;
     
     /** The opacity field. */
-    private FieldId opacity;
+    private FieldIdEnum opacity;
     
     /** The stroke width field. */
-    private FieldId width;
+    private FieldIdEnum width;
 
     /**
      * Instantiates a new colour field config.
@@ -47,9 +46,9 @@ public class ColourFieldConfig {
      */
     public ColourFieldConfig(FieldIdEnum colour, FieldIdEnum opacity, FieldIdEnum width) {
         super();
-        this.colour = new FieldId(colour);
-        this.opacity = new FieldId(opacity);
-        this.width = new FieldId(width);
+        this.colour = colour;
+        this.opacity = opacity;
+        this.width = width;
     }
 
     /**
@@ -57,7 +56,7 @@ public class ColourFieldConfig {
      *
      * @return the colour
      */
-    public FieldId getColour() {
+    public FieldIdEnum getColour() {
         return colour;
     }
 
@@ -66,7 +65,7 @@ public class ColourFieldConfig {
      *
      * @return the opacity
      */
-    public FieldId getOpacity() {
+    public FieldIdEnum getOpacity() {
         return opacity;
     }
 
@@ -75,7 +74,7 @@ public class ColourFieldConfig {
      *
      * @return the width
      */
-    public FieldId getWidth() {
+    public FieldIdEnum getWidth() {
         return width;
     }
 }

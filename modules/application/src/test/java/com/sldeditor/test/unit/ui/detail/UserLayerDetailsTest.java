@@ -32,7 +32,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.UserLayerDetails;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The unit test for UserLayerDetails.
@@ -71,7 +70,7 @@ public class UserLayerDetailsTest {
         GraphicPanelFieldManager fieldDataManager = panel.getFieldDataManager();
         assertNotNull(fieldDataManager);
 
-        panel.dataChanged(new FieldId(FieldIdEnum.INLINE_FEATURE));
+        panel.dataChanged(FieldIdEnum.INLINE_FEATURE);
 
         FieldConfigString nameField = (FieldConfigString) fieldDataManager.get(FieldIdEnum.NAME);
         assertTrue(expectedUserValue.compareTo(nameField.getStringValue()) == 0);

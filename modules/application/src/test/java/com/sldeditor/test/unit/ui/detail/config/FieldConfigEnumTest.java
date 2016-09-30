@@ -35,8 +35,8 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -56,7 +56,7 @@ public class FieldConfigEnumTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -75,7 +75,7 @@ public class FieldConfigEnumTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigEnum field2 = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field2 = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -100,7 +100,7 @@ public class FieldConfigEnumTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -127,20 +127,20 @@ public class FieldConfigEnumTest {
         s1.addOption("key1", "Value 1");
         s1.addOption("key2", "Value 2");
         s1.addOption("key3", "Value 3");
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_H), true);
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_V), false);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_H, true);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_V, false);
         configList.add(s1);
 
         SymbolTypeConfig s2 = new SymbolTypeConfig(null);
         s2.addOption("key4", "Value 4");
         s2.addOption("key5", "Value 5");
         s2.addOption("key6", "Value 6");
-        s2.addField(new FieldId(FieldIdEnum.ANGLE), true);
-        s2.addField(new FieldId(FieldIdEnum.DESCRIPTION), false);
+        s2.addField(FieldIdEnum.ANGLE, true);
+        s2.addField(FieldIdEnum.DESCRIPTION, false);
         configList.add(s2);
 
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
         field.addConfig(null);
@@ -171,7 +171,7 @@ public class FieldConfigEnumTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         String expectedDefaultValue = "key6";
         field.revertToDefaultValue();
@@ -182,16 +182,16 @@ public class FieldConfigEnumTest {
         s1.addOption("key1", "Value 1");
         s1.addOption("key2", "Value 2");
         s1.addOption("key3", "Value 3");
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_H), true);
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_V), false);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_H, true);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_V, false);
         configList.add(s1);
 
         SymbolTypeConfig s2 = new SymbolTypeConfig(null);
         s2.addOption("key4", "Value 4");
         s2.addOption("key5", "Value 5");
         s2.addOption("key6", "Value 6");
-        s2.addField(new FieldId(FieldIdEnum.ANGLE), true);
-        s2.addField(new FieldId(FieldIdEnum.DESCRIPTION), false);
+        s2.addField(FieldIdEnum.ANGLE, true);
+        s2.addField(FieldIdEnum.DESCRIPTION, false);
         configList.add(s2);
 
         field.addConfig(configList);
@@ -210,8 +210,8 @@ public class FieldConfigEnumTest {
 
         class TestFieldConfigEnum extends FieldConfigEnum
         {
-            public TestFieldConfigEnum(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-                super(panelId, id, label, valueOnly);
+            public TestFieldConfigEnum(FieldConfigCommonData commonData) {
+                super(commonData);
             }
 
             public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -220,12 +220,12 @@ public class FieldConfigEnumTest {
             }
         }
 
-        TestFieldConfigEnum field = new TestFieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        TestFieldConfigEnum field = new TestFieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigEnum copy = (FieldConfigEnum) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigEnum) field.callCreateCopy(field);
-        assertEquals(field.getFieldId().getFieldId(), copy.getFieldId().getFieldId());
+        assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
     }
@@ -236,7 +236,7 @@ public class FieldConfigEnumTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         field.createUI();
@@ -258,12 +258,12 @@ public class FieldConfigEnumTest {
         s1.addOption("key1", "Value 1");
         s1.addOption("key2", "Value 2");
         s1.addOption("key3", "Value 3");
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_H), true);
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_V), false);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_H, true);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_V, false);
         configList.add(s1);
 
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.addConfig(configList);
 
@@ -271,10 +271,10 @@ public class FieldConfigEnumTest {
         field.createUI();
 
         field.populateField("key3");
-        Map<FieldId, Boolean> actualMap = field.getFieldEnableState();
+        Map<FieldIdEnum, Boolean> actualMap = field.getFieldEnableState();
 
-        assertEquals(actualMap.get(new FieldId(FieldIdEnum.ANCHOR_POINT_H)), Boolean.TRUE);
-        assertEquals(actualMap.get(new FieldId(FieldIdEnum.ANCHOR_POINT_V)), Boolean.FALSE);
+        assertEquals(actualMap.get(FieldIdEnum.ANCHOR_POINT_H), Boolean.TRUE);
+        assertEquals(actualMap.get(FieldIdEnum.ANCHOR_POINT_V), Boolean.FALSE);
         UndoManager.getInstance().setPopulationCheck(null);
     }
 
@@ -289,20 +289,19 @@ public class FieldConfigEnumTest {
         s1.addOption("key1", "Value 1");
         s1.addOption("key2", "Value 2");
         s1.addOption("key3", "Value 3");
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_H), true);
-        s1.addField(new FieldId(FieldIdEnum.ANCHOR_POINT_V), false);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_H, true);
+        s1.addField(FieldIdEnum.ANCHOR_POINT_V, false);
         configList.add(s1);
 
         SymbolTypeConfig s2 = new SymbolTypeConfig(null);
         s2.addOption("key4", "Value 4");
         s2.addOption("key5", "Value 5");
         s2.addOption("key6", "Value 6");
-        s2.addField(new FieldId(FieldIdEnum.ANGLE), true);
-        s2.addField(new FieldId(FieldIdEnum.DESCRIPTION), false);
+        s2.addField(FieldIdEnum.ANGLE, true);
+        s2.addField(FieldIdEnum.DESCRIPTION, false);
         configList.add(s2);
-
         boolean valueOnly = true;
-        FieldConfigEnum field = new FieldConfigEnum(Integer.class, new FieldId(FieldIdEnum.NAME), "label", valueOnly);
+        FieldConfigEnum field = new FieldConfigEnum(new FieldConfigCommonData(Integer.class, FieldIdEnum.NAME, "label", valueOnly));
         field.addConfig(null);
         assertNull(field.getStringValue());
 
@@ -330,9 +329,9 @@ public class FieldConfigEnumTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME), Double.valueOf(0),  Double.valueOf(23)));
+        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(0),  Double.valueOf(23)));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, new FieldId(FieldIdEnum.NAME),  Double.valueOf(0),  Double.valueOf(54)));
+        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME,  Double.valueOf(0),  Double.valueOf(54)));
     }
 
 }

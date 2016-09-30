@@ -36,6 +36,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
@@ -98,13 +99,10 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     /**
      * Instantiates a new FieldConfigSymbolType.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigSymbolType(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigSymbolType(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -125,7 +123,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
 
         // Create 
@@ -498,7 +496,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -529,10 +527,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigSymbolType(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigSymbolType(fieldConfigBase.getCommonData());
         }
         return copy;
     }

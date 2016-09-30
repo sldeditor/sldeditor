@@ -32,6 +32,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -60,7 +61,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     private Map<String, ValueComboBoxData> comboDataMap = new HashMap<String, ValueComboBoxData>();
 
     /** The field map. */
-    private Map<Class<?>, Map<FieldId, Boolean> > fieldMap = new HashMap<Class<?>, Map<FieldId, Boolean> >();
+    private Map<Class<?>, Map<FieldIdEnum, Boolean> > fieldMap = new HashMap<Class<?>, Map<FieldIdEnum, Boolean> >();
 
     /** The default value. */
     private String defaultValue = "";
@@ -77,13 +78,10 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     /**
      * Instantiates a new field config enum.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigEnum(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigEnum(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -137,7 +135,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
 
         if(dataList != null)
@@ -352,7 +350,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @return the field enable state
      */
-    public Map<FieldId, Boolean> getFieldEnableState()
+    public Map<FieldIdEnum, Boolean> getFieldEnableState()
     {
         ValueComboBoxData value = getEnumValue();
         if(value == null)
@@ -423,7 +421,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, String testValue) {
+    public void setTestValue(FieldIdEnum fieldId, String testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -472,10 +470,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigEnum(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigEnum(fieldConfigBase.getCommonData());
         }
         return copy;
     }

@@ -28,6 +28,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -60,13 +61,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     /**
      * Instantiates a new field config slider.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigSlider(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigSlider(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -106,7 +104,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
         }
     }
 
@@ -304,7 +302,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, double testValue) {
+    public void setTestValue(FieldIdEnum fieldId, double testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -349,10 +347,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigSlider(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigSlider(fieldConfigBase.getCommonData());
         }
         return copy;
     }

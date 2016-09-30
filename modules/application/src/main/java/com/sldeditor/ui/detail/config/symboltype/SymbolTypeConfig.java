@@ -26,8 +26,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.FieldEnableState;
-import com.sldeditor.ui.detail.config.FieldId;
 
 /**
  * The Class SymbolTypeConfig contains all the configuration for a symbol type.
@@ -57,7 +57,7 @@ public class SymbolTypeConfig
     private Map<String, String> optionMap = new LinkedHashMap<String, String>();
 
     /** The field map. */
-    private Map<FieldId, Boolean> fieldMap = new HashMap<FieldId, Boolean>();
+    private Map<FieldIdEnum, Boolean> fieldMap = new HashMap<FieldIdEnum, Boolean>();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(SymbolTypeConfig.class);
@@ -95,9 +95,9 @@ public class SymbolTypeConfig
     {
         for(String menuOption : keyOrderList)
         {
-            List<FieldId> fieldList = new ArrayList<FieldId>();
+            List<FieldIdEnum> fieldList = new ArrayList<FieldIdEnum>();
 
-            for(FieldId fieldKey : fieldMap.keySet())
+            for(FieldIdEnum fieldKey : fieldMap.keySet())
             {
                 boolean value = fieldMap.get(fieldKey);
 
@@ -119,13 +119,13 @@ public class SymbolTypeConfig
      *
      * @return the field map
      */
-    public Map<Class<?>, Map<FieldId, Boolean> > getFieldMap()
+    public Map<Class<?>, Map<FieldIdEnum, Boolean> > getFieldMap()
     {
-        Map<Class<?>, Map<FieldId, Boolean> > map = new HashMap<Class<?>, Map<FieldId, Boolean> >();
+        Map<Class<?>, Map<FieldIdEnum, Boolean> > map = new HashMap<Class<?>, Map<FieldIdEnum, Boolean> >();
 
-        Map<FieldId, Boolean> fieldList = new HashMap<FieldId, Boolean>();
+        Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
 
-        for(FieldId fieldKey : fieldMap.keySet())
+        for(FieldIdEnum fieldKey : fieldMap.keySet())
         {
             boolean value = fieldMap.get(fieldKey);
 
@@ -164,7 +164,7 @@ public class SymbolTypeConfig
      * @param fieldId the field id
      * @param enabled the enabled flag
      */
-    public void addField(FieldId fieldId, boolean enabled)
+    public void addField(FieldIdEnum fieldId, boolean enabled)
     {
         logger.debug(String.format("AddField %s %s", fieldId.toString(), enabled));
         fieldMap.put(fieldId, enabled);

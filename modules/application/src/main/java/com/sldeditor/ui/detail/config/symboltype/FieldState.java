@@ -30,12 +30,13 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
@@ -60,19 +61,13 @@ public abstract class FieldState extends FieldConfigBase {
     /**
      * Instantiates a new field state.
      *
-     * @param panelId the panel id
-     * @param fieldId the field id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      * @param resourceFile the resource file
      */
-    protected FieldState(Class<?> panelId, 
-            FieldId fieldId, 
-            String label, 
-            boolean valueOnly,
+    protected FieldState(FieldConfigCommonData commonData,
             String resourceFile)
     {
-        super(panelId, fieldId, label, valueOnly);
+        super(commonData);
         this.resourceFile = resourceFile;
     }
 
@@ -233,7 +228,7 @@ public abstract class FieldState extends FieldConfigBase {
      * @param fieldConfigManager the field config manager
      * @return the field map
      */
-    public abstract Map<FieldId, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager);
+    public abstract Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager);
 
     /**
      * Returns true if the class can handle the graphical symbol.

@@ -45,7 +45,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
-import com.sldeditor.ui.detail.config.FieldId;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -442,7 +441,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      * @param changedField the changed field
      */
     @Override
-    public void dataChanged(FieldId changedField) {
+    public void dataChanged(FieldIdEnum changedField) {
         updateSymbol();
     }
 

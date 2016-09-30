@@ -29,6 +29,7 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
@@ -56,13 +57,10 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     /**
      * Instantiates a new field config boolean.
      *
-     * @param panelId the panel id
-     * @param id the id
-     * @param label the label
-     * @param valueOnly the value only
+     * @param commonData the common data
      */
-    public FieldConfigBoolean(Class<?> panelId, FieldId id, String label, boolean valueOnly) {
-        super(panelId, id, label, valueOnly);
+    public FieldConfigBoolean(FieldConfigCommonData commonData) {
+        super(commonData);
     }
 
     /**
@@ -95,7 +93,7 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Boolean.class, this));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Boolean.class, this, isRasterSymbol()));
         }
     }
 
@@ -287,7 +285,7 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
      * @param testValue the test value
      */
     @Override
-    public void setTestValue(FieldId fieldId, boolean testValue) {
+    public void setTestValue(FieldIdEnum fieldId, boolean testValue) {
         populateField(testValue);
 
         valueUpdated();
@@ -322,10 +320,7 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigBoolean(fieldConfigBase.getPanelId(),
-                    fieldConfigBase.getFieldId(),
-                    fieldConfigBase.getLabel(),
-                    fieldConfigBase.isValueOnly());
+            copy = new FieldConfigBoolean(fieldConfigBase.getCommonData());
         }
         return copy;
     }
