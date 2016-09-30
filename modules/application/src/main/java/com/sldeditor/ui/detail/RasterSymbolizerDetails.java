@@ -37,6 +37,7 @@ import org.opengis.style.OverlapBehavior;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -44,7 +45,8 @@ import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
-import com.sldeditor.ui.detail.vendor.geoserver.text.VendorOptionTextFactory;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -62,8 +64,8 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     /** The vendor option list allowed to be used. */
     private List<VersionData> vendorOptionVersionList = new ArrayList<VersionData>();
 
-    /** The vendor option text factory. */
-    private VendorOptionTextFactory vendorOptionTextFactory = null;
+    /** The vendor option raster factory. */
+    private VendorOptionRasterFactory vendorOptionRasterFactory = null;
 
     /**
      * Constructor.
@@ -94,28 +96,28 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void updateVendorOptionPanels()
     {
-        //        if(vendorOptionTextFactory != null)
-        //        {
-        //            List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
-        //            if(veList != null)
-        //            {
-        //                for(VendorOptionInterface vendorOption : veList)
-        //                {
-        //                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionList, vendorOption.getVendorOption());
-        //
-        //                    BasePanel extensionPanel = vendorOption.getPanel();
-        //                    if(extensionPanel != null)
-        //                    {
-        //                        removePanel(vendorOption.getPanel());
-        //
-        //                        if(displayVendorOption)
-        //                        {
-        //                            appendPanel(vendorOption.getPanel());
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
+        if(vendorOptionRasterFactory != null)
+        {
+            List<VendorOptionInterface> veList = vendorOptionRasterFactory.getVendorOptionList();
+            if(veList != null)
+            {
+                for(VendorOptionInterface vendorOption : veList)
+                {
+                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionList, vendorOption.getVendorOption());
+
+                    BasePanel extensionPanel = vendorOption.getPanel();
+                    if(extensionPanel != null)
+                    {
+                        removePanel(vendorOption.getPanel());
+
+                        if(displayVendorOption)
+                        {
+                            appendPanel(vendorOption.getPanel());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -125,16 +127,16 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void createVendorOptionPanel() {
 
-        //        vendorOptionTextFactory = new VendorOptionTextFactory(getClass(), getFunctionManager());
-        //
-        //        List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
-        //        if(veList != null)
-        //        {
-        //            for(VendorOptionInterface extension : veList)
-        //            {
-        //                extension.setParentPanel(this);
-        //            }
-        //        }
+        vendorOptionRasterFactory = new VendorOptionRasterFactory(getClass(), getFunctionManager());
+
+        List<VendorOptionInterface> veList = vendorOptionRasterFactory.getVendorOptionList();
+        if(veList != null)
+        {
+            for(VendorOptionInterface extension : veList)
+            {
+                extension.setParentPanel(this);
+            }
+        }
     }
 
     /**
@@ -497,9 +499,9 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     @Override
     public GraphicPanelFieldManager getFieldDataManager()
     {
-        if(vendorOptionTextFactory != null)
+        if(vendorOptionRasterFactory != null)
         {
-            vendorOptionTextFactory.getFieldDataManager(fieldConfigManager);
+            vendorOptionRasterFactory.getFieldDataManager(fieldConfigManager);
         }
 
         return fieldConfigManager;

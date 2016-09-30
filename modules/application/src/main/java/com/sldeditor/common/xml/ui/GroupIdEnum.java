@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="HALO"/&gt;
  *     &lt;enumeration value="VO_LABELLING"/&gt;
  *     &lt;enumeration value="VO_RANDOMFILL"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE"/&gt;
  *     &lt;enumeration value="RASTER"/&gt;
  *     &lt;enumeration value="RASTER_CONTRAST"/&gt;
  *     &lt;enumeration value="RASTER_CHANNELSELECTION"/&gt;
@@ -95,6 +96,7 @@ public enum GroupIdEnum {
     LINEPLACEMENT,
     VO_LABELLING,
     VO_RANDOMFILL,
+    VO_RASTER_NORMALIZE,
     RASTER,
     RASTER_CONTRAST,
     RASTER_CHANNELSELECTION,

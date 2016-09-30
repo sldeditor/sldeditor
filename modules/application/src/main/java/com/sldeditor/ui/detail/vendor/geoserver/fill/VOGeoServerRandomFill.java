@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
 
@@ -500,5 +501,13 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
     }
 }

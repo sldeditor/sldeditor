@@ -130,6 +130,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_COLOUR"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_OPACITY"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_QUANTITY"/&gt;
+ *     &lt;enumeration value="RASTER_NORMALIZE_ALGORITHM"/&gt;
+ *     &lt;enumeration value="RASTER_NORMALIZE_MIN_VALUE"/&gt;
+ *     &lt;enumeration value="RASTER_NORMALIZE_MAX_VALUE"/&gt;
  *     &lt;enumeration value="REMOTE_OWS_SERVICE"/&gt;
  *     &lt;enumeration value="REMOTE_OWS_ONLINERESOURCE"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
@@ -256,6 +259,9 @@ public enum FieldIdEnum {
     RASTER_COLOURMAP_ENTRY_COLOUR,
     RASTER_COLOURMAP_ENTRY_OPACITY,
     RASTER_COLOURMAP_ENTRY_QUANTITY,
+    RASTER_NORMALIZE_ALGORITHM,
+    RASTER_NORMALIZE_MIN_VALUE,
+    RASTER_NORMALIZE_MAX_VALUE,
     REMOTE_OWS_SERVICE,
     REMOTE_OWS_ONLINERESOURCE,
     INLINE_FEATURE,

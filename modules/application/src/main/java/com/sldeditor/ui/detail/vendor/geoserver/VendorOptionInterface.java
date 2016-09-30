@@ -19,6 +19,7 @@
 package com.sldeditor.ui.detail.vendor.geoserver;
 
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -80,4 +81,11 @@ public interface VendorOptionInterface {
      * @param polygonSymbolizer the polygon symbolizer
      */
     public void populate(PolygonSymbolizer polygonSymbolizer);
+
+    /**
+     * Populate for a raster symbolizer.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    public void populate(RasterSymbolizer rasterSymbolizer);
 }
