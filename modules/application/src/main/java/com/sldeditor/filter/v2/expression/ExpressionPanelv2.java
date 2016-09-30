@@ -164,7 +164,7 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
     }
 
     /**
-     * Configure.
+     * Configure the panel.
      *
      * @param title the title
      * @param fieldType the field type
@@ -174,7 +174,7 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
     public void configure(String title, Class<?> fieldType, boolean isRasterSymbol) {
         this.fieldType = fieldType;
 
-        setTitle(title);
+        setTitle(String.format("%s : %s", title, ((fieldType == null) ? "???" : fieldType.getSimpleName())));
 
         expressionPanel.setDataType(fieldType, isRasterSymbol);
         propertyPanel.setDataType(fieldType);

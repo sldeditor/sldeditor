@@ -71,7 +71,7 @@ public class VendorOptionVersion
     }
 
     /**
-     * Checks if is allowed.
+     * Checks if vendor option is allowed.
      *
      * @param versionData the version data
      * @return true, if is allowed
@@ -81,6 +81,12 @@ public class VendorOptionVersion
         if(versionData == null)
         {
             return false;
+        }
+
+        // Check to see if it is strict SLD, always allowed
+        if(versionData.getVendorOptionType() == NoVendorOption.class)
+        {
+            return true;
         }
 
         if(versionData.getVendorOptionType() != this.classType)
