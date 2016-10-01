@@ -85,36 +85,39 @@ public class ParameterFunctionUtils {
      */
     public static String getString(ProcessFunction processFunction) {
         StringBuilder sb = new StringBuilder();
-        sb.append(processFunction.getFunctionName().toString());
-        sb.append("(");
-        int count = 0;
-        for(Expression expression : processFunction.getParameters())
+        if(processFunction != null)
         {
-            if(count > 0)
+            sb.append(processFunction.getFunctionName().toString());
+            sb.append("(");
+            int count = 0;
+            for(Expression expression : processFunction.getParameters())
             {
-                sb.append(", ");
-            }
-            sb.append("\n  ");
-            List<Expression> subParameterList = getExpressionList(expression);
-            
-            if(!subParameterList.isEmpty())
-            {
-                if(subParameterList.size() == 1)
+                if(count > 0)
                 {
-                    sb.append(subParameterList.get(0).toString());
-                    sb.append(":<not set>");
+                    sb.append(", ");
                 }
-                else if(subParameterList.size() == 2)
+                sb.append("\n  ");
+                List<Expression> subParameterList = getExpressionList(expression);
+
+                if(!subParameterList.isEmpty())
                 {
-                    sb.append(subParameterList.get(0).toString());
-                    sb.append(":");
-                    sb.append(subParameterList.get(1).toString());
+                    if(subParameterList.size() == 1)
+                    {
+                        sb.append(subParameterList.get(0).toString());
+                        sb.append(":<not set>");
+                    }
+                    else if(subParameterList.size() == 2)
+                    {
+                        sb.append(subParameterList.get(0).toString());
+                        sb.append(":");
+                        sb.append(subParameterList.get(1).toString());
+                    }
                 }
+
+                count ++;
             }
-            
-            count ++;
+            sb.append("\n)");
         }
-        sb.append("\n)");
         return sb.toString();
     }
 
