@@ -26,7 +26,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,8 +54,6 @@ import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.base.GroupConfig;
-import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExpressionTypeEnum;
@@ -415,23 +412,6 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#setIndentColumn(int)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getIndentColumn()}.
-     */
-    @Test
-    public void testSetIndentColumn() {
-        boolean valueOnly = true;
-        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
-
-        int expectedColumn = 42;
-
-        field.setIndentColumn(expectedColumn);
-        assertEquals(expectedColumn, field.getIndentColumn());
-    }
-
-    /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#expressionUpdated(org.opengis.filter.expression.Expression)}.
      */
     @Test
@@ -619,45 +599,12 @@ public class FieldConfigBaseTest {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
         TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
-        field.setIndentColumn(42);
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
 
         FieldConfigString copy = (FieldConfigString) field.duplicate();
         assertNotNull(copy);
-        assertEquals(field.getIndentColumn(), copy.getIndentColumn());
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#setGroupComponents(java.util.List)}.
-     */
-    @Test
-    public void testSetGroupComponents() {
-        List<GroupConfigInterface> groupConfigList = new ArrayList<GroupConfigInterface>();
-        groupConfigList.add(new GroupConfig());
-
-        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
-
-        field.setGroupComponents(groupConfigList);
-        field.removeFunctionFields();
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#setFunctionParameterType(java.lang.Class)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getFunctionParameterType()}.
-     */
-    @Test
-    public void testSetFunctionParameterType() {
-        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
-
-        Class<Double> expectedClass = Double.class;
-        field.setFunctionParameterType(expectedClass);
-        assertEquals(expectedClass, field.getFunctionParameterType());
     }
 
     /**

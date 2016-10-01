@@ -37,7 +37,6 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.ui.attribute.AttributeSelection;
-import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -62,6 +61,9 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * @author Robert Ward (SCISYS)
  */
 public abstract class FieldConfigBase extends FieldConfigPopulate implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
+
+    /** The Constant X_POS. */
+    private static final int X_POS = 0;
 
     /** The panel. */
     private FieldPanel fieldPanel = null;
@@ -98,18 +100,6 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
 
     /** The parent field config. */
     private FieldConfigBase parentFieldConfig = null;
-
-    /** The indent column. */
-    private int indentColumn = 0;
-
-    /** The function list. */
-    private List<FieldConfigBase> functionList = new ArrayList<FieldConfigBase>();
-
-    /** The function group list. */
-    private List<GroupConfigInterface> functionGroupList = new ArrayList<GroupConfigInterface>();
-
-    /** The function parameter type. */
-    private Class<?> functionParameterType = null;
 
     /**
      * Instantiates a new field config base.
@@ -288,24 +278,6 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
 
         setValueFieldState();
         fireDataChanged();
-    }
-
-    /**
-     * Sets the indent column.
-     *
-     * @param indentColumn the new indent column
-     */
-    public void setIndentColumn(int indentColumn) {
-        this.indentColumn = indentColumn;
-    }
-
-    /**
-     * Gets the indent column.
-     *
-     * @return the indent column
-     */
-    public int getIndentColumn() {
-        return indentColumn;
     }
 
     /**
@@ -636,7 +608,6 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
         if(copy != null)
         {
             copy.setParent(getParent());
-            copy.setIndentColumn(getIndentColumn());
             copy.updateSymbolListenerList = this.updateSymbolListenerList;
         }
         return copy;
@@ -657,105 +628,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      */
     protected int getXPos()
     {
-        int x = getIndentColumn() * 20;
-
-        return x;
-    }
-
-    /**
-     * Gets the no of function fields.
-     *
-     * @return the no of function fields
-     */
-    public int getNoOfFunctionFields() {
-        return functionList.size();
-    }
-
-    /**
-     * Gets the function fields.
-     *
-     * @return the function fields
-     */
-    public List<FieldConfigBase> getFunctionFields() {
-        return functionList;
-    }
-
-    /**
-     * Gets the all function fields.
-     *
-     * @return the all function fields
-     */
-    public List<FieldConfigBase> getAllFunctionFields() {
-        List<FieldConfigBase> existingFunctionList = new ArrayList<FieldConfigBase>();
-
-        findChildFunctionFields(functionList, existingFunctionList);
-
-        return existingFunctionList;
-    }
-
-    /**
-     * Find child function fields.
-     *
-     * @param subFunctionList the sub function list
-     * @param existingFunctionList the existing function list
-     */
-    private void findChildFunctionFields(List<FieldConfigBase> subFunctionList, List<FieldConfigBase> existingFunctionList)
-    {
-        if(subFunctionList != null)
-        {
-            for(FieldConfigBase functionField : subFunctionList)
-            {
-                if(functionField != null)
-                {
-                    existingFunctionList.add(functionField);
-                    findChildFunctionFields(functionField.functionList, existingFunctionList);
-                }
-            }
-        }
-    }
-
-    /**
-     * Removes the function fields.
-     */
-    public void removeFunctionFields() {
-        functionList.clear();
-
-        if(functionGroupList != null)
-        {
-            for(GroupConfigInterface group : functionGroupList)
-            {
-                group.removeFromUI();
-            }
-
-            functionGroupList.clear();
-        }
-    }
-
-    /**
-     * Sets the group components.
-     *
-     * @param groupConfigList the new group components
-     */
-    public void setGroupComponents(List<GroupConfigInterface> groupConfigList) {
-        functionGroupList = groupConfigList;
-    }
-
-    /**
-     * Sets the function parameter type.
-     *
-     * @param functionParameterType the new function parameter type
-     */
-    public void setFunctionParameterType(Class<?> functionParameterType) {
-        this.functionParameterType = functionParameterType;
-    }
-
-    /**
-     * Gets the function parameter type.
-     *
-     * @return the functionParemeterType
-     */
-    public Class<?> getFunctionParameterType() {
-        return functionParameterType;
+        return X_POS;
     }
 
     /**
