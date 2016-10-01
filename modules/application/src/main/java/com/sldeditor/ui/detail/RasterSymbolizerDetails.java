@@ -84,11 +84,11 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void createUI() {
 
-        PrefManager.getInstance().addVendorOptionListener(this);
-
         readRasterConfigFile(this, "Raster.xml");
 
         createVendorOptionPanel();
+
+        PrefManager.getInstance().addVendorOptionListener(this);
     }
 
     /**

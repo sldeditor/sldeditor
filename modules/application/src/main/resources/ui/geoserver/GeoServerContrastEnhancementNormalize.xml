@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
     start="2.4.2"
-    localisation="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize">
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize"
+    parentGroup="RASTER_RGB_CHANNEL_RED_CONTRAST">
     <Group id="VO_RASTER_NORMALIZE" label="geoserver.rasterNormalize"
         showLabel="true">
         <FieldConfigEnum id="RASTER_NORMALIZE_ALGORITHM"

@@ -29,6 +29,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.common.xml.ui.PanelConfig;
 import com.sldeditor.common.xml.ui.XMLFieldConfigBoolean;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColour;
@@ -99,6 +100,9 @@ public class ReadPanelConfig implements PanelConfigInterface {
     /** The is raster symbol flag. */
     private boolean isRasterSymbol = false;
 
+    /** The parent group config. */
+    private GroupIdEnum parentGroupConfig = null;
+
     /**
      * Default constructor.
      *
@@ -142,6 +146,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
         panelTitle = getLocalisedText(localisationClass, panelConfig.getPanelTitle());
         vendorOptionVersion = getVendorOptionVersion(panelConfig);
+        parentGroupConfig  = panelConfig.getParentGroup();
 
         for(Object groupObj : panelConfig.getGroupOrMultiOptionGroup())
         {
@@ -606,5 +611,15 @@ public class ReadPanelConfig implements PanelConfigInterface {
     @Override
     public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return defaultFieldMap;
+    }
+
+    /**
+     * Gets the parent group config.
+     *
+     * @return the parent group config
+     */
+    @Override
+    public GroupIdEnum getParentGroupConfig() {
+        return parentGroupConfig;
     }
 }

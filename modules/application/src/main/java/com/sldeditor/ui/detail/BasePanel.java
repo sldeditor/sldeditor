@@ -158,6 +158,9 @@ public class BasePanel extends JPanel {
     /** The padding component. */
     private BasePanelPadding padding = null;
 
+    /** The parent group config. */
+    private GroupIdEnum parentGroupConfig = null;
+
     /**
      * Default constructor.
      *
@@ -398,6 +401,7 @@ public class BasePanel extends JPanel {
         List<GroupConfigInterface> groupConfigList = config.getGroupList();
         vendorOptionVersion = config.getVendorOptionVersion();
         defaultFieldMap = config.getDefaultFieldMap();
+        parentGroupConfig = config.getParentGroupConfig();
 
         setBorder(BorderFactory.createTitledBorder(config.getPanelTitle()));
 
@@ -713,15 +717,39 @@ public class BasePanel extends JPanel {
      */
     protected void appendPanel(BasePanel panel)
     {
-        padding.removePadding();
-
-        logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
-
-        for(int index = 0; index < panel.box.getComponentCount(); index ++)
+        GroupIdEnum parentGroupId = panel.getParentGroupConfig();
+        if(parentGroupId == null)
         {
-            box.add(panel.box.getComponent(index));
+            padding.removePadding();
+
+            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+
+            for(int index = 0; index < panel.box.getComponentCount(); index ++)
+            {
+                box.add(panel.box.getComponent(index));
+            }
+            padding.addPadding();
         }
-        padding.addPadding();
+        else
+        {
+            GroupConfigInterface parentGroup = getGroup(parentGroupId);
+
+            panel.appendPanelToGroup(parentGroup);
+        }
+    }
+
+    /**
+     * Append panel to group.
+     *
+     * @param parentGroup the parent group
+     */
+    private void appendPanelToGroup(GroupConfigInterface parentGroup) {
+//        GroupConfig g = (GroupConfig) parentGroup;
+//
+//        for(GroupConfigInterface groupConfig : groupConfigList)
+//        {
+//            populateGroup(parent, box, groupConfig, null);
+//        }
     }
 
     /**
@@ -793,5 +821,14 @@ public class BasePanel extends JPanel {
                 fieldConfig.revertToDefaultValue();
             }
         }
+    }
+
+    /**
+     * Gets the parent group config.
+     *
+     * @return the parent group config
+     */
+    public GroupIdEnum getParentGroupConfig() {
+        return parentGroupConfig;
     }
 }
