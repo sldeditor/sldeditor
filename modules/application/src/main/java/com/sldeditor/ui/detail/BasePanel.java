@@ -51,6 +51,7 @@ import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.PanelConfigInterface;
 import com.sldeditor.ui.detail.config.ReadPanelConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
@@ -536,7 +537,7 @@ public class BasePanel extends JPanel {
      * @param parentField the parent field
      * @param field the field
      */
-    private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
+    private void addField(Box parentBox, FieldConfigPopulate parentField, FieldConfigBase field) {
 
         if(field == null)
         {
@@ -570,7 +571,7 @@ public class BasePanel extends JPanel {
      */
     protected void handleFieldState(FieldIdEnum fieldId)
     {
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             if(fieldConfig instanceof FieldConfigEnum)
@@ -599,7 +600,7 @@ public class BasePanel extends JPanel {
     protected void handleFieldState()
     {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(FieldConfigEnum.class);
-        for(FieldConfigBase field : fieldList)
+        for(FieldConfigPopulate field : fieldList)
         {
             FieldConfigEnum fieldEnum = (FieldConfigEnum)field;
 
@@ -659,7 +660,7 @@ public class BasePanel extends JPanel {
      */
     protected void registerForTextFieldButton(FieldIdEnum fieldId, FieldConfigStringButtonInterface listener)
     {
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             FieldConfigString textField = (FieldConfigString)fieldConfig;

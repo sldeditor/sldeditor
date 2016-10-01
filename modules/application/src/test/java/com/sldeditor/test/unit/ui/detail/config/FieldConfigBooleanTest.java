@@ -32,6 +32,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -176,7 +177,7 @@ public class FieldConfigBooleanTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

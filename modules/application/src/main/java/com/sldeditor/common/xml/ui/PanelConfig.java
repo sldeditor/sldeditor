@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="end" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="panelTitle" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="localisation" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="parentGroup" type="{}GroupIdEnum" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -70,6 +71,8 @@ public class PanelConfig {
     protected String panelTitle;
     @XmlAttribute(name = "localisation")
     protected String localisation;
+    @XmlAttribute(name = "parentGroup")
+    protected GroupIdEnum parentGroup;
 
     /**
      * Gets the value of the groupOrMultiOptionGroup property.
@@ -219,6 +222,30 @@ public class PanelConfig {
      */
     public void setLocalisation(String value) {
         this.localisation = value;
+    }
+
+    /**
+     * Gets the value of the parentGroup property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link GroupIdEnum }
+     *     
+     */
+    public GroupIdEnum getParentGroup() {
+        return parentGroup;
+    }
+
+    /**
+     * Sets the value of the parentGroup property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link GroupIdEnum }
+     *     
+     */
+    public void setParentGroup(GroupIdEnum value) {
+        this.parentGroup = value;
     }
 
 }

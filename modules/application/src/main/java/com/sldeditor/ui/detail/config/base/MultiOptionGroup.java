@@ -39,6 +39,7 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
@@ -304,7 +305,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         {
             box.remove(optionPanel);
 
-            for(FieldConfigBase field : optionFieldList)
+            for(FieldConfigPopulate field : optionFieldList)
             {
                 fieldConfigManager.removeField(field);
             }

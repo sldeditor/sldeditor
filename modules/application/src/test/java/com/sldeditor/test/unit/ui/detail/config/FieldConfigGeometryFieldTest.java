@@ -38,6 +38,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometryField;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -392,7 +393,7 @@ public class FieldConfigGeometryFieldTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

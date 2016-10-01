@@ -32,6 +32,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 
 /**
  * The unit test for FieldConfigSlider.
@@ -191,7 +192,7 @@ public class FieldConfigSliderTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

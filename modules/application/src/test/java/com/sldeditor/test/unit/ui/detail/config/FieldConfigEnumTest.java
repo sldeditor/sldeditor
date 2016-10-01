@@ -37,6 +37,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -214,7 +215,7 @@ public class FieldConfigEnumTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

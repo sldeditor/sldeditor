@@ -46,6 +46,7 @@ import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 
 /**
@@ -185,7 +186,7 @@ public class FieldConfigWKTTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

@@ -137,7 +137,7 @@ public class FieldConfigPopulation {
         {
             return;
         }
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             fieldConfig.populateField(colourMap);
@@ -155,7 +155,7 @@ public class FieldConfigPopulation {
         {
             return;
         }
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             fieldConfig.populateField(ftcList);
@@ -173,7 +173,7 @@ public class FieldConfigPopulation {
         {
             return;
         }
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             fieldConfig.populateField(font);
@@ -216,7 +216,7 @@ public class FieldConfigPopulation {
         {
             return;
         }
-        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
@@ -502,8 +502,8 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @return the field config
      */
-    public FieldConfigBase getFieldConfig(FieldIdEnum fieldId) {
-        FieldConfigBase fieldConfig = null;
+    public FieldConfigPopulate getFieldConfig(FieldIdEnum fieldId) {
+        FieldConfigPopulate fieldConfig = null;
         if(fieldConfigManager != null)
         {
             fieldConfig = fieldConfigManager.get(fieldId);

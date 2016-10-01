@@ -53,6 +53,7 @@ import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.vividsolutions.jts.geom.Geometry;
@@ -186,7 +187,7 @@ public class FilterManagerTest {
         String label = functionName.getArgumentNames().get(adjustedIndex);
 
         String debugMessage = String.format("%s/%d %s", functionName.getName(), fieldIndex, label);
-        FieldConfigBase field = fieldList.get(fieldIndex);
+        FieldConfigPopulate field = fieldList.get(fieldIndex);
 
         assertNotNull(debugMessage, field);
         Parameter<?> parameterType = functionName.getArguments().get(adjustedIndex);

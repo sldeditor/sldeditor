@@ -40,6 +40,7 @@ import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
@@ -140,7 +141,7 @@ public class SymbolTypeFactory {
 
         List<ValueComboBoxDataGroup> combinedSymbolList = populateSymbolList(panelDetails);
 
-        FieldConfigBase field = fieldConfigManager.get(this.selectionComboBox);
+        FieldConfigPopulate field = fieldConfigManager.get(this.selectionComboBox);
         this.symbolTypeField = (FieldConfigSymbolType)field;
         symbolTypeField.populate(fillPanel, combinedSymbolList);
 
@@ -175,7 +176,7 @@ public class SymbolTypeFactory {
 
         List<ValueComboBoxDataGroup> combinedSymbolList = populateSymbolList(strokePanel.getClass());
 
-        FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.STROKE_STYLE);
+        FieldConfigPopulate fieldConfig = fieldConfigManager.get(FieldIdEnum.STROKE_STYLE);
         this.symbolTypeField = (FieldConfigSymbolType)fieldConfig;
         symbolTypeField.populate(strokePanel, combinedSymbolList);
 

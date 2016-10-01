@@ -20,7 +20,6 @@ package com.sldeditor.ui.detail.config;
 
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -31,21 +30,12 @@ import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.ConstantExpression;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
-import org.geotools.styling.ColorMap;
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
-import org.geotools.styling.UserLayer;
 import org.opengis.filter.FilterFactory;
-import org.opengis.filter.Id;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
-import com.sldeditor.common.xml.TestValueVisitor;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
@@ -53,7 +43,6 @@ import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 import com.sldeditor.ui.widgets.FieldPanel;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class FieldConfigBase is the base class for all derived FieldConfigxxx classes.
@@ -72,7 +61,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public abstract class FieldConfigBase extends FieldConfigCommonData implements FieldConfigValuePopulateInterface, TestValueVisitor, AttributeButtonSelectionInterface, ExpressionUpdateInterface {
+public abstract class FieldConfigBase extends FieldConfigPopulate implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
     /** The panel. */
     private FieldPanel fieldPanel = null;
@@ -634,313 +623,6 @@ public abstract class FieldConfigBase extends FieldConfigCommonData implements F
     public FieldConfigBase getParent()
     {
         return parentFieldConfig;
-    }
-
-    /**
-     * Populate string field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(String value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate integer field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(Integer value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate double field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(Double value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate date field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(Date value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate field.
-     *
-     * @param value the value
-     */
-    public void populateField(ReferencedEnvelope value)
-    {
-        // Do nothing
-    }
-
-    /**
-     * Populate field.
-     *
-     * @param value the value
-     */
-    public void populateField(UserLayer value)
-    {
-        // Do nothing
-    }
-
-    /**
-     * Populate string field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(Id value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate time period field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(TimePeriod value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate process function field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(ProcessFunction value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate boolean field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(Boolean value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate colourmap field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(ColorMap value) {
-        // Do nothing
-    }
-
-    /**
-     * Populate font field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    public void populateField(Font value)
-    {
-        // Do nothing
-    }
-
-    /**
-     * Populate feature type constraint map field, overridden if necessary.
-     *
-     * @param value the value
-     */
-    public void populateField(List<FeatureTypeConstraint> value)
-    {
-        // Do nothing
-    }
-
-    /**
-     * Gets the feature type constraint.
-     *
-     * @return the feature type constraint
-     */
-    public List<FeatureTypeConstraint> getFeatureTypeConstraint()
-    {
-        return null;
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, String testValue) {
-        // Do nothing
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, int testValue) {
-        // Do nothing
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, double testValue) {
-        // Do nothing
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, boolean testValue) {
-        // Do nothing
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, ColorMap testValue) {
-        // Do nothing
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, List<FeatureTypeConstraint> testValue) {
-        // Do nothing
-    }
-
-    /**
-     * Sets the test expression value.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, Expression testValue) {
-        populate(testValue);
-    }
-
-    /**
-     * Sets the test value, overridden if necessary.
-     *
-     * @param fieldId the field id
-     * @param testValue the test value
-     */
-    @Override
-    public void setTestValue(FieldIdEnum fieldId, ReferencedEnvelope testValue)
-    {
-        // Do nothing
-    }
-
-    /**
-     * Gets the double value, overridden if necessary.
-     *
-     * @return the double value
-     */
-    @Override
-    public double getDoubleValue() {
-        // Do nothing
-        return 0.0;
-    }
-
-    /**
-     * Gets the integer value, overridden if necessary.
-     *
-     * @return the int value
-     */
-    @Override
-    public int getIntValue() {
-        // Do nothing
-        return 0;
-    }
-
-    /**
-     * Gets the boolean value, overridden if necessary.
-     *
-     * @return the boolean value
-     */
-    @Override
-    public boolean getBooleanValue() {
-        // Do nothing
-        return false;
-    }
-
-    /**
-     * Gets the font value, overridden if necessary.
-     *
-     * @return the font
-     */
-    @Override
-    public Font getFont() {
-        // Do nothing
-        return null;
-    }
-
-    /**
-     * Gets the enum value, overridden if necessary.
-     *
-     * @return the enum value
-     */
-    @Override
-    public ValueComboBoxData getEnumValue() {
-        // Do nothing
-        return null;
-    }
-
-    /**
-     * Gets the process function, overridden if necessary.
-     *
-     * @return the process function
-     */
-    @Override
-    public ProcessFunction getProcessFunction()
-    {
-        // Do nothing
-        return null;
-    }
-
-    /**
-     * Gets the colour map.
-     *
-     * @return the colour map
-     */
-    @Override
-    public ColorMap getColourMap() {
-        // Do nothing
-        return null;
     }
 
     /**

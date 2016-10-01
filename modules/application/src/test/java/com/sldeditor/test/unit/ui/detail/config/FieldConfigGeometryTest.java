@@ -32,6 +32,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -174,7 +175,7 @@ public class FieldConfigGeometryTest {
                 super(commonData, buttonText);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

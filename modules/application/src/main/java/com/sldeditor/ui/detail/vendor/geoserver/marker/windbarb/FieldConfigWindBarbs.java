@@ -45,6 +45,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -272,7 +273,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                 Expression expFillColour = null;
                 Expression expFillColourOpacity = null;
 
-                FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                FieldConfigPopulate field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
                 if(field != null)
                 {
                     if(field instanceof FieldConfigColour)

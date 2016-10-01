@@ -51,6 +51,7 @@ import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
@@ -171,7 +172,7 @@ public class FieldConfigMarkerTest {
                         symbolSelectionField);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

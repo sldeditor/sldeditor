@@ -72,6 +72,13 @@
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attribute type="GroupIdEnum" name="parentGroup" use="optional">
+                <xs:annotation>
+                    <xs:documentation>
+                        Parent group identifier this vendor option will succeed
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     
