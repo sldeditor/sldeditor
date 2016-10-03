@@ -89,7 +89,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(this, "symboltype/ExternalGraphicSymbol.xml");
+        readConfigFileNoScrollPane(null, this, "symboltype/ExternalGraphicSymbol.xml");
 
         registerForTextFieldButton(FieldIdEnum.EXTERNAL_GRAPHIC, this);
     }

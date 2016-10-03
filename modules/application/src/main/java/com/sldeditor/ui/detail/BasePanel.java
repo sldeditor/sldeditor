@@ -58,6 +58,7 @@ import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -157,9 +158,6 @@ public class BasePanel extends JPanel {
 
     /** The padding component. */
     private BasePanelPadding padding = null;
-
-    /** The parent group config. */
-    private GroupIdEnum parentGroupConfig = null;
 
     /**
      * Default constructor.
@@ -336,34 +334,41 @@ public class BasePanel extends JPanel {
     /**
      * Read panel configuration file.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readConfigFile(UpdateSymbolInterface parent, String filename)
+    protected void readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
+            UpdateSymbolInterface parent,
+            String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, true, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true, false);
     }
 
     /**
      * Read raster panel configuration file.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readRasterConfigFile(UpdateSymbolInterface parent, String filename)
+    protected void readRasterConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
+            UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, true, true);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true, true);
     }
 
     /**
      * Read panel configuration file no scroll pane.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readConfigFileNoScrollPane(UpdateSymbolInterface parent, String filename)
+    protected void readConfigFileNoScrollPane(VendorOptionFactoryInterface vendorOptionFactory,
+            UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, false, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false, false);
     }
 
     /**
@@ -375,13 +380,14 @@ public class BasePanel extends JPanel {
      * @param useScrollFrame the use scroll frame
      * @param isRasterSymbol the is raster symbol
      */
-    private void internal_readConfigFile(Class<?> panelId, 
+    private void internal_readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
+            Class<?> panelId, 
             UpdateSymbolInterface parent,
             String filename,
             boolean useScrollFrame,
             boolean isRasterSymbol) {
 
-        ReadPanelConfig readConfig = new ReadPanelConfig(isRasterSymbol);
+        ReadPanelConfig readConfig = new ReadPanelConfig(vendorOptionFactory, isRasterSymbol);
 
         readConfig.read(panelId, filename);
 
@@ -401,7 +407,6 @@ public class BasePanel extends JPanel {
         List<GroupConfigInterface> groupConfigList = config.getGroupList();
         vendorOptionVersion = config.getVendorOptionVersion();
         defaultFieldMap = config.getDefaultFieldMap();
-        parentGroupConfig = config.getParentGroupConfig();
 
         setBorder(BorderFactory.createTitledBorder(config.getPanelTitle()));
 
@@ -717,39 +722,15 @@ public class BasePanel extends JPanel {
      */
     protected void appendPanel(BasePanel panel)
     {
-        GroupIdEnum parentGroupId = panel.getParentGroupConfig();
-        if(parentGroupId == null)
+        padding.removePadding();
+
+        logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+
+        for(int index = 0; index < panel.box.getComponentCount(); index ++)
         {
-            padding.removePadding();
-
-            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
-
-            for(int index = 0; index < panel.box.getComponentCount(); index ++)
-            {
-                box.add(panel.box.getComponent(index));
-            }
-            padding.addPadding();
+            box.add(panel.box.getComponent(index));
         }
-        else
-        {
-            GroupConfigInterface parentGroup = getGroup(parentGroupId);
-
-            panel.appendPanelToGroup(parentGroup);
-        }
-    }
-
-    /**
-     * Append panel to group.
-     *
-     * @param parentGroup the parent group
-     */
-    private void appendPanelToGroup(GroupConfigInterface parentGroup) {
-//        GroupConfig g = (GroupConfig) parentGroup;
-//
-//        for(GroupConfigInterface groupConfig : groupConfigList)
-//        {
-//            populateGroup(parent, box, groupConfig, null);
-//        }
+        padding.addPadding();
     }
 
     /**
@@ -821,14 +802,5 @@ public class BasePanel extends JPanel {
                 fieldConfig.revertToDefaultValue();
             }
         }
-    }
-
-    /**
-     * Gets the parent group config.
-     *
-     * @return the parent group config
-     */
-    public GroupIdEnum getParentGroupConfig() {
-        return parentGroupConfig;
     }
 }

@@ -108,7 +108,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      */
     private void createUI() {
 
-        readConfigFile(this, "Stroke.xml");
+        readConfigFile(null, this, "Stroke.xml");
 
         fillFactory.populate(this, fieldConfigManager);
     }

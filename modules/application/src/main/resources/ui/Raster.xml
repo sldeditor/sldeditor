@@ -51,6 +51,7 @@
                             </Value>
                         </ValueList>
                     </FieldConfigEnum>
+                    <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize"/>
                 </Group>
             </Group>
             <Group id="RASTER_RGB_CHANNEL_GREEN" label="raster.rgb.channel.green"

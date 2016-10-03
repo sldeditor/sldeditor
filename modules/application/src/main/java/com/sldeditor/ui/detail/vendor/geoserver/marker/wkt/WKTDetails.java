@@ -74,7 +74,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(this, "symboltype/WKT.xml");
+        readConfigFileNoScrollPane(null, this, "symboltype/WKT.xml");
 
         registerForTextFieldButton(FieldIdEnum.WKT, this);
     }

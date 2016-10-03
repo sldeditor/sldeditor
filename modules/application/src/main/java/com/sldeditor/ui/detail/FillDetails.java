@@ -121,11 +121,11 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        readConfigFile(this, configFile);
+        createVendorOptionPanel();
+
+        readConfigFile(vendorOptionFillFactory, this, configFile);
 
         symbolTypeFactory.populate(this, panelDetails, fieldConfigManager);
-
-        createVendorOptionPanel();
     }
 
     /**

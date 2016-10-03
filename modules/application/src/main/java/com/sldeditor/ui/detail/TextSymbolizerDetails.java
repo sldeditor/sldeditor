@@ -88,9 +88,9 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        readConfigFile(this, "Text.xml");
-
         createVendorOptionPanel();
+
+        readConfigFile(vendorOptionTextFactory, this, "Text.xml");
     }
 
     /**

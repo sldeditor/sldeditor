@@ -89,7 +89,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      */
     private void createUI()
     {
-        readConfigFile(this, "geoserver/GeoServerRandomFill.xml");
+        readConfigFile(null, this, "geoserver/GeoServerRandomFill.xml");
     }
 
     /* (non-Javadoc)

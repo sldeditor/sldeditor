@@ -502,12 +502,12 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @return the field config
      */
-    public FieldConfigPopulate getFieldConfig(FieldIdEnum fieldId) {
+    public FieldConfigBase getFieldConfig(FieldIdEnum fieldId) {
         FieldConfigPopulate fieldConfig = null;
         if(fieldConfigManager != null)
         {
             fieldConfig = fieldConfigManager.get(fieldId);
         }
-        return fieldConfig;
+        return (FieldConfigBase) fieldConfig;
     }
 }

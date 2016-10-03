@@ -27,7 +27,6 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.common.xml.ui.MapUnits;
 import com.sldeditor.common.xml.ui.XMLFieldConfigData;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnum;
@@ -237,11 +236,4 @@ public class ReadMapUnits implements PanelConfigInterface {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.PanelConfigInterface#getParentGroupConfig()
-     */
-    @Override
-    public GroupIdEnum getParentGroupConfig() {
-        return null;
-    }
 }

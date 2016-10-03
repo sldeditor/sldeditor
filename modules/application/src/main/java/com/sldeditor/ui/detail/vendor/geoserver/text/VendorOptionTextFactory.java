@@ -29,6 +29,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 
@@ -37,7 +38,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionTextFactory implements PrefUpdateVendorOptionInterface {
+public class VendorOptionTextFactory implements VendorOptionFactoryInterface, PrefUpdateVendorOptionInterface {
 
     /** The vendor option geo server labelling. */
     private VOGeoServerLabelling vendorOptionGeoServerLabelling = null;

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
@@ -30,7 +31,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionMarkerSymbolFactory {
+public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInterface {
 
     /** The GeoServer vendor option for shapes:// */
     private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();

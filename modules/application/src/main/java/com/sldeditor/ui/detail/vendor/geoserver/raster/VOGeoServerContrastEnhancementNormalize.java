@@ -67,7 +67,7 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
      */
     private void createUI()
     {
-        readConfigFile(this, "geoserver/GeoServerContrastEnhancementNormalize.xml");
+        readConfigFile(null, this, "geoserver/GeoServerContrastEnhancementNormalize.xml");
     }
 
     /**

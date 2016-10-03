@@ -29,7 +29,6 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.common.xml.ui.PanelConfig;
 import com.sldeditor.common.xml.ui.XMLFieldConfigBoolean;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColour;
@@ -54,6 +53,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
 import com.sldeditor.common.xml.ui.XMLFieldConfigString;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSymbolType;
 import com.sldeditor.common.xml.ui.XMLFieldConfigTransformation;
+import com.sldeditor.common.xml.ui.XMLFieldConfigVendorOption;
 import com.sldeditor.common.xml.ui.XMLGroupConfig;
 import com.sldeditor.common.xml.ui.XMLMultiOptionGroup;
 import com.sldeditor.common.xml.ui.XMLOptionGroup;
@@ -71,6 +71,7 @@ import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
 import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 
 /**
  * The Class ReadPanelConfig reads a XML configuration of field configuration
@@ -97,20 +98,22 @@ public class ReadPanelConfig implements PanelConfigInterface {
     /** The map of default field value. */
     private Map<FieldIdEnum, Object> defaultFieldMap = new HashMap<FieldIdEnum, Object>();
 
+    /** The vendor option factory. */
+    private VendorOptionFactoryInterface vendorOptionFactory = null;
+
     /** The is raster symbol flag. */
     private boolean isRasterSymbol = false;
-
-    /** The parent group config. */
-    private GroupIdEnum parentGroupConfig = null;
 
     /**
      * Default constructor.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param isRasterSymbol the is raster symbol
      */
-    public ReadPanelConfig(boolean isRasterSymbol)
+    public ReadPanelConfig(VendorOptionFactoryInterface vendorOptionFactory, boolean isRasterSymbol)
     {
         this.isRasterSymbol = isRasterSymbol;
+        this.vendorOptionFactory = vendorOptionFactory;
 
         // Force it so that standard fields are always loaded
         Localisation.preload(ReadPanelConfig.class);
@@ -146,7 +149,6 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
         panelTitle = getLocalisedText(localisationClass, panelConfig.getPanelTitle());
         vendorOptionVersion = getVendorOptionVersion(panelConfig);
-        parentGroupConfig  = panelConfig.getParentGroup();
 
         for(Object groupObj : panelConfig.getGroupOrMultiOptionGroup())
         {
@@ -290,6 +292,14 @@ public class ReadPanelConfig implements PanelConfigInterface {
                 GroupConfig subGroup = parseGroup(localisationClass, panelId, (XMLGroupConfig)obj);
 
                 groupConfig.addGroup(subGroup);
+            }
+            else if(obj instanceof XMLFieldConfigVendorOption)
+            {
+                XMLFieldConfigVendorOption vendorOption = (XMLFieldConfigVendorOption)obj;
+
+                FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(vendorOptionFactory, vendorOption.getClazz());
+
+                groupConfig.addField(placeHolder);
             }
         }
 
@@ -611,15 +621,5 @@ public class ReadPanelConfig implements PanelConfigInterface {
     @Override
     public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return defaultFieldMap;
-    }
-
-    /**
-     * Gets the parent group config.
-     *
-     * @return the parent group config
-     */
-    @Override
-    public GroupIdEnum getParentGroupConfig() {
-        return parentGroupConfig;
     }
 }

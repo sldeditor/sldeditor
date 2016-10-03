@@ -72,13 +72,6 @@
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-            <xs:attribute type="GroupIdEnum" name="parentGroup" use="optional">
-                <xs:annotation>
-                    <xs:documentation>
-                        Parent group identifier this vendor option will succeed
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
         </xs:complexType>
     </xs:element>
     
@@ -116,6 +109,7 @@
                     <xs:element name="FieldConfigInlineFeature" type="XMLFieldConfigInlineFeature" />
                     <xs:element name="FieldConfigFeatureTypeConstraint" type="XMLFieldConfigFeatureTypeConstraint" />
                     <xs:element name="FieldConfigMapUnit"       type="XMLFieldConfigMapUnit" />
+                    <xs:element name="FieldConfigVendorOption"  type="XMLFieldConfigVendorOption" />
                     <xs:element name="Group" type="XMLGroupConfig" />
                 </xs:choice>
             </xs:extension>
@@ -168,6 +162,21 @@
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData" />
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigVendorOption">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for a vendor option placeholder
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute type="xs:string" name="class" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Class of vendor option panel
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldConfigDouble">
