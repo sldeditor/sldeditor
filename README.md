@@ -4,7 +4,9 @@
 [![Build Status](https://travis-ci.org/robward-scisys/sldeditor.png?branch=master)](https://travis-ci.org/robward-scisys/sldeditor)
 [![Coverage Status](https://coveralls.io/repos/github/robward-scisys/sldeditor/badge.png?branch=master)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
 <p>The SLD Editor is a Java desktop application developed by [SCISYS](http://gis.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
-The application provides a toolset to improve workflow.
+
+The aim of the project is to develop an application enabling the generation of SLD files, where a user has complete control over all aspects of the OGC SLD standard.<p>
+<p>
 
 Main features include:
 * Vector (point, line and polygon) symbol editing
@@ -20,6 +22,7 @@ Main features include:
 * Integration with GeoServer
 * Map viewer
 * YSLD import and export facility
+* Tools to improve workflow.
 * Ability to convert Esri MXD files to SLD files (requires separate licensed components not supplied as part of this project) [Build instructions here](https://github.com/robward-scisys/sldeditor/wiki/generatesld)
 
 ## Release
