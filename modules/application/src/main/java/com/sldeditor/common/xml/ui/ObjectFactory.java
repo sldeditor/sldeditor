@@ -181,6 +181,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigVendorOption }
+     * 
+     */
+    public XMLFieldConfigVendorOption createXMLFieldConfigVendorOption() {
+        return new XMLFieldConfigVendorOption();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigDouble }
      * 
      */

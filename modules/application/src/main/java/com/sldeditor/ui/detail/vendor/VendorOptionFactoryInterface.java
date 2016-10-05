@@ -19,6 +19,10 @@
 
 package com.sldeditor.ui.detail.vendor;
 
+import java.util.List;
+
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+
 /**
  * The Interface VendorOptionFactoryInterface.
  *
@@ -26,4 +30,18 @@ package com.sldeditor.ui.detail.vendor;
  */
 public interface VendorOptionFactoryInterface {
 
+    /**
+     * Gets the vendor option list.
+     *
+     * @return the vendor option list
+     */
+    List<VendorOptionInterface> getVendorOptionList();
+
+    /**
+     * Gets the vendor option list.
+     *
+     * @param className the class name
+     * @return the vendor option list
+     */
+    List<VendorOptionInterface> getVendorOptionList(String className);
 }

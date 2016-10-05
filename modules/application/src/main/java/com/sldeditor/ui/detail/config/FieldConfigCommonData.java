@@ -84,11 +84,14 @@ public class FieldConfigCommonData {
      * @param commonData the common data
      */
     public FieldConfigCommonData(FieldConfigCommonData commonData) {
-        this.panelId = commonData.panelId;
-        this.id = commonData.id;
-        this.label = commonData.label;
-        this.valueOnly = commonData.valueOnly;
-        this.rasterSymbol = commonData.rasterSymbol;
+        if(commonData != null)
+        {
+            this.panelId = commonData.panelId;
+            this.id = commonData.id;
+            this.label = commonData.label;
+            this.valueOnly = commonData.valueOnly;
+            this.rasterSymbol = commonData.rasterSymbol;
+        }
     }
 
     /**

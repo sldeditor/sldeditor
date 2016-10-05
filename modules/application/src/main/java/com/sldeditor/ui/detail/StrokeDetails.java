@@ -48,7 +48,6 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
@@ -135,7 +134,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         List<Float> dashList = createDashArray(fieldConfigVisitor.getText(FieldIdEnum.STROKE_DASH_ARRAY));
         float[] dashes = convertDashListToArray(dashList);
 
-        FieldConfigPopulate fdmFillColour = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
+        FieldConfigBase fdmFillColour = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
         FieldConfigColour colourField = (FieldConfigColour)fdmFillColour;
         Expression fillColour = colourField.getColourExpression();
         Expression fillColourOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_FILL_OPACITY);

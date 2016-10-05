@@ -40,7 +40,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -51,7 +50,6 @@ import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.PanelConfigInterface;
 import com.sldeditor.ui.detail.config.ReadPanelConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
@@ -232,24 +230,12 @@ public class BasePanel extends JPanel {
         treeUpdateList.add(sldTree);
     }
 
-
-    /**
-     * Adds the field configuration to the list of field configuration on the panel.
-     * <p>Uses no vendor option.
-     *
-     * @param fieldConfig the field config
-     */
-    protected void addFieldConfig(FieldConfigBase fieldConfig) {
-        addFieldConfig(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), fieldConfig);
-    }
-
-    /**
+   /**
      * Adds the field configuration to the list of all field configuration for this panel.
      *
-     * @param vendorOption the vendor option
      * @param fieldConfig the field configuration
      */
-    protected void addFieldConfig(VendorOptionVersion vendorOption, FieldConfigBase fieldConfig) {
+    protected void addFieldConfig(FieldConfigBase fieldConfig) {
         fieldConfigList.add(fieldConfig);
     }
 
@@ -546,7 +532,7 @@ public class BasePanel extends JPanel {
      * @param parentField the parent field
      * @param field the field
      */
-    private void addField(Box parentBox, FieldConfigPopulate parentField, FieldConfigBase field) {
+    private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
 
         if(field == null)
         {
@@ -580,7 +566,7 @@ public class BasePanel extends JPanel {
      */
     protected void handleFieldState(FieldIdEnum fieldId)
     {
-        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             if(fieldConfig instanceof FieldConfigEnum)
@@ -609,7 +595,7 @@ public class BasePanel extends JPanel {
     protected void handleFieldState()
     {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(FieldConfigEnum.class);
-        for(FieldConfigPopulate field : fieldList)
+        for(FieldConfigBase field : fieldList)
         {
             FieldConfigEnum fieldEnum = (FieldConfigEnum)field;
 
@@ -669,7 +655,7 @@ public class BasePanel extends JPanel {
      */
     protected void registerForTextFieldButton(FieldIdEnum fieldId, FieldConfigStringButtonInterface listener)
     {
-        FieldConfigPopulate fieldConfig = fieldConfigManager.get(fieldId);
+        FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if(fieldConfig != null)
         {
             FieldConfigString textField = (FieldConfigString)fieldConfig;
@@ -720,17 +706,33 @@ public class BasePanel extends JPanel {
      *
      * @param panel the panel
      */
-    protected void appendPanel(BasePanel panel)
+    public void appendPanel(BasePanel panel)
     {
-        padding.removePadding();
-
-        logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
-
-        for(int index = 0; index < panel.box.getComponentCount(); index ++)
+        if(panel != null)
         {
-            box.add(panel.box.getComponent(index));
+            padding.removePadding();
+
+            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+
+            for(int index = 0; index < panel.box.getComponentCount(); index ++)
+            {
+                box.add(panel.box.getComponent(index));
+            }
+            padding.addPadding();
         }
-        padding.addPadding();
+    }
+
+    public void appendPanelNoPadding(BasePanel panel)
+    {
+        if(panel != null)
+        {
+            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+
+            for(int index = 0; index < panel.box.getComponentCount(); index ++)
+            {
+                box.add(panel.box.getComponent(index));
+            }
+        }
     }
 
     /**
@@ -738,11 +740,14 @@ public class BasePanel extends JPanel {
      *
      * @param panel the panel
      */
-    protected void removePanel(BasePanel panel)
+    public void removePanel(BasePanel panel)
     {
-        padding.removePadding();
-        box.remove(panel.box);
-        padding.addPadding();
+        if(panel != null)
+        {
+            padding.removePadding();
+            box.remove(panel.box);
+            padding.addPadding();
+        }
     }
 
     /**

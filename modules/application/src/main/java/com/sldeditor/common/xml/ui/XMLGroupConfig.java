@@ -48,6 +48,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FieldConfigInlineFeature" type="{}XMLFieldConfigInlineFeature"/&gt;
  *         &lt;element name="FieldConfigFeatureTypeConstraint" type="{}XMLFieldConfigFeatureTypeConstraint"/&gt;
  *         &lt;element name="FieldConfigMapUnit" type="{}XMLFieldConfigMapUnit"/&gt;
+ *         &lt;element name="FieldConfigVendorOption" type="{}XMLFieldConfigVendorOption"/&gt;
  *         &lt;element name="Group" type="{}XMLGroupConfig"/&gt;
  *       &lt;/choice&gt;
  *     &lt;/extension&gt;
@@ -83,6 +84,7 @@ public class XMLGroupConfig
         @XmlElement(name = "FieldConfigInlineFeature", type = XMLFieldConfigInlineFeature.class),
         @XmlElement(name = "FieldConfigFeatureTypeConstraint", type = XMLFieldConfigFeatureTypeConstraint.class),
         @XmlElement(name = "FieldConfigMapUnit", type = XMLFieldConfigMapUnit.class),
+        @XmlElement(name = "FieldConfigVendorOption", type = XMLFieldConfigVendorOption.class),
         @XmlElement(name = "Group", type = XMLGroupConfig.class)
     })
     protected List<Object> fieldList;
@@ -122,6 +124,7 @@ public class XMLGroupConfig
      * {@link XMLFieldConfigInlineFeature }
      * {@link XMLFieldConfigFeatureTypeConstraint }
      * {@link XMLFieldConfigMapUnit }
+     * {@link XMLFieldConfigVendorOption }
      * {@link XMLGroupConfig }
      * 
      * 

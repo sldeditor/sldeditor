@@ -69,6 +69,7 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Pr
      *
      * @return the vendor option list
      */
+    @Override
     public List<VendorOptionInterface> getVendorOptionList()
     {
         return vendorOptionList;
@@ -129,5 +130,13 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Pr
                 fieldConfigManager.add(populateInterface.getFieldDataManager());
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList(String className) {
+        return null;
     }
 }

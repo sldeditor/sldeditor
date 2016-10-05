@@ -37,11 +37,11 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -189,7 +189,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      */
     private void internalPopulate(Map<String, String> options, FieldIdEnum field, String key)
     {
-        FieldConfigPopulate fieldConfig = fieldConfigManager.get(field);
+        FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
         if(fieldConfig instanceof FieldConfigBoolean)
         {
@@ -332,7 +332,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      */
     private void internalUpdateSymbol(Map<String, String> options, FieldIdEnum field, String key)
     {
-        FieldConfigPopulate fieldConfig = fieldConfigManager.get(field);
+        FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
         if(fieldConfig instanceof FieldConfigBoolean)
         {

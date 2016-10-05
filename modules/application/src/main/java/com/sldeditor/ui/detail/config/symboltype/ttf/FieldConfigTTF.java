@@ -47,7 +47,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -303,7 +302,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 Expression expFillColour = null;
                 Expression expFillColourOpacity = null;
 
-                FieldConfigPopulate field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
                 if(field != null)
                 {
                     FieldConfigColour colourField = (FieldConfigColour)field;

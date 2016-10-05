@@ -23,8 +23,11 @@ import java.util.List;
 
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
  * The Class FieldConfigVendorOption.
@@ -60,6 +63,38 @@ public class FieldConfigVendorOption extends FieldConfigEnum implements PrefUpda
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
 
+        updateVendorOptionPanels(vendorOptionList);
+    }
+
+    /**
+     * Update vendor option panels.
+     *
+     * @param vendorOptionList the vendor option list
+     */
+    private void updateVendorOptionPanels(List<VersionData> vendorOptionList)
+    {
+        if(vendorOptionFactory != null)
+        {
+            List<VendorOptionInterface> veList = vendorOptionFactory.getVendorOptionList(vendorOptionClassName);
+            if(veList != null)
+            {
+                for(VendorOptionInterface vendorOption : veList)
+                {
+                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionList, vendorOption.getVendorOption());
+
+                    BasePanel extensionPanel = vendorOption.getPanel();
+                    if(extensionPanel != null)
+                    {
+                        extensionPanel.removePanel(vendorOption.getPanel());
+
+                        if(displayVendorOption)
+                        {
+                            extensionPanel.appendPanelNoPadding(vendorOption.getPanel());
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

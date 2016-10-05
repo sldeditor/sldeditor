@@ -58,7 +58,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
     public VendorOptionRasterFactory(Class<?> panelId, FunctionNameInterface functionManager)
     {
         vendorOptionGeoServerContrastEnhancementNormalize = new VOGeoServerContrastEnhancementNormalize(panelId);
-        
+
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalize);
 
         PrefManager.getInstance().addVendorOptionListener(this);
@@ -69,6 +69,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      *
      * @return the vendor option list
      */
+    @Override
     public List<VendorOptionInterface> getVendorOptionList()
     {
         return vendorOptionList;
@@ -130,5 +131,22 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
                 fieldConfigManager.add(populateInterface.getFieldDataManager());
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList(String className) {
+        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+
+        for(VendorOptionInterface vendorOption : vendorOptionList)
+        {
+            if(vendorOption.getClass().getName().compareTo(className) == 0)
+            {
+                matchingList.add(vendorOption);
+            }
+        }
+        return matchingList;
     }
 }

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
@@ -94,5 +95,21 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
                 }
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList()
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList() {
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList(String className) {
+        return null;
     }
 }

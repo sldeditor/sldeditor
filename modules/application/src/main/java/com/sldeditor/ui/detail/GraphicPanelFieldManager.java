@@ -26,7 +26,6 @@ import java.util.Map;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
@@ -141,7 +140,7 @@ public class GraphicPanelFieldManager {
      * @param fieldConfigToFind the field configuration to find
      * @return the field enum
      */
-    public FieldIdEnum getFieldEnum(Class<?> panelId, FieldConfigPopulate fieldConfigToFind)
+    public FieldIdEnum getFieldEnum(Class<?> panelId, FieldConfigBase fieldConfigToFind)
     {
         Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);
 
@@ -149,7 +148,7 @@ public class GraphicPanelFieldManager {
         {
             for(FieldIdEnum key : panelMap.keySet())
             {
-                FieldConfigPopulate fieldConfig = panelMap.get(key);
+                FieldConfigBase fieldConfig = panelMap.get(key);
 
                 if(fieldConfig == fieldConfigToFind)
                 {
@@ -322,7 +321,7 @@ public class GraphicPanelFieldManager {
      *
      * @param fieldConfig the field config
      */
-    public void removeField(FieldConfigPopulate fieldConfig) {
+    public void removeField(FieldConfigBase fieldConfig) {
         if(fieldConfig != null)
         {
             Map<FieldIdEnum, FieldConfigBase> panelMap = fieldConfigMap.get(panelId);

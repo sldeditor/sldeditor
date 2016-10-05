@@ -37,7 +37,6 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 
 /**
  * The Class StandardPanel responsible for populating/extracting
@@ -200,7 +199,7 @@ public class StandardPanel extends BasePanel {
 
         standardData.description = (Description) getStyleFactory().description(titleString, descriptionString);
 
-        FieldConfigPopulate uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
+        FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
         if(uomFieldConfig != null)
         {
             Expression uomExpression = fieldConfigVisitor.getExpression(FieldIdEnum.UOM);
