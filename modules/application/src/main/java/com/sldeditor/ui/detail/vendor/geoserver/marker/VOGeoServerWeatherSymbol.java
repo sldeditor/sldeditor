@@ -46,6 +46,9 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     /** The field enable map. */
     private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
 
+    /** The parent obj. */
+    private UpdateSymbolInterface parentObj = null;
+
     /**
      * Instantiates a new VO geo server weather symbol.
      */
@@ -108,6 +111,7 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     @Override
     public void setParentPanel(UpdateSymbolInterface parent)
     {
+        this.parentObj = parent;
     }
 
     /* (non-Javadoc)
@@ -142,5 +146,14 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
         // Do nothing
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
+     */
+    @Override
+    public UpdateSymbolInterface getParentPanel() {
+        return parentObj;
     }
 }

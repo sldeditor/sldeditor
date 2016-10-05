@@ -22,15 +22,11 @@
     <Group id="RASTER" showLabel="false">
         <FieldConfigSlider id="RASTER_OPACITY" label="raster.overallopacity" />
     </Group>
-    <Group id="RASTER_CONTRAST" showLabel="true" label="raster.contrast"
-        option="true">
-        <FieldConfigSlider id="RASTER_CONTRAST_NORMALIZE"
-            label="raster.contrast.normalize" />
-        <FieldConfigSlider id="RASTER_CONTRAST_GAMMAVALUE"
-            label="raster.contrast.gammavalue"  defaultValue="1.0" />
+    <Group id="RASTER_CONTRAST" showLabel="true" label="raster.contrast" option="true">
+        <FieldConfigSlider id="RASTER_CONTRAST_NORMALIZE" label="raster.contrast.normalize" />
+        <FieldConfigSlider id="RASTER_CONTRAST_GAMMAVALUE" label="raster.contrast.gammavalue"  defaultValue="1.0" />
     </Group>
-    <MultiOptionGroup id="RASTER_CHANNELSELECTION"
-        label="raster.channelselection" showLabel="true" option="true">
+    <MultiOptionGroup id="RASTER_CHANNELSELECTION" label="raster.channelselection" showLabel="true" option="true">
         <OptionGroup id="RASTER_RGB_CHANNEL_OPTION" label="raster.rgb.channel.option"
             showLabel="true">
             <Group id="RASTER_RGB_CHANNEL_RED" label="raster.rgb.channel.red"

@@ -42,6 +42,7 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
  * The Class GroupConfig represents the configuration for a group of fields.
@@ -299,7 +300,11 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     {
         for(FieldConfigBase field : getFieldConfigList())
         {
-            field.getPanel().enablePanel(enabled);
+            FieldPanel panel = field.getPanel();
+            if(panel != null)
+            {
+                panel.enablePanel(enabled);
+            }
         }
 
         for(GroupConfig subGroup : subGroupList)

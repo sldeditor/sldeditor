@@ -46,6 +46,9 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     /** The field enable map. */
     private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
 
+    /** The parent obj. */
+    private UpdateSymbolInterface parentObj = null;
+
     /**
      * Instantiates a new VOGeoServerShapeSymbol.
      */
@@ -134,6 +137,7 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     @Override
     public void setParentPanel(UpdateSymbolInterface parent)
     {
+        this.parentObj = parent;
     }
 
     /**
@@ -182,5 +186,13 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
         // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
+     */
+    @Override
+    public UpdateSymbolInterface getParentPanel() {
+        return parentObj;
     }
 }

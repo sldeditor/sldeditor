@@ -540,7 +540,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
     }
 
@@ -558,5 +558,13 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
         // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
+     */
+    @Override
+    public UpdateSymbolInterface getParentPanel() {
+        return parentObj;
     }
 }

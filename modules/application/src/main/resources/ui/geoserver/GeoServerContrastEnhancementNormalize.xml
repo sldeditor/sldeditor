@@ -19,7 +19,7 @@
             label="geoserver.rasterNormalize.minValue" valueOnly="true"
             default="0" minValue="0" maxValue="255"/>
         <FieldConfigInteger id="RASTER_NORMALIZE_MAX_VALUE"
-            label="geoserver.rasterNormalize.macValue" valueOnly="true"
+            label="geoserver.rasterNormalize.maxValue" valueOnly="true"
             default="255" minValue="0" maxValue="255"/>
     </Group>
 </PanelConfig>

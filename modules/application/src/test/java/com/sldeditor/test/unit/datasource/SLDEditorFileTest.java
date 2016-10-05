@@ -187,15 +187,15 @@ public class SLDEditorFileTest {
         SLDEditorFile.getInstance().vendorOptionsUpdated(null);
         assertFalse(dataUpdateListener.dataEditedFlag);
 
-        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
-        SLDEditorFile.getInstance().vendorOptionsUpdated(vendorOptionList);
+        List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
+        SLDEditorFile.getInstance().vendorOptionsUpdated(vendorOptionVersionsList);
         assertFalse(dataUpdateListener.dataEditedFlag);
 
         StyleWrapper styleWrapper = new StyleWrapper("workspace","style");
         SLDData sldData = new SLDData(styleWrapper, "contents");
 
         SLDEditorFile.getInstance().setSLDData(sldData);
-        SLDEditorFile.getInstance().vendorOptionsUpdated(vendorOptionList);
+        SLDEditorFile.getInstance().vendorOptionsUpdated(vendorOptionVersionsList);
 
         assertTrue(dataUpdateListener.dataEditedFlag);
     }

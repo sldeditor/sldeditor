@@ -88,4 +88,11 @@ public interface VendorOptionInterface {
      * @param rasterSymbolizer the raster symbolizer
      */
     public void populate(RasterSymbolizer rasterSymbolizer);
+
+    /**
+     * Gets the parent panel.
+     *
+     * @return the parent panel
+     */
+    UpdateSymbolInterface getParentPanel();
 }

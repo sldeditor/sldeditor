@@ -195,7 +195,11 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
         if(this.comboBox != null)
         {
-            expression = getFilterFactory().literal(comboBox.getSelectedValue().getKey());
+            ValueComboBoxData selectedValue = comboBox.getSelectedValue();
+            if(selectedValue != null)
+            {
+                expression = getFilterFactory().literal(selectedValue.getKey());
+            }
         }
 
         return expression;

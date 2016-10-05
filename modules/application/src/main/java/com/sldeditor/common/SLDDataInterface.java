@@ -109,9 +109,9 @@ public interface SLDDataInterface {
     /**
      * Sets the vendor option list.
      *
-     * @param vendorOptionList the new vendor option list
+     * @param vendorOptionVersionsList the new vendor option list
      */
-    void setVendorOptionList(List<VersionData> vendorOptionList);
+    void setVendorOptionList(List<VersionData> vendorOptionVersionsList);
 
     /**
      * Sets the field list.

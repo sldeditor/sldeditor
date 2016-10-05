@@ -172,6 +172,16 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
     }
 
     /**
+     * Gets the parent panel.
+     *
+     * @return the parentObj
+     */
+    @Override
+    public UpdateSymbolInterface getParentPanel() {
+        return parentObj;
+    }
+
+    /**
      * Checks if is data present.
      *
      * @return true, if is data present
@@ -247,4 +257,5 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
     }
+
 }

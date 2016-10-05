@@ -110,9 +110,9 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Pr
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
-        this.vendorOptionVersionList = vendorOptionList;
+        this.vendorOptionVersionList = vendorOptionVersionsList;
     }
 
     /**

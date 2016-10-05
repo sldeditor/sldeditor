@@ -35,7 +35,6 @@ import org.opengis.style.ContrastMethod;
 import org.opengis.style.OverlapBehavior;
 
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -517,9 +516,9 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
-        this.vendorOptionVersionList = vendorOptionList;
+        this.vendorOptionVersionList = vendorOptionVersionsList;
 
         updateVendorOptionPanels();
     }

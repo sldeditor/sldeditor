@@ -157,6 +157,9 @@ public class BasePanel extends JPanel {
     /** The padding component. */
     private BasePanelPadding padding = null;
 
+    /** The group config list. */
+    private List<GroupConfigInterface> groupConfigList;
+
     /**
      * Default constructor.
      *
@@ -230,7 +233,7 @@ public class BasePanel extends JPanel {
         treeUpdateList.add(sldTree);
     }
 
-   /**
+    /**
      * Adds the field configuration to the list of all field configuration for this panel.
      *
      * @param fieldConfig the field configuration
@@ -360,6 +363,7 @@ public class BasePanel extends JPanel {
     /**
      * Read panel configuration file and create user interface including scroll pane.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param panelId the panel id
      * @param parent the parent
      * @param filename the filename
@@ -390,7 +394,7 @@ public class BasePanel extends JPanel {
     private void configureUI(UpdateSymbolInterface parent,
             boolean useScrollFrame,
             PanelConfigInterface config) {
-        List<GroupConfigInterface> groupConfigList = config.getGroupList();
+        groupConfigList = config.getGroupList();
         vendorOptionVersion = config.getVendorOptionVersion();
         defaultFieldMap = config.getDefaultFieldMap();
 
@@ -443,6 +447,7 @@ public class BasePanel extends JPanel {
      * @param parentBox the parent box
      * @param groupConfig the group config
      * @param parentField the parent field
+     * @param previousFieldIndex the previous field index
      */
     private void populateGroup(UpdateSymbolInterface parent, 
             Box parentBox,
@@ -534,26 +539,24 @@ public class BasePanel extends JPanel {
      */
     private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
 
-        if(field == null)
+        if(field != null)
         {
-            return;
-        }
+            field.createUI();
+            addFieldConfig(field);
 
-        field.createUI();
-        addFieldConfig(field);
+            fieldConfigManager.addField(field);
 
-        fieldConfigManager.addField(field);
-
-        if(parentBox != null)
-        {
-            parentBox.add(field.getPanel());
-
-            // Add any custom panels
-            if(field.getCustomPanels() != null)
+            if(parentBox != null)
             {
-                for(Component component : field.getCustomPanels())
+                parentBox.add(field.getPanel());
+
+                // Add any custom panels
+                if(field.getCustomPanels() != null)
                 {
-                    parentBox.add(component);
+                    for(Component component : field.getCustomPanels())
+                    {
+                        parentBox.add(component);
+                    }
                 }
             }
         }
@@ -722,15 +725,56 @@ public class BasePanel extends JPanel {
         }
     }
 
-    public void appendPanelNoPadding(BasePanel panel)
+    /**
+     * Insert panel.
+     *
+     * @param fieldConfig the field config
+     * @param panel the panel
+     */
+    public void insertPanel(FieldConfigBase fieldConfig, BasePanel panel)
     {
-        if(panel != null)
-        {
-            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+        int fieldIndex = -1;
 
-            for(int index = 0; index < panel.box.getComponentCount(); index ++)
+        if(box != null)
+        {
+            for(int index = 0; index < box.getComponentCount(); index ++)
             {
-                box.add(panel.box.getComponent(index));
+                Component component = box.getComponent(index);
+                if(fieldConfig.getPanel() == component)
+                {
+                    fieldIndex = index;
+                    break;
+                }
+            }
+
+            if(panel != null)
+            {
+                if(padding != null)
+                {
+                    padding.removePadding();
+                }
+
+                logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+
+                Component[] componentArray = panel.box.getComponents();
+                for(int index = 0; index < componentArray.length; index ++)
+                {
+                    if(fieldIndex > -1)
+                    {
+                        fieldIndex ++;
+                    }
+                    Component component = componentArray[index];
+
+                    if(!(component instanceof Box.Filler))
+                    {
+                        box.add(component, fieldIndex);
+                    }
+                }
+
+                if(padding != null)
+                {
+                    padding.addPadding();
+                }
             }
         }
     }
@@ -742,7 +786,7 @@ public class BasePanel extends JPanel {
      */
     public void removePanel(BasePanel panel)
     {
-        if(panel != null)
+        if((panel != null) && (padding != null))
         {
             padding.removePadding();
             box.remove(panel.box);

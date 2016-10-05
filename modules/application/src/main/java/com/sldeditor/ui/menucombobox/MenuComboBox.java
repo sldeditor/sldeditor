@@ -400,7 +400,7 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
         // Do nothing
     }
 

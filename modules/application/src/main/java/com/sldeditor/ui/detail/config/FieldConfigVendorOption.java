@@ -21,6 +21,8 @@ package com.sldeditor.ui.detail.config;
 
 import java.util.List;
 
+import org.opengis.filter.expression.Expression;
+
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -34,13 +36,16 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigVendorOption extends FieldConfigEnum implements PrefUpdateVendorOptionInterface {
+public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpdateVendorOptionInterface {
 
     /** The vendor option factory. */
     private VendorOptionFactoryInterface vendorOptionFactory = null;
 
     /** The vendor option class name. */
     private String vendorOptionClassName;
+
+    /** The vendor option versions list. */
+    private List<VersionData> vendorOptionVersionsList = null;
 
     /**
      * Instantiates a new field config map units.
@@ -57,21 +62,41 @@ public class FieldConfigVendorOption extends FieldConfigEnum implements PrefUpda
         PrefManager.getInstance().addVendorOptionListener(this);
     }
 
+    /**
+     * Creates the ui.
+     */
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
+     */
+    @Override
+    public void createUI() {
+        createFieldPanel(0, "");
+    }
+
+    /**
+     * Make visible.
+     */
+    public void makeVisible()
+    {
+        updateVendorOptionPanels(vendorOptionVersionsList);
+    }
+
     /* (non-Javadoc)
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
 
-        updateVendorOptionPanels(vendorOptionList);
+        this.vendorOptionVersionsList = vendorOptionVersionsList;
+        updateVendorOptionPanels(vendorOptionVersionsList);
     }
 
     /**
      * Update vendor option panels.
      *
-     * @param vendorOptionList the vendor option list
+     * @param vendorOptionVersionsList the vendor option versions list
      */
-    private void updateVendorOptionPanels(List<VersionData> vendorOptionList)
+    private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList)
     {
         if(vendorOptionFactory != null)
         {
@@ -80,21 +105,101 @@ public class FieldConfigVendorOption extends FieldConfigEnum implements PrefUpda
             {
                 for(VendorOptionInterface vendorOption : veList)
                 {
-                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionList, vendorOption.getVendorOption());
+                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
 
                     BasePanel extensionPanel = vendorOption.getPanel();
                     if(extensionPanel != null)
                     {
-                        extensionPanel.removePanel(vendorOption.getPanel());
+                        BasePanel panel = (BasePanel) vendorOption.getParentPanel();
+                        panel.removePanel(vendorOption.getPanel());
 
                         if(displayVendorOption)
                         {
-                            extensionPanel.appendPanelNoPadding(vendorOption.getPanel());
+                            panel.insertPanel(this, vendorOption.getPanel());
                         }
                     }
                 }
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     */
+    @Override
+    public void attributeSelection(String field) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigValuePopulateInterface#getStringValue()
+     */
+    @Override
+    public String getStringValue() {
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#setVisible(boolean)
+     */
+    @Override
+    public void setVisible(boolean visible) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
+     */
+    @Override
+    protected Expression generateExpression() {
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
+     */
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
+     */
+    @Override
+    public void revertToDefaultValue() {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
+     */
+    @Override
+    public void populateExpression(Object objValue) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.FieldConfigBase#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)
+     */
+    @Override
+    public FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
+        FieldConfigVendorOption copy = null;
+
+        if((fieldConfigBase != null) && (fieldConfigBase instanceof FieldConfigVendorOption))
+        {
+            FieldConfigVendorOption existing = (FieldConfigVendorOption) fieldConfigBase;
+            copy = new FieldConfigVendorOption(existing.vendorOptionFactory, existing.vendorOptionClassName);
+        }
+        return copy;
     }
 
 }
