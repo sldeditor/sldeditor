@@ -26,6 +26,7 @@ import javax.swing.Box;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -140,7 +141,8 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
             }
             else
             {
-                ConsoleManager.getInstance().error(this, "Failed to find vendor option class : " + vendorOptionClassName);
+                ConsoleManager.getInstance().error(this, 
+                        Localisation.getField(FieldConfigBase.class, "FieldConfigVendorOption.missingVendorOptionClass") + vendorOptionClassName);
             }
         }
     }

@@ -765,7 +765,10 @@ public class BasePanel extends JPanel {
                     padding.removePadding();
                 }
 
-                logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+                logger.debug(String.format("%s : %s -> %s", 
+                        Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"),
+                        panel.getClass().getName(),
+                        this.getClass().getName()));
 
                 Component[] componentArray = panel.box.getComponents();
                 for(int index = 0; index < componentArray.length; index ++)
