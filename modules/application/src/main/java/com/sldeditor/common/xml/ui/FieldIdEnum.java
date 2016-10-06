@@ -130,9 +130,18 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_COLOUR"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_OPACITY"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_QUANTITY"/&gt;
- *     &lt;enumeration value="RASTER_NORMALIZE_ALGORITHM"/&gt;
- *     &lt;enumeration value="RASTER_NORMALIZE_MIN_VALUE"/&gt;
- *     &lt;enumeration value="RASTER_NORMALIZE_MAX_VALUE"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_RED"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_RED"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_RED"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_GREEN"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_GREEN"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_GREEN"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_BLUE"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_BLUE"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_BLUE"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_GREY"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_GREY"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_GREY"/&gt;
  *     &lt;enumeration value="REMOTE_OWS_SERVICE"/&gt;
  *     &lt;enumeration value="REMOTE_OWS_ONLINERESOURCE"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
@@ -259,9 +268,18 @@ public enum FieldIdEnum {
     RASTER_COLOURMAP_ENTRY_COLOUR,
     RASTER_COLOURMAP_ENTRY_OPACITY,
     RASTER_COLOURMAP_ENTRY_QUANTITY,
-    RASTER_NORMALIZE_ALGORITHM,
-    RASTER_NORMALIZE_MIN_VALUE,
-    RASTER_NORMALIZE_MAX_VALUE,
+    VO_RASTER_NORMALIZE_ALGORITHM_RED,
+    VO_RASTER_NORMALIZE_MIN_VALUE_RED,
+    VO_RASTER_NORMALIZE_MAX_VALUE_RED,
+    VO_RASTER_NORMALIZE_ALGORITHM_GREEN,
+    VO_RASTER_NORMALIZE_MIN_VALUE_GREEN,
+    VO_RASTER_NORMALIZE_MAX_VALUE_GREEN,
+    VO_RASTER_NORMALIZE_ALGORITHM_BLUE,
+    VO_RASTER_NORMALIZE_MIN_VALUE_BLUE,
+    VO_RASTER_NORMALIZE_MAX_VALUE_BLUE,
+    VO_RASTER_NORMALIZE_ALGORITHM_GREY,
+    VO_RASTER_NORMALIZE_MIN_VALUE_GREY,
+    VO_RASTER_NORMALIZE_MAX_VALUE_GREY,
     REMOTE_OWS_SERVICE,
     REMOTE_OWS_ONLINERESOURCE,
     INLINE_FEATURE,

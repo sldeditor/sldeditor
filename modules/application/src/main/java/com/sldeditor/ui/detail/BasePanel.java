@@ -331,7 +331,7 @@ public class BasePanel extends JPanel {
             UpdateSymbolInterface parent,
             String filename)
     {
-        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false, false);
     }
 
     /**
@@ -730,16 +730,27 @@ public class BasePanel extends JPanel {
      *
      * @param fieldConfig the field config
      * @param panel the panel
+     * @param optionBox the option box
      */
-    public void insertPanel(FieldConfigBase fieldConfig, BasePanel panel)
+    public void insertPanel(FieldConfigBase fieldConfig, BasePanel panel, Box optionBox)
     {
         int fieldIndex = -1;
 
-        if(box != null)
+        Box boxToUpdate = null;
+        if(optionBox != null)
         {
-            for(int index = 0; index < box.getComponentCount(); index ++)
+            boxToUpdate = optionBox;
+        }
+        else
+        {
+            boxToUpdate = box;
+        }
+
+        if(boxToUpdate != null)
+        {
+            for(int index = 0; index < boxToUpdate.getComponentCount(); index ++)
             {
-                Component component = box.getComponent(index);
+                Component component = boxToUpdate.getComponent(index);
                 if(fieldConfig.getPanel() == component)
                 {
                     fieldIndex = index;
@@ -767,7 +778,7 @@ public class BasePanel extends JPanel {
 
                     if(!(component instanceof Box.Filler))
                     {
-                        box.add(component, fieldIndex);
+                        boxToUpdate.add(component, fieldIndex);
                     }
                 }
 

@@ -54,20 +54,23 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
      * Constructor.
      *
      * @param panelId the panel id
+     * @param resourceFile the resource file
      */
-    public VOGeoServerContrastEnhancementNormalize(Class<?> panelId)
+    protected VOGeoServerContrastEnhancementNormalize(Class<?> panelId, String resourceFile)
     {
         super(panelId, null);
 
-        createUI();
+        createUI(resourceFile);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param resourceFile the resource file
      */
-    private void createUI()
+    private void createUI(String resourceFile)
     {
-        readConfigFile(null, this, "geoserver/GeoServerContrastEnhancementNormalize.xml");
+        readConfigFile(null, this, resourceFile);
     }
 
     /**

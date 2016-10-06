@@ -52,7 +52,10 @@
             <xs:enumeration value="HALO" />
             <xs:enumeration value="VO_LABELLING" />
             <xs:enumeration value="VO_RANDOMFILL" />
-            <xs:enumeration value="VO_RASTER_NORMALIZE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_RED" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_GREEN" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_BLUE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_GREY" />
 
             <xs:enumeration value="RASTER" />
             <xs:enumeration value="RASTER_CONTRAST" />

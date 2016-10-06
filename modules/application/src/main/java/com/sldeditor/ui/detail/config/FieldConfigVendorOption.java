@@ -21,8 +21,11 @@ package com.sldeditor.ui.detail.config;
 
 import java.util.List;
 
+import javax.swing.Box;
+
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -46,6 +49,12 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
 
     /** The vendor option versions list. */
     private List<VersionData> vendorOptionVersionsList = null;
+
+    /** The option box. */
+    private Box optionBox = null;
+
+    /** The has the object been initialised flag. */
+    private boolean initialised = false;
 
     /**
      * Instantiates a new field config map units.
@@ -71,13 +80,17 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
     @Override
     public void createUI() {
         createFieldPanel(0, "");
+        initialised = true;
     }
 
     /**
      * Make visible.
+     *
+     * @param optionBox the option box
      */
-    public void makeVisible()
+    public void makeVisible(Box optionBox)
     {
+        this.optionBox = optionBox;
         updateVendorOptionPanels(vendorOptionVersionsList);
     }
 
@@ -88,20 +101,25 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
 
         this.vendorOptionVersionsList = vendorOptionVersionsList;
-        updateVendorOptionPanels(vendorOptionVersionsList);
+        
+        if(initialised)
+        {
+            updateVendorOptionPanels(vendorOptionVersionsList);
+        }
     }
 
     /**
      * Update vendor option panels.
      *
      * @param vendorOptionVersionsList the vendor option versions list
+     * @param optionBox the option box
      */
     private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList)
     {
         if(vendorOptionFactory != null)
         {
             List<VendorOptionInterface> veList = vendorOptionFactory.getVendorOptionList(vendorOptionClassName);
-            if(veList != null)
+            if((veList != null) && !veList.isEmpty())
             {
                 for(VendorOptionInterface vendorOption : veList)
                 {
@@ -110,15 +128,19 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
                     BasePanel extensionPanel = vendorOption.getPanel();
                     if(extensionPanel != null)
                     {
-                        BasePanel panel = (BasePanel) vendorOption.getParentPanel();
-                        panel.removePanel(vendorOption.getPanel());
+                        BasePanel parentPanel = (BasePanel) vendorOption.getParentPanel();
+                        parentPanel.removePanel(extensionPanel);
 
                         if(displayVendorOption)
                         {
-                            panel.insertPanel(this, vendorOption.getPanel());
+                            parentPanel.insertPanel(this, extensionPanel, this.optionBox);
                         }
                     }
                 }
+            }
+            else
+            {
+                ConsoleManager.getInstance().error(this, "Failed to find vendor option class : " + vendorOptionClassName);
             }
         }
     }

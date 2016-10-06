@@ -276,7 +276,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
                             if(field instanceof FieldConfigVendorOption)
                             {
-                                ((FieldConfigVendorOption)field).makeVisible();
+                                ((FieldConfigVendorOption)field).makeVisible(optionBox);
                             }
                         }
                     }
