@@ -293,6 +293,12 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
                 groupConfig.addGroup(subGroup);
             }
+            else if(obj instanceof XMLMultiOptionGroup)
+            {
+                MultiOptionGroup subGroup = parseMultiOptionGroup(localisationClass, panelId, (XMLMultiOptionGroup)obj);
+
+                groupConfig.addGroup(subGroup);
+            }
             else if(obj instanceof XMLFieldConfigVendorOption)
             {
                 XMLFieldConfigVendorOption vendorOption = (XMLFieldConfigVendorOption)obj;

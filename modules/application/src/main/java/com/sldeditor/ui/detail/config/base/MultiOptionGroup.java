@@ -230,7 +230,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      */
     private void optionSelected(Box box, GraphicPanelFieldManager fieldConfigManager, FieldPanel panel, UndoActionInterface parentObj)
     {
-        if (comboBox.getSelectedItem() != null) {
+        if ((comboBox != null) && (comboBox.getSelectedItem() != null)) {
 
             ValueComboBoxData value = comboBox.getSelectedValue();
 
@@ -261,23 +261,32 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                         optionFieldList.add(field);
                     }
 
-                    for(GroupConfig subGroup : groupConfig.getSubGroupList())
+                    for(GroupConfigInterface subGroupObj : groupConfig.getSubGroupList())
                     {
-                        subGroup.createTitle(optionBox, null);
-
-                        for(FieldConfigBase field : subGroup.getFieldConfigList())
+                        if(subGroupObj instanceof GroupConfig)
                         {
-                            field.createUI();
-                            field.revertToDefaultValue();
-                            FieldPanel component = field.getPanel();
-                            optionBox.add(component);
-                            fieldConfigManager.addField(field);
-                            optionFieldList.add(field);
+                            GroupConfig subGroup = (GroupConfig) subGroupObj;
+                            subGroup.createTitle(optionBox, null);
 
-                            if(field instanceof FieldConfigVendorOption)
+                            for(FieldConfigBase field : subGroup.getFieldConfigList())
                             {
-                                ((FieldConfigVendorOption)field).makeVisible(optionBox);
+                                field.createUI();
+                                field.revertToDefaultValue();
+                                FieldPanel component = field.getPanel();
+                                optionBox.add(component);
+                                fieldConfigManager.addField(field);
+                                optionFieldList.add(field);
+
+                                if(field instanceof FieldConfigVendorOption)
+                                {
+                                    ((FieldConfigVendorOption)field).addToOptionBox(optionBox);
+                                }
                             }
+                        }
+                        else
+                        {
+                            int a =0;
+                            a++;
                         }
                     }
                 }
@@ -366,8 +375,14 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     @Override
     public void enable(boolean enable) {
         multiOptionGroupEnabled = enable;
-        groupTitleCheckbox.setSelected(enable);
-        comboBox.setEnabled(enable);
+        if(groupTitleCheckbox != null)
+        {
+            groupTitleCheckbox.setSelected(enable);
+        }
+        if(comboBox != null)
+        {
+            comboBox.setEnabled(enable);
+        }
 
         if(enable)
         {

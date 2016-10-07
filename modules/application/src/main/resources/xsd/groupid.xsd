@@ -68,6 +68,15 @@
             <xs:enumeration value="RASTER_RGB_CHANNEL_OPTION" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_RED" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST" />
+            
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_NONE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_EXPONENTIAL" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_HISTOGRAM" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_LOGARITHMIC" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_NORMALIZE_GROUP" />
+            
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE" />

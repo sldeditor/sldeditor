@@ -74,7 +74,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     private JCheckBox groupCheckbox;
 
     /** The sub group list. */
-    private List<GroupConfig> subGroupList = new ArrayList<GroupConfig>();
+    private List<GroupConfigInterface> subGroupList = new ArrayList<GroupConfigInterface>();
 
     /** The function component list. */
     private List<Component> componentList = new ArrayList<Component>();
@@ -307,7 +307,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
             }
         }
 
-        for(GroupConfig subGroup : subGroupList)
+        for(GroupConfigInterface subGroup : subGroupList)
         {
             subGroup.enable(enabled);
         }
@@ -338,7 +338,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @param subGroup the sub group
      */
-    public void addGroup(GroupConfig subGroup) {
+    public void addGroup(GroupConfigInterface subGroup) {
         subGroupList.add(subGroup);
     }
 
@@ -347,7 +347,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @return the sub group list
      */
-    public List<GroupConfig> getSubGroupList() {
+    public List<GroupConfigInterface> getSubGroupList() {
         return subGroupList;
     }
 

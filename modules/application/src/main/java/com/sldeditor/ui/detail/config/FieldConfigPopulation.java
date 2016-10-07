@@ -97,13 +97,16 @@ public class FieldConfigPopulation {
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if(value != null)
+        if(fieldConfig != null)
         {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-        }
-        else
-        {
-            fieldConfig.revertToDefaultValue();
+            if(value != null)
+            {
+                ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
+            }
+            else
+            {
+                fieldConfig.revertToDefaultValue();
+            }
         }
     }
 

@@ -85,11 +85,11 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
     }
 
     /**
-     * Make visible.
+     * Adds vendor option to the option box.
      *
      * @param optionBox the option box
      */
-    public void makeVisible(Box optionBox)
+    public void addToOptionBox(Box optionBox)
     {
         this.optionBox = optionBox;
         updateVendorOptionPanels(vendorOptionVersionsList);
@@ -113,7 +113,6 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
      * Update vendor option panels.
      *
      * @param vendorOptionVersionsList the vendor option versions list
-     * @param optionBox the option box
      */
     private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList)
     {

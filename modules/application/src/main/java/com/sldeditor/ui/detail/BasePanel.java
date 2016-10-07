@@ -452,7 +452,8 @@ public class BasePanel extends JPanel {
     private void populateGroup(UpdateSymbolInterface parent, 
             Box parentBox,
             GroupConfigInterface groupConfig, 
-            FieldConfigBase parentField) {
+            FieldConfigBase parentField)
+    {
         groupConfig.createTitle(parentBox, parent);
         groupConfigMap.put(groupConfig.getId(), groupConfig);
 
@@ -473,7 +474,7 @@ public class BasePanel extends JPanel {
                 addField(parentBox, parentField, field);
             }
 
-            for(GroupConfig subGroup : group.getSubGroupList())
+            for(GroupConfigInterface subGroup : group.getSubGroupList())
             {
                 populateGroup(parent, parentBox, subGroup, parentField);
             }
@@ -490,40 +491,53 @@ public class BasePanel extends JPanel {
             {
                 for(GroupConfig optionGroupConfig : optionGroup.getGroupList())
                 {
-                    List<FieldConfigBase> fieldList = optionGroupConfig.getFieldConfigList();
+                    populateOptionGroup(parent, optionGroupConfig);
+                }
+            }
+        }
+    }
 
-                    fieldConfigManager.addGroup(optionGroupConfig);
+    /**
+     * Populate option group.
+     *
+     * @param parent the parent
+     * @param optionGroupConfig the option group config
+     */
+    private void populateOptionGroup(UpdateSymbolInterface parent, GroupConfig optionGroupConfig) {
+        List<FieldConfigBase> fieldList = optionGroupConfig.getFieldConfigList();
 
-                    // Create field user interface
-                    for(FieldConfigBase field : fieldList)
+        fieldConfigManager.addGroup(optionGroupConfig);
+
+        // Create field user interface
+        for(FieldConfigBase field : fieldList)
+        {
+            addFieldConfig(field);
+
+            fieldConfigManager.addField(field);
+        }
+
+        // Register for notifications when data has changed
+        registerForSymbolUpdates(fieldList, parent);
+
+        groupConfigMap.put(optionGroupConfig.getId(), optionGroupConfig);
+
+        for(GroupConfigInterface subOptionGroupConfig : optionGroupConfig.getSubGroupList())
+        {
+            if(subOptionGroupConfig instanceof GroupConfig)
+            {
+                populateOptionGroup(parent, (GroupConfig) subOptionGroupConfig);
+            }
+            else if(subOptionGroupConfig instanceof MultiOptionGroup)
+            {
+                MultiOptionGroup multiOption = (MultiOptionGroup) subOptionGroupConfig;
+
+                fieldConfigManager.addMultiOptionGroup(multiOption);
+
+                for(OptionGroup optionGroup : multiOption.getGroupList())
+                {
+                    for(GroupConfig subMultiOptionGroupConfig : optionGroup.getGroupList())
                     {
-                        addFieldConfig(field);
-
-                        fieldConfigManager.addField(field);
-                    }
-
-                    // Register for notifications when data has changed
-                    registerForSymbolUpdates(fieldList, parent);
-
-                    groupConfigMap.put(optionGroupConfig.getId(), optionGroupConfig);
-
-                    for(GroupConfig subOptionGroupConfig : optionGroupConfig.getSubGroupList())
-                    {
-                        fieldConfigManager.addGroup(subOptionGroupConfig);
-                        groupConfigMap.put(subOptionGroupConfig.getId(), subOptionGroupConfig);
-
-                        List<FieldConfigBase> subOptionGroupFieldList = subOptionGroupConfig.getFieldConfigList();
-
-                        // Register for notifications when data has changed
-                        registerForSymbolUpdates(subOptionGroupFieldList, parent);
-
-                        // Create field user interface
-                        for(FieldConfigBase field : subOptionGroupFieldList)
-                        {
-                            addFieldConfig(field);
-
-                            fieldConfigManager.addField(field);
-                        }
+                        populateOptionGroup(parent, subMultiOptionGroupConfig);
                     }
                 }
             }

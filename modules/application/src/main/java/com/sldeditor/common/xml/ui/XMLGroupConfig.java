@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FieldConfigMapUnit" type="{}XMLFieldConfigMapUnit"/&gt;
  *         &lt;element name="FieldConfigVendorOption" type="{}XMLFieldConfigVendorOption"/&gt;
  *         &lt;element name="Group" type="{}XMLGroupConfig"/&gt;
+ *         &lt;element name="MultiOptionGroup" type="{}XMLMultiOptionGroup"/&gt;
  *       &lt;/choice&gt;
  *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
@@ -85,7 +86,8 @@ public class XMLGroupConfig
         @XmlElement(name = "FieldConfigFeatureTypeConstraint", type = XMLFieldConfigFeatureTypeConstraint.class),
         @XmlElement(name = "FieldConfigMapUnit", type = XMLFieldConfigMapUnit.class),
         @XmlElement(name = "FieldConfigVendorOption", type = XMLFieldConfigVendorOption.class),
-        @XmlElement(name = "Group", type = XMLGroupConfig.class)
+        @XmlElement(name = "Group", type = XMLGroupConfig.class),
+        @XmlElement(name = "MultiOptionGroup", type = XMLMultiOptionGroup.class)
     })
     protected List<Object> fieldList;
 
@@ -126,6 +128,7 @@ public class XMLGroupConfig
      * {@link XMLFieldConfigMapUnit }
      * {@link XMLFieldConfigVendorOption }
      * {@link XMLGroupConfig }
+     * {@link XMLMultiOptionGroup }
      * 
      * 
      */
