@@ -489,9 +489,12 @@ public class BasePanel extends JPanel {
 
             for(OptionGroup optionGroup : multiOption.getGroupList())
             {
-                for(GroupConfig optionGroupConfig : optionGroup.getGroupList())
+                for(GroupConfigInterface optionGroupConfig : optionGroup.getGroupList())
                 {
-                    populateOptionGroup(parent, optionGroupConfig);
+                    if(optionGroupConfig instanceof GroupConfig)
+                    {
+                        populateOptionGroup(parent, (GroupConfig)optionGroupConfig);
+                    }
                 }
             }
         }
@@ -535,9 +538,12 @@ public class BasePanel extends JPanel {
 
                 for(OptionGroup optionGroup : multiOption.getGroupList())
                 {
-                    for(GroupConfig subMultiOptionGroupConfig : optionGroup.getGroupList())
+                    for(GroupConfigInterface subMultiOptionGroupConfig : optionGroup.getGroupList())
                     {
-                        populateOptionGroup(parent, subMultiOptionGroupConfig);
+                        if(subMultiOptionGroupConfig instanceof GroupConfig)
+                        {
+                            populateOptionGroup(parent, (GroupConfig)subMultiOptionGroupConfig);
+                        }
                     }
                 }
             }

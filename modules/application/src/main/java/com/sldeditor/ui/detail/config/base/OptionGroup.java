@@ -40,7 +40,7 @@ public class OptionGroup {
     private boolean showTitle = true;
 
     /** The group list. */
-    private List<GroupConfig> groupList = new ArrayList<GroupConfig>();
+    private List<GroupConfigInterface> groupList = new ArrayList<GroupConfigInterface>();
 
     /**
      * Gets the id.
@@ -101,7 +101,7 @@ public class OptionGroup {
      *
      * @return the group list
      */
-    public List<GroupConfig> getGroupList() {
+    public List<GroupConfigInterface> getGroupList() {
         return groupList;
     }
 

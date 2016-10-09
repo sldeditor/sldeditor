@@ -101,6 +101,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     /** The group title checkbox. */
     private JCheckBox groupTitleCheckbox;
 
+    /** The panel id. */
+    private Class<?> panelId;
+    
     /**
      * Sets the label.
      *
@@ -170,6 +173,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         final UndoActionInterface parentObj = this;
         this.fieldConfigManager = fieldConfigManager;
         this.parentBox = box;
+        this.panelId = panelId;
 
         box.add(GroupConfig.createSeparator());
 
@@ -247,49 +251,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
                 int index = findOptionPanel(box, panel);
                 OptionGroup optionGroup = optionMap.get(value.getKey());
-                for(GroupConfig groupConfig : optionGroup.getGroupList())
-                {
-                    groupConfig.createTitle(optionBox, null);
-
-                    for(FieldConfigBase field : groupConfig.getFieldConfigList())
-                    {
-                        field.createUI();
-                        field.revertToDefaultValue();
-                        FieldPanel component = field.getPanel();
-                        optionBox.add(component);
-                        fieldConfigManager.addField(field);
-                        optionFieldList.add(field);
-                    }
-
-                    for(GroupConfigInterface subGroupObj : groupConfig.getSubGroupList())
-                    {
-                        if(subGroupObj instanceof GroupConfig)
-                        {
-                            GroupConfig subGroup = (GroupConfig) subGroupObj;
-                            subGroup.createTitle(optionBox, null);
-
-                            for(FieldConfigBase field : subGroup.getFieldConfigList())
-                            {
-                                field.createUI();
-                                field.revertToDefaultValue();
-                                FieldPanel component = field.getPanel();
-                                optionBox.add(component);
-                                fieldConfigManager.addField(field);
-                                optionFieldList.add(field);
-
-                                if(field instanceof FieldConfigVendorOption)
-                                {
-                                    ((FieldConfigVendorOption)field).addToOptionBox(optionBox);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            int a =0;
-                            a++;
-                        }
-                    }
-                }
+                populateOptionGroup(fieldConfigManager, optionBox, optionGroup.getGroupList());
 
                 box.add(optionPanel, index + 1);
                 Object newValueObj = value.getKey();
@@ -304,7 +266,78 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                 oldValueObj = newValueObj;
                 box.revalidate();
             }
-        }        
+        }
+    }
+
+    /**
+     * Populate option group.
+     *
+     * @param fieldConfigManager the field config manager
+     * @param optionBox the option box
+     * @param groupConfigList the group config list
+     */
+    private void populateOptionGroup(GraphicPanelFieldManager fieldConfigManager, 
+            Box optionBox,
+            List<GroupConfigInterface> groupConfigList) {
+        for(GroupConfigInterface groupConfigI : groupConfigList)
+        {
+            groupConfigI.createTitle(optionBox, null);
+            if(groupConfigI instanceof GroupConfig)
+            {
+                GroupConfig groupConfig = (GroupConfig) groupConfigI;
+
+                for(FieldConfigBase field : groupConfig.getFieldConfigList())
+                {
+                    field.createUI();
+                    field.revertToDefaultValue();
+                    FieldPanel component = field.getPanel();
+                    optionBox.add(component);
+                    fieldConfigManager.addField(field);
+                    optionFieldList.add(field);
+
+                    if(field instanceof FieldConfigVendorOption)
+                    {
+                        ((FieldConfigVendorOption)field).addToOptionBox(optionBox);
+                    }
+                }
+
+                populateOptionGroup(fieldConfigManager, optionBox, groupConfig.getSubGroupList());
+            }
+            else if(groupConfigI instanceof MultiOptionGroup)
+            {
+                MultiOptionGroup groupConfig = (MultiOptionGroup) groupConfigI;
+
+                groupConfig.createUI(fieldConfigManager, optionBox, this.panelId);
+            }
+//            for(GroupConfigInterface subGroupObj : groupConfig.getSubGroupList())
+//            {
+//                if(subGroupObj instanceof GroupConfig)
+//                {
+//                    GroupConfig subGroup = (GroupConfig) subGroupObj;
+//                    subGroup.createTitle(optionBox, null);
+//
+//                    for(FieldConfigBase field : subGroup.getFieldConfigList())
+//                    {
+//                        field.createUI();
+//                        field.revertToDefaultValue();
+//                        FieldPanel component = field.getPanel();
+//                        optionBox.add(component);
+//                        fieldConfigManager.addField(field);
+//                        optionFieldList.add(field);
+//
+//                        if(field instanceof FieldConfigVendorOption)
+//                        {
+//                            ((FieldConfigVendorOption)field).addToOptionBox(optionBox);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    int a =0;
+//                    a++;
+//                }
+//            }
+        }
     }
 
     /**
