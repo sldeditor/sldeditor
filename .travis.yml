@@ -14,4 +14,3 @@ before_script:
 after_success:
   - cd modules/application
   - mvn org.eluder.coveralls:coveralls-maven-plugin:report
-  - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)
