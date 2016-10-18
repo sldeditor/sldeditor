@@ -33,8 +33,8 @@
     <!-- =========================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>15.1</geotools.version>
-        <geoserver.version>2.9.1</geoserver.version>
+        <geotools.version>15.2</geotools.version>
+        <geoserver.version>2.9.2</geoserver.version>
         <slf4j.version>1.5.11</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <junit.version>4.12</junit.version>
@@ -253,20 +253,6 @@
 
     <repositories>
         <repository>
-            <id>boundless</id>
-            <name>Boundless Maven Repository</name>
-            <url>https://repo.boundlessgeo.com/main/</url>
-            <!-- contains snapshot and release (including third-party-dependences) -->
-            <!-- Restlet maven Repository (http://maven.restlet.org) -->
-            <!-- ucar (https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases) -->
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
             <id>osgeo</id>
             <name>Open Source Geospatial Foundation Repository</name>
             <url>http://download.osgeo.org/webdav/geotools/</url>
@@ -279,6 +265,20 @@
         <repository>
             <id>Maven</id>
             <url>http://mvnrepository.com/</url>
+        </repository>
+        <repository>
+            <id>boundless</id>
+            <name>Boundless Maven Repository</name>
+            <url>https://repo.boundlessgeo.com/main/</url>
+            <!-- contains snapshot and release (including third-party-dependences) -->
+            <!-- Restlet maven Repository (http://maven.restlet.org) -->
+            <!-- ucar (https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases) -->
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 </project>
