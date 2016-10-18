@@ -487,6 +487,14 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     }
 
     /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

@@ -85,7 +85,7 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     @Override
     public void populate(TextSymbolizer textSymbolizer)
     {
-
+        // Do nothing
     }
 
     /* (non-Javadoc)
@@ -94,6 +94,7 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     @Override
     public void updateSymbol(TextSymbolizer textSymbolizer)
     {
+        // Do nothing
     }
 
     /* (non-Javadoc)
@@ -148,6 +149,13 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
         // Do nothing
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
 
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()

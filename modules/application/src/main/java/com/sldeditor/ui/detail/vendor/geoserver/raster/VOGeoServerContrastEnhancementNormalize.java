@@ -19,10 +19,13 @@
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
 import java.util.List;
+import java.util.Map;
 
+import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
+import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
@@ -209,6 +212,7 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer)
     {
+        // Do nothing
     }
 
     /**
@@ -259,6 +263,24 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
+        
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        
+        ContrastEnhancement contrastEnhancement = rasterSymbolizer.getContrastEnhancement();
+        Map<String, Expression> options = contrastEnhancement.getOptions();
+        options.clear();
+//        contrastEnhancement.g
+//        Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD);
+//        
+        Expression normalizeExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_CONTRAST_NORMALIZE);
+
+        options.put("algorithm", normalizeExpression);
     }
 
 }

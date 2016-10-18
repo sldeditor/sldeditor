@@ -117,7 +117,7 @@
             <xs:enumeration value="RASTER_OPACITY" />
             <xs:enumeration value="RASTER_CONTRAST_NORMALIZE" />
             <xs:enumeration value="RASTER_CONTRAST_GAMMAVALUE" />
-            <xs:enumeration value="RASTER_OVERLAP_BEHAVIOR" />
+            <xs:enumeration value="RASTER_OVERLAP_BEHAVIOUR" />
 
             <xs:enumeration value="RASTER_SHADEDRELIEF_BRIGHTNESS" />
             <xs:enumeration value="RASTER_SHADEDRELIEF_FACTOR" />

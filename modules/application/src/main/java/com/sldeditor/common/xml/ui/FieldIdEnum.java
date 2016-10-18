@@ -109,7 +109,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_OPACITY"/&gt;
  *     &lt;enumeration value="RASTER_CONTRAST_NORMALIZE"/&gt;
  *     &lt;enumeration value="RASTER_CONTRAST_GAMMAVALUE"/&gt;
- *     &lt;enumeration value="RASTER_OVERLAP_BEHAVIOR"/&gt;
+ *     &lt;enumeration value="RASTER_OVERLAP_BEHAVIOUR"/&gt;
  *     &lt;enumeration value="RASTER_SHADEDRELIEF_BRIGHTNESS"/&gt;
  *     &lt;enumeration value="RASTER_SHADEDRELIEF_FACTOR"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_TYPE"/&gt;
@@ -247,7 +247,7 @@ public enum FieldIdEnum {
     RASTER_OPACITY,
     RASTER_CONTRAST_NORMALIZE,
     RASTER_CONTRAST_GAMMAVALUE,
-    RASTER_OVERLAP_BEHAVIOR,
+    RASTER_OVERLAP_BEHAVIOUR,
     RASTER_SHADEDRELIEF_BRIGHTNESS,
     RASTER_SHADEDRELIEF_FACTOR,
     RASTER_COLOURMAP_TYPE,

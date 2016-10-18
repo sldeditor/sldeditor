@@ -21,7 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.raster;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geotools.styling.TextSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
@@ -93,22 +93,22 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
     /**
      * Populate.
      *
-     * @param textSymbolizer the text symbolizer
+     * @param rasterSymbolizer the raster symbolizer
      */
-    public void populate(TextSymbolizer textSymbolizer)
+    public void populate(RasterSymbolizer rasterSymbolizer)
     {
         for(VendorOptionInterface vendorOption : vendorOptionList)
         {
-            vendorOption.populate(textSymbolizer);
+            vendorOption.populate(rasterSymbolizer);
         }
     }
 
     /**
      * Update symbol.
      *
-     * @param textSymbolizer the text symbolizer
+     * @param rasterSymbolizer the raster symbolizer
      */
-    public void updateSymbol(TextSymbolizer textSymbolizer)
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer)
     {
         for(VendorOptionInterface vendorOption : vendorOptionList)
         {
@@ -116,7 +116,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
 
             if(displayVendorOption)
             {
-                vendorOption.updateSymbol(textSymbolizer);
+                vendorOption.updateSymbol(rasterSymbolizer);
             }
         }
     }

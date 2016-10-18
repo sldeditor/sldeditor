@@ -250,20 +250,19 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 }
 
                 // Overlap behaviour
-                OverlapBehavior overlapBehavior = rasterSymbolizer.getOverlapBehavior();
+                OverlapBehavior overlapBehaviour = rasterSymbolizer.getOverlapBehavior();
 
                 group = getGroup(GroupIdEnum.RASTER_OVERLAP);
-                group.enable(overlapBehavior != null);
-                if(overlapBehavior != null)
+                group.enable(overlapBehaviour != null);
+                if(overlapBehaviour != null)
                 {
-                    fieldConfigVisitor.populateComboBoxField(FieldIdEnum.RASTER_OVERLAP_BEHAVIOR, overlapBehavior.name());
+                    fieldConfigVisitor.populateComboBoxField(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR, overlapBehaviour.name());
                 }
 
-                //
-                //                if(vendorOptionTextFactory != null)
-                //                {
-                //                    vendorOptionTextFactory.populate(rasterSymbolizer);
-                //                }
+                if(vendorOptionRasterFactory != null)
+                {
+                    vendorOptionRasterFactory.populate(rasterSymbolizer);
+                }
             }
         }
     }
@@ -400,7 +399,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         group = getGroup(GroupIdEnum.RASTER_OVERLAP);
         if(group.isPanelEnabled())
         {
-            ValueComboBoxData overlapBehaviorValue = fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_OVERLAP_BEHAVIOR);
+            ValueComboBoxData overlapBehaviorValue = fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR);
 
             overlapBehavior = OverlapBehavior.valueOf(overlapBehaviorValue.getKey());
         }
@@ -429,6 +428,11 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 contrastEnhancement,
                 shadedRelief,
                 symbolizer);
+
+        if(vendorOptionRasterFactory != null)
+        {
+            vendorOptionRasterFactory.updateSymbol(rasterSymbolizer);
+        }
 
         SelectedSymbol.getInstance().replaceSymbolizer(rasterSymbolizer);
 

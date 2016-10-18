@@ -140,8 +140,8 @@
     </Group>
     <Group id="RASTER_OVERLAP" showLabel="true" label="raster.overlap"
         option="true">
-        <FieldConfigEnum id="RASTER_OVERLAP_BEHAVIOR"
-            label="raster.overlap.behavior">
+        <FieldConfigEnum id="RASTER_OVERLAP_BEHAVIOUR"
+            label="raster.overlap.behaviour">
             <ValueList>
                 <Value>
                     <Item id="LATEST_ON_TOP" label="raster.overlap.latestOnTop" />

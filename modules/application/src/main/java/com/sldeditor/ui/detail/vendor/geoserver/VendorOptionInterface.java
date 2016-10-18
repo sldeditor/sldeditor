@@ -48,27 +48,6 @@ public interface VendorOptionInterface {
     public void populate(TextSymbolizer textSymbolizer);
 
     /**
-     * Update symbol for a text symbolizer.
-     *
-     * @param textSymbolizer the text symbolizer
-     */
-    public void updateSymbol(TextSymbolizer textSymbolizer);
-
-    /**
-     * Gets the panel.
-     *
-     * @return the panel
-     */
-    public BasePanel getPanel();
-
-    /**
-     * Sets the parent panel.
-     *
-     * @param parent the new parent panel
-     */
-    public void setParentPanel(UpdateSymbolInterface parent);
-
-    /**
      * Update symbol for a polygon symbolizer.
      *
      * @param polygonSymbolizer the polygon symbolizer
@@ -88,6 +67,34 @@ public interface VendorOptionInterface {
      * @param rasterSymbolizer the raster symbolizer
      */
     public void populate(RasterSymbolizer rasterSymbolizer);
+
+    /**
+     * Update symbol for a text symbolizer.
+     *
+     * @param textSymbolizer the text symbolizer
+     */
+    public void updateSymbol(TextSymbolizer textSymbolizer);
+
+    /**
+     * Update symbol for a raster symbolizer.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer);
+
+    /**
+     * Gets the panel.
+     *
+     * @return the panel
+     */
+    public BasePanel getPanel();
+
+    /**
+     * Sets the parent panel.
+     *
+     * @param parent the new parent panel
+     */
+    public void setParentPanel(UpdateSymbolInterface parent);
 
     /**
      * Gets the parent panel.

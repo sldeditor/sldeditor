@@ -561,6 +561,14 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     }
 
     /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
      */
     @Override

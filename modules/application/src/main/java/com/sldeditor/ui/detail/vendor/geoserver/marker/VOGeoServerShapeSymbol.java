@@ -80,8 +80,8 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
      * @param panelId the panel id
      */
     @Override
-    public void addVendorOption(Class<?> symbolizerClass, List<ValueComboBoxData> symbolList, Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap, Class<?> panelId) {
-
+    public void addVendorOption(Class<?> symbolizerClass, List<ValueComboBoxData> symbolList, Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap, Class<?> panelId)
+    {
         fieldEnableMap.putAll(this.fieldEnableMap);
     }
 
@@ -96,7 +96,7 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     @Override
     public void populate(TextSymbolizer textSymbolizer)
     {
-
+        // Do nothing
     }
 
     /**
@@ -164,6 +164,15 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer)
     {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
     }
 
     /**
