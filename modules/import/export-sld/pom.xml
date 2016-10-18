@@ -33,7 +33,7 @@
         <app.main.class>com.sldeditor.exportdata.ExportSLD</app.main.class>
         <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
-        <geotools.version>15.1</geotools.version>
+        <geotools.version>15.2</geotools.version>
         <exporter.dest.folder>../bin</exporter.dest.folder>
     </properties>
 
@@ -299,6 +299,20 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>boundless</id>
+            <name>Boundless Maven Repository</name>
+            <url>https://repo.boundlessgeo.com/main/</url>
+            <!-- contains snapshot and release (including third-party-dependences) -->
+            <!-- Restlet maven Repository (http://maven.restlet.org) -->
+            <!-- ucar (https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases) -->
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 </project>
