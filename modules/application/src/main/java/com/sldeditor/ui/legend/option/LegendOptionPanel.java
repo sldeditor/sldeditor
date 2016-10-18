@@ -40,6 +40,7 @@ import javax.swing.event.ChangeListener;
 
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleBuilder;
+import org.geotools.swing.styling.JFontChooser;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
