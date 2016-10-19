@@ -19,6 +19,14 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
+import org.geotools.styling.ChannelSelection;
+import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.SelectedChannelType;
+
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
+
 /**
  * The Class VOGeoServerContrastEnhancementNormalizeGreen.
  *
@@ -34,9 +42,29 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
      * Instantiates a new VO geo server contrast enhancement normalize green.
      *
      * @param panelId the panel id
+     * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeGreen(Class<?> panelId) {
-        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeGreen.xml");
+    public VOGeoServerContrastEnhancementNormalizeGreen(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeGreen.xml", parentPanel,
+                GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
+                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREEN,
+                FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_GREEN,
+                FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_GREEN);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)
+     */
+    @Override
+    protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
+            ChannelSelection channelSelection) {
+        if(id == GroupIdEnum.RASTER_RGB_CHANNEL_OPTION)
+        {
+            SelectedChannelType[] channelTypes = channelSelection.getRGBChannels();
+
+            return channelTypes[1].getContrastEnhancement();
+        }
+        return null;
     }
 
 }

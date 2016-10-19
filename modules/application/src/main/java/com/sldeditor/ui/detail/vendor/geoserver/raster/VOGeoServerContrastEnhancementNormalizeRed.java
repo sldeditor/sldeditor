@@ -19,13 +19,21 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
+import org.geotools.styling.ChannelSelection;
+import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.SelectedChannelType;
+
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
+
 /**
  * The Class VOGeoServerContrastEnhancementNormalizeRed.
  *
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerContrastEnhancementNormalizeRed
-        extends VOGeoServerContrastEnhancementNormalize {
+extends VOGeoServerContrastEnhancementNormalize {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -34,9 +42,30 @@ public class VOGeoServerContrastEnhancementNormalizeRed
      * Instantiates a new VO geo server contrast enhancement normalize red.
      *
      * @param panelId the panel id
+     * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeRed(Class<?> panelId) {
-        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeRed.xml");
+    public VOGeoServerContrastEnhancementNormalizeRed(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeRed.xml",
+                parentPanel,
+                GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
+                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_RED,
+                FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_RED,
+                FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_RED);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)
+     */
+    @Override
+    protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
+            ChannelSelection channelSelection) {
+        if(id == GroupIdEnum.RASTER_RGB_CHANNEL_OPTION)
+        {
+            SelectedChannelType[] channelTypes = channelSelection.getRGBChannels();
+
+            return channelTypes[0].getContrastEnhancement();
+        }
+        return null;
     }
 
 }

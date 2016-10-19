@@ -304,13 +304,13 @@ public class GraphicPanelFieldManager {
      * @param groupId the group id
      * @return the option group
      */
-    public GroupConfig getGroup(Class<?> requestedPanelId, GroupIdEnum groupId)
+    public GroupConfigInterface getGroup(Class<?> requestedPanelId, GroupIdEnum groupId)
     {
         Map<GroupIdEnum, GroupConfigInterface> panelMap = groupMap.get(requestedPanelId);
 
         if(panelMap != null)
         {
-            return (GroupConfig) panelMap.get(groupId);
+            return panelMap.get(groupId);
         }
 
         return null;

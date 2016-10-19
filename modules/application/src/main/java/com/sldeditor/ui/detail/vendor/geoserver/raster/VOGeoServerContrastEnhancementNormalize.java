@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.raster;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
@@ -32,8 +33,13 @@ import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.StandardPanel;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
+import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
+import com.sldeditor.ui.detail.config.base.OptionGroup;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -44,8 +50,16 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerContrastEnhancementNormalize extends StandardPanel implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface, PrefUpdateVendorOptionInterface
+public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPanel implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface, PrefUpdateVendorOptionInterface
 {
+    /** The Constant MAX_VALUE_OPTION. */
+    private static final String MAX_VALUE_OPTION = "maxValue";
+
+    /** The Constant MIN_VALUE_OPTION. */
+    private static final String MIN_VALUE_OPTION = "minValue";
+
+    /** The Constant ALGORITHM_OPTION. */
+    private static final String ALGORITHM_OPTION = "algorithm";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -53,15 +67,36 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
     /** The parent obj. */
     private UpdateSymbolInterface parentObj = null;
 
+    /** The parent panel. */
+    private RasterSymbolizerDetails parentPanel = null;
+
+    private GroupIdEnum methodGroupId;
+    private FieldIdEnum algorithmFieldId;
+    private FieldIdEnum minValueFieldId;
+    private FieldIdEnum maxValueFieldId
+    ;
     /**
      * Constructor.
      *
      * @param panelId the panel id
      * @param resourceFile the resource file
+     * @param parentPanel the parent panel
      */
-    protected VOGeoServerContrastEnhancementNormalize(Class<?> panelId, String resourceFile)
+    protected VOGeoServerContrastEnhancementNormalize(Class<?> panelId, 
+            String resourceFile, 
+            RasterSymbolizerDetails parentPanel,
+            GroupIdEnum methodGroupId,
+            FieldIdEnum algorithmFieldId,
+            FieldIdEnum minValueFieldId,
+            FieldIdEnum maxValueFieldId)
     {
         super(panelId, null);
+
+        this.parentPanel = parentPanel;
+        this.methodGroupId = methodGroupId;
+        this.algorithmFieldId = algorithmFieldId;
+        this.minValueFieldId = minValueFieldId;
+        this.maxValueFieldId = maxValueFieldId;
 
         createUI(resourceFile);
     }
@@ -263,7 +298,7 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
-        
+
     }
 
     /* (non-Javadoc)
@@ -271,16 +306,91 @@ public class VOGeoServerContrastEnhancementNormalize extends StandardPanel imple
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
-        
-        ContrastEnhancement contrastEnhancement = rasterSymbolizer.getContrastEnhancement();
-        Map<String, Expression> options = contrastEnhancement.getOptions();
-        options.clear();
-//        contrastEnhancement.g
-//        Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD);
-//        
-        Expression normalizeExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_CONTRAST_NORMALIZE);
 
-        options.put("algorithm", normalizeExpression);
+        if(parentPanel != null)
+        {
+            GroupConfigInterface group = parentPanel.getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
+            if(group != null)
+            {
+                if(group.isPanelEnabled())
+                {
+                    MultiOptionGroup contrastEnhancementGroup = (MultiOptionGroup) group;
+                    ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
+
+                    OptionGroup selectedOption = contrastEnhancementGroup.getSelectedOptionGroup();
+
+                    ContrastEnhancement contrastEnhancement = getContrastEnhancement(selectedOption.getId(), channelSelection);
+
+                    if(contrastEnhancement != null)
+                    {
+                        extractNormalizeVendorOption(contrastEnhancement);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets the contrast enhancement.
+     *
+     * @param id the id
+     * @param channelSelection the channel selection
+     * @return the contrast enhancement
+     */
+    protected abstract ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
+            ChannelSelection channelSelection);
+
+    /**
+     * Extract normalize vendor option.
+     *
+     * @param contrastEnhancement the contrast enhancement
+     * @param methodGroup the method group
+     * @param algorithm the algorithm
+     * @param minValue the min value
+     * @param maxValue the max value
+     */
+    private void extractNormalizeVendorOption(ContrastEnhancement contrastEnhancement) {
+        if(contrastEnhancement != null)
+        {
+            Map<String, Expression> options = contrastEnhancement.getOptions();
+            options.clear();
+
+            GroupConfigInterface constrastMethodGroup = parentPanel.getGroup(methodGroupId);
+            if(constrastMethodGroup != null)
+            {
+                String method = null;
+                MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
+                OptionGroup selectedOption = constrastMethodGroup2.getSelectedOptionGroup();
+                if(selectedOption != null)
+                {
+                    method = selectedOption.getLabel();
+                }
+
+                if(method != null)
+                {
+                    if(method.compareToIgnoreCase("normalize") == 0)
+                    {
+                        Expression algorithmExpression = fieldConfigVisitor.getExpression(algorithmFieldId);
+                        if(algorithmExpression != null)
+                        {
+                            options.put(ALGORITHM_OPTION, algorithmExpression);
+                        }
+
+                        Expression minValueExpression = fieldConfigVisitor.getExpression(minValueFieldId);
+                        if(minValueExpression != null)
+                        {
+                            options.put(MIN_VALUE_OPTION, minValueExpression);
+                        }
+
+                        Expression maxValueExpression = fieldConfigVisitor.getExpression(maxValueFieldId);
+                        if(maxValueExpression != null)
+                        {
+                            options.put(MAX_VALUE_OPTION, maxValueExpression);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

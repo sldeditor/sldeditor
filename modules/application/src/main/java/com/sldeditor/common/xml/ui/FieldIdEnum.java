@@ -116,16 +116,12 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_COLOURMAP"/&gt;
  *     &lt;enumeration value="RASTER_RGB_RED_NAME"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA"/&gt;
- *     &lt;enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD"/&gt;
  *     &lt;enumeration value="RASTER_RGB_GREEN_NAME"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA"/&gt;
- *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD"/&gt;
  *     &lt;enumeration value="RASTER_RGB_BLUE_NAME"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA"/&gt;
- *     &lt;enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD"/&gt;
  *     &lt;enumeration value="RASTER_RGB_GREY_NAME"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA"/&gt;
- *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_LABEL"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_COLOUR"/&gt;
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_OPACITY"/&gt;
@@ -142,6 +138,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_GREY"/&gt;
  *     &lt;enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_GREY"/&gt;
  *     &lt;enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_GREY"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_OVERALL"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL"/&gt;
+ *     &lt;enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL"/&gt;
  *     &lt;enumeration value="REMOTE_OWS_SERVICE"/&gt;
  *     &lt;enumeration value="REMOTE_OWS_ONLINERESOURCE"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
@@ -254,16 +253,12 @@ public enum FieldIdEnum {
     RASTER_COLOURMAP,
     RASTER_RGB_RED_NAME,
     RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
-    RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
     RASTER_RGB_GREEN_NAME,
     RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
-    RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
     RASTER_RGB_BLUE_NAME,
     RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
-    RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
     RASTER_RGB_GREY_NAME,
     RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
-    RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
     RASTER_COLOURMAP_ENTRY_LABEL,
     RASTER_COLOURMAP_ENTRY_COLOUR,
     RASTER_COLOURMAP_ENTRY_OPACITY,
@@ -280,6 +275,9 @@ public enum FieldIdEnum {
     VO_RASTER_NORMALIZE_ALGORITHM_GREY,
     VO_RASTER_NORMALIZE_MIN_VALUE_GREY,
     VO_RASTER_NORMALIZE_MAX_VALUE_GREY,
+    VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
+    VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL,
+    VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL,
     REMOTE_OWS_SERVICE,
     REMOTE_OWS_ONLINERESOURCE,
     INLINE_FEATURE,

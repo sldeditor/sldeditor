@@ -56,9 +56,18 @@
             <xs:enumeration value="VO_RASTER_NORMALIZE_GREEN" />
             <xs:enumeration value="VO_RASTER_NORMALIZE_BLUE" />
             <xs:enumeration value="VO_RASTER_NORMALIZE_GREY" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_OVERALL" />
 
             <xs:enumeration value="RASTER" />
             <xs:enumeration value="RASTER_CONTRAST" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD_NONE" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD_EXPONENTIAL" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD_HISTOGRAM" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD_LOGARITHMIC" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE_GROUP" />
+            
             <xs:enumeration value="RASTER_CHANNELSELECTION" />
             <xs:enumeration value="RASTER_SHADEDRELIEF" />
             <xs:enumeration value="RASTER_OVERLAP" />
@@ -79,11 +88,37 @@
             
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST" />
+
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NONE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_EXPONENTIAL" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_HISTOGRAM" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_LOGARITHMIC" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NORMALIZE_GROUP" />
+
             <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST" />
+
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NONE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_EXPONENTIAL" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_HISTOGRAM" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_LOGARITHMIC" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NORMALIZE_GROUP" />
+
             <xs:enumeration value="RASTER_GREY_CHANNEL_OPTION" />
             <xs:enumeration value="RASTER_GREY_CHANNEL" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST" />
+
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NONE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_EXPONENTIAL" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_HISTOGRAM" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_LOGARITHMIC" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE_GROUP" />
 
             <xs:enumeration value="REMOTE_OWS" />
             <xs:enumeration value="FEATURE_TYPE_CONSTRAINTS" />

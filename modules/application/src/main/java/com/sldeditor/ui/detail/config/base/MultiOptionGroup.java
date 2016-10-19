@@ -103,7 +103,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
     /** The panel id. */
     private Class<?> panelId;
-    
+
     /**
      * Sets the label.
      *
@@ -305,38 +305,12 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
             }
             else if(groupConfigI instanceof MultiOptionGroup)
             {
-                MultiOptionGroup groupConfig = (MultiOptionGroup) groupConfigI;
+                MultiOptionGroup multiOptionGroupConfig = (MultiOptionGroup) groupConfigI;
 
-                groupConfig.createUI(fieldConfigManager, optionBox, this.panelId);
+                fieldConfigManager.addMultiOptionGroup(multiOptionGroupConfig);
+
+                multiOptionGroupConfig.createUI(fieldConfigManager, optionBox, this.panelId);
             }
-//            for(GroupConfigInterface subGroupObj : groupConfig.getSubGroupList())
-//            {
-//                if(subGroupObj instanceof GroupConfig)
-//                {
-//                    GroupConfig subGroup = (GroupConfig) subGroupObj;
-//                    subGroup.createTitle(optionBox, null);
-//
-//                    for(FieldConfigBase field : subGroup.getFieldConfigList())
-//                    {
-//                        field.createUI();
-//                        field.revertToDefaultValue();
-//                        FieldPanel component = field.getPanel();
-//                        optionBox.add(component);
-//                        fieldConfigManager.addField(field);
-//                        optionFieldList.add(field);
-//
-//                        if(field instanceof FieldConfigVendorOption)
-//                        {
-//                            ((FieldConfigVendorOption)field).addToOptionBox(optionBox);
-//                        }
-//                    }
-//                }
-//                else
-//                {
-//                    int a =0;
-//                    a++;
-//                }
-//            }
         }
     }
 
@@ -461,6 +435,11 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @return the selected option group
      */
     public OptionGroup getSelectedOptionGroup() {
+        if(comboBox == null)
+        {
+            return null;
+        }
+
         ValueComboBoxData selectedItem = comboBox.getSelectedValue();
         String key = selectedItem.getKey();
 

@@ -22,7 +22,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -123,9 +122,6 @@ public class BasePanel extends JPanel {
 
     /** The field configuration manager. */
     protected GraphicPanelFieldManager fieldConfigManager = null;
-
-    /** The group config map. */
-    private Map<GroupIdEnum, GroupConfigInterface> groupConfigMap = new HashMap<GroupIdEnum, GroupConfigInterface>();
 
     /** The scroll frame. */
     private JScrollPane scrollFrame = null;
@@ -455,7 +451,6 @@ public class BasePanel extends JPanel {
             FieldConfigBase parentField)
     {
         groupConfig.createTitle(parentBox, parent);
-        groupConfigMap.put(groupConfig.getId(), groupConfig);
 
         if(groupConfig instanceof GroupConfig)
         {
@@ -521,8 +516,6 @@ public class BasePanel extends JPanel {
 
         // Register for notifications when data has changed
         registerForSymbolUpdates(fieldList, parent);
-
-        groupConfigMap.put(optionGroupConfig.getId(), optionGroupConfig);
 
         for(GroupConfigInterface subOptionGroupConfig : optionGroupConfig.getSubGroupList())
         {
@@ -693,9 +686,9 @@ public class BasePanel extends JPanel {
      * @param groupId the group id
      * @return the group
      */
-    protected GroupConfigInterface getGroup(GroupIdEnum groupId)
+    public GroupConfigInterface getGroup(GroupIdEnum groupId)
     {
-        return groupConfigMap.get(groupId);
+        return fieldConfigManager.getGroup(getClass(), groupId);
     }
 
     /**

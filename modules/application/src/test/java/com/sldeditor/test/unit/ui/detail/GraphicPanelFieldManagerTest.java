@@ -35,6 +35,7 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 
 /**
@@ -178,7 +179,7 @@ public class GraphicPanelFieldManagerTest {
         multiOption.setId(expectedGroupId);
         mgr.addGroup(multiOption);
 
-        GroupConfig actualValue = mgr.getGroup(null, null);
+        GroupConfigInterface actualValue = mgr.getGroup(null, null);
         assertNull(actualValue);
 
         actualValue = mgr.getGroup(expectedPanelId, expectedGroupId);

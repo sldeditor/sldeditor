@@ -25,6 +25,17 @@
     <Group id="RASTER_CONTRAST" showLabel="true" label="raster.contrast" option="true">
         <FieldConfigSlider id="RASTER_CONTRAST_NORMALIZE" label="raster.contrast.normalize" />
         <FieldConfigSlider id="RASTER_CONTRAST_GAMMAVALUE" label="raster.contrast.gammavalue"  defaultValue="1.0" />
+        <MultiOptionGroup id="RASTER_OVERALL_CONTRAST_METHOD" label="raster.channel.contrast.method" showLabel="true">
+            <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_NONE" label="raster.channel.contrast.method.none" showLabel="true" />
+            <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_EXPONENTIAL" label="raster.channel.contrast.method.exponential" showLabel="true" />
+            <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_HISTOGRAM" label="raster.channel.contrast.method.histogram" showLabel="true" />
+            <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
+            <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
+                <Group id="RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
+                    <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeOverall"/>
+                </Group>
+            </OptionGroup>
+        </MultiOptionGroup>
     </Group>
     <MultiOptionGroup id="RASTER_CHANNELSELECTION" label="raster.channelselection" showLabel="true" option="true">
         <OptionGroup id="RASTER_RGB_CHANNEL_OPTION" label="raster.rgb.channel.option"
@@ -48,19 +59,6 @@
                             </Group>
                         </OptionGroup>
                     </MultiOptionGroup>
-<!--
-                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" label="raster.channel.contrast.method">
-                        <ValueList>
-                            <Value>
-                                <Item id="NONE" label="raster.channel.contrast.method.none" />
-                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
-                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
-                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
-                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
-                            </Value>
-                        </ValueList>
-                    </FieldConfigEnum>
-                     -->
                 </Group>
             </Group>
             <Group id="RASTER_RGB_CHANNEL_GREEN" label="raster.rgb.channel.green"
@@ -70,18 +68,17 @@
                 <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
-                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" label="raster.channel.contrast.method">
-                        <ValueList>
-                            <Value>
-                                <Item id="NONE" label="raster.channel.contrast.method.none" />
-                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
-                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
-                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
-                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
-                            </Value>
-                        </ValueList>
-                    </FieldConfigEnum>
-                    <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen"/>
+                    <MultiOptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" label="raster.channel.contrast.method" showLabel="true">
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NONE" label="raster.channel.contrast.method.none" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_EXPONENTIAL" label="raster.channel.contrast.method.exponential" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_HISTOGRAM" label="raster.channel.contrast.method.histogram" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
+                            <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
+                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen"/>
+                            </Group>
+                        </OptionGroup>
+                    </MultiOptionGroup>
                 </Group>
             </Group>
             <Group id="RASTER_RGB_CHANNEL_BLUE" label="raster.rgb.channel.blue"
@@ -91,18 +88,17 @@
                 <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
-                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" label="raster.channel.contrast.method">
-                        <ValueList>
-                            <Value>
-                                <Item id="NONE" label="raster.channel.contrast.method.none" />
-                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
-                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
-                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
-                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
-                            </Value>
-                        </ValueList>
-                    </FieldConfigEnum>
-                    <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue"/>
+                    <MultiOptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" label="raster.channel.contrast.method" showLabel="true">
+                        <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NONE" label="raster.channel.contrast.method.none" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_EXPONENTIAL" label="raster.channel.contrast.method.exponential" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_HISTOGRAM" label="raster.channel.contrast.method.histogram" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
+                            <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
+                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue"/>
+                            </Group>
+                        </OptionGroup>
+                    </MultiOptionGroup>
                 </Group>
             </Group>
         </OptionGroup>
@@ -115,18 +111,17 @@
                 <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
-                    <FieldConfigEnum id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" label="raster.channel.contrast.method">
-                        <ValueList>
-                            <Value>
-                                <Item id="NONE" label="raster.channel.contrast.method.none" />
-                                <Item id="EXPONENTIAL" label="raster.channel.contrast.method.exponential" />
-                                <Item id="HISTOGRAM" label="raster.channel.contrast.method.histogram" />
-                                <Item id="LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" />
-                                <Item id="NORMALIZE" label="raster.channel.contrast.method.normalize" />
-                            </Value>
-                        </ValueList>
-                    </FieldConfigEnum>
-                    <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey"/>
+                    <MultiOptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" label="raster.channel.contrast.method" showLabel="true">
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NONE" label="raster.channel.contrast.method.none" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_EXPONENTIAL" label="raster.channel.contrast.method.exponential" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_HISTOGRAM" label="raster.channel.contrast.method.histogram" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
+                        <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
+                            <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
+                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey"/>
+                            </Group>
+                        </OptionGroup>
+                    </MultiOptionGroup>
                 </Group>
             </Group>
         </OptionGroup>

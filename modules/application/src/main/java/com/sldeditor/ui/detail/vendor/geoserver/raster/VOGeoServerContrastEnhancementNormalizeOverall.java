@@ -21,35 +21,36 @@ package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.SelectedChannelType;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 
 /**
- * The Class VOGeoServerContrastEnhancementNormalizeGrey.
+ * The Class VOGeoServerContrastEnhancementNormalizeOverall.
  *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerContrastEnhancementNormalizeGrey
-        extends VOGeoServerContrastEnhancementNormalize {
+public class VOGeoServerContrastEnhancementNormalizeOverall
+extends VOGeoServerContrastEnhancementNormalize {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new VO geo server contrast enhancement normalize grey.
+     * Instantiates a new VO geo server contrast enhancement normalize overall.
      *
      * @param panelId the panel id
      * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeGrey(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
-        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeGrey.xml",
+    public VOGeoServerContrastEnhancementNormalizeOverall(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeOverall.xml",
                 parentPanel,
-                GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
-                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREY,
-                FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_GREY,
-                FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_GREY);
+                GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD,
+                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
+                FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL,
+                FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL);
     }
 
     /* (non-Javadoc)
@@ -58,9 +59,11 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
     @Override
     protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
             ChannelSelection channelSelection) {
-        if(id == GroupIdEnum.RASTER_GREY_CHANNEL_OPTION)
+        if(id == GroupIdEnum.RASTER_RGB_CHANNEL_OPTION)
         {
-            return channelSelection.getGrayChannel().getContrastEnhancement();
+            SelectedChannelType[] channelTypes = channelSelection.getRGBChannels();
+
+            return channelTypes[0].getContrastEnhancement();
         }
         return null;
     }

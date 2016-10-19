@@ -29,6 +29,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
@@ -52,6 +53,9 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
     /** The vendor option geo server contrast enhancement normalize (grey). */
     private VOGeoServerContrastEnhancementNormalizeGrey vendorOptionGeoServerContrastEnhancementNormalizeGrey = null;
 
+    /** The vendor option geo server contrast enhancement normalize (overall). */
+    private VOGeoServerContrastEnhancementNormalizeOverall vendorOptionGeoServerContrastEnhancementNormalizeOverall = null;
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -63,18 +67,21 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      *
      * @param panelId the panel id
      * @param functionManager the function manager
+     * @param parentPanel the parent panel
      */
-    public VendorOptionRasterFactory(Class<?> panelId, FunctionNameInterface functionManager)
+    public VendorOptionRasterFactory(Class<?> panelId, FunctionNameInterface functionManager, RasterSymbolizerDetails parentPanel)
     {
-        vendorOptionGeoServerContrastEnhancementNormalizeRed = new VOGeoServerContrastEnhancementNormalizeRed(panelId);
-        vendorOptionGeoServerContrastEnhancementNormalizeGreen = new VOGeoServerContrastEnhancementNormalizeGreen(panelId);
-        vendorOptionGeoServerContrastEnhancementNormalizeBlue = new VOGeoServerContrastEnhancementNormalizeBlue(panelId);
-        vendorOptionGeoServerContrastEnhancementNormalizeGrey = new VOGeoServerContrastEnhancementNormalizeGrey(panelId);
+        vendorOptionGeoServerContrastEnhancementNormalizeRed = new VOGeoServerContrastEnhancementNormalizeRed(panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeGreen = new VOGeoServerContrastEnhancementNormalizeGreen(panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeBlue = new VOGeoServerContrastEnhancementNormalizeBlue(panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeGrey = new VOGeoServerContrastEnhancementNormalizeGrey(panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeOverall = new VOGeoServerContrastEnhancementNormalizeOverall(panelId, parentPanel);
 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeRed);
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeGreen);
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeBlue);
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeGrey);
+        vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeOverall);
 
         PrefManager.getInstance().addVendorOptionListener(this);
     }
