@@ -349,7 +349,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      * @param minValue the min value
      * @param maxValue the max value
      */
-    private void extractNormalizeVendorOption(ContrastEnhancement contrastEnhancement) {
+    protected void extractNormalizeVendorOption(ContrastEnhancement contrastEnhancement) {
         if(contrastEnhancement != null)
         {
             Map<String, Expression> options = contrastEnhancement.getOptions();

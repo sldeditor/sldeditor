@@ -21,7 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
-import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.RasterSymbolizer;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -59,13 +59,24 @@ extends VOGeoServerContrastEnhancementNormalize {
     @Override
     protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
             ChannelSelection channelSelection) {
-        if(id == GroupIdEnum.RASTER_RGB_CHANNEL_OPTION)
-        {
-            SelectedChannelType[] channelTypes = channelSelection.getRGBChannels();
-
-            return channelTypes[0].getContrastEnhancement();
-        }
+        // Does nothing
         return null;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+
+        if(rasterSymbolizer != null)
+        {
+            ContrastEnhancement contrastEnhancement = rasterSymbolizer.getContrastEnhancement();
+
+            if(contrastEnhancement != null)
+            {
+                extractNormalizeVendorOption(contrastEnhancement);
+            }
+        }
+    }
 }

@@ -309,7 +309,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
             String contrastMethodString = contrastMethod.name();
 
-     //       fieldConfigVisitor.populateComboBoxField(methodField, contrastMethodString);
+            //       fieldConfigVisitor.populateComboBoxField(methodField, contrastMethodString);
         }
     }
 
@@ -329,8 +329,22 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
         if(group.isPanelEnabled())
         {
-            contrastEnhancement = new ContrastEnhancementImpl();
-            contrastEnhancement.setGammaValue(gammaValueExpression);
+            String method = null;
+            group = getGroup(GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE);
+            if(group != null)
+            {
+                MultiOptionGroup contrastNormalizeMethodGroup = (MultiOptionGroup) group;
+
+                OptionGroup selectedOption = contrastNormalizeMethodGroup.getSelectedOptionGroup();
+
+                if(selectedOption != null)
+                {
+                    method = selectedOption.getLabel();
+                }
+            }
+
+            contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaValueExpression, 
+                    method);
         }
 
         // Colour map
@@ -482,7 +496,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                     }
 
                     contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaExpression, 
-                            (method == null) ? null : method);
+                            method);
                 }
             }
 
