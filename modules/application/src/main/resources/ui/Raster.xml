@@ -31,7 +31,7 @@
             <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
             <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
                 <Group id="RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
-                    <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeOverall"/>
+                    <FieldConfigVendorOption id="VO_RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeOverall"/>
                 </Group>
             </OptionGroup>
         </MultiOptionGroup>
@@ -54,7 +54,7 @@
                         <OptionGroup id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
                         <OptionGroup id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
                             <Group id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
-                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed"/>
+                                <FieldConfigVendorOption id="VO_RASTER_RED_CONTRAST_METHOD_NORMALIZE" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed"/>
                             </Group>
                         </OptionGroup>
                     </MultiOptionGroup>
@@ -74,7 +74,7 @@
                         <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
                         <OptionGroup id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
                             <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
-                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen"/>
+                                <FieldConfigVendorOption id="VO_RASTER_GREEN_CONTRAST_METHOD_NORMALIZE" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen"/>
                             </Group>
                         </OptionGroup>
                     </MultiOptionGroup>
@@ -94,7 +94,7 @@
                         <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
                         <OptionGroup id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
                             <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
-                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue"/>
+                                <FieldConfigVendorOption id="VO_RASTER_BLUE_CONTRAST_METHOD_NORMALIZE" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue"/>
                             </Group>
                         </OptionGroup>
                     </MultiOptionGroup>
@@ -117,7 +117,7 @@
                         <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_LOGARITHMIC" label="raster.channel.contrast.method.logorithmic" showLabel="true" />
                         <OptionGroup id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE" label="raster.channel.contrast.method.normalize" showLabel="true" >
                             <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE_GROUP" showLabel="false">
-                                <FieldConfigVendorOption class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey"/>
+                                <FieldConfigVendorOption id="VO_RASTER_GREY_CONTRAST_METHOD_NORMALIZE" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey"/>
                             </Group>
                         </OptionGroup>
                     </MultiOptionGroup>

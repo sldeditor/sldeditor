@@ -160,8 +160,10 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 ContrastEnhancement contrast = rasterSymbolizer.getContrastEnhancement();
 
                 GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
-                group.enable(contrast != null);
-
+                if(group != null)
+                {
+                    group.enable(contrast != null);
+                }
                 if(contrast != null)
                 {
                     Expression gammaValue = contrast.getGammaValue();
@@ -242,8 +244,11 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 ShadedRelief shadedRelief = rasterSymbolizer.getShadedRelief();
 
                 group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
-                group.enable(shadedRelief != null);
-
+                if(group != null)
+                {
+                    group.enable(shadedRelief != null);
+                }
+                
                 if(shadedRelief != null)
                 {
                     fieldConfigVisitor.populateBooleanField(FieldIdEnum.RASTER_SHADEDRELIEF_BRIGHTNESS, shadedRelief.isBrightnessOnly());
@@ -254,7 +259,10 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 OverlapBehavior overlapBehaviour = rasterSymbolizer.getOverlapBehavior();
 
                 group = getGroup(GroupIdEnum.RASTER_OVERLAP);
-                group.enable(overlapBehaviour != null);
+                if(group != null)
+                {
+                    group.enable(overlapBehaviour != null);
+                }
                 if(overlapBehaviour != null)
                 {
                     fieldConfigVisitor.populateComboBoxField(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR, overlapBehaviour.name());

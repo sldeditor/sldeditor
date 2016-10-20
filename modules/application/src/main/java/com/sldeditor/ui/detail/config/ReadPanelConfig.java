@@ -72,6 +72,7 @@ import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
  * The Class ReadPanelConfig reads a XML configuration of field configuration
@@ -302,8 +303,22 @@ public class ReadPanelConfig implements PanelConfigInterface {
             else if(obj instanceof XMLFieldConfigVendorOption)
             {
                 XMLFieldConfigVendorOption vendorOption = (XMLFieldConfigVendorOption)obj;
+                FieldIdEnum id = vendorOption.getId();
+                String label = null;
+                boolean valueOnly = true;
 
-                FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(vendorOptionFactory, vendorOption.getClazz());
+                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly);
+
+                List<VendorOptionInterface> veList = null;
+
+                veList = vendorOptionFactory.getVendorOptionList(vendorOption.getClazz());
+                if((veList == null) || veList.isEmpty())
+                {
+                    ConsoleManager.getInstance().error(this, 
+                            Localisation.getField(FieldConfigBase.class, "FieldConfigVendorOption.missingVendorOptionClass") + vendorOption.getClazz());
+                }
+
+                FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(commonData, veList);
 
                 groupConfig.addField(placeHolder);
             }

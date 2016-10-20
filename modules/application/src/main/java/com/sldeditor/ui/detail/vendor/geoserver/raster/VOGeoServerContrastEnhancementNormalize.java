@@ -73,8 +73,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     private GroupIdEnum methodGroupId;
     private FieldIdEnum algorithmFieldId;
     private FieldIdEnum minValueFieldId;
-    private FieldIdEnum maxValueFieldId
-    ;
+    private FieldIdEnum maxValueFieldId;
+
     /**
      * Constructor.
      *

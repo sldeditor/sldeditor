@@ -278,7 +278,8 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      */
     private void populateOptionGroup(GraphicPanelFieldManager fieldConfigManager, 
             Box optionBox,
-            List<GroupConfigInterface> groupConfigList) {
+            List<GroupConfigInterface> groupConfigList)
+    {
         for(GroupConfigInterface groupConfigI : groupConfigList)
         {
             groupConfigI.createTitle(optionBox, null);

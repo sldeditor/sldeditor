@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType name="XMLFieldConfigVendorOption"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;attribute name="id" use="required" type="{}FieldIdEnum" /&gt;
  *       &lt;attribute name="class" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,8 +40,34 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "XMLFieldConfigVendorOption")
 public class XMLFieldConfigVendorOption {
 
+    @XmlAttribute(name = "id", required = true)
+    protected FieldIdEnum id;
     @XmlAttribute(name = "class", required = true)
     protected String clazz;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FieldIdEnum }
+     *     
+     */
+    public FieldIdEnum getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FieldIdEnum }
+     *     
+     */
+    public void setId(FieldIdEnum value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the clazz property.

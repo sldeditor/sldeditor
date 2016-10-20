@@ -549,7 +549,10 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      */
     protected FieldPanel createFieldPanel(int xPos, String fieldLabel)
     {
-        fieldPanel = new FieldPanel(xPos, fieldLabel);
+        if(fieldPanel == null)
+        {
+            fieldPanel = new FieldPanel(xPos, fieldLabel);
+        }
 
         return fieldPanel;
     }

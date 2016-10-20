@@ -25,14 +25,11 @@ import javax.swing.Box;
 
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
@@ -41,12 +38,6 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpdateVendorOptionInterface {
-
-    /** The vendor option factory. */
-    private VendorOptionFactoryInterface vendorOptionFactory = null;
-
-    /** The vendor option class name. */
-    private String vendorOptionClassName;
 
     /** The vendor option versions list. */
     private List<VersionData> vendorOptionVersionsList = null;
@@ -57,17 +48,21 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
     /** The has the object been initialised flag. */
     private boolean initialised = false;
 
+    /** The vendor option list. */
+    private List<VendorOptionInterface> veList = null;
+
     /**
      * Instantiates a new field config map units.
      *
-     * @param vendorOptionFactory the vendor option factory
-     * @param vendorOptionClassName the vendor option class name
+     * @param commonData the common data
+     * @param veList the ve list
      */
-    public FieldConfigVendorOption(VendorOptionFactoryInterface vendorOptionFactory, String vendorOptionClassName) {
-        super(null);
+    public FieldConfigVendorOption(FieldConfigCommonData commonData,
+            List<VendorOptionInterface> veList)
+    {
+        super(commonData);
 
-        this.vendorOptionFactory = vendorOptionFactory;
-        this.vendorOptionClassName = vendorOptionClassName;
+        this.veList = veList;
 
         PrefManager.getInstance().addVendorOptionListener(this);
     }
@@ -102,7 +97,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
 
         this.vendorOptionVersionsList = vendorOptionVersionsList;
-        
+
         if(initialised)
         {
             updateVendorOptionPanels(vendorOptionVersionsList);
@@ -116,32 +111,23 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
      */
     private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList)
     {
-        if(vendorOptionFactory != null)
+        if(veList != null)
         {
-            List<VendorOptionInterface> veList = vendorOptionFactory.getVendorOptionList(vendorOptionClassName);
-            if((veList != null) && !veList.isEmpty())
+            for(VendorOptionInterface vendorOption : veList)
             {
-                for(VendorOptionInterface vendorOption : veList)
+                boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+
+                BasePanel extensionPanel = vendorOption.getPanel();
+                if(extensionPanel != null)
                 {
-                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+                    BasePanel parentPanel = (BasePanel) vendorOption.getParentPanel();
+                    parentPanel.removePanel(extensionPanel);
 
-                    BasePanel extensionPanel = vendorOption.getPanel();
-                    if(extensionPanel != null)
+                    if(displayVendorOption)
                     {
-                        BasePanel parentPanel = (BasePanel) vendorOption.getParentPanel();
-                        parentPanel.removePanel(extensionPanel);
-
-                        if(displayVendorOption)
-                        {
-                            parentPanel.insertPanel(this, extensionPanel, this.optionBox);
-                        }
+                        parentPanel.insertPanel(this, extensionPanel, this.optionBox);
                     }
                 }
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, 
-                        Localisation.getField(FieldConfigBase.class, "FieldConfigVendorOption.missingVendorOptionClass") + vendorOptionClassName);
             }
         }
     }
@@ -220,7 +206,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
         if((fieldConfigBase != null) && (fieldConfigBase instanceof FieldConfigVendorOption))
         {
             FieldConfigVendorOption existing = (FieldConfigVendorOption) fieldConfigBase;
-            copy = new FieldConfigVendorOption(existing.vendorOptionFactory, existing.vendorOptionClassName);
+            copy = new FieldConfigVendorOption(existing.getCommonData(), existing.veList);
         }
         return copy;
     }
