@@ -24,7 +24,6 @@ import java.util.List;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ContrastEnhancement;
-import org.geotools.styling.ContrastEnhancementImpl;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.ShadedRelief;
@@ -157,7 +156,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 // Opacity
                 fieldConfigVisitor.populateField(FieldIdEnum.RASTER_OPACITY, rasterSymbolizer.getOpacity());
 
-                // Contrast
+                // Contrast enhancement
                 ContrastEnhancement contrast = rasterSymbolizer.getContrastEnhancement();
 
                 GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
@@ -167,6 +166,8 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 {
                     Expression gammaValue = contrast.getGammaValue();
                     fieldConfigVisitor.populateField(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE, gammaValue);
+
+                    populateContrastMethod(contrast, GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD);
                 }
 
                 // Channel selection
@@ -305,11 +306,40 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         {
             fieldConfigVisitor.populateField(gammaField, contrastEnhancement.getGammaValue());
 
-            ContrastMethod contrastMethod = contrastEnhancement.getMethod();
+            populateContrastMethod(contrastEnhancement, methodField);
+        }
+    }
 
-            String contrastMethodString = contrastMethod.name();
+    /**
+     * Populate contrast method.
+     *
+     * @param contrastEnhancement the contrast enhancement
+     * @param contrastMethodGroup the contrast method group
+     */
+    private void populateContrastMethod(ContrastEnhancement contrastEnhancement, GroupIdEnum contrastMethodGroup) {
+        GroupConfigInterface group = getGroup(contrastMethodGroup);
+        if(group != null)
+        {
+            GroupIdEnum selectedNormalizeMethod = GroupIdEnum.UNKNOWN;
+            MultiOptionGroup contrastNormalizeMethodGroup = (MultiOptionGroup) group;
+            if(contrastEnhancement != null)
+            {
+                ContrastMethod contrastMethod = contrastEnhancement.getMethod();
 
-            //       fieldConfigVisitor.populateComboBoxField(methodField, contrastMethodString);
+                if(contrastMethod != null)
+                {
+                    String contrastMethodString = contrastMethod.name();
+
+                    for(OptionGroup option : contrastNormalizeMethodGroup.getGroupList())
+                    {
+                        if(option.getLabel().compareToIgnoreCase(contrastMethodString) == 0)
+                        {
+                            selectedNormalizeMethod = option.getId();
+                        }
+                    }
+                }
+            }
+            contrastNormalizeMethodGroup.setOption(selectedNormalizeMethod);
         }
     }
 
@@ -322,7 +352,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
         Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_OPACITY);
 
-        // Contrast
+        // Contrast enhancement
         Expression gammaValueExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE);
         ContrastEnhancement contrastEnhancement = null;
 
@@ -330,7 +360,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         if(group.isPanelEnabled())
         {
             String method = null;
-            group = getGroup(GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE);
+            group = getGroup(GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD);
             if(group != null)
             {
                 MultiOptionGroup contrastNormalizeMethodGroup = (MultiOptionGroup) group;

@@ -23,7 +23,6 @@
         <FieldConfigSlider id="RASTER_OPACITY" label="raster.overallopacity" />
     </Group>
     <Group id="RASTER_CONTRAST" showLabel="true" label="raster.contrast" option="true">
-        <FieldConfigSlider id="RASTER_CONTRAST_NORMALIZE" label="raster.contrast.normalize" />
         <FieldConfigSlider id="RASTER_CONTRAST_GAMMAVALUE" label="raster.contrast.gammavalue"  defaultValue="1.0" />
         <MultiOptionGroup id="RASTER_OVERALL_CONTRAST_METHOD" label="raster.channel.contrast.method" showLabel="true">
             <OptionGroup id="RASTER_OVERALL_CONTRAST_METHOD_NONE" label="raster.channel.contrast.method.none" showLabel="true" />

@@ -256,7 +256,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                 box.add(optionPanel, index + 1);
                 Object newValueObj = value.getKey();
 
-                if((oldValueObj == null) && comboBox.getItemCount() > 0)
+                if((oldValueObj == null) && (comboBox.getItemCount() > 0))
                 {
                     oldValueObj = comboBox.getFirstItem().getKey();
                 }
@@ -412,6 +412,10 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param option the new option
      */
     public void setOption(GroupIdEnum option) {
+        if(option == GroupIdEnum.UNKNOWN)
+        {
+            option = optionList.get(0).getId();
+        }
         comboBox.setSelectValueKey(option.toString());
         oldValueObj = option.toString();
     }
