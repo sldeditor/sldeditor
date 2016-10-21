@@ -276,7 +276,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param optionBox the option box
      * @param groupConfigList the group config list
      */
-    private void populateOptionGroup(GraphicPanelFieldManager fieldConfigManager, 
+    private void populateOptionGroup(GraphicPanelFieldManager fieldConfigManager,
             Box optionBox,
             List<GroupConfigInterface> groupConfigList)
     {

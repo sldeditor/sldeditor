@@ -783,20 +783,11 @@ public class BasePanel extends JPanel {
                         panel.getClass().getName(),
                         this.getClass().getName()));
 
-                Component[] componentArray = panel.box.getComponents();
-                for(int index = 0; index < componentArray.length; index ++)
+                if(fieldIndex > -1)
                 {
-                    if(fieldIndex > -1)
-                    {
-                        fieldIndex ++;
-                    }
-                    Component component = componentArray[index];
-
-                    if(!(component instanceof Box.Filler))
-                    {
-                        boxToUpdate.add(component, fieldIndex);
-                    }
+                    fieldIndex ++;
                 }
+                boxToUpdate.add(panel.box, fieldIndex);
 
                 if(padding != null)
                 {
