@@ -121,11 +121,14 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
                 if(extensionPanel != null)
                 {
                     BasePanel parentPanel = (BasePanel) vendorOption.getParentPanel();
-                    parentPanel.removePanel(extensionPanel);
-
-                    if(displayVendorOption)
+                    if(parentPanel != null)
                     {
-                        parentPanel.insertPanel(this, extensionPanel, this.optionBox);
+                        parentPanel.removePanel(extensionPanel);
+
+                        if(displayVendorOption)
+                        {
+                            parentPanel.insertPanel(this, extensionPanel, this.optionBox);
+                        }
                     }
                 }
             }
