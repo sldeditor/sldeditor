@@ -79,4 +79,17 @@ extends VOGeoServerContrastEnhancementNormalize {
             }
         }
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    protected ContrastEnhancement getContrastEnhancement(RasterSymbolizer rasterSymbolizer) {
+        if(rasterSymbolizer != null)
+        {
+            return rasterSymbolizer.getContrastEnhancement();
+        }
+        return null;
+    }
+
 }
