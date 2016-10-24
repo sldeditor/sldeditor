@@ -69,7 +69,6 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /** The parent panel. */
     private RasterSymbolizerDetails parentPanel = null;
 
-    private GroupIdEnum methodGroupId;
     private FieldIdEnum algorithmFieldId;
     private FieldIdEnum minValueFieldId;
     private FieldIdEnum maxValueFieldId;
@@ -84,7 +83,6 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     protected VOGeoServerContrastEnhancementNormalize(Class<?> panelId, 
             String resourceFile, 
             RasterSymbolizerDetails parentPanel,
-            GroupIdEnum methodGroupId,
             FieldIdEnum algorithmFieldId,
             FieldIdEnum minValueFieldId,
             FieldIdEnum maxValueFieldId)
@@ -92,7 +90,6 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
         super(panelId, null);
 
         this.parentPanel = parentPanel;
-        this.methodGroupId = methodGroupId;
         this.algorithmFieldId = algorithmFieldId;
         this.minValueFieldId = minValueFieldId;
         this.maxValueFieldId = maxValueFieldId;
@@ -300,7 +297,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                         int minValue = 0;
                         try
                         {
-                            minValue = Integer.valueOf(options.get(MIN_VALUE_OPTION).toString());
+                            Expression expression = options.get(MIN_VALUE_OPTION);
+                            minValue = Integer.valueOf(expression.toString());
                         }
                         catch(Exception e)
                         {
@@ -312,7 +310,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                         int maxValue = 0;
                         try
                         {
-                            maxValue = Integer.valueOf(options.get(MAX_VALUE_OPTION).toString());
+                            Expression expression = options.get(MAX_VALUE_OPTION);
+                            maxValue = Integer.valueOf(expression.toString());
                         }
                         catch(Exception e)
                         {
@@ -390,38 +389,27 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
             Map<String, Expression> options = contrastEnhancement.getOptions();
             options.clear();
 
-            GroupConfigInterface constrastMethodGroup = parentPanel.getGroup(methodGroupId);
-            if(constrastMethodGroup != null)
+            if(contrastEnhancement.getMethod() != null)
             {
-                String method = null;
-                MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
-                OptionGroup selectedOption = constrastMethodGroup2.getSelectedOptionGroup();
-                if(selectedOption != null)
+                String method = contrastEnhancement.getMethod().name();
+                if(method.compareToIgnoreCase(ContrastMethod.NORMALIZE.name()) == 0)
                 {
-                    method = selectedOption.getLabel();
-                }
-
-                if(method != null)
-                {
-                    if(method.compareToIgnoreCase(ContrastMethod.NORMALIZE.name()) == 0)
+                    Expression algorithmExpression = fieldConfigVisitor.getExpression(algorithmFieldId);
+                    if(algorithmExpression != null)
                     {
-                        Expression algorithmExpression = fieldConfigVisitor.getExpression(algorithmFieldId);
-                        if(algorithmExpression != null)
-                        {
-                            options.put(ALGORITHM_OPTION, algorithmExpression);
-                        }
+                        options.put(ALGORITHM_OPTION, algorithmExpression);
+                    }
 
-                        Expression minValueExpression = fieldConfigVisitor.getExpression(minValueFieldId);
-                        if(minValueExpression != null)
-                        {
-                            options.put(MIN_VALUE_OPTION, minValueExpression);
-                        }
+                    Expression minValueExpression = fieldConfigVisitor.getExpression(minValueFieldId);
+                    if(minValueExpression != null)
+                    {
+                        options.put(MIN_VALUE_OPTION, minValueExpression);
+                    }
 
-                        Expression maxValueExpression = fieldConfigVisitor.getExpression(maxValueFieldId);
-                        if(maxValueExpression != null)
-                        {
-                            options.put(MAX_VALUE_OPTION, maxValueExpression);
-                        }
+                    Expression maxValueExpression = fieldConfigVisitor.getExpression(maxValueFieldId);
+                    if(maxValueExpression != null)
+                    {
+                        options.put(MAX_VALUE_OPTION, maxValueExpression);
                     }
                 }
             }

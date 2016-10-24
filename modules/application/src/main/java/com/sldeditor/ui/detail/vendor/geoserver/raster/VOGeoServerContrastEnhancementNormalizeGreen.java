@@ -47,7 +47,6 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
      */
     public VOGeoServerContrastEnhancementNormalizeGreen(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
         super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeGreen.xml", parentPanel,
-                GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
                 FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREEN,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_GREEN,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_GREEN);

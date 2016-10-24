@@ -48,7 +48,6 @@ extends VOGeoServerContrastEnhancementNormalize {
     public VOGeoServerContrastEnhancementNormalizeRed(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
         super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeRed.xml",
                 parentPanel,
-                GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
                 FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_RED,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_RED,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_RED);

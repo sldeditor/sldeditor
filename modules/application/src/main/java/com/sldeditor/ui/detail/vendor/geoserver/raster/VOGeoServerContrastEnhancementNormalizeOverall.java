@@ -47,7 +47,6 @@ extends VOGeoServerContrastEnhancementNormalize {
     public VOGeoServerContrastEnhancementNormalizeOverall(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
         super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeOverall.xml",
                 parentPanel,
-                GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD,
                 FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL);
