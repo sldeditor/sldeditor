@@ -44,6 +44,7 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 
@@ -276,7 +277,7 @@ public class FieldConfigTransformationTest {
                 super(commonData, editButtonText, clearButtonText);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

@@ -32,7 +32,7 @@ public interface PrefUpdateVendorOptionInterface {
     /**
      * Vendor options updated.
      *
-     * @param vendorOptionList the vendor option list
+     * @param vendorOptionVersionsList the vendor option versions list
      */
-    void vendorOptionsUpdated(List<VersionData> vendorOptionList);
+    void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList);
 }

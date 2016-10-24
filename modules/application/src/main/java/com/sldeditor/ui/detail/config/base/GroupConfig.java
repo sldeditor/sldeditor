@@ -42,6 +42,7 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
  * The Class GroupConfig represents the configuration for a group of fields.
@@ -73,7 +74,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     private JCheckBox groupCheckbox;
 
     /** The sub group list. */
-    private List<GroupConfig> subGroupList = new ArrayList<GroupConfig>();
+    private List<GroupConfigInterface> subGroupList = new ArrayList<GroupConfigInterface>();
 
     /** The function component list. */
     private List<Component> componentList = new ArrayList<Component>();
@@ -299,10 +300,14 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     {
         for(FieldConfigBase field : getFieldConfigList())
         {
-            field.getPanel().enablePanel(enabled);
+            FieldPanel panel = field.getPanel();
+            if(panel != null)
+            {
+                panel.enablePanel(enabled);
+            }
         }
 
-        for(GroupConfig subGroup : subGroupList)
+        for(GroupConfigInterface subGroup : subGroupList)
         {
             subGroup.enable(enabled);
         }
@@ -333,7 +338,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @param subGroup the sub group
      */
-    public void addGroup(GroupConfig subGroup) {
+    public void addGroup(GroupConfigInterface subGroup) {
         subGroupList.add(subGroup);
     }
 
@@ -342,7 +347,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @return the sub group list
      */
-    public List<GroupConfig> getSubGroupList() {
+    public List<GroupConfigInterface> getSubGroupList() {
         return subGroupList;
     }
 
@@ -400,5 +405,13 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      */
     public List<Component> getComponentList() {
         return componentList;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
     }
 }

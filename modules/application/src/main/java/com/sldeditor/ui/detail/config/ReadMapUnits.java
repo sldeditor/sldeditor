@@ -235,4 +235,5 @@ public class ReadMapUnits implements PanelConfigInterface {
     public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return null;
     }
+
 }

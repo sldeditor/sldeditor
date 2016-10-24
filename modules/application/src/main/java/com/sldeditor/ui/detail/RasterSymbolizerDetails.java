@@ -24,7 +24,6 @@ import java.util.List;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ContrastEnhancement;
-import org.geotools.styling.ContrastEnhancementImpl;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.ShadedRelief;
@@ -35,8 +34,8 @@ import org.opengis.style.ContrastMethod;
 import org.opengis.style.OverlapBehavior;
 
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -44,7 +43,8 @@ import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
-import com.sldeditor.ui.detail.vendor.geoserver.text.VendorOptionTextFactory;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -62,8 +62,8 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     /** The vendor option list allowed to be used. */
     private List<VersionData> vendorOptionVersionList = new ArrayList<VersionData>();
 
-    /** The vendor option text factory. */
-    private VendorOptionTextFactory vendorOptionTextFactory = null;
+    /** The vendor option raster factory. */
+    private VendorOptionRasterFactory vendorOptionRasterFactory = null;
 
     /**
      * Constructor.
@@ -82,11 +82,9 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void createUI() {
 
-        PrefManager.getInstance().addVendorOptionListener(this);
-
-        readRasterConfigFile(this, "Raster.xml");
-
         createVendorOptionPanel();
+
+        readRasterConfigFile(vendorOptionRasterFactory, this, "Raster.xml");
     }
 
     /**
@@ -94,28 +92,28 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void updateVendorOptionPanels()
     {
-        //        if(vendorOptionTextFactory != null)
-        //        {
-        //            List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
-        //            if(veList != null)
-        //            {
-        //                for(VendorOptionInterface vendorOption : veList)
-        //                {
-        //                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionList, vendorOption.getVendorOption());
-        //
-        //                    BasePanel extensionPanel = vendorOption.getPanel();
-        //                    if(extensionPanel != null)
-        //                    {
-        //                        removePanel(vendorOption.getPanel());
-        //
-        //                        if(displayVendorOption)
-        //                        {
-        //                            appendPanel(vendorOption.getPanel());
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
+        if(vendorOptionRasterFactory != null)
+        {
+            List<VendorOptionInterface> veList = vendorOptionRasterFactory.getVendorOptionList();
+            if(veList != null)
+            {
+                for(VendorOptionInterface vendorOption : veList)
+                {
+                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionList, vendorOption.getVendorOption());
+
+                    BasePanel extensionPanel = vendorOption.getPanel();
+                    if(extensionPanel != null)
+                    {
+                        removePanel(vendorOption.getPanel());
+
+                        if(displayVendorOption)
+                        {
+                            appendPanel(vendorOption.getPanel());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -125,16 +123,16 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void createVendorOptionPanel() {
 
-        //        vendorOptionTextFactory = new VendorOptionTextFactory(getClass(), getFunctionManager());
-        //
-        //        List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
-        //        if(veList != null)
-        //        {
-        //            for(VendorOptionInterface extension : veList)
-        //            {
-        //                extension.setParentPanel(this);
-        //            }
-        //        }
+        vendorOptionRasterFactory = new VendorOptionRasterFactory(getClass(), getFunctionManager(), this);
+
+        List<VendorOptionInterface> veList = vendorOptionRasterFactory.getVendorOptionList();
+        if(veList != null)
+        {
+            for(VendorOptionInterface extension : veList)
+            {
+                extension.setParentPanel(this);
+            }
+        }
     }
 
     /**
@@ -158,16 +156,20 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 // Opacity
                 fieldConfigVisitor.populateField(FieldIdEnum.RASTER_OPACITY, rasterSymbolizer.getOpacity());
 
-                // Contrast
+                // Contrast enhancement
                 ContrastEnhancement contrast = rasterSymbolizer.getContrastEnhancement();
 
                 GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
-                group.enable(contrast != null);
-
+                if(group != null)
+                {
+                    group.enable(contrast != null);
+                }
                 if(contrast != null)
                 {
                     Expression gammaValue = contrast.getGammaValue();
                     fieldConfigVisitor.populateField(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE, gammaValue);
+
+                    populateContrastMethod(contrast, GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD);
                 }
 
                 // Channel selection
@@ -179,11 +181,11 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                     ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
 
                     boolean enableChannelSelection = false;
-                    
+
                     if(channelSelection != null)
                     {
                         SelectedChannelType[] rgbChannels = channelSelection.getRGBChannels();
-                        
+
                         enableChannelSelection = ((channelSelection.getGrayChannel() != null) ||
                                 (rgbChannels[0] != null) || (rgbChannels[1] != null) || (rgbChannels[2] != null));
                     }
@@ -199,7 +201,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                                     FieldIdEnum.RASTER_RGB_GREY_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
+                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
                                     greyChannel);
                         }
                         else
@@ -212,21 +214,21 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                                     FieldIdEnum.RASTER_RGB_RED_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
+                                    GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
                                     rgbChannels[0]);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_GREEN,
                                     FieldIdEnum.RASTER_RGB_GREEN_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
+                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
                                     rgbChannels[1]);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_BLUE,
                                     FieldIdEnum.RASTER_RGB_BLUE_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
+                                    GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
                                     rgbChannels[2]);
                         }
                     }
@@ -242,8 +244,11 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 ShadedRelief shadedRelief = rasterSymbolizer.getShadedRelief();
 
                 group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
-                group.enable(shadedRelief != null);
-
+                if(group != null)
+                {
+                    group.enable(shadedRelief != null);
+                }
+                
                 if(shadedRelief != null)
                 {
                     fieldConfigVisitor.populateBooleanField(FieldIdEnum.RASTER_SHADEDRELIEF_BRIGHTNESS, shadedRelief.isBrightnessOnly());
@@ -251,20 +256,22 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 }
 
                 // Overlap behaviour
-                OverlapBehavior overlapBehavior = rasterSymbolizer.getOverlapBehavior();
+                OverlapBehavior overlapBehaviour = rasterSymbolizer.getOverlapBehavior();
 
                 group = getGroup(GroupIdEnum.RASTER_OVERLAP);
-                group.enable(overlapBehavior != null);
-                if(overlapBehavior != null)
+                if(group != null)
                 {
-                    fieldConfigVisitor.populateComboBoxField(FieldIdEnum.RASTER_OVERLAP_BEHAVIOR, overlapBehavior.name());
+                    group.enable(overlapBehaviour != null);
+                }
+                if(overlapBehaviour != null)
+                {
+                    fieldConfigVisitor.populateComboBoxField(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR, overlapBehaviour.name());
                 }
 
-                //
-                //                if(vendorOptionTextFactory != null)
-                //                {
-                //                    vendorOptionTextFactory.populate(rasterSymbolizer);
-                //                }
+                if(vendorOptionRasterFactory != null)
+                {
+                    vendorOptionRasterFactory.populate(rasterSymbolizer);
+                }
             }
         }
     }
@@ -283,7 +290,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
             FieldIdEnum nameField,
             GroupIdEnum contrastGroup,
             FieldIdEnum gammaField,
-            FieldIdEnum methodField,
+            GroupIdEnum methodField,
             SelectedChannelType channelType)
     {
         String name = "";
@@ -307,11 +314,40 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         {
             fieldConfigVisitor.populateField(gammaField, contrastEnhancement.getGammaValue());
 
-            ContrastMethod contrastMethod = contrastEnhancement.getMethod();
+            populateContrastMethod(contrastEnhancement, methodField);
+        }
+    }
 
-            String contrastMethodString = contrastMethod.name();
+    /**
+     * Populate contrast method.
+     *
+     * @param contrastEnhancement the contrast enhancement
+     * @param contrastMethodGroup the contrast method group
+     */
+    private void populateContrastMethod(ContrastEnhancement contrastEnhancement, GroupIdEnum contrastMethodGroup) {
+        GroupConfigInterface group = getGroup(contrastMethodGroup);
+        if(group != null)
+        {
+            GroupIdEnum selectedNormalizeMethod = GroupIdEnum.UNKNOWN;
+            MultiOptionGroup contrastNormalizeMethodGroup = (MultiOptionGroup) group;
+            if(contrastEnhancement != null)
+            {
+                ContrastMethod contrastMethod = contrastEnhancement.getMethod();
 
-            fieldConfigVisitor.populateComboBoxField(methodField, contrastMethodString);
+                if(contrastMethod != null)
+                {
+                    String contrastMethodString = contrastMethod.name();
+
+                    for(OptionGroup option : contrastNormalizeMethodGroup.getGroupList())
+                    {
+                        if(option.getLabel().compareToIgnoreCase(contrastMethodString) == 0)
+                        {
+                            selectedNormalizeMethod = option.getId();
+                        }
+                    }
+                }
+            }
+            contrastNormalizeMethodGroup.setOption(selectedNormalizeMethod);
         }
     }
 
@@ -324,15 +360,29 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
         Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_OPACITY);
 
-        // Contrast
+        // Contrast enhancement
         Expression gammaValueExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE);
         ContrastEnhancement contrastEnhancement = null;
 
         GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
         if(group.isPanelEnabled())
         {
-            contrastEnhancement = new ContrastEnhancementImpl();
-            contrastEnhancement.setGammaValue(gammaValueExpression);
+            String method = null;
+            group = getGroup(GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD);
+            if(group != null)
+            {
+                MultiOptionGroup contrastNormalizeMethodGroup = (MultiOptionGroup) group;
+
+                OptionGroup selectedOption = contrastNormalizeMethodGroup.getSelectedOptionGroup();
+
+                if(selectedOption != null)
+                {
+                    method = selectedOption.getLabel();
+                }
+            }
+
+            contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaValueExpression, 
+                    method);
         }
 
         // Colour map
@@ -361,7 +411,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                             FieldIdEnum.RASTER_RGB_GREY_NAME,
                             GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
-                            FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD);
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD);
 
                     channelSelection = getStyleFactory().channelSelection(greyChannel);
                 }
@@ -371,19 +421,19 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                             FieldIdEnum.RASTER_RGB_RED_NAME,
                             GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
-                            FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD);
+                            GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD);
 
                     SelectedChannelType greenChannel = extractContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_GREEN,
                             FieldIdEnum.RASTER_RGB_GREEN_NAME,
                             GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
-                            FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD);
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD);
 
                     SelectedChannelType blueChannel = extractContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_BLUE,
                             FieldIdEnum.RASTER_RGB_BLUE_NAME,
                             GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
-                            FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD);
+                            GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD);
 
                     SelectedChannelType[] channels = new SelectedChannelType[3];
                     channels[0] = redChannel;
@@ -401,7 +451,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         group = getGroup(GroupIdEnum.RASTER_OVERLAP);
         if(group.isPanelEnabled())
         {
-            ValueComboBoxData overlapBehaviorValue = fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_OVERLAP_BEHAVIOR);
+            ValueComboBoxData overlapBehaviorValue = fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR);
 
             overlapBehavior = OverlapBehavior.valueOf(overlapBehaviorValue.getKey());
         }
@@ -431,6 +481,11 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
                 shadedRelief,
                 symbolizer);
 
+        if(vendorOptionRasterFactory != null)
+        {
+            vendorOptionRasterFactory.updateSymbol(rasterSymbolizer);
+        }
+
         SelectedSymbol.getInstance().replaceSymbolizer(rasterSymbolizer);
 
         this.fireUpdateSymbol();
@@ -443,14 +498,14 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      * @param nameField the name field
      * @param contrastGroup the contrast group
      * @param gammaField the gamma field
-     * @param methodField the method field
+     * @param contrastMethod the contrast method
      * @return the selected channel type
      */
     private SelectedChannelType extractContrastEnhancementGroup(GroupIdEnum channelGroup,
             FieldIdEnum nameField,
             GroupIdEnum contrastGroup,
             FieldIdEnum gammaField,
-            FieldIdEnum methodField) {
+            GroupIdEnum contrastMethod) {
 
         SelectedChannelType channelType = null;
 
@@ -466,8 +521,21 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
             if(contrastGrp.isPanelEnabled())
             {
                 Expression gammaExpression = fieldConfigVisitor.getExpression(gammaField);
-                ValueComboBoxData method = fieldConfigVisitor.getComboBox(methodField);
-                contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaExpression, method.getKey());
+
+                GroupConfigInterface constrastMethodGroup = getGroup(contrastMethod);
+                if(constrastMethodGroup != null)
+                {
+                    String method = null;
+                    MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
+                    OptionGroup selectedOption = constrastMethodGroup2.getSelectedOptionGroup();
+                    if(selectedOption != null)
+                    {
+                        method = selectedOption.getLabel();
+                    }
+
+                    contrastEnhancement = (ContrastEnhancement) getStyleFactory().contrastEnhancement(gammaExpression, 
+                            method);
+                }
             }
 
             channelType = getStyleFactory().createSelectedChannelType(channelName, contrastEnhancement);
@@ -496,9 +564,9 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     @Override
     public GraphicPanelFieldManager getFieldDataManager()
     {
-        if(vendorOptionTextFactory != null)
+        if(vendorOptionRasterFactory != null)
         {
-            vendorOptionTextFactory.getFieldDataManager(fieldConfigManager);
+            vendorOptionRasterFactory.getFieldDataManager(fieldConfigManager);
         }
 
         return fieldConfigManager;
@@ -513,9 +581,9 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
-        this.vendorOptionVersionList = vendorOptionList;
+        this.vendorOptionVersionList = vendorOptionVersionsList;
 
         updateVendorOptionPanels();
     }

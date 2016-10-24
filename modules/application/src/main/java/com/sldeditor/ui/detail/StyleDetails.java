@@ -56,7 +56,7 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(this, "StyleDetails.xml");
+        readConfigFile(null, this, "StyleDetails.xml");
     }
 
     /**

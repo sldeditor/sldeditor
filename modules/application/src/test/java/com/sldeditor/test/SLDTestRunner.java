@@ -69,7 +69,7 @@ import com.sldeditor.common.xml.ui.XMLVendorOption;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
-import com.sldeditor.ui.detail.config.base.GroupConfig;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
@@ -346,7 +346,7 @@ public class SLDTestRunner
                                         System.out.println(outputText);
                                         Assert.assertNotNull(outputText, groupId);
 
-                                        GroupConfig groupConfig = mgr.getGroup(panelId, groupId);
+                                        GroupConfigInterface groupConfig = mgr.getGroup(panelId, groupId);
 
                                         Assert.assertNotNull(panelId.getName() + "/" + groupId + " group should exist", groupConfig);
 

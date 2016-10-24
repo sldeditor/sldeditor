@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.4.2"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize" >
+    <Group id="VO_RASTER_NORMALIZE_OVERALL" label="geoserver.rasterNormalize"
+        showLabel="true">
+        <FieldConfigEnum id="VO_RASTER_NORMALIZE_ALGORITHM_OVERALL"
+            label="geoserver.rasterNormalize.algorithm" valueOnly="true"
+            default="none">
+            <ValueList>
+                <Value>
+                    <Item id="StretchToMinimumMaximum" label="StretchToMinimumMaximum" />
+                    <Item id="ClipToMinimumMaximum" label="ClipToMinimumMaximum" />
+                    <Item id="ClipToZero" label="ClipToZero" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigInteger id="VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL"
+            label="geoserver.rasterNormalize.minValue" valueOnly="true"
+            default="0" minValue="0" maxValue="255"/>
+        <FieldConfigInteger id="VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL"
+            label="geoserver.rasterNormalize.maxValue" valueOnly="true"
+            default="255" minValue="0" maxValue="255"/>
+    </Group>
+</PanelConfig>

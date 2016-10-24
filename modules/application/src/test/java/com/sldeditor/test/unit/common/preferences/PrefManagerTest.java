@@ -117,11 +117,11 @@ public class PrefManagerTest {
 
     class DummyVendorOptionChanged implements PrefUpdateVendorOptionInterface
     {
-        public List<VersionData> vendorOptionList = null;
+        public List<VersionData> vendorOptionVersionsList = null;
 
         @Override
-        public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
-            this.vendorOptionList = vendorOptionList;
+        public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
+            this.vendorOptionVersionsList = vendorOptionVersionsList;
         }
 
     }
@@ -152,7 +152,7 @@ public class PrefManagerTest {
         assertEquals(backgroundColour, PrefManager.getInstance().getPrefData().getBackgroundColour());
         assertEquals(uiLayoutClass, PrefManager.getInstance().getPrefData().getUiLayoutClass());
         assertEquals(true, PrefManager.getInstance().getPrefData().isUseAntiAlias());
-        assertEquals(vendorOptionList, voListener.vendorOptionList);
+        assertEquals(vendorOptionList, voListener.vendorOptionVersionsList);
     }
 
     /**

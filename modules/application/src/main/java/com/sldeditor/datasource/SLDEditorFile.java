@@ -330,13 +330,16 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
         notifySLDEditorFileHasUpdated();
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
         if(sldData != null)
         {
             dataEditedFlag = true;
 
-            sldData.setVendorOptionList(vendorOptionList);
+            sldData.setVendorOptionList(vendorOptionVersionsList);
 
             notifySLDEditorFileHasUpdated();
         }

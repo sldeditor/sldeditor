@@ -29,6 +29,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 
@@ -37,7 +38,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionFillFactory implements PrefUpdateVendorOptionInterface {
+public class VendorOptionFillFactory implements VendorOptionFactoryInterface, PrefUpdateVendorOptionInterface {
 
     /** The vendor option GeoServer random fill. */
     private VOGeoServerRandomFill vendorOptionGeoServerRandomFill = null;
@@ -68,6 +69,7 @@ public class VendorOptionFillFactory implements PrefUpdateVendorOptionInterface 
      *
      * @return the vendor options
      */
+    @Override
     public List<VendorOptionInterface> getVendorOptionList()
     {
         return vendorOptionList;
@@ -108,9 +110,9 @@ public class VendorOptionFillFactory implements PrefUpdateVendorOptionInterface 
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
-        this.vendorOptionVersionList = vendorOptionList;
+        this.vendorOptionVersionList = vendorOptionVersionsList;
     }
 
     /**
@@ -128,5 +130,13 @@ public class VendorOptionFillFactory implements PrefUpdateVendorOptionInterface 
                 fieldConfigManager.add(populateInterface.getFieldDataManager());
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList(String className) {
+        return null;
     }
 }

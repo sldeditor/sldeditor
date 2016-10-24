@@ -57,7 +57,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
      */
     private void createUI() {
 
-        readConfigFile(this, "Polygon.xml");
+        readConfigFile(null, this, "Polygon.xml");
     }
 
     /* (non-Javadoc)

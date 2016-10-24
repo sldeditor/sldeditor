@@ -34,7 +34,6 @@ import org.junit.Test;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.PanelField;
 import com.sldeditor.filter.v2.expression.TypeManager;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
@@ -44,6 +43,7 @@ import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -79,7 +79,7 @@ public class PanelFieldTest {
 
         for(Class<?> nodeType : expectedValueMap.keySet())
         {
-            FieldConfigBase fieldConfig = PanelField.getField(classType, valueTextLocalisation, nodeType, enumValueList);
+            FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, nodeType, enumValueList);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -88,7 +88,7 @@ public class PanelFieldTest {
 
         // Special case
         // Number.class
-        FieldConfigBase fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, enumValueList);
+        FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, enumValueList);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);

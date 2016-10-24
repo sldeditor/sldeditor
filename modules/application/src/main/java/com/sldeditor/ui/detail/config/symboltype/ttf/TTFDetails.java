@@ -76,7 +76,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(this, "symboltype/TTFSymbol.xml");
+        readConfigFileNoScrollPane(null, this, "symboltype/TTFSymbol.xml");
 
         registerForTextFieldButton(FieldIdEnum.TTF_SYMBOL, this);
     }

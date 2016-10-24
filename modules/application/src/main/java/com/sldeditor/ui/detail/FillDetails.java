@@ -121,11 +121,11 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        readConfigFile(this, configFile);
+        createVendorOptionPanel();
+
+        readConfigFile(vendorOptionFillFactory, this, configFile);
 
         symbolTypeFactory.populate(this, panelDetails, fieldConfigManager);
-
-        createVendorOptionPanel();
     }
 
     /**
@@ -590,9 +590,9 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
-        this.vendorOptionOptionsList = vendorOptionList;
+        this.vendorOptionOptionsList = vendorOptionVersionsList;
 
         updateVendorOptionPanels();
     }

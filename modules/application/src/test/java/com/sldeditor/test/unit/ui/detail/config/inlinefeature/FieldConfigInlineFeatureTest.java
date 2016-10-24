@@ -37,6 +37,7 @@ import com.sldeditor.test.unit.datasource.impl.DummyInlineSLDFile;
 import com.sldeditor.test.unit.datasource.impl.DummyInlineSLDFile2;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import com.vividsolutions.jts.geom.Geometry;
@@ -165,7 +166,7 @@ public class FieldConfigInlineFeatureTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

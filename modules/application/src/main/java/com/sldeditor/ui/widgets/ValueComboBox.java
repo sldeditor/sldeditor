@@ -52,7 +52,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
     private DefaultComboBoxModel<ValueComboBoxData> model = null;
 
     /** The vendor option list allowed to be used. */
-    private List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+    private List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
 
     /**
      * Instantiates a new value combo box.
@@ -99,7 +99,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
         {
             for(ValueComboBoxData data : valueList)
             {
-                if(VendorOptionManager.getInstance().isAllowed(vendorOptionList, data.getVendorOption()))
+                if(VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, data.getVendorOption()))
                 {
                     model.addElement(data);
                 }
@@ -176,8 +176,8 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
-        this.vendorOptionList = vendorOptionList;
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
+        this.vendorOptionVersionsList = vendorOptionVersionsList;
 
         update();
     }

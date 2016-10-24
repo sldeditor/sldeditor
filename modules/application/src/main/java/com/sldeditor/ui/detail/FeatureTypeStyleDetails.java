@@ -55,7 +55,7 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(this, "FeatureTypeStyles.xml");
+        readConfigFile(null, this, "FeatureTypeStyles.xml");
     }
 
     /**

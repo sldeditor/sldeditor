@@ -53,6 +53,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
 import com.sldeditor.common.xml.ui.XMLFieldConfigString;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSymbolType;
 import com.sldeditor.common.xml.ui.XMLFieldConfigTransformation;
+import com.sldeditor.common.xml.ui.XMLFieldConfigVendorOption;
 import com.sldeditor.common.xml.ui.XMLGroupConfig;
 import com.sldeditor.common.xml.ui.XMLMultiOptionGroup;
 import com.sldeditor.common.xml.ui.XMLOptionGroup;
@@ -70,6 +71,8 @@ import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
 import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
  * The Class ReadPanelConfig reads a XML configuration of field configuration
@@ -96,17 +99,22 @@ public class ReadPanelConfig implements PanelConfigInterface {
     /** The map of default field value. */
     private Map<FieldIdEnum, Object> defaultFieldMap = new HashMap<FieldIdEnum, Object>();
 
+    /** The vendor option factory. */
+    private VendorOptionFactoryInterface vendorOptionFactory = null;
+
     /** The is raster symbol flag. */
     private boolean isRasterSymbol = false;
 
     /**
      * Default constructor.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param isRasterSymbol the is raster symbol
      */
-    public ReadPanelConfig(boolean isRasterSymbol)
+    public ReadPanelConfig(VendorOptionFactoryInterface vendorOptionFactory, boolean isRasterSymbol)
     {
         this.isRasterSymbol = isRasterSymbol;
+        this.vendorOptionFactory = vendorOptionFactory;
 
         // Force it so that standard fields are always loaded
         Localisation.preload(ReadPanelConfig.class);
@@ -285,6 +293,34 @@ public class ReadPanelConfig implements PanelConfigInterface {
                 GroupConfig subGroup = parseGroup(localisationClass, panelId, (XMLGroupConfig)obj);
 
                 groupConfig.addGroup(subGroup);
+            }
+            else if(obj instanceof XMLMultiOptionGroup)
+            {
+                MultiOptionGroup subGroup = parseMultiOptionGroup(localisationClass, panelId, (XMLMultiOptionGroup)obj);
+
+                groupConfig.addGroup(subGroup);
+            }
+            else if(obj instanceof XMLFieldConfigVendorOption)
+            {
+                XMLFieldConfigVendorOption vendorOption = (XMLFieldConfigVendorOption)obj;
+                FieldIdEnum id = vendorOption.getId();
+                String label = null;
+                boolean valueOnly = true;
+
+                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly);
+
+                List<VendorOptionInterface> veList = null;
+
+                veList = vendorOptionFactory.getVendorOptionList(vendorOption.getClazz());
+                if((veList == null) || veList.isEmpty())
+                {
+                    ConsoleManager.getInstance().error(this, 
+                            Localisation.getField(FieldConfigBase.class, "FieldConfigVendorOption.missingVendorOptionClass") + vendorOption.getClazz());
+                }
+
+                FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(commonData, veList);
+
+                groupConfig.addField(placeHolder);
             }
         }
 

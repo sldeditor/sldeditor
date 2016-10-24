@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
 
@@ -88,7 +89,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      */
     private void createUI()
     {
-        readConfigFile(this, "geoserver/GeoServerRandomFill.xml");
+        readConfigFile(null, this, "geoserver/GeoServerRandomFill.xml");
     }
 
     /* (non-Javadoc)
@@ -486,10 +487,18 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     }
 
     /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
         // Do nothing
     }
@@ -500,5 +509,21 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
+     */
+    @Override
+    public UpdateSymbolInterface getParentPanel() {
+        return parentObj;
     }
 }

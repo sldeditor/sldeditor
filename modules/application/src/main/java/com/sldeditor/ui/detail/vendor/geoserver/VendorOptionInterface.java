@@ -19,6 +19,7 @@
 package com.sldeditor.ui.detail.vendor.geoserver;
 
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -47,11 +48,39 @@ public interface VendorOptionInterface {
     public void populate(TextSymbolizer textSymbolizer);
 
     /**
+     * Update symbol for a polygon symbolizer.
+     *
+     * @param polygonSymbolizer the polygon symbolizer
+     */
+    public void updateSymbol(PolygonSymbolizer polygonSymbolizer);
+
+    /**
+     * Populate for a polygon symbolizer.
+     *
+     * @param polygonSymbolizer the polygon symbolizer
+     */
+    public void populate(PolygonSymbolizer polygonSymbolizer);
+
+    /**
+     * Populate for a raster symbolizer.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    public void populate(RasterSymbolizer rasterSymbolizer);
+
+    /**
      * Update symbol for a text symbolizer.
      *
      * @param textSymbolizer the text symbolizer
      */
     public void updateSymbol(TextSymbolizer textSymbolizer);
+
+    /**
+     * Update symbol for a raster symbolizer.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer);
 
     /**
      * Gets the panel.
@@ -68,16 +97,9 @@ public interface VendorOptionInterface {
     public void setParentPanel(UpdateSymbolInterface parent);
 
     /**
-     * Update symbol for a polygon symbolizer.
+     * Gets the parent panel.
      *
-     * @param polygonSymbolizer the polygon symbolizer
+     * @return the parent panel
      */
-    public void updateSymbol(PolygonSymbolizer polygonSymbolizer);
-
-    /**
-     * Populate for a polygon symbolizer.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    public void populate(PolygonSymbolizer polygonSymbolizer);
+    UpdateSymbolInterface getParentPanel();
 }

@@ -38,6 +38,7 @@ import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 
 /**
  * The unit test for FieldConfigTimePeriod.
@@ -209,7 +210,7 @@ public class FieldConfigTimePeriodTest {
                 super(commonData);
             }
 
-            public FieldConfigBase callCreateCopy(FieldConfigBase fieldConfigBase)
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
             {
                 return createCopy(fieldConfigBase);
             }

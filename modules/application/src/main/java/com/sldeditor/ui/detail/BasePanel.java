@@ -22,7 +22,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -57,6 +55,7 @@ import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
@@ -124,9 +123,6 @@ public class BasePanel extends JPanel {
     /** The field configuration manager. */
     protected GraphicPanelFieldManager fieldConfigManager = null;
 
-    /** The group config map. */
-    private Map<GroupIdEnum, GroupConfigInterface> groupConfigMap = new HashMap<GroupIdEnum, GroupConfigInterface>();
-
     /** The scroll frame. */
     private JScrollPane scrollFrame = null;
 
@@ -156,6 +152,9 @@ public class BasePanel extends JPanel {
 
     /** The padding component. */
     private BasePanelPadding padding = null;
+
+    /** The group config list. */
+    private List<GroupConfigInterface> groupConfigList;
 
     /**
      * Default constructor.
@@ -230,24 +229,12 @@ public class BasePanel extends JPanel {
         treeUpdateList.add(sldTree);
     }
 
-
-    /**
-     * Adds the field configuration to the list of field configuration on the panel.
-     * <p>Uses no vendor option.
-     *
-     * @param fieldConfig the field config
-     */
-    protected void addFieldConfig(FieldConfigBase fieldConfig) {
-        addFieldConfig(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), fieldConfig);
-    }
-
     /**
      * Adds the field configuration to the list of all field configuration for this panel.
      *
-     * @param vendorOption the vendor option
      * @param fieldConfig the field configuration
      */
-    protected void addFieldConfig(VendorOptionVersion vendorOption, FieldConfigBase fieldConfig) {
+    protected void addFieldConfig(FieldConfigBase fieldConfig) {
         fieldConfigList.add(fieldConfig);
     }
 
@@ -332,52 +319,61 @@ public class BasePanel extends JPanel {
     /**
      * Read panel configuration file.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readConfigFile(UpdateSymbolInterface parent, String filename)
+    protected void readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
+            UpdateSymbolInterface parent,
+            String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, true, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false, false);
     }
 
     /**
      * Read raster panel configuration file.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readRasterConfigFile(UpdateSymbolInterface parent, String filename)
+    protected void readRasterConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
+            UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, true, true);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true, true);
     }
 
     /**
      * Read panel configuration file no scroll pane.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readConfigFileNoScrollPane(UpdateSymbolInterface parent, String filename)
+    protected void readConfigFileNoScrollPane(VendorOptionFactoryInterface vendorOptionFactory,
+            UpdateSymbolInterface parent, String filename)
     {
-        internal_readConfigFile(parent.getClass(), parent, filename, false, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false, false);
     }
 
     /**
      * Read panel configuration file and create user interface including scroll pane.
      *
+     * @param vendorOptionFactory the vendor option factory
      * @param panelId the panel id
      * @param parent the parent
      * @param filename the filename
      * @param useScrollFrame the use scroll frame
      * @param isRasterSymbol the is raster symbol
      */
-    private void internal_readConfigFile(Class<?> panelId, 
+    private void internal_readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
+            Class<?> panelId, 
             UpdateSymbolInterface parent,
             String filename,
             boolean useScrollFrame,
             boolean isRasterSymbol) {
 
-        ReadPanelConfig readConfig = new ReadPanelConfig(isRasterSymbol);
+        ReadPanelConfig readConfig = new ReadPanelConfig(vendorOptionFactory, isRasterSymbol);
 
         readConfig.read(panelId, filename);
 
@@ -394,7 +390,7 @@ public class BasePanel extends JPanel {
     private void configureUI(UpdateSymbolInterface parent,
             boolean useScrollFrame,
             PanelConfigInterface config) {
-        List<GroupConfigInterface> groupConfigList = config.getGroupList();
+        groupConfigList = config.getGroupList();
         vendorOptionVersion = config.getVendorOptionVersion();
         defaultFieldMap = config.getDefaultFieldMap();
 
@@ -447,13 +443,14 @@ public class BasePanel extends JPanel {
      * @param parentBox the parent box
      * @param groupConfig the group config
      * @param parentField the parent field
+     * @param previousFieldIndex the previous field index
      */
     private void populateGroup(UpdateSymbolInterface parent, 
             Box parentBox,
             GroupConfigInterface groupConfig, 
-            FieldConfigBase parentField) {
+            FieldConfigBase parentField)
+    {
         groupConfig.createTitle(parentBox, parent);
-        groupConfigMap.put(groupConfig.getId(), groupConfig);
 
         if(groupConfig instanceof GroupConfig)
         {
@@ -472,7 +469,7 @@ public class BasePanel extends JPanel {
                 addField(parentBox, parentField, field);
             }
 
-            for(GroupConfig subGroup : group.getSubGroupList())
+            for(GroupConfigInterface subGroup : group.getSubGroupList())
             {
                 populateGroup(parent, parentBox, subGroup, parentField);
             }
@@ -483,30 +480,63 @@ public class BasePanel extends JPanel {
 
             fieldConfigManager.addMultiOptionGroup(multiOption);
 
-            List<FieldConfigBase> multiOptionFieldConfigList = multiOption.createUI(fieldConfigManager, parentBox, parent.getClass());
-            for(FieldConfigBase fieldConfig : multiOptionFieldConfigList)
-            {
-                addFieldConfig(fieldConfig);
-                fieldConfigManager.addField(fieldConfig);
-            }
+            multiOption.createUI(fieldConfigManager, parentBox, parent.getClass());
 
             for(OptionGroup optionGroup : multiOption.getGroupList())
             {
-                for(GroupConfig optionGroupConfig : optionGroup.getGroupList())
+                for(GroupConfigInterface optionGroupConfig : optionGroup.getGroupList())
                 {
-                    List<FieldConfigBase> fieldList = optionGroupConfig.getFieldConfigList();
-
-                    fieldConfigManager.addGroup(optionGroupConfig);
-
-                    // Register for notifications when data has changed
-                    registerForSymbolUpdates(fieldList, parent);
-
-                    groupConfigMap.put(optionGroupConfig.getId(), optionGroupConfig);
-
-                    for(GroupConfig subOptionGroupConfig : optionGroupConfig.getSubGroupList())
+                    if(optionGroupConfig instanceof GroupConfig)
                     {
-                        fieldConfigManager.addGroup(subOptionGroupConfig);
-                        groupConfigMap.put(subOptionGroupConfig.getId(), subOptionGroupConfig);
+                        populateOptionGroup(parent, (GroupConfig)optionGroupConfig);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate option group.
+     *
+     * @param parent the parent
+     * @param optionGroupConfig the option group config
+     */
+    private void populateOptionGroup(UpdateSymbolInterface parent, GroupConfig optionGroupConfig) {
+        List<FieldConfigBase> fieldList = optionGroupConfig.getFieldConfigList();
+
+        fieldConfigManager.addGroup(optionGroupConfig);
+
+        // Create field user interface
+        for(FieldConfigBase field : fieldList)
+        {
+            addFieldConfig(field);
+
+            fieldConfigManager.addField(field);
+        }
+
+        // Register for notifications when data has changed
+        registerForSymbolUpdates(fieldList, parent);
+
+        for(GroupConfigInterface subOptionGroupConfig : optionGroupConfig.getSubGroupList())
+        {
+            if(subOptionGroupConfig instanceof GroupConfig)
+            {
+                populateOptionGroup(parent, (GroupConfig) subOptionGroupConfig);
+            }
+            else if(subOptionGroupConfig instanceof MultiOptionGroup)
+            {
+                MultiOptionGroup multiOption = (MultiOptionGroup) subOptionGroupConfig;
+
+                fieldConfigManager.addMultiOptionGroup(multiOption);
+
+                for(OptionGroup optionGroup : multiOption.getGroupList())
+                {
+                    for(GroupConfigInterface subMultiOptionGroupConfig : optionGroup.getGroupList())
+                    {
+                        if(subMultiOptionGroupConfig instanceof GroupConfig)
+                        {
+                            populateOptionGroup(parent, (GroupConfig)subMultiOptionGroupConfig);
+                        }
                     }
                 }
             }
@@ -522,26 +552,24 @@ public class BasePanel extends JPanel {
      */
     private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
 
-        if(field == null)
+        if(field != null)
         {
-            return;
-        }
+            field.createUI();
+            addFieldConfig(field);
 
-        field.createUI();
-        addFieldConfig(field);
+            fieldConfigManager.addField(field);
 
-        fieldConfigManager.addField(field);
-
-        if(parentBox != null)
-        {
-            parentBox.add(field.getPanel());
-
-            // Add any custom panels
-            if(field.getCustomPanels() != null)
+            if(parentBox != null)
             {
-                for(Component component : field.getCustomPanels())
+                parentBox.add(field.getPanel());
+
+                // Add any custom panels
+                if(field.getCustomPanels() != null)
                 {
-                    parentBox.add(component);
+                    for(Component component : field.getCustomPanels())
+                    {
+                        parentBox.add(component);
+                    }
                 }
             }
         }
@@ -658,9 +686,9 @@ public class BasePanel extends JPanel {
      * @param groupId the group id
      * @return the group
      */
-    protected GroupConfigInterface getGroup(GroupIdEnum groupId)
+    public GroupConfigInterface getGroup(GroupIdEnum groupId)
     {
-        return groupConfigMap.get(groupId);
+        return fieldConfigManager.getGroup(getClass(), groupId);
     }
 
     /**
@@ -694,17 +722,79 @@ public class BasePanel extends JPanel {
      *
      * @param panel the panel
      */
-    protected void appendPanel(BasePanel panel)
+    public void appendPanel(BasePanel panel)
     {
-        padding.removePadding();
-
-        logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
-
-        for(int index = 0; index < panel.box.getComponentCount(); index ++)
+        if(panel != null)
         {
-            box.add(panel.box.getComponent(index));
+            padding.removePadding();
+
+            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
+
+            for(int index = 0; index < panel.box.getComponentCount(); index ++)
+            {
+                box.add(panel.box.getComponent(index));
+            }
+            padding.addPadding();
         }
-        padding.addPadding();
+    }
+
+    /**
+     * Insert panel.
+     *
+     * @param fieldConfig the field config
+     * @param panel the panel
+     * @param optionBox the option box
+     */
+    public void insertPanel(FieldConfigBase fieldConfig, BasePanel panel, Box optionBox)
+    {
+        int fieldIndex = -1;
+
+        Box boxToUpdate = null;
+        if(optionBox != null)
+        {
+            boxToUpdate = optionBox;
+        }
+        else
+        {
+            boxToUpdate = box;
+        }
+
+        if(boxToUpdate != null)
+        {
+            for(int index = 0; index < boxToUpdate.getComponentCount(); index ++)
+            {
+                Component component = boxToUpdate.getComponent(index);
+                if(fieldConfig.getPanel() == component)
+                {
+                    fieldIndex = index;
+                    break;
+                }
+            }
+
+            if(panel != null)
+            {
+                if(padding != null)
+                {
+                    padding.removePadding();
+                }
+
+                logger.debug(String.format("%s : %s -> %s", 
+                        Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"),
+                        panel.getClass().getName(),
+                        this.getClass().getName()));
+
+                if(fieldIndex > -1)
+                {
+                    fieldIndex ++;
+                }
+                boxToUpdate.add(panel.box, fieldIndex);
+
+                if(padding != null)
+                {
+                    padding.addPadding();
+                }
+            }
+        }
     }
 
     /**
@@ -712,11 +802,14 @@ public class BasePanel extends JPanel {
      *
      * @param panel the panel
      */
-    protected void removePanel(BasePanel panel)
+    public void removePanel(BasePanel panel)
     {
-        padding.removePadding();
-        box.remove(panel.box);
-        padding.addPadding();
+        if((panel != null) && (padding != null))
+        {
+            padding.removePadding();
+            box.remove(panel.box);
+            padding.addPadding();
+        }
     }
 
     /**

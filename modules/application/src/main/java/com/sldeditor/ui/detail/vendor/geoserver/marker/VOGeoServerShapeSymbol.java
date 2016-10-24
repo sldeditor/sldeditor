@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
@@ -44,6 +45,9 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
 
     /** The field enable map. */
     private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
+
+    /** The parent obj. */
+    private UpdateSymbolInterface parentObj = null;
 
     /**
      * Instantiates a new VOGeoServerShapeSymbol.
@@ -76,8 +80,8 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
      * @param panelId the panel id
      */
     @Override
-    public void addVendorOption(Class<?> symbolizerClass, List<ValueComboBoxData> symbolList, Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap, Class<?> panelId) {
-
+    public void addVendorOption(Class<?> symbolizerClass, List<ValueComboBoxData> symbolList, Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap, Class<?> panelId)
+    {
         fieldEnableMap.putAll(this.fieldEnableMap);
     }
 
@@ -92,7 +96,7 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     @Override
     public void populate(TextSymbolizer textSymbolizer)
     {
-
+        // Do nothing
     }
 
     /**
@@ -133,6 +137,7 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
     @Override
     public void setParentPanel(UpdateSymbolInterface parent)
     {
+        this.parentObj = parent;
     }
 
     /**
@@ -158,7 +163,16 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
      */
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer)
-    {       
+    {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
     }
 
     /**
@@ -171,6 +185,23 @@ public class VOGeoServerShapeSymbol implements VendorOptionInterface, VOMarkerSy
      */
     @Override
     public void populate(PolygonSymbolizer polygonSymbolizer)
-    {       
+    {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
+     */
+    @Override
+    public UpdateSymbolInterface getParentPanel() {
+        return parentObj;
     }
 }

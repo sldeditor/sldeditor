@@ -42,7 +42,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVe
     private static ExpressionPanelFactory instance = null;
 
     /** The vendor option list. */
-    private List<VersionData> vendorOptionList = null;
+    private List<VersionData> vendorOptionVersionsList = null;
 
     /**
      * Gets the single instance of ExpressionPanelFactory.
@@ -79,7 +79,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVe
      */
     private FilterPanelInterface internal_getFilterPanel(String hints)
     {
-        return new FilterPanelv2(this.vendorOptionList);
+        return new FilterPanelv2(this.vendorOptionVersionsList);
     }
 
     /**
@@ -90,7 +90,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVe
      */
     private ExpressionPanelInterface internal_getExpressionPanel(String hints)
     {
-        return new ExpressionPanelv2(this.vendorOptionList);
+        return new ExpressionPanelv2(this.vendorOptionVersionsList);
     }
 
     /**
@@ -128,14 +128,14 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVe
     /**
      * Vendor options updated.
      *
-     * @param vendorOptionList the vendor option list
+     * @param vendorOptionVersionsList the vendor option list
      */
     /* (non-Javadoc)
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList) {
-        this.vendorOptionList = vendorOptionList;
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
+        this.vendorOptionVersionsList = vendorOptionVersionsList;
     }
 
     /**

@@ -88,9 +88,9 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
         PrefManager.getInstance().addVendorOptionListener(this);
 
-        readConfigFile(this, "Text.xml");
-
         createVendorOptionPanel();
+
+        readConfigFile(vendorOptionTextFactory, this, "Text.xml");
     }
 
     /**
@@ -473,9 +473,9 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionList)
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
     {
-        this.vendorOptionVersionList = vendorOptionList;
+        this.vendorOptionVersionList = vendorOptionVersionsList;
 
         updateVendorOptionPanels();
     }

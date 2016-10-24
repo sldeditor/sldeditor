@@ -84,7 +84,7 @@ UpdateSymbolInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(this, "geoserver/GeoServerWindBarbSymbol.xml");
+        readConfigFileNoScrollPane(null, this, "geoserver/GeoServerWindBarbSymbol.xml");
     }
 
     /**

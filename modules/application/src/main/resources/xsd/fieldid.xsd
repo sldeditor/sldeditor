@@ -115,9 +115,8 @@
 
             <xs:enumeration value="FUNCTION" />
             <xs:enumeration value="RASTER_OPACITY" />
-            <xs:enumeration value="RASTER_CONTRAST_NORMALIZE" />
             <xs:enumeration value="RASTER_CONTRAST_GAMMAVALUE" />
-            <xs:enumeration value="RASTER_OVERLAP_BEHAVIOR" />
+            <xs:enumeration value="RASTER_OVERLAP_BEHAVIOUR" />
 
             <xs:enumeration value="RASTER_SHADEDRELIEF_BRIGHTNESS" />
             <xs:enumeration value="RASTER_SHADEDRELIEF_FACTOR" />
@@ -127,21 +126,42 @@
 
             <xs:enumeration value="RASTER_RGB_RED_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" />
             <xs:enumeration value="RASTER_RGB_GREEN_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD" />
             <xs:enumeration value="RASTER_RGB_BLUE_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD" />
             <xs:enumeration value="RASTER_RGB_GREY_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD" />
 
             <xs:enumeration value="RASTER_COLOURMAP_ENTRY_LABEL" />
             <xs:enumeration value="RASTER_COLOURMAP_ENTRY_COLOUR" />
             <xs:enumeration value="RASTER_COLOURMAP_ENTRY_OPACITY" />
             <xs:enumeration value="RASTER_COLOURMAP_ENTRY_QUANTITY" />
+
+            <xs:enumeration value="VO_RASTER_RED_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_RED" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_RED" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_RED" />
+
+            <xs:enumeration value="VO_RASTER_GREEN_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_GREEN" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_GREEN" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_GREEN" />
+
+            <xs:enumeration value="VO_RASTER_BLUE_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_BLUE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_BLUE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_BLUE" />
+
+            <xs:enumeration value="VO_RASTER_GREY_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_GREY" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_GREY" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_GREY" />
+
+            <xs:enumeration value="VO_RASTER_OVERALL_CONTRAST_METHOD_NORMALIZE" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_ALGORITHM_OVERALL" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL" />
+            <xs:enumeration value="VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL" />
 
             <xs:enumeration value="REMOTE_OWS_SERVICE" />
             <xs:enumeration value="REMOTE_OWS_ONLINERESOURCE" />

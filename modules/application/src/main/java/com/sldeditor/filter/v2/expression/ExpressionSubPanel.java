@@ -312,7 +312,6 @@ public class ExpressionSubPanel extends JPanel {
         if(fieldConfig != null)
         {
             fieldConfig.createUI();
-            fieldConfig.setFunctionParameterType(node.getType());
             fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
             {
                 @Override

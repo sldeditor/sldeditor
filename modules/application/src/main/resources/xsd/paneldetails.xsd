@@ -109,7 +109,9 @@
                     <xs:element name="FieldConfigInlineFeature" type="XMLFieldConfigInlineFeature" />
                     <xs:element name="FieldConfigFeatureTypeConstraint" type="XMLFieldConfigFeatureTypeConstraint" />
                     <xs:element name="FieldConfigMapUnit"       type="XMLFieldConfigMapUnit" />
-                    <xs:element name="Group" type="XMLGroupConfig" />
+                    <xs:element name="FieldConfigVendorOption"  type="XMLFieldConfigVendorOption" />
+                    <xs:element name="Group"                    type="XMLGroupConfig" />
+                    <xs:element name="MultiOptionGroup"         type="XMLMultiOptionGroup" />
                 </xs:choice>
             </xs:extension>
         </xs:complexContent>
@@ -161,6 +163,28 @@
         <xs:complexContent>
             <xs:extension base="XMLFieldConfigData" />
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigVendorOption">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for a vendor option placeholder
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute type="FieldIdEnum" name="id" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    Unique field identifier
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" name="class" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Class of vendor option panel
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldConfigDouble">
