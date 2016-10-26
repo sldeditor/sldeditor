@@ -75,7 +75,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
      */
     @Override
     public void createUI() {
-        createFieldPanel(0, "");
+        createFieldPanel();
         initialised = true;
     }
 
