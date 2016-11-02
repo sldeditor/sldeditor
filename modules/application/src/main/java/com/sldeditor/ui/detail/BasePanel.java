@@ -327,7 +327,7 @@ public class BasePanel extends JPanel {
             UpdateSymbolInterface parent,
             String filename)
     {
-        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true, false);
     }
 
     /**
