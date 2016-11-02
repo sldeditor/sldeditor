@@ -278,7 +278,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         GroupConfig groupConfig = new GroupConfig();
 
         groupConfig.setId(xmlGroupObj.getId());
-        groupConfig.setLabel(getLocalisedText(localisationClass, xmlGroupObj.getLabel()));
+        groupConfig.setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
         groupConfig.setShowLabel(xmlGroupObj.isShowLabel());
         groupConfig.setOptional(xmlGroupObj.isOption());
 
@@ -325,6 +325,23 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
 
         return groupConfig;
+    }
+
+    /**
+     * Create Group title.
+     *
+     * @param groupTitle the group title
+     * @return the string
+     */
+    private String groupTitle(String groupTitle) {
+        if(vendorOptionVersion == null)
+        {
+            return groupTitle;
+        }
+        else
+        {
+            return groupTitle + " " + VendorOptionManager.getInstance().getTitle(vendorOptionVersion);
+        }
     }
 
     /**
