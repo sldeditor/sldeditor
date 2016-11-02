@@ -454,7 +454,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         MathTransform transform = null;
         try {
-            transform = CRS.findMathTransform(bounds.getCoordinateReferenceSystem(), wgs84);
+            transform = CRS.findMathTransform(bounds.getCoordinateReferenceSystem(), wgs84, true);
         } catch (FactoryException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
