@@ -65,6 +65,11 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class DataSourceImpl implements DataSourceInterface {
 
+    /**
+     * 
+     */
+    private static final int MAX_RETRIES = 3;
+
     /** The logger. */
     private static Logger logger = Logger.getLogger(DataSourceImpl.class);
 
@@ -460,17 +465,36 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(this.editorFileInterface);
-            if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
+            int attempt = 0;
+            boolean retry = true;
+            while(retry && (attempt < MAX_RETRIES))
             {
-                dataSourceInfo = dataSourceInfoList.get(0);
+                List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(this.editorFileInterface);
+                if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
+                {
+                    dataSourceInfo = dataSourceInfoList.get(0);
 
-                dataSourceInfo.populateFieldMap();
+                    dataSourceInfo.populateFieldMap();
 
-                notifyDataSourceLoaded();
+                    notifyDataSourceLoaded();
+                }
+
+                // Check that the field data types that were guessed are correct
+                if(ExtractValidFieldTypes.fieldTypesUpdated())
+                {
+                    // Field types were updated so retry
+                    attempt ++;
+                }
+                else
+                {
+                    // No changes made to exit
+                    retry = false;
+                }
             }
         }
     }
+
+
 
     /**
      * Creates the example data source.
@@ -661,5 +685,20 @@ public class DataSourceImpl implements DataSourceInterface {
         createUserLayerDataSources();
 
         notifyDataSourceLoaded();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
+     */
+    @Override
+    public void updateFieldType(String fieldName, Class<?> dataType) {
+        List<DataSourceFieldInterface> fieldList = this.editorFileInterface.getSLDData().getFieldList();
+        for(DataSourceFieldInterface field : fieldList)
+        {
+            if(field.getName().compareTo(fieldName) == 0)
+            {
+                field.setFieldType(dataType);
+            }
+        }
     }
 }

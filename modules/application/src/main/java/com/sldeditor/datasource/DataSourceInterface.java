@@ -168,4 +168,12 @@ public interface DataSourceInterface {
      * Recreate inline data sources for user layers.
      */
     void updateUserLayers();
+
+    /**
+     * Update field type.
+     *
+     * @param fieldName the field name
+     * @param dataType the data type
+     */
+    void updateFieldType(String fieldName, Class<?> dataType);
 }
