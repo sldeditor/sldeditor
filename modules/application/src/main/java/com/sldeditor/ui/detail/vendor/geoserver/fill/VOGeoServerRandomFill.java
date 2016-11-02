@@ -19,7 +19,6 @@
 package com.sldeditor.ui.detail.vendor.geoserver.fill;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
@@ -29,10 +28,7 @@ import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -52,7 +48,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerRandomFill extends StandardPanel implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface, PrefUpdateVendorOptionInterface
+public class VOGeoServerRandomFill extends StandardPanel implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface
 {
 
     /** The Constant serialVersionUID. */
@@ -65,9 +61,10 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     private UpdateSymbolInterface parentObj = null;
 
     /**
-     * Instantiates a new VEGeoServerRandomFill class.
+     * Instantiates a new VOGeoServerRandomFill class.
      *
      * @param panelId the panel id
+     * @param functionManager the function manager
      */
     public VOGeoServerRandomFill(Class<?> panelId, FunctionNameInterface functionManager)
     {
@@ -80,8 +77,6 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
         fieldMap.put(FieldIdEnum.RANDOM_FILL_RANDOM_SEED, "random-seed");
 
         createUI();
-
-        PrefManager.getInstance().addVendorOptionListener(this);
     }
 
     /**
@@ -89,7 +84,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      */
     private void createUI()
     {
-        readConfigFile(null, this, "geoserver/GeoServerRandomFill.xml");
+        readConfigFileNoScrollPane(null, this, "geoserver/GeoServerRandomFill.xml");
     }
 
     /* (non-Javadoc)
@@ -121,6 +116,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     @Override
     public void populate(SelectedSymbol selectedSymbol)
     {
+        // Do nothing
     }
 
     /**
@@ -143,6 +139,7 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     @Override
     public void populate(TextSymbolizer textSymbolizer)
     {
+        // Do nothing
     }
 
     /**
@@ -491,15 +488,6 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
-        // Do nothing
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
-     */
-    @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
         // Do nothing
     }
 

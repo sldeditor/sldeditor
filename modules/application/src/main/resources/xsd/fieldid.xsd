@@ -73,6 +73,7 @@
             <xs:enumeration value="HALO_COLOUR" />
             <xs:enumeration value="HALO_RADIUS" />
 
+            <xs:enumeration value="VO_TEXT_LABEL" />
             <xs:enumeration value="LABEL_ALLOW_OVERRUNS" />
             <xs:enumeration value="LABEL_AUTO_WRAP" />
             <xs:enumeration value="LABEL_CONFLICT_RESOLUTION" />
@@ -172,6 +173,8 @@
             <xs:enumeration value="COLOUR_RAMP_COLOUR" />
             <xs:enumeration value="COLOUR_RAMP_REVERSE" />
 
+            <xs:enumeration value="VO_POINT_RANDOMFILL" />
+            <xs:enumeration value="VO_POLYGON_RANDOMFILL" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

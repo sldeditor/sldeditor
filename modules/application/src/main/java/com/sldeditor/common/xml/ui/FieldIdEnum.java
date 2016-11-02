@@ -70,6 +70,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="FONT_PREVIEW"/&gt;
  *     &lt;enumeration value="HALO_COLOUR"/&gt;
  *     &lt;enumeration value="HALO_RADIUS"/&gt;
+ *     &lt;enumeration value="VO_TEXT_LABEL"/&gt;
  *     &lt;enumeration value="LABEL_ALLOW_OVERRUNS"/&gt;
  *     &lt;enumeration value="LABEL_AUTO_WRAP"/&gt;
  *     &lt;enumeration value="LABEL_CONFLICT_RESOLUTION"/&gt;
@@ -152,6 +153,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="COLOUR_RAMP_TYPE"/&gt;
  *     &lt;enumeration value="COLOUR_RAMP_COLOUR"/&gt;
  *     &lt;enumeration value="COLOUR_RAMP_REVERSE"/&gt;
+ *     &lt;enumeration value="VO_POINT_RANDOMFILL"/&gt;
+ *     &lt;enumeration value="VO_POLYGON_RANDOMFILL"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -211,6 +214,7 @@ public enum FieldIdEnum {
     FONT_PREVIEW,
     HALO_COLOUR,
     HALO_RADIUS,
+    VO_TEXT_LABEL,
     LABEL_ALLOW_OVERRUNS,
     LABEL_AUTO_WRAP,
     LABEL_CONFLICT_RESOLUTION,
@@ -292,7 +296,9 @@ public enum FieldIdEnum {
     LAYER_FEATURE_CONSTRAINTS,
     COLOUR_RAMP_TYPE,
     COLOUR_RAMP_COLOUR,
-    COLOUR_RAMP_REVERSE;
+    COLOUR_RAMP_REVERSE,
+    VO_POINT_RANDOMFILL,
+    VO_POLYGON_RANDOMFILL;
 
     public String value() {
         return name();

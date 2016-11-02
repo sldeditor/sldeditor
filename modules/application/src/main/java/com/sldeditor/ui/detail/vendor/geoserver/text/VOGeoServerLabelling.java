@@ -99,7 +99,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
      */
     private void createUI()
     {
-        readConfigFile(null, this, "geoserver/GeoServerLabel.xml");
+        readConfigFileNoScrollPane(null, this, "geoserver/GeoServerLabel.xml");
     }
 
     /**

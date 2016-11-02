@@ -43,6 +43,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="HALO"/&gt;
  *     &lt;enumeration value="VO_LABELLING"/&gt;
  *     &lt;enumeration value="VO_RANDOMFILL"/&gt;
+ *     &lt;enumeration value="VO_POINT_RANDOMFILL"/&gt;
+ *     &lt;enumeration value="VO_POLYGON_RANDOMFILL"/&gt;
  *     &lt;enumeration value="VO_RASTER_NORMALIZE_RED"/&gt;
  *     &lt;enumeration value="VO_RASTER_NORMALIZE_GREEN"/&gt;
  *     &lt;enumeration value="VO_RASTER_NORMALIZE_BLUE"/&gt;
@@ -104,6 +106,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="FEATURE_TYPE_CONSTRAINTS"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
  *     &lt;enumeration value="USER_LAYER_SOURCE"/&gt;
+ *     &lt;enumeration value="VO_TEXT_LABEL"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -135,6 +138,8 @@ public enum GroupIdEnum {
     LINEPLACEMENT,
     VO_LABELLING,
     VO_RANDOMFILL,
+    VO_POINT_RANDOMFILL,
+    VO_POLYGON_RANDOMFILL,
     VO_RASTER_NORMALIZE_RED,
     VO_RASTER_NORMALIZE_GREEN,
     VO_RASTER_NORMALIZE_BLUE,
@@ -194,7 +199,8 @@ public enum GroupIdEnum {
     REMOTE_OWS,
     FEATURE_TYPE_CONSTRAINTS,
     INLINE_FEATURE,
-    USER_LAYER_SOURCE;
+    USER_LAYER_SOURCE,
+    VO_TEXT_LABEL;
 
     public String value() {
         return name();

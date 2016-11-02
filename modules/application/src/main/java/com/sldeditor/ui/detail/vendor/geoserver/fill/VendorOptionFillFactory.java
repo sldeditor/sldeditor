@@ -137,6 +137,15 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Pr
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
-        return null;
+        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+
+        for(VendorOptionInterface vendorOption : vendorOptionList)
+        {
+            if(vendorOption.getClass().getName().compareTo(className) == 0)
+            {
+                matchingList.add(vendorOption);
+            }
+        }
+        return matchingList;
     }
 }

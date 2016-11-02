@@ -188,15 +188,4 @@ public class RasterSymbolizerDetailsTest {
         assertTrue("".compareTo(nameField.getStringValue()) == 0);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#vendorOptionsUpdated(java.util.List)}.
-     */
-    @Test
-    public void testVendorOptionsUpdated() {
-        RasterSymbolizerDetails panel = new RasterSymbolizerDetails(null);
-        panel.populate(null);
-
-        panel.vendorOptionsUpdated(null);
-    }
-
 }
