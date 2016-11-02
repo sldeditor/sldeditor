@@ -260,6 +260,13 @@ public class FieldConfigGeometryFieldTest {
         @Override
         public void updateUserLayers() {
         }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
+         */
+        @Override
+        public void updateFieldType(String fieldName, Class<?> dataType) {
+        }
     }
 
     /**

@@ -378,10 +378,6 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      * Extract normalize vendor option.
      *
      * @param contrastEnhancement the contrast enhancement
-     * @param methodGroup the method group
-     * @param algorithm the algorithm
-     * @param minValue the min value
-     * @param maxValue the max value
      */
     protected void extractNormalizeVendorOption(ContrastEnhancement contrastEnhancement) {
         if(contrastEnhancement != null)

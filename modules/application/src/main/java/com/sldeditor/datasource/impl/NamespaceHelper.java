@@ -15,6 +15,7 @@ import org.w3c.dom.Node;
  */
 public class NamespaceHelper {
 
+    /** The prefix. */
     private String prefix = "";
 
     /** The element name. */
@@ -64,6 +65,25 @@ public class NamespaceHelper {
         return false;
     }
 
+    /**
+     * Checks if this element matches the requested.
+     *
+     * @param requestPrefixList the requested namespace prefix
+     * @return true, if is element matches
+     */
+    public boolean isElement(List<String> requestPrefixList) {
+        if(requestPrefixList != null)
+        {
+            for(String requestPrefix : requestPrefixList)
+            {
+                if(isElement(requestPrefix))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Checks if this element matches the requested.
@@ -83,6 +103,24 @@ public class NamespaceHelper {
         }
         return false;
     }
+
+    /**
+     * Checks if is element.
+     *
+     * @param requestPrefix the request prefix
+     * @return true, if is element
+     */
+    public boolean isElement(String requestPrefix) {
+        if(requestPrefix != null)
+        {
+            if(requestPrefix.compareToIgnoreCase(prefix) == 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Encode XML element.
      *
@@ -108,5 +146,14 @@ public class NamespaceHelper {
      */
     public String getFullElement() {
         return encode(prefix, elementName);
+    }
+
+    /**
+     * Gets the element name.
+     *
+     * @return the elementName
+     */
+    public String getElementName() {
+        return elementName;
     }
 }

@@ -19,7 +19,6 @@
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
@@ -30,9 +29,7 @@ import org.geotools.styling.TextSymbolizer2;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -52,7 +49,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerLabelling extends StandardPanel implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface, PrefUpdateVendorOptionInterface
+public class VOGeoServerLabelling extends StandardPanel implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface
 {
 
     /** The Constant serialVersionUID. */
@@ -529,19 +526,7 @@ public class VOGeoServerLabelling extends StandardPanel implements VendorOptionI
     @Override
     public void populate(PolygonSymbolizer polygonSymbolizer)
     {
-    }
-
-    /**
-     * Vendor options updated.
-     *
-     * @param vendorOptionList the vendor option list
-     */
-    /* (non-Javadoc)
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
-     */
-    @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
+        // Do nothing
     }
 
     /* (non-Javadoc)
