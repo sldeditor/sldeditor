@@ -143,7 +143,6 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      * Populate expression.
      *
      * @param expression the expression
-     * @param isRasterSymbol the is raster symbol flag
      */
     public void populateExpression(Expression expression) {
         this.storedExpression = expression;

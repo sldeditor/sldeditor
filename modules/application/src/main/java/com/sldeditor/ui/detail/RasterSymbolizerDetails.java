@@ -530,7 +530,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     {
         if(vendorOptionRasterFactory != null)
         {
-            vendorOptionRasterFactory.getFieldDataManager(fieldConfigManager);
+            vendorOptionRasterFactory.updateFieldDataManager(fieldConfigManager);
         }
 
         return fieldConfigManager;

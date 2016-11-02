@@ -138,12 +138,11 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
     }
 
     /**
-     * Gets the field data manager.
+     * Updates the field data manager.
      *
      * @param fieldConfigManager the field config manager
-     * @return the field data manager
      */
-    public void getFieldDataManager(GraphicPanelFieldManager fieldConfigManager)
+    public void updateFieldDataManager(GraphicPanelFieldManager fieldConfigManager)
     {
         for(VendorOptionInterface vendorOption : vendorOptionList)
         {
