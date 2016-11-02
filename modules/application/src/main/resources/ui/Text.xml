@@ -91,4 +91,7 @@
             </Group>
         </OptionGroup>
     </MultiOptionGroup>
+    <Group id="VO_TEXT_LABEL" showLabel="false">
+        <FieldConfigVendorOption id="VO_TEXT_LABEL" class="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerLabelling"/>
+    </Group>
 </PanelConfig>

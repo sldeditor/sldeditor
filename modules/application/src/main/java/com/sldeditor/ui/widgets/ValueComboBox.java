@@ -61,7 +61,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
     public ValueComboBox()
     {
         setRenderer( new ComboBoxRenderer() );
-        putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
+      //  putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
     }
 
     /**

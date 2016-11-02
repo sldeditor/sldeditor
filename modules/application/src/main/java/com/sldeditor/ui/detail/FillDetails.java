@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.detail;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.filter.LiteralExpressionImpl;
@@ -41,10 +40,6 @@ import org.opengis.style.Symbolizer;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -62,7 +57,7 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FillDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface, PrefUpdateVendorOptionInterface {
+public class FillDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -75,9 +70,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
     /**  The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
-
-    /** The vendor option list allowed to be used. */
-    private List<VersionData> vendorOptionOptionsList = new ArrayList<VersionData>();
 
     /** The vendor option fill factory. */
     private VendorOptionFillFactory vendorOptionFillFactory = null;
@@ -118,8 +110,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      * @param configFile the config file
      */
     private void createUI(Class<?> panelDetails, String configFile) {
-
-        PrefManager.getInstance().addVendorOptionListener(this);
 
         createVendorOptionPanel();
 
@@ -579,51 +569,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
     public boolean isDataPresent()
     {
         return SelectedSymbol.getInstance().hasFill();
-    }
-
-    /**
-     * Vendor options updated.
-     *
-     * @param vendorOptionList the vendor option list
-     */
-    /* (non-Javadoc)
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
-     */
-    @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
-        this.vendorOptionOptionsList = vendorOptionVersionsList;
-
-        updateVendorOptionPanels();
-    }
-
-    /**
-     * Update vendor option panels.
-     */
-    private void updateVendorOptionPanels()
-    {
-        if(vendorOptionFillFactory != null)
-        {
-            List<VendorOptionInterface> voList = vendorOptionFillFactory.getVendorOptionList();
-            if(voList != null)
-            {
-                for(VendorOptionInterface extension : voList)
-                {
-                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionOptionsList, extension.getVendorOption());
-
-                    BasePanel optionPanel = extension.getPanel();
-                    if(optionPanel != null)
-                    {
-                        removePanel(optionPanel);
-
-                        if(displayVendorOption)
-                        {
-                            appendPanel(optionPanel);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /* (non-Javadoc)

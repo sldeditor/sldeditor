@@ -28,12 +28,14 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.NoVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.xml.ParseXML;
 
 /**
  * Unit test for VendorOptionManager.
@@ -137,4 +139,39 @@ public class VendorOptionManagerTest {
         assertEquals("Latest", versionData.getVersionString());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getTitle()}.
+     */
+    @Test
+    public void testGetTitle() {
+        StringBuilder expectedValue = new StringBuilder();
+        expectedValue.append("- ");
+        expectedValue.append(Localisation.getString(ParseXML.class, "ParseXML.vendorOption"));
+        expectedValue.append(" ");
+
+        String actualValue = VendorOptionManager.getInstance().getTitle(null);
+        assertTrue(expectedValue.toString().compareTo(actualValue) == 0);
+        
+        // Now try with some real values
+        VersionData noVO = VersionData.getDecodedString("com.sldeditor.common.vendoroption.NoVendorOption@Latest");
+        VersionData geoServerVOMin = VersionData.getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.4.2");
+        VersionData geoServerVOMax = VersionData.getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.9.0");
+        
+        VendorOptionVersion noVOV = new VendorOptionVersion(NoVendorOption.class, noVO);
+        actualValue = VendorOptionManager.getInstance().getTitle(noVOV);
+        
+        StringBuilder expectedValue1 = new StringBuilder();
+        expectedValue1.append(expectedValue.toString());
+        expectedValue1.append("(Strict SLD Latest)");
+
+        assertTrue(expectedValue1.toString().compareTo(actualValue) == 0);
+
+        VendorOptionVersion geoServerVOV = new VendorOptionVersion(GeoServerVendorOption.class, geoServerVOMin, geoServerVOMax);
+        actualValue = VendorOptionManager.getInstance().getTitle(geoServerVOV);
+        StringBuilder expectedValue2 = new StringBuilder();
+        expectedValue2.append(expectedValue.toString());
+        expectedValue2.append("(GeoServer 2.4.2-2.9.0)");
+
+        assertTrue(expectedValue2.toString().compareTo(actualValue) == 0);
+    }
 }

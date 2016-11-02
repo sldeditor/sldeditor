@@ -105,14 +105,4 @@ public class TextSymbolizerDetailsTest {
         assertTrue("".compareTo(nameField.getStringValue()) == 0);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.TextSymbolizerDetails#vendorOptionsUpdated(java.util.List)}.
-     */
-    @Test
-    public void testVendorOptionsUpdated() {
-        TextSymbolizerDetails panel = new TextSymbolizerDetails(null);
-        panel.populate(null);
-        panel.vendorOptionsUpdated(null);
-    }
-
 }

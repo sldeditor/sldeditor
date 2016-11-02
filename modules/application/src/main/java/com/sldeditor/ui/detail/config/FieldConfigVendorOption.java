@@ -52,7 +52,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
     private List<VendorOptionInterface> veList = null;
 
     /**
-     * Instantiates a new field config map units.
+     * Instantiates a new field config vendor option.
      *
      * @param commonData the common data
      * @param veList the ve list
@@ -75,7 +75,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
      */
     @Override
     public void createUI() {
-        createFieldPanel(0, "");
+        createFieldPanel();
         initialised = true;
     }
 

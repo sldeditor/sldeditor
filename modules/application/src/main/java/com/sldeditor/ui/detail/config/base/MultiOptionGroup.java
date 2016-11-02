@@ -174,6 +174,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         this.fieldConfigManager = fieldConfigManager;
         this.parentBox = box;
         this.panelId = panelId;
+        int x = 2;
 
         box.add(GroupConfig.createSeparator());
 
@@ -182,7 +183,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         if(isOptional())
         {
             groupTitleCheckbox = new JCheckBox(getLabel());
-            groupTitleCheckbox.setBounds(0, 0, GroupConfig.FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
+            groupTitleCheckbox.setBounds(x, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
             groupTitleCheckbox.setOpaque(true);
             fieldPanel.add(groupTitleCheckbox);
             multiOptionGroupEnabled = false;
@@ -197,7 +198,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         else
         {
             JLabel groupTitle = new JLabel(getLabel());
-            groupTitle.setBounds(0, 0, GroupConfig.FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
+            groupTitle.setBounds(x, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
             groupTitle.setOpaque(true);
             fieldPanel.add(groupTitle);
         }

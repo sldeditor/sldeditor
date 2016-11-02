@@ -43,6 +43,13 @@ public class FieldPanel extends JPanel {
     private int xPos = 0;
 
     /**
+     * Instantiates a new field panel with no row.
+     */
+    public FieldPanel() {
+        this(0, null, 1);
+    }
+
+    /**
      * Instantiates a new field panel with only one row.
      *
      * @param xPos the x pos
@@ -61,8 +68,13 @@ public class FieldPanel extends JPanel {
      */
     public FieldPanel(int xPos, String labelString, int height) {
         this.xPos = xPos;
+        
         setLayout(null);
-        internalCreateLabel(xPos, labelString);
+        
+        if(labelString != null)
+        {
+            internalCreateLabel(xPos, labelString);
+        }
 
         Dimension size = new Dimension(BasePanel.FIELD_PANEL_WIDTH, height);
 

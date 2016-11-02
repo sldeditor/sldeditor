@@ -37,10 +37,6 @@ import org.opengis.style.Fill;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -58,13 +54,10 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class TextSymbolizerDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface, PrefUpdateVendorOptionInterface {
+public class TextSymbolizerDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The vendor option list allowed to be used. */
-    private List<VersionData> vendorOptionVersionList = new ArrayList<VersionData>();
 
     /** The vendor option text factory. */
     private VendorOptionTextFactory vendorOptionTextFactory = null;
@@ -86,40 +79,9 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      */
     private void createUI() {
 
-        PrefManager.getInstance().addVendorOptionListener(this);
-
         createVendorOptionPanel();
 
         readConfigFile(vendorOptionTextFactory, this, "Text.xml");
-    }
-
-    /**
-     * Update vendor option panels.
-     */
-    private void updateVendorOptionPanels()
-    {
-        if(vendorOptionTextFactory != null)
-        {
-            List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
-            if(veList != null)
-            {
-                for(VendorOptionInterface vendorOption : veList)
-                {
-                    boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionList, vendorOption.getVendorOption());
-
-                    BasePanel extensionPanel = vendorOption.getPanel();
-                    if(extensionPanel != null)
-                    {
-                        removePanel(vendorOption.getPanel());
-
-                        if(displayVendorOption)
-                        {
-                            appendPanel(vendorOption.getPanel());
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -462,22 +424,6 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         }
 
         return fieldConfigManager;
-    }
-
-    /**
-     * Vendor options updated.
-     *
-     * @param vendorOptionList the vendor option list
-     */
-    /* (non-Javadoc)
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
-     */
-    @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
-        this.vendorOptionVersionList = vendorOptionVersionsList;
-
-        updateVendorOptionPanels();
     }
 
     /**

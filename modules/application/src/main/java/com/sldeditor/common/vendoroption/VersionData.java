@@ -54,6 +54,9 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     /** The point number. */
     private int pointNumber = ALL_VERSIONS;
 
+    /** The sub point number. */
+    private int subPointNumber = ALL_VERSIONS;
+
     /** The vendor option. Set when read from json file using reflection */
     private String vendorOption = null;
 
@@ -80,6 +83,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         versionData.majorNumber = majorNumber;
         versionData.minorNumber = minorNumber;
         versionData.pointNumber = pointNumber;
+        versionData.subPointNumber = subPointNumber;
         versionData.vendorOption = vendorOption;
         versionData.versionString = versionString;
 
@@ -149,13 +153,19 @@ public class VersionData implements Comparable<VersionData>, Cloneable
             {
                 if(pointNumber == o.pointNumber)
                 {
-                    return 0;
+                    if(subPointNumber == o.subPointNumber)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return (subPointNumber < o.subPointNumber) ? -1 : 1;
+                    }
                 }
                 else
                 {
                     return (pointNumber < o.pointNumber) ? -1 : 1;
                 }
-
             }
             else
             {
@@ -183,6 +193,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         this.majorNumber = version;
         this.minorNumber = version;
         this.pointNumber = version;
+        this.subPointNumber = version;
     }
 
     /**
@@ -280,9 +291,13 @@ public class VersionData implements Comparable<VersionData>, Cloneable
             }
             else if(this.minorNumber == maximumVersion.minorNumber)
             {
-                if(this.pointNumber <= maximumVersion.pointNumber)
+                if(this.pointNumber < maximumVersion.pointNumber)
                 {
                     return true;
+                }
+                else if(this.pointNumber == maximumVersion.pointNumber)
+                {
+                    return (this.subPointNumber <= maximumVersion.subPointNumber);
                 }
             }
         }
@@ -309,9 +324,13 @@ public class VersionData implements Comparable<VersionData>, Cloneable
             }
             else if(versionData.minorNumber == this.minorNumber)
             {
-                if(versionData.pointNumber >= this.pointNumber)
+                if(versionData.pointNumber > this.pointNumber)
                 {
                     return true;
+                }
+                else if(versionData.pointNumber == this.pointNumber)
+                {
+                    return (versionData.subPointNumber >= this.subPointNumber);
                 }
             }
         }
@@ -374,6 +393,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         result = prime * (result + majorNumber);
         result = prime * (result + minorNumber);
         result = prime * (result + pointNumber);
+        result = prime * (result + subPointNumber);
         result = prime * (result + ((vendorOptionType == null) ? 0 : vendorOptionType.hashCode()));
         result = prime * (result + ((versionString == null) ? 0 : versionString.hashCode()));
         return result;
@@ -394,6 +414,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         if (majorNumber != other.majorNumber) return false;
         if (minorNumber != other.minorNumber) return false;
         if (pointNumber != other.pointNumber) return false;
+        if (subPointNumber != other.subPointNumber) return false;
         if (vendorOptionType == null)
         {
             if (other.vendorOptionType != null)
@@ -437,12 +458,14 @@ public class VersionData implements Comparable<VersionData>, Cloneable
             this.majorNumber = Integer.MIN_VALUE;
             this.minorNumber = Integer.MIN_VALUE;
             this.pointNumber = Integer.MIN_VALUE;
+            this.subPointNumber = Integer.MIN_VALUE;
         }
         else if(versionString.compareToIgnoreCase(LATEST) == 0)
         {
             this.majorNumber = Integer.MAX_VALUE;
             this.minorNumber = Integer.MAX_VALUE;
             this.pointNumber = Integer.MAX_VALUE;
+            this.subPointNumber = Integer.MAX_VALUE;
         }
         else
         {
@@ -463,6 +486,11 @@ public class VersionData implements Comparable<VersionData>, Cloneable
                 if(versionComponents.length > 2)
                 {
                     this.pointNumber = decodeNumber(versionComponents[2]);
+                }
+                
+                if(versionComponents.length > 3)
+                {
+                    this.subPointNumber = decodeNumber(versionComponents[2]);
                 }
             }
             catch(NumberFormatException e)

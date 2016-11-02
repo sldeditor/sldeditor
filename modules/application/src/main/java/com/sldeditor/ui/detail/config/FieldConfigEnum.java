@@ -130,7 +130,9 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
         comboBox = new ValueComboBox();
         comboBox.initialiseSingle(dataList);
-        comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
+                isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                        BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(comboBox);
 
         if(!isValueOnly())

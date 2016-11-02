@@ -82,7 +82,7 @@ public class BasePanel extends JPanel {
     public static final int WIDGET_TITLE_WIDTH = 202;
 
     /** The Constant FIELD_PANEL_WIDTH. */
-    public static final int FIELD_PANEL_WIDTH = 500;
+    public static final int FIELD_PANEL_WIDTH = 550;
 
     /** The Constant WIDGET_EXTENDED_WIDTH. */
     public static final int WIDGET_EXTENDED_WIDTH = 202;
@@ -327,7 +327,7 @@ public class BasePanel extends JPanel {
             UpdateSymbolInterface parent,
             String filename)
     {
-        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false, false);
+        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true, false);
     }
 
     /**
@@ -718,27 +718,6 @@ public class BasePanel extends JPanel {
     }
 
     /**
-     * Append panel.
-     *
-     * @param panel the panel
-     */
-    public void appendPanel(BasePanel panel)
-    {
-        if(panel != null)
-        {
-            padding.removePadding();
-
-            logger.debug(String.format("%s : %s -> %s", Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"), panel.getClass().getName(), this.getClass().getName()));
-
-            for(int index = 0; index < panel.box.getComponentCount(); index ++)
-            {
-                box.add(panel.box.getComponent(index));
-            }
-            padding.addPadding();
-        }
-    }
-
-    /**
      * Insert panel.
      *
      * @param fieldConfig the field config
@@ -787,7 +766,8 @@ public class BasePanel extends JPanel {
                 {
                     fieldIndex ++;
                 }
-                boxToUpdate.add(panel.box, fieldIndex);
+                
+                boxToUpdate.add(panel, fieldIndex);
 
                 if(padding != null)
                 {
@@ -807,7 +787,7 @@ public class BasePanel extends JPanel {
         if((panel != null) && (padding != null))
         {
             padding.removePadding();
-            box.remove(panel.box);
+            box.remove(panel);
             padding.addPadding();
         }
     }

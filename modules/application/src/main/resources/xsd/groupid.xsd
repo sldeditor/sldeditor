@@ -52,6 +52,8 @@
             <xs:enumeration value="HALO" />
             <xs:enumeration value="VO_LABELLING" />
             <xs:enumeration value="VO_RANDOMFILL" />
+            <xs:enumeration value="VO_POINT_RANDOMFILL" />
+            <xs:enumeration value="VO_POLYGON_RANDOMFILL" />
             <xs:enumeration value="VO_RASTER_NORMALIZE_RED" />
             <xs:enumeration value="VO_RASTER_NORMALIZE_GREEN" />
             <xs:enumeration value="VO_RASTER_NORMALIZE_BLUE" />
@@ -124,6 +126,8 @@
             <xs:enumeration value="FEATURE_TYPE_CONSTRAINTS" />
             <xs:enumeration value="INLINE_FEATURE" />
             <xs:enumeration value="USER_LAYER_SOURCE" />
+
+            <xs:enumeration value="VO_TEXT_LABEL" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

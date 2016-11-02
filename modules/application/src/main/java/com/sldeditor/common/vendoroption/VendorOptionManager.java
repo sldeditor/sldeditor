@@ -195,7 +195,7 @@ public class VendorOptionManager
         {
             return null;
         }
-        
+
         VendorOptionTypeInterface veType = vendorOptionClassMap.get(classType);
 
         VersionData minimum = veType.getVersion(startVersion);
@@ -257,7 +257,7 @@ public class VendorOptionManager
         {
             return null;
         }
-        
+
         VersionData minimum = VersionData.getEarliestVersion(classType);
         VersionData maximum = VersionData.getLatestVersion(classType);
 
@@ -296,5 +296,41 @@ public class VendorOptionManager
         VendorOptionVersion version = getDefaultVendorOptionVersion();
 
         return version.getLatest();
+    }
+
+    /**
+     * Gets the title.
+     *
+     * @param vendorOptionVersion the vendor option version
+     * @return the title
+     */
+    public String getTitle(VendorOptionVersion vendorOptionVersion) {
+        StringBuilder title = new StringBuilder();
+        title.append("- ");
+        title.append(Localisation.getString(ParseXML.class, "ParseXML.vendorOption"));
+        title.append(" ");
+
+        if(vendorOptionVersion != null)
+        {
+            VendorOptionTypeInterface vendorOption = vendorOptionClassMap.get(vendorOptionVersion.getClassType());
+            if(vendorOption != null)
+            {
+                title.append("(");
+                title.append(vendorOption.getName());
+                title.append(" ");
+                VersionData earliest = vendorOptionVersion.getEarliest();
+                VersionData latest = vendorOptionVersion.getLatest();
+                title.append(earliest.toString());
+
+                if(earliest.toString().compareTo(latest.toString()) != 0)
+                {
+                    title.append("-");
+                    title.append(latest.toString());
+                }
+                title.append(")");
+            }
+        }
+
+        return title.toString();
     }
 }

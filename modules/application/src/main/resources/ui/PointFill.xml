@@ -37,5 +37,8 @@
         <FieldConfigDouble id="STROKE_FILL_WIDTH"
             label="fillSymbol.stroke.width" defaultValue="1.0" />
     </Group>
+    <Group id="VO_POINT_RANDOMFILL" showLabel="false">
+        <FieldConfigVendorOption id="VO_POINT_RANDOMFILL" class="com.sldeditor.ui.detail.vendor.geoserver.fill.VOGeoServerRandomFill"/>
+    </Group>
 </PanelConfig>
 

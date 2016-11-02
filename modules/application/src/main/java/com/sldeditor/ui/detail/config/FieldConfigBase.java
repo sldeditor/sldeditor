@@ -558,6 +558,21 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
     }
 
     /**
+     * Creates the field panel with no label.
+     *
+     * @return the field panel
+     */
+    protected FieldPanel createFieldPanel()
+    {
+        if(fieldPanel == null)
+        {
+            fieldPanel = new FieldPanel();
+        }
+
+        return fieldPanel;
+    }
+
+    /**
      * Creates the field panel.
      *
      * @param xPos the x pos

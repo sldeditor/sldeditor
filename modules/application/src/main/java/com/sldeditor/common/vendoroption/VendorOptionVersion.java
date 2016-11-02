@@ -137,6 +137,16 @@ public class VendorOptionVersion
     }
 
     /**
+     * Gets the earliest version.
+     *
+     * @return the earliest version
+     */
+    public VersionData getEarliest()
+    {
+        return this.minimumVersion;
+    }
+
+    /**
      * Gets the latest version.
      *
      * @return the latest version
@@ -158,5 +168,14 @@ public class VendorOptionVersion
                         (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
 
         return string;
+    }
+
+    /**
+     * Gets the class type.
+     *
+     * @return the classType
+     */
+    public Class<?> getClassType() {
+        return classType;
     }
 }
