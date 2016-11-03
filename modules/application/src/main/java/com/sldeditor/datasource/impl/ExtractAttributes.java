@@ -300,20 +300,6 @@ public class ExtractAttributes {
                             }
                         }
                     }
-//                    else if(namespace.isElement(namespacePrefixes.get(OGC_NAMESPACE)))
-//                    {
-//                        List<Node> childNodeList = getChildNodes(parent);
-//
-//                        String functionName = namespace.getElementName();
-//
-//                        FilterName filterName = FilterManager.getInstance().getFunction(functionName);
-//
-//                        Class<?> tmpFieldType = findDataType(filterName, childNodeList, node, namespacePrefixes.get(OGC_NAMESPACE));
-//                        if(tmpFieldType != null)
-//                        {
-//                            fieldType = tmpFieldType;
-//                        }
-//                    }
                     else if(namespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
                     {
                         addField = false;
