@@ -27,9 +27,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geotools.feature.NameImpl;
 import org.junit.Test;
-import org.opengis.feature.type.Name;
 
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
@@ -74,13 +72,13 @@ public class DataSourceAttributeModelTest {
         DataSourceAttributeModel model = new DataSourceAttributeModel();
         assertEquals(0, model.getRowCount());
 
-        Name expectedName1 = new NameImpl("test name1");
+        String expectedName1 = "test name1";
         Class<?> expectedType1 = Integer.class;
         Object expectedValue1 = Integer.valueOf(42);
 
         DataSourceAttributeData dsa1 = new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
 
-        Name expectedName2 = new NameImpl("test name2");
+        String expectedName2 = "test name2";
         Class<?> expectedType2 = Integer.class;
         Object expectedValue2 = Integer.valueOf(53);
         DataSourceAttributeData dsa2 = new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
@@ -99,12 +97,12 @@ public class DataSourceAttributeModelTest {
         assertNull(model.getValueAt(-1, 0));
         assertNull(model.getValueAt(attributeList.size(), 0));
 
-        assertTrue(expectedName1.getLocalPart().compareTo(((Name)model.getValueAt(0, 0)).getLocalPart()) == 0);
+        assertTrue(expectedName1.compareTo(((String)model.getValueAt(0, 0))) == 0);
         String actualType = (String)model.getValueAt(0, 1);
         assertTrue(expectedType1.getSimpleName().compareTo(actualType) == 0);
         assertEquals(expectedValue1, model.getValueAt(0, 2));
 
-        assertTrue(expectedName2.getLocalPart().compareTo(((Name)model.getValueAt(1, 0)).getLocalPart()) == 0);
+        assertTrue(expectedName2.compareTo(((String)model.getValueAt(1, 0))) == 0);
         actualType = (String)model.getValueAt(1, 1);
         assertTrue(expectedType2.getSimpleName().compareTo(actualType) == 0);
         assertEquals(expectedValue2, model.getValueAt(1, 2));
@@ -122,7 +120,7 @@ public class DataSourceAttributeModelTest {
 
         // Set Value At - legal values
         model.setValueAt(expectedName3, 0, 0);
-        assertTrue(expectedName3.compareTo(((Name)model.getValueAt(0, 0)).getLocalPart()) == 0);
+        assertTrue(expectedName3.compareTo(((String)model.getValueAt(0, 0))) == 0);
         model.setValueAt(expectedType3.getSimpleName(), 1, 1);
         actualType = (String)model.getValueAt(1, 1);
         assertTrue(expectedType3.getSimpleName().compareTo(actualType) == 0);
@@ -133,7 +131,7 @@ public class DataSourceAttributeModelTest {
         List<DataSourceAttributeData> actualAttributeList = model.retrieveData();
         assertEquals(attributeList.size(), actualAttributeList.size());
 
-        assertTrue(expectedName3.compareTo(actualAttributeList.get(0).getName().getLocalPart()) == 0);
+        assertTrue(expectedName3.compareTo(actualAttributeList.get(0).getName()) == 0);
         assertEquals(expectedType3, actualAttributeList.get(1).getType());
         assertEquals(expectedValue3, actualAttributeList.get(1).getValue());
 
@@ -142,7 +140,7 @@ public class DataSourceAttributeModelTest {
         actualAttributeList = attributeDataImpl.getData();
         assertEquals(attributeList.size(), actualAttributeList.size());
 
-        assertTrue(expectedName3.compareTo(actualAttributeList.get(0).getName().getLocalPart()) == 0);
+        assertTrue(expectedName3.compareTo(actualAttributeList.get(0).getName()) == 0);
         assertEquals(expectedType3, actualAttributeList.get(1).getType());
         assertEquals(expectedValue3, actualAttributeList.get(1).getValue());
         

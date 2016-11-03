@@ -40,11 +40,9 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.datasource.DataSourceField;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -400,7 +398,7 @@ public class DataSourceImpl implements DataSourceInterface {
                 List<Object> attributes = feature.getAttributes();
                 for (int i = 0; i < attributes.size(); i++)
                 {
-                    Name fieldName = fieldNameMap.get(i);
+                    String fieldName = fieldNameMap.get(i).getLocalPart();
 
                     Class<?> type = fieldTypeMap.get(i);
 
@@ -475,8 +473,6 @@ public class DataSourceImpl implements DataSourceInterface {
                     dataSourceInfo = dataSourceInfoList.get(0);
 
                     dataSourceInfo.populateFieldMap();
-
-                    notifyDataSourceLoaded();
                 }
 
                 // Check that the field data types that were guessed are correct
@@ -491,6 +487,8 @@ public class DataSourceImpl implements DataSourceInterface {
                     retry = false;
                 }
             }
+
+            notifyDataSourceLoaded();
         }
     }
 
@@ -585,17 +583,7 @@ public class DataSourceImpl implements DataSourceInterface {
             {
                 List<DataSourceAttributeData> attributeDataList = attributeData.getData();
 
-                List<DataSourceFieldInterface> fieldList = new ArrayList<DataSourceFieldInterface>();
-
-                for(DataSourceAttributeData attributeFieldData : attributeDataList)
-                {
-                    DataSourceField field = new DataSourceField(attributeFieldData.getName().getLocalPart(),
-                            attributeFieldData.getType());
-
-                    fieldList.add(field);
-                }
-
-                this.editorFileInterface.getSLDData().setFieldList(fieldList);
+                this.editorFileInterface.getSLDData().setFieldList(attributeDataList);
 
                 createInternalDataSource();
             }
@@ -608,17 +596,17 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param dataSourceField the data source field
      */
     @Override
-    public void addField(DataSourceFieldInterface dataSourceField) {
+    public void addField(DataSourceAttributeData dataSourceField) {
         if(dataSourceField != null)
         {
             if(connectedToDataSourceFlag == false)
             {
                 SLDDataInterface sldData = this.editorFileInterface.getSLDData();
-                List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
+                List<DataSourceAttributeData> fieldList = sldData.getFieldList();
 
                 if(fieldList == null)
                 {
-                    fieldList = new ArrayList<DataSourceFieldInterface>();
+                    fieldList = new ArrayList<DataSourceAttributeData>();
                     sldData.setFieldList(fieldList);
                 }
                 fieldList.add(dataSourceField);
@@ -692,12 +680,12 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     @Override
     public void updateFieldType(String fieldName, Class<?> dataType) {
-        List<DataSourceFieldInterface> fieldList = this.editorFileInterface.getSLDData().getFieldList();
-        for(DataSourceFieldInterface field : fieldList)
+        List<DataSourceAttributeData> fieldList = this.editorFileInterface.getSLDData().getFieldList();
+        for(DataSourceAttributeData field : fieldList)
         {
             if(field.getName().compareTo(fieldName) == 0)
             {
-                field.setFieldType(dataType);
+                field.setType(dataType);
             }
         }
     }

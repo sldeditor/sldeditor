@@ -22,11 +22,11 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.ui.legend.option.LegendOptionData;
 
@@ -67,7 +67,7 @@ public class SLDData implements SLDDataInterface
     private boolean readOnly = true;
 
     /** The field list. */
-    private List<DataSourceFieldInterface> fieldList;
+    private List<DataSourceAttributeData> fieldList;
 
     /** The data source properties. */
     private DataSourcePropertiesInterface dataSourceProperties;
@@ -132,7 +132,7 @@ public class SLDData implements SLDDataInterface
      * @return the field list
      */
     @Override
-    public List<DataSourceFieldInterface> getFieldList()
+    public List<DataSourceAttributeData> getFieldList()
     {
         return fieldList;
     }
@@ -225,7 +225,7 @@ public class SLDData implements SLDDataInterface
      * @param fieldList the new field list
      */
     @Override
-    public void setFieldList(List<DataSourceFieldInterface> fieldList) {
+    public void setFieldList(List<DataSourceAttributeData> fieldList) {
         this.fieldList = fieldList;
     }
 

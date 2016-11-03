@@ -20,13 +20,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
@@ -99,39 +99,6 @@ public class SLDDataTest {
         public String getDebugConnectionString() {
             return null;
         }
-    }
-
-    class DummyDataSourceField implements DataSourceFieldInterface
-    {
-        private String name;
-        private  Class<?> fieldType;
-
-        public DummyDataSourceField(String name, Class<?> fieldType)
-        {
-            this.name = name;
-            this.fieldType = fieldType;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public Class<?> getFieldType() {
-            return fieldType;
-        }
-
-        @Override
-        public void setFieldType(Class<?> fieldType) {
-            this.fieldType = fieldType;
-        }
-
     }
 
     /**
@@ -217,9 +184,9 @@ public class SLDDataTest {
      */
     @Test
     public void testFieldList() {
-        List<DataSourceFieldInterface> fieldList = new ArrayList<DataSourceFieldInterface>();
-        fieldList.add(new DummyDataSourceField("Field 1", String.class));
-        fieldList.add(new DummyDataSourceField("Field 2", Double.class));
+        List<DataSourceAttributeData> fieldList = new ArrayList<DataSourceAttributeData>();
+        fieldList.add(new DataSourceAttributeData("Field 1", String.class, null));
+        fieldList.add(new DataSourceAttributeData("Field 2", Double.class, null));
 
         SLDData data = new SLDData(null, null);
         data.setFieldList(fieldList);

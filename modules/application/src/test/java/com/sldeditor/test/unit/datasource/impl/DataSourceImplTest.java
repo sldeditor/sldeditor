@@ -40,9 +40,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.datasource.DataSourceField;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
@@ -151,7 +149,7 @@ public class DataSourceImplTest {
         assertEquals(expectedFieldList.size(), ds.getAttributes(String.class).size());
 
         // Add new field
-        DataSourceFieldInterface dataSourceField = new DataSourceField("bearing", Double.class);
+        DataSourceAttributeData dataSourceField = new DataSourceAttributeData("bearing", Double.class, null);
         ds.addField(dataSourceField);
         assertTrue(ds.getAttributes(Double.class).size() == 1);
 
@@ -248,7 +246,7 @@ public class DataSourceImplTest {
         assertEquals(1, ds.getAttributes(String.class).size());
 
         // Add new field - shouldn't work because connections to external data sources are fixed
-        DataSourceFieldInterface dataSourceField = new DataSourceField("bearing", Double.class);
+        DataSourceAttributeData dataSourceField = new DataSourceAttributeData("bearing", Double.class, null);
         ds.addField(dataSourceField);
         assertTrue(ds.getAttributes(Double.class).size() == 1);
 

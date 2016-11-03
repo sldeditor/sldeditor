@@ -43,11 +43,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
-import com.sldeditor.datasource.DataSourceField;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.filter.v2.function.FunctionManager;
 
 /**
@@ -88,7 +87,7 @@ public class ExtractAttributes {
     private static Map<String, String> namespaceMap = null;
 
     /** The processed field list. */
-    private List<DataSourceFieldInterface> processedFieldList = new ArrayList<DataSourceFieldInterface>();
+    private List<DataSourceAttributeData> processedFieldList = new ArrayList<DataSourceAttributeData>();
 
     /** The geometry field list. */
     private List<String> geometryFieldList = new ArrayList<String>();
@@ -180,7 +179,7 @@ public class ExtractAttributes {
      *
      * @return the fields
      */
-    public List<DataSourceFieldInterface> getFields()
+    public List<DataSourceAttributeData> getFields()
     {
         return processedFieldList;
     }
@@ -205,7 +204,7 @@ public class ExtractAttributes {
      */
     private static void extractWKTAttributes(SimpleFeatureTypeBuilder b, Document doc,
             Map<String, List<String>> namespacePrefixes,
-            List<DataSourceFieldInterface> processedFieldList) {
+            List<DataSourceAttributeData> processedFieldList) {
         // Get node list for all possible namespace prefixes
         List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, SLD_NAMESPACE, WELL_KNOWN_NAME);
 
@@ -235,7 +234,7 @@ public class ExtractAttributes {
     private static void extractSimpleAttributes(SimpleFeatureTypeBuilder b,
             Document doc,
             Map<String, List<String>> namespacePrefixes,
-            List<DataSourceFieldInterface> processedFieldList,
+            List<DataSourceAttributeData> processedFieldList,
             List<String> geometryList)
     {
         if(geometryList == null)
@@ -308,7 +307,7 @@ public class ExtractAttributes {
 
                     if(addField)
                     {
-                        DataSourceFieldInterface field = new DataSourceField(fieldName, fieldType);
+                        DataSourceAttributeData field = new DataSourceAttributeData(fieldName, fieldType, null);
                         processedFieldList.add(field);
 
                         b.add(fieldName, fieldType);
@@ -393,9 +392,9 @@ public class ExtractAttributes {
      * @param fieldName the field name
      * @return true, if successful
      */
-    private static boolean fieldExists(List<DataSourceFieldInterface> processedFieldList,
+    private static boolean fieldExists(List<DataSourceAttributeData> processedFieldList,
             String fieldName) {
-        for(DataSourceFieldInterface field: processedFieldList)
+        for(DataSourceAttributeData field: processedFieldList)
         {
             if(field.getName().compareTo(fieldName) == 0)
             {

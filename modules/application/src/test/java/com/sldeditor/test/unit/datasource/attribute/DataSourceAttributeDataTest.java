@@ -19,10 +19,9 @@
 package com.sldeditor.test.unit.datasource.attribute;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.geotools.feature.NameImpl;
 import org.junit.Test;
-import org.opengis.feature.type.Name;
 
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 
@@ -40,13 +39,13 @@ public class DataSourceAttributeDataTest {
      */
     @Test
     public void testDataSourceAttributeDataNameClassOfQObject() {
-        Name expectedName = new NameImpl("test name");
+        String expectedName = "test name";
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
         DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName, expectedType, expectedValue);
 
-        assertEquals(expectedName, dsa.getName());
+        assertTrue(expectedName.compareTo(dsa.getName()) == 0);
         assertEquals(expectedType, dsa.getType());
         assertEquals(expectedValue, dsa.getValue());
     }
@@ -56,7 +55,7 @@ public class DataSourceAttributeDataTest {
      */
     @Test
     public void testClone() {
-        Name expectedName = new NameImpl("test name");
+        String expectedName = "test name";
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
@@ -64,7 +63,7 @@ public class DataSourceAttributeDataTest {
 
         DataSourceAttributeData cloneDsa = dsa.clone();
 
-        assertEquals(expectedName, cloneDsa.getName());
+        assertTrue(expectedName.compareTo(cloneDsa.getName()) == 0);
         assertEquals(expectedType, cloneDsa.getType());
         assertEquals(expectedValue, cloneDsa.getValue());
     }
@@ -74,7 +73,7 @@ public class DataSourceAttributeDataTest {
      */
     @Test
     public void testDataSourceAttributeDataDataSourceAttributeData() {
-        Name expectedName = new NameImpl("test name");
+        String expectedName = "test name";
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
@@ -82,7 +81,7 @@ public class DataSourceAttributeDataTest {
 
         DataSourceAttributeData copyDsa = new DataSourceAttributeData(dsa);
 
-        assertEquals(expectedName, copyDsa.getName());
+        assertTrue(expectedName.compareTo(copyDsa.getName()) == 0);
         assertEquals(expectedType, copyDsa.getType());
         assertEquals(expectedValue, copyDsa.getValue());
     }
@@ -92,15 +91,15 @@ public class DataSourceAttributeDataTest {
      */
     @Test
     public void testSetName() {
-        Name expectedName1 = new NameImpl("test name");
+        String expectedName1 = "test name";
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
         DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName1, expectedType, expectedValue);
 
-        Name expectedName2 = new NameImpl("updated test name");
+        String expectedName2 = "updated test name";
         dsa.setName(expectedName2);
-        assertEquals(expectedName2, dsa.getName());
+        assertTrue(expectedName2.compareTo(dsa.getName()) == 0);
     }
 
     /**
@@ -108,7 +107,7 @@ public class DataSourceAttributeDataTest {
      */
     @Test
     public void testSetType() {
-        Name expectedName = new NameImpl("test name");
+        String expectedName = "test name";
         Class<?> expectedType1 = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
@@ -125,7 +124,7 @@ public class DataSourceAttributeDataTest {
      */
     @Test
     public void testSetValue() {
-        Name expectedName = new NameImpl("test name");
+        String expectedName = "test name";
         Class<?> expectedType = Integer.class;
         Object expectedValue1 = Integer.valueOf(42);
 

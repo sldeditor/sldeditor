@@ -19,6 +19,7 @@
 package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.data.memory.MemoryDataStore;
@@ -29,9 +30,9 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.AttributeType;
 import org.opengis.feature.type.FeatureType;
-import org.opengis.feature.type.Name;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.example.ExampleLineInterface;
 import com.sldeditor.datasource.example.ExamplePointInterface;
 import com.sldeditor.datasource.example.ExamplePolygonInterface;
@@ -77,8 +78,9 @@ public class CreateSampleData {
      * Creates the sample data from the supplied schema.
      *
      * @param schema the schema
+     * @param fieldList the field list
      */
-    public void create(FeatureType schema) {
+    public void create(FeatureType schema, List<DataSourceAttributeData> fieldList) {
         if(schema == null)
         {
             return;
@@ -126,7 +128,19 @@ public class CreateSampleData {
             }
             else
             {
-                value = getFieldTypeValue(index, attributeType.getName(), fieldType);
+                if((fieldList != null) && (index < fieldList.size()))
+                {
+                    value = fieldList.get(index).getValue();
+                }
+
+                if(value == null)
+                {
+                    value = getFieldTypeValue(index, attributeType.getName().getLocalPart(), fieldType);
+                }
+                else
+                {
+                    value = fieldList.get(index).getValue();
+                }
             }
             builder.add(value);
             index ++;
@@ -144,7 +158,7 @@ public class CreateSampleData {
      * @param fieldType the field type
      * @return the field type value
      */
-    public static Object getFieldTypeValue(int index, Name name, Class<?> fieldType)
+    public static Object getFieldTypeValue(int index, String name, Class<?> fieldType)
     {
         Object value = null;
 
@@ -152,7 +166,7 @@ public class CreateSampleData {
         {
             if(name != null)
             {
-                value = name.getLocalPart();
+                value = name;
             }
         }
         else if(fieldType == Long.class)

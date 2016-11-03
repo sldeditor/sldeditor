@@ -51,7 +51,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -64,6 +63,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
@@ -171,7 +171,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
             File f = new File(sldFile);
             String sldContents = readFile(f, Charset.defaultCharset());
-            List<DataSourceFieldInterface> fieldList = null;
+            List<DataSourceAttributeData> fieldList = null;
 
             sldData = new SLDData(new StyleWrapper(sldFile), sldContents);
             sldData.setDataSourceProperties(dataSourceProperties);

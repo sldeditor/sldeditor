@@ -38,9 +38,9 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayerImpl;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -102,7 +102,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             //add a geometry property
             b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
 
-            List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
+            List<DataSourceAttributeData> fieldList = sldData.getFieldList();
 
             // Set the geometry field by default
             geometryField.reset();
@@ -134,7 +134,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             dsInfo.setSchema(schema);
 
             CreateSampleData sampleData = new CreateSampleData();
-            sampleData.create(schema);
+            sampleData.create(schema, fieldList);
             MemoryDataStore dataStore = sampleData.getDataStore();
 
             dsInfo.setDataStore(dataStore);
@@ -173,17 +173,17 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param fieldList the field list
      */
     private void addFields(SimpleFeatureTypeBuilder b,
-            List<DataSourceFieldInterface> fieldList) {
+            List<DataSourceAttributeData> fieldList) {
 
-        for(DataSourceFieldInterface field : fieldList)
+        for(DataSourceAttributeData field : fieldList)
         {
-            if(isGeometryField(field.getFieldType()))
+            if(isGeometryField(field.getType()))
             {
                 geometryField.setGeometryFieldName(field.getName());
             }
             else
             {
-                b.add(field.getName(), field.getFieldType());
+                b.add(field.getName(), field.getType());
             }
         }
     }

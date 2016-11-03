@@ -29,8 +29,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
@@ -130,7 +130,7 @@ public interface DataSourceInterface {
      *
      * @param dataSourceField the data source field
      */
-    void addField(DataSourceFieldInterface dataSourceField);
+    void addField(DataSourceAttributeData dataSourceField);
 
     /**
      * Sets the data source creation classes.

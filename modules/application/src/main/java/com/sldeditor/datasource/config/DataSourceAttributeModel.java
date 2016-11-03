@@ -26,9 +26,6 @@ import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.geotools.feature.NameImpl;
-import org.opengis.feature.type.Name;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
@@ -119,7 +116,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
             for(DataSourceAttributeData data : attributeList)
             {
                 valueList.add(data);
-                valueMap.put(data.getName().getLocalPart(), data);
+                valueMap.put(data.getName(), data);
             }
         }
     }
@@ -148,10 +145,10 @@ public class DataSourceAttributeModel extends AbstractTableModel {
 
         for(int row = 0; row < this.getRowCount(); row++)
         {
-            Name name = (Name) this.getValueAt(row, FIELD_COLUMN_ID);
+            String name = (String) this.getValueAt(row, FIELD_COLUMN_ID);
             Object objValue = this.getValueAt(row, VALUE_COLUMN_ID);
 
-            DataSourceAttributeData existingData = valueMap.get(name.getLocalPart());
+            DataSourceAttributeData existingData = valueMap.get(name);
 
             if(existingData != null)
             {
@@ -293,9 +290,9 @@ public class DataSourceAttributeModel extends AbstractTableModel {
             {
             case FIELD_COLUMN_ID:
             {
-                valueMap.remove(data.getName().getLocalPart());
-                data.setName(new NameImpl((String)value));
-                valueMap.put(data.getName().getLocalPart(), data);
+                valueMap.remove(data.getName());
+                data.setName((String)value);
+                valueMap.put(data.getName(), data);
                 valueList.remove(row);
                 valueList.add(row, data);
             }
@@ -349,14 +346,14 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     public void addNewField()
     {
         int index = valueMap.size();
-        Name name = new NameImpl(String.format("%s_%d", DEFAULT_NEW_FIELD_NAME, index));
+        String name = String.format("%s_%d", DEFAULT_NEW_FIELD_NAME, index);
         Class<?> fieldType = DEFAULT_NEW_FIELD_TYPE;
         Object value = CreateSampleData.getFieldTypeValue(index, name, fieldType);
 
         DataSourceAttributeData newField = new DataSourceAttributeData(name, fieldType, value);
 
         valueList.add(newField);
-        valueMap.put(newField.getName().getLocalPart(), newField);         
+        valueMap.put(newField.getName(), newField);         
     }
 
     /**
@@ -405,7 +402,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
                     DataSourceAttributeData data = valueList.remove(rowIndex);
                     if(data != null)
                     {
-                        valueMap.remove(data.getName().getLocalPart());
+                        valueMap.remove(data.getName());
                     }
                 }
                 index --;

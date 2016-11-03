@@ -23,7 +23,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.geotools.data.DataStore;
-import org.geotools.feature.NameImpl;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
@@ -68,10 +67,10 @@ public class CreateSampleDataTest {
         // Build the feature type
         SimpleFeatureType schema = b.buildFeatureType();
 
-        sampleData.create(schema);
-        
+        sampleData.create(schema, null);
+
         DataStore dataStore = sampleData.getDataStore();
-        
+
         assertTrue(dataStore != null);
         assertEquals(GeometryTypeEnum.POLYGON, sampleData.getGeometryType());
     }
@@ -82,13 +81,13 @@ public class CreateSampleDataTest {
     @Test
     public void testGetFieldTypeValue() {
         String expectedString = "String field";
-        assertEquals(expectedString, CreateSampleData.getFieldTypeValue(0, new NameImpl(expectedString), String.class));
-        assertEquals(Long.valueOf(1), CreateSampleData.getFieldTypeValue(1, new NameImpl(expectedString), Long.class));
-        assertEquals(Short.valueOf((short)2), CreateSampleData.getFieldTypeValue(2, new NameImpl(expectedString), Short.class));
-        assertEquals(Integer.valueOf(3), CreateSampleData.getFieldTypeValue(3, new NameImpl(expectedString), Integer.class));
-        assertEquals(Float.valueOf(4), CreateSampleData.getFieldTypeValue(4, new NameImpl(expectedString), Float.class));
-        assertEquals(Double.valueOf(5), CreateSampleData.getFieldTypeValue(5, new NameImpl(expectedString), Double.class));
-        assertNull(CreateSampleData.getFieldTypeValue(6, new NameImpl(expectedString), SimpleFeatureType.class));
+        assertEquals(expectedString, CreateSampleData.getFieldTypeValue(0, expectedString, String.class));
+        assertEquals(Long.valueOf(1), CreateSampleData.getFieldTypeValue(1, expectedString, Long.class));
+        assertEquals(Short.valueOf((short)2), CreateSampleData.getFieldTypeValue(2, expectedString, Short.class));
+        assertEquals(Integer.valueOf(3), CreateSampleData.getFieldTypeValue(3, expectedString, Integer.class));
+        assertEquals(Float.valueOf(4), CreateSampleData.getFieldTypeValue(4, expectedString, Float.class));
+        assertEquals(Double.valueOf(5), CreateSampleData.getFieldTypeValue(5, expectedString, Double.class));
+        assertNull(CreateSampleData.getFieldTypeValue(6, expectedString, SimpleFeatureType.class));
     }
 
 }

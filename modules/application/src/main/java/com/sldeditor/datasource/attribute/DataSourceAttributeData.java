@@ -18,8 +18,6 @@
  */
 package com.sldeditor.datasource.attribute;
 
-import org.opengis.feature.type.Name;
-
 /**
  * Class that encapsulates data about data source attributes : name, type, value.
  * 
@@ -28,7 +26,7 @@ import org.opengis.feature.type.Name;
 public class DataSourceAttributeData implements Cloneable
 {
     /** The name. */
-    private Name name;
+    private String name;
 
     /** The type. */
     private Class<?> type;
@@ -43,7 +41,7 @@ public class DataSourceAttributeData implements Cloneable
      * @param type the type
      * @param value the value
      */
-    public DataSourceAttributeData(Name name, Class<?> type, Object value) {
+    public DataSourceAttributeData(String name, Class<?> type, Object value) {
         super();
         this.name = name;
         this.type = type;
@@ -78,7 +76,7 @@ public class DataSourceAttributeData implements Cloneable
      *
      * @return the name
      */
-    public Name getName() {
+    public String getName() {
         return name;
     }
 
@@ -105,7 +103,7 @@ public class DataSourceAttributeData implements Cloneable
      *
      * @param name the new name
      */
-    public void setName(Name name) {
+    public void setName(String name) {
         this.name = name;
     }
 
