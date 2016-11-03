@@ -27,8 +27,8 @@ import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
@@ -70,12 +70,12 @@ public class ExtractAttributesTest {
 
         // Check fields extracted ok
         List<String> expectedFieldList = dummy.getExpectedFieldList();
-        List<DataSourceFieldInterface> actualFieldnameList = extract.getFields();
+        List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertTrue(expectedFieldList.size() == actualFieldnameList.size());
 
         // Not assuming fields are in the same order
         int count = 0;
-        for(DataSourceFieldInterface dataSourceField : actualFieldnameList)
+        for(DataSourceAttributeData dataSourceField : actualFieldnameList)
         {
             if(expectedFieldList.contains(dataSourceField.getName()))
             {
@@ -120,7 +120,7 @@ public class ExtractAttributesTest {
 
         // Check fields extracted ok - should be none
         List<String> expectedFieldList = dummy.getExpectedFieldList();
-        List<DataSourceFieldInterface> actualFieldnameList = extract.getFields();
+        List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertTrue(expectedFieldList.size() == actualFieldnameList.size());
         assertEquals(0, actualFieldnameList.size());
 
@@ -161,12 +161,12 @@ public class ExtractAttributesTest {
 
         // Check fields extracted ok - should be none
         List<String> expectedFieldList = dummy.getExpectedFieldList();
-        List<DataSourceFieldInterface> actualFieldnameList = extract.getFields();
+        List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertTrue(expectedFieldList.size() == actualFieldnameList.size());
 
         // Not assuming fields are in the same order
         int count = 0;
-        for(DataSourceFieldInterface dataSourceField : actualFieldnameList)
+        for(DataSourceAttributeData dataSourceField : actualFieldnameList)
         {
             if(expectedFieldList.contains(dataSourceField.getName()))
             {

@@ -33,11 +33,11 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.sldeditor.datasource.example.ExampleLineInterface;
 import com.sldeditor.datasource.example.ExamplePointInterface;
@@ -108,7 +108,7 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void addField(DataSourceFieldInterface dataSourceField) {
+        public void addField(DataSourceAttributeData dataSourceField) {
         }
 
         @Override

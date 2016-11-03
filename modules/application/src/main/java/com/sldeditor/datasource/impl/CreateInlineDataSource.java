@@ -28,10 +28,10 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.sldeditor.common.DataSourceFieldInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 
 /**
@@ -82,7 +82,7 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
                     String typeName = dataStore.getTypeNames()[0];
                     dsInfo.setTypeName(typeName);
 
-                    List<DataSourceFieldInterface> fieldList = sldData.getFieldList();
+                    List<DataSourceAttributeData> fieldList = sldData.getFieldList();
 
                     // Store the fields
                     sldData.setFieldList(fieldList);

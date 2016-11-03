@@ -26,6 +26,7 @@ import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.ui.legend.option.LegendOptionData;
 
@@ -55,7 +56,7 @@ public interface SLDDataInterface {
      *
      * @return the field list
      */
-    List<DataSourceFieldInterface> getFieldList();
+    List<DataSourceAttributeData> getFieldList();
 
     /**
      * Gets the data source properties.
@@ -118,7 +119,7 @@ public interface SLDDataInterface {
      *
      * @param fieldList the new field list
      */
-    void setFieldList(List<DataSourceFieldInterface> fieldList);
+    void setFieldList(List<DataSourceAttributeData> fieldList);
 
     /**
      * Sets the data source properties.

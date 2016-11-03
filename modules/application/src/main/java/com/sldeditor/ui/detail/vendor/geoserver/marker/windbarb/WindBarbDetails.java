@@ -34,8 +34,8 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.datasource.DataSourceField;
 import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.attribute.AttributeUtils;
@@ -161,7 +161,7 @@ UpdateSymbolInterface {
                 windSpeedExpression = getFilterFactory().property(propertyName);
                 DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
-                dataSource.addField(new DataSourceField(propertyName, Double.class));
+                dataSource.addField(new DataSourceAttributeData(propertyName, Double.class, null));
             }
             else
             {

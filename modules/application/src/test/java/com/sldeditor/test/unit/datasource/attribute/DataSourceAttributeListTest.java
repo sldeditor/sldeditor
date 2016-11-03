@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geotools.feature.NameImpl;
 import org.junit.Test;
 
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
@@ -44,15 +43,15 @@ public class DataSourceAttributeListTest {
     @Test
     public void testDataSourceAttributeList() {
         DataSourceAttributeList dsaList = new DataSourceAttributeList();
-        
+
         List<DataSourceAttributeData> expectedAttributeList = new ArrayList<DataSourceAttributeData>();
-        expectedAttributeList.add(new DataSourceAttributeData(new NameImpl("field 1"), String.class, "test value"));
-        expectedAttributeList.add(new DataSourceAttributeData(new NameImpl("field 2"), Double.class, 42.0));
-        expectedAttributeList.add(new DataSourceAttributeData(new NameImpl("field 3"), Integer.class, 22));
-        expectedAttributeList.add(new DataSourceAttributeData(new NameImpl("field 4"), Long.class, 454));
-        
+        expectedAttributeList.add(new DataSourceAttributeData("field 1", String.class, "test value"));
+        expectedAttributeList.add(new DataSourceAttributeData("field 2", Double.class, 42.0));
+        expectedAttributeList.add(new DataSourceAttributeData("field 3", Integer.class, 22));
+        expectedAttributeList.add(new DataSourceAttributeData("field 4", Long.class, 454));
+
         dsaList.setData(expectedAttributeList);
-        
+
         assertEquals(expectedAttributeList, dsaList.getData());
     }
 
