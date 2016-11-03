@@ -312,7 +312,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
             }
             else if(obj instanceof String)
             {
-                size = Integer.valueOf((String)obj);
+                size = Double.valueOf((String)obj).intValue();
             }
 
             sb.append(size);
