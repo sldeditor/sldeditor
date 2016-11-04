@@ -151,6 +151,11 @@ public class FieldConfigIntegerTest {
         String expectedValue3d = String.valueOf(6987);
         field.populateExpression(expectedValue3d);
         assertEquals(Integer.valueOf(expectedValue3d).intValue(), field.getIntValue());
+
+        String expectedValue3e = String.valueOf(6987.0);
+        field.populateExpression(expectedValue3e);
+        int intValue = Double.valueOf(expectedValue3e).intValue();
+        assertEquals(intValue, field.getIntValue());
     }
 
     /**
