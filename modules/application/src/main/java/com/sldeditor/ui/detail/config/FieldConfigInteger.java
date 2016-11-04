@@ -220,7 +220,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         }
         else if(objValue instanceof String)
         {
-            newValue = Integer.valueOf((String)objValue);
+            newValue = Double.valueOf((String)objValue).intValue();
         }
 
         populateField(newValue);
