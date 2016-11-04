@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="LiteralInt" type="{}XMLFieldLiteralInt"/&gt;
  *         &lt;element name="LiteralDouble" type="{}XMLFieldLiteralDouble"/&gt;
  *         &lt;element name="LiteralBool" type="{}XMLFieldLiteralBoolean"/&gt;
+ *         &lt;element name="ColourMapEntries" type="{}XMLColourMapEntries"/&gt;
  *         &lt;element name="Attribute" type="{}XMLFieldAttribute"/&gt;
  *         &lt;element name="Expression" type="{}XMLFieldExpression"/&gt;
  *         &lt;element name="SetLiteralString" type="{}XMLSetFieldLiteralString"/&gt;
@@ -66,6 +67,7 @@ public class XMLFieldTest {
         @XmlElement(name = "LiteralInt", type = XMLFieldLiteralInt.class),
         @XmlElement(name = "LiteralDouble", type = XMLFieldLiteralDouble.class),
         @XmlElement(name = "LiteralBool", type = XMLFieldLiteralBoolean.class),
+        @XmlElement(name = "ColourMapEntries", type = XMLColourMapEntries.class),
         @XmlElement(name = "Attribute", type = XMLFieldAttribute.class),
         @XmlElement(name = "Expression", type = XMLFieldExpression.class),
         @XmlElement(name = "SetLiteralString", type = XMLSetFieldLiteralStringEx.class),
@@ -102,6 +104,7 @@ public class XMLFieldTest {
      * {@link XMLFieldLiteralInt }
      * {@link XMLFieldLiteralDouble }
      * {@link XMLFieldLiteralBoolean }
+     * {@link XMLColourMapEntries }
      * {@link XMLFieldAttribute }
      * {@link XMLFieldExpression }
      * {@link XMLSetFieldLiteralString }

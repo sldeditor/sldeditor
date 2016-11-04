@@ -380,6 +380,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
         else if(xmlFieldConfig instanceof XMLFieldConfigColourMap)
         {
+            commonData.setValueOnly(true);
             FieldConfigColourMap colourMapConfig = new FieldConfigColourMap(commonData);
 
             groupConfig.addField(colourMapConfig);

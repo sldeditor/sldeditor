@@ -137,6 +137,7 @@
             <xs:element name="LiteralInt" type="XMLFieldLiteralInt" />
             <xs:element name="LiteralDouble" type="XMLFieldLiteralDouble" />
             <xs:element name="LiteralBool" type="XMLFieldLiteralBoolean" />
+            <xs:element name="ColourMapEntries" type="XMLColourMapEntries" />
             <xs:element name="Attribute" type="XMLFieldAttribute" />
             <xs:element name="Expression" type="XMLFieldExpression" />
             <xs:element name="SetLiteralString" type="XMLSetFieldLiteralString" />
@@ -213,6 +214,33 @@
         <xs:complexContent>
             <xs:extension base="XMLFieldBase" />
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLColourMapEntries">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare a colour map entry values of a field
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldBase">
+                <xs:sequence>
+                    <xs:element name="Entry" type="XMLColourMapEntry" maxOccurs="unbounded" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLColourMapEntry">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration to compare a colour map entry value of a field
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="label" type="xs:string" use="required" />
+        <xs:attribute name="colour" type="xs:string" use="required" />
+        <xs:attribute name="opacity" type="xs:double" use="required" />
+        <xs:attribute name="quantity" type="xs:int" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldLiteralString">

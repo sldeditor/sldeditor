@@ -413,6 +413,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLColourMapEntries }
+     * 
+     */
+    public XMLColourMapEntries createXMLColourMapEntries() {
+        return new XMLColourMapEntries();
+    }
+
+    /**
+     * Create an instance of {@link XMLColourMapEntry }
+     * 
+     */
+    public XMLColourMapEntry createXMLColourMapEntry() {
+        return new XMLColourMapEntry();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldLiteralString }
      * 
      */
