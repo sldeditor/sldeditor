@@ -35,7 +35,7 @@ import com.sldeditor.common.xml.ui.XMLColourMapEntry;
 import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 
 /**
- * The unit test for FieldConfigColourMap.
+ * The unit test for EncodeColourMap.
  * <p>{@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap}
  *
  * @author Robert Ward (SCISYS)
