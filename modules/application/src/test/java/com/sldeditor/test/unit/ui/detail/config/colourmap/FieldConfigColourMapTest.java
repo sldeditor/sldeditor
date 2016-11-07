@@ -231,6 +231,7 @@ public class FieldConfigColourMapTest {
     }
 
     /**
+     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#colourMapUpdated()}.
      */
     @Test
     public void testColourMapUpdated() {

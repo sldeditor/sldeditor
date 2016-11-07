@@ -53,9 +53,9 @@ public class EncodeColourMap {
         {
             sb.append((entry.getLabel() == null) ? "" : entry.getLabel());
             sb.append(SEPARATOR);
-            sb.append(entry.getColor().toString());
+            sb.append(entry.getColor());
             sb.append(SEPARATOR);
-            sb.append(entry.getOpacity().toString());
+            sb.append(Double.valueOf(entry.getOpacity().toString()));
             sb.append(SEPARATOR);
             sb.append(entry.getQuantity());
             sb.append(ENTRY_SEPARATOR);

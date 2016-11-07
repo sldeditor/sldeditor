@@ -48,8 +48,38 @@ public class SLDCookbookRaster
     }
 
     @Test
+    public void raster_alphachannel()
+    {
+        test.runTest("raster", "raster_alphachannel.xml");
+    }
+
+    @Test
+    public void raster_brightnessandcontrast()
+    {
+        test.runTest("raster", "raster_brightnessandcontrast.xml");
+    }
+
+    @Test
     public void raster_discretecolours()
     {
         test.runTest("raster", "raster_discretecolours.xml");
+    }
+
+    @Test
+    public void raster_manycolourgradient()
+    {
+        test.runTest("raster", "raster_manycolourgradient.xml");
+    }
+
+    @Test
+    public void raster_transparentgradient()
+    {
+        test.runTest("raster", "raster_transparentgradient.xml");
+    }
+
+    @Test
+    public void raster_twocolourgradient()
+    {
+        test.runTest("raster", "raster_twocolourgradient.xml");
     }
 }
