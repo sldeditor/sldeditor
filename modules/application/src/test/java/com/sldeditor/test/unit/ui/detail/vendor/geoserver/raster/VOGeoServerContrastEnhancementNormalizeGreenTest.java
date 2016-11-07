@@ -79,7 +79,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreenTest {
         assertNotNull(constrastMethodGroup);
         MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
         Box box = Box.createVerticalBox();
-        constrastMethodGroup2.createUI(panel.getFieldDataManager(), box, panel.getPanelId());
+        constrastMethodGroup2.createUI(panel.getFieldDataManager(), box, panel, panel.getPanelId());
         constrastMethodGroup2.setOption(GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD_LOGARITHMIC);
 
         rasterSymbolizer.setChannelSelection(channelSelection);
