@@ -153,9 +153,19 @@ public class StandardPanel extends BasePanel {
                 descriptionString = abstractDesc.toString();
             }
         }
-        fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, standardData.name);
-        fieldConfigVisitor.populateTextField(FieldIdEnum.TITLE, titleString);
-        fieldConfigVisitor.populateTextField(FieldIdEnum.DESCRIPTION, descriptionString);
+
+        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.NAME) != null)
+        {
+            fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, standardData.name);
+        }
+        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.TITLE) != null)
+        {
+            fieldConfigVisitor.populateTextField(FieldIdEnum.TITLE, titleString);
+        }
+        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.DESCRIPTION) != null)
+        {
+            fieldConfigVisitor.populateTextField(FieldIdEnum.DESCRIPTION, descriptionString);
+        }
 
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
         if(uomFieldConfig != null)
@@ -192,12 +202,19 @@ public class StandardPanel extends BasePanel {
     protected StandardData getStandardData() {
         StandardData standardData = new StandardData();
 
-        standardData.name = fieldConfigVisitor.getText(FieldIdEnum.NAME);
+        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.NAME) != null)
+        {
+            standardData.name = fieldConfigVisitor.getText(FieldIdEnum.NAME);
+        }
 
-        InternationalString titleString = Text.text(fieldConfigVisitor.getText(FieldIdEnum.TITLE));
-        InternationalString descriptionString = Text.text(fieldConfigVisitor.getText(FieldIdEnum.DESCRIPTION));
+        if((fieldConfigVisitor.getFieldConfig(FieldIdEnum.TITLE) != null) && 
+                (fieldConfigVisitor.getFieldConfig(FieldIdEnum.DESCRIPTION) != null))
+        {
+            InternationalString titleString = Text.text(fieldConfigVisitor.getText(FieldIdEnum.TITLE));
+            InternationalString descriptionString = Text.text(fieldConfigVisitor.getText(FieldIdEnum.DESCRIPTION));
 
-        standardData.description = (Description) getStyleFactory().description(titleString, descriptionString);
+            standardData.description = (Description) getStyleFactory().description(titleString, descriptionString);
+        }
 
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
         if(uomFieldConfig != null)

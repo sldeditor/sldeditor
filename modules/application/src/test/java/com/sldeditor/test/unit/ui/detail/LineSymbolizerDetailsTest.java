@@ -20,6 +20,7 @@
 package com.sldeditor.test.unit.ui.detail;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.geotools.styling.FeatureTypeStyle;
@@ -106,12 +107,11 @@ public class LineSymbolizerDetailsTest {
         panel.dataChanged(null);
 
         FieldConfigString nameField = (FieldConfigString) fieldDataManager.get(FieldIdEnum.NAME);
-        assertTrue(expectedNameValue.compareTo(nameField.getStringValue()) == 0);
+        assertNull(nameField);
         assertTrue(panel.isDataPresent());
 
         // Reset to default value
         panel.preLoadSymbol();
-        assertTrue("".compareTo(nameField.getStringValue()) == 0);
     }
 
 }
