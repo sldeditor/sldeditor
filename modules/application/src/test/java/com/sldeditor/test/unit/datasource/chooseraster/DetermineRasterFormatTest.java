@@ -50,7 +50,7 @@ public class DetermineRasterFormatTest {
         AbstractGridFormat gridFormat = DetermineRasterFormat.choose(null, null);
         assertTrue(UnknownFormat.class == gridFormat.getClass());
 
-        URL url = SLDTreeTest.class.getResource("/raster/sld_cookbook_raster.tif");
+        URL url = SLDTreeTest.class.getResource("/raster/sld/sld_cookbook_raster.tif");
 
         File f = new File(url.getFile());
         gridFormat = DetermineRasterFormat.choose(f, null);

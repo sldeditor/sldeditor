@@ -87,7 +87,6 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     public FieldConfigColourMap(FieldConfigCommonData commonData) {
         super(commonData);
-
         model = new ColourMapModel(this);
     }
 
@@ -417,7 +416,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     @Override
     public String getStringValue() {
-        return null;
+        return EncodeColourMap.encode(model.getColourMap());
     }
 
     /* (non-Javadoc)

@@ -31,10 +31,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -104,6 +106,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     /** The panel id. */
     private Class<?> panelId;
 
+    /** The parent. */
+    private UpdateSymbolInterface parent = null;
+
     /**
      * Sets the label.
      *
@@ -167,12 +172,17 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @param fieldConfigManager the field config manager
      * @param box the box
+     * @param parent the parent
      * @param panelId the panel id
      */
-    public void createUI(GraphicPanelFieldManager fieldConfigManager, Box box, Class<?> panelId) {
+    public void createUI(GraphicPanelFieldManager fieldConfigManager,
+            Box box, 
+            UpdateSymbolInterface parent, 
+            Class<?> panelId) {
         final UndoActionInterface parentObj = this;
         this.fieldConfigManager = fieldConfigManager;
         this.parentBox = box;
+        this.parent = parent;
         this.panelId = panelId;
         int x = 2;
 
@@ -193,6 +203,13 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enable(groupTitleCheckbox.isSelected());
+                    if(parent != null)
+                    {
+                        if(!Controller.getInstance().isPopulating())
+                        {
+                            parent.dataChanged(FieldIdEnum.UNKNOWN);
+                        }
+                    }
                 }});
         }
         else
@@ -219,6 +236,13 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
             public void actionPerformed(ActionEvent e) {
                 optionSelected(parentBox, fieldConfigManager, fieldPanel, parentObj);
+                if(parent != null)
+                {
+                    if(!Controller.getInstance().isPopulating())
+                    {
+                        parent.dataChanged(FieldIdEnum.UNKNOWN);
+                    }
+                }
             }
         });
 
@@ -311,7 +335,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
                 fieldConfigManager.addMultiOptionGroup(multiOptionGroupConfig);
 
-                multiOptionGroupConfig.createUI(fieldConfigManager, optionBox, this.panelId);
+                multiOptionGroupConfig.createUI(fieldConfigManager, optionBox, parent, this.panelId);
             }
         }
     }

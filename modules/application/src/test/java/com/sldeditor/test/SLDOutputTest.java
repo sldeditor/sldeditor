@@ -114,6 +114,7 @@ public class SLDOutputTest {
         populatePrefixMap(SelectedTreeItemEnum.LINE_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.POLYGON_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.TEXT_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
+        populatePrefixMap(SelectedTreeItemEnum.RASTER_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.POINT_FILL, SelectedTreeItemEnum.RULE, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.POLYGON_FILL, SelectedTreeItemEnum.RULE, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.STROKE, SelectedTreeItemEnum.RULE, initialPrefixMap);
@@ -189,6 +190,7 @@ public class SLDOutputTest {
                 case LINE_SYMBOLIZER:
                 case POLYGON_SYMBOLIZER:
                 case TEXT_SYMBOLIZER:
+                case RASTER_SYMBOLIZER:
                     xPathString = getSymbolizerString(selectionData, fieldString);
                     break;
                 case RULE:

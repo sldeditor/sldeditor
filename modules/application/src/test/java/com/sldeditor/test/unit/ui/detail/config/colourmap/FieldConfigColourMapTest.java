@@ -26,6 +26,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -208,10 +209,29 @@ public class FieldConfigColourMapTest {
     public void testGetStringValue() {
         FieldConfigColourMap field = new FieldConfigColourMap(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
-        assertNull(field.getStringValue());
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+        ColorMap expectedValue = new ColorMapImpl();
+        ColorMapEntryImpl entry1 = new ColorMapEntryImpl();
+        entry1.setColor(ff.literal("#001122"));
+        entry1.setLabel("testlabel");
+        entry1.setOpacity(ff.literal(0.42));
+        entry1.setQuantity(ff.literal(42));
+        expectedValue.addColorMapEntry(entry1);
+        ColorMapEntryImpl entry2 = new ColorMapEntryImpl();
+        entry2.setColor(ff.literal("#551122"));
+        entry2.setLabel("testlabel2");
+        entry2.setOpacity(ff.literal(0.22));
+        entry2.setQuantity(ff.literal(12));
+        expectedValue.addColorMapEntry(entry2);
+
+        field.populateField(expectedValue);
+
+        assertTrue(field.getStringValue().compareTo(EncodeColourMap.encode(expectedValue)) == 0);
     }
 
     /**
+     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#colourMapUpdated()}.
      */
     @Test
     public void testColourMapUpdated() {

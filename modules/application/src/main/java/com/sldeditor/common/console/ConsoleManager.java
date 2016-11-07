@@ -83,6 +83,7 @@ public class ConsoleManager
         logger.error(errorMessage);
 
         panel.addErrorMessage(errorMessage);
+        System.err.println(errorMessage);
     }
 
     /**

@@ -421,7 +421,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         }
 
         //
-        // Shaded relied
+        // Shaded relief
         //
         ShadedRelief shadedRelief = null;
         group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
@@ -449,7 +449,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
         {
             vendorOptionRasterFactory.updateSymbol(rasterSymbolizer);
         }
-
+        rasterSymbolizer.setOverlapBehavior(overlapBehavior);
         SelectedSymbol.getInstance().replaceSymbolizer(rasterSymbolizer);
 
         this.fireUpdateSymbol();

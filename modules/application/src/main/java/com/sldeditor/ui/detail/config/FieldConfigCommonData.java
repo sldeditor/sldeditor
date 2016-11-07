@@ -138,4 +138,13 @@ public class FieldConfigCommonData {
     public boolean isRasterSymbol() {
         return rasterSymbol;
     }
+
+    /**
+     * Sets the value only.
+     *
+     * @param valueOnly the valueOnly to set
+     */
+    public void setValueOnly(boolean valueOnly) {
+        this.valueOnly = valueOnly;
+    }
 }

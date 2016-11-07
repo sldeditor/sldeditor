@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="raster/sld/raster_alphachannel.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Alpha channel" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Alpha channel" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RasterSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="1" field="RASTER_COLOURMAP_TYPE"/> <!-- Ramp key = 1 -->
+			<ColourMapEntries field="RASTER_COLOURMAP">
+				<Entry label="" colour="#008000" opacity="1.0" quantity="70"/>
+				<Entry label="" colour="#008000" opacity="0.0" quantity="256"/>
+			</ColourMapEntries>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

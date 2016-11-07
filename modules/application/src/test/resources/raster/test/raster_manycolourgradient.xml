@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="raster/sld/raster_manycolorgradient.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Many color gradient" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Many color gradient" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.RasterSymbolizerDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+        </Setup>
+        <FieldTests>
+			<ColourMapEntries field="RASTER_COLOURMAP">
+				<Entry label="" colour="#000000" opacity="1.0" quantity="95"/>
+				<Entry label="" colour="#0000FF" opacity="1.0" quantity="110"/>
+				<Entry label="" colour="#00FF00" opacity="1.0" quantity="135"/>
+				<Entry label="" colour="#FF0000" opacity="1.0" quantity="160"/>
+				<Entry label="" colour="#FF00FF" opacity="1.0" quantity="185"/>
+				<Entry label="" colour="#FFFF00" opacity="1.0" quantity="210"/>
+				<Entry label="" colour="#00FFFF" opacity="1.0" quantity="235"/>
+				<Entry label="" colour="#FFFFFF" opacity="1.0" quantity="256"/>
+			</ColourMapEntries>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

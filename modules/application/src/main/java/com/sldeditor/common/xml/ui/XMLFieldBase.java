@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "XMLFieldBase")
 @XmlSeeAlso({
     XMLFieldDisabled.class,
+    XMLColourMapEntries.class,
     XMLFieldLiteralBase.class,
     XMLSetFieldLiteralBase.class,
     XMLFieldExpression.class,

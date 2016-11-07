@@ -47,6 +47,7 @@ import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.common.xml.ui.SldEditorTest;
+import com.sldeditor.common.xml.ui.XMLColourMapEntries;
 import com.sldeditor.common.xml.ui.XMLFieldAttribute;
 import com.sldeditor.common.xml.ui.XMLFieldBase;
 import com.sldeditor.common.xml.ui.XMLFieldDisabled;
@@ -72,6 +73,7 @@ import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
+import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -422,6 +424,10 @@ public class SLDTestRunner
                                                 else if(testValue instanceof XMLFieldExpression)
                                                 {
                                                     expectedValue = ((XMLFieldExpression)testValue).getExpression();
+                                                }
+                                                else if(testValue instanceof XMLColourMapEntries)
+                                                {
+                                                    expectedValue = EncodeColourMap.encode(((XMLColourMapEntries)testValue).getEntry());
                                                 }
                                                 else
                                                 {

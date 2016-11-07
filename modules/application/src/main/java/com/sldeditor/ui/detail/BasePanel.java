@@ -480,7 +480,7 @@ public class BasePanel extends JPanel {
 
             fieldConfigManager.addMultiOptionGroup(multiOption);
 
-            multiOption.createUI(fieldConfigManager, parentBox, parent.getClass());
+            multiOption.createUI(fieldConfigManager, parentBox, parent, parent.getClass());
 
             for(OptionGroup optionGroup : multiOption.getGroupList())
             {
