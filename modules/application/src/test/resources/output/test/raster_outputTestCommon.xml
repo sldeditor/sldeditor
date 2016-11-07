@@ -28,6 +28,7 @@
 		</Setup>
 		<FieldTests>
 			<SetLiteralDouble value="0.12" field="RASTER_OPACITY" />
+			<SetLiteralDouble value="0.34" field="RASTER_CONTRAST_GAMMAVALUE" />
  		</FieldTests>
 	</PanelTests>
 </SldEditor_test>
