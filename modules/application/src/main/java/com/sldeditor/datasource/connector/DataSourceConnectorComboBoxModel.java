@@ -126,4 +126,14 @@ public class DataSourceConnectorComboBoxModel extends AbstractListModel<String> 
     {
         return selectedItem;
     }
+
+    /**
+     * Reset.
+     */
+    public void reset() {
+        for(Class<?> key : dscMap.keySet())
+        {
+            dscMap.get(key).reset();
+        }
+    }
 }

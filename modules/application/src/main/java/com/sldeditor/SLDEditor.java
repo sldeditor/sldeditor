@@ -746,5 +746,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     @Override
     public void preLoad() {
         ConsoleManager.getInstance().clear();
+        uiMgr.getDataSourceConfig().reset();
     }
 }
