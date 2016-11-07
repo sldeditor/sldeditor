@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="raster/sld/raster_discretecolors.sld">
+	<PanelTests>
+		<Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+			<Layer index="0" />
+		</Setup>
+		<FieldTests>
+			<SetLiteralString value="New Raster Test" field="NAME" />
+		</FieldTests>
+	</PanelTests>
+	<PanelTests>
+		<Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+			<Layer index="0" />
+			<Style index="0" />
+		</Setup>
+		<FieldTests>
+			<SetLiteralString value="New Style : Raster Title"
+				field="TITLE" />
+		</FieldTests>
+	</PanelTests>
+	<PanelTests>
+		<Setup expectedPanel="com.sldeditor.ui.detail.RasterSymbolizerDetails">
+			<FeatureTypeStyle index="0" />
+			<Layer index="0" />
+			<Rule index="0" />
+			<Style index="0" />
+			<Symbolizer index="0" />
+		</Setup>
+		<FieldTests>
+			<SetLiteralDouble value="0.12" field="RASTER_OPACITY" />
+ 		</FieldTests>
+	</PanelTests>
+</SldEditor_test>

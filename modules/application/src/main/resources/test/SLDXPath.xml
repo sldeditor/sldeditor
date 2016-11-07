@@ -25,6 +25,12 @@
     </Section>
     <Section prefix="*[%d]" sldtype="POLYGON_SYMBOLIZER">
     </Section>
+    <Section prefix="*[%d]" sldtype="RASTER_SYMBOLIZER">
+        <Field id="NAME" xpath="Name" />
+        <Field id="TITLE" xpath="Title" />
+        <Field id="RASTER_OPACITY" xpath="Opacity" />
+        <Field id="RASTER_CONTRAST_GAMMAVALUE" xpath="ContrastEnhancement/GammaValue" />
+    </Section>
     <Section prefix="*[%d]" sldtype="TEXT_SYMBOLIZER">
         <Field id="LABEL" xpath="Label" />
         <Field id="FILL_COLOUR" xpath="Fill/CssParameter[@name=&quot;fill&quot;]" />
