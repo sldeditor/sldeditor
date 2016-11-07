@@ -2,12 +2,6 @@
 <PanelConfig panelTitle="text.paneltitle"
     localisation="com.sldeditor.ui.detail.TextSymbolizerDetails">
     <Group id="STANDARD" showLabel="false">
-        <FieldConfigString id="NAME" label="*standard.name"
-            valueOnly="true" />
-        <FieldConfigString id="TITLE" label="*standard.title"
-            valueOnly="true" />
-        <FieldConfigString id="DESCRIPTION" label="*standard.description"
-            valueOnly="true" />
         <FieldConfigEnum id="UOM" label="*standard.UOM">
             <ValueList>
                 <Value>

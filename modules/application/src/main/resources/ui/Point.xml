@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PanelConfig panelTitle="point.paneltitle">
     <Group id="STANDARD" showLabel="false">
-        <FieldConfigString id="NAME" label="*standard.name"
-            valueOnly="true" />
-        <FieldConfigString id="TITLE" label="*standard.title"
-            valueOnly="true" />
-        <FieldConfigString id="DESCRIPTION" label="*standard.description"
-            valueOnly="true" />
         <FieldConfigEnum id="UOM" label="*standard.UOM">
             <ValueList>
                 <Value>
