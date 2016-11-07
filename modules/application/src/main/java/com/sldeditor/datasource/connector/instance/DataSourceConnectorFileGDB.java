@@ -285,4 +285,15 @@ public class DataSourceConnectorFileGDB implements DataSourceConnectorInterface
         }
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
+     */
+    @Override
+    public void reset() {
+        for(JTextField field : textFieldMap.values())
+        {
+            field.setText("");
+        }
+    }
 }

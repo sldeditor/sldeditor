@@ -324,4 +324,15 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
         }
         return connectPropertyMap;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
+     */
+    @Override
+    public void reset() {
+        for(JTextField field : textFieldMap.values())
+        {
+            field.setText("");
+        }
+    }
 }

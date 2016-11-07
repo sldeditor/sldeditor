@@ -262,4 +262,12 @@ public class DataSourceConnectorRasterFile implements DataSourceConnectorInterfa
         }
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
+     */
+    @Override
+    public void reset() {
+        dataSourceTextField.setText("");
+    }
 }

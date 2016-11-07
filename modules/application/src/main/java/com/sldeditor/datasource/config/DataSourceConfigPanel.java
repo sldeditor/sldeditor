@@ -273,7 +273,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         btnCancel.setEnabled(false);
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dataModel.populate(attributeData.getData());        
+                dataModel.populate(attributeData.getData());
 
                 setPopulatingTable(true);
                 dataModel.fireTableDataChanged();
@@ -367,7 +367,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
     public void undoAction(UndoInterface undoRedoObject) {
         attributeData = (DataSourceAttributeListInterface) undoRedoObject.getOldValue();
 
-        dataModel.populate(attributeData.getData());        
+        dataModel.populate(attributeData.getData());
 
         setPopulatingTable(true);
         dataModel.fireTableDataChanged();
@@ -387,7 +387,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
     public void redoAction(UndoInterface undoRedoObject) {
         attributeData = (DataSourceAttributeListInterface) undoRedoObject.getNewValue();
 
-        dataModel.populate(attributeData.getData());        
+        dataModel.populate(attributeData.getData());
 
         setPopulatingTable(true);
         dataModel.fireTableDataChanged();
@@ -406,5 +406,9 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Does nothing
+    }
+
+    public void reset() {
+        dscModel.reset();
     }
 }

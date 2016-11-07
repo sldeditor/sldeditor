@@ -32,7 +32,7 @@ public interface DataSourceConnectorInterface
 
     /** The file map key. */
     public static String FILE_MAP_KEY = "url";
-    
+
     /**
      * Gets the display name.
      *
@@ -92,4 +92,9 @@ public interface DataSourceConnectorInterface
      * @return the connection properties
      */
     public Map<String, String> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties);
+
+    /**
+     * Reset ui.
+     */
+    public void reset();
 }

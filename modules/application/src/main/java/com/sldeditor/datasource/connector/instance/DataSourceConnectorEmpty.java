@@ -109,4 +109,12 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
         }
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
+     */
+    @Override
+    public void reset() {
+        // Do nothing
+    }
 }
