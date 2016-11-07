@@ -42,6 +42,27 @@ import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
  */
 public class EncodeColourMapTest {
 
+    /** The Constant QUANTITY_1. */
+    private static final int QUANTITY_1 = 42;
+
+    /** The Constant QUANTITY_2. */
+    private static final int QUANTITY_2 = 12;
+
+    /** The Constant OPACITY_1. */
+    private static final double OPACITY_1 = 0.42;
+
+    /** The Constant OPACITY_2. */
+    private static final double OPACITY_2 = 0.0;
+
+    /** The Constant COLOUR_1. */
+    private static final String COLOUR_1 = "#001122";
+
+    /** The Constant COLOUR_2. */
+    private static final String COLOUR_2 = "#551122";
+
+    /** The Constant LABEL_2. */
+    private static final String LABEL_2 = "testlabel2";
+
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap#encode(org.geotools.styling.ColorMap)}.
      * Test method for {@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap#encode(java.util.List)}.
@@ -52,29 +73,29 @@ public class EncodeColourMapTest {
 
         ColorMap expectedValue = new ColorMapImpl();
         ColorMapEntryImpl entry1 = new ColorMapEntryImpl();
-        entry1.setColor(ff.literal("#001122"));
-        entry1.setOpacity(ff.literal(0.42));
-        entry1.setQuantity(ff.literal(42));
+        entry1.setColor(ff.literal(COLOUR_1));
+        entry1.setOpacity(ff.literal(OPACITY_1));
+        entry1.setQuantity(ff.literal(QUANTITY_1));
         expectedValue.addColorMapEntry(entry1);
         ColorMapEntryImpl entry2 = new ColorMapEntryImpl();
-        entry2.setColor(ff.literal("#551122"));
-        entry2.setLabel("testlabel2");
-        entry2.setOpacity(ff.literal(0.22));
-        entry2.setQuantity(ff.literal(12));
+        entry2.setColor(ff.literal(COLOUR_2));
+        entry2.setLabel(LABEL_2);
+        entry2.setOpacity(ff.literal(OPACITY_2));
+        entry2.setQuantity(ff.literal(QUANTITY_2));
         expectedValue.addColorMapEntry(entry2);
 
         List<XMLColourMapEntry> xmlList = new ArrayList<XMLColourMapEntry>();
         XMLColourMapEntry xml1 = new XMLColourMapEntry();
-        xml1.setColour("#001122");
-        xml1.setOpacity(0.42);
+        xml1.setColour(COLOUR_1);
+        xml1.setOpacity(OPACITY_1);
         xml1.setQuantity(42);
         xmlList.add(xml1);
 
         XMLColourMapEntry xml2 = new XMLColourMapEntry();
-        xml2.setColour("#551122");
-        xml2.setLabel("testlabel2");
-        xml2.setOpacity(0.22);
-        xml2.setQuantity(12);
+        xml2.setColour(COLOUR_2);
+        xml2.setLabel(LABEL_2);
+        xml2.setOpacity(OPACITY_2);
+        xml2.setQuantity(QUANTITY_2);
         xmlList.add(xml2);
 
         String actualValue1 = EncodeColourMap.encode(expectedValue);
