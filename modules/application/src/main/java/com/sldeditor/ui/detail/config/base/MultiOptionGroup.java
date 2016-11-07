@@ -31,6 +31,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -204,7 +205,10 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                     enable(groupTitleCheckbox.isSelected());
                     if(parent != null)
                     {
-                        parent.dataChanged(FieldIdEnum.UNKNOWN);
+                        if(!Controller.getInstance().isPopulating())
+                        {
+                            parent.dataChanged(FieldIdEnum.UNKNOWN);
+                        }
                     }
                 }});
         }
@@ -234,7 +238,10 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                 optionSelected(parentBox, fieldConfigManager, fieldPanel, parentObj);
                 if(parent != null)
                 {
-                    parent.dataChanged(FieldIdEnum.UNKNOWN);
+                    if(!Controller.getInstance().isPopulating())
+                    {
+                        parent.dataChanged(FieldIdEnum.UNKNOWN);
+                    }
                 }
             }
         });
