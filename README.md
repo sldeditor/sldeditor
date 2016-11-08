@@ -1,9 +1,12 @@
 <img src="https://github.com/robward-scisys/sldeditor/blob/master/doc/img/sldeditor-logo.png" height="92">
 <a href="http://gis.scisys.co.uk"><img src="http://www.scisys.co.uk/storage/template/img/logo-scisys.jpg" hspace="100"></a>
-<p>
-[![Build Status](https://travis-ci.org/robward-scisys/sldeditor.png?branch=master)](https://travis-ci.org/robward-scisys/sldeditor)
-[![Coverage Status](https://coveralls.io/repos/github/robward-scisys/sldeditor/badge.png?branch=master)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
-<p>The SLD Editor is a Java desktop application developed by [SCISYS](http://gis.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
+
+[![Build Status](https://img.shields.io/travis/robward-scisys/sldeditor/master.svg)](https://travis-ci.org/robward-scisys/sldeditor)
+[![Coverage Status](https://img.shields.io/coveralls/robward-scisys/sldeditor/master.svg)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
+[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)]()
+
+The SLD Editor is a Java desktop application developed by [SCISYS](http://gis.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
 
 The aim of the project is to develop an application enabling the generation of SLD files, where a user has complete control over all aspects of the OGC SLD standard.<p>
 <p>
