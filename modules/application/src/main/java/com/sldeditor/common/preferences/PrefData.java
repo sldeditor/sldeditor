@@ -44,6 +44,12 @@ public class PrefData implements Cloneable {
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
 
+    /** The save last folder view flag. */
+    private boolean saveLastFolderView = false;
+
+    /** The last folder viewed. */
+    private String lastFolderViewed = null;
+    
     /**
      * Default constructor.
      */
@@ -66,6 +72,8 @@ public class PrefData implements Cloneable {
         copy.uiLayoutClass = this.uiLayoutClass;
         copy.useAntiAlias = this.useAntiAlias;
         copy.backgroundColour = new Color(this.backgroundColour.getRGB());
+        copy.saveLastFolderView = this.saveLastFolderView;
+        copy.lastFolderViewed = this.lastFolderViewed;
 
         if(this.vendorOptionList != null)
         {
@@ -151,5 +159,41 @@ public class PrefData implements Cloneable {
      */
     public void setBackgroundColour(Color backgroundColour) {
         this.backgroundColour = backgroundColour;
+    }
+
+    /**
+     * Gets the last folder viewed.
+     *
+     * @return the lastFolderViewed
+     */
+    public String getLastFolderViewed() {
+        return lastFolderViewed;
+    }
+
+    /**
+     * Sets the last folder viewed.
+     *
+     * @param lastFolderViewed the lastFolderViewed to set
+     */
+    public void setLastFolderViewed(String lastFolderViewed) {
+        this.lastFolderViewed = lastFolderViewed;
+    }
+
+    /**
+     * Checks if is save last folder view.
+     *
+     * @return the saveLastFolderView
+     */
+    public boolean isSaveLastFolderView() {
+        return saveLastFolderView;
+    }
+
+    /**
+     * Sets the save last folder view.
+     *
+     * @param saveLastFolderView the saveLastFolderView to set
+     */
+    public void setSaveLastFolderView(boolean saveLastFolderView) {
+        this.saveLastFolderView = saveLastFolderView;
     }
 }

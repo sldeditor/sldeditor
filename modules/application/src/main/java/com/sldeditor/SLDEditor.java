@@ -46,6 +46,7 @@ import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
@@ -253,7 +254,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         UILayoutFactory.readLayout(null);
 
-        PrefManager.finish();
+        PrefManager.getInstance().finish();
+
+        ExtensionFactory.updateForPreferences(PrefManager.getInstance().getPrefData(), extensionArgList);
 
         // Set the UI to show now SLD files loaded
         uiMgr.populateUI(0);
@@ -378,7 +381,10 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         if(newSLDList != null)
         {
-            if(this.loadSLDString(false, false, newSLDList))
+            SelectedFiles selectedFiles = new SelectedFiles();
+            selectedFiles.setSldData(newSLDList);
+
+            if(loadSLDString(selectedFiles))
             {
                 uiMgr.populateUI(1);
             }
@@ -544,16 +550,19 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /**
      * Load sld string.
      *
-     * @param isFolder the is folder flag
-     * @param isDataSource the is data source flag
-     * @param sldFilesToLoad the sld files to load
+     * @param selectedFiles the selected files
      * @return true, if successful
      */
     @Override
-    public boolean loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad)
+    public boolean loadSLDString(SelectedFiles selectedFiles)
     {
         boolean loadNewSymbol = true;
-        if(!isFolder)
+
+        PrefManager.getInstance().setLastFolderViewed(selectedFiles);
+
+        List<SLDDataInterface> sldFilesToLoad = selectedFiles.getSldData();
+
+        if(!selectedFiles.isFolder())
         {
             // Application can only support editing one SLD file at a time
             if(sldFilesToLoad.size() == 1)
@@ -622,7 +631,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 }
             }
 
-            if(!isDataSource)
+            if(!selectedFiles.isDataSource())
             {
                 // Inform UndoManager that a new SLD file has been
                 // loaded and to clear undo history
@@ -672,7 +681,10 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             }
         }
 
-        loadSLDString(false, false, sldDataList);
+        SelectedFiles selectedFiles = new SelectedFiles();
+        selectedFiles.setSldData(sldDataList);
+
+        loadSLDString(selectedFiles);
     }
 
     /**

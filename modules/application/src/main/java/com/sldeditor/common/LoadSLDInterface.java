@@ -19,11 +19,10 @@
 package com.sldeditor.common;
 
 import java.io.File;
-import java.util.List;
 
 import org.geotools.styling.StyledLayerDescriptor;
 
-import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.filesystem.SelectedFiles;
 
 /**
  * The Interface LoadSLDInterface.
@@ -45,12 +44,10 @@ public interface LoadSLDInterface {
     /**
      * Load sld from a string.
      *
-     * @param isFolder the is folder flag
-     * @param isDataSource the is data source flag
-     * @param sldFilesToLoad the sld files to load
+     * @param selectedFiles the selected files
      * @return true, if successful
      */
-    boolean loadSLDString(boolean isFolder, boolean isDataSource, List<SLDDataInterface> sldFilesToLoad);
+    boolean loadSLDString(SelectedFiles selectedFiles);
 
     /**
      * Read sld file and return it.

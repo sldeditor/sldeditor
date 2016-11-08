@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.property.EncryptedProperties;
 
 /**
@@ -67,24 +68,36 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
     }
 
     /**
-     * Constructor.
+     * Decode an encoded GeoServerConnection string.
      *
      * @param connectionString the connection string
+     * @return the geo server connection
      */
-    public GeoServerConnection(String connectionString)
+    public static GeoServerConnection decodeString(String connectionString)
     {
-        String[] components = connectionString.split(DELIMETER);
-        connectionName = components[0];
-        try
+        GeoServerConnection connectionData = null;
+        if(connectionString != null)
         {
-            url = new URL(components[1]);
+            String[] components = connectionString.split(DELIMETER);
+            if(components.length == 4)
+            {
+                connectionData = new GeoServerConnection();
+
+                connectionData.setConnectionName(components[0]);
+                try
+                {
+                    connectionData.setUrl(new URL(components[1]));
+                }
+                catch (MalformedURLException e)
+                {
+                    ConsoleManager.getInstance().exception(GeoServerConnection.class, e);
+                    return null;
+                }
+                connectionData.setUserName(components[2]);
+                connectionData.setPassword(components[3]);
+            }
         }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        userName = components[2];
-        password = components[3];
+        return connectionData;
     }
 
     /**

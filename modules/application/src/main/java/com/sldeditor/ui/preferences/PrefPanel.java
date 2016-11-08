@@ -73,6 +73,9 @@ public class PrefPanel extends JDialog {
     /** The use anti alias checkbox. */
     private JCheckBox chckbxUseAntiAlias;
 
+    /** The set save last folder viewed checkbox. */
+    private JCheckBox chckbxSetSaveLastFolderViewed;
+
     /** The ui layout combo box. */
     private JComboBox<String> uiLayoutComboBox;
 
@@ -109,6 +112,10 @@ public class PrefPanel extends JDialog {
         // Anti-alias
         chckbxUseAntiAlias = new JCheckBox(Localisation.getString(PrefPanel.class, "PrefPanel.useAntiAlias"));
         panel.add(chckbxUseAntiAlias);
+
+        // Save last folder viewed
+        chckbxSetSaveLastFolderViewed = new JCheckBox(Localisation.getString(PrefPanel.class, "PrefPanel.saveLastFolderViewed"));
+        panel.add(chckbxSetSaveLastFolderViewed);
 
         // Ui layout class
         uiLayoutMap = UILayoutFactory.getAllLayouts();
@@ -193,6 +200,7 @@ public class PrefPanel extends JDialog {
     public boolean showDialog(PrefData prefData) {
 
         chckbxUseAntiAlias.setSelected(prefData.isUseAntiAlias());
+        chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
         model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
 
         for(String displayName : uiLayoutMap.keySet())
@@ -214,9 +222,9 @@ public class PrefPanel extends JDialog {
     }
 
     /**
-     * Get pref data.
+     * Get preference data.
      *
-     * @return the pref data
+     * @return the preference data
      */
     public PrefData getPrefData() {
 
@@ -226,6 +234,7 @@ public class PrefPanel extends JDialog {
         prefData.setVendorOptionVersionList(model.getVendorOptionVersionList());
         String uiLayoutClass = uiLayoutMap.get(uiLayoutComboBox.getSelectedItem());
         prefData.setUiLayoutClass(uiLayoutClass);
+        prefData.setSaveLastFolderView(chckbxSetSaveLastFolderViewed.isSelected());
 
         return prefData;
     }

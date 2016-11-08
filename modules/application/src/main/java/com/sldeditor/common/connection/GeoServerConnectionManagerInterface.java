@@ -44,4 +44,12 @@ public interface GeoServerConnectionManagerInterface {
      */
     void updateList(Set<GeoServerConnection> keySet);
 
+    /**
+     * Connection exists.
+     *
+     * @param connectionData the connection data
+     * @return true, if successful
+     */
+    boolean connectionExists(GeoServerConnection connectionData);
+
 }

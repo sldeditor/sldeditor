@@ -226,6 +226,16 @@ public class FileSystemInput implements FileSystemInterface
     public SelectedFiles getSLDContents(NodeInterface node)
     {
         SelectedFiles selectedFiles = new SelectedFiles();
+        if(node instanceof FileTreeNode)
+        {
+            FileTreeNode fileTreeNode = (FileTreeNode)node;
+
+            selectedFiles.setIsFolder(fileTreeNode.isDir());
+
+            File f = fileTreeNode.getFile();
+            String folderName = f.isFile() ? f.getParent() : f.getAbsolutePath();
+            selectedFiles.setFolderName(folderName);
+        }
 
         for(FileHandlerInterface handler : fileHandlerMap.values())
         {
@@ -236,15 +246,10 @@ public class FileSystemInput implements FileSystemInterface
                 selectedFiles.setSldData(sldContentList);
                 selectedFiles.setDataSource(handler.isDataSource());
 
-                if(node instanceof FileTreeNode)
-                {
-                    FileTreeNode fileTreeNode = (FileTreeNode)node;
-
-                    selectedFiles.setIsFolder(fileTreeNode.isDir());
-                }
                 return selectedFiles;
             }
         }
+
         return selectedFiles;
     }
 

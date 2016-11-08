@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.GeoServerConnection;
 
 /**
  * The Class SelectedFiles.
@@ -38,6 +39,12 @@ public class SelectedFiles {
 
     /** The is folder flag. */
     private boolean isFolder = false;
+
+    /** The folder name. */
+    private String folderName;
+
+    /** The connection data. */
+    private GeoServerConnection connectionData = null;
 
     /**
      * Instantiates a new selected files.
@@ -90,7 +97,7 @@ public class SelectedFiles {
     public void setIsFolder(boolean folder) {
         isFolder = folder;
     }
-    
+
     /**
      * Returns the is folder flags.
      *
@@ -98,6 +105,51 @@ public class SelectedFiles {
      */
     public boolean isFolder() {
         return isFolder;
+    }
+
+    /**
+     * Gets the folder name.
+     *
+     * @return the folderName
+     */
+    public String getFolderName() {
+        return folderName;
+    }
+
+    /**
+     * Sets the folder name.
+     *
+     * @param folderName the folderName to set
+     */
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
+    }
+
+    /**
+     * Gets the connection data.
+     *
+     * @return the connectionData
+     */
+    public GeoServerConnection getConnectionData() {
+        return connectionData;
+    }
+
+    /**
+     * Sets the connection data.
+     *
+     * @param connectionData the connectionData to set
+     */
+    public void setConnectionData(GeoServerConnection connectionData) {
+        this.connectionData = connectionData;
+    }
+
+    /**
+     * Append SLD data.
+     *
+     * @param newDataList the new data list
+     */
+    public void appendSLDData(List<SLDDataInterface> newDataList) {
+        sldData.addAll(newDataList);
     }
 
 }

@@ -534,6 +534,11 @@ public class RenderTransformationDialog extends JDialog {
             @Override
             public void updateList(Set<GeoServerConnection> keySet) {
             }
+
+            @Override
+            public boolean connectionExists(GeoServerConnection connectionData) {
+                return false;
+            }
         };
 
         PrefData newPrefData = new PrefData();

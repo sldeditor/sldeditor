@@ -82,20 +82,27 @@ public class PropertyManager implements PropertyManagerInterface
 
         if(fieldValueMap.containsKey(key))
         {
-            if(fieldValueMap.get(key).compareTo(value) != 0)
+            String stringValue = fieldValueMap.get(key);
+            if((stringValue != null) && (value != null))
+            {
+                if(stringValue.compareTo(value) != 0)
+                {
+                    dataUpdated = true;
+                }
+            }
+            else if(stringValue != value)
             {
                 dataUpdated = true;
-                fieldValueMap.put(key, value);
             }
         }
         else
         {
             dataUpdated = true;
-            fieldValueMap.put(key, value);
         }
 
         if(dataUpdated)
         {
+            fieldValueMap.put(key, value);
             writeConfigFile();
         }
     }
@@ -353,24 +360,24 @@ public class PropertyManager implements PropertyManagerInterface
         List<String> valueList = new ArrayList<String>();
 
         List<Integer> indexList = new ArrayList<Integer>();
-        
+
         for(String storedKey : fieldValueMap.keySet())
         {
             if(storedKey.startsWith(updatedKey))
             {
                 String[] components = storedKey.split(ESCAPED_DELIMETER);
-                
+
                 if(components.length > 1)
                 {
                     Integer index = Integer.valueOf(components[components.length - 1]);
-                    
+
                     indexList.add(index);
                 }
             }
         }
 
         Collections.sort(indexList);
-        
+
         for(Integer index : indexList)
         {
             String newKey = updatedKey + index;

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.extension.filesystem.FileSystemExtension;
 
 /**
@@ -31,6 +32,10 @@ import com.sldeditor.extension.filesystem.FileSystemExtension;
  */
 public class ExtensionFactory
 {
+
+    /** The Constant EXTENSION_PREFIX. */
+    public static final String EXTENSION_PREFIX = "-extension";
+
     /** The extension list. */
     private static List<ExtensionInterface> extensionList = new ArrayList<ExtensionInterface>();
 
@@ -84,7 +89,7 @@ public class ExtensionFactory
 
                 if(components.length >= 2)
                 {
-                    if((components[0].compareToIgnoreCase("-extension") == 0) &&
+                    if((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0) &&
                             (components[1].compareToIgnoreCase(extension.getExtensionArgPrefix()) == 0))
                     {
                         StringBuilder sb = new StringBuilder();
@@ -123,7 +128,7 @@ public class ExtensionFactory
 
             if(components.length >= 2)
             {
-                if(components[0].compareToIgnoreCase("-extension") == 0)
+                if(components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0)
                 {
                     extensionArgList.add(extensionArg);
                 }
@@ -131,5 +136,21 @@ public class ExtensionFactory
 
         }
         return extensionArgList;
+    }
+
+    /**
+     * Update for preferences.
+     *
+     * @param prefData the pref data
+     * @param extensionArgList the extension arg list
+     */
+    public static void updateForPreferences(PrefData prefData, List<String> extensionArgList) {
+        for(ExtensionInterface extension : extensionList)
+        {
+            if(extension != null)
+            {
+                extension.updateForPreferences(prefData, extensionArgList);
+            }
+        }
     }
 }

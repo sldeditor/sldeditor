@@ -370,6 +370,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                 SelectedFiles selectedFiles = new SelectedFiles();
                 selectedFiles.setSldData(sldDataList);
                 selectedFiles.setDataSource(false);
+                selectedFiles.setConnectionData(connectionData);
 
                 return selectedFiles;
             }
@@ -401,6 +402,13 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                     }
                 }
             }
+
+            SelectedFiles selectedFiles = new SelectedFiles();
+            selectedFiles.setSldData(sldDataList);
+            selectedFiles.setDataSource(false);
+            selectedFiles.setConnectionData(connectionData);
+
+            return selectedFiles;
         }
         else if(node instanceof GeoServerStyleHeadingNode)
         {
@@ -433,8 +441,21 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             SelectedFiles selectedFiles = new SelectedFiles();
             selectedFiles.setSldData(sldDataList);
             selectedFiles.setDataSource(false);
-            return selectedFiles;
+            selectedFiles.setConnectionData(connectionData);
 
+            return selectedFiles;
+        }
+        else if(node instanceof GeoServerNode)
+        {
+            GeoServerNode geoServerNode = (GeoServerNode) node;
+
+            GeoServerConnection connectionData = geoServerNode.getConnection();
+
+            SelectedFiles selectedFiles = new SelectedFiles();
+            selectedFiles.setDataSource(false);
+            selectedFiles.setConnectionData(connectionData);
+
+            return selectedFiles;
         }
 
         return null;

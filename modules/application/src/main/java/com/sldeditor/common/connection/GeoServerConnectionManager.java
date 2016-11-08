@@ -65,14 +65,16 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     @Override
     public List<GeoServerConnection> getConnectionList() {
         List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
-        
+
         List<String> valueList = PropertyManagerFactory.getInstance().getMultipleValues(GEOSERVER_CONNECTION_FIELD);
 
         for(String connectionString : valueList)
         {
-            GeoServerConnection connection = new GeoServerConnection(connectionString);
-
-            connectionList.add(connection);
+            GeoServerConnection connection = GeoServerConnection.decodeString(connectionString);
+            if(connection != null)
+            {
+                connectionList.add(connection);
+            }
         }
 
         return connectionList;
@@ -90,5 +92,25 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
         {
             PropertyManagerFactory.getInstance().updateValue(GEOSERVER_CONNECTION_FIELD, count, connection.encodeAsString());
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#connectionExists(com.sldeditor.common.data.GeoServerConnection)
+     */
+    @Override
+    public boolean connectionExists(GeoServerConnection connectionData) {
+        if(connectionData != null)
+        {
+            List<GeoServerConnection> connectionList = getConnectionList();
+            for(GeoServerConnection existingConnectionData : connectionList)
+            {
+                if((existingConnectionData.getUrl().sameFile(connectionData.getUrl()) &&
+                        existingConnectionData.getConnectionName().compareTo(connectionData.getConnectionName()) == 0))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

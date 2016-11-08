@@ -31,8 +31,11 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode;
+import com.sldeditor.extension.filesystem.FileSystemExtension;
 
 /**
  * Manages the access between the file system tree and the nodes.
@@ -48,7 +51,7 @@ public class FileSystemNodeManager {
     private static DefaultTreeModel treeModel;
 
     /**
-     * Private default constructor
+     * Private default constructor.
      */
     private FileSystemNodeManager()
     {
@@ -119,7 +122,7 @@ public class FileSystemNodeManager {
             if(parent != null)
             {
                 folderList.add(0, parent.getPath());
-                folderList.add(0, "Root");
+                folderList.add(0, FileSystemExtension.ROOT_NODE);
 
                 DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
 
@@ -277,5 +280,81 @@ public class FileSystemNodeManager {
         {
             ((DefaultTreeModel)fileSystemTreeComponent.getModel()).nodeStructureChanged(parentNode);
         }
+    }
+
+    /**
+     * Show node in tree.
+     *
+     * @param connectionData the connection data
+     * @param allowFiles the allow files
+     */
+    public static void showNodeInTree(GeoServerConnection connectionData, boolean allowFiles) {
+        getTreePath(connectionData, allowFiles, true);
+    }
+
+    /**
+     * Gets the tree path.
+     *
+     * @param connectionData the connection data
+     * @param allowFiles the allow files
+     * @param showInTree the show in tree
+     * @return the tree path
+     */
+    private static DefaultMutableTreeNode getTreePath(GeoServerConnection connectionData,
+            boolean allowFiles,
+            boolean showInTree)
+    {
+        if(connectionData == null)
+        {
+            return null;
+        }
+
+        List<String> folderList = new ArrayList<String>();
+        folderList.add(0, connectionData.getConnectionName());
+        folderList.add(0, GeoServerOverallNode.GEOSERVER_NODE);
+        folderList.add(0, FileSystemExtension.ROOT_NODE);
+
+        DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
+
+        boolean isRoot = true;
+
+        for(String subFolder : folderList)
+        {
+            node = searchNode(isRoot, node, subFolder);
+
+            if(node == null)
+            {
+                break;
+            }
+            isRoot = false;
+        }
+
+        if(node != null)
+        {
+            TreeNode[] nodes = treeModel.getPathToRoot(node);
+            TreePath path = new TreePath(nodes);
+
+            if(showInTree)
+            {
+                fileSystemTreeComponent.scrollPathToVisible(path);
+                fileSystemTreeComponent.expandPath(path);
+            }
+
+            // Select file
+            if(allowFiles)
+            {
+                nodes = treeModel.getPathToRoot(node);
+                path = new TreePath(nodes);
+
+                if(showInTree)
+                {
+                    fileSystemTreeComponent.setSelectionPath(path);
+                }
+            }
+
+            return node;
+        }
+
+        return null;
     }
 }
