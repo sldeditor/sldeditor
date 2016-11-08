@@ -3,8 +3,8 @@
 
 [![Build Status](https://img.shields.io/travis/robward-scisys/sldeditor/master.svg)](https://travis-ci.org/robward-scisys/sldeditor)
 [![Coverage Status](https://img.shields.io/coveralls/robward-scisys/sldeditor/master.svg)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
-[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)]()
-[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)]()
+[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.4.2/SLDEditor.jar)
+[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.4.2/SLDEditor.jar)
 
 The SLD Editor is a Java desktop application developed by [SCISYS](http://gis.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
 
