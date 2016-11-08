@@ -286,33 +286,33 @@ public class FileSystemNodeManager {
      * Show node in tree.
      *
      * @param connectionData the connection data
-     * @param allowFiles the allow files
      */
-    public static void showNodeInTree(GeoServerConnection connectionData, boolean allowFiles) {
-        getTreePath(connectionData, allowFiles, true);
+    public static void showNodeInTree(GeoServerConnection connectionData) {
+        getTreePath(connectionData, true);
     }
 
     /**
      * Gets the tree path.
      *
      * @param connectionData the connection data
-     * @param allowFiles the allow files
      * @param showInTree the show in tree
      * @return the tree path
      */
     private static DefaultMutableTreeNode getTreePath(GeoServerConnection connectionData,
-            boolean allowFiles,
             boolean showInTree)
     {
-        if(connectionData == null)
+        if(treeModel == null)
         {
             return null;
         }
 
         List<String> folderList = new ArrayList<String>();
-        folderList.add(0, connectionData.getConnectionName());
-        folderList.add(0, GeoServerOverallNode.GEOSERVER_NODE);
-        folderList.add(0, FileSystemExtension.ROOT_NODE);
+        folderList.add(FileSystemExtension.ROOT_NODE);
+        folderList.add(GeoServerOverallNode.GEOSERVER_NODE);
+        if(connectionData != null)
+        {
+            folderList.add(connectionData.getConnectionName());
+        }
 
         DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
 
@@ -338,18 +338,7 @@ public class FileSystemNodeManager {
             {
                 fileSystemTreeComponent.scrollPathToVisible(path);
                 fileSystemTreeComponent.expandPath(path);
-            }
-
-            // Select file
-            if(allowFiles)
-            {
-                nodes = treeModel.getPathToRoot(node);
-                path = new TreePath(nodes);
-
-                if(showInTree)
-                {
-                    fileSystemTreeComponent.setSelectionPath(path);
-                }
+                fileSystemTreeComponent.setSelectionPath(path);
             }
 
             return node;

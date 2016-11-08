@@ -40,8 +40,10 @@ import java.util.Properties;
  */
 public class PropertyManager implements PropertyManagerInterface
 {
+    /** The Constant FALSE. */
     private static final String FALSE = "false";
 
+    /** The Constant TRUE. */
     private static final String TRUE = "true";
 
     /** The configuration properties file. */
@@ -184,7 +186,7 @@ public class PropertyManager implements PropertyManagerInterface
     }
 
     /**
-     * Gets the double value of a property
+     * Gets the double value of a property.
      *
      * @param field the field
      * @param defaultValue the default value
@@ -348,7 +350,7 @@ public class PropertyManager implements PropertyManagerInterface
     }
 
     /**
-     * Gets values where the key is a prefix
+     * Gets values where the key is a prefix.
      *
      * @param key the key
      * @return the multiple values
@@ -404,5 +406,27 @@ public class PropertyManager implements PropertyManagerInterface
                 backgroundColour.getAlpha());
 
         updateValue(key, value);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.property.PropertyManagerInterface#clearValue(java.lang.String)
+     */
+    @Override
+    public void clearValue(String key) {
+        String prefix = String.format("%s%s", key, DELIMETER);
+
+        List<String> keyToRemove = new ArrayList<String>();
+        for(String existingKey : fieldValueMap.keySet())
+        {
+            if(existingKey.startsWith(prefix))
+            {
+                keyToRemove.add(existingKey);
+            }
+        }
+
+        for(String existingKey : keyToRemove)
+        {
+            fieldValueMap.remove(existingKey);
+        }
     }
 }

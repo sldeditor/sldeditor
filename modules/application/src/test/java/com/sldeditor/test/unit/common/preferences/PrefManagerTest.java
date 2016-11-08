@@ -113,6 +113,13 @@ public class PrefManagerTest {
             lastValue = backgroundColour;
         }
 
+        /* (non-Javadoc)
+         * @see com.sldeditor.common.property.PropertyManagerInterface#clearValue(java.lang.String)
+         */
+        @Override
+        public void clearValue(String key) {
+        }
+
     }
 
     class DummyVendorOptionChanged implements PrefUpdateVendorOptionInterface

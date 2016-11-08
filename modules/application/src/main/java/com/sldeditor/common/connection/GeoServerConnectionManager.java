@@ -88,6 +88,7 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     @Override
     public void updateList(Set<GeoServerConnection> keySet) {
         int count = 0;
+        PropertyManagerFactory.getInstance().clearValue(GEOSERVER_CONNECTION_FIELD);
         for(GeoServerConnection connection : keySet)
         {
             count ++;

@@ -126,4 +126,11 @@ public interface PropertyManagerInterface {
      */
     void updateValue(String key, Color backgroundColour);
 
+    /**
+     * Clear list value.
+     *
+     * @param key the key
+     */
+    void clearValue(String key);
+
 }

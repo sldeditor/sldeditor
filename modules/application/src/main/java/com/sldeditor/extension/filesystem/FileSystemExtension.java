@@ -138,6 +138,8 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
 
             model = new DefaultTreeModel(rootNode);
 
+            FileSystemNodeManager.create(tree, model);
+
             for(FileSystemInterface extension : extensionList)
             {
                 extension.populate(tree, model, rootNode);
@@ -147,8 +149,6 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         {
             e1.printStackTrace();
         }
-
-        FileSystemNodeManager.create(tree, model);
 
         tree.setModel(model);
         tree.setDragEnabled(true);
@@ -369,7 +369,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                         GeoServerConnection connectionData = GeoServerConnectionManager.getInstance().getConnection(value);
                         if(connectionData != null)
                         {
-                            setFolder(connectionData, true);
+                            FileSystemExtensionFactory.getGeoServerInput().setFolder(connectionData, true);
                         }
                         else
                         {
@@ -383,28 +383,6 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         }
 
         treeItemSelected();
-    }
-
-    /**
-     * Sets the folder.
-     *
-     * @param connectionData the connection data
-     * @param allowFiles the allow files
-     */
-    private void setFolder(GeoServerConnection connectionData, boolean allowFiles) {
-        if(tree != null)
-        {
-            // Disable the tree selection
-            tree.setIgnoreSelection(true);
-            tree.clearSelection();
-        }
-
-        FileSystemNodeManager.showNodeInTree(connectionData, allowFiles);
-        if(tree != null)
-        {
-            // Enable the tree selection
-            tree.setIgnoreSelection(false);
-        }
     }
 
     /**

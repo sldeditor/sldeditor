@@ -36,7 +36,6 @@ import java.util.Map;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -51,6 +50,7 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
@@ -126,10 +126,10 @@ public class FileSystemInput implements FileSystemInterface
     }
 
     /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.FileSystemInterface#populate(javax.swing.JTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
      */
     @Override
-    public void populate(JTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
+    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
     {
         treeModel = model;
 

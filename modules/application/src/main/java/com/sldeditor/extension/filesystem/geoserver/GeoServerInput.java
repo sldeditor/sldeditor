@@ -30,7 +30,6 @@ import java.util.Map;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -48,6 +47,7 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.datasource.extension.filesystem.GeoServerConnectUpdateInterface;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
@@ -184,7 +184,6 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         return client;
     }
 
-
     /**
      * Update property file.
      */
@@ -194,10 +193,10 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
     }
 
     /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.FileSystemInterface#populate(javax.swing.JTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
      */
     @Override
-    public void populate(JTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
+    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
     {
         progress.setTreeModel(tree, model);
 
@@ -632,6 +631,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             addConnectionNode(newConnectionDetails);
 
             progress.refreshNode(getRootGeoServerNode());
+            progress.setFolder(newConnectionDetails, false);
 
             updatePropertyFile();
         }
@@ -691,11 +691,11 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                 connectionMap.remove(connection);
 
                 progress.deleteConnection(connection);
-
-                updatePropertyFile();
             }
         }
+        updatePropertyFile();
         progress.refreshNode(getRootGeoServerNode());
+        progress.setFolder(null, false);
     }
 
     /* (non-Javadoc)
@@ -789,6 +789,16 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         }
 
         return "Unknown";
+    }
+
+    /**
+     * Sets the folder.
+     *
+     * @param connectionData the connection data
+     * @param disableTreeSelection the disable tree selection
+     */
+    public void setFolder(GeoServerConnection connectionData, boolean disableTreeSelection) {
+        progress.setFolder(connectionData, disableTreeSelection);
     }
 
 }
