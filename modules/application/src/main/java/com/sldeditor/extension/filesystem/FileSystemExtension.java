@@ -74,6 +74,9 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     /** The Constant FOLDER_ARG. */
     private static final String FOLDER_ARG = "folder";
 
+    /** The Constant GEOSERVER_ARG. */
+    private static final String GEOSERVER_ARG = "geoserver";
+
     /** The Constant EXTENSION_ARG_PREFIX. */
     private static final String EXTENSION_ARG_PREFIX = "file";
 
@@ -335,22 +338,16 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                 {
                     // Check to if the stored string is a folder,
                     // expecting it to be stored as an URL
-                    File folder = null;
-                    try {
-                        URL url = new URL(value);
-                        folder = new File(url.getFile());
-                    } catch (MalformedURLException e1) {
-                        // This is ok, it just isn't a folder
-                    }
+                    File folder = new File(value);
 
-                    if((folder != null) && folder.isDirectory())
+                    if(folder.isDirectory())
                     {
                         // Folder was stored as an URL
                         if(folder.exists())
                         {
                             try
                             {
-                                setFolder(folder.toURI().toURL(), false);
+                                FileSystemExtensionFactory.getFileSystemInput().setFolder(folder.toURI().toURL(), false);
                             }
                             catch (MalformedURLException e)
                             {
@@ -363,49 +360,32 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                                     Localisation.getField(getClass(), "FileSystemExtension.folderDoesNotExist") + value);
                         }
                     }
+                }
+                else if(field.compareToIgnoreCase(GEOSERVER_ARG) == 0)
+                {
+                    // It wasn't a folder, check to see if it is a GeoServer connection
+                    GeoServerConnection connectionData = GeoServerConnectionManager.getInstance().getConnection(value);
+                    if(connectionData != null)
+                    {
+                        FileSystemExtensionFactory.getGeoServerInput().setFolder(connectionData, true);
+                    }
                     else
                     {
-                        // It wasn't a folder, check to see if it is a GeoServer connection
-                        GeoServerConnection connectionData = GeoServerConnectionManager.getInstance().getConnection(value);
-                        if(connectionData != null)
-                        {
-                            FileSystemExtensionFactory.getGeoServerInput().setFolder(connectionData, true);
-                        }
-                        else
-                        {
-                            // Don't recognise the string
-                            ConsoleManager.getInstance().error(this,
-                                    Localisation.getField(getClass(), "FileSystemExtension.geoServerDoesNotExist") + value);
-                        }
+                        // Don't recognise the string
+                        ConsoleManager.getInstance().error(this,
+                                Localisation.getField(getClass(), "FileSystemExtension.geoServerDoesNotExist") + value);
                     }
+                }
+                else
+                {
+                    // Don't recognise the string
+                    ConsoleManager.getInstance().error(this,
+                            Localisation.getField(getClass(), "FileSystemExtension.geoServerDoesNotExist") + value);
                 }
             }
         }
 
         treeItemSelected();
-    }
-
-    /**
-     * Sets the folder.
-     *
-     * @param url the url
-     * @param allowFiles the allow files
-     */
-    private void setFolder(URL url, boolean allowFiles)
-    {
-        if(tree != null)
-        {
-            // Disable the tree selection
-            tree.setIgnoreSelection(true);
-            tree.clearSelection();
-        }
-
-        FileSystemNodeManager.showNodeInTree(url, allowFiles);
-        if(tree != null)
-        {
-            // Enable the tree selection
-            tree.setIgnoreSelection(false);
-        }
     }
 
     /**
@@ -506,7 +486,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     @Override
     public List<SLDDataInterface> open(URL url) {
 
-        setFolder(url, true);
+        FileSystemExtensionFactory.getFileSystemInput().setFolder(url, true);
 
         for(FileSystemInterface extension : extensionList)
         {

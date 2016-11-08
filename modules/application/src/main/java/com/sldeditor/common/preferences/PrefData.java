@@ -50,6 +50,9 @@ public class PrefData implements Cloneable {
     /** The last folder viewed. */
     private String lastFolderViewed = null;
     
+    /** The last viewed key. */
+    private String lastViewedKey;
+
     /**
      * Default constructor.
      */
@@ -74,6 +77,7 @@ public class PrefData implements Cloneable {
         copy.backgroundColour = new Color(this.backgroundColour.getRGB());
         copy.saveLastFolderView = this.saveLastFolderView;
         copy.lastFolderViewed = this.lastFolderViewed;
+        copy.lastViewedKey = this.lastViewedKey;
 
         if(this.vendorOptionList != null)
         {
@@ -195,5 +199,23 @@ public class PrefData implements Cloneable {
      */
     public void setSaveLastFolderView(boolean saveLastFolderView) {
         this.saveLastFolderView = saveLastFolderView;
+    }
+
+    /**
+     * Gets the last viewed key.
+     *
+     * @return the lastViewedKey
+     */
+    public String getLastViewedKey() {
+        return lastViewedKey;
+    }
+
+    /**
+     * Sets the last viewed key.
+     *
+     * @param lastViewedKey the lastViewedKey to set
+     */
+    public void setLastViewedKey(String lastViewedKey) {
+        this.lastViewedKey = lastViewedKey;
     }
 }

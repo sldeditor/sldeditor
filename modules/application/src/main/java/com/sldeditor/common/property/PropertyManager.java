@@ -104,7 +104,10 @@ public class PropertyManager implements PropertyManagerInterface
 
         if(dataUpdated)
         {
-            fieldValueMap.put(key, value);
+            if(key != null)
+            {
+                fieldValueMap.put(key, value);
+            }
             writeConfigFile();
         }
     }
@@ -412,8 +415,15 @@ public class PropertyManager implements PropertyManagerInterface
      * @see com.sldeditor.common.property.PropertyManagerInterface#clearValue(java.lang.String)
      */
     @Override
-    public void clearValue(String key) {
-        String prefix = String.format("%s%s", key, DELIMETER);
+    public void clearValue(String key, boolean useDelimeter) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(key);
+        if(useDelimeter)
+        {
+            sb.append(DELIMETER);
+        }
+        
+        String prefix = sb.toString();
 
         List<String> keyToRemove = new ArrayList<String>();
         for(String existingKey : fieldValueMap.keySet())

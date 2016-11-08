@@ -130,7 +130,8 @@ public interface PropertyManagerInterface {
      * Clear list value.
      *
      * @param key the key
+     * @param useDelimeter the use delimeter
      */
-    void clearValue(String key);
+    void clearValue(String key, boolean useDelimeter);
 
 }

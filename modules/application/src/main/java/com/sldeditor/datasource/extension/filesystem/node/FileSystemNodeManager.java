@@ -72,22 +72,20 @@ public class FileSystemNodeManager {
      * Show node in tree.
      *
      * @param url the url
-     * @param allowFiles the allow files
      */
-    public static void showNodeInTree(URL url, boolean allowFiles)
+    public static void showNodeInTree(URL url)
     {
-        getTreePath(url, allowFiles, true);
+        getTreePath(url, true);
     }
 
     /**
      * Gets the tree path for the given folder/file.
      *
      * @param url the url
-     * @param allowFiles the allow files
      * @param showInTree the show in tree
      * @return the tree path
      */
-    private static DefaultMutableTreeNode getTreePath(URL url, boolean allowFiles, boolean showInTree)
+    private static DefaultMutableTreeNode getTreePath(URL url, boolean showInTree)
     {
         if(url == null)
         {
@@ -151,7 +149,7 @@ public class FileSystemNodeManager {
                     }
 
                     // Select file
-                    if(file.isFile() && allowFiles)
+                    if(file.isFile())
                     {
                         node = searchNode(isRoot, node, file.getName());
                         if(node != null)
@@ -262,10 +260,9 @@ public class FileSystemNodeManager {
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(FileSystemNodeManager.class, e);
         }
-        boolean allowFiles = file.isFile();
         boolean showInTree = false;
 
-        DefaultMutableTreeNode node = getTreePath(url, allowFiles, showInTree);
+        DefaultMutableTreeNode node = getTreePath(url, showInTree);
 
         return node;
     }
