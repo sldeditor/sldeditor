@@ -54,6 +54,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
@@ -67,9 +68,8 @@ import com.sldeditor.extension.ExtensionInterface;
  */
 public class FileSystemExtension implements ExtensionInterface, FileSelectionInterface
 {
-
     /** The Constant ROOT_NODE. */
-    public static final String ROOT_NODE = "Root";
+    public static final String ROOT_NODE = Localisation.getString(FileSystemExtension.class, "FileSystemExtension.root");
 
     /** The Constant FOLDER_ARG. */
     private static final String FOLDER_ARG = "folder";
@@ -314,14 +314,10 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         return combinedFiles;
     }
 
-    /**
-     * Sets the arguments.
-     *
-     * @param extensionArgList the new arguments
-     */
     /* (non-Javadoc)
      * @see com.sldeditor.batch.ExtensionInterface#setArguments(java.util.List)
      */
+    @Override
     public void setArguments(List<String> extensionArgList)
     {
         for(String arg : extensionArgList)
@@ -329,11 +325,12 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
             logger.debug(arg);
 
             String[] components = arg.split("=");
-            String field = components[0];
-            String value = components[1];
 
             if(components.length == 2)
             {
+                String field = components[0];
+                String value = components[1];
+
                 if(field.compareToIgnoreCase(FOLDER_ARG) == 0)
                 {
                     // Check to if the stored string is a folder,
@@ -362,7 +359,8 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                         }
                         else
                         {
-                            ConsoleManager.getInstance().error(this, "Extension start up folder does not exist : " + value);
+                            ConsoleManager.getInstance().error(this, 
+                                    Localisation.getField(getClass(), "FileSystemExtension.folderDoesNotExist") + value);
                         }
                     }
                     else
@@ -376,7 +374,8 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                         else
                         {
                             // Don't recognise the string
-                            ConsoleManager.getInstance().error(this, "Extension start up GeoServer connection is unknown : " + value);
+                            ConsoleManager.getInstance().error(this,
+                                    Localisation.getField(getClass(), "FileSystemExtension.geoServerDoesNotExist") + value);
                         }
                     }
                 }
@@ -577,25 +576,28 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
             {
                 String folderName = prefData.getLastFolderViewed();
 
-                String prefix = String.format("%s.%s.%s=",
-                        ExtensionFactory.EXTENSION_PREFIX,
-                        getExtensionArgPrefix(),
-                        FOLDER_ARG);
-
-                boolean found = false;
-                for(String arg : extensionArgList)
+                if(folderName != null)
                 {
-                    if(arg.startsWith(prefix))
+                    String prefix = String.format("%s.%s.%s=",
+                            ExtensionFactory.EXTENSION_PREFIX,
+                            getExtensionArgPrefix(),
+                            FOLDER_ARG);
+
+                    boolean found = false;
+                    for(String arg : extensionArgList)
                     {
-                        found = true;
+                        if(arg.startsWith(prefix))
+                        {
+                            found = true;
+                        }
                     }
-                }
 
-                if(!found)
-                {
-                    String arg = prefix + folderName;
+                    if(!found)
+                    {
+                        String arg = prefix + folderName;
 
-                    extensionArgList.add(arg);
+                        extensionArgList.add(arg);
+                    }
                 }
             }
         }
