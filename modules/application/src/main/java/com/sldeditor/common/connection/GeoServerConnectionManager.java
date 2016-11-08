@@ -87,30 +87,30 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
      */
     @Override
     public void updateList(Set<GeoServerConnection> keySet) {
-        int count = 1;
+        int count = 0;
         for(GeoServerConnection connection : keySet)
         {
+            count ++;
             PropertyManagerFactory.getInstance().updateValue(GEOSERVER_CONNECTION_FIELD, count, connection.encodeAsString());
         }
     }
 
     /* (non-Javadoc)
-     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#connectionExists(com.sldeditor.common.data.GeoServerConnection)
+     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#getConnection(java.lang.String)
      */
     @Override
-    public boolean connectionExists(GeoServerConnection connectionData) {
-        if(connectionData != null)
+    public GeoServerConnection getConnection(String connectionDataName) {
+        if(connectionDataName != null)
         {
             List<GeoServerConnection> connectionList = getConnectionList();
             for(GeoServerConnection existingConnectionData : connectionList)
             {
-                if((existingConnectionData.getUrl().sameFile(connectionData.getUrl()) &&
-                        existingConnectionData.getConnectionName().compareTo(connectionData.getConnectionName()) == 0))
+                if(existingConnectionData.getConnectionName().compareTo(connectionDataName) == 0)
                 {
-                    return true;
+                    return existingConnectionData;
                 }
             }
         }
-        return false;
+        return null;
     }
 }

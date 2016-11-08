@@ -536,8 +536,8 @@ public class RenderTransformationDialog extends JDialog {
             }
 
             @Override
-            public boolean connectionExists(GeoServerConnection connectionData) {
-                return false;
+            public GeoServerConnection getConnection(String connectionDataName) {
+                return null;
             }
         };
 

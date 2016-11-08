@@ -19,9 +19,13 @@
 package com.sldeditor.common.preferences;
 
 import java.awt.Color;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
@@ -329,13 +333,18 @@ public class PrefManager implements UndoActionInterface {
         {
             if(selectedFiles.getFolderName() != null)
             {
-                lastViewed = selectedFiles.getFolderName();
+                try {
+                    URL url = new File(selectedFiles.getFolderName()).toURI().toURL();
+                    lastViewed = url.toString();
+                } catch (MalformedURLException e) {
+                    ConsoleManager.getInstance().exception(this, e);
+                }
             }
             else if(selectedFiles.getConnectionData() != null)
             {
                 GeoServerConnection connectData = selectedFiles.getConnectionData();
 
-                lastViewed = connectData.encodeAsString();
+                lastViewed = connectData.getConnectionName();
             }
         }
 

@@ -45,11 +45,10 @@ public interface GeoServerConnectionManagerInterface {
     void updateList(Set<GeoServerConnection> keySet);
 
     /**
-     * Connection exists.
+     * Gets the connection data for the given name.
      *
-     * @param connectionData the connection data
-     * @return true, if successful
+     * @param connectionDataName the connection data name
+     * @return the connection
      */
-    boolean connectionExists(GeoServerConnection connectionData);
-
+    GeoServerConnection getConnection(String connectionDataName);
 }

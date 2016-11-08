@@ -336,9 +336,19 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
             {
                 if(field.compareToIgnoreCase(FOLDER_ARG) == 0)
                 {
-                    File folder = new File(value);
-                    if(folder.isDirectory())
+                    // Check to if the stored string is a folder,
+                    // expecting it to be stored as an URL
+                    File folder = null;
+                    try {
+                        URL url = new URL(value);
+                        folder = new File(url.getFile());
+                    } catch (MalformedURLException e1) {
+                        // This is ok, it just isn't a folder
+                    }
+
+                    if((folder != null) && folder.isDirectory())
                     {
+                        // Folder was stored as an URL
                         if(folder.exists())
                         {
                             try
@@ -357,21 +367,16 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                     }
                     else
                     {
-                        GeoServerConnection connectionData = GeoServerConnection.decodeString(value);
+                        // It wasn't a folder, check to see if it is a GeoServer connection
+                        GeoServerConnection connectionData = GeoServerConnectionManager.getInstance().getConnection(value);
                         if(connectionData != null)
                         {
-                            if(GeoServerConnectionManager.getInstance().connectionExists(connectionData))
-                            {
-                                setFolder(connectionData, true);
-                            }
-                            else
-                            {
-                                ConsoleManager.getInstance().error(this, "Extension start up GeoServer connection is unknown : " + connectionData.getConnectionName());
-                            }
+                            setFolder(connectionData, true);
                         }
                         else
                         {
-                            ConsoleManager.getInstance().error(this, "Extension start up folder is unknown : " + value);
+                            // Don't recognise the string
+                            ConsoleManager.getInstance().error(this, "Extension start up GeoServer connection is unknown : " + value);
                         }
                     }
                 }

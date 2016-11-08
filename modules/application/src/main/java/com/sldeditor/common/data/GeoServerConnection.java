@@ -35,7 +35,6 @@ import com.sldeditor.common.property.EncryptedProperties;
  */
 public class GeoServerConnection implements Comparable<GeoServerConnection>, Serializable
 {
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1230528722618014923L;
 
@@ -83,18 +82,18 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
             {
                 connectionData = new GeoServerConnection();
 
-                connectionData.setConnectionName(components[0]);
+                connectionData.connectionName = components[0];
                 try
                 {
-                    connectionData.setUrl(new URL(components[1]));
+                    connectionData.url = new URL(components[1]);
                 }
                 catch (MalformedURLException e)
                 {
                     ConsoleManager.getInstance().exception(GeoServerConnection.class, e);
                     return null;
                 }
-                connectionData.setUserName(components[2]);
-                connectionData.setPassword(components[3]);
+                connectionData.userName = components[2];
+                connectionData.password = components[3];
             }
         }
         return connectionData;
@@ -199,7 +198,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
     }
 
     /**
-     * Compare to.
+     * Compare to another GeoServerConnection object.
      *
      * @param o the o
      * @return the int
