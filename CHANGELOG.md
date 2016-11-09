@@ -1,7 +1,39 @@
 # Change Log
 
-## [0.4.2](https://github.com/robward-scisys/sldeditor/tree/0.4.2) (2016-09-30)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.1...0.4.2)
+## [0.5.0](https://github.com/robward-scisys/sldeditor/tree/0.5.0) (2016-11-09)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.2...0.5.0)
+
+**Implemented enhancements:**
+
+- Iss108 last folder viewed [\#111](https://github.com/robward-scisys/sldeditor/pull/111) ([robward-scisys](https://github.com/robward-scisys))
+- Data source ui fields are cleared when a file is loaded [\#109](https://github.com/robward-scisys/sldeditor/pull/109) ([robward-scisys](https://github.com/robward-scisys))
+- Removed name, title and description fields [\#107](https://github.com/robward-scisys/sldeditor/pull/107) ([robward-scisys](https://github.com/robward-scisys))
+- Iss104 raster integration tests [\#105](https://github.com/robward-scisys/sldeditor/pull/105) ([robward-scisys](https://github.com/robward-scisys))
+- Updated to use GeoTools 16 and GeoServer 2.10.0 [\#100](https://github.com/robward-scisys/sldeditor/pull/100) ([robward-scisys](https://github.com/robward-scisys))
+- Iss96 found datasource field types [\#99](https://github.com/robward-scisys/sldeditor/pull/99) ([robward-scisys](https://github.com/robward-scisys))
+- Iss91 improve ui [\#95](https://github.com/robward-scisys/sldeditor/pull/95) ([robward-scisys](https://github.com/robward-scisys))
+- Iss91 raster contrast normalize vendoroptions [\#94](https://github.com/robward-scisys/sldeditor/pull/94) ([robward-scisys](https://github.com/robward-scisys))
+- Iss92 geotools geoserver [\#93](https://github.com/robward-scisys/sldeditor/pull/93) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Data source example values not remembered [\#98](https://github.com/robward-scisys/sldeditor/issues/98)
+- HTML colour strings not displayed correctly on legend panel [\#89](https://github.com/robward-scisys/sldeditor/issues/89)
+- Iss102 floats in string expecting integer [\#103](https://github.com/robward-scisys/sldeditor/pull/103) ([robward-scisys](https://github.com/robward-scisys))
+- Iss98 data source values [\#101](https://github.com/robward-scisys/sldeditor/pull/101) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Update version to 0.5.0-SNAPSHOT \(again\) [\#87](https://github.com/robward-scisys/sldeditor/issues/87)
+- Release 0.4.2 [\#85](https://github.com/robward-scisys/sldeditor/issues/85)
+
+**Merged pull requests:**
+
+- Corrected size of colour fields on the legend options panel [\#90](https://github.com/robward-scisys/sldeditor/pull/90) ([robward-scisys](https://github.com/robward-scisys))
+- Updated project version to 0.5.0-SNAPSHOT \(again\) [\#88](https://github.com/robward-scisys/sldeditor/pull/88) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.4.2](https://github.com/robward-scisys/sldeditor/tree/v0.4.2) (2016-09-30)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.1...v0.4.2)
 
 **Implemented enhancements:**
 
@@ -22,6 +54,7 @@
 
 **Merged pull requests:**
 
+- Create v0.4.2 release [\#86](https://github.com/robward-scisys/sldeditor/pull/86) ([robward-scisys](https://github.com/robward-scisys))
 - Iss79 colour map entry expressions [\#84](https://github.com/robward-scisys/sldeditor/pull/84) ([robward-scisys](https://github.com/robward-scisys))
 - Iss77 render transformation unit tests [\#78](https://github.com/robward-scisys/sldeditor/pull/78) ([robward-scisys](https://github.com/robward-scisys))
 - Update version to 0.5.0-SNAPSHOT [\#76](https://github.com/robward-scisys/sldeditor/pull/76) ([robward-scisys](https://github.com/robward-scisys))
