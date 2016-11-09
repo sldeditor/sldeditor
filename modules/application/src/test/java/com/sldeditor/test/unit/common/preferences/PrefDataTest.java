@@ -29,6 +29,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 
@@ -47,7 +48,7 @@ public class PrefDataTest {
     public void testClone() {
         PrefData prefData = new PrefData();
         prefData.setUseAntiAlias(true);
-        
+
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
@@ -55,13 +56,17 @@ public class PrefDataTest {
         String uiLayoutClass = "perfect curve";
 
         prefData.setUiLayoutClass(uiLayoutClass);
-        
+        prefData.setLastFolderViewed("last folder");
+
         PrefData newObj = prefData.clone();
-        
+
         assertEquals(newObj.getBackgroundColour(), prefData.getBackgroundColour());
         assertEquals(newObj.getUiLayoutClass(), prefData.getUiLayoutClass());
         assertEquals(newObj.getVendorOptionVersionList(), prefData.getVendorOptionVersionList());
         assertEquals(newObj.isUseAntiAlias(), prefData.isUseAntiAlias());
+        assertEquals(newObj.isSaveLastFolderView(), prefData.isSaveLastFolderView());
+        assertEquals(newObj.getLastViewedKey(), prefData.getLastViewedKey());
+        assertEquals(newObj.getLastFolderViewed(), prefData.getLastFolderViewed());
     }
 
     /**
@@ -117,5 +122,49 @@ public class PrefDataTest {
         Color testColour = Color.blue;
         prefData.setBackgroundColour(testColour);
         assertEquals(testColour, prefData.getBackgroundColour());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#getSaveLastFolderView()}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#setSaveLastFolderView(boolean)}.
+     */
+    @Test
+    public void testSaveLastFolderView() {
+        PrefData prefData = new PrefData();
+        boolean expectedValue = true;
+        prefData.setSaveLastFolderView(expectedValue);
+        assertEquals(expectedValue, prefData.isSaveLastFolderView());
+
+        expectedValue = false;
+        prefData.setSaveLastFolderView(expectedValue);
+        assertEquals(expectedValue, prefData.isSaveLastFolderView());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#getLastViewedKey()}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#setLastViewedKey(PrefDataLastViewedEnum)}.
+     */
+    @Test
+    public void testLastViewedKey() {
+        PrefData prefData = new PrefData();
+        PrefDataLastViewedEnum expectedValue = PrefDataLastViewedEnum.FOLDER;
+        prefData.setLastViewedKey(expectedValue);
+        assertEquals(expectedValue, prefData.getLastViewedKey());
+
+        expectedValue = PrefDataLastViewedEnum.GEOSERVER;
+        prefData.setLastViewedKey(expectedValue);
+        assertEquals(expectedValue, prefData.getLastViewedKey());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#geLastFolderViewed()}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#setLastFolderViewed(String)}.
+     */
+    @Test
+    public void testLastFolderViewed() {
+        PrefData prefData = new PrefData();
+        String expectedValue = "last viewed folder";
+        prefData.setLastFolderViewed(expectedValue);
+        assertEquals(expectedValue, prefData.getLastFolderViewed());
     }
 }

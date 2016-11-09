@@ -49,9 +49,9 @@ public class PrefData implements Cloneable {
 
     /** The last folder viewed. */
     private String lastFolderViewed = null;
-    
+
     /** The last viewed key. */
-    private PrefDataLastViewedEnum lastViewedKey;
+    private PrefDataLastViewedEnum lastViewedKey = PrefDataLastViewedEnum.FOLDER;
 
     /**
      * Default constructor.

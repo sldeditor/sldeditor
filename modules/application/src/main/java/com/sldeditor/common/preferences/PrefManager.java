@@ -324,7 +324,7 @@ public class PrefManager implements UndoActionInterface {
                 newPrefData.getLastViewedKey(),
                 newPrefData.getLastFolderViewed());
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, prefData));
+        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, newPrefData));
     }
 
     /**
@@ -490,9 +490,15 @@ public class PrefManager implements UndoActionInterface {
     @Override
     public void undoAction(UndoInterface undoRedoObject)
     {
-        PrefData prefData = (PrefData)undoRedoObject.getOldValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getOldValue() instanceof PrefData)
+            {
+                PrefData prefData = (PrefData)undoRedoObject.getOldValue();
 
-        setPrefData(prefData);
+                setPrefData(prefData);
+            }
+        }
     }
 
     /* (non-Javadoc)
@@ -501,9 +507,15 @@ public class PrefManager implements UndoActionInterface {
     @Override
     public void redoAction(UndoInterface undoRedoObject)
     {
-        PrefData prefData = (PrefData)undoRedoObject.getNewValue();
+        if(undoRedoObject != null)
+        {
+            if(undoRedoObject.getNewValue() instanceof PrefData)
+            {
+                PrefData prefData = (PrefData)undoRedoObject.getNewValue();
 
-        setPrefData(prefData);
+                setPrefData(prefData);
+            }
+        }
     }
 
     /**
