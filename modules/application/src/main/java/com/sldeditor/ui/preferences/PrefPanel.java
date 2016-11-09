@@ -83,17 +83,6 @@ public class PrefPanel extends JDialog {
     private Map<String, String> uiLayoutMap;
 
     /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        PrefPanel panel = new PrefPanel();
-        panel.pack();
-        panel.setVisible(true);
-    }
-
-    /**
      * Default constructor
      */
     public PrefPanel()
@@ -199,26 +188,38 @@ public class PrefPanel extends JDialog {
      */
     public boolean showDialog(PrefData prefData) {
 
-        chckbxUseAntiAlias.setSelected(prefData.isUseAntiAlias());
-        chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
-        model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
-
-        for(String displayName : uiLayoutMap.keySet())
-        {
-            String className = uiLayoutMap.get(displayName);
-
-            if(prefData.getUiLayoutClass() != null)
-            {
-                if(className.compareTo(prefData.getUiLayoutClass()) == 0)
-                {
-                    uiLayoutComboBox.setSelectedItem(displayName);
-                }
-            }
-        }
+        populate(prefData);
 
         setVisible(true);
 
         return okPressed;
+    }
+
+    /**
+     * Populate panel.
+     *
+     * @param prefData the pref data
+     */
+    protected void populate(PrefData prefData) {
+        if(prefData != null)
+        {
+            chckbxUseAntiAlias.setSelected(prefData.isUseAntiAlias());
+            chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
+            model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
+
+            for(String displayName : uiLayoutMap.keySet())
+            {
+                String className = uiLayoutMap.get(displayName);
+
+                if(prefData.getUiLayoutClass() != null)
+                {
+                    if(className.compareTo(prefData.getUiLayoutClass()) == 0)
+                    {
+                        uiLayoutComboBox.setSelectedItem(displayName);
+                    }
+                }
+            }
+        }
     }
 
     /**

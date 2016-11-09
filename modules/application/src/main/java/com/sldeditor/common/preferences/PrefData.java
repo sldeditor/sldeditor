@@ -218,4 +218,62 @@ public class PrefData implements Cloneable {
     public void setLastViewedKey(PrefDataLastViewedEnum lastViewedKey) {
         this.lastViewedKey = lastViewedKey;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((backgroundColour == null) ? 0 : backgroundColour.hashCode());
+        result = prime * result + ((lastFolderViewed == null) ? 0 : lastFolderViewed.hashCode());
+        result = prime * result + ((lastViewedKey == null) ? 0 : lastViewedKey.hashCode());
+        result = prime * result + (saveLastFolderView ? 1231 : 1237);
+        result = prime * result + ((uiLayoutClass == null) ? 0 : uiLayoutClass.hashCode());
+        result = prime * result + (useAntiAlias ? 1231 : 1237);
+        result = prime * result + ((vendorOptionList == null) ? 0 : vendorOptionList.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PrefData other = (PrefData) obj;
+        if (backgroundColour == null) {
+            if (other.backgroundColour != null)
+                return false;
+        } else if (!backgroundColour.equals(other.backgroundColour))
+            return false;
+        if (lastFolderViewed == null) {
+            if (other.lastFolderViewed != null)
+                return false;
+        } else if (!lastFolderViewed.equals(other.lastFolderViewed))
+            return false;
+        if (lastViewedKey != other.lastViewedKey)
+            return false;
+        if (saveLastFolderView != other.saveLastFolderView)
+            return false;
+        if (uiLayoutClass == null) {
+            if (other.uiLayoutClass != null)
+                return false;
+        } else if (!uiLayoutClass.equals(other.uiLayoutClass))
+            return false;
+        if (useAntiAlias != other.useAntiAlias)
+            return false;
+        if (vendorOptionList == null) {
+            if (other.vendorOptionList != null)
+                return false;
+        } else if (!vendorOptionList.equals(other.vendorOptionList))
+            return false;
+        return true;
+    }
 }
