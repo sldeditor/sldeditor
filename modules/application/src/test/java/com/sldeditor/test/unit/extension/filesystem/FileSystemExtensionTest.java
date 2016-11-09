@@ -25,26 +25,37 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.SLDEditorInterface;
+import com.sldeditor.common.ToolSelectionInterface;
+import com.sldeditor.common.connection.GeoServerConnectionManager;
+import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
+import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.filesystem.FileSystemExtension;
 import com.sldeditor.extension.filesystem.FileSystemExtensionFactory;
+import com.sldeditor.tool.ToolInterface;
 
 /**
  * Unit test for FileSystemExtension class.
@@ -54,6 +65,35 @@ import com.sldeditor.extension.filesystem.FileSystemExtensionFactory;
  *
  */
 public class FileSystemExtensionTest {
+
+    /**
+     * The Class DummyToolMgr.
+     */
+    class DummyToolMgr implements ToolSelectionInterface
+    {
+        @Override
+        public void setSelectedItems(List<NodeInterface> nodeTypeList,
+                List<SLDDataInterface> sldDataList) {
+        }
+
+        @Override
+        public JPanel getPanel() {
+            return null;
+        }
+
+        @Override
+        public void refreshSelection() {
+        }
+
+        @Override
+        public SLDEditorInterface getApplication() {
+            return null;
+        }
+
+        @Override
+        public void registerTool(Class<?> nodeType, ToolInterface toolToRegister) {
+        }
+    }
 
     /**
      * The Class DummyExtension.
@@ -192,16 +232,79 @@ public class FileSystemExtensionTest {
         FileSystemExtensionFactory.override(overrideExtensionList);
         fsExt.initialise(null, null);
 
-        fsExt.getExtensionArgPrefix();
+        fsExt.initialise(null, new DummyToolMgr());
     }
 
     /**
      * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#setArguments(java.util.List)}.
      */
-    @Ignore
     @Test
     public void testSetArguments() {
-        fail("Not yet implemented");
+        FileSystemExtension fsExt = new FileSystemExtension();
+        FileSystemExtensionFactory.override(null);
+        fsExt.initialise(null, new DummyToolMgr());
+
+        // Handle null argument
+        fsExt.setArguments(null);
+
+        List<String> extensionArgList = new ArrayList<String>();
+        extensionArgList.add("invalid1");
+        extensionArgList.add("in.val.id2");
+        extensionArgList.add("in.va.li.d3.");
+        extensionArgList.add("invalid4=abc");
+        String actual = fsExt.setArguments(extensionArgList);
+        assertNull(actual);
+
+        // File does not exist
+        extensionArgList.clear();
+        String expectedFile = "folder=X:\\asdef";
+        extensionArgList.add(expectedFile);
+        actual = fsExt.setArguments(extensionArgList);
+        assertNull(actual);
+
+        // Valid file
+        extensionArgList.clear();
+        File f = null;
+        try {
+            f = File.createTempFile("test", ".tmp");
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+        expectedFile = "folder=" + f.getParent();
+        extensionArgList.add(expectedFile);
+        actual = fsExt.setArguments(extensionArgList);
+        assertEquals(expectedFile, actual);
+        f.delete();
+
+        // Invalid GeoServer
+        extensionArgList.clear();
+        String expectedGeoServer = "geoserver=unknown";
+        extensionArgList.add(expectedGeoServer);
+        actual = fsExt.setArguments(extensionArgList);
+        assertNull(actual);
+
+        // Valid GeoServer
+        Map<GeoServerConnection, String> connectionMap = new HashMap<GeoServerConnection, String>();
+        GeoServerConnection geoServerConnection = new GeoServerConnection();
+        geoServerConnection.setConnectionName("GeoServer connection");
+        try {
+            geoServerConnection.setUrl(new URL("http://localhost/geoserver"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            fail();
+        }
+        geoServerConnection.setUserName("username");
+        geoServerConnection.setPassword("password");
+        connectionMap.put(geoServerConnection, null);
+        GeoServerConnectionManager.getInstance().updateList(connectionMap.keySet());
+
+        extensionArgList.clear();
+        expectedGeoServer = "geoserver=" + geoServerConnection.getConnectionName();
+        extensionArgList.add(expectedGeoServer);
+        actual = fsExt.setArguments(extensionArgList);
+
+        assertEquals(expectedGeoServer, actual);
     }
 
     /**
@@ -233,7 +336,7 @@ public class FileSystemExtensionTest {
         FileSystemExtensionFactory.override(overrideExtensionList);
         fsExt.initialise(null, null);
 
-        assertTrue(fsExt.getPanel() == null);
+        assertTrue(fsExt.getPanel() != null);
     }
 
     /**
@@ -290,14 +393,14 @@ public class FileSystemExtensionTest {
     @Test
     public void testOpen() {
         FileSystemExtension fsExt = new FileSystemExtension();
-        DummyExtension dummyExtension = new DummyExtension();
 
-        List<FileSystemInterface> overrideExtensionList = new ArrayList<FileSystemInterface>();
-        overrideExtensionList.add(dummyExtension);
-        FileSystemExtensionFactory.override(overrideExtensionList);
         fsExt.initialise(null, null);
+        FileSystemExtensionFactory.override(null);
 
         // Try null parameter
+        assertNull(fsExt.open(null));
+
+        FileSystemExtensionFactory.getFileExtensionList(null);
         assertNull(fsExt.open(null));
 
         // Try invalid url
@@ -339,7 +442,74 @@ public class FileSystemExtensionTest {
         // Try null parameter
         assertFalse(fsExt.save(null));
 
-        assertFalse(fsExt.save(new SLDData(null, null)));
+        assertTrue(fsExt.save(new SLDData(null, null)));
     }
 
+    /**
+     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List<String>)}.
+     */
+    @Test
+    public void testUpdateForPreferences() {
+        FileSystemExtension fsExt = new FileSystemExtension();
+        FileSystemExtensionFactory.override(null);
+        fsExt.initialise(null, null);
+
+        fsExt.updateForPreferences(null, null);
+
+        // Set up with 'save last folder view' set to false
+        List<String> actualArgList = new ArrayList<String>();
+        PrefData prefData = new PrefData();
+        String lastFolderViewed = null;
+        prefData.setLastFolderViewed(lastFolderViewed);
+        PrefDataLastViewedEnum lastViewedKey = PrefDataLastViewedEnum.FOLDER;
+        prefData.setLastViewedKey(lastViewedKey);
+        prefData.setSaveLastFolderView(false);
+
+        fsExt.updateForPreferences(prefData, actualArgList);
+
+        assertTrue(actualArgList.isEmpty());
+
+        // Set up with 'save last folder view' set to true but no folder
+        prefData.setSaveLastFolderView(true);
+        fsExt.updateForPreferences(prefData, actualArgList);
+        assertTrue(actualArgList.isEmpty());
+
+        // Set up with 'save last folder view' set to true but with folder
+        lastFolderViewed = "last viewed";
+        prefData.setLastFolderViewed(lastFolderViewed);
+        fsExt.updateForPreferences(prefData, actualArgList);
+        assertEquals(1, actualArgList.size());
+        String expected = String.format("%s.%s.%s=%s",
+                ExtensionFactory.EXTENSION_PREFIX,
+                fsExt.getExtensionArgPrefix(),
+                "folder",
+                lastFolderViewed);
+        assertEquals(expected, actualArgList.get(0));
+        
+        // Set up with 'save last folder view' set to true but with GeoServer
+        actualArgList.clear();
+        lastViewedKey = PrefDataLastViewedEnum.GEOSERVER;
+        prefData.setLastViewedKey(lastViewedKey);
+        fsExt.updateForPreferences(prefData, actualArgList);
+        assertEquals(1, actualArgList.size());
+        expected = String.format("%s.%s.%s=%s",
+                ExtensionFactory.EXTENSION_PREFIX,
+                fsExt.getExtensionArgPrefix(),
+                "geoserver",
+                lastFolderViewed);
+        assertEquals(expected, actualArgList.get(0));
+
+        // Try and replace existing argument
+        String previous = lastFolderViewed;
+        lastFolderViewed = "new folder";
+        prefData.setLastFolderViewed(lastFolderViewed);
+        fsExt.updateForPreferences(prefData, actualArgList);
+        assertEquals(1, actualArgList.size());
+        expected = String.format("%s.%s.%s=%s",
+                ExtensionFactory.EXTENSION_PREFIX,
+                fsExt.getExtensionArgPrefix(),
+                "geoserver",
+                previous);
+        assertEquals(expected, actualArgList.get(0));
+    }
 }

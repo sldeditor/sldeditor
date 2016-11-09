@@ -99,8 +99,9 @@ public interface ExtensionInterface {
      * Sets the arguments.
      *
      * @param extensionArgList the new arguments
+     * @return the argument accepted
      */
-    public void setArguments(List<String> extensionArgList);
+    public String setArguments(List<String> extensionArgList);
 
     /**
      * Update for preferences.
