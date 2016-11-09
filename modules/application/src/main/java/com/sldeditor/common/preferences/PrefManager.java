@@ -20,7 +20,9 @@ package com.sldeditor.common.preferences;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.SelectedFiles;
@@ -81,6 +83,9 @@ public class PrefManager implements UndoActionInterface {
     /** The property manager. */
     private static PropertyManagerInterface propertyManagerInstance = null;
 
+    /** The last viewed map. */
+    private static Map<PrefDataLastViewedEnum, String> lastViewedMap = null;
+
     /**
      * Gets the single instance of PrefManager.
      *
@@ -109,6 +114,12 @@ public class PrefManager implements UndoActionInterface {
      */
     private PrefManager()
     {
+        if(lastViewedMap == null)
+        {
+            lastViewedMap = new HashMap<PrefDataLastViewedEnum, String>();
+            lastViewedMap.put(PrefDataLastViewedEnum.FOLDER, LAST_FOLDER_VIEWED_FIELD);
+            lastViewedMap.put(PrefDataLastViewedEnum.GEOSERVER, LAST_GEOSERVER_VIEWED_FIELD);
+        }
     }
 
     /**
@@ -163,25 +174,6 @@ public class PrefManager implements UndoActionInterface {
     }
 
     /**
-     * Sets the save last folder viewed flag.
-     *
-     * @param saveLastFolderViewed the new save last folder viewed
-     */
-    private void setSaveLastFolderViewed(boolean saveLastFolderViewed) {
-        if(this.prefData.isSaveLastFolderView() != saveLastFolderViewed)
-        {
-            this.prefData.setSaveLastFolderView(saveLastFolderViewed);
-
-            if(propertyManagerInstance != null)
-            {
-                propertyManagerInstance.updateValue(SAVE_LAST_FOLDER_VIEWED_FIELD, saveLastFolderViewed);
-            }
-
-            updateLastFolderViewed();
-        }
-    }
-
-    /**
      * Initialise.
      *
      * @param propertyManager the property manager
@@ -232,7 +224,20 @@ public class PrefManager implements UndoActionInterface {
             newPrefData.setVendorOptionVersionList(vendorOptionVersionList);
             newPrefData.setBackgroundColour(propertyManagerInstance.getColourValue(BACKGROUND_COLOUR_FIELD, Color.WHITE));
             newPrefData.setSaveLastFolderView(propertyManagerInstance.getBooleanValue(SAVE_LAST_FOLDER_VIEWED_FIELD, false));
-            newPrefData.setLastFolderViewed(propertyManagerInstance.getStringValue(LAST_FOLDER_VIEWED_FIELD, null));
+
+            String folderName = propertyManagerInstance.getStringValue(LAST_FOLDER_VIEWED_FIELD, null);
+            if(folderName != null)
+            {
+                newPrefData.setLastViewedKey(PrefDataLastViewedEnum.FOLDER);
+                newPrefData.setLastFolderViewed(folderName);
+            }
+            String geoServerConnection = propertyManagerInstance.getStringValue(LAST_GEOSERVER_VIEWED_FIELD, null);
+            if(geoServerConnection != null)
+            {
+                newPrefData.setLastViewedKey(PrefDataLastViewedEnum.GEOSERVER);
+                newPrefData.setLastFolderViewed(geoServerConnection);
+            }
+
             newPrefData.setUiLayoutClass(propertyManagerInstance.getStringValue(UILAYOUT_FIELD, null));
 
             setPrefData(newPrefData);
@@ -315,8 +320,9 @@ public class PrefManager implements UndoActionInterface {
         setVendorOptionList(newPrefData.getVendorOptionVersionList());
         setUiLayoutClass(newPrefData.getUiLayoutClass());
         setBackgroundColour(newPrefData.getBackgroundColour());
-        setLastFolderViewed(newPrefData.getLastViewedKey(), newPrefData.getLastFolderViewed());
-        setSaveLastFolderViewed(newPrefData.isSaveLastFolderView());
+        setLastFolderViewed(newPrefData.isSaveLastFolderView(),
+                newPrefData.getLastViewedKey(),
+                newPrefData.getLastFolderViewed());
 
         UndoManager.getInstance().addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, prefData));
     }
@@ -329,43 +335,40 @@ public class PrefManager implements UndoActionInterface {
     public void setLastFolderViewed(SelectedFiles selectedFiles)
     {
         String lastViewed = null;
-        String key = null;
+        PrefDataLastViewedEnum key = PrefDataLastViewedEnum.FOLDER;
 
         if(selectedFiles != null)
         {
             if(selectedFiles.getFolderName() != null)
             {
                 lastViewed = selectedFiles.getFolderName();
-                key = LAST_FOLDER_VIEWED_FIELD; 
+                key = PrefDataLastViewedEnum.FOLDER; 
             }
             else if(selectedFiles.getConnectionData() != null)
             {
                 GeoServerConnection connectData = selectedFiles.getConnectionData();
 
                 lastViewed = connectData.getConnectionName();
-                key = LAST_GEOSERVER_VIEWED_FIELD; 
+                key = PrefDataLastViewedEnum.GEOSERVER; 
             }
         }
 
-        setLastFolderViewed(key, lastViewed);
+        setLastFolderViewed(this.prefData.isSaveLastFolderView(), key, lastViewed);
     }
 
     /**
      * Sets the last folder viewed.
      *
+     * @param saveLastFolderViewed the save last folder viewed
      * @param key the key
      * @param lastFolderViewed the new last folder viewed
      */
-    private void setLastFolderViewed(String key, String lastFolderViewed) {
-        boolean different = false;
-        if((this.prefData.getLastViewedKey() == null) || (key == null))
-        {
-            different = !((this.prefData.getLastViewedKey() == null) && (key == null));
-        }
-        else if((this.prefData.getLastViewedKey() != null) && (key != null))
-        {
-            different = (this.prefData.getLastViewedKey().compareTo(key) != 0);
-        }
+    private void setLastFolderViewed(boolean saveLastFolderViewed,
+            PrefDataLastViewedEnum key,
+            String lastFolderViewed) {
+
+        boolean different = (this.prefData.isSaveLastFolderView() != saveLastFolderViewed) ||
+                ((this.prefData.getLastViewedKey() != key));
 
         if(!different)
         {
@@ -379,15 +382,15 @@ public class PrefManager implements UndoActionInterface {
             }
         }
 
-        if(different)
+        this.prefData.setSaveLastFolderView(saveLastFolderViewed);
+        if((key != null) && (lastFolderViewed != null))
         {
-            if(key == null)
-            {
-                key = LAST_FOLDER_VIEWED_FIELD;
-            }
             this.prefData.setLastViewedKey(key);
             this.prefData.setLastFolderViewed(lastFolderViewed);
+        }
 
+        if(different)
+        {
             updateLastFolderViewed();
         }
     }
@@ -399,9 +402,11 @@ public class PrefManager implements UndoActionInterface {
         propertyManagerInstance.clearValue(LAST_FOLDER_VIEWED_FIELD, false);
         propertyManagerInstance.clearValue(LAST_GEOSERVER_VIEWED_FIELD, false);
 
+        propertyManagerInstance.updateValue(SAVE_LAST_FOLDER_VIEWED_FIELD, this.prefData.isSaveLastFolderView());
         if(this.prefData.isSaveLastFolderView())
         {
-            propertyManagerInstance.updateValue(this.prefData.getLastViewedKey(), 
+            String key = lastViewedMap.get(this.prefData.getLastViewedKey());
+            propertyManagerInstance.updateValue(key, 
                     this.prefData.getLastFolderViewed());
         }
     }

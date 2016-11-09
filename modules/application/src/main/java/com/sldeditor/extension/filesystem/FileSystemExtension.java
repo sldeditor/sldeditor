@@ -56,6 +56,7 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.extension.ExtensionFactory;
@@ -380,7 +381,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                 {
                     // Don't recognise the string
                     ConsoleManager.getInstance().error(this,
-                            Localisation.getField(getClass(), "FileSystemExtension.geoServerDoesNotExist") + value);
+                            Localisation.getField(getClass(), "FileSystemExtension.unknownStartUp") + value);
                 }
             }
         }
@@ -536,10 +537,11 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
 
                 if(folderName != null)
                 {
+                    String suffix = (prefData.getLastViewedKey() == PrefDataLastViewedEnum.GEOSERVER) ? GEOSERVER_ARG : FOLDER_ARG;
                     String prefix = String.format("%s.%s.%s=",
                             ExtensionFactory.EXTENSION_PREFIX,
                             getExtensionArgPrefix(),
-                            FOLDER_ARG);
+                            suffix);
 
                     boolean found = false;
                     for(String arg : extensionArgList)

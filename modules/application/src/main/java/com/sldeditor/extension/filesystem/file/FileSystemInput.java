@@ -479,7 +479,7 @@ public class FileSystemInput implements FileSystemInterface
      * Sets the folder.
      *
      * @param url the url
-     * @param allowFiles the allow files
+     * @param disableTreeSelection the disable tree selection
      */
     public void setFolder(URL url, boolean disableTreeSelection)
     {

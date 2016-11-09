@@ -51,7 +51,7 @@ public class PrefData implements Cloneable {
     private String lastFolderViewed = null;
     
     /** The last viewed key. */
-    private String lastViewedKey;
+    private PrefDataLastViewedEnum lastViewedKey;
 
     /**
      * Default constructor.
@@ -206,7 +206,7 @@ public class PrefData implements Cloneable {
      *
      * @return the lastViewedKey
      */
-    public String getLastViewedKey() {
+    public PrefDataLastViewedEnum getLastViewedKey() {
         return lastViewedKey;
     }
 
@@ -215,7 +215,7 @@ public class PrefData implements Cloneable {
      *
      * @param lastViewedKey the lastViewedKey to set
      */
-    public void setLastViewedKey(String lastViewedKey) {
+    public void setLastViewedKey(PrefDataLastViewedEnum lastViewedKey) {
         this.lastViewedKey = lastViewedKey;
     }
 }
