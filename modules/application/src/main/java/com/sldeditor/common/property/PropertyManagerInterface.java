@@ -126,4 +126,12 @@ public interface PropertyManagerInterface {
      */
     void updateValue(String key, Color backgroundColour);
 
+    /**
+     * Clear list value.
+     *
+     * @param key the key
+     * @param useDelimeter the use delimeter
+     */
+    void clearValue(String key, boolean useDelimeter);
+
 }

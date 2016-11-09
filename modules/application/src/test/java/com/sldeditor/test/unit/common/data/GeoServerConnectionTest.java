@@ -199,7 +199,7 @@ public class GeoServerConnectionTest {
 
         String connectionString = connection1.encodeAsString();
 
-        GeoServerConnection connection2 = new GeoServerConnection(connectionString);
+        GeoServerConnection connection2 = GeoServerConnection.decodeString(connectionString);
 
         assertEquals(connection1.getConnectionName(), connection2.getConnectionName());
         assertEquals(connection1.getPassword(), connection2.getPassword());

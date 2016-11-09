@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -32,6 +31,8 @@ import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
@@ -123,7 +124,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
     private DefaultTreeModel treeModel;
 
     /** The tree. */
-    private JTree tree = null;
+    private FSTree tree = null;
 
     /** The node map. */
     private Map<GeoServerConnection, GeoServerNode> nodeMap = new HashMap<GeoServerConnection, GeoServerNode>();
@@ -521,7 +522,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param tree the tree
      * @param model the model
      */
-    public void setTreeModel(JTree tree, DefaultTreeModel model)
+    public void setTreeModel(FSTree tree, DefaultTreeModel model)
     {
         this.tree = tree;
         this.treeModel = model;
@@ -588,6 +589,33 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
                 geoserverNode.setUserObject(newConnectionDetails.getConnectionName());
 
                 refreshNode(geoserverNode);
+
+                setFolder(newConnectionDetails, false);
+            }
+        }
+    }
+
+    /**
+     * Sets the folder.
+     *
+     * @param connectionData the connection data
+     * @param disableTreeSelection the disable tree selection
+     */
+    public void setFolder(GeoServerConnection connectionData, boolean disableTreeSelection) {
+        if(tree != null)
+        {
+            if(disableTreeSelection)
+            {
+                // Disable the tree selection
+                tree.setIgnoreSelection(true);
+            }
+            tree.clearSelection();
+
+            FileSystemNodeManager.showNodeInTree(connectionData);
+            if(disableTreeSelection)
+            {
+                // Enable the tree selection
+                tree.setIgnoreSelection(false);
             }
         }
     }

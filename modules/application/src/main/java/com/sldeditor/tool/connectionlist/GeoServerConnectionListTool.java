@@ -66,7 +66,7 @@ public class GeoServerConnectionListTool implements ToolInterface
     private List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
 
     /**
-     * Instantiates a new geo server connection tool.
+     * Instantiates a new geo server connection list tool.
      *
      * @param geoServerConnectUpdate the geo server connect update
      */
@@ -120,10 +120,9 @@ public class GeoServerConnectionListTool implements ToolInterface
                         GeoServerConnection selectedConnectionDetails = connectionList.get(0);
 
                         GeoServerConnection duplicateItem = selectedConnectionDetails.duplicate();
-                        
+
                         geoServerConnectUpdate.addNewConnection(duplicateItem);
                     }
-                    setButtonsDisabled();
                 }
             }
         });
@@ -147,7 +146,6 @@ public class GeoServerConnectionListTool implements ToolInterface
                             geoServerConnectUpdate.updateConnectionDetails(selectedConnectionDetails, newConnectionDetails);
                         }
                     }
-                    setButtonsDisabled();
                 }
             }
         });
@@ -163,7 +161,6 @@ public class GeoServerConnectionListTool implements ToolInterface
                 {
                     geoServerConnectUpdate.deleteConnections(connectionList);
                 }
-                setButtonsDisabled();
             }
         });
 
@@ -188,7 +185,7 @@ public class GeoServerConnectionListTool implements ToolInterface
         connectionList.clear();
 
         boolean geoServerNodesSelected = false;
-        
+
         for(NodeInterface nodeType : nodeTypeList)
         {
             if(nodeType instanceof GeoServerNode)
@@ -199,7 +196,7 @@ public class GeoServerConnectionListTool implements ToolInterface
                 geoServerNodesSelected = true;
             }
         }
-        
+
         btnDuplicate.setEnabled(geoServerNodesSelected && (connectionList.size() == 1));
         btnEdit.setEnabled(geoServerNodesSelected && (connectionList.size() == 1));
         btnDelete.setEnabled(geoServerNodesSelected);
@@ -225,15 +222,5 @@ public class GeoServerConnectionListTool implements ToolInterface
             return true;
         }
         return false;
-    }
-    
-    /**
-     * Sets the buttons disabled.
-     */
-    private void setButtonsDisabled()
-    {
-        btnDuplicate.setEnabled(false);
-        btnEdit.setEnabled(false);
-        btnDelete.setEnabled(false);
     }
 }

@@ -40,8 +40,10 @@ import java.util.Properties;
  */
 public class PropertyManager implements PropertyManagerInterface
 {
+    /** The Constant FALSE. */
     private static final String FALSE = "false";
 
+    /** The Constant TRUE. */
     private static final String TRUE = "true";
 
     /** The configuration properties file. */
@@ -82,20 +84,30 @@ public class PropertyManager implements PropertyManagerInterface
 
         if(fieldValueMap.containsKey(key))
         {
-            if(fieldValueMap.get(key).compareTo(value) != 0)
+            String stringValue = fieldValueMap.get(key);
+            if((stringValue != null) && (value != null))
+            {
+                if(stringValue.compareTo(value) != 0)
+                {
+                    dataUpdated = true;
+                }
+            }
+            else if(stringValue != value)
             {
                 dataUpdated = true;
-                fieldValueMap.put(key, value);
             }
         }
         else
         {
             dataUpdated = true;
-            fieldValueMap.put(key, value);
         }
 
         if(dataUpdated)
         {
+            if(key != null)
+            {
+                fieldValueMap.put(key, value);
+            }
             writeConfigFile();
         }
     }
@@ -177,7 +189,7 @@ public class PropertyManager implements PropertyManagerInterface
     }
 
     /**
-     * Gets the double value of a property
+     * Gets the double value of a property.
      *
      * @param field the field
      * @param defaultValue the default value
@@ -341,7 +353,7 @@ public class PropertyManager implements PropertyManagerInterface
     }
 
     /**
-     * Gets values where the key is a prefix
+     * Gets values where the key is a prefix.
      *
      * @param key the key
      * @return the multiple values
@@ -353,24 +365,24 @@ public class PropertyManager implements PropertyManagerInterface
         List<String> valueList = new ArrayList<String>();
 
         List<Integer> indexList = new ArrayList<Integer>();
-        
+
         for(String storedKey : fieldValueMap.keySet())
         {
             if(storedKey.startsWith(updatedKey))
             {
                 String[] components = storedKey.split(ESCAPED_DELIMETER);
-                
+
                 if(components.length > 1)
                 {
                     Integer index = Integer.valueOf(components[components.length - 1]);
-                    
+
                     indexList.add(index);
                 }
             }
         }
 
         Collections.sort(indexList);
-        
+
         for(Integer index : indexList)
         {
             String newKey = updatedKey + index;
@@ -397,5 +409,34 @@ public class PropertyManager implements PropertyManagerInterface
                 backgroundColour.getAlpha());
 
         updateValue(key, value);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.property.PropertyManagerInterface#clearValue(java.lang.String)
+     */
+    @Override
+    public void clearValue(String key, boolean useDelimeter) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(key);
+        if(useDelimeter)
+        {
+            sb.append(DELIMETER);
+        }
+        
+        String prefix = sb.toString();
+
+        List<String> keyToRemove = new ArrayList<String>();
+        for(String existingKey : fieldValueMap.keySet())
+        {
+            if(existingKey.startsWith(prefix))
+            {
+                keyToRemove.add(existingKey);
+            }
+        }
+
+        for(String existingKey : keyToRemove)
+        {
+            fieldValueMap.remove(existingKey);
+        }
     }
 }

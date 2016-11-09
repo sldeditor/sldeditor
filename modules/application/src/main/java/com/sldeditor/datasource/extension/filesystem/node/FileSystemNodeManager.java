@@ -31,8 +31,11 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode;
+import com.sldeditor.extension.filesystem.FileSystemExtension;
 
 /**
  * Manages the access between the file system tree and the nodes.
@@ -48,7 +51,7 @@ public class FileSystemNodeManager {
     private static DefaultTreeModel treeModel;
 
     /**
-     * Private default constructor
+     * Private default constructor.
      */
     private FileSystemNodeManager()
     {
@@ -69,22 +72,20 @@ public class FileSystemNodeManager {
      * Show node in tree.
      *
      * @param url the url
-     * @param allowFiles the allow files
      */
-    public static void showNodeInTree(URL url, boolean allowFiles)
+    public static void showNodeInTree(URL url)
     {
-        getTreePath(url, allowFiles, true);
+        getTreePath(url, true);
     }
 
     /**
      * Gets the tree path for the given folder/file.
      *
      * @param url the url
-     * @param allowFiles the allow files
      * @param showInTree the show in tree
      * @return the tree path
      */
-    private static DefaultMutableTreeNode getTreePath(URL url, boolean allowFiles, boolean showInTree)
+    private static DefaultMutableTreeNode getTreePath(URL url, boolean showInTree)
     {
         if(url == null)
         {
@@ -119,7 +120,7 @@ public class FileSystemNodeManager {
             if(parent != null)
             {
                 folderList.add(0, parent.getPath());
-                folderList.add(0, "Root");
+                folderList.add(0, FileSystemExtension.ROOT_NODE);
 
                 DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
 
@@ -148,7 +149,7 @@ public class FileSystemNodeManager {
                     }
 
                     // Select file
-                    if(file.isFile() && allowFiles)
+                    if(file.isFile())
                     {
                         node = searchNode(isRoot, node, file.getName());
                         if(node != null)
@@ -259,10 +260,9 @@ public class FileSystemNodeManager {
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(FileSystemNodeManager.class, e);
         }
-        boolean allowFiles = file.isFile();
         boolean showInTree = false;
 
-        DefaultMutableTreeNode node = getTreePath(url, allowFiles, showInTree);
+        DefaultMutableTreeNode node = getTreePath(url, showInTree);
 
         return node;
     }
@@ -277,5 +277,70 @@ public class FileSystemNodeManager {
         {
             ((DefaultTreeModel)fileSystemTreeComponent.getModel()).nodeStructureChanged(parentNode);
         }
+    }
+
+    /**
+     * Show node in tree.
+     *
+     * @param connectionData the connection data
+     */
+    public static void showNodeInTree(GeoServerConnection connectionData) {
+        getTreePath(connectionData, true);
+    }
+
+    /**
+     * Gets the tree path.
+     *
+     * @param connectionData the connection data
+     * @param showInTree the show in tree
+     * @return the tree path
+     */
+    private static DefaultMutableTreeNode getTreePath(GeoServerConnection connectionData,
+            boolean showInTree)
+    {
+        if(treeModel == null)
+        {
+            return null;
+        }
+
+        List<String> folderList = new ArrayList<String>();
+        folderList.add(FileSystemExtension.ROOT_NODE);
+        folderList.add(GeoServerOverallNode.GEOSERVER_NODE);
+        if(connectionData != null)
+        {
+            folderList.add(connectionData.getConnectionName());
+        }
+
+        DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
+
+        boolean isRoot = true;
+
+        for(String subFolder : folderList)
+        {
+            node = searchNode(isRoot, node, subFolder);
+
+            if(node == null)
+            {
+                break;
+            }
+            isRoot = false;
+        }
+
+        if(node != null)
+        {
+            TreeNode[] nodes = treeModel.getPathToRoot(node);
+            TreePath path = new TreePath(nodes);
+
+            if(showInTree)
+            {
+                fileSystemTreeComponent.scrollPathToVisible(path);
+                fileSystemTreeComponent.expandPath(path);
+                fileSystemTreeComponent.setSelectionPath(path);
+            }
+
+            return node;
+        }
+
+        return null;
     }
 }

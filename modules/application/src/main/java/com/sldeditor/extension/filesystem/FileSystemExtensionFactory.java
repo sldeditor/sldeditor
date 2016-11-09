@@ -35,6 +35,12 @@ public class FileSystemExtensionFactory {
 
     /** The extension list. */
     private static List<FileSystemInterface> extensionList = new ArrayList<FileSystemInterface>();
+    
+    /** The geo server input. */
+    private static GeoServerInput geoServerInput;
+
+    /** The file system input. */
+    private static FileSystemInput fileSystemInput;
 
     /**
      * Populate default file extensions.
@@ -42,8 +48,10 @@ public class FileSystemExtensionFactory {
      * @param toolMgr the tool manager
      */
     private static void populateExtensions(ToolSelectionInterface toolMgr) {
-        extensionList.add(new GeoServerInput(toolMgr));
-        extensionList.add(new FileSystemInput(toolMgr));
+        geoServerInput = new GeoServerInput(toolMgr);
+        extensionList.add(geoServerInput);
+        fileSystemInput = new FileSystemInput(toolMgr);
+        extensionList.add(fileSystemInput);
     }
 
     /**
@@ -78,5 +86,23 @@ public class FileSystemExtensionFactory {
         }
 
         return extensionList;
+    }
+
+    /**
+     * Gets the geo server input.
+     *
+     * @return the geoServerInput
+     */
+    public static GeoServerInput getGeoServerInput() {
+        return geoServerInput;
+    }
+
+    /**
+     * Gets the file system input.
+     *
+     * @return the fileSystemInput
+     */
+    public static FileSystemInput getFileSystemInput() {
+        return fileSystemInput;
     }
 }

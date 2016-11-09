@@ -24,12 +24,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 
 /**
  * The Interface FileSystemInterface is implemented by nodes that
@@ -47,7 +47,7 @@ public interface FileSystemInterface extends Serializable
      * @param model the model
      * @param rootNode the root node
      */
-    void populate(JTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode);
+    void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode);
 
     /**
      * Tree expanded.

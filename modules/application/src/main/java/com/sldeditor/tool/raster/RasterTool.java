@@ -36,6 +36,7 @@ import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
@@ -135,7 +136,12 @@ public class RasterTool implements ToolInterface {
                         // Load sld
                         List<SLDDataInterface> sldFilesToLoad = new ArrayList<SLDDataInterface>();
                         sldFilesToLoad.add(sldData);
-                        loadSLD.loadSLDString(false, false, sldFilesToLoad);
+
+                        SelectedFiles selectedFiles = new SelectedFiles();
+                        selectedFiles.setSldData(sldFilesToLoad);
+                        selectedFiles.setFolderName(rasterFile.getParent());
+
+                        loadSLD.loadSLDString(selectedFiles);
                     }
                 }
             }

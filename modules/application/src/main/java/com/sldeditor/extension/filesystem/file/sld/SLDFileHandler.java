@@ -167,7 +167,7 @@ public class SLDFileHandler implements FileHandlerInterface
     /**
      * Internal open file.
      *
-     * @param f the ffile
+     * @param f the file
      * @param list the list
      */
     private void internalOpenFile(File f, List<SLDDataInterface> list) {

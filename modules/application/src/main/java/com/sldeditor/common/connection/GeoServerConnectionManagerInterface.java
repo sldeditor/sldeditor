@@ -44,4 +44,11 @@ public interface GeoServerConnectionManagerInterface {
      */
     void updateList(Set<GeoServerConnection> keySet);
 
+    /**
+     * Gets the connection data for the given name.
+     *
+     * @param connectionDataName the connection data name
+     * @return the connection
+     */
+    GeoServerConnection getConnection(String connectionDataName);
 }

@@ -120,6 +120,11 @@ public class UILayoutFactory
      */
     public static Map<String, String> getAllLayouts()
     {
+        if(uiLayoutMap.isEmpty())
+        {
+            populate();
+        }
+
         Map<String, String> map = new LinkedHashMap<String, String>();
 
         for(String className : uiLayoutMap.keySet())

@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
+import com.sldeditor.common.preferences.PrefData;
 
 /**
  * The Interface ExtensionInterface.
@@ -98,6 +99,15 @@ public interface ExtensionInterface {
      * Sets the arguments.
      *
      * @param extensionArgList the new arguments
+     * @return the argument accepted
      */
-    public void setArguments(List<String> extensionArgList);
+    public String setArguments(List<String> extensionArgList);
+
+    /**
+     * Update for preferences.
+     *
+     * @param prefData the pref data
+     * @param extensionArgList the extension arg list
+     */
+    public void updateForPreferences(PrefData prefData, List<String> extensionArgList);
 }

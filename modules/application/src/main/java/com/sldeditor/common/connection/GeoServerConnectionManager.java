@@ -65,14 +65,16 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     @Override
     public List<GeoServerConnection> getConnectionList() {
         List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
-        
+
         List<String> valueList = PropertyManagerFactory.getInstance().getMultipleValues(GEOSERVER_CONNECTION_FIELD);
 
         for(String connectionString : valueList)
         {
-            GeoServerConnection connection = new GeoServerConnection(connectionString);
-
-            connectionList.add(connection);
+            GeoServerConnection connection = GeoServerConnection.decodeString(connectionString);
+            if(connection != null)
+            {
+                connectionList.add(connection);
+            }
         }
 
         return connectionList;
@@ -85,10 +87,31 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
      */
     @Override
     public void updateList(Set<GeoServerConnection> keySet) {
-        int count = 1;
+        int count = 0;
+        PropertyManagerFactory.getInstance().clearValue(GEOSERVER_CONNECTION_FIELD, true);
         for(GeoServerConnection connection : keySet)
         {
+            count ++;
             PropertyManagerFactory.getInstance().updateValue(GEOSERVER_CONNECTION_FIELD, count, connection.encodeAsString());
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#getConnection(java.lang.String)
+     */
+    @Override
+    public GeoServerConnection getConnection(String connectionDataName) {
+        if(connectionDataName != null)
+        {
+            List<GeoServerConnection> connectionList = getConnectionList();
+            for(GeoServerConnection existingConnectionData : connectionList)
+            {
+                if(existingConnectionData.getConnectionName().compareTo(connectionDataName) == 0)
+                {
+                    return existingConnectionData;
+                }
+            }
+        }
+        return null;
     }
 }

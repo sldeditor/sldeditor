@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -36,6 +35,7 @@ import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.extension.filesystem.FileSystemExtensionFactory;
 
 /**
@@ -64,7 +64,7 @@ public class FileSystemExtensionFactoryTest {
          * @param rootNode the root node
          */
         @Override
-        public void populate(JTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
+        public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
         }
 
         /**

@@ -35,10 +35,15 @@ public class PrefManagerUI {
     {
         PrefPanel panel = new PrefPanel();
 
-        if(panel.showDialog(PrefManager.getInstance().getPrefData()))
+        PrefData originalPrefData = PrefManager.getInstance().getPrefData();
+        if(panel.showDialog(originalPrefData))
         {
             PrefData prefData = panel.getPrefData();
 
+            if(!originalPrefData.isSaveLastFolderView() && prefData.isSaveLastFolderView())
+            {
+                prefData.setLastFolderViewed(originalPrefData.getLastFolderViewed());
+            }
             PrefManager.getInstance().setPrefData(prefData);
         }
     }

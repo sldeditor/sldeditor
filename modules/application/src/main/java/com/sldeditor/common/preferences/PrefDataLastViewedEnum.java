@@ -16,45 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.common;
 
-import java.io.File;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
-import com.sldeditor.common.filesystem.SelectedFiles;
+package com.sldeditor.common.preferences;
 
 /**
- * The Interface LoadSLDInterface.
+ * The Enum PrefDataLastViewedEnum.
  *
  * @author Robert Ward (SCISYS)
  */
-public interface LoadSLDInterface {
-
-    /**
-     * Empty SLD.
-     */
-    void emptySLD();
-
-    /**
-     * Method called when a new folder/file has been selected but not processed
-     */
-    void preLoad();
-
-    /**
-     * Load sld from a string.
-     *
-     * @param selectedFiles the selected files
-     * @return true, if successful
-     */
-    boolean loadSLDString(SelectedFiles selectedFiles);
-
-    /**
-     * Read sld file and return it.
-     *
-     * @param file the filename
-     * @return the styled layer descriptor
-     */
-    StyledLayerDescriptor readSLDFile(File file);
-
+public enum PrefDataLastViewedEnum {
+    FOLDER,
+    
+    GEOSERVER
 }

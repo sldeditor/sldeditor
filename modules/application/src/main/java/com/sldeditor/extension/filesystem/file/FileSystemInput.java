@@ -36,7 +36,6 @@ import java.util.Map;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -51,6 +50,8 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
@@ -66,8 +67,8 @@ import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.tool.ysld.YSLDTool;
 
 /**
- * Class that makes the underlying file system appear as a file system!
- * 
+ * Class that makes the underlying file system appear as a file system!.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemInput implements FileSystemInterface
@@ -83,6 +84,9 @@ public class FileSystemInput implements FileSystemInterface
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(FileSystemInput.class);
+
+    /** The tree. */
+    private FSTree tree = null;
 
     /**
      * Instantiates a new file system input.
@@ -126,12 +130,13 @@ public class FileSystemInput implements FileSystemInterface
     }
 
     /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.FileSystemInterface#populate(javax.swing.JTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
      */
     @Override
-    public void populate(JTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
+    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
     {
-        treeModel = model;
+        this.treeModel = model;
+        this.tree = tree;
 
         FileTreeNode.setTreeModel(model);
         FileTreeNode.setInputInterface(this);
@@ -226,6 +231,16 @@ public class FileSystemInput implements FileSystemInterface
     public SelectedFiles getSLDContents(NodeInterface node)
     {
         SelectedFiles selectedFiles = new SelectedFiles();
+        if(node instanceof FileTreeNode)
+        {
+            FileTreeNode fileTreeNode = (FileTreeNode)node;
+
+            selectedFiles.setIsFolder(fileTreeNode.isDir());
+
+            File f = fileTreeNode.getFile();
+            String folderName = f.isFile() ? f.getParent() : f.getAbsolutePath();
+            selectedFiles.setFolderName(folderName);
+        }
 
         for(FileHandlerInterface handler : fileHandlerMap.values())
         {
@@ -236,15 +251,10 @@ public class FileSystemInput implements FileSystemInterface
                 selectedFiles.setSldData(sldContentList);
                 selectedFiles.setDataSource(handler.isDataSource());
 
-                if(node instanceof FileTreeNode)
-                {
-                    FileTreeNode fileTreeNode = (FileTreeNode)node;
-
-                    selectedFiles.setIsFolder(fileTreeNode.isDir());
-                }
                 return selectedFiles;
             }
         }
+
         return selectedFiles;
     }
 
@@ -268,7 +278,7 @@ public class FileSystemInput implements FileSystemInterface
     }
 
     /**
-     * Gets the file handler for the given file extension
+     * Gets the file handler for the given file extension.
      *
      * @param filename the filename
      * @return the file handler
@@ -463,5 +473,32 @@ public class FileSystemInput implements FileSystemInterface
         }
 
         return Localisation.getString(FileSystemInput.class, "FileSystemInput.unknown");
+    }
+
+    /**
+     * Sets the folder.
+     *
+     * @param url the url
+     * @param disableTreeSelection the disable tree selection
+     */
+    public void setFolder(URL url, boolean disableTreeSelection)
+    {
+        if(tree != null)
+        {
+            // Disable the tree selection
+            if(disableTreeSelection)
+            {
+                tree.setIgnoreSelection(true);
+            }
+            tree.clearSelection();
+
+            FileSystemNodeManager.showNodeInTree(url);
+
+            if(disableTreeSelection)
+            {
+                // Enable the tree selection
+                tree.setIgnoreSelection(false);
+            }
+        }
     }
 }

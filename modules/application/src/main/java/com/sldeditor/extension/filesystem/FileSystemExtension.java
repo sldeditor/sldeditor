@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -49,12 +48,19 @@ import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
+import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
+import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.ExtensionInterface;
+import com.sldeditor.extension.filesystem.file.FileSystemInput;
 
 /**
  * Application extension that presents a file system to the user.
@@ -63,6 +69,18 @@ import com.sldeditor.extension.ExtensionInterface;
  */
 public class FileSystemExtension implements ExtensionInterface, FileSelectionInterface
 {
+    /** The Constant ROOT_NODE. */
+    public static final String ROOT_NODE = Localisation.getString(FileSystemExtension.class, "FileSystemExtension.root");
+
+    /** The Constant FOLDER_ARG. */
+    private static final String FOLDER_ARG = "folder";
+
+    /** The Constant GEOSERVER_ARG. */
+    private static final String GEOSERVER_ARG = "geoserver";
+
+    /** The Constant EXTENSION_ARG_PREFIX. */
+    private static final String EXTENSION_ARG_PREFIX = "file";
+
     /** The parent obj. */
     private LoadSLDInterface parentObj = null;
 
@@ -94,11 +112,6 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     {
         this.toolMgr = toolMgr;
 
-        if(toolMgr == null)
-        {
-            return;
-        }
-
         this.parentObj = parent;
 
         // Add extensions
@@ -108,7 +121,13 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         extensionPanel.setLayout(new BorderLayout());
         extensionPanel.setPreferredSize(new Dimension(400, 400));
 
-        JPanel toolPanel = toolMgr.getPanel();
+        JPanel toolPanel = null;
+
+        if(toolMgr != null)
+        {
+            toolPanel = toolMgr.getPanel();
+        }
+
         if(toolPanel != null)
         {
             extensionPanel.add(toolPanel, BorderLayout.NORTH);
@@ -120,9 +139,11 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         DefaultMutableTreeNode rootNode;
         try
         {
-            rootNode = new DefaultMutableTreeNode("Root");
+            rootNode = new DefaultMutableTreeNode(ROOT_NODE);
 
             model = new DefaultTreeModel(rootNode);
+
+            FileSystemNodeManager.create(tree, model);
 
             for(FileSystemInterface extension : extensionList)
             {
@@ -131,10 +152,8 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         }
         catch (SecurityException e1)
         {
-            e1.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e1);
         }
-
-        FileSystemNodeManager.create(tree, model);
 
         tree.setModel(model);
         tree.setDragEnabled(true);
@@ -243,130 +262,144 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                 parentObj.preLoad();
             }
 
-            List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-            List<NodeInterface> nodeList = new ArrayList<NodeInterface>();
-            boolean isDataSource = false;
-            boolean isFolder = false;
+            SelectedFiles combinedFiles = treeItemSelected();
 
-            TreePath[] selectedPaths = tree.getSelectionPaths();
-
-            if(selectedPaths != null)
+            if((parentObj != null) && !parentObj.loadSLDString(combinedFiles))
             {
-                for(TreePath selectedPath : selectedPaths)
-                {
-                    Object o = selectedPath.getLastPathComponent();
-
-                    if(o instanceof NodeInterface)
-                    {
-                        NodeInterface handler = (NodeInterface)o;
-
-                        FileSystemInterface input = handler.getHandler();
-                        SelectedFiles selectedFiles = input.getSLDContents(handler);
-
-                        if(selectedFiles != null)
-                        {
-                            isDataSource = selectedFiles.isDataSource();
-                            isFolder |= selectedFiles.isFolder();
-                            List<SLDDataInterface> handlerDataList = selectedFiles.getSldData();
-                            if(handlerDataList != null)
-                            {
-                                sldDataList.addAll(handlerDataList);
-                            }
-                        }
-
-                        nodeList.add(handler);
-                    }
-                }
-
-                toolMgr.setSelectedItems(nodeList, sldDataList);
-
-                if(!parentObj.loadSLDString(isFolder, isDataSource, sldDataList))
-                {
-                    tree.revertSelection(e.getOldLeadSelectionPath());
-                }
-            }
-            else
-            {
-                toolMgr.setSelectedItems(nodeList, sldDataList);
+                tree.revertSelection(e.getOldLeadSelectionPath());
             }
         }
     }
 
     /**
-     * Sets the arguments.
+     * Called to determine the selected items from the tree nodes selected.
      *
-     * @param extensionArgList the new arguments
+     * @return the selected files
      */
+    private SelectedFiles treeItemSelected() {
+        List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
+        List<NodeInterface> nodeList = new ArrayList<NodeInterface>();
+
+        SelectedFiles combinedFiles = new SelectedFiles();
+
+        TreePath[] selectedPaths = tree.getSelectionPaths();
+
+        if(selectedPaths != null)
+        {
+            for(TreePath selectedPath : selectedPaths)
+            {
+                Object o = selectedPath.getLastPathComponent();
+
+                if(o instanceof NodeInterface)
+                {
+                    NodeInterface handler = (NodeInterface)o;
+
+                    FileSystemInterface input = handler.getHandler();
+                    SelectedFiles selectedFiles = input.getSLDContents(handler);
+
+                    if(selectedFiles != null)
+                    {
+                        combinedFiles.setDataSource(selectedFiles.isDataSource());
+                        combinedFiles.setFolderName(selectedFiles.getFolderName());
+                        combinedFiles.setConnectionData(selectedFiles.getConnectionData());
+                        combinedFiles.setIsFolder(combinedFiles.isFolder() | selectedFiles.isFolder());
+
+                        List<SLDDataInterface> handlerDataList = selectedFiles.getSldData();
+                        if(handlerDataList != null)
+                        {
+                            combinedFiles.appendSLDData(handlerDataList);
+                        }
+                    }
+
+                    nodeList.add(handler);
+                }
+            }
+        }
+
+        if(toolMgr != null)
+        {
+            toolMgr.setSelectedItems(nodeList, sldDataList);
+        }
+        return combinedFiles;
+    }
+
     /* (non-Javadoc)
      * @see com.sldeditor.batch.ExtensionInterface#setArguments(java.util.List)
      */
-    public void setArguments(List<String> extensionArgList)
+    @Override
+    public String setArguments(List<String> extensionArgList)
     {
-        boolean folderSet = false;
+        String acceptArgument = null;
 
-        for(String arg : extensionArgList)
+        if(extensionArgList != null)
         {
-            logger.debug(arg);
-
-            String[] components = arg.split("=");
-            String field = components[0];
-            String value = components[1];
-
-            if(components.length == 2)
+            for(String arg : extensionArgList)
             {
-                if(field.compareToIgnoreCase("folder") == 0)
+                logger.debug(arg);
+
+                String[] components = arg.split("=");
+
+                if(components.length == 2)
                 {
-                    File folder = new File(value);
-                    if(folder.exists())
+                    String field = components[0];
+                    String value = components[1];
+
+                    if(field.compareToIgnoreCase(FOLDER_ARG) == 0)
                     {
-                        try
+                        // Check to if the stored string is a folder,
+                        // expecting it to be stored as an URL
+                        File folder = new File(value);
+
+                        if(folder.isDirectory())
                         {
-                            setFolder(folder.toURI().toURL(), false);
-                            folderSet = true;
+                            // Folder was stored as an URL
+                            if(folder.exists())
+                            {
+                                try
+                                {
+                                    FileSystemExtensionFactory.getFileSystemInput().setFolder(folder.toURI().toURL(), false);
+                                    acceptArgument = arg;
+                                }
+                                catch (MalformedURLException e)
+                                {
+                                    ConsoleManager.getInstance().exception(this, e);
+                                }
+                            }
+                            else
+                            {
+                                ConsoleManager.getInstance().error(this, 
+                                        Localisation.getField(getClass(), "FileSystemExtension.folderDoesNotExist") + value);
+                            }
                         }
-                        catch (MalformedURLException e)
+                    }
+                    else if(field.compareToIgnoreCase(GEOSERVER_ARG) == 0)
+                    {
+                        // It wasn't a folder, check to see if it is a GeoServer connection
+                        GeoServerConnection connectionData = GeoServerConnectionManager.getInstance().getConnection(value);
+                        if(connectionData != null)
                         {
-                            ConsoleManager.getInstance().exception(this, e);
+                            FileSystemExtensionFactory.getGeoServerInput().setFolder(connectionData, true);
+                            acceptArgument = arg;
+                        }
+                        else
+                        {
+                            // Don't recognise the string
+                            ConsoleManager.getInstance().error(this,
+                                    Localisation.getField(getClass(), "FileSystemExtension.geoServerDoesNotExist") + value);
                         }
                     }
                     else
                     {
-                        ConsoleManager.getInstance().error(this, "Extension start up folder does not exist : " + value);
+                        // Don't recognise the string
+                        ConsoleManager.getInstance().error(this,
+                                Localisation.getField(getClass(), "FileSystemExtension.unknownStartUp") + value);
                     }
                 }
             }
-        }
 
-        if(!folderSet)
-        {
-            if(toolMgr != null)
-            {
-                toolMgr.setSelectedItems(null, null);
-            }
+            treeItemSelected();
         }
-    }
-
-    /**
-     * Sets the folder.
-     *
-     * @param url the url
-     * @param allowFiles the allow files
-     */
-    private void setFolder(URL url, boolean allowFiles)
-    {
-        if(tree != null)
-        {
-            // Disable the tree selection
-            tree.setIgnoreSelection(true);
-            tree.clearSelection();
-        }
-
-        FileSystemNodeManager.showNodeInTree(url, allowFiles);
-        if(tree != null)
-        {
-            // Enable the tree selection
-            tree.setIgnoreSelection(false);
-        }
+        return acceptArgument;
     }
 
     /**
@@ -377,32 +410,10 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     /* (non-Javadoc)
      * @see com.sldeditor.batch.ExtensionInterface#getExtensionArgPrefix()
      */
-
+    @Override
     public String getExtensionArgPrefix()
     {
-        return "file";
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-
-        FileSystemExtension mgr = new FileSystemExtension();
-
-        mgr.initialise(null, null);
-
-        JPanel panel = mgr.getPanel();
-
-        JFrame frame = new JFrame();
-
-        frame.getContentPane().add(panel);
-
-        frame.setVisible(true);
-
-        frame.setSize(400, 600);
+        return EXTENSION_ARG_PREFIX;
     }
 
     /**
@@ -467,14 +478,18 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     @Override
     public List<SLDDataInterface> open(URL url) {
 
-        setFolder(url, true);
-
-        for(FileSystemInterface extension : extensionList)
+        FileSystemInput fileSystemInput = FileSystemExtensionFactory.getFileSystemInput();
+        if(fileSystemInput != null)
         {
-            List<SLDDataInterface> sldDataList = extension.open(url);
-            if(sldDataList != null)
+            fileSystemInput.setFolder(url, true);
+
+            for(FileSystemInterface extension : extensionList)
             {
-                return sldDataList;
+                List<SLDDataInterface> sldDataList = extension.open(url);
+                if(sldDataList != null)
+                {
+                    return sldDataList;
+                }
             }
         }
         return null;
@@ -502,5 +517,46 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         }
 
         return saved;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.extension.ExtensionInterface#updateForPreferences(com.sldeditor.common.preferences.PrefData, java.util.List)
+     */
+    @Override
+    public void updateForPreferences(PrefData prefData, List<String> extensionArgList) {
+        if((prefData != null) && (extensionArgList != null))
+        {
+            if(prefData.isSaveLastFolderView())
+            {
+                String folderName = prefData.getLastFolderViewed();
+
+                if(folderName != null)
+                {
+                    String suffix = (prefData.getLastViewedKey() == PrefDataLastViewedEnum.GEOSERVER) ? GEOSERVER_ARG : FOLDER_ARG;
+                    String prefix = String.format("%s.%s.%s=",
+                            ExtensionFactory.EXTENSION_PREFIX,
+                            getExtensionArgPrefix(),
+                            suffix);
+
+                    // Check to see if the argument already exists
+                    boolean found = false;
+                    for(String arg : extensionArgList)
+                    {
+                        if(arg.startsWith(prefix))
+                        {
+                            found = true;
+                        }
+                    }
+
+                    // If the argument doesn't already exists then use
+                    if(!found)
+                    {
+                        String arg = prefix + folderName;
+
+                        extensionArgList.add(arg);
+                    }
+                }
+            }
+        }
     }
 }

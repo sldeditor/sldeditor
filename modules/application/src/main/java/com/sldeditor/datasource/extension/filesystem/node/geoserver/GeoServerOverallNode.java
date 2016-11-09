@@ -36,6 +36,10 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
  */
 public class GeoServerOverallNode extends DefaultMutableTreeNode implements NodeInterface
 {
+    
+    /** The Constant GEOSERVER_NODE. */
+    public static final String GEOSERVER_NODE = "GeoServer";
+
     /** The handler. */
     private FileSystemInterface handler = null;
 
@@ -55,7 +59,7 @@ public class GeoServerOverallNode extends DefaultMutableTreeNode implements Node
      */
     public GeoServerOverallNode(FileSystemInterface handler)
     {
-        super("GeoServer");
+        super(GEOSERVER_NODE);
         this.handler = handler;
     }
 
