@@ -21,3 +21,6 @@ cd $CURRENT_DIR
 find $ROOT \( -name 'pom.xml.versionsBackup' \) -delete
 python changelog-vbump.py -i -v $NEW_VERSION ../changelog/.github_changelog_generator
 
+# Force Versions.h to be generated
+cd $ROOT
+mvn clean install -DskipTests

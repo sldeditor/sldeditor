@@ -18,6 +18,10 @@ cd %CURRENT_DIR%
 changelog-vbump.py -i -v %NEW_VERSION% ..\changelog\.github_changelog_generator
 
 
+rem Force Versions.h to be generated
+cd %ROOT%
+call mvn clean install -DskipTests
+
 goto end
 
 :usage
