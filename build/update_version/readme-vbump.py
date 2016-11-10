@@ -2,15 +2,15 @@
 #
 # coding: utf-8
 """
-Version-bump script for github_changelog_generator.
-Reads .github_changelog_generator, parses the future version, increments it and writes an updated file to stdout.
+Version-bump script for README.md.
+Reads README.md, parses the future version, increments it and writes an updated file to stdout.
 
 Usage:
-    changelog-vbump.py [-i] [-v <new version number>] [path to .github_changelog_generator]
+    readme-vbump.py [-i] [-v <new version number>] [path to README.md]
 
 Options:
-    -n  Dry run: just print the new version number that would be written to .github_changelog_generator
-    -i  Edit .github_changelog_generator in place, instead of writing result to stdout
+    -n  Dry run: just print the new version number that would be written to README.md
+    -i  Edit README.md in place, instead of writing result to stdout
     -v  specify a version number, e.g. "1.23"
 
 If the next version number (v_n) is not specified, it will be guestimated from
@@ -21,15 +21,16 @@ the current version (v_c) using the following rules:
         increment z and add '-SNAPSHOT', so v_n = a.b.c...(z+1)-SNAPSHOT
     - otherwise give up and throw an error
 
-If .github_changelog_generator file is not specified, the script will look in the current working directory.
+If README.md file is not specified, the script will look in the current working directory.
 
-Tested with Python 2.7.5 and 3.3.2.
-Requires lxml.
 """
 import sys
 import getopt
 import os.path
-from lxml import etree as ET
+import hashlib
+import datetime
+
+download = 'https://github.com/robward-scisys/sldeditor/releases/download/v{}/SLDEditor.jar)'
 
 class InvalidVersion(Exception):
     def __init__(self, msg):
@@ -41,7 +42,7 @@ def main(args):
     next_version = None
     in_place = False
     dry_run = False
-    input_file = './.github_changelog_generator'
+    input_file = './README.md'
 
     try:
         opts, args = getopt.getopt(args, 'nv:ih', ['dryrun', 'version', 'inplace', 'help'])
@@ -69,7 +70,7 @@ def main(args):
     if len(args) > 0:
         input_file = args[0]
     if not os.path.isfile(input_file):
-        log("ERROR: Could not find .github_changelog_generator file: %s" %input_file)
+        log("ERROR: Could not find README.md file: %s" %input_file)
         usage()
         return False
 
@@ -91,62 +92,66 @@ def bump(input_file, next_version, in_place, dry_run):
         for line in ins:
             array.append(line)
     
-    field = 'future-release='
+    fields = ['[![GitHub release]', '[![Github All Releases]' ]
+    release_field = '* [SLDEditor Release '
     index = -1
-    found = False
     for line in array:
         index = index + 1
-        if line.startswith(field):
-            found = True
-            break
+        for field in fields:
+            if line.startswith(field):
+                array[index] = update(line, next_version)
+        if line.startswith(release_field):
+            array[index] = update_release(line, next_version)
 
-    if found == False:
-        raise InvalidVersion("Failed to find future-release")
 
-    current_version = array[index][len(field):]
-    
-    log("Current version is %s" % current_version)
-
-    # Calculate the next version, if not specified
-    if not next_version:
-        next_version = increment_version(current_version)
-
-    # If dry run, just print the next version and exit
-    if dry_run:
-        print next_version
+    # Update the content
+    contents = ''.join(array).replace('\n', '\r\n') + '\r\n'
+    if in_place:
+        # Write back to file
+        write_to_file(contents, input_file)
     else:
-        log("Incrementing version to %s" % next_version)
+        # Print result to stdout
+        print_contents(contents)
 
-        # Update the content
-        array[index] = field + next_version
-        contents = ''.join(array).replace('\n', '\r\n') + '\r\n'
-        if in_place:
-            # Write back to file
-            write_to_file(contents, input_file)
-        else:
-            # Print result to stdout
-            print_contents(contents)
+def hashfile(afile, hasher, blocksize=65536):
+    buf = afile.read(blocksize)
+    while len(buf) > 0:
+        hasher.update(buf)
+        buf = afile.read(blocksize)
+    return hasher.hexdigest()
 
-def increment_version(current_version):
+def update(line, next_version):
     # If it's a snapshot version, convert it to a release version
-    if current_version.endswith('-SNAPSHOT'):
-        return current_version[:-9]
+    if next_version.endswith('-SNAPSHOT'):
+        next_version = next_version[:-9]
 
-    parts = current_version.split(".")
-    last_part = parts[len(parts) - 1]
-    try:
-        # Add one to the final part of the version string
-        incremented_last_part = str(int(last_part) + 1)
-    except TypeError:
-        raise InvalidVersion("Unsuppported version format [%s]" % current_version)
+    start = line.find('(https://github')
+    if start == -1:
+        return line
 
-    # Try to maintain the zero padding of the old version, if any
-    incremented_last_part = incremented_last_part.zfill(len(last_part))
+    line = line[:start] + download.format(next_version)
+    print line
 
-    # Make it a snapshot version
-    incremented_last_part = incremented_last_part + '-SNAPSHOT'
+    return line
 
-    return ".".join(parts[:-1] + [incremented_last_part])
+def update_release(line, next_version):
+    # If it's a snapshot version, convert it to a release version
+    if next_version.endswith('-SNAPSHOT'):
+        next_version = next_version[:-9]
+
+    start = line.find('(https://github')
+    if start == -1:
+        return line
+
+    full_download = download.format(next_version)
+    fname = '../../bin/SLDEditor.jar'
+    md5 = hashfile(open(fname, 'rb'), hashlib.md5())
+    date_string = datetime.date.today().strftime('%d %b %Y')
+    line = '* [SLDEditor Release {}]({}) (MD5 : {}) Released {}'.format(next_version, full_download, md5, date_string);
+
+    print line
+
+    return line
 
 def write_to_file(contents, output_file):
     with open(output_file, 'wb') as f:

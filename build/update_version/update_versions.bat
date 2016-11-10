@@ -17,14 +17,10 @@ del /f /s pom.xml.versionsBackup
 cd %CURRENT_DIR%
 changelog-vbump.py -i -v %NEW_VERSION% ..\changelog\.github_changelog_generator
 
-
-<<<<<<< HEAD
-=======
 rem Force Versions.h to be generated
 cd %ROOT%
 call mvn clean install -DskipTests
 
->>>>>>> master
 goto end
 
 :usage
