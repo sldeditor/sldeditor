@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- =========================================================== -->
@@ -8,9 +8,9 @@
     <parent>
         <groupId>com.sldeditor</groupId>
         <artifactId>sldeditor</artifactId>
-        <version>0.5.0</version>
+        <version>0.6.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
-    </parent>
+   </parent>
 
     <!-- =========================================================== -->
     <!-- Project Description -->
@@ -68,7 +68,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore></ignore>
+                                                <ignore/>
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>
@@ -298,12 +298,10 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <target>
-                                <delete file="${app.version.file}.java" />
-                                <copy file="${app.version.file}.txt"
-                                    tofile="${app.version.file}.java" />
+                                <delete file="${app.version.file}.java"/>
+                                <copy file="${app.version.file}.txt" tofile="${app.version.file}.java"/>
 
-                                <replace file="${app.version.file}.java"
-                                    token="xx" value="${project.version}" />
+                                <replace file="${app.version.file}.java" token="xx" value="${project.version}"/>
                             </target>
                         </configuration>
                         <goals>
@@ -323,10 +321,8 @@
                         <configuration>
                             <target name="Remove unused shade plugin generated files">
                                 <delete>
-                                    <fileset dir="${sldeditor.dest.folder}"
-                                        includes="original-*.jar" />
-                                    <fileset dir="${sldeditor.dest.folder}"
-                                        includes="*-shaded.jar" />
+                                    <fileset dir="${sldeditor.dest.folder}" includes="original-*.jar"/>
+                                    <fileset dir="${sldeditor.dest.folder}" includes="*-shaded.jar"/>
                                 </delete>
                             </target>
                         </configuration>
@@ -427,8 +423,7 @@
                         </filter>
                     </filters>
                     <transformers>
-                        <transformer
-                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <manifestEntries>
                                 <Main-Class>${app.main.class}</Main-Class>
                                 <Specification-Title>Java Advanced
@@ -446,14 +441,11 @@
                         </transformer>
                         <!-- This bit merges the various GeoTools META-INF/services 
                             files -->
-                        <transformer
-                            implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                        <transformer
-                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                             <resource>META-INF/registryFile.jai</resource>
                         </transformer>
-                        <transformer
-                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                             <resource>META-INF/registryFile.jaiext</resource>
                         </transformer>
                     </transformers>
