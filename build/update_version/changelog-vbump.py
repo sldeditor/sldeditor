@@ -41,7 +41,7 @@ def main(args):
     next_version = None
     in_place = False
     dry_run = False
-    input_file = './pom.xml'
+    input_file = './.github_changelog_generator'
 
     try:
         opts, args = getopt.getopt(args, 'nv:ih', ['dryrun', 'version', 'inplace', 'help'])
