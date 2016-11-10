@@ -45,6 +45,8 @@ public class CheckUpdatePanel extends JDialog {
         super(Controller.getInstance().getFrame(), Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.title"), true);
         createUI();
         setSize(400,300);
+
+        Controller.getInstance().centreDialog(this);
     }
 
     /**
