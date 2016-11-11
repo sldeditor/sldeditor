@@ -27,6 +27,8 @@ import com.sldeditor.common.console.ConsoleManager;
  */
 public class VersionData implements Comparable<VersionData>, Cloneable
 {
+    private static final String SNAPSHOT_SUFFIX = "-SNAPSHOT";
+
     /** The Constant EARLIEST. */
     private static final String EARLIEST = "First";
 
@@ -62,6 +64,9 @@ public class VersionData implements Comparable<VersionData>, Cloneable
 
     /** The vendor option type. */
     private Class<?> vendorOptionType = null;
+
+    /** The snapshot flag. */
+    private boolean snapshot = false;;
 
     /**
      * Default constructor
@@ -155,7 +160,11 @@ public class VersionData implements Comparable<VersionData>, Cloneable
                 {
                     if(subPointNumber == o.subPointNumber)
                     {
-                        return 0;
+                        if(snapshot == o.snapshot)
+                        {
+                            return 0;
+                        }
+                        return (snapshot) ? -1 : 1;
                     }
                     else
                     {
@@ -265,7 +274,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         {
             return false;
         }
-        
+
         boolean inRange = minimumVersion.greaterThan(this) && this.lessThan(maximumVersion);
 
         return inRange;
@@ -469,6 +478,12 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         }
         else
         {
+            snapshot = versionString.endsWith(SNAPSHOT_SUFFIX);
+            if(snapshot)
+            {
+                versionString = versionString.substring(0, versionString.length() - SNAPSHOT_SUFFIX.length());
+            }
+
             String [] versionComponents = versionString.split("\\.");
 
             try
@@ -487,7 +502,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
                 {
                     this.pointNumber = decodeNumber(versionComponents[2]);
                 }
-                
+
                 if(versionComponents.length > 3)
                 {
                     this.subPointNumber = decodeNumber(versionComponents[2]);

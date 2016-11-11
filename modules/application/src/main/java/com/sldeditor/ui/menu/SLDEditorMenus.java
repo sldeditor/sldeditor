@@ -47,8 +47,10 @@ import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
+import com.sldeditor.generated.Version;
 import com.sldeditor.ui.about.AboutDialog;
 import com.sldeditor.ui.preferences.PrefManagerUI;
+import com.sldeditor.update.CheckUpdatePanel;
 
 /**
  * Class that creates and handles the application menus.
@@ -212,6 +214,15 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
             }
         });
 
+        JMenuItem mntmCheckUpdates = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "tools.menu.checkUpdates"));
+        mntmCheckUpdates.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CheckUpdatePanel panel = new CheckUpdatePanel();
+
+                panel.showPanel(Version.getVersionNumber());
+            }
+        });
+
         // Create any extension specific menu items
         for(ExtensionInterface extension : extensionList)
         {
@@ -219,6 +230,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         }
 
         mnTools.add(mntmOptions);
+        mnTools.add(mntmCheckUpdates);
 
         JMenuItem mntmAboutDlg = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "tools.menu.about"));
         mntmAboutDlg.addActionListener(new ActionListener() {
