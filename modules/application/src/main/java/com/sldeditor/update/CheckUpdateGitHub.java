@@ -1,8 +1,20 @@
 /*
- *    SLDEditor - SLD Editor application
+ * SLD Editor - The Open Source Java SLD Editor
  *
- *    (C) 2016, SCISYS
+ * Copyright (C) 2016, SCISYS UK Limited
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.sldeditor.update;
@@ -31,6 +43,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
 
 /**
@@ -40,12 +54,35 @@ import com.sldeditor.common.vendoroption.VersionData;
  */
 public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
-    private static final String DOWNLOAD_URL = "https://github.com/robward-scisys/sldeditor/releases";
+    /** The Constant TAG_PREFIX. */
+    private static final String TAG_PREFIX = "v";
+
+    /** The Constant BODY. */
+    private static final String BODY = "body";
+
+    /** The Constant PUBLISHED_AT. */
+    private static final String PUBLISHED_AT = "published_at";
+
+    /** The Constant TAG_NAME. */
+    private static final String TAG_NAME = "tag_name";
+
+    /** The Constant USER. */
+    private static final String USER = "robward-scisys";
+
+    /** The Constant REPO. */
+    private static final String REPO = "sldeditor";
+
+    /** The Constant DOWNLOAD_URL. */
+    private static final String DOWNLOAD_URL = String.format("https://github.com/%s/%s/releases", USER, REPO);
+
     /** The Constant URL. */
-    private static final String URL = "https://api.github.com/repos/robward-scisys/sldeditor/releases";
+    private static final String URL = String.format("https://api.github.com/%s/%s/releases", USER, REPO);
+
+    /** The destination reached flag. */
+    private boolean destinationReached = false;
 
     /**
-     * Instantiates a new check update git hub.
+     * Instantiates a new check update github.
      */
     public CheckUpdateGitHub()
     {
@@ -69,33 +106,56 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      */
     private String readData()
     {
+        return readDataFromURL(URL);
+    }
+
+    /**
+     * Read data from URL.
+     *
+     * @param url the url
+     * @return the string
+     */
+    protected String readDataFromURL(String url)
+    {
+        destinationReached = false;
+
         StringBuilder sb = new StringBuilder();
-        try
+        if(url != null)
         {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpGet getRequest = new HttpGet(URL);
-            getRequest.addHeader("accept", "application/json");
+            try
+            {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpGet getRequest = new HttpGet(url);
+                getRequest.addHeader("accept", "application/json");
 
-            HttpResponse response = httpClient.execute(getRequest);
+                HttpResponse response = httpClient.execute(getRequest);
 
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + response.getStatusLine().getStatusCode());
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    ConsoleManager.getInstance().error(this,
+                            String.format("%s %s",
+                                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdateGitHub.httpError"),
+                                    response.getStatusLine().getStatusCode()));
+                }
+                else
+                {
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader((response.getEntity().getContent())));
+
+                    String output;
+                    while ((output = br.readLine()) != null) {
+                        sb.append(output);
+                    }
+
+                    destinationReached = true;
+                }
+
+                httpClient.getConnectionManager().shutdown();
+
+            } catch (ClientProtocolException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
             }
-
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader((response.getEntity().getContent())));
-
-            String output;
-            while ((output = br.readLine()) != null) {
-                sb.append(output);
-            }
-
-            httpClient.getConnectionManager().shutdown();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return sb.toString();
@@ -108,6 +168,11 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      * @return the update data
      */
     protected UpdateData check(String jsonString) {
+        if(jsonString == null)
+        {
+            return null;
+        }
+
         try
         {
             JsonParser parser = new JsonParser();
@@ -121,12 +186,12 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             {
                 JsonObject obj = o.get(index).getAsJsonObject();
 
-                String tagName = obj.get("tag_name").getAsString();
-                if(tagName.startsWith("v"))
+                String tagName = obj.get(TAG_NAME).getAsString();
+                if(tagName.startsWith(TAG_PREFIX))
                 {
                     tagName = tagName.substring(1);
                 }
-                String published = obj.get("published_at").getAsString();
+                String published = obj.get(PUBLISHED_AT).getAsString();
 
                 Calendar cal = ISO8601toCalendar(published);
 
@@ -139,7 +204,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
             Calendar latestTime = calList.get(calList.size() - 1);
             String latest = map.get(latestTime);
-            String description = jsonMap.get(latestTime).get("body").getAsString();
+            String description = jsonMap.get(latestTime).get(BODY).getAsString();
 
             VersionData latestVersion = VersionData.decode(getClass(), latest);
 
@@ -171,6 +236,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
         }
         Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(s);
         calendar.setTime(date);
+
         return calendar;
     }
 
@@ -186,6 +252,15 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             e.printStackTrace();
         }
         return url;
+    }
+
+    /**
+     * Checks if is destination reached.
+     *
+     * @return the destinationReached flag
+     */
+    public boolean isDestinationReached() {
+        return destinationReached;
     }
 
 

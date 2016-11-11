@@ -16,27 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.update;
-
-import java.net.URL;
 
 /**
- * The Interface CheckUpdateClientInterface.
+ * Test files that represent the latest versions available to a client.
+ * 
+ * @author Robert Ward (SCISYS)
+ *
  */
-public interface CheckUpdateClientInterface {
-
-    /**
-     * Gets the latest.
-     *
-     * @return the latest
-     */
-    UpdateData getLatest();
-
-    /**
-     * Get download page URL.
-     *
-     * @return the download URL
-     */
-    URL getDownloadURL();
-
-}
+package update;

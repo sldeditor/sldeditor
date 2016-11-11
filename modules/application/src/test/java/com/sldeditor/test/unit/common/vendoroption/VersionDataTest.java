@@ -83,6 +83,10 @@ public class VersionDataTest {
         String expectedVersionString8 = "first";
         VersionData versionData8 = VersionData.decode(getClass(), expectedVersionString8);
         assertEquals(expectedVersionString8, versionData8.getVersionString());
+
+        String expectedVersionString9 = "1.2.3-SNAPSHOT";
+        VersionData versionData9 = VersionData.decode(getClass(), expectedVersionString9);
+        assertEquals(expectedVersionString9, versionData9.getVersionString());
     }
 
     /**
@@ -99,6 +103,7 @@ public class VersionDataTest {
         VersionData versionData6 = VersionData.decode(getClass(), "8.2.4");
         VersionData versionData7 = VersionData.decode(getClass(), "8.1.2");
         VersionData versionData8 = VersionData.decode(getClass(), "8.3.4");
+        VersionData versionData9 = VersionData.decode(getClass(), "8.3.4-SNAPSHOT");
 
         assertTrue(versionData1.compareTo(versionData2) == 0);
         assertTrue(versionData1.equals(versionData2));
@@ -122,7 +127,11 @@ public class VersionDataTest {
 
         assertTrue(versionData1.hashCode() == versionData2.hashCode());
         assertFalse(versionData1.hashCode() == versionData4.hashCode());
-}
+
+        // SNAPSHOT versions come before non-SNAPSHOT versions if the numbes are the same
+        assertTrue(versionData8.compareTo(versionData9) == 1);
+        assertFalse(versionData8.equals(versionData9));
+    }
 
     /**
      * Test method for {@link com.sldeditor.common.vendoroption.VersionData#getEarliestVersion(java.lang.Class)}.

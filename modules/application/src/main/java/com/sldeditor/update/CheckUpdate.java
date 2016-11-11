@@ -1,8 +1,20 @@
 /*
- *    SLDEditor - SLD Editor application
+ * SLD Editor - The Open Source Java SLD Editor
  *
- *    (C) 2016, SCISYS
+ * Copyright (C) 2016, SCISYS UK Limited
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.sldeditor.update;
@@ -24,34 +36,22 @@ public class CheckUpdate {
 
     /** The client. */
     private CheckUpdateClientInterface client = null;
-    private UpdateData latestData;
+    
+    /** The latest data. */
+    private UpdateData latestData = null;
 
+    /**
+     * Instantiates a new check update.
+     *
+     * @param client the client
+     */
     public CheckUpdate(CheckUpdateClientInterface client) {
         this.client = client;
     }
 
     /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-
-        CheckUpdateClientInterface github = new CheckUpdateGitHub();
-        CheckUpdate update = new CheckUpdate(github);
-
-        if(update.shouldUpdate("0.4.2"))
-        {
-            UpdateData latestData = update.getLatestData();
-            System.out.println(latestData.getVersion());
-            System.out.println(latestData.getDescription());
-        }
-    }
-
-    /**
      * Should update.
      *
-     * @param latest the latest
      * @param currentVersion the current version
      * @return true, if successful
      */
@@ -71,6 +71,8 @@ public class CheckUpdate {
     }
 
     /**
+     * Gets the latest data.
+     *
      * @return the latestData
      */
     public UpdateData getLatestData() {

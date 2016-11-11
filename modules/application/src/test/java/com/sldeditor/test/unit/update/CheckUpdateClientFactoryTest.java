@@ -16,27 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.update;
 
-import java.net.URL;
+package com.sldeditor.test.unit.update;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import com.sldeditor.update.CheckUpdateClientFactory;
 
 /**
- * The Interface CheckUpdateClientInterface.
+ * The unit test for CheckUpdateClientFactory.
+ * <p>{@link com.sldeditor.update.CheckUpdateClientFactory}
+ *
+ * @author Robert Ward (SCISYS)
  */
-public interface CheckUpdateClientInterface {
+public class CheckUpdateClientFactoryTest {
 
     /**
-     * Gets the latest.
-     *
-     * @return the latest
+     * Test method for {@link com.sldeditor.update.CheckUpdateClientFactory#getClient()}.
      */
-    UpdateData getLatest();
-
-    /**
-     * Get download page URL.
-     *
-     * @return the download URL
-     */
-    URL getDownloadURL();
+    @Test
+    public void testGetClient() {
+        assertNotNull(CheckUpdateClientFactory.getClient());
+    }
 
 }
