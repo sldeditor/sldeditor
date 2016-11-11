@@ -44,11 +44,21 @@ public class CheckUpdatePanel extends JDialog {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The current version label. */
     private JLabel lblCurrentVersion;
-    private JLabel lblLatestVersion;
-    private JTextArea textArea;
-    private JLabel lblStatus;
-    private JButton btnGet;
+
+    /** The latest version label. */
+    protected JLabel lblLatestVersion;
+
+    /** The text area. */
+    protected JTextArea textArea;
+
+    /** The status label. */
+    protected JLabel lblStatus;
+
+    /** The Get button. */
+    protected JButton btnGet;
 
     /**
      * Instantiates a new check update panel.
@@ -144,43 +154,60 @@ public class CheckUpdatePanel extends JDialog {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run(){
-                btnGet.setVisible(false);
-                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.contacting"));
-                lblLatestVersion.setText("");
-                textArea.setText("");
-
                 CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
-                CheckUpdate update = new CheckUpdate(client);
 
-                boolean shouldUpdate = update.shouldUpdate(currentVersion);
-
-                if(update.isDestinationReached())
-                {
-                    UpdateData latestData = update.getLatestData();
-                    String latestVersionString = String.format("%s %s",
-                            Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"), 
-                            latestData.getVersion());
-                    lblLatestVersion.setText(latestVersionString);
-                    if(shouldUpdate)
-                    {
-                        textArea.setText(latestData.getDescription());
-                        lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.newVersionAvailable"));
-                        btnGet.setVisible(true);
-                    }
-                    else
-                    {
-                        lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.runningLatest"));
-                    }
-                }
-                else
-                {
-                    lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
-                }
+                checkForLatestVersion(currentVersion, client);
             }
         });
 
         thread1.start();
 
         setVisible(true);
+    }
+
+    /**
+     * Check for latest version.
+     *
+     * @param currentVersion the current version
+     * @param client the client
+     */
+    protected void checkForLatestVersion(String currentVersion,
+            CheckUpdateClientInterface client) {
+        if(client == null)
+        {
+            return;
+        }
+
+        btnGet.setVisible(false);
+        lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.contacting"));
+        lblLatestVersion.setText("");
+        textArea.setText("");
+
+        CheckUpdate update = new CheckUpdate(client);
+
+        boolean shouldUpdate = update.shouldUpdate(currentVersion);
+
+        if(update.isDestinationReached())
+        {
+            UpdateData latestData = update.getLatestData();
+            String latestVersionString = String.format("%s %s",
+                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"), 
+                    latestData.getVersion());
+            lblLatestVersion.setText(latestVersionString);
+            if(shouldUpdate)
+            {
+                textArea.setText(latestData.getDescription());
+                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.newVersionAvailable"));
+                btnGet.setVisible(true);
+            }
+            else
+            {
+                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.runningLatest"));
+            }
+        }
+        else
+        {
+            lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
+        }
     }
 }
