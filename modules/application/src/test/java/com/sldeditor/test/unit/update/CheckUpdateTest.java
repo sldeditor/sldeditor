@@ -62,6 +62,14 @@ public class CheckUpdateTest {
         public URL getDownloadURL() {
             return null;
         }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.update.CheckUpdateClientInterface#isDestinationReached()
+         */
+        @Override
+        public boolean isDestinationReached() {
+            return true;
+        }
     }
 
     /**
@@ -94,4 +102,15 @@ public class CheckUpdateTest {
         obj.showDownloadPage();
     }
 
+    /**
+     * Test method for {@link com.sldeditor.update.CheckUpdate#isDestinationReached()}.
+     */
+    @Test
+    public void testIsDestinationReached() {
+        CheckUpdate obj = new CheckUpdate(null);
+        assertFalse(obj.isDestinationReached());
+
+        obj = new CheckUpdate(new TestCheckUpdateClient());
+        assertTrue(obj.isDestinationReached());
+    }
 }

@@ -36,7 +36,7 @@ public class CheckUpdate {
 
     /** The client. */
     private CheckUpdateClientInterface client = null;
-    
+
     /** The latest data. */
     private UpdateData latestData = null;
 
@@ -61,11 +61,14 @@ public class CheckUpdate {
         {
             latestData = client.getLatest();
 
-            VersionData current = VersionData.decode(getClass(), currentVersion);
+            if(latestData != null)
+            {
+                VersionData current = VersionData.decode(getClass(), currentVersion);
 
-            int result = current.compareTo(latestData.getVersion());
+                int result = current.compareTo(latestData.getVersion());
 
-            return (result == -1);
+                return (result == -1);
+            }
         }
         return false;
     }
@@ -96,6 +99,19 @@ public class CheckUpdate {
                 }
             }
         }
+    }
+
+    /**
+     * Checks if is destination reached.
+     *
+     * @return the destinationReached flag
+     */
+    public boolean isDestinationReached() {
+        if(client != null)
+        {
+            return client.isDestinationReached();
+        }
+        return false;
     }
 
 }

@@ -81,6 +81,8 @@ public class CheckUpdatePanel extends JDialog {
         panel.setLayout(new BorderLayout(0, 0));
 
         textArea = new JTextArea();
+        textArea.setEditable(false);
+
         JScrollPane jp = new JScrollPane(textArea);
         panel.add(jp, BorderLayout.CENTER);
 
@@ -142,25 +144,37 @@ public class CheckUpdatePanel extends JDialog {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run(){
+                btnGet.setVisible(false);
+                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.contacting"));
+                lblLatestVersion.setText("");
+                textArea.setText("");
+
                 CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
                 CheckUpdate update = new CheckUpdate(client);
 
                 boolean shouldUpdate = update.shouldUpdate(currentVersion);
 
-                UpdateData latestData = update.getLatestData();
-                String latestVersionString = String.format("%s %s",
-                        Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"), 
-                        latestData.getVersion());
-                lblLatestVersion.setText(latestVersionString);
-                btnGet.setVisible(shouldUpdate);
-                if(shouldUpdate)
+                if(update.isDestinationReached())
                 {
-                    textArea.setText(latestData.getDescription());
-                    lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.newVersionAvailable"));
+                    UpdateData latestData = update.getLatestData();
+                    String latestVersionString = String.format("%s %s",
+                            Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"), 
+                            latestData.getVersion());
+                    lblLatestVersion.setText(latestVersionString);
+                    if(shouldUpdate)
+                    {
+                        textArea.setText(latestData.getDescription());
+                        lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.newVersionAvailable"));
+                        btnGet.setVisible(true);
+                    }
+                    else
+                    {
+                        lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.runningLatest"));
+                    }
                 }
                 else
                 {
-                    lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.runningLatest"));
+                    lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
                 }
             }
         });
@@ -169,12 +183,4 @@ public class CheckUpdatePanel extends JDialog {
 
         setVisible(true);
     }
-
-    public static void main(String[] args) {
-
-        CheckUpdatePanel panel = new CheckUpdatePanel();
-
-        panel.showPanel("0.4.0");
-    }
-
 }

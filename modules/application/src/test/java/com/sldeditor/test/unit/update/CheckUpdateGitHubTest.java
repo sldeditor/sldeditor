@@ -111,6 +111,7 @@ public class CheckUpdateGitHubTest {
         }
         TestCheckUpdateGitHub obj = new TestCheckUpdateGitHub();
         assertNull(obj.testCheck(null));
+        assertNull(obj.testCheck(""));
 
         UpdateData updateData = obj.testCheck(out.toString());
         assertNotNull(updateData);

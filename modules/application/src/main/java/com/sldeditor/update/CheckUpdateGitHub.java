@@ -76,7 +76,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     private static final String DOWNLOAD_URL = String.format("https://github.com/%s/%s/releases", USER, REPO);
 
     /** The Constant URL. */
-    private static final String URL = String.format("https://api.github.com/%s/%s/releases", USER, REPO);
+    private static final String URL = String.format("https://api.github.com/repos/%s/%s/releases", USER, REPO);
 
     /** The destination reached flag. */
     private boolean destinationReached = false;
@@ -154,7 +154,8 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             } catch (ClientProtocolException e) {
                 ConsoleManager.getInstance().exception(this, e);
             } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
+                ConsoleManager.getInstance().error(this, 
+                        Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
             }
         }
 
@@ -169,6 +170,11 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      */
     protected UpdateData check(String jsonString) {
         if(jsonString == null)
+        {
+            return null;
+        }
+
+        if(jsonString.isEmpty())
         {
             return null;
         }
@@ -212,7 +218,9 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
             return updateData;
         } catch (ParseException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
+        } catch (IllegalStateException e) {
+            ConsoleManager.getInstance().exception(this, e);
         }
 
         return null;
@@ -259,9 +267,9 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      *
      * @return the destinationReached flag
      */
+    @Override
     public boolean isDestinationReached() {
         return destinationReached;
     }
-
 
 }

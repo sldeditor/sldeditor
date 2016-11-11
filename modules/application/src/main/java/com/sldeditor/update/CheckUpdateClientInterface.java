@@ -39,4 +39,11 @@ public interface CheckUpdateClientInterface {
      */
     URL getDownloadURL();
 
+    /**
+     * Checks if is destination reached.
+     *
+     * @return true, if is destination reached
+     */
+    boolean isDestinationReached();
+
 }
