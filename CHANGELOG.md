@@ -1,10 +1,25 @@
 # Change Log
 
-## [0.5.0](https://github.com/robward-scisys/sldeditor/tree/0.5.0) (2016-11-09)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.2...0.5.0)
+## [0.6.0](https://github.com/robward-scisys/sldeditor/tree/0.6.0) (2016-11-11)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.0...0.6.0)
 
 **Implemented enhancements:**
 
+- Iss116 check latest version [\#117](https://github.com/robward-scisys/sldeditor/pull/117) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.5.0](https://github.com/robward-scisys/sldeditor/tree/v0.5.0) (2016-11-09)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.2...v0.5.0)
+
+**Implemented enhancements:**
+
+- Remember last folder viewed in the file system view [\#110](https://github.com/robward-scisys/sldeditor/issues/110)
+- Data source field values are not emptied when new SLD is loaded [\#108](https://github.com/robward-scisys/sldeditor/issues/108)
+- Remove unused symbolizer fields [\#106](https://github.com/robward-scisys/sldeditor/issues/106)
+- Add raster integration tests [\#104](https://github.com/robward-scisys/sldeditor/issues/104)
+- Updates to use GeoTools 16 [\#97](https://github.com/robward-scisys/sldeditor/issues/97)
+- Need to work out data source field types [\#96](https://github.com/robward-scisys/sldeditor/issues/96)
+- Updated to use GeoTools 15.2 and Geoserver 2.9.2 [\#92](https://github.com/robward-scisys/sldeditor/issues/92)
+- Implement raster symbols GeoServer vendor options [\#91](https://github.com/robward-scisys/sldeditor/issues/91)
 - Iss108 last folder viewed [\#111](https://github.com/robward-scisys/sldeditor/pull/111) ([robward-scisys](https://github.com/robward-scisys))
 - Data source ui fields are cleared when a file is loaded [\#109](https://github.com/robward-scisys/sldeditor/pull/109) ([robward-scisys](https://github.com/robward-scisys))
 - Removed name, title and description fields [\#107](https://github.com/robward-scisys/sldeditor/pull/107) ([robward-scisys](https://github.com/robward-scisys))
@@ -17,6 +32,7 @@
 
 **Fixed bugs:**
 
+- NumberFormatExceptions raised when font size specified as float [\#102](https://github.com/robward-scisys/sldeditor/issues/102)
 - Data source example values not remembered [\#98](https://github.com/robward-scisys/sldeditor/issues/98)
 - HTML colour strings not displayed correctly on legend panel [\#89](https://github.com/robward-scisys/sldeditor/issues/89)
 - Iss102 floats in string expecting integer [\#103](https://github.com/robward-scisys/sldeditor/pull/103) ([robward-scisys](https://github.com/robward-scisys))
@@ -29,6 +45,7 @@
 
 **Merged pull requests:**
 
+- Release v0.5.0 [\#113](https://github.com/robward-scisys/sldeditor/pull/113) ([robward-scisys](https://github.com/robward-scisys))
 - Corrected size of colour fields on the legend options panel [\#90](https://github.com/robward-scisys/sldeditor/pull/90) ([robward-scisys](https://github.com/robward-scisys))
 - Updated project version to 0.5.0-SNAPSHOT \(again\) [\#88](https://github.com/robward-scisys/sldeditor/pull/88) ([robward-scisys](https://github.com/robward-scisys))
 
