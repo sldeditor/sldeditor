@@ -30,7 +30,7 @@ import os.path
 import hashlib
 import datetime
 
-download = 'https://github.com/robward-scisys/sldeditor/releases/download/v{}/SLDEditor.jar)'
+download = '(https://github.com/robward-scisys/sldeditor/releases/download/v{}/SLDEditor.jar)'
 
 class InvalidVersion(Exception):
     def __init__(self, msg):
@@ -105,7 +105,7 @@ def bump(input_file, next_version, in_place, dry_run):
 
 
     # Update the content
-    contents = ''.join(array).replace('\n', '\r\n') + '\r\n'
+    contents = ''.join(array).replace('\n', '\r\n')
     if in_place:
         # Write back to file
         write_to_file(contents, input_file)
@@ -129,7 +129,7 @@ def update(line, next_version):
     if start == -1:
         return line
 
-    line = line[:start] + download.format(next_version)
+    line = line[:start] + download.format(next_version) + '\n'
     print line
 
     return line
@@ -147,7 +147,7 @@ def update_release(line, next_version):
     fname = '../../bin/SLDEditor.jar'
     md5 = hashfile(open(fname, 'rb'), hashlib.md5())
     date_string = datetime.date.today().strftime('%d %b %Y')
-    line = '* [SLDEditor Release {}]({}) (MD5 : {}) Released {}'.format(next_version, full_download, md5, date_string);
+    line = '* [SLDEditor Release {}]{} (MD5 : {}) Released {}\n'.format(next_version, full_download, md5, date_string);
 
     print line
 
