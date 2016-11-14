@@ -205,82 +205,90 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      */
     private void determineGeometryType(StyledLayerDescriptor sld)
     {
-        if(sld == null)
+        GeometryTypeEnum geometryType = internal_determineGeometryType(sld);
+
+        dsInfo.setGeometryType(geometryType);
+    }
+
+    protected GeometryTypeEnum internal_determineGeometryType(StyledLayerDescriptor sld)
+    {
+        GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
+
+        if(sld != null)
         {
-            return;
-        }
+            List<StyledLayer> styledLayerList = sld.layers();
+            int pointCount = 0;
+            int lineCount = 0;
+            int polygonCount = 0;
+            int rasterCount = 0;
 
-        List<StyledLayer> styledLayerList = sld.layers();
-        int pointCount = 0;
-        int lineCount = 0;
-        int polygonCount = 0;
-        int rasterCount = 0;
-
-        for(StyledLayer styledLayer : styledLayerList)
-        {
-            List<Style> styleList = null;
-
-            if(styledLayer instanceof NamedLayerImpl)
+            for(StyledLayer styledLayer : styledLayerList)
             {
-                NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                List<Style> styleList = null;
 
-                styleList = namedLayerImpl.styles();
-            }
-            else if(styledLayer instanceof UserLayerImpl)
-            {
-                UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
-
-                styleList = userLayerImpl.userStyles();
-            }
-
-            if(styleList != null)
-            {
-                for(Style style : styleList)
+                if(styledLayer instanceof NamedLayerImpl)
                 {
-                    for(FeatureTypeStyle fts : style.featureTypeStyles())
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+
+                    styleList = namedLayerImpl.styles();
+                }
+                else if(styledLayer instanceof UserLayerImpl)
+                {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+
+                    styleList = userLayerImpl.userStyles();
+                }
+
+                if(styleList != null)
+                {
+                    for(Style style : styleList)
                     {
-                        for(Rule rule : fts.rules())
+                        for(FeatureTypeStyle fts : style.featureTypeStyles())
                         {
-                            for(org.opengis.style.Symbolizer symbolizer : rule.symbolizers())
+                            for(Rule rule : fts.rules())
                             {
-                                if(symbolizer instanceof PointSymbolizer)
+                                for(org.opengis.style.Symbolizer symbolizer : rule.symbolizers())
                                 {
-                                    pointCount ++;
-                                }
-                                else if(symbolizer instanceof LineSymbolizer)
-                                {
-                                    lineCount ++;
-                                }
-                                else if(symbolizer instanceof PolygonSymbolizer)
-                                {
-                                    polygonCount ++;
-                                }
-                                else if(symbolizer instanceof RasterSymbolizer)
-                                {
-                                    rasterCount ++;
+                                    if(symbolizer instanceof PointSymbolizer)
+                                    {
+                                        pointCount ++;
+                                    }
+                                    else if(symbolizer instanceof LineSymbolizer)
+                                    {
+                                        lineCount ++;
+                                    }
+                                    else if(symbolizer instanceof PolygonSymbolizer)
+                                    {
+                                        polygonCount ++;
+                                    }
+                                    else if(symbolizer instanceof RasterSymbolizer)
+                                    {
+                                        rasterCount ++;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
 
-        if(pointCount > 0)
-        {
-            dsInfo.setGeometryType(GeometryTypeEnum.POINT);
+            if(polygonCount > 0)
+            {
+                geometryType = GeometryTypeEnum.POLYGON;
+            }
+            else if(lineCount > 0)
+            {
+                geometryType = GeometryTypeEnum.LINE;
+            }
+            else if(pointCount > 0)
+            {
+                geometryType = GeometryTypeEnum.POINT;
+            }
+            else if(rasterCount > 0)
+            {
+                geometryType = GeometryTypeEnum.RASTER;
+            }
         }
-        else if(lineCount > 0)
-        {
-            dsInfo.setGeometryType(GeometryTypeEnum.LINE);
-        }
-        else if(polygonCount > 0)
-        {
-            dsInfo.setGeometryType(GeometryTypeEnum.POLYGON);
-        }
-        else if(rasterCount > 0)
-        {
-            dsInfo.setGeometryType(GeometryTypeEnum.RASTER);
-        }
+        return geometryType;
     }
 }

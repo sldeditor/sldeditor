@@ -18,16 +18,31 @@
  */
 package com.sldeditor.test.unit.datasource.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.Rule;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyleFactoryImpl;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayer;
 import org.junit.Test;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.impl.CreateInternalDataSource;
 import com.sldeditor.datasource.impl.DataSourceInfo;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
  * Unit test for CreateInternalDataSource.
@@ -37,6 +52,19 @@ import com.sldeditor.datasource.impl.DataSourceInfo;
  */
 public class CreateInternalDataSourceTest {
 
+    class TestCreateInternalDataSource extends CreateInternalDataSource
+    {
+
+        /**
+         * Call determine geometry type.
+         *
+         * @param sld the sld
+         */
+        public GeometryTypeEnum callDetermineGeometryType(StyledLayerDescriptor sld) {
+            return super.internal_determineGeometryType(sld);
+        }
+
+    }
     /**
      * Test method for {@link com.sldeditor.datasource.impl.CreateInternalDataSource#connect(com.sldeditor.datasource.SLDEditorFileInterface)}.
      */
@@ -61,4 +89,68 @@ public class CreateInternalDataSourceTest {
         assertTrue(dsInfo.getDataStore() != null);
     }
 
+    /**
+     * Test method for {@link com.sldeditor.datasource.impl.CreateInternalDataSource#determineGeometryType(StyledLayerDescriptor)}.
+     */
+    @Test
+    public void testDetermineGeometryType() {
+        TestCreateInternalDataSource ds = new TestCreateInternalDataSource();
+
+        assertEquals(GeometryTypeEnum.UNKNOWN, ds.callDetermineGeometryType(null));
+        
+        // Create StyledLayerDescriptor
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
+        NamedLayer namedLayer = styleFactory.createNamedLayer();
+        sld.addStyledLayer(namedLayer);
+        UserLayer userLayer = styleFactory.createUserLayer();
+        sld.addStyledLayer(userLayer);
+        Style style = styleFactory.createStyle();
+        namedLayer.addStyle(style);
+        List<FeatureTypeStyle> ftsList = style.featureTypeStyles();
+        FeatureTypeStyle fts = styleFactory.createFeatureTypeStyle();
+        ftsList.add(fts);
+        Rule rule = styleFactory.createRule();
+        fts.rules().add(rule);
+
+        // Raster
+        RasterSymbolizer raster = DefaultSymbols.createDefaultRasterSymbolizer();
+        rule.symbolizers().add(raster);
+
+        assertEquals(GeometryTypeEnum.RASTER, ds.callDetermineGeometryType(sld));
+
+        // Polygon
+        rule.symbolizers().clear();
+        PolygonSymbolizer polygon = DefaultSymbols.createDefaultPolygonSymbolizer();
+        rule.symbolizers().add(polygon);
+        assertEquals(GeometryTypeEnum.POLYGON, ds.callDetermineGeometryType(sld));
+
+        // Line
+        rule.symbolizers().clear();
+        LineSymbolizer line = DefaultSymbols.createDefaultLineSymbolizer();
+        rule.symbolizers().add(line);
+        assertEquals(GeometryTypeEnum.LINE, ds.callDetermineGeometryType(sld));
+
+        // Point
+        rule.symbolizers().clear();
+        PointSymbolizer point = DefaultSymbols.createDefaultPointSymbolizer();
+        rule.symbolizers().add(point);
+        assertEquals(GeometryTypeEnum.POINT, ds.callDetermineGeometryType(sld));
+        
+        // Add line to point
+        rule.symbolizers().add(line);
+        assertEquals(GeometryTypeEnum.LINE, ds.callDetermineGeometryType(sld));
+
+        // Add point, line
+        rule.symbolizers().clear();
+        rule.symbolizers().add(line);
+        rule.symbolizers().add(point);
+        assertEquals(GeometryTypeEnum.LINE, ds.callDetermineGeometryType(sld));
+
+        // Add polygon, line
+        rule.symbolizers().clear();
+        rule.symbolizers().add(point);
+        rule.symbolizers().add(polygon);
+        assertEquals(GeometryTypeEnum.POLYGON, ds.callDetermineGeometryType(sld));
+    }
 }
