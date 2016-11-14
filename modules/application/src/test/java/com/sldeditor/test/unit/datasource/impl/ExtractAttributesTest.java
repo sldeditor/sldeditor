@@ -23,11 +23,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.Rule;
+import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
+import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 
 import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 import com.vividsolutions.jts.geom.Point;
@@ -179,5 +186,95 @@ public class ExtractAttributesTest {
         List<String> actualGeometryFields = extract.getGeometryFields();
         assertEquals(1, actualGeometryFields.size());
         assertTrue(expectedGeometryFieldName.compareTo(actualGeometryFields.get(0)) == 0);
+    }
+
+    /**
+     * Test filter.
+     */
+    @Test
+    public void testFilter()
+    {
+        DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
+
+        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+
+        String typeName = "test type name";
+        b.setName( typeName );
+
+        String namespace = null;
+        b.setNamespaceURI(namespace);
+
+        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
+        //add a geometry property
+        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
+
+        b.add( expectedGeometryFieldName, Point.class );
+
+        b.setDefaultGeometry( expectedGeometryFieldName );
+
+        ExtractAttributes extract = new ExtractAttributes();
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(dummy.getSLDData());
+        NamedLayer namedLayer = (NamedLayer) sld.layers().get(0);
+        List<Rule> ruleList = namedLayer.styles().get(0).featureTypeStyles().get(0).rules();
+        Rule rule = DefaultSymbols.createNewRule();
+        
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+        // Try it 1) property 2) Literal
+        Filter filter = ff.greater(ff.property("width"), ff.literal(42.1));
+        rule.setFilter(filter);
+        ruleList.add(rule);
+        extract.extractDefaultFields(b, sld);
+
+        // Check fields extracted ok 
+        List<String> expectedFieldList = dummy.getExpectedFieldList();
+        List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
+        assertEquals(1, actualFieldnameList.size());
+        DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
+        assertEquals(Double.class, dataSourceField.getType());
+        // Check geometry fields extracted ok
+        List<String> actualGeometryFields = extract.getGeometryFields();
+        assertEquals(1, actualGeometryFields.size());
+
+        // Try it 1) literal 2) property
+        filter = ff.greater(ff.literal(42.1), ff.property("dble"));
+        rule.setFilter(filter);
+        ruleList.clear();
+        ruleList.add(rule);
+        extract.extractDefaultFields(b, sld);
+
+        // Check fields extracted ok 
+        actualFieldnameList = extract.getFields();
+        assertEquals(2, actualFieldnameList.size());
+        dataSourceField = actualFieldnameList.get(0);
+        assertEquals(Double.class, dataSourceField.getType());
+        
+        // Try with NOT
+        extract = new ExtractAttributes();
+        filter = ff.not(ff.greater(ff.literal(42.1), ff.property("dble")));
+        rule.setFilter(filter);
+        ruleList.clear();
+        ruleList.add(rule);
+        extract.extractDefaultFields(b, sld);
+
+        // Check fields extracted ok 
+        actualFieldnameList = extract.getFields();
+        assertEquals(1, actualFieldnameList.size());
+        dataSourceField = actualFieldnameList.get(0);
+        assertEquals(Double.class, dataSourceField.getType());
+
+        // Try with something complex
+        extract = new ExtractAttributes();
+        filter = ff.and(ff.greater(ff.literal(42), ff.property("int")), ff.less(ff.literal(12), ff.property("abc")));
+        rule.setFilter(filter);
+        ruleList.clear();
+        ruleList.add(rule);
+        extract.extractDefaultFields(b, sld);
+
+        // Check fields extracted ok 
+        actualFieldnameList = extract.getFields();
+        assertEquals(2, actualFieldnameList.size());
+        dataSourceField = actualFieldnameList.get(0);
+        assertEquals(Integer.class, dataSourceField.getType());
     }
 }

@@ -27,7 +27,9 @@ import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MultiCompareFilterImpl;
+import org.geotools.filter.NotImpl;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
@@ -132,8 +134,23 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         pages.push(copy);
     }
 
+    /* (non-Javadoc)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.Filter)
+     */
     protected Filter copy( Filter filter ){
-        if(filter instanceof MultiCompareFilterImpl)
+        if(filter instanceof NotImpl)
+        {
+            return copy(((NotImpl) filter).getFilter());
+        }
+        else if(filter instanceof LogicFilterImpl)
+        {
+            LogicFilterImpl logicFilter = (LogicFilterImpl) filter;
+            for(Filter childFilter : logicFilter.getChildren())
+            {
+                copy(childFilter);
+            }
+        }
+        else if(filter instanceof MultiCompareFilterImpl)
         {
             MultiCompareFilterImpl multiCompareFilter = (MultiCompareFilterImpl) filter;
             List<String> foundList1 = new ArrayList<String>();
@@ -152,7 +169,17 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
                     }
                 }
             }
-            System.out.println();
+            else if(!foundList2.isEmpty() && returnType1 != String.class)
+            {
+                for(String fieldName : foundList2)
+                {
+                    DataSourceAttributeData data = fieldList.get(fieldName);
+                    if(data != null)
+                    {
+                        data.setType(returnType1);
+                    }
+                }
+            }
         }
         return super.copy(filter);
     }
