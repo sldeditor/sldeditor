@@ -684,10 +684,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             }
         }
 
-        SelectedFiles selectedFiles = new SelectedFiles();
-        selectedFiles.setSldData(sldDataList);
+        if(sldDataList != null)
+        {
+            SelectedFiles selectedFiles = new SelectedFiles();
+            selectedFiles.setSldData(sldDataList);
 
-        loadSLDString(selectedFiles);
+            loadSLDString(selectedFiles);
+        }
     }
 
     /**

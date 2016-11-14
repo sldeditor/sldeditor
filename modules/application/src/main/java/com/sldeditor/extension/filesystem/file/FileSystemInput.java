@@ -26,7 +26,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -266,12 +268,17 @@ public class FileSystemInput implements FileSystemInterface
     {
         if(url != null)
         {
-            File file = new File(url.getFile());
-            FileHandlerInterface fileHandler = getFileHandler(file.getAbsolutePath());
+            try {
+                String urlString = URLDecoder.decode(url.getFile(), "UTF-8");
+                File file = new File(urlString);
+                FileHandlerInterface fileHandler = getFileHandler(file.getAbsolutePath());
 
-            if(fileHandler != null)
-            {
-                return fileHandler.open(file);
+                if(fileHandler != null)
+                {
+                    return fileHandler.open(file);
+                }
+            } catch (UnsupportedEncodingException e) {
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
         return null;
