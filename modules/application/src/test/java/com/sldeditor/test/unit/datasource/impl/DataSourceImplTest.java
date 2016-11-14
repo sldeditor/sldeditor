@@ -143,15 +143,15 @@ public class DataSourceImplTest {
         assertTrue(expectedFieldList.size() == count);
 
         // Check for fields of certain types
-        assertTrue(ds.getAttributes(Integer.class).isEmpty());
-        assertTrue(ds.getAttributes(Double.class).isEmpty());
+        assertFalse(ds.getAttributes(Integer.class).isEmpty());
+        assertFalse(ds.getAttributes(Double.class).isEmpty());
 
-        assertEquals(expectedFieldList.size(), ds.getAttributes(String.class).size());
+        assertEquals(2, ds.getAttributes(String.class).size());
 
         // Add new field
         DataSourceAttributeData dataSourceField = new DataSourceAttributeData("bearing", Double.class, null);
         ds.addField(dataSourceField);
-        assertTrue(ds.getAttributes(Double.class).size() == 1);
+        assertTrue(ds.getAttributes(Double.class).size() == 2);
 
         // Update field
         DataSourceAttributeList attributeData = new DataSourceAttributeList();
@@ -168,7 +168,8 @@ public class DataSourceImplTest {
 
         ds.updateFields(null);
         ds.updateFields(attributeData);
-        assertTrue(ds.getAttributes(Integer.class).size() == 1);
+        List<String> actualAttributes = ds.getAttributes(Integer.class);
+        assertTrue(actualAttributes.size() == 2);
 
         FeatureSource<SimpleFeatureType, SimpleFeature> features = ds.getFeatureSource();
         try {

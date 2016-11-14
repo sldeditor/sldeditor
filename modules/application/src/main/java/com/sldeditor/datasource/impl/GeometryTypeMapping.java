@@ -21,7 +21,6 @@ package com.sldeditor.datasource.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sldeditor.common.console.ConsoleManager;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPoint;
@@ -70,10 +69,6 @@ public class GeometryTypeMapping {
         if(geometryMap.containsKey(bindingType))
         {
             geometryType = geometryMap.get(bindingType);
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(GeometryTypeMapping.class, "Unsupported geometry type : " + bindingType.getName());
         }
 
         return geometryType;

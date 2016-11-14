@@ -210,6 +210,12 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
         dsInfo.setGeometryType(geometryType);
     }
 
+    /**
+     * Internal determine geometry type.
+     *
+     * @param sld the sld
+     * @return the geometry type enum
+     */
     protected GeometryTypeEnum internal_determineGeometryType(StyledLayerDescriptor sld)
     {
         GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;

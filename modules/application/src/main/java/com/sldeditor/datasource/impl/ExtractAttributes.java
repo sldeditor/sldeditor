@@ -18,160 +18,242 @@
  */
 package com.sldeditor.datasource.impl;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.geotools.styling.StyledLayer;
+import org.geotools.filter.AttributeExpressionImpl;
+import org.geotools.filter.FunctionExpression;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.filter.MultiCompareFilterImpl;
+import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.UserLayer;
-import org.geotools.styling.UserLayerImpl;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import org.opengis.filter.Filter;
+import org.opengis.filter.capability.FunctionName;
+import org.opengis.filter.expression.Expression;
+import org.opengis.parameter.Parameter;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-import com.sldeditor.filter.v2.function.FunctionManager;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
 
 /**
  * Class that extracts all data source fields from an SLD file.
  *
  * @author Robert Ward (SCISYS)
  */
-public class ExtractAttributes {
-
-    /** The Constant OGC_NAMESPACE. */
-    private static final String OGC_NAMESPACE = "ogc";
-
-    /** The Constant OGC_NAMESPACE_URL. */
-    private static final String OGC_NAMESPACE_URL = "http://www.opengis.net/ogc";
-
-    /** The Constant SLD_NAMESPACE. */
-    private static final String SLD_NAMESPACE = "sld";
-
-    /** The Constant SLD_NAMESPACE_URL. */
-    private static final String SLD_NAMESPACE_URL = "http://www.opengis.net/sld";
-
-    /** The Constant WELL_KNOWN_NAME. */
-    private static final String WELL_KNOWN_NAME = "WellKnownName";
-
-    /** The Constant GEOMETRY_FIELD. */
-    private static final String GEOMETRY_FIELD = "Geometry";
-
-    /** The Constant FUNCTION. */
-    private static final String FUNCTION = "Function";
-
-    /** The Constant FUNCTION_NAME. */
-    private static final String FUNCTION_NAME = "name";
-
-    /** The Constant PROPERTY_NAME. */
-    private static final String PROPERTY_NAME = "PropertyName";
-
-    /** The namespace map. */
-    private static Map<String, String> namespaceMap = null;
+public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /** The processed field list. */
     private List<DataSourceAttributeData> processedFieldList = new ArrayList<DataSourceAttributeData>();
+
+    /** The field list. */
+    private Map<String, DataSourceAttributeData> fieldList = new HashMap<String, DataSourceAttributeData>();
 
     /** The geometry field list. */
     private List<String> geometryFieldList = new ArrayList<String>();
 
     /**
-     * Populate namespace map.
+     * Instantiates a new extract expressions.
      */
-    private static synchronized void populateNamespaceMap()
+    public ExtractAttributes()
     {
-        if(namespaceMap == null)
-        {
-            namespaceMap = new HashMap<String, String>();
+        super();
+    }
 
-            namespaceMap.put(OGC_NAMESPACE_URL, OGC_NAMESPACE);
-            namespaceMap.put(SLD_NAMESPACE_URL, SLD_NAMESPACE);
+    /* (non-Javadoc)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.expression.Expression)
+     */
+    protected Expression copy( Expression expression )
+    {
+        return copy(String.class, expression);
+    }
+
+    private Expression copy(Class<?> attributeType, Expression expression )
+    {
+        List<String> foundList = new ArrayList<String>();
+        extractAttribute(attributeType, expression, foundList);
+        return super.copy(expression);
+    }
+
+    public void visit(PointSymbolizer ps) {
+        PointSymbolizer copy = sf.getDefaultPointSymbolizer();
+
+        copy.setGeometry(copy(Point.class, ps.getGeometry()));
+
+        copy.setUnitOfMeasure(ps.getUnitOfMeasure());
+        copy.setGraphic( copy( ps.getGraphic() ));
+        copy.getOptions().putAll(ps.getOptions());
+
+        if( STRICT ){
+            if( !copy.equals( ps )){
+                throw new IllegalStateException("Was unable to duplicate provided Graphic:"+ps );
+            }
         }
+        pages.push(copy);
+    }
+
+    public void visit(LineSymbolizer line) {
+        LineSymbolizer copy = sf.getDefaultLineSymbolizer();
+
+        copy.setGeometry(copy(LineString.class, line.getGeometry()));
+
+        copy.setUnitOfMeasure(line.getUnitOfMeasure());
+        copy.setStroke( copy( line.getStroke()));
+        copy.getOptions().putAll(line.getOptions());
+        copy.setPerpendicularOffset(line.getPerpendicularOffset());
+
+        if( STRICT && !copy.equals( line )){
+            throw new IllegalStateException("Was unable to duplicate provided LineSymbolizer:"+line );
+        }
+        pages.push(copy);
+    }
+
+    public void visit(PolygonSymbolizer poly) {
+        PolygonSymbolizer copy = sf.createPolygonSymbolizer();
+        copy.setFill( copy( poly.getFill()));
+
+        copy.setGeometry(copy(MultiPolygon.class, poly.getGeometry()));
+
+        copy.setUnitOfMeasure(poly.getUnitOfMeasure());
+        copy.setStroke(copy(poly.getStroke()));
+        copy.getOptions().putAll(poly.getOptions());
+
+        if( STRICT && !copy.equals( poly )){
+            throw new IllegalStateException("Was unable to duplicate provided PolygonSymbolizer:"+poly );
+        }
+        pages.push(copy);
+    }
+
+    protected Filter copy( Filter filter ){
+        if(filter instanceof MultiCompareFilterImpl)
+        {
+            MultiCompareFilterImpl multiCompareFilter = (MultiCompareFilterImpl) filter;
+            List<String> foundList1 = new ArrayList<String>();
+            Class<?> returnType1 = extractAttribute(String.class, multiCompareFilter.getExpression1(), foundList1);
+            List<String> foundList2 = new ArrayList<String>();
+            Class<?> returnType2 = extractAttribute(String.class, multiCompareFilter.getExpression2(), foundList2);
+
+            if(!foundList1.isEmpty() && returnType2 != String.class)
+            {
+                for(String fieldName : foundList1)
+                {
+                    DataSourceAttributeData data = fieldList.get(fieldName);
+                    if(data != null)
+                    {
+                        data.setType(returnType2);
+                    }
+                }
+            }
+            System.out.println();
+        }
+        return super.copy(filter);
     }
 
     /**
-     * Extract the default fields.
+     * Extract attribute.
      *
-     * @param b the feature type builder
+     * @param attributeType the attribute type
+     * @param expression the expression
+     * @param foundList the found list
+     * @return the class
+     */
+    protected Class<?> extractAttribute(Class<?> attributeType, Expression expression, List<String> foundList) {
+        Class<?> returnType = String.class;
+
+        if(expression instanceof AttributeExpressionImpl)
+        {
+            AttributeExpressionImpl attribute = (AttributeExpressionImpl) expression;
+            // Determine if attribute is a geometry
+            if((GeometryTypeMapping.getGeometryType(attributeType) != GeometryTypeEnum.UNKNOWN) || (attributeType == Geometry.class))
+            {
+                if(!geometryFieldList.contains(attribute.getPropertyName()))
+                {
+                    geometryFieldList.add(attribute.getPropertyName());
+                }
+            }
+            else
+            {
+                if(!fieldList.containsKey(attribute.getPropertyName()))
+                {
+                    DataSourceAttributeData field = new DataSourceAttributeData(attribute.getPropertyName(),
+                            attributeType, null);
+                    processedFieldList.add(field);
+                    fieldList.put(attribute.getPropertyName(), field);
+                    foundList.add(attribute.getPropertyName());
+                }
+            }
+        }
+        else if(expression instanceof FunctionExpression)
+        {
+            FunctionExpression function = (FunctionExpression) expression;
+            FunctionName functionName = function.getFunctionName();
+            List<Parameter<?>> argumentList = functionName.getArguments();
+            int index = 0;
+
+            for(Expression parameterExpression : function.getParameters())
+            {
+                Parameter<?> parameter = argumentList.get(index);
+                extractAttribute(parameter.getType(), parameterExpression, foundList);
+                index ++;
+            }
+
+            returnType = functionName.getReturn().getType();
+        }
+        else if(expression instanceof LiteralExpressionImpl)
+        {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) expression;
+
+            try
+            {
+                @SuppressWarnings("unused")
+                int integer = Integer.valueOf(literal.toString());
+                returnType = Integer.class;
+            }
+            catch(NumberFormatException e)
+            {
+                // Ignore
+            }
+
+            if(returnType == String.class)
+            {
+                try
+                {
+                    @SuppressWarnings("unused")
+                    double doubleValue = Double.valueOf(literal.toString());
+                    returnType = Double.class;
+                }
+                catch(NumberFormatException e)
+                {
+                    // Ignore
+                }
+            }
+        }
+
+        return returnType;
+    }
+
+    /**
+     * Extract default fields.
+     *
+     * @param b the b
      * @param sld the sld
      */
     public void extractDefaultFields(SimpleFeatureTypeBuilder b, StyledLayerDescriptor sld)
     {
-        // Remove inline features
-        String sldContents = preprocessSLD(sld);
+        visit(sld);
 
-        if((sldContents != null) && (b != null))
+        for(DataSourceAttributeData dsAttribute : processedFieldList)
         {
-            try
-            {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                InputSource is = new InputSource(new StringReader(sldContents));
-                Document doc = builder.parse(is);
-
-                Map<String, List<String>> namespacePrefixes = getNamespacePrefixes(doc);
-
-                extractSimpleAttributes(b, doc, namespacePrefixes, processedFieldList, geometryFieldList);
-                extractWKTAttributes(b, doc, namespacePrefixes, processedFieldList);
-            }
-            catch(IOException e)
-            {
-                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-            } catch (SAXException e) {
-                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-            } catch (ParserConfigurationException e) {
-                ConsoleManager.getInstance().exception(ExtractAttributes.class, e);
-            }
+            b.add(dsAttribute.getName(), dsAttribute.getType());
         }
-    }
-
-    /**
-     * Take a copy of the StyledLayerDescriptor and null out the inline features
-     *
-     * @param sld the original sld
-     * @return the string contents without the inline features
-     */
-    private String preprocessSLD(StyledLayerDescriptor sld) {
-        if(sld == null)
-        {
-            return null;
-        }
-
-        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
-
-        DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
-        sld.accept(duplicator);
-        StyledLayerDescriptor sldCopy = (StyledLayerDescriptor)duplicator.getCopy();
-
-        for(StyledLayer styledLayer : sldCopy.layers())
-        {
-            if(styledLayer instanceof UserLayer)
-            {
-                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
-                userLayer.setInlineFeatureDatastore(null);
-                userLayer.setInlineFeatureType(null);
-            }
-        }
-
-        String sldContents = sldWriter.encodeSLD(null, sldCopy);
-        return sldContents;
     }
 
     /**
@@ -192,216 +274,5 @@ public class ExtractAttributes {
     public List<String> getGeometryFields()
     {
         return geometryFieldList;
-    }
-
-    /**
-     * Extract wkt attributes.
-     *
-     * @param b the b
-     * @param doc the doc
-     * @param namespacePrefixes the namespace prefixes
-     * @param processedFieldList the processed field list
-     */
-    private static void extractWKTAttributes(SimpleFeatureTypeBuilder b, Document doc,
-            Map<String, List<String>> namespacePrefixes,
-            List<DataSourceAttributeData> processedFieldList) {
-        // Get node list for all possible namespace prefixes
-        List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, SLD_NAMESPACE, WELL_KNOWN_NAME);
-
-        for(NodeList nodeList : completeNodeList)
-        {
-            for(int index = 0; index < nodeList.getLength(); index ++)
-            {
-                Node node = nodeList.item(index);
-
-                @SuppressWarnings("unused")
-                String contents = node.getTextContent();
-
-                //    System.out.println(contents);
-            }
-        }
-    }
-
-    /**
-     * Extract simple attributes.
-     *
-     * @param b the feature type builder
-     * @param doc the doc
-     * @param namespacePrefixes the namespace prefixes
-     * @param processedFieldList the processed field list
-     * @param geometryList the geometry list
-     */
-    private static void extractSimpleAttributes(SimpleFeatureTypeBuilder b,
-            Document doc,
-            Map<String, List<String>> namespacePrefixes,
-            List<DataSourceAttributeData> processedFieldList,
-            List<String> geometryList)
-    {
-        if(geometryList == null)
-        {
-            return;
-        }
-
-        if(processedFieldList == null)
-        {
-            return;
-        }
-
-        if(doc == null)
-        {
-            return;
-        }
-
-        // Get node list for all possible namespace prefixes
-        List<NodeList> completeNodeList = getNodeList(doc, namespacePrefixes, OGC_NAMESPACE, PROPERTY_NAME);
-
-        boolean addField = false;
-
-        for(NodeList nodeList : completeNodeList)
-        {
-            for(int index = 0; index < nodeList.getLength(); index ++)
-            {
-                Node node = nodeList.item(index);
-
-                String fieldName = node.getTextContent();
-
-                if(!fieldExists(processedFieldList, fieldName))
-                {
-                    Class<?> fieldType = String.class; // We don't now any better at the moment
-
-                    Node parent = node.getParentNode();
-
-                    NamespaceHelper namespace = new NamespaceHelper(parent);
-                    addField = true;
-
-                    if(namespace.isElement(namespacePrefixes.get(OGC_NAMESPACE), FUNCTION))
-                    {
-                        Node parentAgain = parent.getParentNode();
-                        if(parentAgain != null)
-                        {
-                            NamespaceHelper geometryNamespace = new NamespaceHelper(parentAgain);
-
-                            if(geometryNamespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
-                            {
-                                addField = false;
-                            }
-                        }
-
-                        if(addField)
-                        {
-                            Element e = (Element) parent;
-                            String functionName = e.getAttribute(FUNCTION_NAME);
-
-                            Class<?> tmpFieldType = FunctionManager.getInstance().getFunctionType(functionName);
-                            if(tmpFieldType != null)
-                            {
-                                fieldType = tmpFieldType;
-                            }
-                        }
-                    }
-                    else if(namespace.isElement(namespacePrefixes.get(SLD_NAMESPACE), GEOMETRY_FIELD))
-                    {
-                        addField = false;
-                        geometryList.add(fieldName);
-                    }
-
-                    if(addField)
-                    {
-                        DataSourceAttributeData field = new DataSourceAttributeData(fieldName, fieldType, null);
-                        processedFieldList.add(field);
-
-                        b.add(fieldName, fieldType);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Gets the node list.
-     *
-     * @param doc the doc
-     * @param namespacePrefixes the namespace prefixes used in the document
-     * @param namespacePrefix the namespace prefix to find
-     * @param elementName the element name
-     * @return the node list
-     */
-    private static List<NodeList> getNodeList(Document doc, 
-            Map<String, List<String>> namespacePrefixes, 
-            String namespacePrefix,
-            String elementName) {
-        List<NodeList> completeNodeList = new ArrayList<NodeList>();
-
-        List<String> prefixList = namespacePrefixes.get(namespacePrefix);
-        for(String prefix : prefixList)
-        {
-            String tagName = NamespaceHelper.encode(prefix, elementName);
-            NodeList nodeList = doc.getElementsByTagName(tagName);
-            completeNodeList.add(nodeList);
-        }
-
-        return completeNodeList;
-    }
-
-    /**
-     * Gets the namespace prefixes.
-     *
-     * @param doc the doc
-     * @return the namespace prefix map
-     */
-    private static Map<String, List<String>> getNamespacePrefixes(Document doc) {
-
-        populateNamespaceMap();
-
-        Map<String, List<String>> prefixMap = new HashMap<String, List<String>>();
-
-        NamedNodeMap attributeMap = doc.getDocumentElement().getAttributes();
-
-        for(int index = 0; index < attributeMap.getLength(); index ++)
-        {
-            Node node = attributeMap.item(index);
-
-            String namespaceURI = node.getNodeValue();
-            if(namespaceMap.containsKey(namespaceURI))
-            {
-                String prefixConstant = namespaceMap.get(namespaceURI);
-
-                String[] components = node.getNodeName().split(":");
-                String prefix = "";
-                if(components.length == 2)
-                {
-                    prefix = components[1];
-                }
-
-                List<String> prefixList = prefixMap.get(prefixConstant);
-                if(prefixList == null)
-                {
-                    prefixList = new ArrayList<String>();
-                }
-                prefixList.add(prefix);
-                prefixMap.put(prefixConstant, prefixList);
-            }
-        }
-        return prefixMap;
-    }
-
-    /**
-     * Check to see if the field name already exists.
-     *
-     * @param processedFieldList the processed field list
-     * @param fieldName the field name
-     * @return true, if successful
-     */
-    private static boolean fieldExists(List<DataSourceAttributeData> processedFieldList,
-            String fieldName) {
-        for(DataSourceAttributeData field: processedFieldList)
-        {
-            if(field.getName().compareTo(fieldName) == 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
