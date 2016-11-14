@@ -283,13 +283,30 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                     if (result == JFileChooser.APPROVE_OPTION) {
                         File selectedFile = fileChooser.getSelectedFile();
                         application.openFile(selectedFile.toURI().toURL());
-                    }           
+                    }
                 } catch (IOException e1) {
                     ConsoleManager.getInstance().exception(this,  e1);
                 }
             }
         });
         mnSld.add(mntmOpenSLD);
+
+        JMenuItem mntmReloadSLD = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.reload"));
+        mntmReloadSLD.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+                if(sldData != null)
+                {
+                    URL url = sldData.getSLDURL();
+                    if(url != null)
+                    {
+                        application.openFile(url);
+                    }
+                }
+            }
+        });
+        mnSld.add(mntmReloadSLD);
 
         menuSaveSLDFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.save"));
         menuSaveSLDFile.setEnabled(false);
@@ -404,7 +421,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                 }
             }
         });
-        
+
         // Save
         menuSaveSLDEditorFile = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "common.save"), KeyEvent.VK_S);
         menuSaveSLDEditorFile.setEnabled(false);

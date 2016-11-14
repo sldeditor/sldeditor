@@ -19,11 +19,13 @@
 package com.sldeditor.common.data;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
@@ -392,7 +394,7 @@ public class SLDData implements SLDDataInterface
     @Override
     public void setLegendOptions(LegendOptionData legendOptions) {
         this.legendOptions = legendOptions;
-        
+
         if(this.legendOptions == null)
         {
             this.legendOptions = new LegendOptionData();
@@ -417,5 +419,27 @@ public class SLDData implements SLDDataInterface
     @Override
     public URL getResourceLocator() {
         return resourceLocator;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.SLDDataInterface#getSLDURL()
+     */
+    @Override
+    public URL getSLDURL() {
+        URL url = null;
+        if(sldFile != null)
+        {
+            try {
+                url = sldFile.toURI().toURL();
+            } catch (MalformedURLException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+
+        if(connectionData != null)
+        {
+            url = connectionData.getUrl();
+        }
+        return url;
     }
 }
