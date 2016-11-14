@@ -56,6 +56,7 @@ import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.watcher.ReloadManager;
 import com.sldeditor.create.NewSLDPanel;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
@@ -255,6 +256,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         UILayoutFactory.readLayout(null);
 
         PrefManager.getInstance().finish();
+
+        ReloadManager.getInstance().addListener(this);
 
         ExtensionFactory.updateForPreferences(PrefManager.getInstance().getPrefData(), extensionArgList);
 
@@ -759,5 +762,69 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public void preLoad() {
         ConsoleManager.getInstance().clear();
         uiMgr.getDataSourceConfig().reset();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.LoadSLDInterface#reloadSLDFile()
+     */
+    @Override
+    public void reloadSLDFile() {
+        Object[] options = {Localisation.getString(SLDEditor.class, "common.yes"),
+                Localisation.getString(SLDEditor.class, "common.no")};
+
+        int result = JOptionPane.showOptionDialog(frame,
+                Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
+                Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                options,
+                options[1]);
+
+        if(result == JOptionPane.OK_OPTION)
+        {
+            SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+
+            if(sldData != null)
+            {
+                URL url = sldData.getSLDURL();
+                if(url != null)
+                {
+                    List<SLDDataInterface> sldDataList = null;
+                    for(ExtensionInterface extension : extensionList)
+                    {
+                        if(sldDataList == null)
+                        {
+                            sldDataList = extension.open(url);
+                        }
+                    }
+
+                    if((sldDataList != null) && !sldDataList.isEmpty())
+                    {
+                        SLDDataInterface firstObject = sldDataList.get(0);
+                        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
+
+                        SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
+                        selectedSymbolInstance.setSld(sld);
+
+                        SLDEditorFile.getInstance().setSLDData(firstObject);
+                        dataSource.reset();
+
+                        dataSource.connect(SLDEditorFile.getInstance());
+
+                        LegendManager.getInstance().SLDLoaded(firstObject.getLegendOptions());
+                        SLDEditorFile.getInstance().fileOpenedSaved();
+
+                        // Inform UndoManager that a new SLD file has been
+                        // loaded and to clear undo history
+                        UndoManager.getInstance().fileLoaded();
+
+                        Controller.getInstance().setPopulating(true);
+                        uiMgr.populateUI(sldDataList.size());
+                        Controller.getInstance().setPopulating(false);
+                    }
+                }
+            }
+        }
     }
 }

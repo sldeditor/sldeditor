@@ -38,7 +38,7 @@ import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
 
 /**
  * Unit test for FileSystemWatcher.
- * <p>{@link com.sldeditor.common.vendoroption.FileSystemWatcher}
+ * <p>{@link com.sldeditor.common.watcher.FileSystemWatcher}
  * 
  * @author Robert Ward (SCISYS)
  *

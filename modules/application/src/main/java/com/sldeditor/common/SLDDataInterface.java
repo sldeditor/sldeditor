@@ -157,6 +157,13 @@ public interface SLDDataInterface {
     File getSLDFile();
 
     /**
+     * Gets the sld file as an url.
+     *
+     * @return the sld url
+     */
+    URL getSLDURL();
+
+    /**
      * Gets the layer name with out suffix.
      *
      * @return the layer name with out suffix

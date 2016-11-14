@@ -160,6 +160,7 @@ public class FileSystemWatcher implements Runnable {
                         parentObj.fileAdded(fullPath);
                     }
                 } else if (watchEventKind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                    ReloadManager.getInstance().fileModified(fullPath);
                     // The file has been modified.
                     if(parentObj != null)
                     {
