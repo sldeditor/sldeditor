@@ -57,4 +57,9 @@ public interface LoadSLDInterface {
      */
     StyledLayerDescriptor readSLDFile(File file);
 
+    /**
+     * Reload SLD file.
+     */
+    void reloadSLDFile();
+
 }
