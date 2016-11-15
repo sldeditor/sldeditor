@@ -219,7 +219,7 @@ public class WKTGeometry {
     public String getSegmentName(int index) {
         if(geometryType.canHaveMultipleShapes())
         {
-            return String.format("%s %d", Localisation.getString(WKTGeometry.class, "WKTDialog.partShape"), index + 1);
+            return String.format("%s %d", Localisation.getString(WKTDialog.class, "WKTDialog.partShape"), index + 1);
         }
         else
         {
