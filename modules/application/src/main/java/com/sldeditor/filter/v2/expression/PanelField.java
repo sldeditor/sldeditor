@@ -42,6 +42,9 @@ import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * The Class PanelField.
@@ -69,8 +72,8 @@ public class PanelField {
         String valueText = Localisation.getString(classType, valueTextLocalisation);
         FieldIdEnum fieldId = FieldIdEnum.FUNCTION;
         FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText, true);
-        
-        if(nodeType == Geometry.class)
+
+        if((nodeType == Geometry.class) || (nodeType == LineString.class) || (nodeType == Point.class) || (nodeType == Polygon.class))
         {
             fieldConfig = new FieldConfigGeometry(commonData, null);
         }

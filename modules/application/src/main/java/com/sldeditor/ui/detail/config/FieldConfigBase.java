@@ -33,6 +33,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.BinaryExpression;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
@@ -406,6 +407,17 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
                 setCachedExpression(expression);
             }
             else if(expression instanceof FunctionExpressionImpl)
+            {
+                expressionType = ExpressionTypeEnum.E_EXPRESSION;
+
+                if(attributeSelectionPanel != null)
+                {
+                    attributeSelectionPanel.populate(expression);
+                }
+
+                setCachedExpression(expression);
+            }
+            else if(expression instanceof BinaryExpression)
             {
                 expressionType = ExpressionTypeEnum.E_EXPRESSION;
 
