@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 
@@ -144,7 +145,7 @@ public class WKTGeometryTest {
 
         g.setGeometryType(wktType);
         actualValue = g.getSegmentName(0);
-        assertTrue(actualValue.compareTo(String.format("%s %d", Localisation.getString(WKTGeometry.class, "WKTDialog.partShape"), expectedIndex + 1)) == 0);
+        assertTrue(actualValue.compareTo(String.format("%s %d", Localisation.getString(WKTDialog.class, "WKTDialog.partShape"), expectedIndex + 1)) == 0);
 
         assertNull(g.getSegmentList(-4));
         assertNull(g.getSegmentList(43));
