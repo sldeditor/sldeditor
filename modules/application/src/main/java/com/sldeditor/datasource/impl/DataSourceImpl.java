@@ -415,6 +415,8 @@ public class DataSourceImpl implements DataSourceInterface {
                     valueMap.add(data);
                 }
             }
+
+            iterator.close();
         }
 
         attributeData.setData(valueMap);
