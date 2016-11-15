@@ -58,4 +58,21 @@ public interface FunctionNameInterface {
      */
     Class<?> getFunctionType(String functionName);
 
+    /**
+     * Gets the function.
+     *
+     * @param string the string
+     * @return the function
+     */
+    FunctionName getFunction(String functionName);
+
+    /**
+     * Creates the expression.
+     *
+     * @param function the function
+     * @param argumentList the argument list
+     * @return the expression
+     */
+    Expression createExpression(FunctionName function, List<Expression> argumentList);
+
 }

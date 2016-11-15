@@ -63,9 +63,7 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class DataSourceImpl implements DataSourceInterface {
 
-    /**
-     * 
-     */
+    /** The Constant MAX_RETRIES. */
     private static final int MAX_RETRIES = 3;
 
     /** The logger. */
@@ -690,5 +688,13 @@ public class DataSourceImpl implements DataSourceInterface {
                 field.setType(dataType);
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.DataSourceInterface#getGeometryFieldName()
+     */
+    @Override
+    public String getGeometryFieldName() {
+        return dataSourceInfo.getGeometryFieldName();
     }
 }

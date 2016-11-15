@@ -28,9 +28,6 @@ public class RuleRenderOptions {
     /** The apply transformation flag. */
     private boolean applyTransformation = false;
 
-    /** The ignore geometry fields flag. */
-    private boolean ignoreGeometryFields = true;
-
     /**
      * Default constructor.
      */
@@ -54,24 +51,6 @@ public class RuleRenderOptions {
      */
     public void setApplyTransformation(boolean applyTransformation) {
         this.applyTransformation = applyTransformation;
-    }
-
-    /**
-     * Checks if is ignore geometry fields.
-     *
-     * @return the ignoreGeometryFields
-     */
-    public boolean isIgnoreGeometryFields() {
-        return ignoreGeometryFields;
-    }
-
-    /**
-     * Sets the ignore geometry fields.
-     *
-     * @param ignoreGeometryFields the ignoreGeometryFields to set
-     */
-    public void setIgnoreGeometryFields(boolean ignoreGeometryFields) {
-        this.ignoreGeometryFields = ignoreGeometryFields;
     }
 
 }

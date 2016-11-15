@@ -253,7 +253,7 @@ public class FunctionManager implements FunctionNameInterface {
      */
     @Override
     public Class<?> getFunctionType(String functionName) {
-        FunctionName function = functionNameMap.get(functionName);
+        FunctionName function = getFunction(functionName);
 
         if(function == null)
         {
@@ -263,4 +263,44 @@ public class FunctionManager implements FunctionNameInterface {
         return function.getReturn().getType();
     }
 
+    /**
+     * Gets the function type.
+     *
+     * @param functionName the function name
+     * @return the function type
+     */
+    @Override
+    public FunctionName getFunction(String functionName) {
+        FunctionName function = functionNameMap.get(functionName);
+
+        if(function == null)
+        {
+            return null;
+        }
+
+        return function;
+    }
+
+    /**
+     * Creates the expression.
+     *
+     * @param functionName the function name
+     * @param parameters the parameters
+     * @return the expression
+     */
+    /* (non-Javadoc)
+     * @see com.sldeditor.filter.v2.function.FunctionNameInterface#createExpression(org.opengis.filter.capability.FunctionName, java.util.List)
+     */
+    @Override
+    public Expression createExpression(FunctionName functionName, List<Expression> argumentList) {
+            if(functionName == null)
+            {
+                return null;
+            }
+
+            Literal fallback = null;
+            Function function = functionFactory.function(functionName.getFunctionName(), argumentList, fallback);
+
+            return function;
+    }
 }

@@ -290,11 +290,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     public void visit(PointSymbolizer ps) {
         PointSymbolizer copy = sf.getDefaultPointSymbolizer();
 
-        // Ignore geometry field so that symbol is rendered
-        if(!options.isIgnoreGeometryFields())
-        {
-            copy.setGeometry(copy(ps.getGeometry()));
-        }
+        copy.setGeometry(copy(ps.getGeometry()));
 
         copy.setUnitOfMeasure(ps.getUnitOfMeasure());
         copy.setGraphic( copy( ps.getGraphic() ));
@@ -314,11 +310,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     public void visit(LineSymbolizer line) {
         LineSymbolizer copy = sf.getDefaultLineSymbolizer();
 
-        // Ignore geometry field so that symbol is rendered
-        if(!options.isIgnoreGeometryFields())
-        {
-            copy.setGeometry(copy(line.getGeometry()));
-        }
+        copy.setGeometry(copy(line.getGeometry()));
 
         copy.setUnitOfMeasure(line.getUnitOfMeasure());
         copy.setStroke( copy( line.getStroke()));
@@ -338,11 +330,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         PolygonSymbolizer copy = sf.createPolygonSymbolizer();
         copy.setFill( copy( poly.getFill()));
 
-        // Ignore geometry field so that symbol is rendered
-        if(!options.isIgnoreGeometryFields())
-        {
-            copy.setGeometry(copy(poly.getGeometry()));
-        }
+        copy.setGeometry(copy(poly.getGeometry()));
 
         copy.setUnitOfMeasure(poly.getUnitOfMeasure());
         copy.setStroke(copy(poly.getStroke()));
@@ -416,11 +404,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setColorMap( copy( raster.getColorMap() ));
         copy.setContrastEnhancement( copy( raster.getContrastEnhancement()));
 
-        // Ignore geometry field so that symbol is rendered
-        if(!options.isIgnoreGeometryFields())
-        {
-            copy.setGeometry(copy(raster.getGeometry()));
-        }
+        copy.setGeometry(copy(raster.getGeometry()));
 
         copy.setUnitOfMeasure(raster.getUnitOfMeasure());
         copy.setImageOutline( copy( raster.getImageOutline()));

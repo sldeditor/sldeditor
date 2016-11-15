@@ -25,6 +25,10 @@ import javax.measure.quantity.Length;
 import javax.measure.unit.Unit;
 
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.function.FilterFunction_endAngle;
+import org.geotools.filter.function.FilterFunction_endPoint;
+import org.geotools.filter.function.FilterFunction_startAngle;
+import org.geotools.filter.function.FilterFunction_startPoint;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Description;
 import org.geotools.styling.FeatureTypeStyle;
@@ -33,6 +37,7 @@ import org.geotools.styling.Font;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Halo;
 import org.geotools.styling.LineSymbolizer;
+import org.geotools.styling.MarkImpl;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointPlacement;
 import org.geotools.styling.PointSymbolizer;
@@ -46,11 +51,15 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Displacement;
 import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
+import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
@@ -59,6 +68,19 @@ import com.sldeditor.ui.tree.SLDTreeTools;
  * @author Robert Ward (SCISYS)
  */
 public class DefaultSymbols {
+
+    /**
+     * 
+     */
+    private static final double DEGREES_180 = 180.0;
+
+    /**
+     * 
+     */
+    private static final double DEFAULT_ARROW_SIZE = 30.0;
+
+    /** The Constant DEFAULT_ARROW_SYMBOL. */
+    private static final String DEFAULT_ARROW_SYMBOL = "shape://oarrow";
 
     /** The Constant DEFAULT_MARKER_SYMBOL_SIZE. */
     private static final double DEFAULT_MARKER_SYMBOL_SIZE = 10.0;
@@ -453,5 +475,79 @@ public class DefaultSymbols {
         rule.symbolizers().add(raster);
 
         return sld;
+    }
+
+    /**
+     * Creates the source arrow.
+     *
+     * @return the point symbolizer
+     */
+    public static PointSymbolizer createSourceArrow() {
+        return createArrow(Localisation.getString(SLDTreeTools.class, "TreeItem.sourceArrow"),
+                FilterFunction_startAngle.NAME, FilterFunction_startPoint.NAME, true);
+    }
+
+    /**
+     * Creates the destination arrow.
+     *
+     * @return the point symbolizer
+     */
+    public static PointSymbolizer createDestinationArrow() {
+        return createArrow(Localisation.getString(SLDTreeTools.class, "TreeItem.destArrow"),
+                FilterFunction_endAngle.NAME, FilterFunction_endPoint.NAME, false);
+    }
+
+    /**
+     * Creates the arrow.
+     *
+     * @param name the name
+     * @param angleFunction the angle function
+     * @param locationFunction the location function
+     * @param isSourceArrow the is source arrow
+     * @return the point symbolizer
+     */
+    private static PointSymbolizer createArrow(String name, 
+            FunctionName angleFunction,
+            FunctionName locationFunction,
+            boolean isSourceArrow)
+    {
+        PointSymbolizer pointSymbolizer = createDefaultPointSymbolizer();
+
+        pointSymbolizer.setName(name);
+        Graphic graphic = pointSymbolizer.getGraphic();
+        graphic.setSize(ff.literal(DEFAULT_ARROW_SIZE));
+        List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
+        MarkImpl mark = (MarkImpl) graphicalSymbolList.get(0);
+
+        Expression wellKnownName = ff.literal(DEFAULT_ARROW_SYMBOL);
+        mark.setWellKnownName(wellKnownName);
+
+        mark.getFill().setColor(ff.literal(DEFAULT_COLOUR));
+
+        // Arrow rotation
+        List<Expression> rotationArgumentList = new ArrayList<Expression>();
+
+        DataSourceInterface dsInfo = DataSourceFactory.getDataSource();
+        String geometryFieldName = dsInfo.getGeometryFieldName();
+        rotationArgumentList.add(ff.property(geometryFieldName));
+
+        Expression rotation = FunctionManager.getInstance().createExpression(angleFunction, rotationArgumentList);
+        if(isSourceArrow)
+        {
+            graphic.setRotation(ff.add(ff.literal(DEGREES_180), rotation));
+        }
+        else
+        {
+            graphic.setRotation(rotation);
+        }
+
+        // Set location of the arrow head
+        List<Expression> endPointArgumentList = new ArrayList<Expression>();
+        endPointArgumentList.add(ff.property(geometryFieldName));
+
+        Expression geometry = FunctionManager.getInstance().createExpression(locationFunction, endPointArgumentList);
+        pointSymbolizer.setGeometry(geometry);
+
+        return pointSymbolizer;
     }
 }

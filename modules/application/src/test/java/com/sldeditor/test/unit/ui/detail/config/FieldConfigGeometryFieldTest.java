@@ -267,6 +267,14 @@ public class FieldConfigGeometryFieldTest {
         @Override
         public void updateFieldType(String fieldName, Class<?> dataType) {
         }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.datasource.DataSourceInterface#getGeometryFieldName()
+         */
+        @Override
+        public String getGeometryFieldName() {
+            return null;
+        }
     }
 
     /**
