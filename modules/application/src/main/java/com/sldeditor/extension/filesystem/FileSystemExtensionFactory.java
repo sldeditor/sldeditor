@@ -49,6 +49,7 @@ public class FileSystemExtensionFactory {
      */
     private static void populateExtensions(ToolSelectionInterface toolMgr) {
         geoServerInput = new GeoServerInput(toolMgr);
+        geoServerInput.readPropertyFile();
         extensionList.add(geoServerInput);
         fileSystemInput = new FileSystemInput(toolMgr);
         extensionList.add(fileSystemInput);

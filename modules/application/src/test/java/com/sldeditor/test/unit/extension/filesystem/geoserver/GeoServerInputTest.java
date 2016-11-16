@@ -40,6 +40,7 @@ import org.junit.Test;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.SLDData;
@@ -57,8 +58,36 @@ import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
  * @author Robert Ward (SCISYS)
  *
  */
-@Ignore
 public class GeoServerInputTest {
+
+    /**
+     * The Class DummyGeoServerInput.
+     */
+    class DummyGeoServerInput extends GeoServerInput
+    {
+
+        /** The Constant serialVersionUID. */
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Instantiates a new dummy geo server input.
+         *
+         * @param toolMgr the tool mgr
+         */
+        public DummyGeoServerInput(ToolSelectionInterface toolMgr) {
+            super(toolMgr);
+        }
+
+        /**
+         * Test remove style file extension.
+         *
+         * @param styleWrapper the style wrapper
+         */
+        public void testRemoveStyleFileExtension(StyleWrapper styleWrapper) {
+            super.removeStyleFileExtension(styleWrapper);
+        }
+
+    }
 
     /**
      * Test method for {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#GeoServerInput(com.sldeditor.common.ToolSelectionInterface)}.
@@ -120,7 +149,7 @@ public class GeoServerInputTest {
             assertFalse(input.save(sldData));
 
             // Check how many connections we have
-            assertEquals(3, input.getConnectionDetails().size());
+            assertEquals(2, input.getConnectionDetails().size());
         }
         catch (SecurityException e)
         {
@@ -321,7 +350,7 @@ public class GeoServerInputTest {
         List<GeoServerConnection> listToDelete = new ArrayList<GeoServerConnection>();
         listToDelete.add(connection1);
         input.deleteConnections(listToDelete);
-        
+
         GeoServerConnection connection1Updated = new GeoServerConnection();
         connection1Updated.setConnectionName("update test connection 1");
         input.addNewConnection(connection1Updated);
@@ -494,4 +523,18 @@ public class GeoServerInputTest {
         input.deleteNodes(workspaceTreeNode, sldToDeleteList);
     }
 
+    @Test
+    public void testRemoveStyleFileExtension() {
+        DummyGeoServerInput obj = new DummyGeoServerInput(null);
+        obj.testRemoveStyleFileExtension(null);
+
+        StyleWrapper wrapper = new StyleWrapper();
+        obj.testRemoveStyleFileExtension(wrapper);
+
+        String expected = "test.sld";
+        wrapper.setStyle(expected);
+        obj.testRemoveStyleFileExtension(wrapper);
+
+        assertEquals("test", wrapper.getStyle());
+    }
 }
