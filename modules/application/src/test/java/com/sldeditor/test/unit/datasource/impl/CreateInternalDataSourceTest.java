@@ -72,7 +72,7 @@ public class CreateInternalDataSourceTest {
     public void testConnect() {
         CreateInternalDataSource ds = new CreateInternalDataSource();
 
-        List<DataSourceInfo> dataSourceInfoList = ds.connect(null);
+        List<DataSourceInfo> dataSourceInfoList = ds.connect(null, null);
 
         DataSourceInfo dsInfo = dataSourceInfoList.get(0);
 
@@ -81,7 +81,7 @@ public class CreateInternalDataSourceTest {
         assertNull(dsInfo.getTypeName());
 
         SLDEditorFileInterface sldEditor = new DummyInternalSLDFile(); 
-        dataSourceInfoList = ds.connect(sldEditor);
+        dataSourceInfoList = ds.connect(null, sldEditor);
         dsInfo = dataSourceInfoList.get(0);
 
         assertTrue(dsInfo != null);

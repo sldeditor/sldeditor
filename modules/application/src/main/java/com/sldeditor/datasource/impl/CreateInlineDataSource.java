@@ -47,11 +47,12 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
     /**
      * Creates the data source.
      *
+     * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of data stores
      */
     @Override
-    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         for(DataSourceInfo dsInfo : dataSourceInfoList)
         {

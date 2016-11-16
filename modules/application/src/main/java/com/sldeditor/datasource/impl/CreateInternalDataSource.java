@@ -71,11 +71,12 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     /**
      * Creates the.
      *
+     * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
@@ -106,6 +107,10 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
             // Set the geometry field by default
             geometryField.reset();
+            if(geometryFieldName != null)
+            {
+                geometryField.setGeometryFieldName(geometryFieldName);
+            }
 
             if((fieldList == null) || fieldList.isEmpty())
             {
@@ -114,9 +119,9 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
                 fieldList = extract.getFields();
 
                 List<String> geometryFields = extract.getGeometryFields();
-                for(String geometryFieldName : geometryFields)
+                for(String localGeometryFieldName : geometryFields)
                 {
-                    geometryField.setGeometryFieldName(geometryFieldName);
+                    geometryField.setGeometryFieldName(localGeometryFieldName);
                 }
             }
             else
@@ -138,7 +143,10 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             MemoryDataStore dataStore = sampleData.getDataStore();
 
             dsInfo.setDataStore(dataStore);
+            
+            dsInfo.populateFieldMap();
         }
+
         return dataSourceInfoList;
     }
 

@@ -154,6 +154,8 @@ public class SLDTreeToolsTest {
         treeTools.addNewThing(UserLayer.class);
         treeTools.addNewThing(NamedLayer.class);
         treeTools.addNewRaster();
+        treeTools.addDestArrow();
+        treeTools.addSourceArrow();
         treeTools.moveItem(true);
         treeTools.removeItem();
     }
@@ -1226,5 +1228,50 @@ public class SLDTreeToolsTest {
         treeTools.removeItem();
         assertEquals(0, rootNode.getChildCount());
         assertFalse(renderSymbol.hasRenderSymbolBeenCalled());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addSourceArrow()}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addDestArrow()}.
+     */
+    @Test
+    public void testAddArrows() {
+        SLDTreeTools treeTools = new SLDTreeTools();
+
+        TestSLDTree sldTree = new TestSLDTree(null, treeTools);
+
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+
+        // Start off with just a top level SLD and no structure below it
+        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
+
+        SelectedSymbol.getInstance().setSld(sld);
+
+        sldTree.populateSLD();
+        sldTree.selectFirstSymbol();
+        treeTools.addNewThing(NamedLayer.class);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+        treeTools.addNewThing(null);
+
+        DefaultMutableTreeNode rootNode = sldTree.getRootNode();
+
+        // Make sure we have a rule selected
+        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
+        assertEquals(RuleImpl.class, rule.getUserObject().getClass());
+        assertEquals(0, rule.getChildCount());
+
+        treeTools.addNewLine();
+        treeTools.addSourceArrow();
+        treeTools.addDestArrow();
+
+        DefaultMutableTreeNode lineNode = (DefaultMutableTreeNode) rule.getChildAt(0);
+        assertEquals(LineSymbolizerImpl.class, lineNode.getUserObject().getClass());
+
+        DefaultMutableTreeNode srcArrowNode = (DefaultMutableTreeNode) rule.getChildAt(1);
+        assertEquals(PointSymbolizerImpl.class, srcArrowNode.getUserObject().getClass());
+        
+        DefaultMutableTreeNode destArrowNode = (DefaultMutableTreeNode) rule.getChildAt(2);
+        assertEquals(PointSymbolizerImpl.class, destArrowNode.getUserObject().getClass());
     }
 }

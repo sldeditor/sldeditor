@@ -98,6 +98,13 @@ public interface DataSourceInterface {
     GeometryTypeEnum getGeometryType();
 
     /**
+     * Gets the geometry field name.
+     *
+     * @return the geometry field name
+     */
+    String getGeometryFieldName();
+
+    /**
      * Read attributes from feature.
      *
      * @param attributeData the attribute data

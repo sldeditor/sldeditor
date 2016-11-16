@@ -294,6 +294,7 @@ public class DataSourceImplTest {
 
         ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
         ds.connect(editorFile);
+        assertTrue(dataSourceUpdateListener.hasBeenCalled());
 
         assertEquals(GeometryTypeEnum.UNKNOWN, dataSourceUpdateListener.geometryType);
         assertFalse(dataSourceUpdateListener.isConnectedToDataSourceFlag);

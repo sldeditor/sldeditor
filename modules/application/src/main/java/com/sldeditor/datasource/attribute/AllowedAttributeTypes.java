@@ -24,8 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.filter.function.Classifier;
+import org.geotools.filter.function.RangedClassifier;
+
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.MultiPolygon;
@@ -70,6 +74,11 @@ public class AllowedAttributeTypes {
         List<Class<?> > integerList = new ArrayList<Class<?> >(Arrays.asList(Integer.class, Long.class));
         List<Class<?> > stringList = new ArrayList<Class<?> >(Arrays.asList(String.class));
         List<Class<?> > geometryList = new ArrayList<Class<?> >(Arrays.asList(Point.class, LineString.class, Polygon.class, MultiPolygon.class, MultiPoint.class, MultiLineString.class));
+        List<Class<?> > lineStringList = new ArrayList<Class<?> >(Arrays.asList(LineString.class, MultiLineString.class));
+        List<Class<?> > pointList = new ArrayList<Class<?> >(Arrays.asList(Point.class, MultiPoint.class));
+        List<Class<?> > linearRingList = new ArrayList<Class<?> >(Arrays.asList(LinearRing.class));
+        List<Class<?> > rangedClassifierList = new ArrayList<Class<?> >(Arrays.asList(RangedClassifier.class));
+        List<Class<?> > classifierList = new ArrayList<Class<?> >(Arrays.asList(Classifier.class));
 
         allowedClassTypeMap.put(String.class, stringList);
         allowedClassTypeMap.put(Double.class, doubleList);
@@ -77,12 +86,18 @@ public class AllowedAttributeTypes {
         allowedClassTypeMap.put(Integer.class, integerList);
         allowedClassTypeMap.put(Long.class, integerList);
         allowedClassTypeMap.put(Geometry.class, geometryList);
+        allowedClassTypeMap.put(LineString.class, lineStringList);
+        allowedClassTypeMap.put(Point.class, pointList);
+        allowedClassTypeMap.put(LinearRing.class, linearRingList);
+        allowedClassTypeMap.put(RangedClassifier.class, rangedClassifierList);
+        allowedClassTypeMap.put(Classifier.class, classifierList);
 
         List<Class<?> > objectList = new ArrayList<Class<?>>();
         objectList.addAll(doubleList);
         objectList.addAll(integerList);
         objectList.addAll(stringList);
         objectList.addAll(geometryList);
+        objectList.addAll(lineStringList);
         allowedClassTypeMap.put(Object.class, objectList);
     }
 

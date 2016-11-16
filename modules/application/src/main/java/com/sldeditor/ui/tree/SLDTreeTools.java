@@ -131,6 +131,12 @@ public class SLDTreeTools {
     /** The add user layer button. */
     private JButton btnAddUserLayerButton;
 
+    /** The source arrow button. */
+    private JButton btnSourceArrowButton;
+
+    /** The destination arrow button. */
+    private JButton btnDestArrowButton;
+
     /** The sld writer. */
     private SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
@@ -301,6 +307,26 @@ public class SLDTreeTools {
             }
         });
         buttonPanel.add(btnMoveDown);
+
+        btnSourceArrowButton = new JButton();
+        btnSourceArrowButton.setIcon(getResourceIcon("button/srcArrow.png"));
+        btnSourceArrowButton.setEnabled(true);
+        btnSourceArrowButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addSourceArrow();
+            }
+        });
+        buttonPanel.add(btnSourceArrowButton);
+
+        btnDestArrowButton = new JButton();
+        btnDestArrowButton.setIcon(getResourceIcon("button/destArrow.png"));
+        btnDestArrowButton.setEnabled(true);
+        btnDestArrowButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addDestArrow();
+            }
+        });
+        buttonPanel.add(btnDestArrowButton);
     }
 
     /**
@@ -672,6 +698,52 @@ public class SLDTreeTools {
 
             UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
         }
+    }
+
+    /**
+     * Adds the destination arrow.
+     */
+    public void addDestArrow() {
+        addArrow(false);
+    }
+        
+    /**
+     * Adds the arrow.
+     *
+     * @param isSourceArrow the is source arrow
+     */
+    private void addArrow(boolean isSourceArrow)
+    {
+        if(symbolTree == null)
+        {
+            return;
+        }
+        // Store current state of the SLD before the add
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
+
+        PointSymbolizer pointSymbolizer = DefaultSymbols.createArrow(isSourceArrow);
+        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
+
+        SelectedSymbol.getInstance().addSymbolizerToRule(pointSymbolizer);
+        DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, pointSymbolizer, true); 
+
+        // Select the item just added
+        if(newNode != null)
+        {
+            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(pointSymbolizer), true);
+
+            // Store current state of the SLD after the add
+            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
+        }
+    }
+
+    /**
+     * Adds the source arrow.
+     */
+    public void addSourceArrow() {
+        addArrow(true);
     }
 
     /**
@@ -1087,6 +1159,7 @@ public class SLDTreeTools {
         boolean hasMoreThan1Item = false;
         boolean isFirstSelected = false;
         boolean isLastSelected = false;
+        boolean showLineArrowButtons = false;
 
         symbolizerButtonState.setGeometryType(currentGeometryType);
 
@@ -1169,6 +1242,8 @@ public class SLDTreeTools {
                         isLastSelected = (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
                     }
                 }
+
+                showLineArrowButtons = (obj instanceof LineSymbolizer);
             }
             else
             {
@@ -1197,6 +1272,9 @@ public class SLDTreeTools {
         btnMoveUp.setEnabled(hasMoreThan1Item && !isFirstSelected);
         btnMoveDown.setVisible(showMoveButtons);
         btnMoveDown.setEnabled(hasMoreThan1Item && !isLastSelected);
+        
+        btnSourceArrowButton.setVisible(showLineArrowButtons);
+        btnDestArrowButton.setVisible(showLineArrowButtons);
     }
 
     /**

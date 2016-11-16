@@ -72,11 +72,12 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
     /**
      * Connect.
      *
+     * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);

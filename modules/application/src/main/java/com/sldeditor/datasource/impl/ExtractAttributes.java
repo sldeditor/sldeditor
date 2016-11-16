@@ -441,30 +441,33 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      */
     public void extractDefaultFields(SimpleFeatureTypeBuilder b, StyledLayerDescriptor sld)
     {
-        visit(sld);
-
-        // Check to see if any geometry fields have been added to processedFieldList
-        List<DataSourceAttributeData> fieldsToMoveToGeometryList = new ArrayList<DataSourceAttributeData>();
-
-        for(DataSourceAttributeData dsAttribute : processedFieldList)
+        if(sld != null)
         {
-            if(dsAttribute.getType() == Geometry.class)
+            visit(sld);
+
+            // Check to see if any geometry fields have been added to processedFieldList
+            List<DataSourceAttributeData> fieldsToMoveToGeometryList = new ArrayList<DataSourceAttributeData>();
+
+            for(DataSourceAttributeData dsAttribute : processedFieldList)
             {
-                fieldsToMoveToGeometryList.add(dsAttribute);
+                if(dsAttribute.getType() == Geometry.class)
+                {
+                    fieldsToMoveToGeometryList.add(dsAttribute);
+                }
             }
-        }
 
-        // Move geometry fields to the correct list
-        for(DataSourceAttributeData ds : fieldsToMoveToGeometryList)
-        {
-            geometryFieldList.add(ds.getName());
-            processedFieldList.remove(ds);
-        }
+            // Move geometry fields to the correct list
+            for(DataSourceAttributeData ds : fieldsToMoveToGeometryList)
+            {
+                geometryFieldList.add(ds.getName());
+                processedFieldList.remove(ds);
+            }
 
-        // Add non-geometry fields to the feature type builder
-        for(DataSourceAttributeData dsAttribute : processedFieldList)
-        {
-            b.add(dsAttribute.getName(), dsAttribute.getType());
+            // Add non-geometry fields to the feature type builder
+            for(DataSourceAttributeData dsAttribute : processedFieldList)
+            {
+                b.add(dsAttribute.getName(), dsAttribute.getType());
+            }
         }
     }
 

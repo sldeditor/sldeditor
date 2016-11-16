@@ -328,6 +328,8 @@ public class ExpressionSubPanel extends JPanel {
             dataSourceAttributePanel.setAttribute(null);
             functionPanel.setFunction(null);
 
+            dataSourceAttributePanel.setDataType(node.getType());
+
             if(expression instanceof AttributeExpressionImpl)
             {
                 dataSourceAttributePanel.setAttribute(expression);
