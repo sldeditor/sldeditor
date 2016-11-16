@@ -703,7 +703,7 @@ public class SLDTreeTools {
     /**
      * Adds the destination arrow.
      */
-    private void addDestArrow() {
+    public void addDestArrow() {
         if(symbolTree == null)
         {
             return;
@@ -732,7 +732,7 @@ public class SLDTreeTools {
     /**
      * Adds the source arrow.
      */
-    private void addSourceArrow() {
+    public void addSourceArrow() {
         if(symbolTree == null)
         {
             return;
