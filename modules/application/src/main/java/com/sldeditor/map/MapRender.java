@@ -52,7 +52,6 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.geotools.styling.UserLayerImpl;
-import org.geotools.swing.JMapPane;
 import org.geotools.swing.action.NoToolAction;
 import org.geotools.swing.action.PanAction;
 import org.geotools.swing.action.ResetAction;
@@ -110,7 +109,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature> > userLayerFeatureListMap = null;
 
     /** The map pane. */
-    private JMapPane mapPane = null;
+    private SLDMapPane mapPane = null;
 
     /** The geometry type. */
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
@@ -584,8 +583,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
      *
      * @return the j map pane
      */
-    private JMapPane createMapPane() {
-        JMapPane internal_mapPane = new JMapPane();
+    private SLDMapPane createMapPane() {
+        SLDMapPane internal_mapPane = new SLDMapPane();
         internal_mapPane.setBackground(PrefManager.getInstance().getPrefData().getBackgroundColour());
         internal_mapPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
