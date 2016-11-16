@@ -7,6 +7,7 @@
 
 package com.sldeditor.tool.stickDataSource;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -53,7 +54,7 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
 
         // Export to YSLD
         stickyButton = new ToggleToolButton(Localisation.getString(StickyDataSourceTool.class, "StickyDataSourceTool.dataSource"),
-                "tool/exporttoysld.png");
+                "tool/stickydatasource.png");
         stickyButton.setEnabled(true);
         final StickyDataSourceTool callingObj = this;
         
@@ -64,6 +65,7 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         });
 
         groupPanel.add(stickyButton);
+        groupPanel.setPreferredSize(new Dimension(60, 62));
     }
 
     /* (non-Javadoc)
