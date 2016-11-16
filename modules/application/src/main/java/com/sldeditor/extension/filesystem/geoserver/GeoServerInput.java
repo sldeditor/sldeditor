@@ -726,6 +726,9 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                     for(SLDDataInterface sldData : droppedDataMap.get(key))
                     {
                         StyleWrapper styleWrapper = sldData.getStyle();
+
+                        removeStyleFileExtension(styleWrapper);
+
                         styleWrapper.setWorkspace(workspaceNode.getWorkspaceName());
                         client.uploadSLD(styleWrapper, sldData.getSld());
                     }
@@ -737,6 +740,26 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             return true;
         }
         return false;
+    }
+
+    /**
+     * Removes the style file extension.
+     *
+     * @param styleWrapper the style wrapper
+     */
+    protected void removeStyleFileExtension(StyleWrapper styleWrapper) {
+        if(styleWrapper != null)
+        {
+            String original = styleWrapper.getStyle();
+            if(original != null)
+            {
+                int pos = original.lastIndexOf('.');
+                if(pos > 0)
+                {
+                    styleWrapper.setStyle(original.substring(0, pos));
+                }
+            }
+        }
     }
 
     /* (non-Javadoc)
