@@ -199,4 +199,17 @@ public class SLDEditorFileTest {
 
         assertTrue(dataUpdateListener.dataEditedFlag);
     }
+
+    /**
+     * Test method for {@link com.sldeditor.datasource.SLDEditorFile#setStickyDataSource(boolean)}.
+     * Test method for {@link com.sldeditor.datasource.SLDEditorFile#isStickyDataSource()}.
+     */
+    @Test
+    public void testStickDataSource() {
+        assertFalse(SLDEditorFile.getInstance().isStickyDataSource());
+        SLDEditorFile.getInstance().setStickyDataSource(true);
+        assertTrue(SLDEditorFile.getInstance().isStickyDataSource());
+        SLDEditorFile.getInstance().setStickyDataSource(false);
+        assertFalse(SLDEditorFile.getInstance().isStickyDataSource());
+    }
 }
