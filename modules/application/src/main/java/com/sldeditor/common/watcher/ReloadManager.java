@@ -31,6 +31,12 @@ import com.sldeditor.datasource.SLDEditorFile;
 
 /**
  * The Class ReloadManager, class implemented as a singleton.
+ * Receives the currently load SLD file when it updates and compares it to all
+ * modified files from the FileWatcher.  If the currently loaded when is modified
+ * and the save flag has n't been set then inform the application that the currently
+ * loaded file has been modified.
+ * Added some protection to prevent multiple file watcher events for the currently loaded
+ * file to trigger more than once.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -53,6 +59,9 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
 
     /** The listener to be notified when underlying file has been changed. */
     private LoadSLDInterface listener = null;
+
+    /** The file saved flag. */
+    private boolean fileSaved = false;
 
     /**
      * Instantiates a new reload manager.
@@ -82,8 +91,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     @Override
     public void fileAdded(Path f) {
-        // TODO Auto-generated method stub
-
+        // Ignore
     }
 
     /* (non-Javadoc)
@@ -96,7 +104,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         {
             if(current.equals(updated))
             {
-                if(startTimeout())
+                if(!isFileSaved() && startTimeout())
                 {
                     timer.schedule(new TimerTask() {
 
@@ -118,6 +126,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     @Override
     public void fileDeleted(Path updated) {
+        // Ignore
     }
 
     /* (non-Javadoc)
@@ -183,5 +192,24 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     public void addListener(LoadSLDInterface listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Checks if is file saved and resets flag.
+     *
+     * @return the fileSaved
+     */
+    private synchronized boolean isFileSaved() {
+        boolean tmp = fileSaved;
+        fileSaved = false;
+
+        return tmp;
+    }
+
+    /**
+     * Sets the file saved.
+     */
+    public synchronized void setFileSaved() {
+        this.fileSaved = true;
     }
 }

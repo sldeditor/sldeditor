@@ -484,6 +484,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
         sldData.updateSLDContents(sldContents);
 
+        ReloadManager.getInstance().setFileSaved();
         saveSLDData(sldData);
 
         SLDEditorFile.getInstance().fileOpenedSaved();
