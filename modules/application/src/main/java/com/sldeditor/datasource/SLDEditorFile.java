@@ -67,6 +67,9 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     /** The data edited flag. */
     private boolean dataEditedFlag = false;
 
+    /** The sticky data source flag. */
+    private boolean stickyDataSource = false;
+
     /**
      * Gets the single instance of SLDEditorFile.
      *
@@ -171,7 +174,6 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     public void addSLDOutputListener(SLDOutputInterface sldOutput)
     {
         // Does nothing
-
     }
 
     /**
@@ -351,5 +353,23 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Does nothing
+    }
+
+    /**
+     * Checks if is sticky data source.
+     *
+     * @return the stickyDataSource
+     */
+    public boolean isStickyDataSource() {
+        return stickyDataSource;
+    }
+
+    /**
+     * Sets the sticky data source.
+     *
+     * @param stickyDataSource the stickyDataSource to set
+     */
+    public void setStickyDataSource(boolean stickyDataSource) {
+        this.stickyDataSource = stickyDataSource;
     }
 }

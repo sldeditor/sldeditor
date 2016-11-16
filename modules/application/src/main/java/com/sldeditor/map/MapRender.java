@@ -35,6 +35,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
@@ -129,6 +130,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     public static final String TOOLBAR_ZOOMIN_BUTTON_NAME = "ToolbarZoomInButton";
     /** Name assigned to toolbar button for map zoom out. */
     public static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
+    /** The Constant TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME. */
+    private static final String TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME = "ToolbarStickyDataSourceButton";
 
     /** The click to zoom factor, 1 wheel click is 10% zoom. */
     private final double clickToZoom = 0.1;
@@ -220,6 +223,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         btn = new JButton(new ResetAction(mapPane));
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
+
+        toolBar.addSeparator();
+
+        JToggleButton tBtn = new JToggleButton(new StickDataSourceAction(mapPane));
+        tBtn.setName(TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME);
+        toolBar.add(tBtn);
 
         return toolBar;
     }
