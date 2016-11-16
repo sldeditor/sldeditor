@@ -175,11 +175,6 @@ public class DataSourceImpl implements DataSourceInterface {
 
             if(this.dataSourceProperties != null)
             {
-                // Create the example data to show in the render panel
-                createExampleDataSource();
-
-                createUserLayerDataSources();
-
                 if(this.dataSourceProperties.isEmpty())
                 {
                     openWithoutDataSource();
@@ -188,6 +183,13 @@ public class DataSourceImpl implements DataSourceInterface {
                 {
                     openExternalDataSource();
                 }
+
+                // Create the example data to show in the render panel
+                createExampleDataSource();
+
+                createUserLayerDataSources();
+
+                notifyDataSourceLoaded();
             }
         }
     }
@@ -203,7 +205,7 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            userLayerDataSourceInfo = inlineDataSource.connect(this.editorFileInterface);
+            userLayerDataSourceInfo = inlineDataSource.connect(null, this.editorFileInterface);
 
             if(userLayerDataSourceInfo != null)
             {
@@ -229,7 +231,7 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            List<DataSourceInfo> dataSourceInfoList = externalDataSource.connect(this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList = externalDataSource.connect(null, this.editorFileInterface);
             if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
             {
                 dataSourceInfo = dataSourceInfoList.get(0);
@@ -239,8 +241,6 @@ public class DataSourceImpl implements DataSourceInterface {
                     dataSourceInfo.populateFieldMap();
 
                     connectedToDataSourceFlag = true;
-
-                    notifyDataSourceLoaded();
                 }
                 else
                 {
@@ -396,21 +396,25 @@ public class DataSourceImpl implements DataSourceInterface {
                 List<Object> attributes = feature.getAttributes();
                 for (int i = 0; i < attributes.size(); i++)
                 {
-                    String fieldName = fieldNameMap.get(i).getLocalPart();
-
-                    Class<?> type = fieldTypeMap.get(i);
-
-                    if(type == Geometry.class)
+                    Name name = fieldNameMap.get(i);
+                    if(name != null)
                     {
-                        Object value = feature.getAttribute(fieldName);
+                        String fieldName = name.getLocalPart();
 
-                        type = value.getClass();
+                        Class<?> type = fieldTypeMap.get(i);
+
+                        if(type == Geometry.class)
+                        {
+                            Object value = feature.getAttribute(fieldName);
+
+                            type = value.getClass();
+                        }
+                        DataSourceAttributeData data = new DataSourceAttributeData(fieldName,
+                                type,
+                                attributes.get(i));
+
+                        valueMap.add(data);
                     }
-                    DataSourceAttributeData data = new DataSourceAttributeData(fieldName,
-                            type,
-                            attributes.get(i));
-
-                    valueMap.add(data);
                 }
             }
 
@@ -467,12 +471,11 @@ public class DataSourceImpl implements DataSourceInterface {
             boolean retry = true;
             while(retry && (attempt < MAX_RETRIES))
             {
-                List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(this.editorFileInterface);
+                List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(dataSourceInfo.getGeometryFieldName(),
+                        this.editorFileInterface);
                 if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
                 {
                     dataSourceInfo = dataSourceInfoList.get(0);
-
-                    dataSourceInfo.populateFieldMap();
                 }
 
                 // Check that the field data types that were guessed are correct
@@ -487,8 +490,6 @@ public class DataSourceImpl implements DataSourceInterface {
                     retry = false;
                 }
             }
-
-            notifyDataSourceLoaded();
         }
     }
 
@@ -505,7 +506,9 @@ public class DataSourceImpl implements DataSourceInterface {
         }
         else
         {
-            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(dataSourceInfo.getGeometryFieldName(),
+                    this.editorFileInterface);
+
             if((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1))
             {
                 exampleDataSourceInfo = dataSourceInfoList.get(0);
@@ -586,6 +589,8 @@ public class DataSourceImpl implements DataSourceInterface {
                 this.editorFileInterface.getSLDData().setFieldList(attributeDataList);
 
                 createInternalDataSource();
+
+                notifyDataSourceLoaded();
             }
         }
     }
@@ -612,6 +617,8 @@ public class DataSourceImpl implements DataSourceInterface {
                 fieldList.add(dataSourceField);
 
                 createInternalDataSource();
+
+                notifyDataSourceLoaded();
             }
         }
     }
