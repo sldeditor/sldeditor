@@ -149,7 +149,7 @@ public class GeoServerInputTest {
             assertFalse(input.save(sldData));
 
             // Check how many connections we have
-            assertEquals(3, input.getConnectionDetails().size());
+            assertEquals(2, input.getConnectionDetails().size());
         }
         catch (SecurityException e)
         {

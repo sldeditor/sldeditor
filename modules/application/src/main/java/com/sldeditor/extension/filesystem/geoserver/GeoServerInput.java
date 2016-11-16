@@ -136,14 +136,12 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             ToolManager.getInstance().registerTool(GeoServerWorkspaceNode.class, new GeoServerLayerUpdateTool(this));
             ToolManager.getInstance().registerTool(GeoServerLayerHeadingNode.class, new GeoServerLayerUpdateTool(this));
         }
-
-        readPropertyFile();
     }
 
     /**
      * Read property file.
      */
-    private void readPropertyFile()
+    public void readPropertyFile()
     {
         List<GeoServerConnection> connectionList = GeoServerConnectionManager.getInstance().getConnectionList();
 
