@@ -40,6 +40,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.geotools.styling.StyledLayerDescriptor;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
@@ -618,7 +619,17 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                         selectedSymbolInstance.setName(layerName);
 
                         SLDEditorFile.getInstance().setSLDData(firstObject);
+
+                        // Reload data source if stick flag is set
+                        boolean isDataSourceSticky = SLDEditorFile.getInstance().isStickyDataSource();
+                        DataSourcePropertiesInterface previousDataSource = dataSource.getDataConnectorProperties();
+
                         dataSource.reset();
+
+                        if(isDataSourceSticky)
+                        {
+                            SLDEditorFile.getInstance().setDataSource(previousDataSource);
+                        }
 
                         dataSource.connect(SLDEditorFile.getInstance());
 

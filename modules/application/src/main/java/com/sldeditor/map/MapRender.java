@@ -23,6 +23,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
@@ -35,6 +37,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
@@ -76,6 +79,8 @@ import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -88,7 +93,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpdateInterface, DataSourceUpdatedInterface, MouseWheelListener {
+public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpdateInterface, DataSourceUpdatedInterface, MouseWheelListener, StickyDataSourceInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -129,6 +134,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     public static final String TOOLBAR_ZOOMIN_BUTTON_NAME = "ToolbarZoomInButton";
     /** Name assigned to toolbar button for map zoom out. */
     public static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
+    /** The Constant TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME. */
+    private static final String TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME = "ToolbarStickyDataSourceButton";
 
     /** The click to zoom factor, 1 wheel click is 10% zoom. */
     private final double clickToZoom = 0.1;
@@ -141,6 +148,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /** The map bounds. */
     private ReferencedEnvelope mapBounds = null;
+
+    /** The sticky data source button. */
+    private JToggleButton stickyDataSourceButton = null;
 
     /**
      * Default constructor.
@@ -178,6 +188,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         // Listen for mouse wheel changes
         mapPane.addMouseWheelListener(this);
+
+        SLDEditorFile.getInstance().addStickyDataSourceListener(this);
     }
 
     /**
@@ -220,6 +232,22 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         btn = new JButton(new ResetAction(mapPane));
         btn.setName(TOOLBAR_RESET_BUTTON_NAME);
         toolBar.add(btn);
+
+        toolBar.addSeparator();
+
+        stickyDataSourceButton = new JToggleButton(new StickyDataSourceAction(mapPane));
+        stickyDataSourceButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        stickyDataSourceButton.setName(TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME);
+
+        final MapRender mapRender = this;
+        stickyDataSourceButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean sticky = stickyDataSourceButton.isSelected();
+                SLDEditorFile.getInstance().setStickyDataSource(mapRender, sticky);
+            }});
+        toolBar.add(stickyDataSourceButton);
 
         return toolBar;
     }
@@ -608,8 +636,19 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             // Remove all layers
             for(Layer layer : mapContent.layers())
             {
-                    mapContent.removeLayer(layer);
+                mapContent.removeLayer(layer);
             }
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.StickyDataSourceInterface#stickyDataSourceUpdates(boolean)
+     */
+    @Override
+    public void stickyDataSourceUpdates(boolean updated) {
+        if(stickyDataSourceButton != null)
+        {
+            stickyDataSourceButton.setSelected(updated);
         }
     }
 }

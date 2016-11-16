@@ -65,6 +65,7 @@ import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.legend.LegendTool;
 import com.sldeditor.tool.raster.RasterTool;
 import com.sldeditor.tool.scale.ScaleTool;
+import com.sldeditor.tool.stickDataSource.StickyDataSourceTool;
 import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.tool.ysld.YSLDTool;
 
@@ -128,6 +129,7 @@ public class FileSystemInput implements FileSystemInterface
             ToolManager.getInstance().registerTool(FileTreeNode.class, new RasterTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new VectorTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
+            ToolManager.getInstance().registerTool(FileTreeNode.class, new StickyDataSourceTool());
         }
     }
 
