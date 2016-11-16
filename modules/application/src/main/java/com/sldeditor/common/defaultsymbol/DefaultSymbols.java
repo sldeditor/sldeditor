@@ -25,8 +25,6 @@ import javax.measure.quantity.Length;
 import javax.measure.unit.Unit;
 
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.function.FilterFunction_endAngle;
-import org.geotools.filter.function.FilterFunction_endPoint;
 import org.geotools.filter.function.FilterFunction_startAngle;
 import org.geotools.filter.function.FilterFunction_startPoint;
 import org.geotools.styling.AnchorPoint;
@@ -69,15 +67,14 @@ import com.sldeditor.ui.tree.SLDTreeTools;
  */
 public class DefaultSymbols {
 
-    /**
-     * 
-     */
+    /** The Constant DEGREES_180. */
     private static final double DEGREES_180 = 180.0;
 
-    /**
-     * 
-     */
+    /** The Constant DEFAULT_ARROW_SIZE. */
     private static final double DEFAULT_ARROW_SIZE = 30.0;
+
+    /** The Constant DEFAULT_ARROW_HALF_ANGLE. */
+    private static final double DEFAULT_ARROW_HALF_ANGLE = 15.0;
 
     /** The Constant DEFAULT_ARROW_SYMBOL. */
     private static final String DEFAULT_ARROW_SYMBOL = "shape://oarrow";
@@ -478,39 +475,32 @@ public class DefaultSymbols {
     }
 
     /**
-     * Creates the source arrow.
+     * Creates the arrow.
      *
-     * @return the point symbolizer
+     * @return the point symbolizer containing the arrow
      */
-    public static PointSymbolizer createSourceArrow() {
-        return createArrow(Localisation.getString(SLDTreeTools.class, "TreeItem.sourceArrow"),
-                FilterFunction_startAngle.NAME, FilterFunction_startPoint.NAME, true);
-    }
-
-    /**
-     * Creates the destination arrow.
-     *
-     * @return the point symbolizer
-     */
-    public static PointSymbolizer createDestinationArrow() {
-        return createArrow(Localisation.getString(SLDTreeTools.class, "TreeItem.destArrow"),
-                FilterFunction_endAngle.NAME, FilterFunction_endPoint.NAME, false);
+    public static PointSymbolizer createArrow(boolean isSourceArrow) {
+        return createArrow(FilterFunction_startAngle.NAME, FilterFunction_startPoint.NAME,
+                DEFAULT_ARROW_SYMBOL,
+                isSourceArrow);
     }
 
     /**
      * Creates the arrow.
      *
-     * @param name the name
      * @param angleFunction the angle function
      * @param locationFunction the location function
+     * @param markerSymbol the marker symbol
      * @param isSourceArrow the is source arrow
      * @return the point symbolizer
      */
-    private static PointSymbolizer createArrow(String name, 
-            FunctionName angleFunction,
+    private static PointSymbolizer createArrow(FunctionName angleFunction,
             FunctionName locationFunction,
+            String markerSymbol,
             boolean isSourceArrow)
     {
+        String name = isSourceArrow ? Localisation.getString(SLDTreeTools.class, "TreeItem.sourceArrow") : Localisation.getString(SLDTreeTools.class, "TreeItem.destArrow");
+
         PointSymbolizer pointSymbolizer = createDefaultPointSymbolizer();
 
         pointSymbolizer.setName(name);
@@ -519,7 +509,7 @@ public class DefaultSymbols {
         List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
         MarkImpl mark = (MarkImpl) graphicalSymbolList.get(0);
 
-        Expression wellKnownName = ff.literal(DEFAULT_ARROW_SYMBOL);
+        Expression wellKnownName = ff.literal(markerSymbol);
         mark.setWellKnownName(wellKnownName);
 
         mark.getFill().setColor(ff.literal(DEFAULT_COLOUR));
@@ -534,11 +524,11 @@ public class DefaultSymbols {
         Expression rotation = FunctionManager.getInstance().createExpression(angleFunction, rotationArgumentList);
         if(isSourceArrow)
         {
-            graphic.setRotation(ff.add(ff.literal(DEGREES_180), rotation));
+            graphic.setRotation(ff.add(ff.literal(DEGREES_180 - DEFAULT_ARROW_HALF_ANGLE), rotation));
         }
         else
         {
-            graphic.setRotation(rotation);
+            graphic.setRotation(ff.add(ff.literal(DEFAULT_ARROW_HALF_ANGLE), rotation));
         }
 
         // Set location of the arrow head

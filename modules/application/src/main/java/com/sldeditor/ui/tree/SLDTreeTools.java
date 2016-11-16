@@ -704,6 +704,16 @@ public class SLDTreeTools {
      * Adds the destination arrow.
      */
     public void addDestArrow() {
+        addArrow(false);
+    }
+        
+    /**
+     * Adds the arrow.
+     *
+     * @param isSourceArrow the is source arrow
+     */
+    private void addArrow(boolean isSourceArrow)
+    {
         if(symbolTree == null)
         {
             return;
@@ -711,7 +721,7 @@ public class SLDTreeTools {
         // Store current state of the SLD before the add
         Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-        PointSymbolizer pointSymbolizer = DefaultSymbols.createDestinationArrow();
+        PointSymbolizer pointSymbolizer = DefaultSymbols.createArrow(isSourceArrow);
         DefaultMutableTreeNode ruleNode = getRuleTreeNode();
 
         SelectedSymbol.getInstance().addSymbolizerToRule(pointSymbolizer);
@@ -733,29 +743,7 @@ public class SLDTreeTools {
      * Adds the source arrow.
      */
     public void addSourceArrow() {
-        if(symbolTree == null)
-        {
-            return;
-        }
-        // Store current state of the SLD before the add
-        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
-
-        PointSymbolizer pointSymbolizer = DefaultSymbols.createSourceArrow();
-        DefaultMutableTreeNode ruleNode = getRuleTreeNode();
-
-        SelectedSymbol.getInstance().addSymbolizerToRule(pointSymbolizer);
-        DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, pointSymbolizer, true); 
-
-        // Select the item just added
-        if(newNode != null)
-        {
-            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(pointSymbolizer), true);
-
-            // Store current state of the SLD after the add
-            Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
-
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(), getClass().getName(), oldValueObj, newValueObj));
-        }
+        addArrow(true);
     }
 
     /**
