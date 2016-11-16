@@ -23,6 +23,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
@@ -77,6 +79,8 @@ import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -89,7 +93,7 @@ import com.vividsolutions.jts.geom.Envelope;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpdateInterface, DataSourceUpdatedInterface, MouseWheelListener {
+public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpdateInterface, DataSourceUpdatedInterface, MouseWheelListener, StickyDataSourceInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -145,6 +149,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The map bounds. */
     private ReferencedEnvelope mapBounds = null;
 
+    /** The sticky data source button. */
+    private JToggleButton stickyDataSourceButton = null;
+
     /**
      * Default constructor.
      */
@@ -181,6 +188,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         // Listen for mouse wheel changes
         mapPane.addMouseWheelListener(this);
+
+        SLDEditorFile.getInstance().addStickyDataSourceListener(this);
     }
 
     /**
@@ -226,9 +235,19 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         toolBar.addSeparator();
 
-        JToggleButton tBtn = new JToggleButton(new StickDataSourceAction(mapPane));
-        tBtn.setName(TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME);
-        toolBar.add(tBtn);
+        stickyDataSourceButton = new JToggleButton(new StickyDataSourceAction(mapPane));
+        stickyDataSourceButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        stickyDataSourceButton.setName(TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME);
+
+        final MapRender mapRender = this;
+        stickyDataSourceButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean sticky = stickyDataSourceButton.isSelected();
+                SLDEditorFile.getInstance().setStickyDataSource(mapRender, sticky);
+            }});
+        toolBar.add(stickyDataSourceButton);
 
         return toolBar;
     }
@@ -617,8 +636,19 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             // Remove all layers
             for(Layer layer : mapContent.layers())
             {
-                    mapContent.removeLayer(layer);
+                mapContent.removeLayer(layer);
             }
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.StickyDataSourceInterface#stickyDataSourceUpdates(boolean)
+     */
+    @Override
+    public void stickyDataSourceUpdates(boolean updated) {
+        if(stickyDataSourceButton != null)
+        {
+            stickyDataSourceButton.setSelected(updated);
         }
     }
 }

@@ -21,20 +21,17 @@ package com.sldeditor.map;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JToggleButton;
-
 import org.geotools.swing.MapPane;
 import org.geotools.swing.action.MapAction;
 
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.SLDEditorFile;
 
 /**
- * The Class StickDataSourceAction.
+ * The Class StickyDataSourceAction.
  *
  * @author Robert Ward (SCISYS)
  */
-public class StickDataSourceAction extends MapAction {
+public class StickyDataSourceAction extends MapAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4462980379403957817L;
@@ -53,7 +50,7 @@ public class StickDataSourceAction extends MapAction {
      * 
      * @param mapPane the map pane being serviced by this action
      */
-    public StickDataSourceAction(MapPane mapPane) {
+    public StickyDataSourceAction(MapPane mapPane) {
         this(mapPane, false);
     }
 
@@ -64,7 +61,7 @@ public class StickDataSourceAction extends MapAction {
      * @param mapPane the map pane being serviced by this action
      * @param showToolName set to true for the control to display the tool name
      */
-    public StickDataSourceAction(MapPane mapPane, boolean showToolName) {
+    public StickyDataSourceAction(MapPane mapPane, boolean showToolName) {
         String toolName = showToolName ? TOOL_NAME : null;
 
         super.init(mapPane, toolName, TOOL_TIP, ICON_IMAGE);
@@ -78,8 +75,6 @@ public class StickDataSourceAction extends MapAction {
      */
     @Override
     public void actionPerformed(ActionEvent ev) {
-        JToggleButton source = (JToggleButton) ev.getSource();
-        boolean sticky = source.isSelected();
-        SLDEditorFile.getInstance().setStickyDataSource(sticky);
+//      Handled in MapRender
     }
 }

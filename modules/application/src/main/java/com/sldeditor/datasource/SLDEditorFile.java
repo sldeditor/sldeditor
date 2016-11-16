@@ -70,6 +70,9 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     /** The sticky data source flag. */
     private boolean stickyDataSource = false;
 
+    /** The sticky data source listener list. */
+    private List<StickyDataSourceInterface> stickyDataSourceListenerList = new ArrayList<StickyDataSourceInterface>();
+
     /**
      * Gets the single instance of SLDEditorFile.
      *
@@ -365,11 +368,32 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     }
 
     /**
+     * Adds the sticky data source listener.
+     *
+     * @param listener the listener
+     */
+    public void addStickyDataSourceListener(StickyDataSourceInterface listener)
+    {
+        if(!stickyDataSourceListenerList.contains(listener) && (listener != null))
+        {
+            stickyDataSourceListenerList.add(listener);
+        }
+    }
+
+    /**
      * Sets the sticky data source.
      *
      * @param stickyDataSource the stickyDataSource to set
      */
-    public void setStickyDataSource(boolean stickyDataSource) {
+    public void setStickyDataSource(StickyDataSourceInterface callingObj, boolean stickyDataSource) {
         this.stickyDataSource = stickyDataSource;
+
+        for(StickyDataSourceInterface listener : stickyDataSourceListenerList)
+        {
+            if(listener != callingObj)
+            {
+                listener.stickyDataSourceUpdates(stickyDataSource);
+            }
+        }
     }
 }

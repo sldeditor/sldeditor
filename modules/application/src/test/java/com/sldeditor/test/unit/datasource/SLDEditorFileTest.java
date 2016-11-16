@@ -38,6 +38,7 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 import com.sldeditor.datasource.impl.DataSourceProperties;
@@ -63,6 +64,24 @@ public class SLDEditorFileTest {
         }
     }
 
+    /**
+     * The Class DummyStickyData.
+     */
+    class DummyStickyData implements StickyDataSourceInterface
+    {
+        public boolean sticky = false;
+        public boolean stickyCalled = false;
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.datasource.StickyDataSourceInterface#stickyDataSourceUpdates(boolean)
+         */
+        @Override
+        public void stickyDataSourceUpdates(boolean updated) {
+            sticky = updated;
+            stickyCalled = true;
+        }
+
+    }
     /**
      * Test method for {@link com.sldeditor.datasource.SLDEditorFile#getSLDData()}.
      * Test method for {@link com.sldeditor.datasource.SLDEditorFile#fileOpenedSaved()}.
@@ -206,10 +225,26 @@ public class SLDEditorFileTest {
      */
     @Test
     public void testStickDataSource() {
+        DummyStickyData obj1 = new DummyStickyData();
+        DummyStickyData obj2 = new DummyStickyData();
+
+        SLDEditorFile.getInstance().addStickyDataSourceListener(obj1);
+        SLDEditorFile.getInstance().addStickyDataSourceListener(obj1);
+        SLDEditorFile.getInstance().addStickyDataSourceListener(obj2);
+
         assertFalse(SLDEditorFile.getInstance().isStickyDataSource());
-        SLDEditorFile.getInstance().setStickyDataSource(true);
+        assertFalse(obj1.stickyCalled);
+        assertFalse(obj2.stickyCalled);
+        SLDEditorFile.getInstance().setStickyDataSource(obj1, true);
         assertTrue(SLDEditorFile.getInstance().isStickyDataSource());
-        SLDEditorFile.getInstance().setStickyDataSource(false);
+        assertFalse(obj1.stickyCalled);
+        assertTrue(obj2.stickyCalled);
+        assertTrue(obj2.sticky);
+        obj2.stickyCalled = false;
+        SLDEditorFile.getInstance().setStickyDataSource(obj2, false);
         assertFalse(SLDEditorFile.getInstance().isStickyDataSource());
+        assertTrue(obj1.stickyCalled);
+        assertFalse(obj2.stickyCalled);
+        assertFalse(obj1.sticky);
     }
 }
