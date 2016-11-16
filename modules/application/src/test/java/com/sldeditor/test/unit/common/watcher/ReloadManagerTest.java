@@ -151,4 +151,51 @@ public class ReloadManagerTest {
         assertEquals(1, callback.reloadCallbackCalled);
     }
 
+    @Test
+    public void testReloadSavedFile() {
+
+        SLDData sldData = new SLDData(new StyleWrapper(), "");
+        ReloadManager.getInstance().sldDataUpdated(sldData, true);
+
+        File expectedFile = new File("/tmp/testFile.sld");
+        Path path = expectedFile.toPath();
+
+        DummyCallback callback = new DummyCallback();
+        ReloadManager.getInstance().addListener(callback);
+
+        assertEquals(0, callback.reloadCallbackCalled);
+
+        // Set loaded file - should match
+        sldData.setSLDFile(expectedFile);
+        ReloadManager.getInstance().sldDataUpdated(sldData, true);
+
+        // Mark as not saved
+        ReloadManager.getInstance().fileModified(path);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(1, callback.reloadCallbackCalled);
+
+        // Mark as saved
+        callback.reloadCallbackCalled = 0;
+        ReloadManager.getInstance().setFileSaved();
+        ReloadManager.getInstance().fileModified(path);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(0, callback.reloadCallbackCalled);
+
+        // Mark as not saved
+        ReloadManager.getInstance().fileModified(path);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(1, callback.reloadCallbackCalled);
+    }
 }
