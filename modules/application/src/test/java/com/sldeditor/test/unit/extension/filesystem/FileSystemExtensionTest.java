@@ -51,6 +51,7 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
+import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.filesystem.FileSystemExtension;
@@ -240,6 +241,9 @@ public class FileSystemExtensionTest {
      */
     @Test
     public void testSetArguments() {
+        File configPropertiesFile = new File("./FileSystemExtensionTest.properties");
+        PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
+
         FileSystemExtension fsExt = new FileSystemExtension();
         FileSystemExtensionFactory.override(null);
         fsExt.initialise(null, new DummyToolMgr());
@@ -305,6 +309,7 @@ public class FileSystemExtensionTest {
         actual = fsExt.setArguments(extensionArgList);
 
         assertEquals(expectedGeoServer, actual);
+        configPropertiesFile.delete();
     }
 
     /**

@@ -28,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -39,6 +40,15 @@ import com.sldeditor.common.console.ConsoleManager;
  * @author Robert Ward (SCISYS)
  */
 public class ConsoleManagerTest {
+
+    /** The log file, defined in /src/test/resources/log4j.properties. */
+    private static File logFile = new File("consolemanagertest.log");
+
+    @AfterClass
+    public static void endOfTest()
+    {
+        logFile.delete();
+    }
 
     /**
      * Test method for {@link com.sldeditor.common.console.ConsoleManager#getInstance()}.
@@ -95,7 +105,7 @@ public class ConsoleManagerTest {
         occurances = countOccurences("ERROR", errorMessage1);
 
         assertEquals(1, occurances);
-        
+
         occurances = countOccurences("ERROR", exceptionMessage1);
 
         assertEquals(1, occurances);
@@ -118,13 +128,11 @@ public class ConsoleManagerTest {
      */
     private int countOccurences(String prefix, String message) {
 
-        File f = new File("consolemanagertest.log");
-        f.deleteOnExit();
         int count = 0;
 
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader(f));
+            br = new BufferedReader(new FileReader(logFile));
             String line = null;
             while ((line = br.readLine()) != null) {
                 if(line.startsWith(prefix) && line.endsWith(message))

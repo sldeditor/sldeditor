@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +36,8 @@ import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -45,6 +48,7 @@ import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
@@ -59,6 +63,9 @@ import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
  *
  */
 public class GeoServerInputTest {
+
+    /** The config properties file. */
+    private File configPropertiesFile = new File("./GeoServerInputTest.properties");
 
     /**
      * The Class DummyGeoServerInput.
@@ -87,6 +94,24 @@ public class GeoServerInputTest {
             super.removeStyleFileExtension(styleWrapper);
         }
 
+    }
+
+    /**
+     * Called before each test.
+     */
+    @Before
+    public void beforeEachTest()
+    {
+        PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
+    }
+    
+    /**
+     * Called after each test.
+     */
+    @After
+    public void afterEachTest()
+    {
+        configPropertiesFile.delete();
     }
 
     /**
@@ -230,6 +255,7 @@ public class GeoServerInputTest {
      */
     @Test
     public void testDisconnect() {
+        PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
         GeoServerInput input = new GeoServerInput(null);
         GeoServerInput.overrideGeoServerClientClass(DummyGeoServerClient.class);
 
