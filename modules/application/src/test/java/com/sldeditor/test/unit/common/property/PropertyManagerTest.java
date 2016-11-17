@@ -46,7 +46,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testUpdateValueString() {
-        PropertyManager propertyManager = new PropertyManager(null);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(null);
         String stringKey = "test string key";
         String stringValue = "string test value";
         propertyManager.updateValue(stringKey, stringValue);
@@ -66,7 +67,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testUpdateValueStringBoolean() {
-        PropertyManager propertyManager = new PropertyManager(null);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(null);
         String key = "test boolean key";
         boolean value = true;
         propertyManager.updateValue(key, value);
@@ -86,7 +88,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testReadConfig() {
-        PropertyManager nullPropertyManager = new PropertyManager(null);
+        PropertyManager nullPropertyManager = new PropertyManager();
+        nullPropertyManager.setPropertyFile(null);
         nullPropertyManager.readConfig();
 
         File file = null;
@@ -96,7 +99,8 @@ public class PropertyManagerTest {
             e.printStackTrace();
             fail("Failed to create test property temporary file");
         }
-        PropertyManager propertyManager = new PropertyManager(file);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(file);
 
         String stringKey = "string key";
         String stringValue = "test string value";
@@ -125,7 +129,8 @@ public class PropertyManagerTest {
             index ++;
         }
 
-        PropertyManager testPropertyManager = new PropertyManager(file);
+        PropertyManager testPropertyManager = new PropertyManager();
+        testPropertyManager.setPropertyFile(file);
         testPropertyManager.readConfig();
 
         Color actualColourResult = testPropertyManager.getColourValue(colourKey, Color.black);
@@ -151,7 +156,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testGetDoubleValue() {
-        PropertyManager propertyManager = new PropertyManager(null);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(null);
         String stringKey = "test double key";
         double expectedValue = 42.0;
         String stringValue = Double.toString(expectedValue);
@@ -176,7 +182,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testUpdateValueStringListOfString() {
-        PropertyManager propertyManager = new PropertyManager(null);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(null);
         String stringKey = "test string list key";
         List<String> stringList = new ArrayList<String>();
         stringList.add("item 1");
@@ -199,7 +206,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testUpdateValueStringIntString() {
-        PropertyManager propertyManager = new PropertyManager(null);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(null);
         String stringKey = "test string int list key";
         List<String> stringList = new ArrayList<String>();
         stringList.add("item 1");
@@ -227,7 +235,8 @@ public class PropertyManagerTest {
      */
     @Test
     public void testUpdateValueStringColor() {
-        PropertyManager propertyManager = new PropertyManager(null);
+        PropertyManager propertyManager = new PropertyManager();
+        propertyManager.setPropertyFile(null);
         String key = "test colour key";
         Color value = Color.CYAN;
         propertyManager.updateValue(key, value);

@@ -32,7 +32,7 @@ public class PropertyManagerFactory {
 
     /** The singleton instance. */
     private static PropertyManagerInterface instance = null;
-    
+
     /**
      * Private default constructor
      */
@@ -40,7 +40,7 @@ public class PropertyManagerFactory {
     {
         // Does nothing
     }
-    
+
     /**
      * Return the Property Manager
      *
@@ -50,9 +50,10 @@ public class PropertyManagerFactory {
     {
         if(instance == null)
         {
-            instance = new PropertyManager(new File(CONFIG_PROPERTIES));
+            instance = new PropertyManager();
+            instance.setPropertyFile(new File(CONFIG_PROPERTIES));
         }
-        
+
         return instance;
     }
 }

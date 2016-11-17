@@ -39,7 +39,7 @@ public class PropertyManagerFactoryTest {
     @Test
     public void testGetInstance() {
         PropertyManagerInterface instance = PropertyManagerFactory.getInstance();
-        
+
         assertTrue(instance != null);
     }
 

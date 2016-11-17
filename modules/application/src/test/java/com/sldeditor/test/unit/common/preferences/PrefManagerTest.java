@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -228,6 +229,13 @@ public class PrefManagerTest {
             {
                 fieldValueMap.remove(existingKey);
             }
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.common.property.PropertyManagerInterface#setPropertyFile(java.io.File)
+         */
+        @Override
+        public void setPropertyFile(File configPropertiesFile) {
         }
     }
 

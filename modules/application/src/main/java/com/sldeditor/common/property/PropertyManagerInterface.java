@@ -19,6 +19,7 @@
 package com.sldeditor.common.property;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -133,5 +134,12 @@ public interface PropertyManagerInterface {
      * @param useDelimeter the use delimeter
      */
     void clearValue(String key, boolean useDelimeter);
+
+    /**
+     * Sets the property file.
+     *
+     * @param configPropertiesFile the new property file
+     */
+    void setPropertyFile(File configPropertiesFile);
 
 }

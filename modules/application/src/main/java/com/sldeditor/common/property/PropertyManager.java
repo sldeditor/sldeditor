@@ -63,10 +63,18 @@ public class PropertyManager implements PropertyManagerInterface
 
     /**
      * Default constructor.
-     *
-     * @param configPropertiesFile the config properties file
      */
-    public PropertyManager(File configPropertiesFile)
+    public PropertyManager()
+    {
+    }
+
+    /**
+     * Sets the property file.
+     *
+     * @param configPropertiesFile the new property file
+     */
+    @Override
+    public void setPropertyFile(File configPropertiesFile)
     {
         this.configPropertiesFile = configPropertiesFile;
     }
