@@ -543,7 +543,7 @@ public class DefaultSymbols {
             graphic.setRotation(rotation);
         }
 
-        AnchorPoint anchorPoint = styleFactory.anchorPoint(ff.literal(0.0), ff.literal(0.5));
+        AnchorPoint anchorPoint = styleFactory.anchorPoint(ff.literal(0.5), ff.literal(0.5));
         graphic.setAnchorPoint(anchorPoint);
 
         // Set location of the arrow head
