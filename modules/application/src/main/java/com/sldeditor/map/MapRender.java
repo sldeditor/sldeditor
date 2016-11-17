@@ -56,7 +56,6 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.geotools.styling.UserLayerImpl;
 import org.geotools.swing.action.NoToolAction;
-import org.geotools.swing.action.PanAction;
 import org.geotools.swing.action.ResetAction;
 import org.geotools.swing.action.ZoomInAction;
 import org.geotools.swing.action.ZoomOutAction;
