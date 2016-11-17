@@ -111,6 +111,9 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     /** The Constant DPI. */
     private static final int DPI = 96;
 
+    /** The Constant OVERRIDE_DPI. */
+    private static final boolean OVERRIDE_DPI = false;
+
     /** The Constant ST_WIDTH, width of the area containing the rendered image. */
     private static final int ST_WIDTH = 200;
 
@@ -292,7 +295,10 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         map.setViewport(viewport);
         try {
             Map<Object,Object> hints = new HashMap<Object,Object>();
-            hints.put(StreamingRenderer.DPI_KEY, dpi);
+            if(OVERRIDE_DPI)
+            {
+                hints.put(StreamingRenderer.DPI_KEY, dpi);
+            }
             // This ensures all the labelling is cleared
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
 
@@ -443,7 +449,10 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         map.addLayers(layers);
         try {
             Map<Object,Object> hints = new HashMap<Object,Object>();
-            hints.put(StreamingRenderer.DPI_KEY, dpi);
+            if(OVERRIDE_DPI)
+            {
+                hints.put(StreamingRenderer.DPI_KEY, dpi);
+            }
             // This ensures all the labelling is cleared
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
 
@@ -522,7 +531,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         {
             StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
             SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
-            
+
             if(sld != null)
             {
                 for(SLDOutputInterface sldOutput : sldOutputList)
