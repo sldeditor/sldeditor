@@ -36,6 +36,7 @@ import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.ui.tree.SLDTreeManager;
 import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
@@ -123,7 +124,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         if(sldTree == null)
         {
             SLDTreeTools sldTreeTools = new SLDTreeTools();
-            sldTree = new SLDTree(getRendererList(), sldTreeTools);
+            sldTree = SLDTreeManager.getInstance().createSLDTree(getRendererList(), sldTreeTools);
 
             // Register for updates to the SLD tree structure
             SelectedSymbol.getInstance().setTreeUpdateListener(sldTree);

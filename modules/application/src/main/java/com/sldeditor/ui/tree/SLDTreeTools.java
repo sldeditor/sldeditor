@@ -417,6 +417,8 @@ public class SLDTreeTools {
             return;
         }
 
+        SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
         // Re-render the symbol
         if(renderList != null)
         {
@@ -577,6 +579,8 @@ public class SLDTreeTools {
         // Select the item just added
         if(newNode != null)
         {
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
@@ -658,6 +662,8 @@ public class SLDTreeTools {
         {
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPointSymbolizer), true);
 
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
@@ -689,6 +695,8 @@ public class SLDTreeTools {
         // Select the item just added
         if(newNode != null)
         {
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
@@ -732,6 +740,17 @@ public class SLDTreeTools {
         {
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(pointSymbolizer), true);
 
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
+            // Re-render the symbol
+            if(renderList != null)
+            {
+                for(RenderSymbolInterface render : renderList)
+                {
+                    render.renderSymbol();
+                }
+            }
+
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
@@ -767,6 +786,8 @@ public class SLDTreeTools {
         // Select the item just added
         if(newNode != null)
         {
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
             TreePath newPath = getPath(newNode);
 
             symbolTree.setSelectionPath(newPath);
@@ -799,6 +820,8 @@ public class SLDTreeTools {
         if(newNode != null)
         {
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
+
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
             // Select the item just added
             TreePath newPath = getPath(newNode);
@@ -833,6 +856,8 @@ public class SLDTreeTools {
         if(newNode != null)
         {
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
+
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
             // Select the item just added
             TreePath newPath = getPath(newNode);
@@ -869,6 +894,8 @@ public class SLDTreeTools {
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer), true);
 
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
+
             // Select the item just added
             TreePath newPath = getPath(newNode);
 
@@ -903,6 +930,8 @@ public class SLDTreeTools {
         {
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
             sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer), true);
+
+            SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
             // Select the item just added
             TreePath newPath = getPath(newNode);
@@ -1112,7 +1141,7 @@ public class SLDTreeTools {
 
         // Now clear tree structure and re-populate, inefficient but it means
         // that all items are expanded as required.
-        sldTree.populateSLD();
+        SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
         //  Make item moved selected again
         symbolTree.setSelectionRows(selectedRows);
