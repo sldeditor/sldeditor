@@ -37,6 +37,7 @@ import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.legend.LegendPanel;
 import com.sldeditor.ui.legend.option.LegendOptionPanel;
 import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.ui.tree.SLDTreeManager;
 
 /**
  * The Class SingleLegendUI, coordinates creating all the necessary legend panels
@@ -134,7 +135,7 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         if(sldTree == null)
         {
             // Create symbol tree without tool buttons
-            sldTree = new SLDTree(getRendererList(), null);
+            sldTree = SLDTreeManager.getInstance().createSLDTree(getRendererList(), null);
 
             // Register for updates to the SLD tree structure
             SelectedSymbol.getInstance().setTreeUpdateListener(sldTree);
