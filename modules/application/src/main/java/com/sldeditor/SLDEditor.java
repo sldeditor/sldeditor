@@ -596,52 +596,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                     if(loadNewSymbol)
                     {
-                        String layerName = firstObject.getLayerName();
-
-                        File sldEditorFile = firstObject.getSldEditorFile();
-                        if(sldEditorFile != null)
-                        {
-                            ConsoleManager.getInstance().information(this,
-                                    String.format("%s : %s",
-                                            Localisation.getString(getClass(), "SLDEditor.loadedSLDEditorFile"),
-                                            sldEditorFile.getAbsolutePath()));
-                        }
-                        ConsoleManager.getInstance().information(this,
-                                String.format("%s : %s",
-                                        Localisation.getString(getClass(), "SLDEditor.loadedSLDFile"),
-                                        layerName));
-
-                        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
-
-                        SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
-                        selectedSymbolInstance.setSld(sld);
-                        selectedSymbolInstance.setFilename(layerName);
-                        selectedSymbolInstance.setName(layerName);
-
-                        SLDEditorFile.getInstance().setSLDData(firstObject);
-
-                        // Reload data source if stick flag is set
-                        boolean isDataSourceSticky = SLDEditorFile.getInstance().isStickyDataSource();
-                        DataSourcePropertiesInterface previousDataSource = dataSource.getDataConnectorProperties();
-
-                        dataSource.reset();
-
-                        if(isDataSourceSticky)
-                        {
-                            SLDEditorFile.getInstance().setDataSource(previousDataSource);
-                        }
-
-                        dataSource.connect(SLDEditorFile.getInstance());
-
-                        if(sldEditorFile != null)
-                        {
-                            PrefData prefData = PrefManager.getInstance().getPrefData();
-                            prefData.setVendorOptionVersionList(firstObject.getVendorOptionList());
-                            PrefManager.getInstance().setPrefData(prefData);
-                        }
-
-                        LegendManager.getInstance().SLDLoaded(firstObject.getLegendOptions());
-                        SLDEditorFile.getInstance().fileOpenedSaved();
+                        populate(firstObject);
                     }
                 }
             }
@@ -659,6 +614,60 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
 
         return loadNewSymbol;
+    }
+
+    /**
+     * Populate the application with the SLD.
+     *
+     * @param sldData the sld data
+     */
+    protected void populate(SLDDataInterface sldData) {
+        String layerName = sldData.getLayerName();
+
+        File sldEditorFile = sldData.getSldEditorFile();
+        if(sldEditorFile != null)
+        {
+            ConsoleManager.getInstance().information(this,
+                    String.format("%s : %s",
+                            Localisation.getString(getClass(), "SLDEditor.loadedSLDEditorFile"),
+                            sldEditorFile.getAbsolutePath()));
+        }
+        ConsoleManager.getInstance().information(this,
+                String.format("%s : %s",
+                        Localisation.getString(getClass(), "SLDEditor.loadedSLDFile"),
+                        layerName));
+
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+
+        SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
+        selectedSymbolInstance.setSld(sld);
+        selectedSymbolInstance.setFilename(layerName);
+        selectedSymbolInstance.setName(layerName);
+
+        SLDEditorFile.getInstance().setSLDData(sldData);
+
+        // Reload data source if sticky flag is set
+        boolean isDataSourceSticky = SLDEditorFile.getInstance().isStickyDataSource();
+        DataSourcePropertiesInterface previousDataSource = dataSource.getDataConnectorProperties();
+
+        dataSource.reset();
+
+        if(isDataSourceSticky)
+        {
+            SLDEditorFile.getInstance().setDataSource(previousDataSource);
+        }
+
+        dataSource.connect(SLDEditorFile.getInstance());
+
+        if(sldEditorFile != null)
+        {
+            PrefData prefData = PrefManager.getInstance().getPrefData();
+            prefData.setVendorOptionVersionList(sldData.getVendorOptionList());
+            PrefManager.getInstance().setPrefData(prefData);
+        }
+
+        LegendManager.getInstance().SLDLoaded(sldData.getLegendOptions());
+        SLDEditorFile.getInstance().fileOpenedSaved();
     }
 
     /**
@@ -817,26 +826,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                     if((sldDataList != null) && !sldDataList.isEmpty())
                     {
                         SLDDataInterface firstObject = sldDataList.get(0);
-                        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(firstObject);
-
-                        SelectedSymbol selectedSymbolInstance = SelectedSymbol.getInstance();
-                        selectedSymbolInstance.setSld(sld);
-
-                        SLDEditorFile.getInstance().setSLDData(firstObject);
-                        dataSource.reset();
-
-                        dataSource.connect(SLDEditorFile.getInstance());
-
-                        LegendManager.getInstance().SLDLoaded(firstObject.getLegendOptions());
-                        SLDEditorFile.getInstance().fileOpenedSaved();
-
-                        // Inform UndoManager that a new SLD file has been
-                        // loaded and to clear undo history
-                        UndoManager.getInstance().fileLoaded();
-
-                        Controller.getInstance().setPopulating(true);
-                        uiMgr.populateUI(sldDataList.size());
-                        Controller.getInstance().setPopulating(false);
+                        populate(firstObject);
                     }
                 }
             }
