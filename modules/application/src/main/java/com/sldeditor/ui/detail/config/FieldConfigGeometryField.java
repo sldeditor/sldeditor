@@ -103,6 +103,11 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
         fieldPanel.add(attributeComboBox);
         populateAttributeComboBox();
 
+        if(!isValueOnly())
+        {
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this, true));
+        }
+
         attributeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(isAttributeComboBoxPopulated())
@@ -115,6 +120,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
                 }
             }
         });
+
     }
 
     /**
