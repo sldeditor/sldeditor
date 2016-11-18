@@ -105,7 +105,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
         if(!isValueOnly())
         {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, true));
+            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this, true));
         }
 
         attributeComboBox.addActionListener(new ActionListener() {
