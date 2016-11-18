@@ -469,7 +469,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
             boolean rasterSymbol)
     {
         AttributeSelection obj = new AttributeSelection(expectedDataType, field);
-        obj.updateAttributeSelection(rasterSymbol);
+        obj.updateAttributeSelection(!rasterSymbol);
 
         return obj;
     }
@@ -477,15 +477,15 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
     /**
      * Update attribute selection.
      *
-     * @param isRasterSymbol the is raster symbol
+     * @param excludeAttributePanel the exclude attribute panel
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void updateAttributeSelection(boolean isRasterSymbol) {
+    public void updateAttributeSelection(boolean excludeAttributePanel) {
 
         List<String> allowedItemList = new ArrayList<String>();
         allowedItemList.add(ValueSubPanel.getPanelName());
 
-        if(!isRasterSymbol)
+        if(excludeAttributePanel)
         {
             allowedItemList.add(DataSourceAttributePanel.getPanelName());
         }
