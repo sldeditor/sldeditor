@@ -1,11 +1,52 @@
 # Change Log
 
-## [0.6.0](https://github.com/robward-scisys/sldeditor/tree/0.6.0) (2016-11-11)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.0...0.6.0)
+## [0.5.2](https://github.com/robward-scisys/sldeditor/tree/0.5.2) (2016-11-18)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.1...0.5.2)
 
 **Implemented enhancements:**
 
+- Correct position of arrow head at the end of a line [\#149](https://github.com/robward-scisys/sldeditor/issues/149)
+- Update Maven plugin versions [\#143](https://github.com/robward-scisys/sldeditor/issues/143)
+- Add sticky data source tool [\#138](https://github.com/robward-scisys/sldeditor/issues/138)
+- Enable anti aliasing for rendered map [\#136](https://github.com/robward-scisys/sldeditor/issues/136)
+- When uploading SLD file to GeoServer remove .sld file extension [\#134](https://github.com/robward-scisys/sldeditor/issues/134)
+- Add tool to add arrows to line symbols [\#130](https://github.com/robward-scisys/sldeditor/issues/130)
+- Handle case where underlying sld file of edited sld is updated [\#120](https://github.com/robward-scisys/sldeditor/issues/120)
+- Correct position of arrow head [\#151](https://github.com/robward-scisys/sldeditor/pull/151) ([robward-scisys](https://github.com/robward-scisys))
+- Iss138 sticky datasource tool [\#139](https://github.com/robward-scisys/sldeditor/pull/139) ([robward-scisys](https://github.com/robward-scisys))
+- Had to create new file to adding anti-aliasing functionality [\#137](https://github.com/robward-scisys/sldeditor/pull/137) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Pan tool not working with new SLDMapPane class [\#148](https://github.com/robward-scisys/sldeditor/issues/148)
+- SLD structure tree on legend panel not updating [\#146](https://github.com/robward-scisys/sldeditor/issues/146)
+- Reduce DPI when rendering symbol [\#141](https://github.com/robward-scisys/sldeditor/issues/141)
+- GeoServerInput unit tests affecting config.properties file [\#140](https://github.com/robward-scisys/sldeditor/issues/140)
+- File changed dialog displayed after saving a file [\#132](https://github.com/robward-scisys/sldeditor/issues/132)
+- Remove 'SEVERE: The following locker still has a lock: read on' warning for shapefile data sources [\#128](https://github.com/robward-scisys/sldeditor/issues/128)
+- Field names in attribute expressions not being extracted from the SLD accurately [\#126](https://github.com/robward-scisys/sldeditor/issues/126)
+- Crash occurs when reloading SLD file with spaces in the file name [\#124](https://github.com/robward-scisys/sldeditor/issues/124)
+- Geometry type for internal data source not set correctly [\#121](https://github.com/robward-scisys/sldeditor/issues/121)
+- Sticky data source flag respected when reloading SLD file [\#153](https://github.com/robward-scisys/sldeditor/pull/153) ([robward-scisys](https://github.com/robward-scisys))
+- Introduced SLDTreeManager class to handle repopulating trees [\#147](https://github.com/robward-scisys/sldeditor/pull/147) ([robward-scisys](https://github.com/robward-scisys))
+- Iss141 change symbol render dpi [\#145](https://github.com/robward-scisys/sldeditor/pull/145) ([robward-scisys](https://github.com/robward-scisys))
+- Any unit tests writing to the property file now use a different filename [\#142](https://github.com/robward-scisys/sldeditor/pull/142) ([robward-scisys](https://github.com/robward-scisys))
+- Iss134 remove sld file extension when uploading [\#135](https://github.com/robward-scisys/sldeditor/pull/135) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.5.1](https://github.com/robward-scisys/sldeditor/tree/v0.5.1) (2016-11-11)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.0...v0.5.1)
+
+**Implemented enhancements:**
+
+- Create a check for latest version tool [\#116](https://github.com/robward-scisys/sldeditor/issues/116)
+- Create v0.6.0-SNAPSHOT [\#114](https://github.com/robward-scisys/sldeditor/issues/114)
+- Create release 0.5.0 [\#112](https://github.com/robward-scisys/sldeditor/issues/112)
 - Iss116 check latest version [\#117](https://github.com/robward-scisys/sldeditor/pull/117) ([robward-scisys](https://github.com/robward-scisys))
+
+**Merged pull requests:**
+
+- Updated to version 0.5.1 [\#119](https://github.com/robward-scisys/sldeditor/pull/119) ([robward-scisys](https://github.com/robward-scisys))
+- Iss114 v0.6.0 snapshot [\#115](https://github.com/robward-scisys/sldeditor/pull/115) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.5.0](https://github.com/robward-scisys/sldeditor/tree/v0.5.0) (2016-11-09)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.4.2...v0.5.0)
