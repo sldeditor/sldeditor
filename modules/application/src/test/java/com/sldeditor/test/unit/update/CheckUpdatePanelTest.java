@@ -63,7 +63,7 @@ public class CheckUpdatePanelTest {
         public void testCheckForLatestVersion(String currentVersion,
                 CheckUpdateClientInterface client)
         {
-            checkForLatestVersion(currentVersion, client);
+            checkForLatestVersion(currentVersion, client, false);
         }
 
         /**

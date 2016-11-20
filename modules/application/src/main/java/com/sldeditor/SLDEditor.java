@@ -74,6 +74,7 @@ import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 import com.sldeditor.ui.panels.SLDEditorUIPanels;
 import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.update.CheckUpdatePanel;
 
 import it.geosolutions.jaiext.JAIExt;
 
@@ -296,6 +297,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
+
+        CheckUpdatePanel updatePanel = new CheckUpdatePanel();
+        updatePanel.showPanelSilent(Version.getVersionNumber());
     }
 
     /**
