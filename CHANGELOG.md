@@ -1,7 +1,16 @@
 # Change Log
 
-## [0.5.2](https://github.com/robward-scisys/sldeditor/tree/0.5.2) (2016-11-18)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.1...0.5.2)
+## [0.5.3](https://github.com/robward-scisys/sldeditor/tree/0.5.3) (2016-11-21)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.2...0.5.3)
+
+**Implemented enhancements:**
+
+- Allow symbolizer geometry field to enter a function [\#156](https://github.com/robward-scisys/sldeditor/issues/156)
+- Iss158 check app version at startup [\#159](https://github.com/robward-scisys/sldeditor/pull/159) ([robward-scisys](https://github.com/robward-scisys))
+- Iss156 symbolizer geometry field function [\#157](https://github.com/robward-scisys/sldeditor/pull/157) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.5.2](https://github.com/robward-scisys/sldeditor/tree/v0.5.2) (2016-11-18)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.1...v0.5.2)
 
 **Implemented enhancements:**
 
@@ -32,6 +41,23 @@
 - Iss141 change symbol render dpi [\#145](https://github.com/robward-scisys/sldeditor/pull/145) ([robward-scisys](https://github.com/robward-scisys))
 - Any unit tests writing to the property file now use a different filename [\#142](https://github.com/robward-scisys/sldeditor/pull/142) ([robward-scisys](https://github.com/robward-scisys))
 - Iss134 remove sld file extension when uploading [\#135](https://github.com/robward-scisys/sldeditor/pull/135) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Create a 0.5.1 release [\#118](https://github.com/robward-scisys/sldeditor/issues/118)
+
+**Merged pull requests:**
+
+- Updated version to 0.5.2 [\#155](https://github.com/robward-scisys/sldeditor/pull/155) ([robward-scisys](https://github.com/robward-scisys))
+- Fixed PanTool crash [\#150](https://github.com/robward-scisys/sldeditor/pull/150) ([robward-scisys](https://github.com/robward-scisys))
+- Updated maven plugin version. [\#144](https://github.com/robward-scisys/sldeditor/pull/144) ([robward-scisys](https://github.com/robward-scisys))
+- Added protection to prevent saving files triggering the reload dialog [\#133](https://github.com/robward-scisys/sldeditor/pull/133) ([robward-scisys](https://github.com/robward-scisys))
+- Iss130 arrow tool [\#131](https://github.com/robward-scisys/sldeditor/pull/131) ([robward-scisys](https://github.com/robward-scisys))
+- Forgot to close the SimpleFeatureIterator [\#129](https://github.com/robward-scisys/sldeditor/pull/129) ([robward-scisys](https://github.com/robward-scisys))
+- Iss126 extract attribute type from expressions [\#127](https://github.com/robward-scisys/sldeditor/pull/127) ([robward-scisys](https://github.com/robward-scisys))
+- Forgot to decode the URL properly, spaces were still %20 [\#125](https://github.com/robward-scisys/sldeditor/pull/125) ([robward-scisys](https://github.com/robward-scisys))
+- Corrected determing geometry type for internal data sources [\#123](https://github.com/robward-scisys/sldeditor/pull/123) ([robward-scisys](https://github.com/robward-scisys))
+- Added ReloadManager and unit test to handle the reloading of SLD files [\#122](https://github.com/robward-scisys/sldeditor/pull/122) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.5.1](https://github.com/robward-scisys/sldeditor/tree/v0.5.1) (2016-11-11)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.0...v0.5.1)
