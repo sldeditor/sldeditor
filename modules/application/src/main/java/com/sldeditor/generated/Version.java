@@ -27,7 +27,7 @@ package com.sldeditor.generated;
 public class Version {
 
     /** The version taken from the maven pom. */
-    public static String pomVersionString = "0.5.3";
+    public static String pomVersionString = "0.6.0-SNAPSHOT";
 
     /**
      * Gets the version number.
