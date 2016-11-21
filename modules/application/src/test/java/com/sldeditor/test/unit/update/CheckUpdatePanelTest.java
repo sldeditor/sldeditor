@@ -98,7 +98,7 @@ public class CheckUpdatePanelTest {
             boolean latest = latestVersionString.equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == false);
             String text = textArea.getText();
-            boolean description = EMPTY_STRING.equals(text);
+            boolean description = compareHtml(EMPTY_STRING, text);
 
             return status && getButton && latest && description;
         }
@@ -118,7 +118,7 @@ public class CheckUpdatePanelTest {
             boolean latest = latestVersionString.equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == true);
             String text = textArea.getText();
-            boolean description = DESCRIPTION.equals(text);
+            boolean description = compareHtml(DESCRIPTION, text);
 
             return status && getButton && latest && description;
         }
@@ -178,6 +178,28 @@ public class CheckUpdatePanelTest {
 
         panel.testCheckForLatestVersion("0.1.0", client);
         assertTrue(panel.testLaterVersion());
+    }
+
+    /**
+     * Compare html strings by stripping out newlines, carriage returns
+     * so unit tests work on different operating systems.
+     *
+     * @param string the string
+     * @param text the text
+     * @return true, if successful
+     */
+    private static boolean compareHtml(String string, String text) {
+        return removeNewLine(string).equals(removeNewLine(text));
+    }
+
+    /**
+     * Removes the new line, carriage returns.
+     *
+     * @param string the string
+     * @return the string
+     */
+    private static String removeNewLine(String string) {
+        return string.replace("\n", "").replace("\r", "");
     }
 
 }
