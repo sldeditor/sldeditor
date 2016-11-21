@@ -252,47 +252,35 @@ public class FieldConfigMarker extends FieldState {
             return null;
         }
 
-        Expression fillColour = null;
+        Expression symbolTypeExpression = null;
 
-        FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
-        if(field != null)
+        String symbolTypeName = symbolType.toString();
+        if(symbolTypeName.compareTo(SOLID_SYMBOL_KEY) != 0)
         {
-            fillColour = ((FieldConfigColour)field).getColourExpression();
-        }
-
-        Expression fillColourOpacity = null;
-        field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-        if(field != null)
-        {
-            fillColourOpacity = field.getExpression();
+            symbolTypeExpression = symbolType;
         }
 
         Fill fill = null;
-        if(fillEnabled)
-        {
-            fill = getStyleFactory().fill(null, fillColour, fillColourOpacity);
-        }
-
         Stroke stroke = null;
 
-        if(strokeEnabled)
+        if(symbolTypeName.startsWith("shape://"))
         {
             Expression strokeColour = null;
-            field = fieldConfigManager.get(strokeFieldConfig.getColour());
+            FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
             if(field != null)
             {
                 strokeColour = ((FieldConfigColour)field).getColourExpression();
             }
 
             Expression strokeColourOpacity = null;
-            field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
+            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
             if(field != null)
             {
                 strokeColourOpacity = field.getExpression();
             }
 
             Expression strokeWidth = null;
-            field = fieldConfigManager.get(strokeFieldConfig.getWidth());
+            field = fieldConfigManager.get(fillFieldConfig.getWidth());
             if(field != null)
             {
                 strokeWidth = field.getExpression();
@@ -300,15 +288,56 @@ public class FieldConfigMarker extends FieldState {
 
             stroke = getStyleFactory().createStroke(strokeColour, strokeWidth, strokeColourOpacity);
         }
-
-        Expression expression = null;
-
-        if(symbolType.toString().compareTo(SOLID_SYMBOL_KEY) != 0)
+        else
         {
-            expression = symbolType;
+            Expression fillColour = null;
+
+            FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
+            if(field != null)
+            {
+                fillColour = ((FieldConfigColour)field).getColourExpression();
+            }
+
+            Expression fillColourOpacity = null;
+            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+            if(field != null)
+            {
+                fillColourOpacity = field.getExpression();
+            }
+
+            if(fillEnabled)
+            {
+                fill = getStyleFactory().fill(null, fillColour, fillColourOpacity);
+            }
+
+            if(strokeEnabled)
+            {
+                Expression strokeColour = null;
+                field = fieldConfigManager.get(strokeFieldConfig.getColour());
+                if(field != null)
+                {
+                    strokeColour = ((FieldConfigColour)field).getColourExpression();
+                }
+
+                Expression strokeColourOpacity = null;
+                field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
+                if(field != null)
+                {
+                    strokeColourOpacity = field.getExpression();
+                }
+
+                Expression strokeWidth = null;
+                field = fieldConfigManager.get(strokeFieldConfig.getWidth());
+                if(field != null)
+                {
+                    strokeWidth = field.getExpression();
+                }
+
+                stroke = getStyleFactory().createStroke(strokeColour, strokeWidth, strokeColourOpacity);
+            }
         }
 
-        Mark markerSymbol = getStyleFactory().mark(expression, fill, stroke);
+        Mark markerSymbol = getStyleFactory().mark(symbolTypeExpression, fill, stroke);
 
         return SelectedSymbol.getInstance().getSymbolList(markerSymbol);
     }

@@ -159,12 +159,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         else
         {
             stroke = getStyleFactory().getDefaultStroke();
-            stroke.setLineCap(lineCap);
-            stroke.setLineJoin(join);
-            stroke.setDashOffset(offset);
-
-            List<Expression> dashExpressionList = createDashArrayList(dashes);
-            stroke.setDashArray(dashExpressionList);
 
             AnchorPoint anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));

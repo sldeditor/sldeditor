@@ -143,10 +143,10 @@
                 <Field id="STROKE_STROKE_OPACITY" enabled="true" />
                 <Field id="STROKE_FILL_WIDTH" enabled="true" />
 
-                <Field id="STROKE_LINE_JOIN" enabled="true" />
-                <Field id="STROKE_LINE_CAP" enabled="true" />
-                <Field id="STROKE_DASH_ARRAY" enabled="true" />
-                <Field id="STROKE_OFFSET" enabled="true" />
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
 
                 <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
                 <Field id="STROKE_SYMBOL_SIZE" enabled="true" />

@@ -23,7 +23,7 @@
                 </Value>
             </ValueList>
         </FieldConfigEnum>
-        <FieldConfigDouble id="STROKE_OFFSET" label="stroke.dash.offset" />
+        <FieldConfigDouble id="STROKE_OFFSET" label="stroke.dash.offset" minValue="0.0" />
         <FieldConfigString id="STROKE_DASH_ARRAY"
             label="stroke.dash.array" valueOnly="true" />
     </Group>
@@ -32,7 +32,7 @@
         <FieldConfigDouble id="STROKE_SYMBOL_ANGLE"
             label="stroke.strokeSymbol.angle" />
         <FieldConfigDouble id="STROKE_SYMBOL_SIZE"
-            label="stroke.strokeSymbol.size" defaultValue="1.0" minValue="0.1" />
+            label="stroke.strokeSymbol.size" defaultValue="5.0" minValue="0.1" />
         <FieldConfigDouble id="STROKE_SYMBOL_INITIAL_GAP"
             label="stroke.strokeSymbol.initialGap" />
         <FieldConfigDouble id="STROKE_SYMBOL_GAP"
