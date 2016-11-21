@@ -65,6 +65,9 @@ public class PrefManager implements UndoActionInterface {
     /** The Constant LAST_GEOSERVER_VIEWED_FIELD. */
     private static final String LAST_GEOSERVER_VIEWED_FIELD = "SldEditor.lastGeoServerViewed";
 
+    /** The Constant CHECK_APP_VERSION_ON_STARTUP_FIELD. */
+    private static final String CHECK_APP_VERSION_ON_STARTUP_FIELD = "SldEditor.checkAppVersionOnStartUp";
+
     /** The singleton instance. */
     private static PrefManager instance = null;
 
@@ -198,6 +201,7 @@ public class PrefManager implements UndoActionInterface {
         if(propertyManagerInstance != null)
         {
             PrefData newPrefData = new PrefData();
+            newPrefData.setCheckAppVersionOnStartUp(propertyManagerInstance.getBooleanValue(CHECK_APP_VERSION_ON_STARTUP_FIELD, true));
             newPrefData.setUseAntiAlias(propertyManagerInstance.getBooleanValue(USE_ANTI_ALIAS_FIELD, true));
 
             List<String> stringList = propertyManagerInstance.getStringListValue(VENDOROPTIONS_FIELD);
@@ -323,8 +327,26 @@ public class PrefManager implements UndoActionInterface {
         setLastFolderViewed(newPrefData.isSaveLastFolderView(),
                 newPrefData.getLastViewedKey(),
                 newPrefData.getLastFolderViewed());
+        setCheckAppVersionOnStartUp(newPrefData.isCheckAppVersionOnStartUp());
 
         UndoManager.getInstance().addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, newPrefData));
+    }
+
+    /**
+     * Sets the check app version on start up.
+     *
+     * @param checkAppVersionOnStartUp the new check app version on start up
+     */
+    private void setCheckAppVersionOnStartUp(boolean checkAppVersionOnStartUp) {
+        if(this.prefData.isCheckAppVersionOnStartUp() != checkAppVersionOnStartUp)
+        {
+            this.prefData.setCheckAppVersionOnStartUp(checkAppVersionOnStartUp);
+
+            if(propertyManagerInstance != null)
+            {
+                propertyManagerInstance.updateValue(CHECK_APP_VERSION_ON_STARTUP_FIELD, checkAppVersionOnStartUp);
+            }
+        }
     }
 
     /**

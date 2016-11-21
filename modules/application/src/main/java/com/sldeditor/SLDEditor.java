@@ -298,8 +298,16 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             }
         }
 
-        CheckUpdatePanel updatePanel = new CheckUpdatePanel();
-        updatePanel.showPanelSilent(Version.getVersionNumber());
+        // Check application version on startup
+        PrefData prefData = PrefManager.getInstance().getPrefData();
+        if(prefData != null)
+        {
+            if(prefData.isCheckAppVersionOnStartUp())
+            {
+                CheckUpdatePanel updatePanel = new CheckUpdatePanel();
+                updatePanel.showPanelSilent(Version.getVersionNumber());
+            }
+        }
     }
 
     /**
