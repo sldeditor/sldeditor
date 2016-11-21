@@ -76,14 +76,22 @@ public class PrefPanel extends JDialog {
     /** The set save last folder viewed checkbox. */
     private JCheckBox chckbxSetSaveLastFolderViewed;
 
+    /** The chckbx check app version on start up. */
+    private JCheckBox chckbxCheckAppVersionOnStartUp;
+
     /** The ui layout combo box. */
     private JComboBox<String> uiLayoutComboBox;
 
     /** The ui layout map. */
     private Map<String, String> uiLayoutMap;
 
+    private JLabel uiLayoutPanelLabel;
+
+    /** The populating dialog flag. */
+    private boolean populatingDialog = false;
+
     /**
-     * Default constructor
+     * Default constructor.
      */
     public PrefPanel()
     {
@@ -99,12 +107,25 @@ public class PrefPanel extends JDialog {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         // Anti-alias
+        JPanel chckbxUseAntiAliasPanel = new JPanel();
+        chckbxUseAntiAliasPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
         chckbxUseAntiAlias = new JCheckBox(Localisation.getString(PrefPanel.class, "PrefPanel.useAntiAlias"));
-        panel.add(chckbxUseAntiAlias);
+        chckbxUseAntiAliasPanel.add(chckbxUseAntiAlias);
+        panel.add(chckbxUseAntiAliasPanel);
 
         // Save last folder viewed
+        JPanel chckbxSetSaveLastFolderViewedPanel = new JPanel();
+        chckbxSetSaveLastFolderViewedPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
         chckbxSetSaveLastFolderViewed = new JCheckBox(Localisation.getString(PrefPanel.class, "PrefPanel.saveLastFolderViewed"));
-        panel.add(chckbxSetSaveLastFolderViewed);
+        chckbxSetSaveLastFolderViewedPanel.add(chckbxSetSaveLastFolderViewed);
+        panel.add(chckbxSetSaveLastFolderViewedPanel);
+
+        // Check app version on start up
+        JPanel chckbxCheckAppVersionOnStartUpPanel = new JPanel();
+        chckbxCheckAppVersionOnStartUpPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        chckbxCheckAppVersionOnStartUp = new JCheckBox(Localisation.getString(PrefPanel.class, "PrefPanel.checkAppVersionOnStartUp"));
+        chckbxCheckAppVersionOnStartUpPanel.add(chckbxCheckAppVersionOnStartUp);
+        panel.add(chckbxCheckAppVersionOnStartUpPanel);
 
         // Ui layout class
         uiLayoutMap = UILayoutFactory.getAllLayouts();
@@ -118,10 +139,24 @@ public class PrefPanel extends JDialog {
         uiLayoutComboBox = new JComboBox<String>(uiLayoutNameList);
 
         JPanel uiLayoutPanel = new JPanel();
-
+        uiLayoutPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
         uiLayoutPanel.add(new JLabel(Localisation.getField(PrefPanel.class, "PrefPanel.uiLayout")));
         uiLayoutPanel.add(uiLayoutComboBox);
+
+        uiLayoutPanelLabel = new JLabel(" ");
+        uiLayoutPanel.add(uiLayoutPanelLabel);
+
         panel.add(uiLayoutPanel);
+
+        uiLayoutComboBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!populatingDialog)
+                {
+                    uiLayoutPanelLabel.setText(Localisation.getString(PrefPanel.class, "PrefPanel.uiLayoutLabel"));
+                }
+            }});
 
         // Vendor options
         JPanel panel_1 = new JPanel();
@@ -203,6 +238,7 @@ public class PrefPanel extends JDialog {
     protected void populate(PrefData prefData) {
         if(prefData != null)
         {
+            chckbxCheckAppVersionOnStartUp.setSelected(prefData.isCheckAppVersionOnStartUp());
             chckbxUseAntiAlias.setSelected(prefData.isUseAntiAlias());
             chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
             model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
@@ -215,7 +251,9 @@ public class PrefPanel extends JDialog {
                 {
                     if(className.compareTo(prefData.getUiLayoutClass()) == 0)
                     {
+                        populatingDialog = true;
                         uiLayoutComboBox.setSelectedItem(displayName);
+                        populatingDialog = false;
                     }
                 }
             }
@@ -231,6 +269,7 @@ public class PrefPanel extends JDialog {
 
         PrefData prefData = new PrefData();
 
+        prefData.setCheckAppVersionOnStartUp(chckbxCheckAppVersionOnStartUp.isSelected());
         prefData.setUseAntiAlias(chckbxUseAntiAlias.isSelected());
         prefData.setVendorOptionVersionList(model.getVendorOptionVersionList());
         String uiLayoutClass = uiLayoutMap.get(uiLayoutComboBox.getSelectedItem());

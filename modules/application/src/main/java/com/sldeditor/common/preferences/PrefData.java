@@ -53,6 +53,9 @@ public class PrefData implements Cloneable {
     /** The last viewed key. */
     private PrefDataLastViewedEnum lastViewedKey = PrefDataLastViewedEnum.FOLDER;
 
+    /** The check app version on start up. */
+    private boolean checkAppVersionOnStartUp = true;
+
     /**
      * Default constructor.
      */
@@ -78,6 +81,7 @@ public class PrefData implements Cloneable {
         copy.saveLastFolderView = this.saveLastFolderView;
         copy.lastFolderViewed = this.lastFolderViewed;
         copy.lastViewedKey = this.lastViewedKey;
+        copy.checkAppVersionOnStartUp = this.checkAppVersionOnStartUp;
 
         if(this.vendorOptionList != null)
         {
@@ -227,6 +231,7 @@ public class PrefData implements Cloneable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((backgroundColour == null) ? 0 : backgroundColour.hashCode());
+        result = prime * result + (checkAppVersionOnStartUp ? 1231 : 1237);
         result = prime * result + ((lastFolderViewed == null) ? 0 : lastFolderViewed.hashCode());
         result = prime * result + ((lastViewedKey == null) ? 0 : lastViewedKey.hashCode());
         result = prime * result + (saveLastFolderView ? 1231 : 1237);
@@ -253,6 +258,8 @@ public class PrefData implements Cloneable {
                 return false;
         } else if (!backgroundColour.equals(other.backgroundColour))
             return false;
+        if (checkAppVersionOnStartUp != other.checkAppVersionOnStartUp)
+            return false;
         if (lastFolderViewed == null) {
             if (other.lastFolderViewed != null)
                 return false;
@@ -275,5 +282,23 @@ public class PrefData implements Cloneable {
         } else if (!vendorOptionList.equals(other.vendorOptionList))
             return false;
         return true;
+    }
+
+    /**
+     * Checks if is check app version on start up.
+     *
+     * @return the checkAppVersionOnStartUp
+     */
+    public boolean isCheckAppVersionOnStartUp() {
+        return checkAppVersionOnStartUp;
+    }
+
+    /**
+     * Sets the check app version on start up.
+     *
+     * @param checkAppVersionOnStartUp the checkAppVersionOnStartUp to set
+     */
+    public void setCheckAppVersionOnStartUp(boolean checkAppVersionOnStartUp) {
+        this.checkAppVersionOnStartUp = checkAppVersionOnStartUp;
     }
 }

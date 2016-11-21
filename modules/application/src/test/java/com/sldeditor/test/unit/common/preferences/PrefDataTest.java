@@ -67,6 +67,7 @@ public class PrefDataTest {
         assertEquals(newObj.isSaveLastFolderView(), prefData.isSaveLastFolderView());
         assertEquals(newObj.getLastViewedKey(), prefData.getLastViewedKey());
         assertEquals(newObj.getLastFolderViewed(), prefData.getLastFolderViewed());
+        assertEquals(newObj.isCheckAppVersionOnStartUp(), prefData.isCheckAppVersionOnStartUp());
     }
 
     /**
@@ -81,6 +82,21 @@ public class PrefDataTest {
 
         prefData.setUseAntiAlias(false);
         assertFalse(prefData.isUseAntiAlias());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#setCheckAppVersionOnStartUp(boolean)}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#isCheckAppVersionOnStartUp()}.
+     */
+    @Test
+    public void testCheckAppVersionOnStartUp() {
+        PrefData prefData = new PrefData();
+
+        prefData.setCheckAppVersionOnStartUp(false);
+        assertFalse(prefData.isCheckAppVersionOnStartUp());
+
+        prefData.setCheckAppVersionOnStartUp(true);
+        assertTrue(prefData.isCheckAppVersionOnStartUp());
     }
 
     /**

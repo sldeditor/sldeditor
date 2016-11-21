@@ -20,20 +20,20 @@
 package com.sldeditor.update;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
-import java.awt.FlowLayout;
 
 /**
  * The class CheckUpdatePanel.
@@ -52,7 +52,7 @@ public class CheckUpdatePanel extends JDialog {
     protected JLabel lblLatestVersion;
 
     /** The text area. */
-    protected JTextArea textArea;
+    protected JEditorPane textArea;
 
     /** The status label. */
     protected JLabel lblStatus;
@@ -64,9 +64,11 @@ public class CheckUpdatePanel extends JDialog {
      * Instantiates a new check update panel.
      */
     public CheckUpdatePanel() {
-        super(Controller.getInstance().getFrame(), Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.title"), true);
+        super(Controller.getInstance().getFrame(),
+                Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.title"),
+                true);
         createUI();
-        setSize(400,300);
+        setSize(600, 400);
 
         Controller.getInstance().centreDialog(this);
     }
@@ -90,7 +92,8 @@ public class CheckUpdatePanel extends JDialog {
         getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(new BorderLayout(0, 0));
 
-        textArea = new JTextArea();
+        textArea = new JEditorPane();
+        textArea.setContentType("text/html");
         textArea.setEditable(false);
 
         JScrollPane jp = new JScrollPane(textArea);
@@ -156,7 +159,7 @@ public class CheckUpdatePanel extends JDialog {
             public void run(){
                 CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
 
-                checkForLatestVersion(currentVersion, client);
+                checkForLatestVersion(currentVersion, client, false);
             }
         });
 
@@ -166,13 +169,38 @@ public class CheckUpdatePanel extends JDialog {
     }
 
     /**
+     * Show panel silent.
+     *
+     * @param currentVersion the current version
+     */
+    public void showPanelSilent(String currentVersion)
+    {
+        lblCurrentVersion.setText(String.format("%s %s", 
+                Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"), 
+                currentVersion));
+
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run(){
+                CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
+
+                checkForLatestVersion(currentVersion, client, true);
+            }
+        });
+
+        thread1.start();
+    }
+
+    /**
      * Check for latest version.
      *
      * @param currentVersion the current version
      * @param client the client
+     * @param silent the silent flag
      */
     protected void checkForLatestVersion(String currentVersion,
-            CheckUpdateClientInterface client) {
+            CheckUpdateClientInterface client,
+            boolean silent) {
         if(client == null)
         {
             return;
@@ -208,6 +236,11 @@ public class CheckUpdatePanel extends JDialog {
         else
         {
             lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
+        }
+
+        if(shouldUpdate && silent)
+        {
+            setVisible(true);
         }
     }
 }

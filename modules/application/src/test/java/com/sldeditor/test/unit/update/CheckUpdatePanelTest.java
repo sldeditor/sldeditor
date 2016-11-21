@@ -52,7 +52,10 @@ public class CheckUpdatePanelTest {
         private static final String LATEST_VERSION = "0.4.0";
 
         /** The Constant DESCRIPTION. */
-        private static final String DESCRIPTION = "Description";
+        private static final String DESCRIPTION = "<html>\n  <head>\n    \n  </head>\n  <body>\n    Description\n  </body>\n</html>\n";
+
+        /** The Constant EMPTY_STRING. */
+        private static final String EMPTY_STRING = "<html>\r\n  <head>\r\n\r\n  </head>\r\n  <body>\r\n    <p style=\"margin-top: 0\">\r\n      \r\n    </p>\r\n  </body>\r\n</html>\r\n";;
 
         /**
          * Test check for latest version.
@@ -63,7 +66,7 @@ public class CheckUpdatePanelTest {
         public void testCheckForLatestVersion(String currentVersion,
                 CheckUpdateClientInterface client)
         {
-            checkForLatestVersion(currentVersion, client);
+            checkForLatestVersion(currentVersion, client, false);
         }
 
         /**
@@ -94,7 +97,8 @@ public class CheckUpdatePanelTest {
             boolean status = expectedStatus.equals(lblStatus.getText());
             boolean latest = latestVersionString.equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == false);
-            boolean description = "".equals(textArea.getText());
+            String text = textArea.getText();
+            boolean description = compareHtml(EMPTY_STRING, text);
 
             return status && getButton && latest && description;
         }
@@ -113,7 +117,8 @@ public class CheckUpdatePanelTest {
             boolean status = expectedStatus.equals(lblStatus.getText());
             boolean latest = latestVersionString.equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == true);
-            boolean description = DESCRIPTION.equals(textArea.getText());
+            String text = textArea.getText();
+            boolean description = compareHtml(DESCRIPTION, text);
 
             return status && getButton && latest && description;
         }
@@ -173,6 +178,28 @@ public class CheckUpdatePanelTest {
 
         panel.testCheckForLatestVersion("0.1.0", client);
         assertTrue(panel.testLaterVersion());
+    }
+
+    /**
+     * Compare html strings by stripping out newlines, carriage returns
+     * so unit tests work on different operating systems.
+     *
+     * @param string the string
+     * @param text the text
+     * @return true, if successful
+     */
+    private static boolean compareHtml(String string, String text) {
+        return removeNewLine(string).equals(removeNewLine(text));
+    }
+
+    /**
+     * Removes the new line, carriage returns.
+     *
+     * @param string the string
+     * @return the string
+     */
+    private static String removeNewLine(String string) {
+        return string.replace("\n", "").replace("\r", "");
     }
 
 }

@@ -186,6 +186,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
             Map<Calendar, String> map = new HashMap<Calendar, String>();
             Map<Calendar, JsonObject> jsonMap = new HashMap<Calendar, JsonObject>();
+            Map<String, String> descriptionMap = new HashMap<String, String>();
             List<Calendar> calList = new ArrayList<Calendar>();
 
             for(int index = 0; index < o.size(); index ++)
@@ -204,17 +205,24 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                 map.put(cal, tagName);
                 jsonMap.put(cal, obj);
                 calList.add(cal);
+                descriptionMap.put(tagName, obj.get(BODY).getAsString());
             }
 
-            Collections.sort(calList);
+            Collections.sort(calList, Collections.reverseOrder());
 
-            Calendar latestTime = calList.get(calList.size() - 1);
+            Calendar latestTime = calList.get(0);
             String latest = map.get(latestTime);
-            String description = jsonMap.get(latestTime).get(BODY).getAsString();
+            StringBuilder description = new StringBuilder();
+
+            for(Calendar time : calList)
+            {
+                String tag = map.get(time);
+                formatDescription(description, tag, descriptionMap.get(tag));
+            }
 
             VersionData latestVersion = VersionData.decode(getClass(), latest);
 
-            UpdateData updateData = new UpdateData(latestVersion, description);
+            UpdateData updateData = new UpdateData(latestVersion, description.toString());
 
             return updateData;
         } catch (ParseException e) {
@@ -224,6 +232,22 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
         }
 
         return null;
+    }
+
+    /**
+     * Format description.
+     *
+     * @param stringBuilder the string builder
+     * @param tag the tag
+     * @param description the description
+     */
+    private void formatDescription(StringBuilder stringBuilder, String tag, String description) {
+        if(stringBuilder == null)
+        {
+            return;
+        }
+        stringBuilder.append(String.format("<h2>Version : %s</h2>",tag));
+        stringBuilder.append(description.replace("\r\n","<br>"));
     }
 
     /**
