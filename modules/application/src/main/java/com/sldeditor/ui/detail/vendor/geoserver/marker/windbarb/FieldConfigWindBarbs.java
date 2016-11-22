@@ -275,13 +275,15 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                 FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
                 if(field != null)
                 {
-                    if(field instanceof FieldConfigColour)
-                    {
-                        FieldConfigColour colourField = (FieldConfigColour)field;
+                    FieldConfigColour colourField = (FieldConfigColour)field;
 
-                        expFillColour = colourField.getColourExpression();
-                        expFillColourOpacity = colourField.getColourOpacityExpression();
-                    }
+                    expFillColour = colourField.getColourExpression();
+                }
+
+                field = fieldConfigManager.get(FieldIdEnum.OPACITY);
+                if(field != null)
+                {
+                    expFillColourOpacity = field.getExpression();
                 }
 
                 Stroke stroke = null;

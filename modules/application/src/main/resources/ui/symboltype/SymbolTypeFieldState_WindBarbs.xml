@@ -10,14 +10,10 @@
                 <Field id="OPACITY" enabled="true" />
                 <Field id="INITIAL_GAP" enabled="true" />
                 <Field id="GAP" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
-                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>

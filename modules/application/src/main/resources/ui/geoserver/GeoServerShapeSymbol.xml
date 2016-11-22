@@ -16,13 +16,13 @@
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
                 <Field id="OPACITY" enabled="true" />
-                <Field id="INITIAL_GAP" enabled="true" />
-                <Field id="GAP" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
 
                 <Group id="FILL" enabled="true" />
                 <Group id="STROKE" enabled="false" />
-                <Group id="ANCHORPOINT" enabled="false" />
-                <Group id="DISPLACEMENT" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>

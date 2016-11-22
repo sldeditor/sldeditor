@@ -308,7 +308,12 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                     FieldConfigColour colourField = (FieldConfigColour)field;
 
                     expFillColour = colourField.getColourExpression();
-                    expFillColourOpacity = colourField.getColourOpacityExpression();
+                }
+
+                field = fieldConfigManager.get(FieldIdEnum.OPACITY);
+                if(field != null)
+                {
+                    expFillColourOpacity = field.getExpression();
                 }
 
                 Stroke stroke = null;
