@@ -9,7 +9,7 @@
                 <Field id="SYMBOL_TYPE" enabled="true" />
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
-                <Field id="OPACITY" enabled="false" />
+                <Field id="OPACITY" enabled="true" />
                 <Field id="INITIAL_GAP" enabled="false" />
                 <Field id="GAP" enabled="true" />
 

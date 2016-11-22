@@ -137,7 +137,7 @@
     </Section>
     <Section prefix="*[%d]" sldtype="STROKE">
         <Field id="STROKE_FILL_COLOUR" xpath="Stroke/CssParameter[@name=&quot;stroke&quot;]" />
-        <Field id="STROKE_FILL_OPACITY"
+        <Field id="OPACITY"
             xpath="Stroke/CssParameter[@name=&quot;stroke-opacity&quot;]" />
         <Field id="STROKE_LINE_JOIN"
             xpath="Stroke/CssParameter[@name=&quot;stroke-linejoin&quot;]" />
@@ -150,7 +150,7 @@
         <Field id="STROKE_DASH_ARRAY"
             xpath="Stroke/CssParameter[@name=&quot;stroke-dasharray&quot;]" />
         <Field id="STROKE_STROKE_COLOUR" xpath="Stroke/CssParameter[@name=&quot;stroke&quot;]" />
-        <Field id="STROKE_STROKE_OPACITY"
+        <Field id="OPACITY"
             xpath="Stroke/CssParameter[@name=&quot;stroke-opacity&quot;]" />
         <Field id="STROKE_STYLE"
             xpath="Stroke/GraphicStroke/Graphic/Mark/WellKnownName" />

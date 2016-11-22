@@ -31,8 +31,6 @@
             <Disabled field="FILL_COLOUR"/>
             <LiteralDouble value="16.0" field="SIZE"/>
             <LiteralDouble value="0.0" field="ANGLE"/>
-            <Disabled field="GAP"/>
-            <Disabled field="INITIAL_GAP"/>
             <LiteralDouble value="1.0" field="OPACITY"/>
             <LiteralString value="#990099" field="STROKE_FILL_COLOUR"/>
             <LiteralDouble value="1.0" field="STROKE_FILL_WIDTH"/>

@@ -47,7 +47,7 @@
         </Setup>
         <FieldTests>
             <LiteralString value="shape://vertline" field="STROKE_STYLE"/>
-            <LiteralString value="#333333" field="STROKE_STROKE_COLOUR"/>
+            <LiteralString value="#333333" field="STROKE_FILL_COLOUR"/>
             <LiteralDouble value="1.0" field="STROKE_WIDTH"/>
         </FieldTests>
     </PanelTests>

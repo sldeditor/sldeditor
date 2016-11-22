@@ -109,8 +109,8 @@
 
                 <Field id="STROKE_LINE_JOIN" enabled="false" />
                 <Field id="STROKE_LINE_CAP" enabled="false" />
-                <Field id="STROKE_DASH_ARRAY" enabled="false" />
-                <Field id="STROKE_OFFSET" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="true" />
+                <Field id="STROKE_OFFSET" enabled="true" />
 
                 <Group id="FILLCOLOUR" enabled="true" />
                 <Group id="STROKECOLOUR" enabled="true" />

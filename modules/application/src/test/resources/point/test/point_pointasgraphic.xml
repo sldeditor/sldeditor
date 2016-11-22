@@ -31,7 +31,6 @@
             <LiteralDouble value="32.0" field="SIZE"/>
             <LiteralDouble value="0.0" field="ANGLE"/>
             <LiteralDouble value="0.0" field="GAP"/>
-            <LiteralDouble value="0.0" field="INITIAL_GAP"/>
             <LiteralDouble value="1.0" field="OPACITY"/>
         </FieldTests>
     </PanelTests>

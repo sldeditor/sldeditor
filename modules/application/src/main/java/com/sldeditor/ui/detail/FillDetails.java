@@ -279,7 +279,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                             hasStroke = true;
                             expStrokeColour = stroke.getColor();
                             expStrokeWidth = stroke.getWidth();
-                            expOpacity = stroke.getOpacity();
                         }
                     }
                     symbolTypeFactory.setValue(this.fieldConfigManager, symbol);
