@@ -33,6 +33,7 @@
             <LiteralString value="4 6" field="STROKE_DASH_ARRAY"/>
             <Disabled field="STROKE_WIDTH"/>
             <LiteralDouble value="4.0" field="STROKE_SYMBOL_SIZE"/>
+            <LiteralDouble value="1.0" field="STROKE_FILL_WIDTH"/>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>

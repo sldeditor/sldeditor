@@ -337,6 +337,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     private void populateStroke(Stroke stroke) {
 
         Expression expColour = null;
+        Expression expStrokeColour = null;
         Expression expOpacity = null;
         Expression expStrokeWidth = null;
         Expression expStrokeOffset = null;
@@ -426,6 +427,34 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                 for(GraphicalSymbol graphicSymbol : graphicSymbolList)
                 {
+                    if(graphicSymbol instanceof MarkImpl)
+                    {
+                        MarkImpl mark = (MarkImpl)graphicSymbol;
+
+                        Mark defaultMark = getStyleFactory().getDefaultMark();
+
+                        Fill markFill = mark.getFill();
+
+                        if(markFill != null)
+                        {
+                            expColour = markFill.getColor();
+                        }
+
+                        expStrokeColour = defaultMark.getStroke().getColor();
+
+                        Stroke markStroke = mark.getStroke();
+
+                        if(markStroke != null) 
+                        { 
+                            strokeColourEnabled = true;
+                            expStrokeColour = markStroke.getColor();
+                        }
+                    }
+                    else if(graphicSymbol instanceof ExternalGraphicImpl)
+                    {
+                        @SuppressWarnings("unused") 
+                        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl)graphicSymbol;
+                    }
                     fillFactory.setValue(this.fieldConfigManager, graphicSymbol);
                 }
             }
@@ -448,6 +477,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y, expDisplacementY);
 
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_COLOUR, expColour);
+            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_STROKE_COLOUR, expStrokeColour);
             fieldConfigVisitor.populateField(FieldIdEnum.OPACITY, expOpacity);
 
             GroupConfigInterface fillColourGroup = getGroup(GroupIdEnum.FILLCOLOUR);
@@ -455,8 +485,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             {
                 fillColourGroup.enable(true);
             }
-
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_COLOUR, expColour);
 
             GroupConfigInterface strokeColourGroup = getGroup(GroupIdEnum.STROKECOLOUR);
             if(strokeColourGroup != null)
