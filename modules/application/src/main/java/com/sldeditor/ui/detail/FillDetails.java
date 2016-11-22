@@ -19,6 +19,7 @@
 package com.sldeditor.ui.detail;
 
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
@@ -44,6 +45,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
@@ -95,7 +97,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
         symbolTypeFactory = new SymbolTypeFactory(FillDetails.class,
                 new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.STROKE_FILL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(panelId);
@@ -168,7 +170,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         Expression expGap = null;
         Expression expInitialGap = null;
         Expression expStrokeColour = null;
-        Expression expStrokeColourOpacity = null;
         Expression expStrokeWidth = null;
 
         boolean hasFillColour = false;
@@ -277,7 +278,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                             hasStroke = true;
                             expStrokeColour = stroke.getColor();
                             expStrokeWidth = stroke.getWidth();
-                            expStrokeColourOpacity = stroke.getOpacity();
+                            expOpacity = stroke.getOpacity();
                         }
                     }
                     symbolTypeFactory.setValue(this.fieldConfigManager, symbol);
@@ -296,7 +297,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateField(FieldIdEnum.GAP, expGap);
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
         fieldConfigVisitor.populateColourField(FieldIdEnum.STROKE_FILL_COLOUR, expStrokeColour);
-        fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_OPACITY, expStrokeColourOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_WIDTH, expStrokeWidth);
 
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
@@ -522,19 +522,24 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
      */
     private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem)
     {
-        List<FieldIdEnum> list = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
-        for(FieldConfigBase fieldConfig : this.getFieldConfigList())
+        for(GroupIdEnum groupId : groupList.keySet())
         {
-            FieldIdEnum fieldId = fieldConfig.getFieldId();
-            if((fieldId != FieldIdEnum.SYMBOL_TYPE) && (list != null))
-            {
-                if(fieldId != FieldIdEnum.UNKNOWN)
-                {
-                    boolean disable = !list.contains(fieldId);
-                    fieldConfig.setFieldStateOverride(disable);
-                }
-            }
+            boolean groupEnabled = groupList.get(groupId);
+            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(), groupId);
+            groupConfig.setGroupStateOverride(groupEnabled);
+        }
+
+        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+
+        for(FieldIdEnum fieldId : fieldList.keySet())
+        {
+            boolean fieldEnabled = fieldList.get(fieldId);
+            FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+            CurrentFieldState fieldState = fieldConfig.getFieldState();
+            fieldState.setFieldEnabled(fieldEnabled);
+            fieldConfig.setFieldState(fieldState);
         }
     }
 

@@ -26,6 +26,13 @@
         <FieldConfigDouble id="STROKE_OFFSET" label="stroke.dash.offset" minValue="0.0" />
         <FieldConfigString id="STROKE_DASH_ARRAY"
             label="stroke.dash.array" valueOnly="true" />
+        <FieldConfigSlider id="OPACITY"
+            label="stroke.opacity" />
+    </Group>
+    <Group id="FILLCOLOUR" label="stroke.fillColour" showLabel="true"
+        option="true">
+        <FieldConfigColour id="STROKE_FILL_COLOUR"
+            label="stroke.fillColour.colour" />
     </Group>
     <Group id="STROKESYMBOL" label="stroke.strokeSymbol"
         showLabel="true" option="false">
@@ -37,6 +44,13 @@
             label="stroke.strokeSymbol.initialGap" />
         <FieldConfigDouble id="STROKE_SYMBOL_GAP"
             label="stroke.strokeSymbol.gap" />
+    </Group>
+    <Group id="STROKECOLOUR" label="stroke.strokeColour"
+        showLabel="true" option="true">
+        <FieldConfigColour id="STROKE_STROKE_COLOUR"
+            label="stroke.strokeColour.colour" />
+        <FieldConfigDouble id="STROKE_FILL_WIDTH"
+            label="stroke.width" defaultValue="1.0" />
     </Group>
     <Group id="STROKEANCHORPOINT" label="stroke.anchorPoint"
         showLabel="true">
@@ -51,21 +65,5 @@
             label="stroke.displacement.x" defaultValue="0.0" />
         <FieldConfigDouble id="STROKE_SYMBOL_DISPLACEMENT_Y"
             label="stroke.displacement.y" defaultValue="0.0" />
-    </Group>
-    <Group id="FILLCOLOUR" label="stroke.fillColour" showLabel="true"
-        option="true">
-        <FieldConfigColour id="STROKE_FILL_COLOUR"
-            label="stroke.fillColour.colour" />
-        <FieldConfigSlider id="STROKE_FILL_OPACITY"
-            label="stroke.fillColour.opacity" />
-    </Group>
-    <Group id="STROKECOLOUR" label="stroke.strokeColour"
-        showLabel="true" option="true">
-        <FieldConfigColour id="STROKE_STROKE_COLOUR"
-            label="stroke.strokeColour.colour" />
-        <FieldConfigSlider id="STROKE_STROKE_OPACITY"
-            label="stroke.strokeColour.opacity" />
-        <FieldConfigDouble id="STROKE_FILL_WIDTH"
-            label="stroke.width" defaultValue="1.0" />
     </Group>
 </PanelConfig>

@@ -46,7 +46,6 @@
             <xs:enumeration value="NAME" />
             <xs:enumeration value="STROKE_STYLE" />
             <xs:enumeration value="STROKE_FILL_COLOUR" />
-            <xs:enumeration value="STROKE_FILL_OPACITY" />
             <xs:enumeration value="STROKE_FILL_WIDTH" />
             <xs:enumeration value="STROKE_WIDTH" />
             <xs:enumeration value="STROKE_LINE_JOIN" />
@@ -54,7 +53,6 @@
             <xs:enumeration value="STROKE_DASH_ARRAY" />
             <xs:enumeration value="STROKE_OFFSET" />
             <xs:enumeration value="STROKE_STROKE_COLOUR" />
-            <xs:enumeration value="STROKE_STROKE_OPACITY" />
 
             <xs:enumeration value="STROKE_SYMBOL_SIZE" />
             <xs:enumeration value="STROKE_SYMBOL_ANGLE" />

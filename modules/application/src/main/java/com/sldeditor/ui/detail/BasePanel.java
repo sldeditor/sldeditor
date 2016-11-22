@@ -277,6 +277,15 @@ public class BasePanel extends JPanel {
     }
 
     /**
+     * Gets the group config list.
+     *
+     * @return the groupConfigList
+     */
+    public List<GroupConfigInterface> getGroupConfigList() {
+        return groupConfigList;
+    }
+
+    /**
      * Gets the style factory.
      *
      * @return the style factory
@@ -443,7 +452,6 @@ public class BasePanel extends JPanel {
      * @param parentBox the parent box
      * @param groupConfig the group config
      * @param parentField the parent field
-     * @param previousFieldIndex the previous field index
      */
     private void populateGroup(UpdateSymbolInterface parent, 
             Box parentBox,

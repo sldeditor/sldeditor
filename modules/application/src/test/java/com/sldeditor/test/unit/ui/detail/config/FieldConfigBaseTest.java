@@ -54,6 +54,7 @@ import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExpressionTypeEnum;
@@ -327,21 +328,25 @@ public class FieldConfigBaseTest {
         assertFalse(field.isEnabled());
         assertTrue(field.getAttributeSelectionPanel().isEnabled());
 
-        boolean disable = false;
-        field.setFieldStateOverride(disable);
+        boolean fieldEnabledFlag = true;
+        CurrentFieldState fieldState = field.getFieldState();
+        fieldState.setFieldEnabled(fieldEnabledFlag);
+        field.setFieldState(fieldState);
         field.testSetValueFieldState();
-        assertEquals(disable, field.isEnabled());
-        assertEquals(disable, !field.getAttributeSelectionPanel().isEnabled());
+        assertEquals(fieldEnabledFlag, field.isEnabled());
+        assertEquals(fieldEnabledFlag, !field.getAttributeSelectionPanel().isEnabled());
 
-        disable = true;
-        field.setFieldStateOverride(disable);
+        fieldEnabledFlag = true;
+        fieldState = field.getFieldState();
+        fieldState.setFieldEnabled(fieldEnabledFlag);
+        field.setFieldState(fieldState);
         field.testSetValueFieldState();
-        assertEquals(disable, !field.isEnabled());
-        assertEquals(disable, !field.getAttributeSelectionPanel().isEnabled());
+        assertEquals(fieldEnabledFlag, !field.isEnabled());
+        assertEquals(fieldEnabledFlag, !field.getAttributeSelectionPanel().isEnabled());
 
         field.attributeUpdated("");
-        assertEquals(disable, !field.isEnabled());
-        assertEquals(disable, !field.getAttributeSelectionPanel().isEnabled());
+        assertEquals(fieldEnabledFlag, !field.isEnabled());
+        assertEquals(fieldEnabledFlag, !field.getAttributeSelectionPanel().isEnabled());
     }
 
     /**

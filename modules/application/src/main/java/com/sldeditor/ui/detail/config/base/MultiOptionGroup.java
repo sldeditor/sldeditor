@@ -109,6 +109,12 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     /** The parent. */
     private UpdateSymbolInterface parent = null;
 
+    /** The group state override disable flag. */
+    private boolean groupStateOverrideDisable = false;
+
+    /** The group enabled flag. */
+    private boolean groupEnabled = false;
+
     /**
      * Sets the label.
      *
@@ -576,5 +582,20 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     @Override
     public String toString() {
         return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#setGroupStateOverride(boolean)
+     */
+    @Override
+    public void setGroupStateOverride(boolean disable) {
+        boolean enabled = false;
+
+        if(!groupStateOverrideDisable)
+        {
+            enabled = groupEnabled;
+        }
+
+        enable(enabled);
     }
 }

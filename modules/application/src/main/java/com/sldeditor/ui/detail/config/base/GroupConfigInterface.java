@@ -77,4 +77,11 @@ public interface GroupConfigInterface {
      * Removes components from the from ui.
      */
     void removeFromUI();
+
+    /**
+     * Sets the group config state override.
+     *
+     * @param disable the new group state override
+     */
+    void setGroupStateOverride(boolean disable);
 }

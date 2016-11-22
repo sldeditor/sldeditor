@@ -58,6 +58,11 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class FieldConfigMarker extends FieldState {
 
+    /**
+     * 
+     */
+    private static final String GEOSERVER_MARKER_PREFIX = "shape://";
+
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Marker.xml";
 
@@ -263,7 +268,7 @@ public class FieldConfigMarker extends FieldState {
         Fill fill = null;
         Stroke stroke = null;
 
-        if(symbolTypeName.startsWith("shape://"))
+        if(symbolTypeName.startsWith(GEOSERVER_MARKER_PREFIX))
         {
             Expression strokeColour = null;
             FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());

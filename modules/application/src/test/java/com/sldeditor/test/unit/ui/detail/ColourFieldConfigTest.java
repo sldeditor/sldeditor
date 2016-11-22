@@ -43,7 +43,7 @@ public class ColourFieldConfigTest {
     @Test
     public void testColourFieldConfig() {
         FieldIdEnum strokeFillColour = FieldIdEnum.STROKE_FILL_COLOUR;
-        FieldIdEnum strokeFillOpacity = FieldIdEnum.STROKE_FILL_OPACITY;
+        FieldIdEnum strokeFillOpacity = FieldIdEnum.OPACITY;
         FieldIdEnum strokeFillWidth = FieldIdEnum.STROKE_FILL_WIDTH;
         ColourFieldConfig config = new ColourFieldConfig(strokeFillColour, strokeFillOpacity, strokeFillWidth);
 

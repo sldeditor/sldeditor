@@ -46,7 +46,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="NAME"/&gt;
  *     &lt;enumeration value="STROKE_STYLE"/&gt;
  *     &lt;enumeration value="STROKE_FILL_COLOUR"/&gt;
- *     &lt;enumeration value="STROKE_FILL_OPACITY"/&gt;
  *     &lt;enumeration value="STROKE_FILL_WIDTH"/&gt;
  *     &lt;enumeration value="STROKE_WIDTH"/&gt;
  *     &lt;enumeration value="STROKE_LINE_JOIN"/&gt;
@@ -54,7 +53,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="STROKE_DASH_ARRAY"/&gt;
  *     &lt;enumeration value="STROKE_OFFSET"/&gt;
  *     &lt;enumeration value="STROKE_STROKE_COLOUR"/&gt;
- *     &lt;enumeration value="STROKE_STROKE_OPACITY"/&gt;
  *     &lt;enumeration value="STROKE_SYMBOL_SIZE"/&gt;
  *     &lt;enumeration value="STROKE_SYMBOL_ANGLE"/&gt;
  *     &lt;enumeration value="STROKE_SYMBOL_DISPLACEMENT_X"/&gt;
@@ -190,7 +188,6 @@ public enum FieldIdEnum {
     NAME,
     STROKE_STYLE,
     STROKE_FILL_COLOUR,
-    STROKE_FILL_OPACITY,
     STROKE_FILL_WIDTH,
     STROKE_WIDTH,
     STROKE_LINE_JOIN,
@@ -198,7 +195,6 @@ public enum FieldIdEnum {
     STROKE_DASH_ARRAY,
     STROKE_OFFSET,
     STROKE_STROKE_COLOUR,
-    STROKE_STROKE_OPACITY,
     STROKE_SYMBOL_SIZE,
     STROKE_SYMBOL_ANGLE,
     STROKE_SYMBOL_DISPLACEMENT_X,

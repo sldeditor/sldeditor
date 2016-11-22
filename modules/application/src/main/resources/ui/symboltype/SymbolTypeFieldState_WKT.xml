@@ -5,19 +5,21 @@
             <Item id="wkt" label="WKT" />
             <FieldList>
                 <Field id="WKT" enabled="true" />
-                <Field id="ANGLE" enabled="true" />
-                <Field id="SIZE" enabled="true" />
+                <Field id="STROKE_STYLE" enabled="true" />
+
+                <Field id="STROKE_WIDTH" enabled="true" />
                 <Field id="OPACITY" enabled="true" />
-                <Field id="INITIAL_GAP" enabled="true" />
-                <Field id="GAP" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
-                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
+
+                <Group id="FILLCOLOUR" enabled="false" />
+                <Group id="STROKECOLOUR" enabled="true" />
+                <Group id="STROKESYMBOL" enabled="true" />
+                <Group id="STROKEANCHORPOINT" enabled="true" />
+                <Group id="STROKEDISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>
@@ -26,19 +28,21 @@
             <Item id="wkt" label="WKT" />
             <FieldList>
                 <Field id="WKT" enabled="true" />
-                <Field id="ANGLE" enabled="true" />
-                <Field id="SIZE" enabled="true" />
+                <Field id="STROKE_STYLE" enabled="true" />
+
+                <Field id="STROKE_WIDTH" enabled="true" />
                 <Field id="OPACITY" enabled="true" />
-                <Field id="INITIAL_GAP" enabled="true" />
-                <Field id="GAP" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
-                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
+
+                <Group id="FILLCOLOUR" enabled="false" />
+                <Group id="STROKECOLOUR" enabled="true" />
+                <Group id="STROKESYMBOL" enabled="true" />
+                <Group id="STROKEANCHORPOINT" enabled="true" />
+                <Group id="STROKEDISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>
@@ -47,19 +51,21 @@
             <Item id="wkt" label="WKT" />
             <FieldList>
                 <Field id="WKT" enabled="true" />
-                <Field id="ANGLE" enabled="true" />
-                <Field id="SIZE" enabled="true" />
+                <Field id="STROKE_STYLE" enabled="true" />
+
+                <Field id="STROKE_WIDTH" enabled="true" />
                 <Field id="OPACITY" enabled="true" />
-                <Field id="INITIAL_GAP" enabled="true" />
-                <Field id="GAP" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_H" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANCHOR_POINT_V" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_X" enabled="true" />
-                <Field id="STROKE_SYMBOL_DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_SYMBOL_SIZE" enabled="true" />
-                <Field id="STROKE_SYMBOL_ANGLE" enabled="true" />
-                <Field id="STROKE_SYMBOL_GAP" enabled="true" />
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
+
+                <Group id="FILLCOLOUR" enabled="false" />
+                <Group id="STROKECOLOUR" enabled="true" />
+                <Group id="STROKESYMBOL" enabled="true" />
+                <Group id="STROKEANCHORPOINT" enabled="true" />
+                <Group id="STROKEDISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>

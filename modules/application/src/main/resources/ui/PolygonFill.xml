@@ -32,8 +32,6 @@
         option="true">
         <FieldConfigColour id="STROKE_FILL_COLOUR"
             label="fillSymbol.stroke.colour" />
-        <FieldConfigSlider id="STROKE_FILL_OPACITY"
-            label="fillSymbol.stroke.opacity" defaultValue="1.0" />
         <FieldConfigDouble id="STROKE_FILL_WIDTH"
             label="fillSymbol.stroke.width" defaultValue="1.0" />
     </Group>
