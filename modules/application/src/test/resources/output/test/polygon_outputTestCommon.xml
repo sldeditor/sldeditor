@@ -42,7 +42,7 @@
             <SetLiteralDouble value="4.2" field="STROKE_OFFSET"/>
             <SetLiteralString value="2.0 5.0 1.0" field="STROKE_DASH_ARRAY"/>
             <SetLiteralString value="#123456" field="STROKE_FILL_COLOUR"/>
-            <SetLiteralDouble value="0.42" field="STROKE_FILL_OPACITY"/>
+            <SetLiteralDouble value="0.42" field="OPACITY"/>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>
