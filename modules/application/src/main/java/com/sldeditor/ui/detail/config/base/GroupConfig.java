@@ -325,14 +325,13 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      */
     @Override
     public boolean isPanelEnabled() {
-        if(groupCheckbox == null)
+        boolean checkBox = true;
+        if(groupCheckbox != null)
         {
-            return true;
+            checkBox = groupCheckbox.isSelected();
         }
-        else
-        {
-            return groupCheckbox.isSelected();
-        }
+
+        return checkBox && groupEnabled;
     }
 
     /**

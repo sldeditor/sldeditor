@@ -40,6 +40,7 @@ import org.opengis.style.GraphicalSymbol;
 import org.opengis.style.Symbolizer;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -341,7 +342,8 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
             {
                 PolygonSymbolizerImpl newPolygonSymbolizer = (PolygonSymbolizerImpl) symbolizer;
 
-                Fill fill = symbolTypeFactory.getFill(getGraphicFill(), this.fieldConfigManager);
+                GraphicFill graphicFill = getGraphicFill();
+                Fill fill = symbolTypeFactory.getFill(graphicFill, this.fieldConfigManager);
 
                 newPolygonSymbolizer.setFill(fill);
 
@@ -528,7 +530,14 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         {
             boolean groupEnabled = groupList.get(groupId);
             GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(), groupId);
-            groupConfig.setGroupStateOverride(groupEnabled);
+            if(groupConfig != null)
+            {
+                groupConfig.setGroupStateOverride(groupEnabled);
+            }
+            else
+            {
+                ConsoleManager.getInstance().error(this, "Failed to find group : " + groupId.toString());
+            }
         }
 
         Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
@@ -537,9 +546,16 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         {
             boolean fieldEnabled = fieldList.get(fieldId);
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-            CurrentFieldState fieldState = fieldConfig.getFieldState();
-            fieldState.setFieldEnabled(fieldEnabled);
-            fieldConfig.setFieldState(fieldState);
+            if(fieldConfig != null)
+            {
+                CurrentFieldState fieldState = fieldConfig.getFieldState();
+                fieldState.setFieldEnabled(fieldEnabled);
+                fieldConfig.setFieldState(fieldState);
+            }
+            else
+            {
+                ConsoleManager.getInstance().error(this, "Failed to find field : " + fieldId.toString());
+            }
         }
     }
 

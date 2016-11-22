@@ -6,9 +6,9 @@
             label="fillSymbol.symbol" />
         <FieldConfigDouble id="ANGLE" label="fillSymbol.angle" />
         <FieldConfigDouble id="SIZE" label="fillSymbol.size" defaultValue="5.0" minValue="0.1"/>
-        <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" />
         <FieldConfigDouble id="INITIAL_GAP" label="fillSymbol.initialGap" />
         <FieldConfigDouble id="GAP" label="fillSymbol.gap" />
+        <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" />
     </Group>
     <Group id="ANCHORPOINT" label="fillSymbol.anchorPoint"
         showLabel="true">

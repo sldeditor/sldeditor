@@ -35,6 +35,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -42,6 +43,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
@@ -366,7 +368,7 @@ public class FieldConfigMarker extends FieldState {
         FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
         if(field != null)
         {
-            if(field instanceof FieldConfigColour)
+            if((field instanceof FieldConfigColour) && field.isEnabled())
             {
                 fillColour = ((FieldConfigColour)field).getColourExpression();
             }

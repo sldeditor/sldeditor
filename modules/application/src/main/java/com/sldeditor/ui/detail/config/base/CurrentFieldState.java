@@ -33,7 +33,7 @@ public class CurrentFieldState {
     private boolean groupSelectedFlag = true;
     
     /** The field enabled flag. */
-    private boolean fieldEnabledFlag = false;
+    private boolean fieldEnabledFlag = true;
 
     /**
      * Checks if is group enabled flag.

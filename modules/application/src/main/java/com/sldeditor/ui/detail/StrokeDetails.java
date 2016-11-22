@@ -681,7 +681,14 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         {
             boolean groupEnabled = groupList.get(groupId);
             GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(), groupId);
-            groupConfig.setGroupStateOverride(groupEnabled);
+            if(groupConfig != null)
+            {
+                groupConfig.setGroupStateOverride(groupEnabled);
+            }
+            else
+            {
+                ConsoleManager.getInstance().error(this, "Failed to find group : " + groupId.toString());
+            }
         }
 
         Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);

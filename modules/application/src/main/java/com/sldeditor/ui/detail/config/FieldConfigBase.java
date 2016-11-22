@@ -24,7 +24,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.AttributeExpressionImpl;
@@ -222,8 +221,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
     protected void setValueFieldState() {
 
         boolean fieldEnabled = fieldState.getFieldEnabledState();
-        Logger logger = Logger.getLogger(FieldConfigBase.class);
-        logger.debug(String.format("%s : %s", this.toString(), fieldEnabled ? "TRUE" : "FALSE"));
+
         setEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
 
         if(attributeSelectionPanel != null)

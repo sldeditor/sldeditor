@@ -379,7 +379,7 @@ public class FieldConfigWKTTest {
         Mark actualSymbol = (Mark) actualValue.get(0);
         assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
         assertNotNull(actualSymbol.getFill());
-        assertNull(actualSymbol.getStroke());
+        assertNotNull(actualSymbol.getStroke());
 
         // Enable stroke and fill flags
         actualValue = field2.getValue(fieldConfigManager, symbolType, true, true);
@@ -388,7 +388,7 @@ public class FieldConfigWKTTest {
         actualSymbol = (Mark) actualValue.get(0);
         assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
         assertNotNull(actualSymbol.getFill());
-        assertNull(actualSymbol.getStroke());
+        assertNotNull(actualSymbol.getStroke());
     }
 
     /**

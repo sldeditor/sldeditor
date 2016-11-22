@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
@@ -410,8 +411,9 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
 
         assertTrue(field.getFieldList(null).isEmpty());
-        assertFalse(field.getFieldList(fieldConfigManager).isEmpty());
-        assertEquals(6, field.getFieldList(fieldConfigManager).size());
+        Map<FieldIdEnum, FieldConfigBase> actualFieldList = field.getFieldList(fieldConfigManager);
+        assertFalse(actualFieldList.isEmpty());
+        assertEquals(5, actualFieldList.size());
     }
 
     /**

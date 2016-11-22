@@ -54,7 +54,6 @@ import com.sldeditor.ui.attribute.AttributeSelection;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExpressionTypeEnum;
@@ -328,25 +327,12 @@ public class FieldConfigBaseTest {
         assertFalse(field.isEnabled());
         assertTrue(field.getAttributeSelectionPanel().isEnabled());
 
-        boolean fieldEnabledFlag = true;
-        CurrentFieldState fieldState = field.getFieldState();
-        fieldState.setFieldEnabled(fieldEnabledFlag);
-        field.setFieldState(fieldState);
+        boolean fieldEnabledFlag = false;
         field.testSetValueFieldState();
         assertEquals(fieldEnabledFlag, field.isEnabled());
-        assertEquals(fieldEnabledFlag, !field.getAttributeSelectionPanel().isEnabled());
-
-        fieldEnabledFlag = true;
-        fieldState = field.getFieldState();
-        fieldState.setFieldEnabled(fieldEnabledFlag);
-        field.setFieldState(fieldState);
-        field.testSetValueFieldState();
-        assertEquals(fieldEnabledFlag, !field.isEnabled());
-        assertEquals(fieldEnabledFlag, !field.getAttributeSelectionPanel().isEnabled());
 
         field.attributeUpdated("");
-        assertEquals(fieldEnabledFlag, !field.isEnabled());
-        assertEquals(fieldEnabledFlag, !field.getAttributeSelectionPanel().isEnabled());
+        assertEquals(fieldEnabledFlag, field.isEnabled());
     }
 
     /**
