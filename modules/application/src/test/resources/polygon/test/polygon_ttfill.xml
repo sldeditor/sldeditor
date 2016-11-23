@@ -5,7 +5,7 @@
             <Layer index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="Polygon picture fill" field="NAME"/>
+            <LiteralString value="Polygon TTF fill" field="NAME"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -14,7 +14,7 @@
             <Style index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="Polygon picture fill" field="TITLE"/>
+            <LiteralString value="Polygon TTF fill" field="TITLE"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -27,10 +27,11 @@
             <SymbolizerDetail index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="point/sld/smileyface.png" field="EXTERNAL_GRAPHIC"/>
+            <LiteralString value="ttf://Arial#U+0025" field="TTF"/>
             <LiteralDouble value="50.0" field="SIZE"/>
             <LiteralDouble value="63.0" field="ANGLE"/>
             <LiteralDouble value="0.69" field="OPACITY"/>
+            <LiteralString value="#CC0066" field="FILL_COLOUR"/>
             <Disabled field="STROKE_FILL_COLOUR"/>
         </FieldTests>
     </PanelTests>

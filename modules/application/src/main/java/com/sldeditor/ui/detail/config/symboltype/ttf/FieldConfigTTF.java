@@ -320,9 +320,14 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
                 Stroke stroke = null;
                 Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                Expression size = null;
-                Expression rotation = null;
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
+
+                // Size
+                Expression expSize = null;
+
+                // Rotation
+                Expression expRotation = null;
+
+                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, expSize, expRotation);
 
                 symbolList.add(mark);
             }
@@ -341,7 +346,16 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     public Fill getFill(GraphicFill graphicFill,
             GraphicPanelFieldManager fieldConfigManager)
     {
-        return null;
+        if(fieldConfigManager == null)
+        {
+            return null;
+        }
+
+        Expression fillColour = null;
+        Expression fillColourOpacity = null;
+        Fill fill = getStyleFactory().fill(graphicFill, fillColour, fillColourOpacity);
+
+        return fill;
     }
 
     /**
