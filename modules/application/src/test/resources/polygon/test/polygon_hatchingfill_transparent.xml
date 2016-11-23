@@ -31,7 +31,7 @@
             <Disabled field="STROKE_FILL_COLOUR"/>
             <LiteralDouble value="16.0" field="SIZE"/>
             <LiteralDouble value="0.0" field="ANGLE"/>
-            <LiteralDouble value="0.38" field="OPACITY"/>
+            <LiteralDouble value="0.38" field="POLYGON_FILL_OPACITY"/>
             <LiteralString value="#990099" field="FILL_COLOUR"/>
         </FieldTests>
     </PanelTests>

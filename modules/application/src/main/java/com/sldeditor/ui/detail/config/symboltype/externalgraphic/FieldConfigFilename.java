@@ -73,16 +73,16 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /** The external graphic panel. */
     private ExternalGraphicDetails externalGraphicPanel = null;
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Filename.xml";
 
     /**
      * Instantiates a new field config string.
      *
      * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
      */
     public FieldConfigFilename(FieldConfigCommonData commonData,
             ColourFieldConfig fillFieldConfig,
@@ -235,13 +235,14 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
      * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
+    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if(symbol instanceof ExternalGraphicImpl)
@@ -258,7 +259,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
                 multiOptionPanel.setSelectedItem(EXTERNAL_SYMBOL_KEY);
             }
 
-            FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OPACITY);
+            FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
             if(opacity != null)
             {
                 opacity.populate(graphic.getOpacity());
@@ -305,7 +306,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         }
 
         Fill fill = null;
-        FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.OPACITY);
+        FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
         if(fieldConfig != null)
         {
             Expression fillColour = null;
@@ -444,7 +445,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
     /**
      * Method called when the field has been selected from a combo box
-     * and may need to be initialised
+     * and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -504,5 +505,13 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     @Override
     protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return true;
     }
 }

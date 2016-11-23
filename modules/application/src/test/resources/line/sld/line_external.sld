@@ -21,7 +21,7 @@
                       <sld:CssParameter name="stroke-width">3.0</sld:CssParameter>
                     </sld:Stroke>
                   </sld:Mark>
-                  <sld:Opacity>0.43</sld:Opacity>
+                  <sld:Opacity>0.34</sld:Opacity>
                   <sld:Size>13.0</sld:Size>
                   <sld:Rotation>7.0</sld:Rotation>
                   <sld:Displacement>
@@ -30,7 +30,6 @@
                   </sld:Displacement>
                 </sld:Graphic>
               </sld:GraphicStroke>
-              <sld:CssParameter name="stroke-width">3.0</sld:CssParameter>
             </sld:Stroke>
           </sld:LineSymbolizer>
           <sld:LineSymbolizer>
@@ -41,18 +40,14 @@
                     <sld:WellKnownName>shape://plus</sld:WellKnownName>
                     <sld:Stroke>
                       <sld:CssParameter name="stroke">#9999FF</sld:CssParameter>
-                      <sld:CssParameter name="stroke-opacity">0.61</sld:CssParameter>
                       <sld:CssParameter name="stroke-width">2.0</sld:CssParameter>
                     </sld:Stroke>
                   </sld:Mark>
-                  <sld:Opacity>0.61</sld:Opacity>
+                  <sld:Opacity>0.43</sld:Opacity>
                   <sld:Size>18.0</sld:Size>
                   <sld:Rotation>-8.0</sld:Rotation>
                 </sld:Graphic>
               </sld:GraphicStroke>
-              <sld:CssParameter name="stroke">#9999FF</sld:CssParameter>
-              <sld:CssParameter name="stroke-opacity">0.61</sld:CssParameter>
-              <sld:CssParameter name="stroke-width">2.0</sld:CssParameter>
             </sld:Stroke>
           </sld:LineSymbolizer>
           <sld:LineSymbolizer>
@@ -60,15 +55,14 @@
               <sld:GraphicStroke>
                 <sld:Graphic>
                   <sld:ExternalGraphic>
-                    <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="file:/D:/sldeditor/external/sldeditor/modules/application/src/test/resources/point/sld/smileyface.png"/>
+                    <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="../../point/sld/smileyface.png"/>
                     <sld:Format>image/png</sld:Format>
                   </sld:ExternalGraphic>
-                  <sld:Opacity>0.31</sld:Opacity>
+                  <sld:Opacity>0.25</sld:Opacity>
                   <sld:Size>24.0</sld:Size>
                   <sld:Rotation>14.0</sld:Rotation>
                 </sld:Graphic>
               </sld:GraphicStroke>
-              <sld:CssParameter name="stroke-width">2.0</sld:CssParameter>
             </sld:Stroke>
           </sld:LineSymbolizer>
           <sld:LineSymbolizer>
@@ -81,7 +75,7 @@
                       <sld:CssParameter name="fill">#FF9900</sld:CssParameter>
                     </sld:Fill>
                   </sld:Mark>
-                  <sld:Opacity>0.64</sld:Opacity>
+                  <sld:Opacity>0.36</sld:Opacity>
                   <sld:Size>17.0</sld:Size>
                   <sld:Rotation>-18.0</sld:Rotation>
                   <sld:Displacement>

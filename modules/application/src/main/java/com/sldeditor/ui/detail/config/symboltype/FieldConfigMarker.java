@@ -25,6 +25,7 @@ import java.util.Map;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
+import org.geotools.styling.LineSymbolizerImpl;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.Stroke;
@@ -201,13 +202,15 @@ public class FieldConfigMarker extends FieldState {
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
      * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel,
             Graphic graphic, GraphicalSymbol symbol)
     {
@@ -227,12 +230,9 @@ public class FieldConfigMarker extends FieldState {
                 }
 
                 Expression expFillColour = null;
-                Expression expOpacity = null;
-                if(graphic != null)
-                {
-                    expOpacity = graphic.getOpacity();
-                }
+                Expression expFillOpacity = null;
                 Expression expStrokeColour = null;
+                Expression expStrokeOpacity = null;
                 Expression expStrokeWidth = null;
 
                 // Which opacity attribute do we use?
@@ -244,20 +244,44 @@ public class FieldConfigMarker extends FieldState {
                     if(fill != null)
                     {
                         expFillColour = fill.getColor();
+                        if(!isOverallOpacity(symbolizerType))
+                        {
+                            expFillOpacity = fill.getOpacity();
+                        }
                     }
 
                     Stroke stroke = markSymbol.getStroke();
                     if(stroke != null)
                     {
                         expStrokeColour = stroke.getColor();
+
+                        if(!isOverallOpacity(symbolizerType))
+                        {
+                            expStrokeOpacity = stroke.getOpacity();
+                        }
                         expStrokeWidth = stroke.getWidth();
+                    }
+                }
+
+                if(isOverallOpacity(symbolizerType))
+                {
+                    FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
+                    if(opacity != null)
+                    {
+                        opacity.populate(graphic.getOpacity());
                     }
                 }
 
                 FieldConfigBase opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
                 if(opacity != null)
                 {
-                    opacity.populate(expOpacity);
+                    opacity.populate(expFillOpacity);
+                }
+
+                opacity = fieldConfigManager.get(strokeFieldConfig.getOpacity());
+                if(opacity != null)
+                {
+                    opacity.populate(expStrokeOpacity);
                 }
 
                 Class<?> panelId = getCommonData().getPanelId();
@@ -277,6 +301,13 @@ public class FieldConfigMarker extends FieldState {
                     {
                         fillColour.populate(expStrokeColour);
                     }
+                    
+                    opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
+                    if(opacity != null)
+                    {
+                        opacity.populate(expStrokeOpacity);
+                    }
+
                     strokeGroup.enable(false);
                 }
                 else
@@ -344,6 +375,11 @@ public class FieldConfigMarker extends FieldState {
             }
 
             Expression strokeColourOpacity = null;
+            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+            if(field != null)
+            {
+                strokeColourOpacity = field.getExpression();
+            }
 
             Expression strokeWidth = null;
             field = fieldConfigManager.get(fillFieldConfig.getWidth());
@@ -365,6 +401,11 @@ public class FieldConfigMarker extends FieldState {
             }
 
             Expression fillColourOpacity = null;
+            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+            if(field != null)
+            {
+                fillColourOpacity = field.getExpression();
+            }
 
             if(fillEnabled)
             {
@@ -381,6 +422,11 @@ public class FieldConfigMarker extends FieldState {
                 }
 
                 Expression strokeColourOpacity = null;
+                field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
+                if(field != null)
+                {
+                    strokeColourOpacity = field.getExpression();
+                }
 
                 Expression strokeWidth = null;
                 field = fieldConfigManager.get(strokeFieldConfig.getWidth());
@@ -491,7 +537,7 @@ public class FieldConfigMarker extends FieldState {
             {
                 fillGroup.enable(expFillColour != null);
             }
-            
+
             // Opacity
             field = fieldConfigManager.get(fillFieldConfig.getOpacity());
             if(field != null)
@@ -677,5 +723,13 @@ public class FieldConfigMarker extends FieldState {
     @Override
     public void setVisible(boolean visible) {
         // Does nothing, always visible
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return (symbolizerType == LineSymbolizerImpl.class);
     }
 }

@@ -31,7 +31,7 @@
             <LiteralString value="#00FF33" field="STROKE_FILL_COLOUR"/>
             <LiteralString value="#000000" field="STROKE_STROKE_COLOUR"/>
             <LiteralDouble value="3.0" field="STROKE_FILL_WIDTH"/>
-            <LiteralDouble value="0.43" field="OPACITY"/>
+            <LiteralDouble value="0.34" field="OVERALL_OPACITY"/>
             <LiteralDouble value="13.0" field="STROKE_SYMBOL_SIZE"/>
             <LiteralDouble value="7.0" field="STROKE_SYMBOL_ANGLE"/>
             <LiteralDouble value="2.0" field="STROKE_SYMBOL_DISPLACEMENT_X"/>
@@ -51,7 +51,7 @@
             <LiteralString value="shape://plus" field="STROKE_STYLE"/>
             <LiteralString value="#9999FF" field="STROKE_FILL_COLOUR"/>
             <Disabled field="STROKE_STROKE_COLOUR"/>
-            <LiteralDouble value="0.61" field="OPACITY"/>
+            <LiteralDouble value="0.43" field="OVERALL_OPACITY"/>
             <LiteralDouble value="18.0" field="STROKE_SYMBOL_SIZE"/>
             <LiteralDouble value="-8.0" field="STROKE_SYMBOL_ANGLE"/>
         </FieldTests>
@@ -69,7 +69,7 @@
             <LiteralString value="point/sld/smileyface.png" field="EXTERNAL_GRAPHIC"/>
             <Disabled field="STROKE_FILL_COLOUR"/>
             <Disabled field="STROKE_STROKE_COLOUR"/>
-            <LiteralDouble value="0.31" field="OPACITY"/>
+            <LiteralDouble value="0.25" field="OVERALL_OPACITY"/>
             <LiteralDouble value="24.0" field="STROKE_SYMBOL_SIZE"/>
             <LiteralDouble value="14.0" field="STROKE_SYMBOL_ANGLE"/>
         </FieldTests>
@@ -87,7 +87,7 @@
             <LiteralString value="ttf://Arial#U+0021" field="TTF_SYMBOL"/>
             <LiteralString value="#FF9900" field="STROKE_FILL_COLOUR"/>
             <Disabled field="STROKE_STROKE_COLOUR"/>
-            <LiteralDouble value="0.64" field="OPACITY"/>
+            <LiteralDouble value="0.36" field="OVERALL_OPACITY"/>
             <LiteralDouble value="17.0" field="STROKE_SYMBOL_SIZE"/>
             <LiteralDouble value="-18.0" field="STROKE_SYMBOL_ANGLE"/>
             <LiteralDouble value="4.0" field="STROKE_SYMBOL_DISPLACEMENT_X"/>

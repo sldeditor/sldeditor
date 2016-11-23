@@ -86,8 +86,8 @@ public class StrokeDetailsTest {
         Stroke stroke = styleFactory.getDefaultStroke();
 
         SymbolTypeFactory fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.STROKE_STYLE);
         fillFactory.populate(panel, panel.getFieldDataManager());
 
@@ -127,7 +127,7 @@ public class StrokeDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.STROKE_SYMBOL_ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OPACITY);
+        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 
@@ -197,7 +197,7 @@ public class StrokeDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.STROKE_SYMBOL_ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OPACITY);
+        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 
@@ -272,7 +272,7 @@ public class StrokeDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.STROKE_SYMBOL_ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OPACITY);
+        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 

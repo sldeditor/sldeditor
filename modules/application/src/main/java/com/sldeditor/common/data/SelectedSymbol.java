@@ -23,14 +23,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.NamedLayerImpl;
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.PointSymbolizerImpl;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.PolygonSymbolizerImpl;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;

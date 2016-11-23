@@ -40,7 +40,7 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
-import com.sldeditor.ui.detail.FillDetails;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -267,10 +267,10 @@ public class FieldConfigTTFTest {
         boolean valueOnly = true;
 
         GraphicPanelFieldManager fieldConfigManager = null;
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
 
-        Class<?> panelId = FillDetails.class;
+        Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
@@ -282,15 +282,15 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
                 fillConfig,strokeConfig,null);
 
-        field.setValue(null, null, null, null);
-        field.setValue(fieldConfigManager, null, null, null);
+        field.setValue(null, null, null, null, null);
+        field.setValue(null, fieldConfigManager, null, null, null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star", Color.green, Color.black, 2.0);
 
-        field.setValue(null, null, null, marker);
-        field.setValue(fieldConfigManager, null, null, marker);
+        field.setValue(null, null, null, null, marker);
+        field.setValue(null, fieldConfigManager, null, null, marker);
     }
 
     /**
@@ -301,10 +301,10 @@ public class FieldConfigTTFTest {
         boolean valueOnly = true;
 
         GraphicPanelFieldManager fieldConfigManager = null;
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
 
-        Class<?> panelId = FillDetails.class;
+        Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));

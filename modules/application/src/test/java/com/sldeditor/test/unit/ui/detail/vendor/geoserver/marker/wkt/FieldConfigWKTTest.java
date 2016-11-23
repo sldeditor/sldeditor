@@ -39,7 +39,7 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.FillDetails;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -245,23 +245,23 @@ public class FieldConfigWKTTest {
 
         GraphicPanelFieldManager fieldConfigManager = null;
 
-        Class<?> panelId = FillDetails.class;
+        Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
-        field.setValue(null, null, null, null);
-        field.setValue(fieldConfigManager, null, null, null);
+        field.setValue(null, null, null, null, null);
+        field.setValue(null, fieldConfigManager, null, null, null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker1 = styleBuilder.createMark("star");
-        field.setValue(null, null, null, marker1);
-        field.setValue(fieldConfigManager, null, null, marker1);
+        field.setValue(null, null, null, null, marker1);
+        field.setValue(null, fieldConfigManager, null, null, marker1);
 
         Mark marker2 = styleBuilder.createMark("wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", styleBuilder.createFill(), styleBuilder.createStroke());
 
-        field.setValue(null, null, null, marker2);
+        field.setValue(null, null, null, null, marker2);
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
@@ -270,7 +270,7 @@ public class FieldConfigWKTTest {
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OPACITY;
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
@@ -283,7 +283,7 @@ public class FieldConfigWKTTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        field.setValue(fieldConfigManager, null, null, marker2);
+        field.setValue(null, fieldConfigManager, null, null, marker2);
 
         File f = null;
         String filename = null;
@@ -306,7 +306,7 @@ public class FieldConfigWKTTest {
 
         // Try unsupported symbol
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
-        field.setValue(fieldConfigManager, null, null, externalGraphic);
+        field.setValue(null, fieldConfigManager, null, null, externalGraphic);
 
         if(f != null)
         {
@@ -332,7 +332,7 @@ public class FieldConfigWKTTest {
 
         assertTrue(actualValue.isEmpty());
 
-        Class<?> panelId = FillDetails.class;
+        Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         String actualMarkerSymbol = "solid";
         symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
@@ -342,7 +342,7 @@ public class FieldConfigWKTTest {
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OPACITY;
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();

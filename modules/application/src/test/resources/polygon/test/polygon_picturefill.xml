@@ -30,7 +30,7 @@
             <LiteralString value="point/sld/smileyface.png" field="EXTERNAL_GRAPHIC"/>
             <LiteralDouble value="50.0" field="SIZE"/>
             <LiteralDouble value="63.0" field="ANGLE"/>
-            <LiteralDouble value="0.69" field="OPACITY"/>
+            <LiteralDouble value="0.69" field="OVERALL_OPACITY"/>
             <Disabled field="STROKE_FILL_COLOUR"/>
         </FieldTests>
     </PanelTests>

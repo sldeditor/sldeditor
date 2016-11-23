@@ -36,7 +36,7 @@
     <Section prefix="*[%d]" sldtype="TEXT_SYMBOLIZER">
         <Field id="LABEL" xpath="Label" />
         <Field id="FILL_COLOUR" xpath="Fill/CssParameter[@name=&quot;fill&quot;]" />
-        <Field id="OPACITY"
+        <Field id="OVERALL_OPACITY"
             xpath="Fill/CssParameter[@name=&quot;fill-opacity&quot;]" />
         <Field id="FONT_FAMILY"
             xpath="Font/CssParameter[@name=&quot;font-family&quot;]" />
@@ -91,7 +91,9 @@
         <Field id="SYMBOL_TYPE" xpath="Graphic/Mark/WellKnownName" />
         <Field id="FILL_COLOUR"
             xpath="Graphic/Mark/Fill/CssParameter[@name=&quot;fill&quot;]" />
-        <Field id="OPACITY" xpath="Graphic/Opacity" />
+        <Field id="OVERALL_OPACITY" xpath="Graphic/Opacity" />
+        <Field id="POINT_FILL_OPACITY" xpath="Graphic/Mark/Fill/CssParameter[@name=&quot;fill-opacity&quot;]" /> 
+        <Field id="POINT_STROKE_OPACITY" xpath="Graphic/Mark/Stroke/CssParameter[@name=&quot;fill-opacity&quot;]" /> 
         <Field id="SIZE" xpath="Graphic/Size" />
         <Field id="ANGLE" xpath="Graphic/Rotation" />
         <Field id="GAP" xpath="Graphic/Gap" />
@@ -109,7 +111,9 @@
         <Field id="SYMBOL_TYPE" xpath="Fill/GraphicFill/Graphic/Mark/WellKnownName" />
         <Field id="FILL_COLOUR"
             xpath="Fill/GraphicFill/Graphic/Mark/Fill/CssParameter[@name=&quot;fill&quot;]" />
-        <Field id="OPACITY" xpath="Graphic/Opacity" />
+        <Field id="OVERALL_OPACITY" xpath="Graphic/Opacity" />
+        <Field id="POLYGON_FILL_OPACITY" xpath="Fill/GraphicFill/Graphic/Mark/Fill/CssParameter[@name=&quot;fill-opacity&quot;]" /> 
+        <Field id="POLYGON_STROKE_OPACITY" xpath="Fill/GraphicFill/Graphic/Mark/Stroke/CssParameter[@name=&quot;fill-opacity&quot;]" /> 
         <Field id="SIZE" xpath="Graphic/Size" />
         <Field id="ANGLE" xpath="Graphic/Rotation" />
         <Field id="GAP" xpath="Graphic/Gap" />
@@ -135,8 +139,9 @@
     </Section>
     <Section prefix="*[%d]" sldtype="STROKE">
         <Field id="STROKE_FILL_COLOUR" xpath="Stroke/CssParameter[@name=&quot;stroke&quot;]" />
-        <Field id="OPACITY"
-            xpath="Stroke/CssParameter[@name=&quot;stroke-opacity&quot;]" />
+        <Field id="OVERALL_OPACITY" xpath="Stroke/GraphicStroke/Graphic/Opacity" />
+        <Field id="LINE_FILL_OPACITY" xpath="Stroke/GraphicStroke/Graphic/Opacity" />
+        <Field id="LINE_STROKE_OPACITY" xpath="Stroke/GraphicStroke/Graphic/Opacity" />
         <Field id="STROKE_LINE_JOIN"
             xpath="Stroke/CssParameter[@name=&quot;stroke-linejoin&quot;]" />
         <Field id="STROKE_LINE_CAP"
@@ -148,7 +153,6 @@
         <Field id="STROKE_DASH_ARRAY"
             xpath="Stroke/CssParameter[@name=&quot;stroke-dasharray&quot;]" />
         <Field id="STROKE_STROKE_COLOUR" xpath="Stroke/CssParameter[@name=&quot;stroke&quot;]" />
-        <Field id="OPACITY" xpath="Stroke/CssParameter[@name=&quot;stroke-opacity&quot;]" />
         <Field id="STROKE_STYLE"
             xpath="Stroke/GraphicStroke/Graphic/Mark/WellKnownName" />
         <Field id="STROKE_SYMBOL_ANGLE" xpath="Stroke/GraphicStroke/Graphic/Rotation" />

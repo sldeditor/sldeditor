@@ -16,6 +16,7 @@
                     <sld:WellKnownName>triangle</sld:WellKnownName>
                     <sld:Fill>
                       <sld:CssParameter name="fill">#110011</sld:CssParameter>
+                      <sld:CssParameter name="fill-opacity">0.75</sld:CssParameter>
                     </sld:Fill>
                     <sld:Stroke>
                       <sld:CssParameter name="stroke">#CCFF00</sld:CssParameter>
@@ -26,7 +27,6 @@
                   <sld:Rotation>26.0</sld:Rotation>
                 </sld:Graphic>
               </sld:GraphicFill>
-              <sld:CssParameter name="fill-opacity">0.75</sld:CssParameter>
             </sld:Fill>
           </sld:PolygonSymbolizer>
         </sld:Rule>

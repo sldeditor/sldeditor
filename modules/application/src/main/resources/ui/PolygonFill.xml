@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PanelConfig panelTitle="fillSymbol.paneltitle"
-    localisation="com.sldeditor.ui.detail.FillDetails">
+    localisation="com.sldeditor.ui.detail.PolygonFillDetails">
     <Group id="FILLSYMBOL" showLabel="false" option="false">
         <FieldConfigSymbolType id="SYMBOL_TYPE"
             label="fillSymbol.symbol" />
@@ -8,7 +8,7 @@
         <FieldConfigDouble id="SIZE" label="fillSymbol.size" defaultValue="5.0" minValue="0.1"/>
         <FieldConfigDouble id="INITIAL_GAP" label="fillSymbol.initialGap" />
         <FieldConfigDouble id="GAP" label="fillSymbol.gap" />
-        <FieldConfigSlider id="OPACITY" label="fillSymbol.opacity" />
+        <FieldConfigSlider id="OVERALL_OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
     </Group>
     <Group id="ANCHORPOINT" label="fillSymbol.anchorPoint"
         showLabel="true">
@@ -27,11 +27,13 @@
     <Group id="FILL" label="fillSymbol.fill" showLabel="true"
         option="true">
         <FieldConfigColour id="FILL_COLOUR" label="fillSymbol.fill.colour" />
+        <FieldConfigSlider id="POLYGON_FILL_OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
     </Group>
     <Group id="STROKE" label="fillSymbol.stroke" showLabel="true"
         option="true">
         <FieldConfigColour id="STROKE_FILL_COLOUR"
             label="fillSymbol.stroke.colour" />
+        <FieldConfigSlider id="POLYGON_STROKE_OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
         <FieldConfigDouble id="STROKE_FILL_WIDTH"
             label="fillSymbol.stroke.width" defaultValue="1.0" />
     </Group>

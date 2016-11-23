@@ -82,7 +82,7 @@ public class FillDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OPACITY);
+        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 
@@ -149,7 +149,7 @@ public class FillDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OPACITY);
+        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 

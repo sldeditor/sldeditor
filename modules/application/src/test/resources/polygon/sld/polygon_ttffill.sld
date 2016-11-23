@@ -16,6 +16,7 @@
                     <sld:WellKnownName>ttf://Arial#U+0025</sld:WellKnownName>
                     <sld:Fill>
                       <sld:CssParameter name="fill">#CC0066</sld:CssParameter>
+                      <sld:CssParameter name="fill-opacity">0.25</sld:CssParameter>
                     </sld:Fill>
                   </sld:Mark>
                   <sld:Size>50.0</sld:Size>
@@ -26,7 +27,6 @@
                   </sld:Displacement>
                 </sld:Graphic>
               </sld:GraphicFill>
-              <sld:CssParameter name="fill-opacity">0.2</sld:CssParameter>
             </sld:Fill>
           </sld:PolygonSymbolizer>
         </sld:Rule>

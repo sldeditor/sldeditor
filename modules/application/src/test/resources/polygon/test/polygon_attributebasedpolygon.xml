@@ -46,7 +46,7 @@
             <Disabled field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="1.0" field="POLYGON_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -88,7 +88,7 @@
             <Disabled field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="1.0" field="POLYGON_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -130,7 +130,7 @@
             <Disabled field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="1.0" field="POLYGON_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>

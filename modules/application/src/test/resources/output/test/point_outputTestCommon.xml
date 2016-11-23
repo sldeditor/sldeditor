@@ -31,7 +31,7 @@
             <SetLiteralDouble value="42.0" field="SIZE"/>
             <SetLiteralString value="#123456" field="FILL_COLOUR"/>
             <SetLiteralDouble value="34.3" field="ANGLE"/>
-            <SetLiteralDouble value="0.25" field="OPACITY"/>
+            <SetLiteralDouble value="0.25" field="POINT_FILL_OPACITY"/>
             <SetLiteralDouble value="0.52" field="DISPLACEMENT_X"/>
             <SetLiteralDouble value="0.19" field="DISPLACEMENT_Y"/>
             <SetLiteralDouble value="0.98" field="ANCHOR_POINT_V"/>

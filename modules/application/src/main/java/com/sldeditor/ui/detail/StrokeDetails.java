@@ -96,8 +96,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         setUpdateSymbolListener(this);
 
         fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.LINE_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.LINE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.STROKE_STYLE);
 
         fieldEnableState = fillFactory.getFieldOverrides(this.getClass());
@@ -140,7 +140,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         FieldConfigBase fdmFillColour = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
         FieldConfigColour colourField = (FieldConfigColour)fdmFillColour;
         Expression fillColour = colourField.getColourExpression();
-        Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
+        Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OVERALL_OPACITY);
 
         boolean isLine = true;
         if(symbolTypeValue != null)
@@ -280,23 +280,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        Stroke stroke = getStrokeFromSymbolizer(selectedSymbol);
-
-        populateStroke(stroke);
-    }
-
-    /**
-     * Gets the stroke from symbolizer.
-     *
-     * @param selectedSymbol the selected symbol
-     * @return the stroke from symbolizer
-     */
-    private Stroke getStrokeFromSymbolizer(SelectedSymbol selectedSymbol) {
         Stroke stroke = null;
+        Symbolizer symbolizer = null;
 
         if(selectedSymbol != null)
         {
-            Symbolizer symbolizer = selectedSymbol.getSymbolizer();
+            symbolizer = selectedSymbol.getSymbolizer();
             if(symbolizer instanceof PointSymbolizer)
             {
                 PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer; 
@@ -327,15 +316,22 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                 stroke = polygonSymbol.getStroke();
             }
         }
-        return stroke;
+
+        Class<?> symbolizerClass = null;
+        if(symbolizer != null)
+        {
+            symbolizerClass = symbolizer.getClass();
+        }
+        populateStroke(symbolizerClass, stroke);
     }
 
     /**
      * Populate stroke.
      *
+     * @param symbolizerType the symbolizer type
      * @param stroke the stroke
      */
-    private void populateStroke(Stroke stroke) {
+    private void populateStroke(Class<?> symbolizerType, Stroke stroke) {
 
         Expression expColour = null;
         Expression expStrokeColour = null;
@@ -456,7 +452,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                         @SuppressWarnings("unused") 
                         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl)graphicSymbol;
                     }
-                    fillFactory.setValue(this.fieldConfigManager, graphicStroke, graphicSymbol);
+                    fillFactory.setValue(symbolizerType, this.fieldConfigManager, graphicStroke, graphicSymbol);
                 }
             }
 

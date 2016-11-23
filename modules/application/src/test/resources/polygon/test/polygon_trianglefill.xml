@@ -30,7 +30,7 @@
             <LiteralString value="triangle" field="SYMBOL_TYPE"/>
             <LiteralDouble value="16.0" field="SIZE"/>
             <LiteralDouble value="26.0" field="ANGLE"/>
-            <LiteralDouble value="0.75" field="OPACITY"/>
+            <LiteralDouble value="0.75" field="POLYGON_FILL_OPACITY"/>
             <LiteralString value="#110011" field="FILL_COLOUR"/>
             <LiteralString value="#CCFF00" field="STROKE_FILL_COLOUR"/>
             <LiteralDouble value="3.0" field="STROKE_FILL_WIDTH"/>

@@ -9,7 +9,7 @@
                 <Field id="SYMBOL_TYPE" enabled="true" />
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
-                <Field id="OPACITY" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
                 <Field id="INITIAL_GAP" enabled="false" />
                 <Field id="GAP" enabled="true" />
 
@@ -29,7 +29,7 @@
                 <Field id="SYMBOL_TYPE" enabled="true" />
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
-                <Field id="OPACITY" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
                 <Field id="INITIAL_GAP" enabled="true" />
                 <Field id="GAP" enabled="true" />
 
@@ -48,7 +48,7 @@
                 <Field id="STROKE_STYLE" enabled="true" />
 
                 <Field id="STROKE_WIDTH" enabled="false" />
-                <Field id="OPACITY" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
                 <Field id="STROKE_LINE_JOIN" enabled="false" />
                 <Field id="STROKE_LINE_CAP" enabled="false" />
                 <Field id="STROKE_DASH_ARRAY" enabled="false" />

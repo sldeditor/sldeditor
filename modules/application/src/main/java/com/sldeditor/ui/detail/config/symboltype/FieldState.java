@@ -117,7 +117,7 @@ public abstract class FieldState extends FieldConfigBase {
      * @param graphic the graphic
      * @param symbol the new value
      */
-    public abstract void setValue(GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol);
+    public abstract void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol);
 
     /**
      * Gets the value.
@@ -255,6 +255,14 @@ public abstract class FieldState extends FieldConfigBase {
      * @return true, if successful
      */
     public abstract boolean accept(GraphicalSymbol symbol);
+
+    /**
+     * Checks if is overall opacity needs to be set.
+     *
+     * @param symbolizerType the symbolizer type
+     * @return true, if is overall opacity
+     */
+    public abstract boolean isOverallOpacity(Class<?> symbolizerType);
 
     /**
      * Sets the update symbol listener.

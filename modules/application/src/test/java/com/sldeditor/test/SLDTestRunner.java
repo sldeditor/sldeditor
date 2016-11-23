@@ -585,7 +585,7 @@ public class SLDTestRunner
 
         if(string.startsWith(TTF_PREFIX + DEFAULT_FONT.toLowerCase()))
         {
-            String charCode = string.substring(TTF_PREFIX.length() + DEFAULT_FONT.length());
+            String charCode = expectedValue.substring(TTF_PREFIX.length() + DEFAULT_FONT.length());
             expression = ff.literal(TTF_PREFIX + getFontForOS() + charCode);
             System.out.println("Updated font family to test for : " + expression.toString());
         }

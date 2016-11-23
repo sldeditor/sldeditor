@@ -16,12 +16,12 @@
                     <sld:WellKnownName>shape://times</sld:WellKnownName>
                     <sld:Stroke>
                       <sld:CssParameter name="stroke">#990099</sld:CssParameter>
+                      <sld:CssParameter name="stroke-opacity">0.38</sld:CssParameter>
                     </sld:Stroke>
                   </sld:Mark>
                   <sld:Size>16.0</sld:Size>
                 </sld:Graphic>
               </sld:GraphicFill>
-              <sld:CssParameter name="fill-opacity">0.38</sld:CssParameter>
             </sld:Fill>
           </sld:PolygonSymbolizer>
         </sld:Rule>

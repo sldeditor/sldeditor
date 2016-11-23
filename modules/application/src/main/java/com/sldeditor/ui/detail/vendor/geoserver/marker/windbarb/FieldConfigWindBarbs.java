@@ -67,16 +67,16 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     /** The wind barbs panel. */
     private WindBarbDetails windBarbsPanel = null;
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WindBarbs.xml";
 
     /**
      * Instantiates a new field config string.
      *
      * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
      */
     public FieldConfigWindBarbs(FieldConfigCommonData commonData,
             ColourFieldConfig fillFieldConfig,
@@ -226,13 +226,15 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
      * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if(symbol != null)
@@ -324,7 +326,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     }
 
     /**
-     * Gets the field map
+     * Gets the field map.
      *
      * @param fieldConfigManager the field config manager
      * @return the field map
@@ -489,5 +491,13 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
         
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return true;
     }
 }

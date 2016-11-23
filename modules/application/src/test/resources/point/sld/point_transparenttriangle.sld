@@ -14,12 +14,13 @@
                 <sld:WellKnownName>triangle</sld:WellKnownName>
                 <sld:Fill>
                   <sld:CssParameter name="fill">#009900</sld:CssParameter>
+                  <sld:CssParameter name="fill-opacity">0.48</sld:CssParameter>
                 </sld:Fill>
                 <sld:Stroke>
+                  <sld:CssParameter name="stroke-opacity">0.65</sld:CssParameter>
                   <sld:CssParameter name="stroke-width">2.0</sld:CssParameter>
                 </sld:Stroke>
               </sld:Mark>
-              <sld:Opacity>0.2</sld:Opacity>
               <sld:Size>12.0</sld:Size>
             </sld:Graphic>
           </sld:PointSymbolizer>

@@ -80,10 +80,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     /** The wkt panel. */
     private WKTDetails wktPanel = null;
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WKT.xml";
 
     /**
@@ -231,13 +228,15 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
      * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
             FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if((symbol != null) && (fieldConfigManager != null))
@@ -258,7 +257,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     {
                         field.populate(expFillColour);
                     }
-                    field = fieldConfigManager.get(FieldIdEnum.OPACITY);
+                    field = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
                     if(field != null)
                     {
                         field.populate(expFillColourOpacity);
@@ -506,7 +505,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
     /**
      * Method called when the field has been selected from a combo box
-     * and may need to be initialised
+     * and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -565,5 +564,13 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     @Override
     protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return true;
     }
 }

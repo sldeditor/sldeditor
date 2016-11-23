@@ -39,8 +39,8 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -263,19 +263,19 @@ public class FieldConfigFilenameTest {
 
         GraphicPanelFieldManager fieldConfigManager = null;
 
-        Class<?> panelId = FillDetails.class;
+        Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
-        field.setValue(null, null, null, null);
-        field.setValue(fieldConfigManager, null, null,null);
+        field.setValue(null, null, null, null, null);
+        field.setValue(null, fieldConfigManager, null, null,null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
-        field.setValue(null, null, null, marker);
-        field.setValue(fieldConfigManager, null, null,marker);
+        field.setValue(null, null, null, null, marker);
+        field.setValue(null, fieldConfigManager, null, null,marker);
 
         File f = null;
         String filename = null;
@@ -297,7 +297,7 @@ public class FieldConfigFilenameTest {
         }
 
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
-        field.setValue(fieldConfigManager, null, null, externalGraphic);
+        field.setValue(null, fieldConfigManager, null, null, externalGraphic);
 
         if(f != null)
         {
@@ -332,13 +332,13 @@ public class FieldConfigFilenameTest {
         GraphicPanelFieldManager fieldConfigManager = null;
         assertNull(field.getFill(graphicFill, fieldConfigManager));
 
-        Class<?> panelId = FillDetails.class;
+        Class<?> panelId = PointFillDetails.class;
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(FieldIdEnum.UNKNOWN, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OPACITY;
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();

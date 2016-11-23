@@ -30,7 +30,7 @@
             <LiteralString value="ttf://Arial#U+0025" field="TTF_SYMBOL"/>
             <LiteralDouble value="50.0" field="SIZE"/>
             <LiteralDouble value="63.0" field="ANGLE"/>
-            <LiteralDouble value="0.2" field="OPACITY"/>
+            <LiteralDouble value="0.25" field="POLYGON_FILL_OPACITY"/>
             <LiteralString value="#CC0066" field="FILL_COLOUR"/>
             <Disabled field="STROKE_FILL_COLOUR"/>
         </FieldTests>
