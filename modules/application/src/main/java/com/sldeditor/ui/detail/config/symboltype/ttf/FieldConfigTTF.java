@@ -41,6 +41,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -48,6 +49,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -256,10 +258,19 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
             {
                 field.populate(expFillColour);
             }
+
             field = fieldConfigManager.get(FieldIdEnum.OPACITY);
             if(field != null)
             {
                 field.populate(expFillColourOpacity);
+            }
+
+            Class<?> panelId = getCommonData().getPanelId();
+            GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.FILL);
+
+            if(fillGroup != null)
+            {
+                fillGroup.enable(expFillColour != null);
             }
         }
 
