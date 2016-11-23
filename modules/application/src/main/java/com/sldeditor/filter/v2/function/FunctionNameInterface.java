@@ -61,7 +61,7 @@ public interface FunctionNameInterface {
     /**
      * Gets the function.
      *
-     * @param string the string
+     * @param functionName the function name
      * @return the function
      */
     FunctionName getFunction(String functionName);

@@ -88,8 +88,6 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     /**
      * Constructor.
      *
-     * @param panelId the panel id
-     * @param configFile the config file
      * @param functionManager the function manager
      */
     public PolygonFillDetails(FunctionNameInterface functionManager)
