@@ -455,7 +455,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                         @SuppressWarnings("unused") 
                         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl)graphicSymbol;
                     }
-                    fillFactory.setValue(this.fieldConfigManager, graphicSymbol);
+                    fillFactory.setValue(this.fieldConfigManager, graphicStroke, graphicSymbol);
                 }
             }
 

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
@@ -224,9 +225,10 @@ public class SymbolTypeFactory {
      * Sets the symbol value.
      *
      * @param fieldConfigManager the field config manager
+     * @param graphic the graphic
      * @param symbol the new value
      */
-    public void setValue(GraphicPanelFieldManager fieldConfigManager, GraphicalSymbol symbol) {
+    public void setValue(GraphicPanelFieldManager fieldConfigManager, Graphic graphic, GraphicalSymbol symbol) {
 
         for(FieldState panel : classMap.values())
         {
@@ -234,7 +236,7 @@ public class SymbolTypeFactory {
             {
                 if (panel.accept(symbol))
                 {
-                    panel.setValue(fieldConfigManager, symbolTypeField, symbol);
+                    panel.setValue(fieldConfigManager, symbolTypeField, graphic, symbol);
                 }
             }
         }

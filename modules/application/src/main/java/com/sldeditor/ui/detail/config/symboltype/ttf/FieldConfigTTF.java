@@ -29,6 +29,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.FillImpl;
+import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.Stroke;
@@ -224,11 +225,12 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      *
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if(symbol == null)
         {

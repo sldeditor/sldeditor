@@ -112,4 +112,10 @@ public class SLDCookbookPolygon
     {
         test.runTest("polygon", "polygon_hatchingfill_transparent.xml");
     }
+
+    @Test
+    public void polygon_picturefill()
+    {
+        test.runTest("polygon", "polygon_picturefill.xml");
+    }
 }

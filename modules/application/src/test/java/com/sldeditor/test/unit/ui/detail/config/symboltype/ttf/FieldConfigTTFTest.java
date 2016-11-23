@@ -277,15 +277,15 @@ public class FieldConfigTTFTest {
 
         FieldConfigTTF field = new FieldConfigTTF(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
-        field.setValue(null, null, null);
-        field.setValue(fieldConfigManager, null, null);
+        field.setValue(null, null, null, null);
+        field.setValue(fieldConfigManager, null, null, null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star", Color.green, Color.black, 2.0);
 
-        field.setValue(null, null, marker);
-        field.setValue(fieldConfigManager, null, marker);
+        field.setValue(null, null, null, marker);
+        field.setValue(fieldConfigManager, null, null, marker);
     }
 
     /**

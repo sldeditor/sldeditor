@@ -268,14 +268,14 @@ public class FieldConfigFilenameTest {
 
         FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
-        field.setValue(null, null, null);
-        field.setValue(fieldConfigManager, null, null);
+        field.setValue(null, null, null, null);
+        field.setValue(fieldConfigManager, null, null,null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
-        field.setValue(null, null, marker);
-        field.setValue(fieldConfigManager, null, marker);
+        field.setValue(null, null, null, marker);
+        field.setValue(fieldConfigManager, null, null,marker);
 
         File f = null;
         String filename = null;
@@ -297,7 +297,7 @@ public class FieldConfigFilenameTest {
         }
 
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
-        field.setValue(fieldConfigManager, null, externalGraphic);
+        field.setValue(fieldConfigManager, null, null, externalGraphic);
 
         if(f != null)
         {

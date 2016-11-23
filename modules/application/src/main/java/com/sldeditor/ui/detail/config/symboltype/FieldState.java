@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
@@ -97,9 +98,10 @@ public abstract class FieldState extends FieldConfigBase {
      *
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the new value
      */
-    public abstract void setValue(GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol);
+    public abstract void setValue(GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol);
 
     /**
      * Gets the value.

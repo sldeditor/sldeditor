@@ -47,8 +47,7 @@
             </ValueList>
         </FieldConfigEnum>
         <FieldConfigInteger id="RANDOM_FILL_SYMBOL_COUNT"
-            label="geoserver.randomFill.symbolCount" valueOnly="true"
-            default="16" />
+            label="geoserver.randomFill.symbolCount" valueOnly="true" minValue="0" default="16" />
         <FieldConfigInteger id="RANDOM_FILL_RANDOM_SEED"
             label="geoserver.randomFill.seed" valueOnly="true" default="0" />
     </Group>

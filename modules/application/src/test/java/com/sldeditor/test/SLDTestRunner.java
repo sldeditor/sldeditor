@@ -125,6 +125,7 @@ public class SLDTestRunner
         colourFieldsList.add(FieldIdEnum.STROKE_STROKE_COLOUR);
         colourFieldsList.add(FieldIdEnum.HALO_COLOUR);
 
+        filenameList.add(FieldIdEnum.SYMBOL_TYPE);
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
 
@@ -441,7 +442,13 @@ public class SLDTestRunner
                                                 boolean condition;
                                                 if(comparingFilename(fieldId))
                                                 {
-                                                    condition = actualValue.endsWith(expectedValue);
+                                                    File actualFile = new File(actualValue);
+                                                    File expectedFile = new File(expectedValue);
+                                                    
+                                                    String actualFileString = actualFile.getAbsolutePath();
+                                                    String expectedFileString = expectedFile.getAbsolutePath();
+                                                    expectedFileString = expectedFileString.substring(expectedFileString.length() - expectedValue.length());
+                                                    condition = actualFileString.endsWith(expectedFileString);
                                                 }
                                                 else
                                                 {

@@ -27,6 +27,7 @@ import java.util.Map;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
@@ -232,11 +233,12 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
     public void setValue(GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if(symbol instanceof ExternalGraphicImpl)
         {
@@ -250,6 +252,12 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
             if(multiOptionPanel != null)
             {
                 multiOptionPanel.setSelectedItem(EXTERNAL_SYMBOL_KEY);
+            }
+
+            FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OPACITY);
+            if(opacity != null)
+            {
+                opacity.populate(graphic.getOpacity());
             }
         }
     }

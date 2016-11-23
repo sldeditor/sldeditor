@@ -250,18 +250,18 @@ public class FieldConfigWKTTest {
 
         FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
-        field.setValue(null, null, null);
-        field.setValue(fieldConfigManager, null, null);
+        field.setValue(null, null, null, null);
+        field.setValue(fieldConfigManager, null, null, null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker1 = styleBuilder.createMark("star");
-        field.setValue(null, null, marker1);
-        field.setValue(fieldConfigManager, null, marker1);
+        field.setValue(null, null, null, marker1);
+        field.setValue(fieldConfigManager, null, null, marker1);
 
         Mark marker2 = styleBuilder.createMark("wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", styleBuilder.createFill(), styleBuilder.createStroke());
 
-        field.setValue(null, null, marker2);
+        field.setValue(null, null, null, marker2);
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
@@ -283,7 +283,7 @@ public class FieldConfigWKTTest {
         fieldConfigManager.add(opacityFieldId, opacityField);
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        field.setValue(fieldConfigManager, null, marker2);
+        field.setValue(fieldConfigManager, null, null, marker2);
 
         File f = null;
         String filename = null;
@@ -306,7 +306,7 @@ public class FieldConfigWKTTest {
 
         // Try unsupported symbol
         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
-        field.setValue(fieldConfigManager, null, externalGraphic);
+        field.setValue(fieldConfigManager, null, null, externalGraphic);
 
         if(f != null)
         {

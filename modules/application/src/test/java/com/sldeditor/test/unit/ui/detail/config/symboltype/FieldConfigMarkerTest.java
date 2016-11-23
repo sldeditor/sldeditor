@@ -544,13 +544,13 @@ public class FieldConfigMarkerTest {
 
         FieldConfigMarker field2 = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
 
-        field2.setValue(null, null, null);
-        field2.setValue(fieldConfigManager, null, null);
+        field2.setValue(null, null, null,null);
+        field2.setValue(fieldConfigManager, null, null, null);
 
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
-        field2.setValue(null, null, marker);
-        field2.setValue(fieldConfigManager, null, marker);
+        field2.setValue(null, null, null,marker);
+        field2.setValue(fieldConfigManager, null, null,marker);
     }
 
     /**
