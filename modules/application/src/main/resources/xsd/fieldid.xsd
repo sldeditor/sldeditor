@@ -50,6 +50,7 @@
             <xs:enumeration value="LINE_STROKE_OPACITY" />
             <xs:enumeration value="POLYGON_FILL_OPACITY" />
             <xs:enumeration value="POLYGON_STROKE_OPACITY" />
+            <xs:enumeration value="TEXT_OPACITY" />
             
             <xs:enumeration value="STROKE_STYLE" />
             <xs:enumeration value="STROKE_FILL_COLOUR" />
