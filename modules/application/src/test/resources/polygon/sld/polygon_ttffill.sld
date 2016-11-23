@@ -16,14 +16,17 @@
                     <sld:WellKnownName>ttf://Arial#U+0025</sld:WellKnownName>
                     <sld:Fill>
                       <sld:CssParameter name="fill">#CC0066</sld:CssParameter>
-                      <sld:CssParameter name="fill-opacity">0.69</sld:CssParameter>
                     </sld:Fill>
                   </sld:Mark>
-                  <sld:Opacity>0.69</sld:Opacity>
                   <sld:Size>50.0</sld:Size>
                   <sld:Rotation>63.0</sld:Rotation>
+                  <sld:Displacement>
+                    <sld:DisplacementX>1.0</sld:DisplacementX>
+                    <sld:DisplacementY>0.0</sld:DisplacementY>
+                  </sld:Displacement>
                 </sld:Graphic>
               </sld:GraphicFill>
+              <sld:CssParameter name="fill-opacity">0.2</sld:CssParameter>
             </sld:Fill>
           </sld:PolygonSymbolizer>
         </sld:Rule>

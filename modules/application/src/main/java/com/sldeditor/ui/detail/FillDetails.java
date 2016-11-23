@@ -169,31 +169,39 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         Expression expInitialGap = null;
 
         PolygonSymbolizer polygon = null;
+        Fill fill = null;
+        Expression expOpacity = null;
 
         if(selectedSymbol != null)
         {
             Symbolizer symbolizer = selectedSymbol.getSymbolizer();
-            if(symbolizer instanceof PolygonSymbolizerImpl)
+
+            Graphic graphic = null;
+            if(symbolizer instanceof PointSymbolizerImpl)
             {
-                polygon = (PolygonSymbolizer) symbolizer;
+                PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
+                graphic = pointSymbolizer.getGraphic();
             }
-
-            Graphic graphic = selectedSymbol.getGraphic();
-
-            if(graphic == null)
+            else if(symbolizer instanceof PolygonSymbolizerImpl)
             {
-                Fill fill = null;
-                Expression expOpacity = null;
-
-                if(polygon != null)
+                PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer;
+                if(polygonSymbolizer != null)
                 {
-                    fill = polygon.getFill();
+                    fill = polygonSymbolizer.getFill();
 
                     if(fill != null)
                     {
-                        expFillColour = fill.getColor();
                         expOpacity = fill.getOpacity();
+                        graphic = fill.getGraphicFill();
                     }
+                }
+            }
+
+            if(graphic == null)
+            {
+                if(fill != null)
+                {
+                    expFillColour = fill.getColor();
                 }
 
                 if(fill == null)
@@ -259,6 +267,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y, expDisplacementY);
         fieldConfigVisitor.populateField(FieldIdEnum.GAP, expGap);
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
+        fieldConfigVisitor.populateField(FieldIdEnum.OPACITY, expOpacity);
 
         if(vendorOptionFillFactory != null)
         {
@@ -291,6 +300,12 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                 GraphicFill graphicFill = getGraphicFill();
                 Fill fill = symbolTypeFactory.getFill(graphicFill, this.fieldConfigManager);
 
+                Expression expOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
+
+                if(fill != null)
+                {
+                    fill.setOpacity(expOpacity);
+                }
                 newPolygonSymbolizer.setFill(fill);
 
                 if(vendorOptionFillFactory != null)
@@ -382,7 +397,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.STROKE);
         boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
-        Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
+        Expression opacity = null;
         Expression size = fieldConfigVisitor.getExpression(FieldIdEnum.SIZE);
         Expression rotation = fieldConfigVisitor.getExpression(FieldIdEnum.ANGLE);
         Expression symbolType = fieldConfigVisitor.getExpression(FieldIdEnum.SYMBOL_TYPE);

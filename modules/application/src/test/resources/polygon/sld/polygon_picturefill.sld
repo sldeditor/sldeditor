@@ -13,12 +13,15 @@
               <sld:GraphicFill>
                 <sld:Graphic>
                   <sld:ExternalGraphic>
-                    <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="../../point/sld/smileyface.png"/>
+                    <sld:OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="file:/D:/sldeditor/external/sldeditor/modules/application/src/test/resources/point/sld/smileyface.png"/>
                     <sld:Format>image/png</sld:Format>
                   </sld:ExternalGraphic>
-                  <sld:Opacity>0.69</sld:Opacity>
                   <sld:Size>50.0</sld:Size>
                   <sld:Rotation>63.0</sld:Rotation>
+                  <sld:Displacement>
+                    <sld:DisplacementX>-1.0</sld:DisplacementX>
+                    <sld:DisplacementY>0.0</sld:DisplacementY>
+                  </sld:Displacement>
                 </sld:Graphic>
               </sld:GraphicFill>
               <sld:CssParameter name="fill-opacity">0.69</sld:CssParameter>

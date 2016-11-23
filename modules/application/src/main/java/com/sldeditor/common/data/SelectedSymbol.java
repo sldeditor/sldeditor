@@ -708,36 +708,6 @@ public class SelectedSymbol {
     }
 
     /**
-     * Gets the graphic.
-     *
-     * @return the graphic
-     */
-    public Graphic getGraphic() {
-        Graphic graphic = null;
-
-        if(this.symbolData.getSymbolizer() instanceof PointSymbolizerImpl)
-        {
-            PointSymbolizer pointSymbolizer = (PointSymbolizer) getSymbolizer();
-            graphic = pointSymbolizer.getGraphic();
-        }
-        else if(this.symbolData.getSymbolizer() instanceof PolygonSymbolizerImpl)
-        {
-            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) getSymbolizer();
-            if(polygonSymbolizer != null)
-            {
-                Fill fill = polygonSymbolizer.getFill();
-
-                if(fill != null)
-                {
-                    graphic = fill.getGraphicFill();
-                }
-            }
-        }
-
-        return graphic;
-    }
-
-    /**
      * Sets the tree update listener.
      *
      * @param treeObj the new tree update listener

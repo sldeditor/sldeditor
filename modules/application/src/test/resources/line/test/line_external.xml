@@ -87,7 +87,7 @@
             <LiteralString value="ttf://Arial#U+0021" field="TTF_SYMBOL"/>
             <LiteralString value="#FF9900" field="STROKE_FILL_COLOUR"/>
             <Disabled field="STROKE_STROKE_COLOUR"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="0.64" field="OPACITY"/>
             <LiteralDouble value="17.0" field="STROKE_SYMBOL_SIZE"/>
             <LiteralDouble value="-18.0" field="STROKE_SYMBOL_ANGLE"/>
             <LiteralDouble value="4.0" field="STROKE_SYMBOL_DISPLACEMENT_X"/>

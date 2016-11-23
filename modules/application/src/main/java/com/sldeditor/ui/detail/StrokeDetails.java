@@ -299,7 +299,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             Symbolizer symbolizer = selectedSymbol.getSymbolizer();
             if(symbolizer instanceof PointSymbolizer)
             {
-                Graphic graphic = selectedSymbol.getGraphic();
+                PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer; 
+                Graphic graphic = pointSymbolizer.getGraphic(); 
 
                 List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
 

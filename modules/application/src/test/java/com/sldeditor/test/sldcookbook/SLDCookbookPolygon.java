@@ -118,4 +118,10 @@ public class SLDCookbookPolygon
     {
         test.runTest("polygon", "polygon_picturefill.xml");
     }
+
+    @Test
+    public void polygon_ttfill()
+    {
+        test.runTest("polygon", "polygon_ttffill.xml");
+    }
 }

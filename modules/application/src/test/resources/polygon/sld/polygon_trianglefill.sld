@@ -16,19 +16,17 @@
                     <sld:WellKnownName>triangle</sld:WellKnownName>
                     <sld:Fill>
                       <sld:CssParameter name="fill">#110011</sld:CssParameter>
-                      <sld:CssParameter name="fill-opacity">0.67</sld:CssParameter>
                     </sld:Fill>
                     <sld:Stroke>
                       <sld:CssParameter name="stroke">#CCFF00</sld:CssParameter>
-                      <sld:CssParameter name="stroke-opacity">0.51</sld:CssParameter>
                       <sld:CssParameter name="stroke-width">3.0</sld:CssParameter>
                     </sld:Stroke>
                   </sld:Mark>
-                  <sld:Opacity>0.78</sld:Opacity>
                   <sld:Size>16.0</sld:Size>
                   <sld:Rotation>26.0</sld:Rotation>
                 </sld:Graphic>
               </sld:GraphicFill>
+              <sld:CssParameter name="fill-opacity">0.75</sld:CssParameter>
             </sld:Fill>
           </sld:PolygonSymbolizer>
         </sld:Rule>

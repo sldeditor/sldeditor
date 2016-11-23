@@ -444,7 +444,7 @@ public class SLDTestRunner
                                                 {
                                                     File actualFile = new File(actualValue);
                                                     File expectedFile = new File(expectedValue);
-                                                    
+
                                                     String actualFileString = actualFile.getAbsolutePath();
                                                     String expectedFileString = expectedFile.getAbsolutePath();
                                                     expectedFileString = expectedFileString.substring(expectedFileString.length() - expectedValue.length());
@@ -482,6 +482,17 @@ public class SLDTestRunner
                                                         if(string.compareToIgnoreCase(DEFAULT_FONT) != 0)
                                                         {
                                                             expression = ff.literal(getFontForOS());
+                                                            System.out.println("Updated font family to test for : " + expression.toString());
+                                                        }
+                                                    }
+                                                    else if(fieldId == FieldIdEnum.TTF_SYMBOL)
+                                                    {
+                                                        // Handle the case where a font is not available on all operating systems
+                                                        String string = expression.toString().toLowerCase();
+
+                                                        if(string.startsWith(DEFAULT_FONT.toLowerCase()))
+                                                        {
+                                                            expression = ff.literal(getFontForOS() + string.substring(0, DEFAULT_FONT.length()));
                                                             System.out.println("Updated font family to test for : " + expression.toString());
                                                         }
                                                     }
