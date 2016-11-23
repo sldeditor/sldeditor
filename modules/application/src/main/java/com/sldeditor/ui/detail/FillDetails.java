@@ -28,6 +28,7 @@ import org.geotools.styling.Displacement;
 import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
+import org.geotools.styling.MarkImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
@@ -181,6 +182,23 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
             {
                 PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
                 graphic = pointSymbolizer.getGraphic();
+                if(graphic != null)
+                {
+                    List<GraphicalSymbol> graphicSymbolList = graphic.graphicalSymbols();
+                    if(!graphicSymbolList.isEmpty())
+                    {
+                        GraphicalSymbol graphicalSymbol = graphicSymbolList.get(0);
+                        if(graphicalSymbol instanceof MarkImpl)
+                        {
+                            MarkImpl mark = (MarkImpl) graphicalSymbol;
+                            fill = mark.getFill();
+                            if(fill != null)
+                            {
+                                expOpacity = fill.getOpacity();
+                            }
+                        }
+                    }
+                }
             }
             else if(symbolizer instanceof PolygonSymbolizerImpl)
             {
@@ -335,7 +353,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.STROKE);
         boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
-        Expression opacity = null;
+        Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
         Expression size = fieldConfigVisitor.getExpression(FieldIdEnum.SIZE);
         Expression rotation = fieldConfigVisitor.getExpression(FieldIdEnum.ANGLE);
         Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.GAP);
