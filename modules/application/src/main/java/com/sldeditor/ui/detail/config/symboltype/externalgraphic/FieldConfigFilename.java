@@ -38,6 +38,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -83,8 +84,11 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @param commonData the common data
      */
-    public FieldConfigFilename(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigFilename(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
     }
 
     /**
@@ -475,7 +479,8 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigFilename(fieldConfigBase.getCommonData());
+            copy = new FieldConfigFilename(fieldConfigBase.getCommonData(),
+                    fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }

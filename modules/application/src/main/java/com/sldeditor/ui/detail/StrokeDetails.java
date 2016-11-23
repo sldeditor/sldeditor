@@ -96,8 +96,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         setUpdateSymbolListener(this);
 
         fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.STROKE_STYLE);
 
         fieldEnableState = fillFactory.getFieldOverrides(this.getClass());
@@ -317,12 +317,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             }
             else if(symbolizer instanceof LineSymbolizer)
             {
-                LineSymbolizer lineSymbol = (LineSymbolizer) selectedSymbol.getSymbolizer();
+                LineSymbolizer lineSymbol = (LineSymbolizer) symbolizer;
                 stroke = lineSymbol.getStroke();
             }
             else if(symbolizer instanceof PolygonSymbolizer)
             {
-                PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) selectedSymbol.getSymbolizer();
+                PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) symbolizer;
                 stroke = polygonSymbol.getStroke();
             }
         }
@@ -478,7 +478,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_COLOUR, expColour);
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_STROKE_COLOUR, expStrokeColour);
-            fieldConfigVisitor.populateField(FieldIdEnum.OPACITY, expOpacity);
 
             GroupConfigInterface fillColourGroup = getGroup(GroupIdEnum.FILLCOLOUR);
             if(fillColourGroup != null)

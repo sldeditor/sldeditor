@@ -27,7 +27,7 @@
             <SymbolizerDetail index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="ttf://Arial#U+0025" field="TTF"/>
+            <LiteralString value="ttf://Arial#U+0025" field="TTF_SYMBOL"/>
             <LiteralDouble value="50.0" field="SIZE"/>
             <LiteralDouble value="63.0" field="ANGLE"/>
             <LiteralDouble value="0.69" field="OPACITY"/>

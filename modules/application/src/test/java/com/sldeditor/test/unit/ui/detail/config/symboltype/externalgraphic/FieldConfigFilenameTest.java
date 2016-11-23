@@ -65,7 +65,7 @@ public class FieldConfigFilenameTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +84,7 @@ public class FieldConfigFilenameTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigFilename field2 = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field2 = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -108,7 +108,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -127,7 +127,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.populateExpression((Double)null);
         field.populateField((String)null);
@@ -171,7 +171,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.revertToDefaultValue();
 
@@ -185,7 +185,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.justSelected();
     }
@@ -201,7 +201,7 @@ public class FieldConfigFilenameTest {
         {
 
             public TestFieldConfigFilename(FieldConfigCommonData commonData) {
-                super(commonData);
+                super(commonData, null,null,null);
             }
 
             public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -226,7 +226,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.attributeSelection("field");
         // Does nothing
@@ -238,7 +238,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
     }
@@ -249,7 +249,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
@@ -266,7 +266,7 @@ public class FieldConfigFilenameTest {
         Class<?> panelId = FillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.setValue(null, null, null, null);
         field.setValue(fieldConfigManager, null, null,null);
@@ -311,7 +311,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetValue() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertNull(field.getValue(null, null, false, false));
 
@@ -326,7 +326,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         GraphicFill graphicFill = null;
         GraphicPanelFieldManager fieldConfigManager = null;
@@ -367,7 +367,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertNull(field.getBasePanel());
     }
@@ -378,7 +378,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertEquals(1, field.getFieldList(null).size());
     }
@@ -389,7 +389,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertFalse(field.accept(null));
 
@@ -407,7 +407,7 @@ public class FieldConfigFilenameTest {
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.setUpdateSymbolListener(null);
     }

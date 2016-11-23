@@ -73,15 +73,6 @@ public class FieldConfigMarker extends FieldState {
     /** The Constant SOLID_SYMBOL. */
     private static final String SOLID_SYMBOL_KEY = "solid";
 
-    /** The fill field config. */
-    private ColourFieldConfig fillFieldConfig;
-
-    /** The stroke field config. */
-    private ColourFieldConfig strokeFieldConfig; 
-
-    /** The symbol selection field. */
-    private FieldIdEnum symbolSelectionField;
-
     //
     // Vendor Option for marker symbols
     //
@@ -101,11 +92,7 @@ public class FieldConfigMarker extends FieldState {
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
-
-        this.fillFieldConfig = fillFieldConfig;
-        this.strokeFieldConfig = strokeFieldConfig;
-        this.symbolSelectionField = symbolSelectionField;
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
     }
 
     /**
@@ -240,9 +227,12 @@ public class FieldConfigMarker extends FieldState {
                 }
 
                 Expression expFillColour = null;
-                Expression expFillOpacity = null;
+                Expression expOpacity = null;
+                if(graphic != null)
+                {
+                    expOpacity = graphic.getOpacity();
+                }
                 Expression expStrokeColour = null;
-                Expression expStrokeOpacity = null;
                 Expression expStrokeWidth = null;
 
                 // Which opacity attribute do we use?
@@ -253,7 +243,6 @@ public class FieldConfigMarker extends FieldState {
 
                     if(fill != null)
                     {
-                        expFillOpacity = fill.getOpacity();
                         expFillColour = fill.getColor();
                     }
 
@@ -261,14 +250,19 @@ public class FieldConfigMarker extends FieldState {
                     if(stroke != null)
                     {
                         expStrokeColour = stroke.getColor();
-                        expStrokeOpacity = stroke.getOpacity();
                         expStrokeWidth = stroke.getWidth();
                     }
                 }
 
+                FieldConfigBase opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
+                if(opacity != null)
+                {
+                    opacity.populate(expOpacity);
+                }
+
                 Class<?> panelId = getCommonData().getPanelId();
-                GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.FILL);
-                GroupConfigInterface strokeGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.STROKE);
+                GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, fillFieldConfig.getGroup());
+                GroupConfigInterface strokeGroup = fieldConfigManager.getGroup(panelId, strokeFieldConfig.getGroup());
 
                 if((fillGroup == null) || (strokeGroup == null))
                 {
@@ -282,11 +276,6 @@ public class FieldConfigMarker extends FieldState {
                     if(fillColour != null)
                     {
                         fillColour.populate(expStrokeColour);
-                    }
-                    FieldConfigBase opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
-                    if(opacity != null)
-                    {
-                        opacity.populate(expStrokeOpacity);
                     }
                     strokeGroup.enable(false);
                 }
@@ -304,12 +293,6 @@ public class FieldConfigMarker extends FieldState {
                     if(strokeColour != null)
                     {
                         strokeColour.populate(expStrokeColour);
-                    }
-
-                    FieldConfigBase opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
-                    if(opacity != null)
-                    {
-                        opacity.populate(expFillOpacity);
                     }
 
                     FieldConfigBase strokeWidth = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_WIDTH);
@@ -361,11 +344,6 @@ public class FieldConfigMarker extends FieldState {
             }
 
             Expression strokeColourOpacity = null;
-            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-            if(field != null)
-            {
-                strokeColourOpacity = field.getExpression();
-            }
 
             Expression strokeWidth = null;
             field = fieldConfigManager.get(fillFieldConfig.getWidth());
@@ -387,11 +365,6 @@ public class FieldConfigMarker extends FieldState {
             }
 
             Expression fillColourOpacity = null;
-            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-            if(field != null)
-            {
-                fillColourOpacity = field.getExpression();
-            }
 
             if(fillEnabled)
             {
@@ -408,11 +381,6 @@ public class FieldConfigMarker extends FieldState {
                 }
 
                 Expression strokeColourOpacity = null;
-                field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
-                if(field != null)
-                {
-                    strokeColourOpacity = field.getExpression();
-                }
 
                 Expression strokeWidth = null;
                 field = fieldConfigManager.get(strokeFieldConfig.getWidth());

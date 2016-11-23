@@ -41,9 +41,9 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -92,8 +92,11 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      *
      * @param commonData the common data
      */
-    public FieldConfigTTF(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigTTF(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
     }
 
     /**
@@ -251,26 +254,29 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         if(fill != null)
         {
             Expression expFillColour = fill.getColor();
-            Expression expFillColourOpacity = fill.getOpacity();
 
-            FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+            FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
             if(field != null)
             {
                 field.populate(expFillColour);
             }
 
-            field = fieldConfigManager.get(FieldIdEnum.OPACITY);
-            if(field != null)
-            {
-                field.populate(expFillColourOpacity);
-            }
-
             Class<?> panelId = getCommonData().getPanelId();
-            GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.FILL);
+            GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, fillFieldConfig.getGroup());
 
             if(fillGroup != null)
             {
                 fillGroup.enable(expFillColour != null);
+            }
+        }
+
+        // Opacity
+        if(graphic != null)
+        {
+            FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+            if(field != null)
+            {
+                field.populate(graphic.getOpacity());
             }
         }
 
@@ -315,18 +321,12 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 Expression expFillColour = null;
                 Expression expFillColourOpacity = null;
 
-                FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
                 if(field != null)
                 {
                     FieldConfigColour colourField = (FieldConfigColour)field;
 
                     expFillColour = colourField.getColourExpression();
-                }
-
-                field = fieldConfigManager.get(FieldIdEnum.OPACITY);
-                if(field != null)
-                {
-                    expFillColourOpacity = field.getExpression();
                 }
 
                 Stroke stroke = null;
@@ -541,7 +541,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigTTF(fieldConfigBase.getCommonData());
+            copy = new FieldConfigTTF(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }

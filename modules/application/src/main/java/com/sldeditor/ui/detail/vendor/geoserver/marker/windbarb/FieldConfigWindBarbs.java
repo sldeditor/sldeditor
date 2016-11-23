@@ -41,6 +41,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -77,8 +78,11 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @param commonData the common data
      */
-    public FieldConfigWindBarbs(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigWindBarbs(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
     }
 
     /**
@@ -282,12 +286,6 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                     expFillColour = colourField.getColourExpression();
                 }
 
-                field = fieldConfigManager.get(FieldIdEnum.OPACITY);
-                if(field != null)
-                {
-                    expFillColourOpacity = field.getExpression();
-                }
-
                 Stroke stroke = null;
                 Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
                 Expression size = null;
@@ -466,7 +464,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData());
+            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }

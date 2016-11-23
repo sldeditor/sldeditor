@@ -95,8 +95,8 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         setUpdateSymbolListener(this);
 
         symbolTypeFactory = new SymbolTypeFactory(panelId,
-                new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(panelId);

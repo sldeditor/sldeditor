@@ -20,6 +20,7 @@
 package com.sldeditor.ui.detail;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 
 /**
  * The Class ColourFieldConfig.
@@ -27,6 +28,9 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
  * @author Robert Ward (SCISYS)
  */
 public class ColourFieldConfig {
+
+    /** The group. */
+    private GroupIdEnum group;
 
     /** The colour field. */
     private FieldIdEnum colour;
@@ -40,12 +44,14 @@ public class ColourFieldConfig {
     /**
      * Instantiates a new colour field config.
      *
+     * @param group the group
      * @param colour the colour
      * @param opacity the opacity
      * @param width the width
      */
-    public ColourFieldConfig(FieldIdEnum colour, FieldIdEnum opacity, FieldIdEnum width) {
+    public ColourFieldConfig(GroupIdEnum group, FieldIdEnum colour, FieldIdEnum opacity, FieldIdEnum width) {
         super();
+        this.group = group;
         this.colour = colour;
         this.opacity = opacity;
         this.width = width;
@@ -76,5 +82,14 @@ public class ColourFieldConfig {
      */
     public FieldIdEnum getWidth() {
         return width;
+    }
+
+    /**
+     * Gets the group.
+     *
+     * @return the group
+     */
+    public GroupIdEnum getGroup() {
+        return group;
     }
 }

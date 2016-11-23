@@ -65,7 +65,7 @@ public class FieldConfigWKTTest {
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +84,7 @@ public class FieldConfigWKTTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigWKT field2 = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field2 = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -108,7 +108,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -126,7 +126,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.populateExpression((Double)null);
         field.populateField((String)null);
@@ -152,7 +152,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.revertToDefaultValue();
 
@@ -167,7 +167,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.justSelected();
     }
@@ -183,7 +183,7 @@ public class FieldConfigWKTTest {
         {
 
             public TestFieldConfigWKT(FieldConfigCommonData commonData) {
-                super(commonData);
+                super(commonData, null,null,null);
             }
 
             public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
@@ -208,7 +208,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.attributeSelection("field");
         // Does nothing
@@ -220,7 +220,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
     }
@@ -231,7 +231,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
@@ -248,7 +248,7 @@ public class FieldConfigWKTTest {
         Class<?> panelId = FillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.setValue(null, null, null, null);
         field.setValue(fieldConfigManager, null, null, null);
@@ -322,7 +322,7 @@ public class FieldConfigWKTTest {
         StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertNull(field.getStringValue());
 
@@ -361,7 +361,7 @@ public class FieldConfigWKTTest {
         assertEquals(0, actualValue.size());
 
         // Try with symbol type of solid
-        FieldConfigWKT field2 = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field2 = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
         assertNotNull(actualValue);
@@ -404,7 +404,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertNull(field.getFill(null, null));
     }
@@ -415,7 +415,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertNull(field.getBasePanel());
     }
@@ -433,7 +433,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertEquals(1, field.getFieldList(null).size());
     }
@@ -444,7 +444,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         assertFalse(field.accept(null));
 
@@ -465,7 +465,7 @@ public class FieldConfigWKTTest {
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigWKT field = new FieldConfigWKT(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
 
         field.setUpdateSymbolListener(null);
     }

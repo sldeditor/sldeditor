@@ -106,11 +106,16 @@ public class SymbolTypeFactory {
     {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true));
-        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true));
-        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true));
-        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true));
+        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);

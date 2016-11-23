@@ -43,6 +43,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -89,9 +90,15 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * Instantiates a new field config string.
      *
      * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigWKT(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigWKT(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
     }
 
@@ -310,12 +317,6 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                                 expStrokeColour = colourField.getColourExpression();
                                 expStrokeColourOpacity = colourField.getColourOpacityExpression();
                             }
-                        }
-
-                        field = fieldConfigManager.get(FieldIdEnum.OPACITY);
-                        if(field != null)
-                        {
-                            expStrokeColourOpacity = field.getExpression();
                         }
                     }
 
@@ -540,7 +541,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigWKT(fieldConfigBase.getCommonData());
+            copy = new FieldConfigWKT(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }

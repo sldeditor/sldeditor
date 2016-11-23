@@ -42,6 +42,7 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -237,8 +238,8 @@ public class FieldConfigMarkerTest {
     public void testGetFill() {
         // Test it with null values
         boolean valueOnly = true;
-        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
 
         assertNull(field.getStringValue());
@@ -314,8 +315,8 @@ public class FieldConfigMarkerTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
@@ -351,8 +352,8 @@ public class FieldConfigMarkerTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
@@ -388,8 +389,8 @@ public class FieldConfigMarkerTest {
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
@@ -522,8 +523,8 @@ public class FieldConfigMarkerTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
@@ -561,8 +562,8 @@ public class FieldConfigMarkerTest {
         StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        ColourFieldConfig fillConfig = new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
 
         FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
 

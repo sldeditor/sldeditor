@@ -33,6 +33,7 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StrokeDetails;
@@ -85,8 +86,8 @@ public class StrokeDetailsTest {
         Stroke stroke = styleFactory.getDefaultStroke();
 
         SymbolTypeFactory fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
-                new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.STROKE_STYLE);
         fillFactory.populate(panel, panel.getFieldDataManager());
 

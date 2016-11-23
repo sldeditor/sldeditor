@@ -33,6 +33,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -59,6 +60,15 @@ public abstract class FieldState extends FieldConfigBase {
     /** The field enable map. */
     private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = null;
 
+    /** The fill field config. */
+    protected ColourFieldConfig fillFieldConfig;
+
+    /** The stroke field config. */
+    protected ColourFieldConfig strokeFieldConfig; 
+
+    /** The symbol selection field. */
+    protected FieldIdEnum symbolSelectionField;
+
     /**
      * Instantiates a new field state.
      *
@@ -66,10 +76,16 @@ public abstract class FieldState extends FieldConfigBase {
      * @param resourceFile the resource file
      */
     protected FieldState(FieldConfigCommonData commonData,
-            String resourceFile)
+            String resourceFile,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField)
     {
         super(commonData);
         this.resourceFile = resourceFile;
+        this.fillFieldConfig = fillFieldConfig;
+        this.strokeFieldConfig = strokeFieldConfig;
+        this.symbolSelectionField = symbolSelectionField;
     }
 
     /**
