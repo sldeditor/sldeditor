@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<SldEditor_test testsldfile="polygon/sld/polygon_hatchingfill.sld">
+<SldEditor_test testsldfile="polygon/sld/polygon_hatchingfill_transparent.sld">
     <PanelTests>
         <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
             <Layer index="0"/>
@@ -14,7 +14,7 @@
             <Style index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="SLD Cook Book: Hatching fill" field="TITLE"/>
+            <LiteralString value="SLD Cook Book: Hatching fill Transparent" field="TITLE"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -31,7 +31,7 @@
             <Disabled field="STROKE_FILL_COLOUR"/>
             <LiteralDouble value="16.0" field="SIZE"/>
             <LiteralDouble value="0.0" field="ANGLE"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="0.5" field="OPACITY"/>
             <LiteralString value="#990099" field="FILL_COLOUR"/>
         </FieldTests>
     </PanelTests>

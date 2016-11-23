@@ -60,9 +60,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class FieldConfigMarker extends FieldState {
 
-    /**
-     * 
-     */
+    /** The Constant GEOSERVER_MARKER_PREFIX. */
     private static final String GEOSERVER_MARKER_PREFIX = "shape://";
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
@@ -236,6 +234,86 @@ public class FieldConfigMarker extends FieldState {
                 if(field != null)
                 {
                     field.populate(literal);
+                }
+
+                Expression expFillColour = null;
+                Expression expFillOpacity = null;
+                Expression expStrokeColour = null;
+                Expression expStrokeOpacity = null;
+                Expression expStrokeWidth = null;
+
+                // Which opacity attribute do we use?
+                if(symbol instanceof MarkImpl)
+                {
+                    MarkImpl markSymbol = (MarkImpl)symbol;
+                    Fill fill = markSymbol.getFill();
+
+                    if(fill != null)
+                    {
+                        expFillOpacity = fill.getOpacity();
+                        expFillColour = fill.getColor();
+                    }
+
+                    Stroke stroke = markSymbol.getStroke();
+                    if(stroke != null)
+                    {
+                        expStrokeColour = stroke.getColor();
+                        expStrokeOpacity = stroke.getOpacity();
+                        expStrokeWidth = stroke.getWidth();
+                    }
+                }
+
+                Class<?> panelId = getCommonData().getPanelId();
+                GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.FILL);
+                GroupConfigInterface strokeGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.STROKE);
+
+                if((fillGroup == null) || (strokeGroup == null))
+                {
+                    return;
+                }
+
+                if(literal.toString().startsWith(GEOSERVER_MARKER_PREFIX))
+                {
+                    fillGroup.enable(expStrokeColour != null);
+                    FieldConfigBase fillColour = fieldConfigManager.get(fillFieldConfig.getColour());
+                    if(fillColour != null)
+                    {
+                        fillColour.populate(expStrokeColour);
+                    }
+                    FieldConfigBase opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
+                    if(opacity != null)
+                    {
+                        opacity.populate(expStrokeOpacity);
+                    }
+                    strokeGroup.enable(false);
+                }
+                else
+                {
+                    fillGroup.enable(expFillColour != null);
+                    FieldConfigBase fillColour = fieldConfigManager.get(fillFieldConfig.getColour());
+                    if(fillColour != null)
+                    {
+                        fillColour.populate(expFillColour);
+                    }
+
+                    strokeGroup.enable(expStrokeColour != null);
+                    FieldConfigBase strokeColour = fieldConfigManager.get(strokeFieldConfig.getColour());
+                    if(strokeColour != null)
+                    {
+                        strokeColour.populate(expStrokeColour);
+                    }
+
+                    FieldConfigBase opacity = fieldConfigManager.get(fillFieldConfig.getOpacity());
+                    if(opacity != null)
+                    {
+                        opacity.populate(expFillOpacity);
+                    }
+
+                    FieldConfigBase strokeWidth = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_WIDTH);
+                    if(strokeWidth != null)
+                    {
+                        strokeWidth.populate(expStrokeWidth);
+                    }
                 }
             }
         }
@@ -435,6 +513,15 @@ public class FieldConfigMarker extends FieldState {
                 field.populate(expFillColour);
             }
 
+            Class<?> panelId = getCommonData().getPanelId();
+            GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, GroupIdEnum.FILL);
+
+            if(fillGroup != null)
+            {
+                fillGroup.enable(expFillColour != null);
+            }
+            
+            // Opacity
             field = fieldConfigManager.get(fillFieldConfig.getOpacity());
             if(field != null)
             {

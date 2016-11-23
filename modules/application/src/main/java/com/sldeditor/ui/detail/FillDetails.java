@@ -28,12 +28,10 @@ import org.geotools.styling.Displacement;
 import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
-import org.geotools.styling.MarkImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.PolygonSymbolizerImpl;
-import org.geotools.styling.Stroke;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
@@ -96,7 +94,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
         setUpdateSymbolListener(this);
 
-        symbolTypeFactory = new SymbolTypeFactory(FillDetails.class,
+        symbolTypeFactory = new SymbolTypeFactory(panelId,
                 new ColourFieldConfig(FieldIdEnum.FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_WIDTH),
                 new ColourFieldConfig(FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.SYMBOL_TYPE);
@@ -167,14 +165,8 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         Expression expDisplacementX = null;
         Expression expDisplacementY = null;
         Expression expFillColour = null;
-        Expression expOpacity = null;
         Expression expGap = null;
         Expression expInitialGap = null;
-        Expression expStrokeColour = null;
-        Expression expStrokeWidth = null;
-
-        boolean hasFillColour = false;
-        boolean hasStroke = false;
 
         PolygonSymbolizer polygon = null;
 
@@ -186,9 +178,8 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
             {
                 Symbolizer symbolizer = selectedSymbol.getSymbolizer();
 
-                expOpacity = null;
-
                 Fill fill = null;
+                Expression expOpacity = null;
 
                 if(symbolizer instanceof PolygonSymbolizerImpl)
                 {
@@ -205,12 +196,10 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
 
                 if(fill == null)
                 {
-                    hasFillColour = false;
                     symbolTypeFactory.setNoFill(this.fieldConfigManager);
                 }
                 else
                 {
-                    hasFillColour = true;
                     symbolTypeFactory.setSolidFill(this.fieldConfigManager, expFillColour, expOpacity);
                 }
             }
@@ -247,7 +236,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                     expDisplacementY = defaultDisplacement.getDisplacementY();
                 }
 
-                expOpacity = graphic.getOpacity();
                 expGap = graphic.getGap();
                 expInitialGap = graphic.getInitialGap();
 
@@ -257,30 +245,6 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
                 {
                     GraphicalSymbol symbol = graphicalSymbolList.get(0);
 
-                    // Which opacity attribute do we use?
-                    if(symbol instanceof MarkImpl)
-                    {
-                        MarkImpl markSymbol = (MarkImpl)symbol;
-                        Fill fill = markSymbol.getFill();
-
-                        if(fill != null)
-                        {
-                            hasFillColour = true;
-                            if(fill.getOpacity() != null)
-                            {
-                                expOpacity = fill.getOpacity();
-                            }
-                            expFillColour = fill.getColor();
-                        }
-
-                        Stroke stroke = markSymbol.getStroke();
-                        if(stroke != null)
-                        {
-                            hasStroke = true;
-                            expStrokeColour = stroke.getColor();
-                            expStrokeWidth = stroke.getWidth();
-                        }
-                    }
                     symbolTypeFactory.setValue(this.fieldConfigManager, symbol);
                 }
             }
@@ -292,27 +256,9 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V, expAnchorPointY);
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X, expDisplacementX);
         fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y, expDisplacementY);
-        fieldConfigVisitor.populateColourField(FieldIdEnum.FILL_COLOUR, expFillColour);
-        fieldConfigVisitor.populateField(FieldIdEnum.OPACITY, expOpacity);
         fieldConfigVisitor.populateField(FieldIdEnum.GAP, expGap);
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
-        fieldConfigVisitor.populateColourField(FieldIdEnum.STROKE_FILL_COLOUR, expStrokeColour);
-        fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_WIDTH, expStrokeWidth);
-
-        GroupConfigInterface fillGroup = getGroup(GroupIdEnum.FILL);
-
-        if(fillGroup != null)
-        {
-            fillGroup.enable(hasFillColour);
-        }
-
-        GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.STROKE);
-
-        if(strokeGroup != null)
-        {
-            strokeGroup.enable(hasStroke);
-        }
-
+        
         if(vendorOptionFillFactory != null)
         {
             vendorOptionFillFactory.populate(polygon);
@@ -373,7 +319,7 @@ public class FillDetails extends StandardPanel implements PopulateDetailsInterfa
         GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.STROKE);
         boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
-        Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OPACITY);
+        Expression opacity = null;
         Expression size = fieldConfigVisitor.getExpression(FieldIdEnum.SIZE);
         Expression rotation = fieldConfigVisitor.getExpression(FieldIdEnum.ANGLE);
         Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.GAP);
