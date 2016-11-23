@@ -274,7 +274,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         Expression wellKnownName = null;
         if((getConfigField() != null) && (fieldConfigManager != null))
         {
-            wellKnownName = symbolType;
+            wellKnownName = getConfigField().getExpression();
             if(wellKnownName != null)
             {
                 Expression expFillColour = null;
