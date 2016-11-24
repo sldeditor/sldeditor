@@ -85,9 +85,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 public class SLDTestRunner
 {
 
-    /**
-     * 
-     */
+    /** The Constant TTF_PREFIX. */
     private static final String TTF_PREFIX = "ttf://";
 
     /** The Constant DEFAULT_FONT. */
