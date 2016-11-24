@@ -288,7 +288,7 @@ public class FieldConfigWKTTest {
         File f = null;
         String filename = null;
         try {
-            f = File.createTempFile("test", ".png");
+            f = File.createTempFile(getClass().getSimpleName(), ".png");
         } catch (IOException e) {
             e.printStackTrace();
         }

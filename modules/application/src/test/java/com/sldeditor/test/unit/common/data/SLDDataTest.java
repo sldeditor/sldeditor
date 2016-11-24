@@ -126,7 +126,7 @@ public class SLDDataTest {
 
         File sldFile = null;
         try {
-            sldFile = File.createTempFile("test", ".txt");
+            sldFile = File.createTempFile(getClass().getSimpleName(), ".txt");
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test SLD file");
@@ -227,7 +227,7 @@ public class SLDDataTest {
 
         File sldEditorFile = null;
         try {
-            sldEditorFile = File.createTempFile("test", ".txt");
+            sldEditorFile = File.createTempFile(getClass().getSimpleName(), ".txt");
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test SLD Editor file");

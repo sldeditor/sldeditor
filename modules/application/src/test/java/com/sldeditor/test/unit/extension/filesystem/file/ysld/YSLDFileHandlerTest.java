@@ -94,7 +94,7 @@ public class YSLDFileHandlerTest {
             assertEquals(1, sldDataList.size());
 
             // Changes where the file is to be saved to
-            File saveFile = File.createTempFile("test", ".ysld");
+            File saveFile = File.createTempFile(getClass().getSimpleName(), ".ysld");
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 

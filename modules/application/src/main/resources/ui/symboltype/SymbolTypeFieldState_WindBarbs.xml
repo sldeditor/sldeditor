@@ -11,47 +11,9 @@
                 <Field id="INITIAL_GAP" enabled="true" />
                 <Field id="GAP" enabled="true" />
                 <Group id="FILL" enabled="true" />
-                <Group id="STROKE" enabled="false" />
+                <Group id="STROKE" enabled="true" />
                 <Group id="ANCHORPOINT" enabled="true" />
                 <Group id="DISPLACEMENT" enabled="true" />
-            </FieldList>
-        </Value>
-    </Panel>
-    <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
-        <Value>
-            <Item id="windbarb" label="Windbarbs" />
-            <FieldList>
-                <Field id="WKT" enabled="true" />
-                <Field id="ANGLE" enabled="true" />
-                <Field id="SIZE" enabled="false" />
-                <Field id="OVERALL_OPACITY" enabled="true" />
-                <Field id="INITIAL_GAP" enabled="true" />
-                <Field id="GAP" enabled="true" />
-                
-                 <Group id="FILL" enabled="true" />
-                <Group id="STROKE" enabled="false" />
-                <Group id="ANCHORPOINT" enabled="true" />
-                <Group id="DISPLACEMENT" enabled="true" />
-            </FieldList>
-        </Value>
-    </Panel>
-    <Panel type="com.sldeditor.ui.detail.StrokeDetails">
-        <Value>
-            <Item id="windbarb" label="Windbarbs" />
-            <FieldList>
-                <Field id="WKT" enabled="true" />
-                <Field id="STROKE_STYLE" enabled="true" />
-
-                <Field id="STROKE_LINE_JOIN" enabled="false" />
-                <Field id="STROKE_LINE_CAP" enabled="false" />
-                <Field id="STROKE_DASH_ARRAY" enabled="false" />
-                <Field id="STROKE_OFFSET" enabled="false" />
-
-                <Group id="FILLCOLOUR" enabled="true" />
-                <Group id="STROKECOLOUR" enabled="false" />
-                <Group id="STROKESYMBOL" enabled="true" />
-                <Group id="STROKEANCHORPOINT" enabled="true" />
-                <Group id="STROKEDISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>

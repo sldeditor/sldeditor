@@ -109,7 +109,7 @@ public class RasterFileHandlerTest {
             assertTrue(sldDataList.isEmpty());
 
             // Changes where the file is to be saved to
-            File saveFile = File.createTempFile("test", ".sld");
+            File saveFile = File.createTempFile(getClass().getSimpleName(), ".sld");
 
             SLDData sldData = new SLDData(null, "");
 

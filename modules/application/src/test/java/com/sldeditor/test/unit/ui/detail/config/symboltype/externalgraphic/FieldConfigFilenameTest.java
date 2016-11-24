@@ -142,7 +142,7 @@ public class FieldConfigFilenameTest {
 
         File f = null;
         try {
-            f = File.createTempFile("test", ".tmp");
+            f = File.createTempFile(getClass().getSimpleName(), ".tmp");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -280,7 +280,7 @@ public class FieldConfigFilenameTest {
         File f = null;
         String filename = null;
         try {
-            f = File.createTempFile("test", ".png");
+            f = File.createTempFile(getClass().getSimpleName(), ".png");
         } catch (IOException e) {
             e.printStackTrace();
         }

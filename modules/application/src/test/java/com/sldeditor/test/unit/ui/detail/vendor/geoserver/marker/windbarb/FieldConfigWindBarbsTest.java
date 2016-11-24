@@ -266,7 +266,7 @@ public class FieldConfigWindBarbsTest {
         File f = null;
         String filename = null;
         try {
-            f = File.createTempFile("test", ".png");
+            f = File.createTempFile(getClass().getSimpleName(), ".png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -300,7 +300,7 @@ public class FieldConfigWindBarbsTest {
         // Test it with null values
         boolean valueOnly = true;
         FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
-
+        field.createUI();
         assertNull(field.getStringValue());
 
         GraphicPanelFieldManager fieldConfigManager = null;
@@ -337,36 +337,7 @@ public class FieldConfigWindBarbsTest {
         assertNotNull(actualValue);
         assertEquals(1, actualValue.size());
         Mark actualSymbol = (Mark) actualValue.get(0);
-        assertTrue(actualSymbol.getWellKnownName().toString().compareTo("solid") == 0);
-
-        // Try with symbol type of solid
-        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
-
-        actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
-        assertNotNull(actualValue);
-        assertEquals(1, actualValue.size());
-        actualSymbol = (Mark) actualValue.get(0);
-        assertTrue(actualSymbol.getWellKnownName().toString().compareTo("solid") == 0);
-
-        // Try with symbol type of circle
-        actualMarkerSymbol = "circle";
-        symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
-        actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
-        assertNotNull(actualValue);
-        assertEquals(1, actualValue.size());
-        actualSymbol = (Mark) actualValue.get(0);
-        assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
-        assertNotNull(actualSymbol.getFill());
-        assertNull(actualSymbol.getStroke());
-
-        // Enable stroke and fill flags
-        actualValue = field2.getValue(fieldConfigManager, symbolType, true, true);
-        assertNotNull(actualValue);
-        assertEquals(1, actualValue.size());
-        actualSymbol = (Mark) actualValue.get(0);
-        assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
-        assertNotNull(actualSymbol.getFill());
-        assertNull(actualSymbol.getStroke());
+        assertTrue(actualSymbol.getWellKnownName().toString().compareTo("windbarbs://default(0)[m/s]") == 0);
     }
 
     /**

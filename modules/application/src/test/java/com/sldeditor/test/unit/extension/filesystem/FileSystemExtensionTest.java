@@ -270,7 +270,7 @@ public class FileSystemExtensionTest {
         extensionArgList.clear();
         File f = null;
         try {
-            f = File.createTempFile("test", ".tmp");
+            f = File.createTempFile(getClass().getSimpleName(), ".tmp");
         } catch (IOException e) {
             e.printStackTrace();
             fail();

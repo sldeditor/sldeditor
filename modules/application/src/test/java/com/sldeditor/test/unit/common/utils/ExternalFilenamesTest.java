@@ -53,7 +53,7 @@ public class ExternalFilenamesTest {
         SLDData sldData = new SLDData(new StyleWrapper("workspace","style"), "contents");
         File tempSLDFile = null;
         try {
-            tempSLDFile = File.createTempFile("test", ".sld");
+            tempSLDFile = File.createTempFile(getClass().getSimpleName(), ".sld");
         } catch (IOException e1) {
             e1.printStackTrace();
             fail("Couldn't create temp test file");
@@ -75,7 +75,7 @@ public class ExternalFilenamesTest {
         // Now a graphics file with an absolute file path 
         File absolutePathGraphicsFile = null;
         try {
-            absolutePathGraphicsFile = File.createTempFile("test", ".png");
+            absolutePathGraphicsFile = File.createTempFile(getClass().getSimpleName(), ".png");
         } catch (IOException e) {
             e.printStackTrace();
             fail("Couldn't create temp test file");
@@ -113,7 +113,7 @@ public class ExternalFilenamesTest {
         SLDData sldData = new SLDData(new StyleWrapper("workspace","style"), "contents");
         File tempSLDFile = null;
         try {
-            tempSLDFile = File.createTempFile("test", ".sld");
+            tempSLDFile = File.createTempFile(getClass().getSimpleName(), ".sld");
         } catch (IOException e1) {
             e1.printStackTrace();
             fail("Couldn't create temp test file");

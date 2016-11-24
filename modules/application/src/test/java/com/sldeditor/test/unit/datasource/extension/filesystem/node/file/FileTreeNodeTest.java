@@ -64,7 +64,7 @@ public class FileTreeNodeTest {
 
         Path tmpFolder = null;
         try {
-            tmpFolder = Files.createTempDirectory("sldeditor");
+            tmpFolder = Files.createTempDirectory(getClass().getSimpleName());
         } catch (IOException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -105,6 +105,7 @@ public class FileTreeNodeTest {
 
             assertEquals(folder.getAbsolutePath(), node.getDestinationText());
             tmpFile1.delete();
+            folder.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());

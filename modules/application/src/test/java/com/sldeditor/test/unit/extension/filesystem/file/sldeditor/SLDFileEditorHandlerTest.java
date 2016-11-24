@@ -93,7 +93,7 @@ public class SLDFileEditorHandlerTest {
             assertEquals(1, sldDataList.size());
 
             // Changes where the file is to be saved to
-            File sldEditorFile = File.createTempFile("test", ".sldeditor");
+            File sldEditorFile = File.createTempFile(getClass().getSimpleName(), ".sldeditor");
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 

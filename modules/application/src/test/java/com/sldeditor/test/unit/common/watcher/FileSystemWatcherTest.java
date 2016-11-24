@@ -54,7 +54,7 @@ public class FileSystemWatcherTest {
 
         Path tempFolder = null;
         try {
-            tempFolder = Files.createTempDirectory("test");
+            tempFolder = Files.createTempDirectory(getClass().getSimpleName());
             System.out.println("Created temp test folder : " + tempFolder);
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,7 +86,7 @@ public class FileSystemWatcherTest {
 
         File tmpFile = null;
         try {
-            tmpFile = File.createTempFile("tmp", ".tmp", tempFolder.toFile());
+            tmpFile = File.createTempFile(getClass().getSimpleName(), ".tmp", tempFolder.toFile());
             System.out.println("Created temp test file : " + tmpFile);
         } catch (IOException e) {
             e.printStackTrace();

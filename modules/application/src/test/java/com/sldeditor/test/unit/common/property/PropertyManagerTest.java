@@ -94,7 +94,7 @@ public class PropertyManagerTest {
 
         File file = null;
         try {
-            file = File.createTempFile("test", ".properties");
+            file = File.createTempFile(getClass().getSimpleName(), ".properties");
         } catch (IOException e) {
             e.printStackTrace();
             fail("Failed to create test property temporary file");
