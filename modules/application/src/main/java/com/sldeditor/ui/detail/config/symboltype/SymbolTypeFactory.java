@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
@@ -34,8 +35,9 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
-import com.sldeditor.ui.detail.FillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
+import com.sldeditor.ui.detail.PolygonFillDetails;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -105,11 +107,16 @@ public class SymbolTypeFactory {
     {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true));
-        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true));
-        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true));
-        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true));
+        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);
@@ -128,13 +135,51 @@ public class SymbolTypeFactory {
     }
 
     /**
-     * Populate fill details.
+     * Populate polygon fill details.
      *
      * @param fillPanel the graphic panel
      * @param panelDetails the panel details the configuration is for
      * @param fieldConfigManager the field config manager
      */
-    public void populate(FillDetails fillPanel,
+    public void populate(PolygonFillDetails fillPanel,
+            Class<?> panelDetails,
+            GraphicPanelFieldManager fieldConfigManager) {
+
+        List<ValueComboBoxDataGroup> combinedSymbolList = populateSymbolList(panelDetails);
+
+        FieldConfigBase field = fieldConfigManager.get(this.selectionComboBox);
+        this.symbolTypeField = (FieldConfigSymbolType)field;
+        symbolTypeField.populate(fillPanel, combinedSymbolList);
+
+        for(FieldState panel : symbolTypeFieldList)
+        {
+            panel.setUpdateSymbolListener(fillPanel);
+
+            classMap.put(panel.getClass(), panel);
+
+            this.symbolTypeField.addField(panel);
+
+            fillPanel.updateFieldConfig(panel.getBasePanel());
+
+            Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
+            if(map != null)
+            {
+                for(FieldIdEnum panelField : map.keySet())
+                {
+                    fieldConfigManager.add(panelField, map.get(panelField));
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate point fill details.
+     *
+     * @param fillPanel the graphic panel
+     * @param panelDetails the panel details the configuration is for
+     * @param fieldConfigManager the field config manager
+     */
+    public void populate(PointFillDetails fillPanel,
             Class<?> panelDetails,
             GraphicPanelFieldManager fieldConfigManager) {
 
@@ -223,10 +268,15 @@ public class SymbolTypeFactory {
     /**
      * Sets the symbol value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
+     * @param graphic the graphic
      * @param symbol the new value
      */
-    public void setValue(GraphicPanelFieldManager fieldConfigManager, GraphicalSymbol symbol) {
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
+            Graphic graphic, 
+            GraphicalSymbol symbol) {
 
         for(FieldState panel : classMap.values())
         {
@@ -234,7 +284,7 @@ public class SymbolTypeFactory {
             {
                 if (panel.accept(symbol))
                 {
-                    panel.setValue(fieldConfigManager, symbolTypeField, symbol);
+                    panel.setValue(symbolizerType, fieldConfigManager, symbolTypeField, graphic, symbol);
                 }
             }
         }
@@ -398,5 +448,23 @@ public class SymbolTypeFactory {
         {
             //          panel.setTestValue(value);
         }
+    }
+
+    /**
+     * Checks if symbol uses overall opacity.
+     *
+     * @param symbolizerType the symbolizer type
+     * @param selectedPanelId the selected panel id
+     * @return true, if is overall opacity
+     */
+    public boolean isOverallOpacity(Class<?> symbolizerType, 
+            Class<?> selectedPanelId) {
+        FieldState panel = classMap.get(selectedPanelId);
+        if(panel != null)
+        {
+            return panel.isOverallOpacity(symbolizerType);
+        }
+
+        return true;
     }
 }

@@ -46,6 +46,7 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExternalGraphicFilter;
@@ -92,6 +93,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         readConfigFileNoScrollPane(null, this, "symboltype/ExternalGraphicSymbol.xml");
 
         registerForTextFieldButton(FieldIdEnum.EXTERNAL_GRAPHIC, this);
+
+        for(FieldConfigBase fieldConfig : this.getFieldConfigList())
+        {
+            CurrentFieldState fieldState = fieldConfig.getFieldState();
+            fieldState.setFieldEnabled(true);
+            fieldConfig.setFieldState(fieldState);
+        }
     }
 
     /**
@@ -371,5 +379,17 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        for(FieldConfigBase fieldConfig : getFieldConfigList())
+        {
+            fieldConfig.setEnabled(enabled);
+        }
+        super.setEnabled(enabled);
     }
 }

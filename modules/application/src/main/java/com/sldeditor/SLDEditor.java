@@ -808,14 +808,18 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         Object[] options = {Localisation.getString(SLDEditor.class, "common.yes"),
                 Localisation.getString(SLDEditor.class, "common.no")};
 
-        int result = JOptionPane.showOptionDialog(frame,
-                Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
-                Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE,
-                null,
-                options,
-                options[1]);
+        int result = JOptionPane.OK_OPTION;
+        if(!underTestFlag)
+        {
+            result = JOptionPane.showOptionDialog(frame,
+                    Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
+                    Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+        }
 
         if(result == JOptionPane.OK_OPTION)
         {

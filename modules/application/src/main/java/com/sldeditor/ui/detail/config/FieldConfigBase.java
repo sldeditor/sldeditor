@@ -38,6 +38,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.ui.attribute.AttributeSelection;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
 import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -87,11 +88,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
     /** The style factory. */
     private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
-    /** The field state override disable. */
-    private boolean fieldStateOverrideDisable = false;
-
-    /** The field enabled. */
-    private boolean fieldEnabled = true;
+    /** The field state flag. */
+    private CurrentFieldState fieldState = new CurrentFieldState();
 
     /** The cached expression. */
     private Expression cachedExpression = null;
@@ -221,18 +219,14 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * Sets the value field state.
      */
     protected void setValueFieldState() {
-        boolean enabled = false;
 
-        if(!fieldStateOverrideDisable)
-        {
-            enabled = fieldEnabled;
-        }
+        boolean fieldEnabled = fieldState.getFieldEnabledState();
 
-        setEnabled(enabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
+        setEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
 
         if(attributeSelectionPanel != null)
         {
-            attributeSelectionPanel.setEnabled(enabled);
+            attributeSelectionPanel.setEnabled(fieldEnabled);
         }
     }
 
@@ -448,18 +442,6 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
         {
             updateSymbolListenerList.add(listener);
         }
-    }
-
-    /**
-     * Sets the field state override.
-     *
-     * @param disable the new field state override
-     */
-    public void setFieldStateOverride(boolean disable)
-    {
-        fieldEnabled = !disable;
-
-        setValueFieldState();
     }
 
     /**
@@ -706,5 +688,28 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
     @Override
     public String toString() {
         return String.format("%s : (%s) %s", getClass().getName(), getFieldId().toString(), getLabel());
+    }
+
+    /**
+     * Gets the field state.
+     *
+     * @return the fieldState
+     */
+    public CurrentFieldState getFieldState() {
+        return fieldState;
+    }
+
+    /**
+     * Sets the field state.
+     *
+     * @param fieldState the fieldState to set
+     */
+    public void setFieldState(CurrentFieldState fieldState) {
+        if(fieldState != null)
+        {
+            this.fieldState = fieldState;
+            
+            setValueFieldState();
+        }
     }
 }

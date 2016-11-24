@@ -94,7 +94,7 @@ public class SLDFileHandlerTest {
             assertEquals(1, sldDataList.size());
 
             // Changes where the file is to be saved to
-            File saveFile = File.createTempFile("test", ".sld");
+            File saveFile = File.createTempFile(getClass().getSimpleName(), ".sld");
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 

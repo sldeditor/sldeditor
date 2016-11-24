@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="ANCHOR_POINT_H"/&gt;
  *     &lt;enumeration value="GAP"/&gt;
  *     &lt;enumeration value="INITIAL_GAP"/&gt;
- *     &lt;enumeration value="OPACITY"/&gt;
+ *     &lt;enumeration value="OVERALL_OPACITY"/&gt;
  *     &lt;enumeration value="FILTER"/&gt;
  *     &lt;enumeration value="FILL_COLOUR"/&gt;
  *     &lt;enumeration value="DEFAULT_STYLE"/&gt;
@@ -44,9 +44,15 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="MAXIMUM_SCALE"/&gt;
  *     &lt;enumeration value="UOM"/&gt;
  *     &lt;enumeration value="NAME"/&gt;
+ *     &lt;enumeration value="POINT_FILL_OPACITY"/&gt;
+ *     &lt;enumeration value="POINT_STROKE_OPACITY"/&gt;
+ *     &lt;enumeration value="LINE_FILL_OPACITY"/&gt;
+ *     &lt;enumeration value="LINE_STROKE_OPACITY"/&gt;
+ *     &lt;enumeration value="POLYGON_FILL_OPACITY"/&gt;
+ *     &lt;enumeration value="POLYGON_STROKE_OPACITY"/&gt;
+ *     &lt;enumeration value="TEXT_OPACITY"/&gt;
  *     &lt;enumeration value="STROKE_STYLE"/&gt;
  *     &lt;enumeration value="STROKE_FILL_COLOUR"/&gt;
- *     &lt;enumeration value="STROKE_FILL_OPACITY"/&gt;
  *     &lt;enumeration value="STROKE_FILL_WIDTH"/&gt;
  *     &lt;enumeration value="STROKE_WIDTH"/&gt;
  *     &lt;enumeration value="STROKE_LINE_JOIN"/&gt;
@@ -54,7 +60,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="STROKE_DASH_ARRAY"/&gt;
  *     &lt;enumeration value="STROKE_OFFSET"/&gt;
  *     &lt;enumeration value="STROKE_STROKE_COLOUR"/&gt;
- *     &lt;enumeration value="STROKE_STROKE_OPACITY"/&gt;
  *     &lt;enumeration value="STROKE_SYMBOL_SIZE"/&gt;
  *     &lt;enumeration value="STROKE_SYMBOL_ANGLE"/&gt;
  *     &lt;enumeration value="STROKE_SYMBOL_DISPLACEMENT_X"/&gt;
@@ -176,7 +181,7 @@ public enum FieldIdEnum {
     ANCHOR_POINT_H,
     GAP,
     INITIAL_GAP,
-    OPACITY,
+    OVERALL_OPACITY,
     FILTER,
     FILL_COLOUR,
     DEFAULT_STYLE,
@@ -188,9 +193,15 @@ public enum FieldIdEnum {
     MAXIMUM_SCALE,
     UOM,
     NAME,
+    POINT_FILL_OPACITY,
+    POINT_STROKE_OPACITY,
+    LINE_FILL_OPACITY,
+    LINE_STROKE_OPACITY,
+    POLYGON_FILL_OPACITY,
+    POLYGON_STROKE_OPACITY,
+    TEXT_OPACITY,
     STROKE_STYLE,
     STROKE_FILL_COLOUR,
-    STROKE_FILL_OPACITY,
     STROKE_FILL_WIDTH,
     STROKE_WIDTH,
     STROKE_LINE_JOIN,
@@ -198,7 +209,6 @@ public enum FieldIdEnum {
     STROKE_DASH_ARRAY,
     STROKE_OFFSET,
     STROKE_STROKE_COLOUR,
-    STROKE_STROKE_OPACITY,
     STROKE_SYMBOL_SIZE,
     STROKE_SYMBOL_ANGLE,
     STROKE_SYMBOL_DISPLACEMENT_X,

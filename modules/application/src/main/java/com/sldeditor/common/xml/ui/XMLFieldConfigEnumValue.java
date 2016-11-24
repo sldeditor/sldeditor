@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
  *                   &lt;element name="Field" type="{}XMLFieldConfigEnumValueField" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *                   &lt;element name="Group" type="{}XMLFieldConfigEnumValueGroup" maxOccurs="unbounded" minOccurs="0"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -186,6 +187,7 @@ public class XMLFieldConfigEnumValue {
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
      *         &lt;element name="Field" type="{}XMLFieldConfigEnumValueField" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *         &lt;element name="Group" type="{}XMLFieldConfigEnumValueGroup" maxOccurs="unbounded" minOccurs="0"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -196,12 +198,15 @@ public class XMLFieldConfigEnumValue {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "field"
+        "field",
+        "group"
     })
     public static class FieldList {
 
         @XmlElement(name = "Field")
         protected List<XMLFieldConfigEnumValueField> field;
+        @XmlElement(name = "Group")
+        protected List<XMLFieldConfigEnumValueGroup> group;
 
         /**
          * Gets the value of the field property.
@@ -230,6 +235,35 @@ public class XMLFieldConfigEnumValue {
                 field = new ArrayList<XMLFieldConfigEnumValueField>();
             }
             return this.field;
+        }
+
+        /**
+         * Gets the value of the group property.
+         * 
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the group property.
+         * 
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getGroup().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link XMLFieldConfigEnumValueGroup }
+         * 
+         * 
+         */
+        public List<XMLFieldConfigEnumValueGroup> getGroup() {
+            if (group == null) {
+                group = new ArrayList<XMLFieldConfigEnumValueGroup>();
+            }
+            return this.group;
         }
 
     }

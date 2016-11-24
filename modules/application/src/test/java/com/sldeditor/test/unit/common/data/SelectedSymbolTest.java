@@ -34,7 +34,9 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.PolygonSymbolizerImpl;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
@@ -229,7 +231,7 @@ public class SelectedSymbolTest {
         instance.addSymbolizerToRule(symbolizer);
         instance.setSymbolizer(symbolizer);
 
-        Graphic graphic = instance.getGraphic();
+        Graphic graphic = getGraphic(symbolizer);
         assertNull(graphic);
 
         Fill graphicFill = DefaultSymbols.createDefaultGraphicFill();
@@ -239,7 +241,7 @@ public class SelectedSymbolTest {
         instance.addSymbolizerToRule(newSymbolizer);
         instance.setSymbolizer(newSymbolizer);
 
-        graphic = instance.getGraphic();
+        graphic = getGraphic(newSymbolizer);
         assertNotNull(graphic);
         assertTrue(instance.hasFill());
         assertTrue(instance.hasStroke());
@@ -248,7 +250,7 @@ public class SelectedSymbolTest {
         instance.addSymbolizerToRule(lineSymbolizer);
         instance.setSymbolizer(lineSymbolizer);
 
-        graphic = instance.getGraphic();
+        graphic = getGraphic(lineSymbolizer);
         assertNull(graphic);
         assertFalse(instance.hasFill());
         assertTrue(instance.hasStroke());
@@ -257,7 +259,7 @@ public class SelectedSymbolTest {
         instance.addSymbolizerToRule(pointSymbolizer);
         instance.setSymbolizer(pointSymbolizer);
 
-        graphic = instance.getGraphic();
+        graphic = getGraphic(pointSymbolizer);
         assertNotNull(graphic);
 
         assertTrue(instance.hasFill());
@@ -541,4 +543,35 @@ public class SelectedSymbolTest {
 
         assertNull(rasterSymbol.getImageOutline());
     }
+
+    /**
+     * Gets the graphic.
+     *
+     * @param symbolizer the symbolizer
+     * @return the graphic
+     */
+    private Graphic getGraphic(Symbolizer symbolizer) { 
+        Graphic graphic = null; 
+ 
+        if(symbolizer instanceof PointSymbolizerImpl) 
+        { 
+            PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer; 
+            graphic = pointSymbolizer.getGraphic(); 
+        } 
+        else if(symbolizer instanceof PolygonSymbolizerImpl) 
+        { 
+            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer; 
+            if(polygonSymbolizer != null) 
+            { 
+                Fill fill = polygonSymbolizer.getFill(); 
+ 
+                if(fill != null) 
+                { 
+                    graphic = fill.getGraphicFill(); 
+                } 
+            } 
+        } 
+ 
+        return graphic; 
+    } 
 }

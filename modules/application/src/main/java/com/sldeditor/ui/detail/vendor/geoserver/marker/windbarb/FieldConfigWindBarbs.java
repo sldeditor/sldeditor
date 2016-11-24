@@ -28,6 +28,7 @@ import java.util.Map;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.Stroke;
@@ -40,6 +41,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -65,19 +67,22 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     /** The wind barbs panel. */
     private WindBarbDetails windBarbsPanel = null;
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WindBarbs.xml";
 
     /**
      * Instantiates a new field config string.
      *
      * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigWindBarbs(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigWindBarbs(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
     }
 
     /**
@@ -221,13 +226,16 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if(symbol != null)
         {
@@ -266,7 +274,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         Expression wellKnownName = null;
         if((getConfigField() != null) && (fieldConfigManager != null))
         {
-            wellKnownName = symbolType;
+            wellKnownName = getConfigField().getExpression();
             if(wellKnownName != null)
             {
                 Expression expFillColour = null;
@@ -275,13 +283,9 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                 FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
                 if(field != null)
                 {
-                    if(field instanceof FieldConfigColour)
-                    {
-                        FieldConfigColour colourField = (FieldConfigColour)field;
+                    FieldConfigColour colourField = (FieldConfigColour)field;
 
-                        expFillColour = colourField.getColourExpression();
-                        expFillColourOpacity = colourField.getColourOpacityExpression();
-                    }
+                    expFillColour = colourField.getColourExpression();
                 }
 
                 Stroke stroke = null;
@@ -322,7 +326,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     }
 
     /**
-     * Gets the field map
+     * Gets the field map.
      *
      * @param fieldConfigManager the field config manager
      * @return the field map
@@ -462,7 +466,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData());
+            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -487,5 +491,13 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
         
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return true;
     }
 }

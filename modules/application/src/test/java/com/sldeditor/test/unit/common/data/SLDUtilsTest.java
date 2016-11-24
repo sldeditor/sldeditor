@@ -120,7 +120,7 @@ public class SLDUtilsTest {
     @Test
     public void testReadSLDFile() {
         try {
-            File tmpFile = File.createTempFile("test", ".sld");
+            File tmpFile = File.createTempFile(getClass().getSimpleName(), ".sld");
 
             FileWriter fileWriter = new FileWriter(tmpFile);
             fileWriter.write(expectedSld);

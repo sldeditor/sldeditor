@@ -206,10 +206,6 @@ public class FileSystemNodeManager {
         {
             folder = file;
         }
-        else
-        {
-            ConsoleManager.getInstance().error(FileSystemNodeManager.class, "Unknown file : " + file.getAbsolutePath());
-        }
 
         return folder;
     }

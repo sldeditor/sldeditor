@@ -101,6 +101,10 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
 
     /** The tool mgr. */
     private ToolSelectionInterface toolMgr = null;
+
+    /** The sld saved. */
+    private boolean sldSaved = false;
+
     /**
      * Initialise.
      *
@@ -257,16 +261,24 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
     {
         if(!tree.isDragging())
         {
-            if(parentObj != null)
+            if(sldSaved)
             {
-                parentObj.preLoad();
+                // Reset flag
+                sldSaved = false;
             }
-
-            SelectedFiles combinedFiles = treeItemSelected();
-
-            if((parentObj != null) && !parentObj.loadSLDString(combinedFiles))
+            else
             {
-                tree.revertSelection(e.getOldLeadSelectionPath());
+                if(parentObj != null)
+                {
+                    parentObj.preLoad();
+                }
+
+                SelectedFiles combinedFiles = treeItemSelected();
+
+                if((parentObj != null) && !parentObj.loadSLDString(combinedFiles))
+                {
+                    tree.revertSelection(e.getOldLeadSelectionPath());
+                }
             }
         }
     }
@@ -515,6 +527,8 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                 saved = extension.save(sldData);
             }
         }
+
+        sldSaved  = true;
 
         return saved;
     }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_trianglefill.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="shape:// fill" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Triangle fill" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="triangle" field="SYMBOL_TYPE"/>
+            <LiteralDouble value="16.0" field="SIZE"/>
+            <LiteralDouble value="26.0" field="ANGLE"/>
+            <LiteralDouble value="0.75" field="POLYGON_FILL_OPACITY"/>
+            <LiteralString value="#110011" field="FILL_COLOUR"/>
+            <LiteralString value="#CCFF00" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="3.0" field="STROKE_FILL_WIDTH"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

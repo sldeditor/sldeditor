@@ -85,6 +85,11 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 public class SLDTestRunner
 {
 
+    /**
+     * 
+     */
+    private static final String TTF_PREFIX = "ttf://";
+
     /** The Constant DEFAULT_FONT. */
     private static final String DEFAULT_FONT = "Arial";
 
@@ -125,6 +130,7 @@ public class SLDTestRunner
         colourFieldsList.add(FieldIdEnum.STROKE_STROKE_COLOUR);
         colourFieldsList.add(FieldIdEnum.HALO_COLOUR);
 
+        filenameList.add(FieldIdEnum.SYMBOL_TYPE);
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
 
@@ -416,6 +422,12 @@ public class SLDTestRunner
                                                 {
                                                     Object literalValue = getLiteralValue((XMLFieldLiteralBase)testValue);
                                                     expectedValue = String.valueOf(literalValue);
+
+                                                    if(fieldId == FieldIdEnum.TTF_SYMBOL)
+                                                    {
+                                                        expectedValue = processTTFField(expectedValue).toString();
+                                                    }
+
                                                 }
                                                 else if(testValue instanceof XMLFieldAttribute)
                                                 {
@@ -441,7 +453,13 @@ public class SLDTestRunner
                                                 boolean condition;
                                                 if(comparingFilename(fieldId))
                                                 {
-                                                    condition = actualValue.endsWith(expectedValue);
+                                                    File actualFile = new File(actualValue);
+                                                    File expectedFile = new File(expectedValue);
+
+                                                    String actualFileString = actualFile.getAbsolutePath();
+                                                    String expectedFileString = expectedFile.getAbsolutePath();
+                                                    expectedFileString = expectedFileString.substring(expectedFileString.length() - expectedValue.length());
+                                                    condition = actualFileString.endsWith(expectedFileString);
                                                 }
                                                 else
                                                 {
@@ -477,6 +495,10 @@ public class SLDTestRunner
                                                             expression = ff.literal(getFontForOS());
                                                             System.out.println("Updated font family to test for : " + expression.toString());
                                                         }
+                                                    }
+                                                    else if(fieldId == FieldIdEnum.TTF_SYMBOL)
+                                                    {
+                                                        expression = processTTFField(expression.toString());
                                                     }
                                                 }
                                                 if(expression != null)
@@ -548,6 +570,31 @@ public class SLDTestRunner
 
         JFrame frame = sldEditor.getApplicationFrame();
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+    }
+
+    /**
+     * Process TTF field.
+     *
+     * @param expectedValue the expected value
+     * @return the expression
+     */
+    protected Expression processTTFField(String expectedValue) {
+        Expression expression = null;
+        // Handle the case where a font is not available on all operating systems
+        String string = expectedValue.toLowerCase();
+
+        if(string.startsWith(TTF_PREFIX + DEFAULT_FONT.toLowerCase()))
+        {
+            String charCode = expectedValue.substring(TTF_PREFIX.length() + DEFAULT_FONT.length());
+            expression = ff.literal(TTF_PREFIX + getFontForOS() + charCode);
+            System.out.println("Updated font family to test for : " + expression.toString());
+        }
+        else
+        {
+            expression = ff.literal(expectedValue);
+        }
+
+        return expression;
     }
 
     /**

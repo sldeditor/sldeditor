@@ -23,20 +23,35 @@
                 </Value>
             </ValueList>
         </FieldConfigEnum>
-        <FieldConfigDouble id="STROKE_OFFSET" label="stroke.dash.offset" />
+        <FieldConfigDouble id="STROKE_OFFSET" label="stroke.dash.offset" minValue="0.0" />
         <FieldConfigString id="STROKE_DASH_ARRAY"
             label="stroke.dash.array" valueOnly="true" />
+        <FieldConfigSlider id="OVERALL_OPACITY" label="stroke.opacity" defaultValue="1.0" />
     </Group>
     <Group id="STROKESYMBOL" label="stroke.strokeSymbol"
         showLabel="true" option="false">
         <FieldConfigDouble id="STROKE_SYMBOL_ANGLE"
             label="stroke.strokeSymbol.angle" />
         <FieldConfigDouble id="STROKE_SYMBOL_SIZE"
-            label="stroke.strokeSymbol.size" defaultValue="1.0" minValue="0.1" />
+            label="stroke.strokeSymbol.size" defaultValue="5.0" minValue="0.1" />
         <FieldConfigDouble id="STROKE_SYMBOL_INITIAL_GAP"
             label="stroke.strokeSymbol.initialGap" />
         <FieldConfigDouble id="STROKE_SYMBOL_GAP"
             label="stroke.strokeSymbol.gap" />
+    </Group>
+    <Group id="FILLCOLOUR" label="stroke.fillColour" showLabel="true"
+        option="true">
+        <FieldConfigColour id="STROKE_FILL_COLOUR"
+            label="stroke.fillColour.colour" />
+        <FieldConfigSlider id="LINE_FILL_OPACITY" label="stroke.opacity" defaultValue="1.0" />
+    </Group>
+    <Group id="STROKECOLOUR" label="stroke.strokeColour"
+        showLabel="true" option="true">
+        <FieldConfigColour id="STROKE_STROKE_COLOUR"
+            label="stroke.strokeColour.colour" />
+        <FieldConfigSlider id="LINE_STROKE_OPACITY" label="stroke.opacity" defaultValue="1.0" />
+        <FieldConfigDouble id="STROKE_FILL_WIDTH"
+            label="stroke.width" defaultValue="1.0" />
     </Group>
     <Group id="STROKEANCHORPOINT" label="stroke.anchorPoint"
         showLabel="true">
@@ -51,21 +66,5 @@
             label="stroke.displacement.x" defaultValue="0.0" />
         <FieldConfigDouble id="STROKE_SYMBOL_DISPLACEMENT_Y"
             label="stroke.displacement.y" defaultValue="0.0" />
-    </Group>
-    <Group id="FILLCOLOUR" label="stroke.fillColour" showLabel="true"
-        option="true">
-        <FieldConfigColour id="STROKE_FILL_COLOUR"
-            label="stroke.fillColour.colour" />
-        <FieldConfigSlider id="STROKE_FILL_OPACITY"
-            label="stroke.fillColour.opacity" />
-    </Group>
-    <Group id="STROKECOLOUR" label="stroke.strokeColour"
-        showLabel="true" option="true">
-        <FieldConfigColour id="STROKE_STROKE_COLOUR"
-            label="stroke.strokeColour.colour" />
-        <FieldConfigSlider id="STROKE_STROKE_OPACITY"
-            label="stroke.strokeColour.opacity" />
-        <FieldConfigDouble id="STROKE_FILL_WIDTH"
-            label="stroke.width" defaultValue="1.0" />
     </Group>
 </PanelConfig>

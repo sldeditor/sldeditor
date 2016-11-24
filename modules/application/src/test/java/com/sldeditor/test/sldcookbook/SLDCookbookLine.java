@@ -118,4 +118,10 @@ public class SLDCookbookLine
     {
         test.runTest("line", "line_zoombasedline.xml");
     }
+
+    @Test
+    public void line_external()
+    {
+        test.runTest("line", "line_external.xml");
+    }
 }

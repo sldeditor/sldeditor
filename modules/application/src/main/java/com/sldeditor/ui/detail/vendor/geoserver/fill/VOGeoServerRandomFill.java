@@ -445,6 +445,8 @@ public class VOGeoServerRandomFill extends StandardPanel implements VendorOption
     {       
         Map<String, String> options = polygonSymbolizer.getOptions();
 
+        options.clear();
+
         for(FieldIdEnum key : fieldMap.keySet())
         {
             internalUpdateSymbol(options, key, fieldMap.get(key));

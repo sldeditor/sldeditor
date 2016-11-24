@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.fill;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 
 import com.sldeditor.common.preferences.PrefManager;
@@ -147,5 +148,14 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Pr
             }
         }
         return matchingList;
+    }
+
+    /**
+     * Populate point fill vendor options.
+     *
+     * @param point the point
+     */
+    public void populate(PointSymbolizer point) {
+        // No vendor options
     }
 }

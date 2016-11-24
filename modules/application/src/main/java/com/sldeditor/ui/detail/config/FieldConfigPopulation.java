@@ -311,7 +311,10 @@ public class FieldConfigPopulation {
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
             if(fieldConfig != null)
             {
-                return fieldConfig.getExpression();
+                if(fieldConfig.isEnabled())
+                {
+                    return fieldConfig.getExpression();
+                }
             }
         }
         return null;

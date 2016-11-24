@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.FillDetails;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
@@ -65,7 +65,7 @@ public class GraphicPanelFieldManagerTest {
         Class<?> expectedPanelId = StrokeDetails.class;
         mgr = new GraphicPanelFieldManager(expectedPanelId);
 
-        assertEquals(FieldIdEnum.UNKNOWN, mgr.getFieldEnum(FillDetails.class, null));
+        assertEquals(FieldIdEnum.UNKNOWN, mgr.getFieldEnum(PointFillDetails.class, null));
         assertEquals(expectedPanelId, mgr.getComponentId());
 
         // Now try with a field
@@ -118,7 +118,7 @@ public class GraphicPanelFieldManagerTest {
         assertEquals(1, mgr1.getFields(FieldConfigString.class).size());
 
         // Set up manager 2
-        Class<?> expectedPanelId2 = FillDetails.class;
+        Class<?> expectedPanelId2 = PointFillDetails.class;
         GraphicPanelFieldManager mgr2 = new GraphicPanelFieldManager(expectedPanelId2);
 
         FieldIdEnum expectedFieldId2 = FieldIdEnum.ANGLE;

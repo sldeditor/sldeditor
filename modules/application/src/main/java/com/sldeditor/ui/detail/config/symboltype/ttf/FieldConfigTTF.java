@@ -29,6 +29,8 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.FillImpl;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.LineSymbolizerImpl;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.Stroke;
@@ -42,11 +44,13 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -78,19 +82,22 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     /** The ttf panel. */
     private TTFDetails ttfPanel = null;
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_TTF.xml";
 
     /**
      * Instantiates a new field config string.
      *
      * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigTTF(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigTTF(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
     }
 
     /**
@@ -222,13 +229,16 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if(symbol == null)
         {
@@ -244,21 +254,46 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
         FillImpl fill = markerSymbol.getFill();
 
+        Expression expFillColour = null;
+        Expression expFillOpacity = null;
+        
         if(fill != null)
         {
-            Expression expFillColour = fill.getColor();
-            Expression expFillColourOpacity = fill.getOpacity();
+            expFillColour = fill.getColor();
+            if(!isOverallOpacity(symbolizerType))
+            {
+                expFillOpacity = fill.getOpacity();
+            }
+        }
+        
+        FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
+        if(field != null)
+        {
+            field.populate(expFillColour);
+        }
 
-            FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-            if(field != null)
+        // Opacity
+        if(isOverallOpacity(symbolizerType))
+        {
+            FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
+            if(opacity != null)
             {
-                field.populate(expFillColour);
+                opacity.populate(graphic.getOpacity());
             }
-            field = fieldConfigManager.get(FieldIdEnum.OPACITY);
-            if(field != null)
-            {
-                field.populate(expFillColourOpacity);
-            }
+        }
+    
+        field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+        if(field != null)
+        {
+            field.populate(expFillOpacity);
+        }
+
+        Class<?> panelId = getCommonData().getPanelId();
+        GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, fillFieldConfig.getGroup());
+
+        if(fillGroup != null)
+        {
+            fillGroup.enable(expFillColour != null);
         }
 
         if(ttfPanel != null)
@@ -302,20 +337,30 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 Expression expFillColour = null;
                 Expression expFillColourOpacity = null;
 
-                FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
                 if(field != null)
                 {
                     FieldConfigColour colourField = (FieldConfigColour)field;
 
                     expFillColour = colourField.getColourExpression();
-                    expFillColourOpacity = colourField.getColourOpacityExpression();
+                }
+
+                field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+                if(field != null)
+                {
+                    expFillColourOpacity = field.getExpression();
                 }
 
                 Stroke stroke = null;
                 Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                Expression size = null;
-                Expression rotation = null;
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
+
+                // Size
+                Expression expSize = null;
+
+                // Rotation
+                Expression expRotation = null;
+
+                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, expSize, expRotation);
 
                 symbolList.add(mark);
             }
@@ -334,7 +379,16 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     public Fill getFill(GraphicFill graphicFill,
             GraphicPanelFieldManager fieldConfigManager)
     {
-        return null;
+        if(fieldConfigManager == null)
+        {
+            return null;
+        }
+
+        Expression fillColour = null;
+        Expression fillColourOpacity = null;
+        Fill fill = getStyleFactory().fill(graphicFill, fillColour, fillColourOpacity);
+
+        return fill;
     }
 
     /**
@@ -434,7 +488,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
     /**
      * Method called when the field has been selected from a combo box
-     * and may need to be initialised
+     * and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -509,7 +563,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigTTF(fieldConfigBase.getCommonData());
+            copy = new FieldConfigTTF(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -533,5 +587,13 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     @Override
     protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return (symbolizerType == LineSymbolizerImpl.class);
     }
 }

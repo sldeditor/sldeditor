@@ -350,6 +350,7 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="Field" type="XMLFieldConfigEnumValueField" maxOccurs="unbounded" minOccurs="0" />
+                        <xs:element name="Group" type="XMLFieldConfigEnumValueGroup" maxOccurs="unbounded" minOccurs="0" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -392,6 +393,25 @@
             <xs:annotation>
                 <xs:documentation>
                     Unique id of field
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:boolean" name="enabled" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Field state if the enum value is selected:
+                    - false = disabled
+                    - true  = enabled
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigEnumValueGroup">
+        <xs:attribute type="GroupIdEnum" name="id" use="required" >
+            <xs:annotation>
+                <xs:documentation>
+                    Unique id of group
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>

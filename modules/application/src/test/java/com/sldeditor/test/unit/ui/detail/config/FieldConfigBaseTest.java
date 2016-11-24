@@ -327,21 +327,12 @@ public class FieldConfigBaseTest {
         assertFalse(field.isEnabled());
         assertTrue(field.getAttributeSelectionPanel().isEnabled());
 
-        boolean disable = false;
-        field.setFieldStateOverride(disable);
+        boolean fieldEnabledFlag = false;
         field.testSetValueFieldState();
-        assertEquals(disable, field.isEnabled());
-        assertEquals(disable, !field.getAttributeSelectionPanel().isEnabled());
-
-        disable = true;
-        field.setFieldStateOverride(disable);
-        field.testSetValueFieldState();
-        assertEquals(disable, !field.isEnabled());
-        assertEquals(disable, !field.getAttributeSelectionPanel().isEnabled());
+        assertEquals(fieldEnabledFlag, field.isEnabled());
 
         field.attributeUpdated("");
-        assertEquals(disable, !field.isEnabled());
-        assertEquals(disable, !field.getAttributeSelectionPanel().isEnabled());
+        assertEquals(fieldEnabledFlag, field.isEnabled());
     }
 
     /**

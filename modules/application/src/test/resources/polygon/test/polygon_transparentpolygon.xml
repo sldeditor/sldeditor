@@ -33,7 +33,7 @@
             <Disabled field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="0.5" field="OPACITY"/>
+            <LiteralDouble value="0.5" field="POLYGON_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>

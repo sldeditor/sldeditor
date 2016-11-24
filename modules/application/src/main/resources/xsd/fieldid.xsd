@@ -32,7 +32,7 @@
             <xs:enumeration value="ANCHOR_POINT_H" />
             <xs:enumeration value="GAP" />
             <xs:enumeration value="INITIAL_GAP" />
-            <xs:enumeration value="OPACITY" />
+            <xs:enumeration value="OVERALL_OPACITY" />
             <xs:enumeration value="FILTER" />
             <xs:enumeration value="FILL_COLOUR" />
             <xs:enumeration value="DEFAULT_STYLE" />
@@ -44,9 +44,16 @@
             <xs:enumeration value="MAXIMUM_SCALE" />
             <xs:enumeration value="UOM" />
             <xs:enumeration value="NAME" />
+            <xs:enumeration value="POINT_FILL_OPACITY" />
+            <xs:enumeration value="POINT_STROKE_OPACITY" />
+            <xs:enumeration value="LINE_FILL_OPACITY" />
+            <xs:enumeration value="LINE_STROKE_OPACITY" />
+            <xs:enumeration value="POLYGON_FILL_OPACITY" />
+            <xs:enumeration value="POLYGON_STROKE_OPACITY" />
+            <xs:enumeration value="TEXT_OPACITY" />
+            
             <xs:enumeration value="STROKE_STYLE" />
             <xs:enumeration value="STROKE_FILL_COLOUR" />
-            <xs:enumeration value="STROKE_FILL_OPACITY" />
             <xs:enumeration value="STROKE_FILL_WIDTH" />
             <xs:enumeration value="STROKE_WIDTH" />
             <xs:enumeration value="STROKE_LINE_JOIN" />
@@ -54,7 +61,6 @@
             <xs:enumeration value="STROKE_DASH_ARRAY" />
             <xs:enumeration value="STROKE_OFFSET" />
             <xs:enumeration value="STROKE_STROKE_COLOUR" />
-            <xs:enumeration value="STROKE_STROKE_OPACITY" />
 
             <xs:enumeration value="STROKE_SYMBOL_SIZE" />
             <xs:enumeration value="STROKE_SYMBOL_ANGLE" />

@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 
 /**
@@ -42,11 +43,13 @@ public class ColourFieldConfigTest {
      */
     @Test
     public void testColourFieldConfig() {
+        GroupIdEnum groupId = GroupIdEnum.FILLCOLOUR;
         FieldIdEnum strokeFillColour = FieldIdEnum.STROKE_FILL_COLOUR;
-        FieldIdEnum strokeFillOpacity = FieldIdEnum.STROKE_FILL_OPACITY;
+        FieldIdEnum strokeFillOpacity = FieldIdEnum.OVERALL_OPACITY;
         FieldIdEnum strokeFillWidth = FieldIdEnum.STROKE_FILL_WIDTH;
-        ColourFieldConfig config = new ColourFieldConfig(strokeFillColour, strokeFillOpacity, strokeFillWidth);
+        ColourFieldConfig config = new ColourFieldConfig(groupId, strokeFillColour, strokeFillOpacity, strokeFillWidth);
 
+        assertEquals(groupId, config.getGroup());
         assertEquals(strokeFillColour, config.getColour());
         assertEquals(strokeFillOpacity, config.getOpacity());
         assertEquals(strokeFillWidth, config.getWidth());

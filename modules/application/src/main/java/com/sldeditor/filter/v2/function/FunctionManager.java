@@ -285,7 +285,7 @@ public class FunctionManager implements FunctionNameInterface {
      * Creates the expression.
      *
      * @param functionName the function name
-     * @param parameters the parameters
+     * @param argumentList the argument list
      * @return the expression
      */
     /* (non-Javadoc)
@@ -293,14 +293,14 @@ public class FunctionManager implements FunctionNameInterface {
      */
     @Override
     public Expression createExpression(FunctionName functionName, List<Expression> argumentList) {
-            if(functionName == null)
-            {
-                return null;
-            }
+        if(functionName == null)
+        {
+            return null;
+        }
 
-            Literal fallback = null;
-            Function function = functionFactory.function(functionName.getFunctionName(), argumentList, fallback);
+        Literal fallback = null;
+        Function function = functionFactory.function(functionName.getFunctionName(), argumentList, fallback);
 
-            return function;
+        return function;
     }
 }

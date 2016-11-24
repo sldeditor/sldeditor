@@ -261,6 +261,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigEnumValueGroup }
+     * 
+     */
+    public XMLFieldConfigEnumValueGroup createXMLFieldConfigEnumValueGroup() {
+        return new XMLFieldConfigEnumValueGroup();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigString }
      * 
      */

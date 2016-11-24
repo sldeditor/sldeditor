@@ -95,7 +95,7 @@ public class FileSystemInputTest {
             assertEquals(1, sldDataContentsList.size());
 
             // Changes where the file is to be saved to
-            File saveFile = File.createTempFile("test", ".sld");
+            File saveFile = File.createTempFile(getClass().getSimpleName(), ".sld");
 
             SLDData sldData = (SLDData) sldDataContentsList.get(0);
 
@@ -157,22 +157,24 @@ public class FileSystemInputTest {
         List<SLDDataInterface> sldDataList = input.open(url);
 
         assertEquals(1, sldDataList.size());
-        
+
         try {
-            Path tempFolder = Files.createTempDirectory("test");
-            
+            Path tempFolder = Files.createTempDirectory(getClass().getSimpleName());
+
             File tempFolderFile = tempFolder.toFile();
             FileTreeNode destinationTreeNode = new FileTreeNode(tempFolderFile.getParentFile(), tempFolderFile.getName());
 
             Map<NodeInterface, List<SLDDataInterface>> copyDataMap = new HashMap<NodeInterface, List<SLDDataInterface>>();
-            
+
             copyDataMap.put(destinationTreeNode, sldDataList);
             assertTrue(input.copyNodes(destinationTreeNode, copyDataMap));
-            
+
             SLDData sldData = (SLDData) sldDataList.get(0);
             sldData.setSLDFile(new File(tempFolderFile, "point_attribute.sld"));
-            
+
             input.deleteNodes(destinationTreeNode, sldDataList);
+
+            tempFolderFile.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
             fail(e.getMessage());

@@ -8,19 +8,17 @@
             <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
             <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
             <FieldList>
+                <Field id="SYMBOL_TYPE" enabled="true" />
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
-                <Field id="OPACITY" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
                 <Field id="INITIAL_GAP" enabled="false" />
                 <Field id="GAP" enabled="false" />
-                <Field id="ANCHOR_POINT_H" enabled="true" />
-                <Field id="ANCHOR_POINT_V" enabled="true" />
-                <Field id="DISPLACEMENT_X" enabled="true" />
-                <Field id="DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_FILL_OPACITY" enabled="true" />
-                <Field id="STROKE_WIDTH" enabled="true" />
+
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>
@@ -32,19 +30,17 @@
             <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
             <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
             <FieldList>
+                <Field id="SYMBOL_TYPE" enabled="true" />
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
-                <Field id="OPACITY" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
                 <Field id="INITIAL_GAP" enabled="false" />
                 <Field id="GAP" enabled="false" />
-                <Field id="ANCHOR_POINT_H" enabled="true" />
-                <Field id="ANCHOR_POINT_V" enabled="true" />
-                <Field id="DISPLACEMENT_X" enabled="true" />
-                <Field id="DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_FILL_OPACITY" enabled="true" />
-                <Field id="STROKE_WIDTH" enabled="true" />
+
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>
@@ -56,19 +52,18 @@
             <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
             <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
             <FieldList>
-                <Field id="ANGLE" enabled="true" />
-                <Field id="SIZE" enabled="true" />
-                <Field id="OPACITY" enabled="true" />
-                <Field id="INITIAL_GAP" enabled="false" />
-                <Field id="GAP" enabled="false" />
-                <Field id="ANCHOR_POINT_H" enabled="true" />
-                <Field id="ANCHOR_POINT_V" enabled="true" />
-                <Field id="DISPLACEMENT_X" enabled="true" />
-                <Field id="DISPLACEMENT_Y" enabled="true" />
-                <Field id="FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_FILL_COLOUR" enabled="true" />
-                <Field id="STROKE_FILL_OPACITY" enabled="true" />
-                <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="STROKE_STYLE" enabled="true" />
+
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
+
+                <Group id="FILLCOLOUR" enabled="true" />
+                <Group id="STROKECOLOUR" enabled="false" />
+                <Group id="STROKESYMBOL" enabled="true" />
+                <Group id="STROKEANCHORPOINT" enabled="true" />
+                <Group id="STROKEDISPLACEMENT" enabled="true" />
             </FieldList>
         </Value>
     </Panel>

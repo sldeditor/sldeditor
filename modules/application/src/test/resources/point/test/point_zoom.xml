@@ -45,7 +45,7 @@
             <LiteralDouble value="0.0" field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="1.0" field="POINT_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -77,7 +77,7 @@
             <LiteralDouble value="0.0" field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="1.0" field="POINT_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -108,7 +108,7 @@
             <LiteralDouble value="0.0" field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="1.0" field="OPACITY"/>
+            <LiteralDouble value="1.0" field="POINT_FILL_OPACITY"/>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>

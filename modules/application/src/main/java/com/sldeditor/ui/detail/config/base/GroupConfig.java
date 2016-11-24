@@ -42,7 +42,6 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
  * The Class GroupConfig represents the configuration for a group of fields.
@@ -81,6 +80,12 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
 
     /** The box containing the headings/fields. */
     private Box parentBox = null;
+
+    /** The group enabled flag. */
+    private boolean groupEnabled = true;
+
+    /** The group title. */
+    private JLabel groupTitle = null;
 
     /**
      * Gets the id.
@@ -230,7 +235,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
             }
             else
             {
-                JLabel groupTitle = new JLabel(getLabel());
+                groupTitle = new JLabel(getLabel());
                 groupTitle.setBounds(0, 0, FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
                 groupTitle.setOpaque(true);
                 component = groupTitle;
@@ -258,16 +263,13 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      */
     public static Component createSeparator() {
         JPanel p = new JPanel();
-        
+
         p.setLayout(new BorderLayout());
 
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        
+
         p.add(separator,  BorderLayout.CENTER);
         Dimension size = new Dimension(FULL_WIDTH, 5);
-//        separator.setPreferredSize(size);
-//        separator.setMaximumSize(size);
-//        separator.setSize(size);
 
         p.setPreferredSize(size);
         return p;
@@ -289,6 +291,8 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
             groupCheckbox.setSelected(enable);
         }
         enableSubGroups(enable);
+
+        setValueGroupState();
     }
 
     /**
@@ -300,11 +304,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     {
         for(FieldConfigBase field : getFieldConfigList())
         {
-            FieldPanel panel = field.getPanel();
-            if(panel != null)
-            {
-                panel.enablePanel(enabled);
-            }
+            CurrentFieldState fieldState = field.getFieldState();
+            fieldState.setGroupSelected(enabled);
+            field.setFieldState(fieldState);
         }
 
         for(GroupConfigInterface subGroup : subGroupList)
@@ -323,14 +325,13 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      */
     @Override
     public boolean isPanelEnabled() {
-        if(groupCheckbox == null)
+        boolean checkBox = true;
+        if(groupCheckbox != null)
         {
-            return true;
+            checkBox = groupCheckbox.isSelected();
         }
-        else
-        {
-            return groupCheckbox.isSelected();
-        }
+
+        return checkBox && groupEnabled;
     }
 
     /**
@@ -413,5 +414,56 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     @Override
     public String toString() {
         return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#setGroupStateOverride(boolean)
+     */
+    @Override
+    public void setGroupStateOverride(boolean enabled) {
+        groupEnabled = enabled;
+
+        for(FieldConfigBase field : getFieldConfigList())
+        {
+            CurrentFieldState fieldState = field.getFieldState();
+            fieldState.setGroupEnabled(groupEnabled);
+            fieldState.setFieldEnabled(groupEnabled);
+            field.setFieldState(fieldState);
+        }
+
+        setValueGroupState();
+    }
+
+    /**
+     * Sets the value group state.
+     */
+    private void setValueGroupState() {
+        boolean enabled = groupEnabled;
+        boolean isSelected = true;
+
+        if(isShowLabel())
+        {
+            if(isOptional())
+            {
+                groupCheckbox.setEnabled(enabled);
+                isSelected = groupCheckbox.isSelected();
+            }
+            else
+            {
+                groupTitle.setEnabled(enabled);
+            }
+        }
+
+        for(FieldConfigBase field : getFieldConfigList())
+        {
+            CurrentFieldState fieldState = field.getFieldState();
+            fieldState.setGroupSelected(isSelected);
+            field.setFieldState(fieldState);
+        }
+
+        //        for(GroupConfigInterface subGroup : subGroupList)
+        //        {
+        //            subGroup.setValueGroupState();
+        //        }
     }
 }

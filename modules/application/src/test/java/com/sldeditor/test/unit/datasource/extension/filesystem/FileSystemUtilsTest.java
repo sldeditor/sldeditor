@@ -42,7 +42,7 @@ public class FileSystemUtilsTest {
 
         assertFalse(FileSystemUtils.isFileExtensionSupported(null,  null));
 
-        File f = new File("test.tst");
+        File f = new File(getClass().getSimpleName() + ".tst");
 
         List<String> fileExtensionList = new ArrayList<String>();
 

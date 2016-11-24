@@ -153,6 +153,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
                 if(fill != null)
                 {
                     fieldConfigVisitor.populateField(FieldIdEnum.FILL_COLOUR, fill.getColor());
+                    fieldConfigVisitor.populateField(FieldIdEnum.TEXT_OPACITY, fill.getOpacity());
                 }
 
                 // Halo
@@ -318,7 +319,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
         FieldConfigColour fdmFillColour = (FieldConfigColour)fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
         Expression fillColour = fdmFillColour.getColourExpression();
-        Expression fillColourOpacity = fdmFillColour.getColourOpacityExpression();
+        Expression fillColourOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.TEXT_OPACITY);
 
         Fill fill = getStyleFactory().createFill(fillColour, fillColourOpacity);
 

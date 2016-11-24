@@ -18,7 +18,6 @@
  */
 package com.sldeditor.ui.widgets;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
@@ -112,19 +111,5 @@ public class FieldPanel extends JPanel {
         lblLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 
         add(lblLabel);
-    }
-
-    /**
-     * Enable panel.
-     *
-     * @param enabled the enabled
-     */
-    public void enablePanel(boolean enabled) {
-        for(int index = 0; index < this.getComponentCount(); index ++)
-        {
-            Component c = this.getComponent(index);
-
-            c.setEnabled(enabled);
-        }
     }
 }

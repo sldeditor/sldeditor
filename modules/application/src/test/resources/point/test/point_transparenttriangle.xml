@@ -33,7 +33,8 @@
             <LiteralDouble value="0.0" field="ANGLE"/>
             <Disabled field="GAP"/>
             <Disabled field="INITIAL_GAP"/>
-            <LiteralDouble value="0.2" field="OPACITY"/>
+            <LiteralDouble value="0.48" field="POINT_FILL_OPACITY"/>
+            <LiteralDouble value="0.65" field="POINT_STROKE_OPACITY"/>
             <LiteralString value="#000000" field="STROKE_FILL_COLOUR"/>
             <LiteralDouble value="2.0" field="STROKE_FILL_WIDTH"/>
         </FieldTests>

@@ -17,6 +17,7 @@
         <FieldConfigGeometryField id="GEOMETRY" label="text.general.geometry" />
         <FieldConfigString id="LABEL" label="text.general.label" />
         <FieldConfigColour id="FILL_COLOUR" label="text.general.colour" />
+        <FieldConfigSlider id="TEXT_OPACITY" label="text.general.opacity" defaultValue="1.0" />
     </Group>
     <Group id="FONT" label="text.font" showLabel="true" option="true">
         <FieldConfigFont id="FONT_FAMILY"/>

@@ -94,4 +94,34 @@ public class SLDCookbookPolygon
     {
         test.runTest("polygon", "polygon_zoombasedpolygon.xml");
     }
+
+    @Test
+    public void polygon_trianglefill()
+    {
+        test.runTest("polygon", "polygon_trianglefill.xml");
+    }
+
+    @Test
+    public void polygon_trianglefill_nostroke()
+    {
+        test.runTest("polygon", "polygon_trianglefill_nostroke.xml");
+    }
+
+    @Test
+    public void polygon_hatchingfill_transparent()
+    {
+        test.runTest("polygon", "polygon_hatchingfill_transparent.xml");
+    }
+
+    @Test
+    public void polygon_picturefill()
+    {
+        test.runTest("polygon", "polygon_picturefill.xml");
+    }
+
+    @Test
+    public void polygon_ttfill()
+    {
+        test.runTest("polygon", "polygon_ttffill.xml");
+    }
 }

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
@@ -32,6 +33,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -58,6 +60,15 @@ public abstract class FieldState extends FieldConfigBase {
     /** The field enable map. */
     private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = null;
 
+    /** The fill field config. */
+    protected ColourFieldConfig fillFieldConfig;
+
+    /** The stroke field config. */
+    protected ColourFieldConfig strokeFieldConfig; 
+
+    /** The symbol selection field. */
+    protected FieldIdEnum symbolSelectionField;
+
     /**
      * Instantiates a new field state.
      *
@@ -65,10 +76,16 @@ public abstract class FieldState extends FieldConfigBase {
      * @param resourceFile the resource file
      */
     protected FieldState(FieldConfigCommonData commonData,
-            String resourceFile)
+            String resourceFile,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField)
     {
         super(commonData);
         this.resourceFile = resourceFile;
+        this.fillFieldConfig = fillFieldConfig;
+        this.strokeFieldConfig = strokeFieldConfig;
+        this.symbolSelectionField = symbolSelectionField;
     }
 
     /**
@@ -97,9 +114,10 @@ public abstract class FieldState extends FieldConfigBase {
      *
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the new value
      */
-    public abstract void setValue(GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol);
+    public abstract void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol);
 
     /**
      * Gets the value.
@@ -237,6 +255,14 @@ public abstract class FieldState extends FieldConfigBase {
      * @return true, if successful
      */
     public abstract boolean accept(GraphicalSymbol symbol);
+
+    /**
+     * Checks if is overall opacity needs to be set.
+     *
+     * @param symbolizerType the symbolizer type
+     * @return true, if is overall opacity
+     */
+    public abstract boolean isOverallOpacity(Class<?> symbolizerType);
 
     /**
      * Sets the update symbol listener.

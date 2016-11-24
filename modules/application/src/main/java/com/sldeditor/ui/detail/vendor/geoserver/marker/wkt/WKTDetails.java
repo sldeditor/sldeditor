@@ -245,4 +245,16 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     public void preLoadSymbol() {
         setAllDefaultValues();
     }
+
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        for(FieldConfigBase fieldConfig : getFieldConfigList())
+        {
+            fieldConfig.setEnabled(enabled);
+        }
+        super.setEnabled(enabled);
+    }
 }

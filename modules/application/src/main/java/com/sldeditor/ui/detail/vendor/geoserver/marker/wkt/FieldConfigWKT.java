@@ -29,6 +29,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.FillImpl;
+import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.Stroke;
@@ -42,6 +43,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
@@ -78,19 +80,23 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     /** The wkt panel. */
     private WKTDetails wktPanel = null;
 
-    /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the
-     * field enable/disable field states for the different symbol types
-     */
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WKT.xml";
 
     /**
      * Instantiates a new field config string.
      *
      * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigWKT(FieldConfigCommonData commonData) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE);
+    public FieldConfigWKT(FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+
     }
 
     /**
@@ -222,13 +228,16 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     /**
      * Sets the value.
      *
+     * @param symbolizerType the symbolizer type
      * @param fieldConfigManager the field config manager
      * @param multiOptionPanel the multi option panel
+     * @param graphic the graphic
      * @param symbol the symbol
      */
     @Override
-    public void setValue(GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, GraphicalSymbol symbol)
+    public void setValue(Class<?> symbolizerType, 
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
     {
         if((symbol != null) && (fieldConfigManager != null))
         {
@@ -248,7 +257,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     {
                         field.populate(expFillColour);
                     }
-                    field = fieldConfigManager.get(FieldIdEnum.OPACITY);
+                    field = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
                     if(field != null)
                     {
                         field.populate(expFillColourOpacity);
@@ -291,10 +300,35 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                 wellKnownName = getConfigField().getExpression();
                 if(wellKnownName != null)
                 {
+                    // Stroke colour
+                    Expression expStrokeColour = null;
+                    Expression expStrokeColourOpacity = null;
+                    FieldConfigBase field = null;
+                    if(strokeEnabled)
+                    {
+                        field = fieldConfigManager.get(FieldIdEnum.STROKE_STROKE_COLOUR);
+                        if(field != null)
+                        {
+                            if(field instanceof FieldConfigColour)
+                            {
+                                FieldConfigColour colourField = (FieldConfigColour)field;
+
+                                expStrokeColour = colourField.getColourExpression();
+                                expStrokeColourOpacity = colourField.getColourOpacityExpression();
+                            }
+                        }
+                    }
+
+                    // Fill colour
                     Expression expFillColour = null;
                     Expression expFillColourOpacity = null;
 
-                    FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                    // Fill colour is ignored, uses stroke colour
+                    expFillColour = expStrokeColour;
+                    expFillColourOpacity = expStrokeColourOpacity;
+
+                    /*
+                    field = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
                     if(field != null)
                     {
                         if(field instanceof FieldConfigColour)
@@ -305,12 +339,24 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                             expFillColourOpacity = colourField.getColourOpacityExpression();
                         }
                     }
-
-                    Stroke stroke = null;
+                     */
                     Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                    Expression size = null;
+                    Stroke stroke = getStyleFactory().createStroke(expStrokeColour, expStrokeColourOpacity);
+                    field = fieldConfigManager.get(FieldIdEnum.STROKE_WIDTH);
+                    if(field != null)
+                    {
+                        Expression strokeWidth = field.getExpression();
+                        stroke.setWidth(strokeWidth);
+                    }
+
+                    Expression symbolSize = null;
+                    field = fieldConfigManager.get(FieldIdEnum.STROKE_SYMBOL_SIZE);
+                    if(field != null)
+                    {
+                        symbolSize = field.getExpression();
+                    }
                     Expression rotation = null;
-                    Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
+                    Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, symbolSize, rotation);
 
                     symbolList.add(mark);
                 }
@@ -459,7 +505,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
     /**
      * Method called when the field has been selected from a combo box
-     * and may need to be initialised
+     * and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -494,7 +540,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
 
         if(fieldConfigBase != null)
         {
-            copy = new FieldConfigWKT(fieldConfigBase.getCommonData());
+            copy = new FieldConfigWKT(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -518,5 +564,13 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     @Override
     protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
+     */
+    @Override
+    public boolean isOverallOpacity(Class<?> symbolizerType) {
+        return true;
     }
 }

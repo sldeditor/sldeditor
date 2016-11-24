@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_ttffill.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Polygon TTF fill" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Polygon TTF fill" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="ttf://Arial#U+0025" field="TTF_SYMBOL"/>
+            <LiteralDouble value="50.0" field="SIZE"/>
+            <LiteralDouble value="63.0" field="ANGLE"/>
+            <LiteralDouble value="0.25" field="POLYGON_FILL_OPACITY"/>
+            <LiteralString value="#CC0066" field="FILL_COLOUR"/>
+            <Disabled field="STROKE_FILL_COLOUR"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

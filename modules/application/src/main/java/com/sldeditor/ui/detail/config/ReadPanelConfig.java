@@ -39,6 +39,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigEnum;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue.FieldList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueField;
+import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueGroup;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueItem;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigFeatureTypeConstraint;
@@ -591,7 +592,9 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param valueObj the value obj
      * @return the symbol type config
      */
-    public static SymbolTypeConfig parseSymbolTypeConfig(Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValue valueObj) {
+    public static SymbolTypeConfig parseSymbolTypeConfig(Class<?> localisationClass,
+            Class<?> panelId,
+            XMLFieldConfigEnumValue valueObj) {
         SymbolTypeConfig config = new SymbolTypeConfig(panelId);
 
         String groupName = valueObj.getGroupName();
@@ -609,12 +612,16 @@ public class ReadPanelConfig implements PanelConfigInterface {
         }
 
         FieldList fieldList = valueObj.getFieldList();
-
         if(fieldList != null)
         {
             for(XMLFieldConfigEnumValueField field : fieldList.getField())
             {
                 config.addField(field.getId(), field.isEnabled());
+            }
+
+            for(XMLFieldConfigEnumValueGroup group : fieldList.getGroup())
+            {
+                config.addGroup(group.getId(), group.isEnabled());
             }
         }
         return config;

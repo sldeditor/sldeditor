@@ -24,9 +24,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.FieldEnableState;
 
 /**
@@ -59,8 +58,8 @@ public class SymbolTypeConfig
     /** The field map. */
     private Map<FieldIdEnum, Boolean> fieldMap = new HashMap<FieldIdEnum, Boolean>();
 
-    /** The logger. */
-    private static Logger logger = Logger.getLogger(SymbolTypeConfig.class);
+    /** The group map. */
+    private Map<GroupIdEnum, Boolean> groupMap = new HashMap<GroupIdEnum, Boolean>();
 
     /** The panel id. */
     private Class<?> panelId = null;
@@ -95,21 +94,26 @@ public class SymbolTypeConfig
     {
         for(String menuOption : keyOrderList)
         {
-            List<FieldIdEnum> fieldList = new ArrayList<FieldIdEnum>();
+            Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
 
             for(FieldIdEnum fieldKey : fieldMap.keySet())
             {
                 boolean value = fieldMap.get(fieldKey);
 
-                if(value)
-                {
-                    fieldList.add(fieldKey);
-                }
+                fieldList.put(fieldKey, value);
+            }
+
+            Map<GroupIdEnum, Boolean> groupList = new HashMap<GroupIdEnum, Boolean>();
+            for(GroupIdEnum groupKey : groupMap.keySet())
+            {
+                boolean value = groupMap.get(groupKey);
+
+                groupList.put(groupKey, value);
             }
 
             if(fieldEnableState != null)
             {
-                fieldEnableState.add(panelName, menuOption, fieldList);
+                fieldEnableState.add(panelName, menuOption, fieldList, groupList);
             }
         }
     }
@@ -166,10 +170,19 @@ public class SymbolTypeConfig
      */
     public void addField(FieldIdEnum fieldId, boolean enabled)
     {
-        logger.debug(String.format("AddField %s %s", fieldId.toString(), enabled));
         fieldMap.put(fieldId, enabled);
     }
 
+    /**
+     * Adds the group.
+     *
+     * @param groupId the group id
+     * @param enabled the enabled
+     */
+    public void addGroup(GroupIdEnum groupId, boolean enabled) {
+        groupMap.put(groupId, enabled);
+    }
+    
     /**
      * Gets the option map.
      *
@@ -214,4 +227,5 @@ public class SymbolTypeConfig
     public String getGroupName() {
         return groupName;
     }
+
 }
