@@ -24,6 +24,8 @@ import java.nio.file.Path;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.log4j.Logger;
+
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
@@ -104,6 +106,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         {
             if(current.equals(updated))
             {
+                System.out.println("Loaded file modified");
                 if(!isFileSaved() && startTimeout())
                 {
                     timer.schedule(new TimerTask() {
@@ -162,6 +165,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     private synchronized void setCurrentLoadedFile(Path currentLoadedFile) {
         this.currentLoadedFile = currentLoadedFile;
+        System.out.println("Currently loaded file : " + currentLoadedFile.toString());
     }
 
     /**

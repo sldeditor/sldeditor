@@ -32,7 +32,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -133,6 +132,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** The under test flag. */
     private static boolean underTestFlag = false;
 
+    /** The sld editor dlg. */
+    private SLDEditorDlgInterface sldEditorDlg = null;
+
     static {
         JAIExt.initJAIEXT();
     }
@@ -185,8 +187,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                 setOSXAppIcon();
                 AppSplashScreen.splashInit();
-
-                createAndShowGUI(filename, extensionArgList, false);
+                createAndShowGUI(filename, extensionArgList, false, null);
             }
         });
     }
@@ -228,8 +229,19 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @param filename the filename
      * @param extensionArgList the extension arg list
+     * @param overrideSLDEditorDlg the override SLD editor dlg
      */
-    public SLDEditor(String filename, List<String> extensionArgList) {
+    public SLDEditor(String filename, List<String> extensionArgList,
+            SLDEditorDlgInterface overrideSLDEditorDlg) {
+
+        if(overrideSLDEditorDlg == null)
+        {
+            sldEditorDlg = new SLDEditorDlg();
+        }
+        else
+        {
+            sldEditorDlg = overrideSLDEditorDlg;
+        }
 
         UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
 
@@ -316,9 +328,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param filename the filename
      * @param extensionArgList the extension argument list
      * @param underTest the under test flag
+     * @param overrideSLDEditorDlg the override SLD editor dlg
      * @return the SLD editor
      */
-    public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList, boolean underTest) {
+    public static SLDEditor createAndShowGUI(String filename,
+            List<String> extensionArgList,
+            boolean underTest,
+            SLDEditorDlgInterface overrideSLDEditorDlg) {
         underTestFlag = underTest;
         frame = new JFrame(generateApplicationTitleString());
 
@@ -329,7 +345,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         frame.setDefaultCloseOperation(underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
 
         // Add contents to the window.
-        SLDEditor sldEditor = new SLDEditor(filename, extensionArgList);
+        SLDEditor sldEditor = new SLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
 
         // Display the window.
         frame.pack();
@@ -590,20 +606,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 {
                     if(dataEditedFlag && !isUnderTestFlag())
                     {
-                        Object[] options = {Localisation.getString(SLDEditor.class, "common.discard"),
-                                Localisation.getString(SLDEditor.class, "common.cancel")};
-
-                        int result = JOptionPane.showOptionDialog(frame,
-                                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChanges"),
-                                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChangesTitle"),
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE,
-                                null,
-                                options,
-                                options[1]);
-
-                        // If discard option selected then allow the new symbol to be loaded
-                        loadNewSymbol = (result == JOptionPane.OK_OPTION);
+                        loadNewSymbol = sldEditorDlg.load(frame);
                     }
 
                     if(loadNewSymbol)
@@ -805,23 +808,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     @Override
     public void reloadSLDFile() {
-        Object[] options = {Localisation.getString(SLDEditor.class, "common.yes"),
-                Localisation.getString(SLDEditor.class, "common.no")};
-
-        int result = JOptionPane.OK_OPTION;
+        boolean reloadFile = true;
         if(!underTestFlag)
         {
-            result = JOptionPane.showOptionDialog(frame,
-                    Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
-                    Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    null,
-                    options,
-                    options[1]);
+            reloadFile = sldEditorDlg.reload(frame);
         }
 
-        if(result == JOptionPane.OK_OPTION)
+        if(reloadFile)
         {
             SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
 

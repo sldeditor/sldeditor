@@ -132,7 +132,7 @@ public class SLDTestRunner
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
 
-        sldEditor = SLDEditor.createAndShowGUI(null, null, true);
+        sldEditor = SLDEditor.createAndShowGUI(null, null, true, null);
     }
 
     /**
