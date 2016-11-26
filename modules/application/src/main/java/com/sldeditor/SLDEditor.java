@@ -613,6 +613,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                     {
                         populate(firstObject);
                     }
+                    
+                    ReloadManager.getInstance().reset();
                 }
             }
 

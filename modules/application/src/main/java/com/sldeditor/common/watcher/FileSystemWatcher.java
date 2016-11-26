@@ -70,6 +70,7 @@ public class FileSystemWatcher implements Runnable {
     public void addWatch(FileWatcherUpdateInterface parent, Path path) {
         if(path != null)
         {
+            System.out.println(path.toString());
             // The directory that has to be watched needs to be registered. Any
             // object that implements the Watchable interface can be registered.
 

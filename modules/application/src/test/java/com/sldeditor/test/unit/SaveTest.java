@@ -29,15 +29,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
 import org.apache.commons.io.IOUtils;
+import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.SLDEditor;
 import com.sldeditor.SLDEditorDlgInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.filesystem.SelectedFiles;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
 
 /**
  * Test the save/save as reload functionality.
@@ -52,10 +62,10 @@ public class SaveTest {
      */
     class DummyDlg implements SLDEditorDlgInterface
     {
-        
+
         /** The load called. */
         private boolean loadCalled = false;
-        
+
         /** The reload called. */
         private boolean reloadCalled = false;
 
@@ -64,6 +74,7 @@ public class SaveTest {
          */
         @Override
         public boolean load(JFrame frame) {
+            loadCalled = true;
             return false;
         }
 
@@ -78,12 +89,13 @@ public class SaveTest {
             loadCalled = false;
             return tmp;
         }
-        
+
         /* (non-Javadoc)
          * @see com.sldeditor.SLDEditorDlgInterface#reload(javax.swing.JFrame)
          */
         @Override
         public boolean reload(JFrame frame) {
+            reloadCalled = true;
             return false;
         }
 
@@ -102,11 +114,11 @@ public class SaveTest {
     }
 
     /**
-     * Test.
+     * Test save functionality.
      */
     @Ignore
     @Test
-    public void test() {
+    public void testSave() {
         String testsldfile = "/line/sld/line_dashdot.sld";
         String testsldfile2 = "/line/sld/line_simpleline.sld";
         SLDEditor sldEditor = null;
@@ -115,32 +127,77 @@ public class SaveTest {
         InputStream inputStream = SaveTest.class.getResourceAsStream(testsldfile);
         InputStream inputStream2 = SaveTest.class.getResourceAsStream(testsldfile2);
 
+        File file1 = null;
+        File file2 = null;
+        File file3 = null;
+
         try {
-            File file1 = stream2file(inputStream);
-            File file2 = stream2file(inputStream2);
+            file1 = stream2file(inputStream);
+            file2 = stream2file(inputStream2);
 
             sldEditor = SLDEditor.createAndShowGUI(null, null, false, dlg);
 
+            System.out.println("Opening : " + file1.toURI().toURL());
             sldEditor.openFile(file1.toURI().toURL());
 
             assertFalse(dlg.isLoadCalled()); // Data was not edited
             assertFalse(dlg.isReloadCalled());
+            System.out.println("Saving : " + file1.toURI().toURL());
             sldEditor.saveFile(file1.toURI().toURL());
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             assertFalse(dlg.isLoadCalled());
             assertFalse(dlg.isReloadCalled());
 
-            overwriteFile(file1, file2);
+            overwriteFile(file2, file1);
             assertFalse(dlg.isLoadCalled());
-            assertTrue(dlg.isReloadCalled());
+            assertFalse(dlg.isReloadCalled());
             File saveAsFile = new File(file1.getParentFile(), "SaveAs" + file1.getName());
+            System.out.println("Saving : " + saveAsFile.toURI().toURL());
             sldEditor.saveFile(saveAsFile.toURI().toURL());
             assertFalse(dlg.isLoadCalled());
             assertFalse(dlg.isReloadCalled());
+            System.out.println("Saving : " + saveAsFile.toURI().toURL());
             sldEditor.saveFile(saveAsFile.toURI().toURL());
+            assertFalse(dlg.isLoadCalled());
+            assertFalse(dlg.isReloadCalled());
+
+            file3 = File.createTempFile(SaveTest.class.getName(), ".sld");
+
+            SelectedFiles selectedFiles = createNewSLD();
+            System.out.println("Creating new file");
+            assertTrue(sldEditor.loadSLDString(selectedFiles));
+            assertFalse(dlg.isLoadCalled());
+            assertFalse(dlg.isReloadCalled());
+            overwriteFile(file1, file3);
+            assertFalse(dlg.isLoadCalled());
+            assertFalse(dlg.isReloadCalled());
+            System.out.println("Saving : " + file3.toURI().toURL());
+            sldEditor.saveFile(file3.toURI().toURL());
             assertFalse(dlg.isLoadCalled());
             assertFalse(dlg.isReloadCalled());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally
+        {
+            if(file1 != null)
+            {
+                file1.delete();
+            }
+
+            if(file2 != null)
+            {
+                file2.delete();
+            }
+
+            if(file3 != null)
+            {
+                file3.delete();
+            }
         }
     }
 
@@ -168,9 +225,9 @@ public class SaveTest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
+
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -190,5 +247,23 @@ public class SaveTest {
         }
 
         return tempFile;
+    }
+
+    /**
+     * @return
+     */
+    private SelectedFiles createNewSLD() {
+        List<SLDDataInterface> newSLDList = new ArrayList<SLDDataInterface>();
+
+        StyledLayerDescriptor sld = DefaultSymbols.createNewPolygon();
+
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
+
+        String newName = "TestSLD";
+        newSLDList.add(new SLDData(new StyleWrapper(newName), sldWriter.encodeSLD(null, sld)));
+
+        SelectedFiles selectedFiles = new SelectedFiles();
+        selectedFiles.setSldData(newSLDList);
+        return selectedFiles;
     }
 }

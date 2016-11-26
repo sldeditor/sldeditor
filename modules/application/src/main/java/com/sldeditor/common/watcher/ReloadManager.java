@@ -24,8 +24,6 @@ import java.nio.file.Path;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.log4j.Logger;
-
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
@@ -114,6 +112,8 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
                         @Override
                         public void run() {
                             timingOutFinished();
+                            System.out.println("Finished timeout");
+
                             if(listener != null)
                             {
                                 listener.reloadSLDFile();
@@ -165,7 +165,8 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     private synchronized void setCurrentLoadedFile(Path currentLoadedFile) {
         this.currentLoadedFile = currentLoadedFile;
-        System.out.println("Currently loaded file : " + currentLoadedFile.toString());
+
+        System.out.println("Currently loaded file : " + ((currentLoadedFile != null) ? currentLoadedFile.toString() : "<null>"));
     }
 
     /**
@@ -183,6 +184,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     private synchronized boolean startTimeout() {
         if(this.timingOut == false)
         {
+            System.out.println("Starting timeout");
             this.timingOut = true;
             return true;
         }
@@ -214,6 +216,15 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * Sets the file saved.
      */
     public synchronized void setFileSaved() {
+        System.out.println("File saved");
         this.fileSaved = true;
+    }
+
+    /**
+     * Reset file saved flag.
+     */
+    public synchronized void reset() {
+        System.out.println("Reset");
+        this.fileSaved = false;
     }
 }
