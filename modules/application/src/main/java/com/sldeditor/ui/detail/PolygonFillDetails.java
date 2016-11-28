@@ -85,6 +85,9 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     /** The default displacement. */
     private static Displacement defaultDisplacement = new DisplacementImpl();
 
+    /** The symbolizer. */
+    private Symbolizer symbolizer = null;
+
     /**
      * Constructor.
      *
@@ -174,9 +177,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         Fill fill = null;
         Expression expOpacity = null;
 
+        symbolizer = null;
         if(selectedSymbol != null)
         {
-            Symbolizer symbolizer = selectedSymbol.getSymbolizer();
+            symbolizer = selectedSymbol.getSymbolizer();
 
             Graphic graphic = null;
             if(symbolizer instanceof PointSymbolizerImpl)
@@ -214,6 +218,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
                         graphic = fill.getGraphicFill();
                     }
                 }
+            }
+            else
+            {
+                System.err.println("symbolizer == null");
             }
 
             if(graphic == null)
@@ -302,8 +310,6 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     private void updateSymbol() {
         if(!Controller.getInstance().isPopulating())
         {
-            Symbolizer symbolizer = SelectedSymbol.getInstance().getSymbolizer();
-
             if(symbolizer instanceof PolygonSymbolizer)
             {
                 PolygonSymbolizerImpl newPolygonSymbolizer = (PolygonSymbolizerImpl) symbolizer;

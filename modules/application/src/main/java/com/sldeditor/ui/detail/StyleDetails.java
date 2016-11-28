@@ -75,7 +75,10 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
             Style style = selectedSymbol.getStyle();
 
             populateStandardData(style);
-            fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE, style.isDefault());
+            if(style != null)
+            {
+                fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE, style.isDefault());
+            }
         }
     }
 

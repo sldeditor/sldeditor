@@ -135,15 +135,17 @@ public class SLDOutputTest {
     /**
      * Gets the string.
      *
-     * @param doc the XML document
-     * @param symbolizer the symbolizer
+     * @param sldContentString the sld content string
      * @param selectionData the selection data
      * @param field the field
+     * @param suffix the suffix
      * @return the string
      */
-    public String getString(Document doc, TreeSelectionData selectionData, FieldIdEnum field,
+    public String getString(String sldContentString, TreeSelectionData selectionData, FieldIdEnum field,
             String suffix)
     {
+        Document doc = getXMLDocument(sldContentString);
+
         String extractedString = null;
 
         XPath xpath = xPathfactory.newXPath();
@@ -211,6 +213,15 @@ public class SLDOutputTest {
                 {
                     expr = xpath.compile(xPathString);
                     extractedString = expr.evaluate(doc);
+                    if((extractedString == null) || extractedString.isEmpty())
+                    {
+                        System.out.println("SLD : " + sldContentString);
+                        System.out.println("XPath : " + xPathString);
+                    }
+                }
+                else
+                {
+                    System.out.println("No XPath string");
                 }
             }
         } catch (XPathExpressionException e) {
@@ -354,9 +365,7 @@ public class SLDOutputTest {
     {
         boolean passed = false;
 
-        Document doc = getXMLDocument(sldContentString);
-
-        String extractedString = getString(doc, selectionData, field, null);
+        String extractedString = getString(sldContentString, selectionData, field, null);
 
         if(testValue instanceof XMLSetFieldLiteralString)
         {
@@ -364,6 +373,10 @@ public class SLDOutputTest {
             String valueToTest = stringLiteral.getValue();
 
             passed = (valueToTest.compareTo(extractedString) == 0);
+            if(!passed)
+            {
+                System.out.println(String.format("Value to test : '%s' Extracted : '%s'", valueToTest, extractedString));
+            }
         }
         else if(testValue instanceof XMLSetFieldLiteralDouble)
         {
@@ -372,6 +385,11 @@ public class SLDOutputTest {
             {
                 Double convertedValue = Double.valueOf(extractedString);
                 passed = (Math.abs(convertedValue - doubleLiteral.getValue()) < 0.001);
+            }
+
+            if(!passed)
+            {
+                System.out.println(String.format("Value to test : '%f' Extracted : '%s'", doubleLiteral.getValue(), extractedString));
             }
         }
         else if(testValue instanceof XMLSetFieldLiteralInt)
@@ -391,7 +409,7 @@ public class SLDOutputTest {
             }
         }
 
-        System.out.println("Checking : " + field + " " + extractedString + " " + (passed ? "PASS" : "FAIL"));
+        System.out.println("Checking value : " + field + " " + extractedString + " " + (passed ? "PASS" : "FAIL"));
 
         return passed;
     }
@@ -435,15 +453,13 @@ public class SLDOutputTest {
             FieldIdEnum field, XMLSetFieldAttribute testValue) {
         boolean passed = false;
 
-        Document doc = getXMLDocument(sldContentString);
-
-        String extractedString = getString(doc, selectionData, field, XPATH_CHILD_ELEMENT_VALUE);
+        String extractedString = getString(sldContentString, selectionData, field, XPATH_CHILD_ELEMENT_VALUE);
 
         String valueToTest = testValue.getAttribute();
 
         passed = (valueToTest.compareTo(extractedString) == 0);
 
-        System.out.println("Checking : " + field + " " + extractedString + " " + (passed ? "PASS" : "FAIL"));
+        System.out.println("Checking attribute : " + field + " " + extractedString + " " + (passed ? "PASS" : "FAIL"));
 
         return passed;
     }

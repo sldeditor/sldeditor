@@ -67,6 +67,7 @@ import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.generated.Version;
 import com.sldeditor.map.MapRender;
+import com.sldeditor.render.RenderPanelImpl;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.layout.UILayoutFactory;
@@ -343,6 +344,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         Controller.getInstance().setFrame(frame);
 
         MapRender.setUnderTest(underTest);
+        RenderPanelImpl.setUnderTest(underTest);
+        ReloadManager.setUnderTest(underTest);
 
         frame.setDefaultCloseOperation(underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
 
