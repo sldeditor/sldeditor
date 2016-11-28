@@ -48,6 +48,9 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     /** The singleton instance. */
     private static ReloadManager instance = null;
 
+    /** The under test flag. */
+    private static boolean underTest = false;;
+
     /** The current loaded file. */
     private Path currentLoadedFile = null;
 
@@ -99,24 +102,27 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     @Override
     public void fileModified(Path updated) {
-        Path current = getCurrentLoadedFile();
-        if((updated != null) && (current != null))
+        if(!underTest)
         {
-            if(current.equals(updated))
+            Path current = getCurrentLoadedFile();
+            if((updated != null) && (current != null))
             {
-                if(startTimeout())
+                if(current.equals(updated))
                 {
-                    timer.schedule(new TimerTask() {
+                    if(startTimeout())
+                    {
+                        timer.schedule(new TimerTask() {
 
-                        @Override
-                        public void run() {
-                            timingOutFinished();
+                            @Override
+                            public void run() {
+                                timingOutFinished();
 
-                            if(listener != null)
-                            {
-                                listener.reloadSLDFile();
-                            }
-                        }}, TIMEOUT);
+                                if(listener != null)
+                                {
+                                    listener.reloadSLDFile();
+                                }
+                            }}, TIMEOUT);
+                    }
                 }
             }
         }
@@ -209,5 +215,14 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     public synchronized void reset() {
         this.fileSaved = false;
+    }
+
+    /**
+     * Sets the under test flag.
+     *
+     * @param underTest the new under test
+     */
+    public static void setUnderTest(boolean underTest) {
+        ReloadManager.underTest  = underTest;
     }
 }

@@ -86,6 +86,9 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     /** The default displacement. */
     private static Displacement defaultDisplacement = new DisplacementImpl();
 
+    /** The symbolizer displayed. */
+    private Symbolizer symbolizer = null;
+
     /**
      * Constructor.
      */
@@ -283,7 +286,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     public void populate(SelectedSymbol selectedSymbol) {
 
         Stroke stroke = null;
-        Symbolizer symbolizer = null;
 
         if(selectedSymbol != null)
         {
@@ -581,7 +583,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         {
             Stroke stroke = getStroke();
 
-            Symbolizer symbolizer = SelectedSymbol.getInstance().getSymbolizer();
             if(symbolizer instanceof PointSymbolizer)
             {
                 PointSymbolizer pointSymbol = (PointSymbolizer) symbolizer;
@@ -596,6 +597,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                     markerSymbol.setStroke(stroke);
 
+                    SelectedSymbol.getInstance().replaceSymbolizer(pointSymbol);
+
                     this.fireUpdateSymbol();
                 }
             }
@@ -605,6 +608,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                 lineSymbol.setStroke(stroke);
 
+                SelectedSymbol.getInstance().replaceSymbolizer(lineSymbol);
+
                 this.fireUpdateSymbol();
             }
             else if(symbolizer instanceof PolygonSymbolizer)
@@ -613,7 +618,13 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                 polygonSymbol.setStroke(stroke);
 
+                SelectedSymbol.getInstance().replaceSymbolizer(polygonSymbol);
+
                 this.fireUpdateSymbol();
+            }
+            else
+            {
+                System.err.println("Symbolizer == null");
             }
         }
     }

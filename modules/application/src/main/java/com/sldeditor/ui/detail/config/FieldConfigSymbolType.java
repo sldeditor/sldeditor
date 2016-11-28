@@ -477,13 +477,15 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
 
                 oldValueObj = new String(newValueObj);
 
-                valueUpdated();
-
                 if(symbolSelectedListener != null)
                 {
                     logger.debug(String.format("Field %s selected %s", getFieldId(), selectedData.getKey()));
 
                     symbolSelectedListener.optionSelected(selectedData.getPanelId(), selectedData.getKey());
+                }
+                else
+                {
+                    valueUpdated();
                 }
             }
         }

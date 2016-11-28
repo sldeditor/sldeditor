@@ -204,7 +204,10 @@ public class BasePanel extends JPanel {
             // Notify that renderers need to be updated
             for(RenderSymbolInterface renderer : rendererList)
             {
-                renderer.renderSymbol();
+                if(renderer != null)
+                {
+                    renderer.renderSymbol();
+                }
             }
 
             if(fieldConfigVisitor.isTreeDataUpdated())

@@ -153,6 +153,9 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
 
+    /** The under test flag. */
+    private static boolean underTest = false;
+
     /**
      * Instantiates a new render panel.
      */
@@ -237,29 +240,32 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
      */
     private void renderSymbol(Style style)
     {
-        if(!dataLoaded)
+        if(!underTest)
         {
-            createFeature();
+            if(!dataLoaded)
+            {
+                createFeature();
+            }
+
+            Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
+
+            switch(geometryType)
+            {
+            case RASTER:
+                renderRasterMap(imageSize, style, DPI);
+                break;
+            case POINT:
+            case LINE:
+            case POLYGON:
+                renderVectorMap(featureList, imageSize, style, DPI);
+                break;
+            default:
+                validSymbol = false;
+                break;
+            }
+
+            repaint();
         }
-
-        Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
-
-        switch(geometryType)
-        {
-        case RASTER:
-            renderRasterMap(imageSize, style, DPI);
-            break;
-        case POINT:
-        case LINE:
-        case POLYGON:
-            renderVectorMap(featureList, imageSize, style, DPI);
-            break;
-        default:
-            validSymbol = false;
-            break;
-        }
-
-        repaint();
     }
 
     /**
@@ -623,5 +629,14 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Does nothing
+    }
+
+    /**
+     * Sets the under test flag.
+     *
+     * @param underTest the new under test
+     */
+    public static void setUnderTest(boolean underTest) {
+        RenderPanelImpl.underTest = underTest;
     }
 }
