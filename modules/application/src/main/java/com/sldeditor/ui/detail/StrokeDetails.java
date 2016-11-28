@@ -624,7 +624,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             }
             else
             {
-                System.err.println("Symbolizer == null");
+                ConsoleManager.getInstance().error(this, "symbolizer == null");
             }
         }
     }
