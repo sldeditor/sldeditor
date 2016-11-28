@@ -40,14 +40,12 @@ import javax.swing.tree.TreePath;
 
 import org.geotools.data.DataStore;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.FillImpl;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.StrokeImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -636,8 +634,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             Object nodeInfo = node.getUserObject();
             if(nodeInfo != null)
             {
-                Class<?> classSelected = nodeInfo.getClass();
-                SLDTreeItemInterface treeItem = TreeItemMap.getInstance().getValue(classSelected);
+                SLDTreeItemInterface treeItem = TreeItemMap.getInstance().getValue(nodeInfo.getClass());
 
                 if(treeItem != null)
                 {
@@ -652,32 +649,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                     if(node.getParent() != null)
                     {
                         parent = (DefaultMutableTreeNode) node.getParent();
-                        // Check to see if node represents a fill
-                        if(classSelected == FillImpl.class)
-                        {
-                            // Check to see if fill has been selected
-                            Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-                            if(!SLDTreeLeafFactory.getInstance().hasFill(symbolizer))
-                            {
-                                classSelected = null;
-                            }
-                        }
-                        else if(classSelected == StrokeImpl.class)
-                        {
-                            // Check to see if stroke has been selected
-                            Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
 
-                            if(!SLDTreeLeafFactory.getInstance().hasStroke(symbolizer))
-                            {
-                                classSelected = null;
-                            }
-                        }
-                        else
-                        {
-                            parentClass = parent.getUserObject().getClass();
-                        }
+                        parentClass = parent.getUserObject().getClass();
                     }
-                    displayPanel.show(parentClass, classSelected);
+                    displayPanel.show(parentClass, nodeInfo.getClass());
                     Controller.getInstance().setPopulating(false);
                 }
 

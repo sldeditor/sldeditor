@@ -220,26 +220,20 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     @Override
     public void show(Class<?> parentClass, Class<?> classSelected)
     {
-        String key = null;
         if(classSelected != null)
         {
-            key = classSelected.toString();
-        }
-        else
-        {
-            key = EMPTY_PANEL_KEY;
-        }
+            String key = classSelected.toString();
 
-        PopulateDetailsInterface panel = getPanel(parentClass, key);
-        if(panel != null)
-        {
-            CardLayout cl = (CardLayout)(detailsPanel.getLayout());
-            cl.show(detailsPanel, encodePanelKey(key, panel));
+            PopulateDetailsInterface panel = getPanel(parentClass, key);
+            if(panel != null)
+            {
+                CardLayout cl = (CardLayout)(detailsPanel.getLayout());
+                cl.show(detailsPanel, encodePanelKey(key, panel));
 
-            SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
-            panel.populate(selectedSymbol);
+                SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
+                panel.populate(selectedSymbol);
+            }
         }
-
         repaint();
     }
 
