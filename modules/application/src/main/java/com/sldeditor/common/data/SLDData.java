@@ -98,12 +98,8 @@ public class SLDData implements SLDDataInterface
     public SLDData(StyleWrapper style, String sldContents)
     {
         super();
-        this.style = style;
-        if(style != null)
-        {
-            this.name = removeFileExtension(style.getStyle());
-        }
-        this.sldContents = sldContents;
+        updateStyleWrapper(style);
+        updateSLDContents(sldContents);
     }
 
     /**
@@ -330,6 +326,19 @@ public class SLDData implements SLDDataInterface
             layerName = layerName.substring(0, index);
         }
         return layerName;
+    }
+
+    /**
+     * Update style wrapper.
+     *
+     * @param style the style
+     */
+    public void updateStyleWrapper(StyleWrapper style) {
+        this.style = style;
+        if(style != null)
+        {
+            this.name = removeFileExtension(style.getStyle());
+        }
     }
 
     /**

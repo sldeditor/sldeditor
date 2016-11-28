@@ -17,4 +17,10 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
+        <!-- Not used -->
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.StrokeDetails">
+        <!-- Not used -->
+    </Panel>
 </XMLSymbolTypeConfig>

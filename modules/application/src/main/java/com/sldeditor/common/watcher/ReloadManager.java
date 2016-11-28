@@ -104,13 +104,14 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         {
             if(current.equals(updated))
             {
-                if(!isFileSaved() && startTimeout())
+                if(startTimeout())
                 {
                     timer.schedule(new TimerTask() {
 
                         @Override
                         public void run() {
                             timingOutFinished();
+
                             if(listener != null)
                             {
                                 listener.reloadSLDFile();
@@ -177,7 +178,9 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * @return true, if timeout should be started, false it is already running
      */
     private synchronized boolean startTimeout() {
-        if(this.timingOut == false)
+        boolean isFileSaved = fileSaved;
+        fileSaved = false;
+        if((this.timingOut == false) && !isFileSaved)
         {
             this.timingOut = true;
             return true;
@@ -195,21 +198,16 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     }
 
     /**
-     * Checks if is file saved and resets flag.
-     *
-     * @return the fileSaved
-     */
-    private synchronized boolean isFileSaved() {
-        boolean tmp = fileSaved;
-        fileSaved = false;
-
-        return tmp;
-    }
-
-    /**
      * Sets the file saved.
      */
     public synchronized void setFileSaved() {
         this.fileSaved = true;
+    }
+
+    /**
+     * Reset file saved flag.
+     */
+    public synchronized void reset() {
+        this.fileSaved = false;
     }
 }

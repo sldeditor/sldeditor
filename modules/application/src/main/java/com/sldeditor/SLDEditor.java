@@ -26,13 +26,13 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -47,6 +47,7 @@ import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
@@ -133,6 +134,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** The under test flag. */
     private static boolean underTestFlag = false;
 
+    /** The sld editor dlg. */
+    private SLDEditorDlgInterface sldEditorDlg = null;
+
     static {
         JAIExt.initJAIEXT();
     }
@@ -185,8 +189,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                 setOSXAppIcon();
                 AppSplashScreen.splashInit();
-
-                createAndShowGUI(filename, extensionArgList, false);
+                createAndShowGUI(filename, extensionArgList, false, null);
             }
         });
     }
@@ -228,8 +231,19 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @param filename the filename
      * @param extensionArgList the extension arg list
+     * @param overrideSLDEditorDlg the override SLD editor dlg
      */
-    public SLDEditor(String filename, List<String> extensionArgList) {
+    public SLDEditor(String filename, List<String> extensionArgList,
+            SLDEditorDlgInterface overrideSLDEditorDlg) {
+
+        if(overrideSLDEditorDlg == null)
+        {
+            sldEditorDlg = new SLDEditorDlg();
+        }
+        else
+        {
+            sldEditorDlg = overrideSLDEditorDlg;
+        }
 
         UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
 
@@ -316,9 +330,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param filename the filename
      * @param extensionArgList the extension argument list
      * @param underTest the under test flag
+     * @param overrideSLDEditorDlg the override SLD editor dlg
      * @return the SLD editor
      */
-    public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList, boolean underTest) {
+    public static SLDEditor createAndShowGUI(String filename,
+            List<String> extensionArgList,
+            boolean underTest,
+            SLDEditorDlgInterface overrideSLDEditorDlg) {
         underTestFlag = underTest;
         frame = new JFrame(generateApplicationTitleString());
 
@@ -329,7 +347,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         frame.setDefaultCloseOperation(underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
 
         // Add contents to the window.
-        SLDEditor sldEditor = new SLDEditor(filename, extensionArgList);
+        SLDEditor sldEditor = new SLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
 
         // Display the window.
         frame.pack();
@@ -497,11 +515,46 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
         sldData.updateSLDContents(sldContents);
 
+        StyleWrapper style = null;
+
+        if(isLocalFile(urlToSave))
+        {
+            try {
+                File f = new File(urlToSave.toURI());
+                style = new StyleWrapper(f.getName());
+            } catch (URISyntaxException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+        sldData.updateStyleWrapper(style);
+
         ReloadManager.getInstance().setFileSaved();
         saveSLDData(sldData);
 
         SLDEditorFile.getInstance().fileOpenedSaved();
         UndoManager.getInstance().fileSaved();
+    }
+
+    /**
+     *  Whether the URL is a file in the local file system.
+     *
+     * @param url the url
+     * @return true, if is local file
+     */
+    private static boolean isLocalFile(URL url) {
+      String scheme = url.getProtocol();
+      return "file".equalsIgnoreCase(scheme) && !hasHost(url);
+    }
+
+    /**
+     * Checks for host.
+     *
+     * @param url the url
+     * @return true, if successful
+     */
+    private static boolean hasHost(URL url) {
+      String host = url.getHost();
+      return host != null && !"".equals(host);
     }
 
     /**
@@ -590,26 +643,15 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 {
                     if(dataEditedFlag && !isUnderTestFlag())
                     {
-                        Object[] options = {Localisation.getString(SLDEditor.class, "common.discard"),
-                                Localisation.getString(SLDEditor.class, "common.cancel")};
-
-                        int result = JOptionPane.showOptionDialog(frame,
-                                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChanges"),
-                                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChangesTitle"),
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.WARNING_MESSAGE,
-                                null,
-                                options,
-                                options[1]);
-
-                        // If discard option selected then allow the new symbol to be loaded
-                        loadNewSymbol = (result == JOptionPane.OK_OPTION);
+                        loadNewSymbol = sldEditorDlg.load(frame);
                     }
 
                     if(loadNewSymbol)
                     {
                         populate(firstObject);
                     }
+
+                    ReloadManager.getInstance().reset();
                 }
             }
 
@@ -805,23 +847,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     @Override
     public void reloadSLDFile() {
-        Object[] options = {Localisation.getString(SLDEditor.class, "common.yes"),
-                Localisation.getString(SLDEditor.class, "common.no")};
-
-        int result = JOptionPane.OK_OPTION;
+        boolean reloadFile = true;
         if(!underTestFlag)
         {
-            result = JOptionPane.showOptionDialog(frame,
-                    Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
-                    Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    null,
-                    options,
-                    options[1]);
+            reloadFile = sldEditorDlg.reload(frame);
         }
 
-        if(result == JOptionPane.OK_OPTION)
+        if(reloadFile)
         {
             SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
 
@@ -847,5 +879,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 }
             }
         }
+        ReloadManager.getInstance().reset();
+        // Inform UndoManager that a new SLD file has been
+        // loaded and to clear undo history
+        UndoManager.getInstance().fileLoaded();
+
+        Controller.getInstance().setPopulating(true);
+        uiMgr.populateUI(1);
+        Controller.getInstance().setPopulating(false);
     }
 }

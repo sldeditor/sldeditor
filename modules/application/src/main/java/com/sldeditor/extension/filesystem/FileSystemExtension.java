@@ -266,19 +266,17 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                 // Reset flag
                 sldSaved = false;
             }
-            else
+
+            if(parentObj != null)
             {
-                if(parentObj != null)
-                {
-                    parentObj.preLoad();
-                }
+                parentObj.preLoad();
+            }
 
-                SelectedFiles combinedFiles = treeItemSelected();
+            SelectedFiles combinedFiles = treeItemSelected();
 
-                if((parentObj != null) && !parentObj.loadSLDString(combinedFiles))
-                {
-                    tree.revertSelection(e.getOldLeadSelectionPath());
-                }
+            if((parentObj != null) && !parentObj.loadSLDString(combinedFiles))
+            {
+                tree.revertSelection(e.getOldLeadSelectionPath());
             }
         }
     }
@@ -528,7 +526,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
             }
         }
 
-        sldSaved  = true;
+        sldSaved = true;
 
         return saved;
     }
