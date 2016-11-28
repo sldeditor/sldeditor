@@ -714,7 +714,7 @@ public class SLDTreeTools {
     public void addDestArrow() {
         addArrow(false);
     }
-        
+
     /**
      * Adds the arrow.
      *
@@ -1286,12 +1286,15 @@ public class SLDTreeTools {
         btnAddUserLayerButton.setVisible(addUserLayerButtonEnabled);
         btnAddButton.setVisible(addButtonEnabled);
 
-        btnNewMarker.setVisible(symbolizerButtonState.isMarkerVisible(parentObj, obj));
-        btnNewLine.setVisible(symbolizerButtonState.isLineVisible(parentObj, obj));
+        // All symbolizer types are allowed be added to an SLD
+        boolean allSymbolizer = symbolizerButtonState.isMarkerVisible(parentObj, obj) || symbolizerButtonState.isLineVisible(parentObj, obj) ||
+                symbolizerButtonState.isPolygonVisible(parentObj, obj) || symbolizerButtonState.isRasterVisible(parentObj, obj);
+        btnNewMarker.setVisible(allSymbolizer);
+        btnNewLine.setVisible(allSymbolizer);
         btnNewImageOutlineLine.setVisible(symbolizerButtonState.isImageOutlineLineVisible(parentObj, obj));
-        btnNewPolygon.setVisible(symbolizerButtonState.isPolygonVisible(parentObj, obj));
+        btnNewPolygon.setVisible(allSymbolizer);
         btnNewImageOutlinePolygon.setVisible(symbolizerButtonState.isImageOutlinePolygonVisible(parentObj, obj));
-        btnNewRaster.setVisible(symbolizerButtonState.isRasterVisible(parentObj, obj));
+        btnNewRaster.setVisible(allSymbolizer);
         btnNewText.setVisible(symbolizerButtonState.isTextVisible(parentObj, obj));
 
         btnRemoveMarker.setVisible(removeButtonEnabled);
@@ -1301,7 +1304,7 @@ public class SLDTreeTools {
         btnMoveUp.setEnabled(hasMoreThan1Item && !isFirstSelected);
         btnMoveDown.setVisible(showMoveButtons);
         btnMoveDown.setEnabled(hasMoreThan1Item && !isLastSelected);
-        
+
         btnSourceArrowButton.setVisible(showLineArrowButtons);
         btnDestArrowButton.setVisible(showLineArrowButtons);
     }
