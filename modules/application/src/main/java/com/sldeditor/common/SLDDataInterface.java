@@ -232,4 +232,11 @@ public interface SLDDataInterface {
      * @return the resource locator
      */
     URL getResourceLocator();
+
+    /**
+     * Update style wrapper.
+     *
+     * @param style the style
+     */
+    void updateStyleWrapper(StyleWrapper style);
 }

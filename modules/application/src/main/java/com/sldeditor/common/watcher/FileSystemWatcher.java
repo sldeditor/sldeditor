@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.console.ConsoleManager;
+
 /**
  * Class that implements a file watcher to inform the file system tree whether files have been added or deleted.
  * 
@@ -70,7 +72,6 @@ public class FileSystemWatcher implements Runnable {
     public void addWatch(FileWatcherUpdateInterface parent, Path path) {
         if(path != null)
         {
-            System.out.println(path.toString());
             // The directory that has to be watched needs to be registered. Any
             // object that implements the Watchable interface can be registered.
 
@@ -114,7 +115,7 @@ public class FileSystemWatcher implements Runnable {
         try {
             internal_watchDirectoryPath();
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 
@@ -134,7 +135,7 @@ public class FileSystemWatcher implements Runnable {
                 // notification
                 key = watchService.take();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // Ignore
             }
 
             // once a key is obtained, we poll for events on that key

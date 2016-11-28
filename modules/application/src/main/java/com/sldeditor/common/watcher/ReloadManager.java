@@ -104,15 +104,13 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         {
             if(current.equals(updated))
             {
-                System.out.println("Loaded file modified");
-                if(!isFileSaved() && startTimeout())
+                if(startTimeout())
                 {
                     timer.schedule(new TimerTask() {
 
                         @Override
                         public void run() {
                             timingOutFinished();
-                            System.out.println("Finished timeout");
 
                             if(listener != null)
                             {
@@ -165,8 +163,6 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     private synchronized void setCurrentLoadedFile(Path currentLoadedFile) {
         this.currentLoadedFile = currentLoadedFile;
-
-        System.out.println("Currently loaded file : " + ((currentLoadedFile != null) ? currentLoadedFile.toString() : "<null>"));
     }
 
     /**
@@ -182,9 +178,10 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * @return true, if timeout should be started, false it is already running
      */
     private synchronized boolean startTimeout() {
-        if(this.timingOut == false)
+        boolean isFileSaved = fileSaved;
+        fileSaved = false;
+        if((this.timingOut == false) && !isFileSaved)
         {
-            System.out.println("Starting timeout");
             this.timingOut = true;
             return true;
         }
@@ -201,22 +198,9 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     }
 
     /**
-     * Checks if is file saved and resets flag.
-     *
-     * @return the fileSaved
-     */
-    private synchronized boolean isFileSaved() {
-        boolean tmp = fileSaved;
-        fileSaved = false;
-
-        return tmp;
-    }
-
-    /**
      * Sets the file saved.
      */
     public synchronized void setFileSaved() {
-        System.out.println("File saved");
         this.fileSaved = true;
     }
 
@@ -224,7 +208,6 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * Reset file saved flag.
      */
     public synchronized void reset() {
-        System.out.println("Reset");
         this.fileSaved = false;
     }
 }

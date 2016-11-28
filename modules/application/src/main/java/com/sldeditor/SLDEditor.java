@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
@@ -513,11 +515,46 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
         sldData.updateSLDContents(sldContents);
 
+        StyleWrapper style = null;
+
+        if(isLocalFile(urlToSave))
+        {
+            try {
+                File f = new File(urlToSave.toURI());
+                style = new StyleWrapper(f.getName());
+            } catch (URISyntaxException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+        sldData.updateStyleWrapper(style);
+
         ReloadManager.getInstance().setFileSaved();
         saveSLDData(sldData);
 
         SLDEditorFile.getInstance().fileOpenedSaved();
         UndoManager.getInstance().fileSaved();
+    }
+
+    /**
+     *  Whether the URL is a file in the local file system.
+     *
+     * @param url the url
+     * @return true, if is local file
+     */
+    private static boolean isLocalFile(URL url) {
+      String scheme = url.getProtocol();
+      return "file".equalsIgnoreCase(scheme) && !hasHost(url);
+    }
+
+    /**
+     * Checks for host.
+     *
+     * @param url the url
+     * @return true, if successful
+     */
+    private static boolean hasHost(URL url) {
+      String host = url.getHost();
+      return host != null && !"".equals(host);
     }
 
     /**
@@ -613,7 +650,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                     {
                         populate(firstObject);
                     }
-                    
+
                     ReloadManager.getInstance().reset();
                 }
             }
@@ -842,5 +879,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 }
             }
         }
+        ReloadManager.getInstance().reset();
+        // Inform UndoManager that a new SLD file has been
+        // loaded and to clear undo history
+        UndoManager.getInstance().fileLoaded();
+
+        Controller.getInstance().setPopulating(true);
+        uiMgr.populateUI(1);
+        Controller.getInstance().setPopulating(false);
     }
 }
