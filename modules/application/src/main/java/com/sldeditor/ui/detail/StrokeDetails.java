@@ -154,6 +154,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         Stroke stroke = null;
         if(isLine)
         {
+            opacity = fieldConfigVisitor.getExpression(FieldIdEnum.LINE_FILL_OPACITY);
+
             stroke = getStyleFactory().stroke(fillColour,
                     opacity,
                     strokeWidth,
