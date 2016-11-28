@@ -221,7 +221,7 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
             }
             else
             {
-                System.err.println("symbolizer == null");
+                ConsoleManager.getInstance().error(this, "symbolizer == null");
             }
 
             if(graphic == null)
