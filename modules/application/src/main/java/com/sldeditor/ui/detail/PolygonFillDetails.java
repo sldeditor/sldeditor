@@ -313,10 +313,12 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
 
                 Expression expOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.OVERALL_OPACITY);
 
-                if(fill != null)
+                // If field is not enabled it returns null
+                if((fill != null) && (expOpacity != null))
                 {
                     fill.setOpacity(expOpacity);
                 }
+
                 newPolygonSymbolizer.setFill(fill);
 
                 if(vendorOptionFillFactory != null)
