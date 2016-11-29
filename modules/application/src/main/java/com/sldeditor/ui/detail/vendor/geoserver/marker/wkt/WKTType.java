@@ -71,18 +71,6 @@ public class WKTType
     }
 
     /**
-     * Instantiates a new wkt type.
-     *
-     * @param name the name
-     * @param multipleCoordinates the multiple coordinates
-     * @param numOfPoints the num of points
-     * @param listItem the list item
-     */
-    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem, boolean doFirstLastHaveToBeSame) {
-        this(name, multipleCoordinates, numOfPoints, listItem ,false, doFirstLastHaveToBeSame);
-    }
-
-    /**
      * Gets the name.
      *
      * @return the name

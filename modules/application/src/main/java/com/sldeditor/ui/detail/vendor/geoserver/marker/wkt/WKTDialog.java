@@ -245,7 +245,7 @@ public class WKTDialog extends JDialog {
 
         if(wktType != null)
         {
-            wktType.canHaveMultipleShapes();
+            enabled = wktType.canHaveMultipleShapes();
         }
         multiList.setVisible(enabled);
         addMultiButton.setEnabled(enabled);
