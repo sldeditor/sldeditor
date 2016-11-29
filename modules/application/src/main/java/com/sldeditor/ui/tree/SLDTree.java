@@ -80,7 +80,8 @@ import com.sldeditor.ui.tree.item.TreeItemMap;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpdatedInterface, DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
+public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpdatedInterface,
+DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
 
     private static final int PANEL_HEIGHT = 350;
 
@@ -117,25 +118,19 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      * @param renderList the render list
      * @param treeTools the tree tools
      */
-    public SLDTree(List<RenderSymbolInterface> renderList, SLDTreeTools treeTools)
-    {
+    public SLDTree(List<RenderSymbolInterface> renderList, SLDTreeTools treeTools) {
         this.renderList = renderList;
         this.treeTools = treeTools;
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-        if(dataSource != null)
-        {
+        if (dataSource != null) {
             dataSource.addListener(this);
         }
 
-        if(renderList != null)
-        {
-            for(RenderSymbolInterface render : renderList)
-            {
-                if(render instanceof DataSourceUpdatedInterface)
-                {
-                    if(dataSource != null)
-                    {
+        if (renderList != null) {
+            for (RenderSymbolInterface render : renderList) {
+                if (render instanceof DataSourceUpdatedInterface) {
+                    if (dataSource != null) {
                         dataSource.addListener(render);
                     }
                 }
@@ -162,7 +157,8 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         symbolTree = new JTree(treeModel);
         symbolTree.setEditable(true);
         symbolTree.setBorder(new LineBorder(Color.black));
-        ComponentCellRenderer cellRenderer = new ComponentCellRenderer(symbolTree.getCellRenderer());
+        ComponentCellRenderer cellRenderer = new ComponentCellRenderer(
+                symbolTree.getCellRenderer());
         symbolTree.setCellRenderer(cellRenderer);
         symbolTree.setCellEditor(new CheckBoxNodeEditor(symbolTree, cellRenderer, this));
         symbolTree.setEditable(true);
@@ -177,13 +173,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         panelSymbolMarkerTree.add(scrollpane);
 
         // Add the tree tools if they were supplied
-        if(treeTools != null)
-        {
+        if (treeTools != null) {
             treeTools.configure(this, symbolTree, treeModel, renderList);
             add(treeTools.getButtonPanel());
-        }
-        else
-        {
+        } else {
             setPreferredSize(new Dimension(SLDTreeTools.getPanelWidth(), PANEL_HEIGHT));
         }
     }
@@ -225,12 +218,13 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         treeModel.reload(); // This notifies the listeners and changes the GUI
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#addObject(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object, boolean)
      */
     @Override
-    public DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent,
-            Object child, 
+    public DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent, Object child,
             boolean shouldBeVisible) {
         DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
 
@@ -241,8 +235,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         }
 
         // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-        treeModel.insertNodeInto(childNode, parent, 
-                parent.getChildCount());
+        treeModel.insertNodeInto(childNode, parent, parent.getChildCount());
 
         // Make sure the user can see the lovely new node.
         if (shouldBeVisible) {
@@ -251,101 +244,110 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         return childNode;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#populateSLD()
      */
     @Override
-    public void populateSLD()
-    {
+    public void populateSLD() {
         reset();
 
         SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             StyledLayerDescriptor sld = selectedSymbol.getSld();
             rootNode.setUserObject(sld);
             treeModel.nodeChanged(rootNode);
 
-            if(sld != null)
-            {
+            if (sld != null) {
                 List<StyledLayer> styledLayerList = sld.layers();
 
-                if(sld != null)
-                {
-                    for(StyledLayer styledLayer : styledLayerList)
-                    {
+                if (sld != null) {
+                    for (StyledLayer styledLayer : styledLayerList) {
                         DefaultMutableTreeNode styledLayerTreeNode = null;
                         List<Style> styleList = null;
 
-                        if(styledLayer instanceof NamedLayerImpl)
-                        {
-                            NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                        if (styledLayer instanceof NamedLayerImpl) {
+                            NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
                             styleList = namedLayerImpl.styles();
 
                             styledLayerTreeNode = addObject(rootNode, namedLayerImpl, true);
-                        }
-                        else if(styledLayer instanceof UserLayerImpl)
-                        {
-                            UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                        } else if (styledLayer instanceof UserLayerImpl) {
+                            UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
                             styleList = userLayerImpl.userStyles();
 
                             styledLayerTreeNode = addObject(rootNode, userLayerImpl, true);
                         }
 
-                        if(styleList != null)
-                        {
-                            for(Style style : styleList)
-                            {
-                                DefaultMutableTreeNode styleTreeNode = addObject(styledLayerTreeNode, style, true);
+                        if (styleList != null) {
+                            for (Style style : styleList) {
+                                DefaultMutableTreeNode styleTreeNode = addObject(
+                                        styledLayerTreeNode, style, true);
 
-                                for(FeatureTypeStyle fts : style.featureTypeStyles())
-                                {
-                                    DefaultMutableTreeNode ftsTreeNode = addObject(styleTreeNode, fts, true);
+                                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                                    DefaultMutableTreeNode ftsTreeNode = addObject(styleTreeNode,
+                                            fts, true);
 
-                                    for(Rule rule : fts.rules())
-                                    {
-                                        DefaultMutableTreeNode ruleTreeNode = addObject(ftsTreeNode, rule, true);
+                                    for (Rule rule : fts.rules()) {
+                                        DefaultMutableTreeNode ruleTreeNode = addObject(ftsTreeNode,
+                                                rule, true);
 
-                                        for(org.opengis.style.Symbolizer symbolizer : rule.symbolizers())
-                                        {
-                                            DefaultMutableTreeNode symbolizerTreeNode = addObject(ruleTreeNode, symbolizer, true);
+                                        for (org.opengis.style.Symbolizer symbolizer : rule
+                                                .symbolizers()) {
+                                            DefaultMutableTreeNode symbolizerTreeNode = addObject(
+                                                    ruleTreeNode, symbolizer, true);
 
-                                            if((symbolizer instanceof PointSymbolizer) || (symbolizer instanceof PolygonSymbolizer))
-                                            {
-                                                addObject(symbolizerTreeNode, SLDTreeLeafFactory.getInstance().getFill(symbolizer), true);
+                                            if ((symbolizer instanceof PointSymbolizer)
+                                                    || (symbolizer instanceof PolygonSymbolizer)) {
+                                                addObject(
+                                                        symbolizerTreeNode, SLDTreeLeafFactory
+                                                        .getInstance().getFill(symbolizer),
+                                                        true);
                                             }
 
-                                            if((symbolizer instanceof PolygonSymbolizer) || (symbolizer instanceof LineSymbolizer))
-                                            {
-                                                addObject(symbolizerTreeNode, SLDTreeLeafFactory.getInstance().getStroke(symbolizer), true);
+                                            if ((symbolizer instanceof PolygonSymbolizer)
+                                                    || (symbolizer instanceof LineSymbolizer)) {
+                                                addObject(symbolizerTreeNode, SLDTreeLeafFactory
+                                                        .getInstance().getStroke(symbolizer), true);
                                             }
 
-                                            if(symbolizer instanceof RasterSymbolizer)
-                                            {
+                                            if (symbolizer instanceof RasterSymbolizer) {
                                                 // Handle the image outline symbolizer for raster symbols
-                                                Symbolizer outlineSymbolizer = ((RasterSymbolizer)symbolizer).getImageOutline();
+                                                Symbolizer outlineSymbolizer = ((RasterSymbolizer) symbolizer)
+                                                        .getImageOutline();
 
-                                                if(outlineSymbolizer instanceof LineSymbolizer)
-                                                {
+                                                if (outlineSymbolizer instanceof LineSymbolizer) {
                                                     LineSymbolizer outlineLineSymbolizer = (LineSymbolizer) outlineSymbolizer;
-                                                    if(outlineLineSymbolizer != null)
-                                                    {
-                                                        DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(symbolizerTreeNode, outlineLineSymbolizer, true);
+                                                    if (outlineLineSymbolizer != null) {
+                                                        DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(
+                                                                symbolizerTreeNode,
+                                                                outlineLineSymbolizer, true);
 
-                                                        addObject(symbolizerImageOutlineLineNode, SLDTreeLeafFactory.getInstance().getStroke(outlineLineSymbolizer), true);
+                                                        addObject(symbolizerImageOutlineLineNode,
+                                                                SLDTreeLeafFactory.getInstance()
+                                                                .getStroke(
+                                                                        outlineLineSymbolizer),
+                                                                true);
                                                     }
-                                                }
-                                                else if(outlineSymbolizer instanceof PolygonSymbolizer)
-                                                {
+                                                } else if (outlineSymbolizer instanceof PolygonSymbolizer) {
                                                     PolygonSymbolizer outlinePolygonSymbolizer = (PolygonSymbolizer) outlineSymbolizer;
 
-                                                    if(outlinePolygonSymbolizer != null)
-                                                    {
-                                                        DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(symbolizerTreeNode, outlinePolygonSymbolizer, true);
+                                                    if (outlinePolygonSymbolizer != null) {
+                                                        DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(
+                                                                symbolizerTreeNode,
+                                                                outlinePolygonSymbolizer, true);
 
-                                                        addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getFill(outlinePolygonSymbolizer), true);
-                                                        addObject(symbolizerImageOutlinePolygonNode, SLDTreeLeafFactory.getInstance().getStroke(outlinePolygonSymbolizer), true);
+                                                        addObject(symbolizerImageOutlinePolygonNode,
+                                                                SLDTreeLeafFactory.getInstance()
+                                                                .getFill(
+                                                                        outlinePolygonSymbolizer),
+                                                                true);
+                                                        addObject(symbolizerImageOutlinePolygonNode,
+                                                                SLDTreeLeafFactory.getInstance()
+                                                                .getStroke(
+                                                                        outlinePolygonSymbolizer),
+                                                                true);
                                                     }
                                                 }
                                             }
@@ -360,7 +362,9 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
      */
     @Override
@@ -372,29 +376,25 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      * Select first symbol.
      */
     public void selectFirstSymbol() {
-        if(SelectedSymbol.getInstance().getSld() != null)
-        {
+        if (SelectedSymbol.getInstance().getSld() != null) {
             symbolTree.setSelectionRow(0);
-        }
-        else
-        {
+        } else {
             // No SLD loaded
-            if(displayPanel != null)
-            {
+            if (displayPanel != null) {
                 displayPanel.show(null, null);
             }
 
-            if(renderList != null)
-            {
-                for(RenderSymbolInterface render : renderList)
-                {
+            if (renderList != null) {
+                for (RenderSymbolInterface render : renderList) {
                     render.renderSymbol();
                 }
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeUpdatedInterface#textUpdated()
      */
     @Override
@@ -415,19 +415,16 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     public void updateNode(Object objectOld, Object objectNew) {
         DefaultMutableTreeNode node = null;
 
-        for(DefaultMutableTreeNode n : nodeMap.values())
-        {
+        for (DefaultMutableTreeNode n : nodeMap.values()) {
             Object o = n.getUserObject();
 
-            if(o == objectOld)
-            {
+            if (o == objectOld) {
                 node = n;
                 break;
             }
         }
 
-        if(node != null)
-        {
+        if (node != null) {
             node.setUserObject(objectNew);
             nodeMap.remove(objectOld);
             nodeMap.put(objectNew, node);
@@ -435,11 +432,14 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
         currentGeometryType = geometryType;
     }
 
@@ -449,11 +449,10 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      * @param data the data
      * @return true, if successful
      */
-    public boolean selectTreeItem(TreeSelectionData data)
-    {
+    public boolean selectTreeItem(TreeSelectionData data) {
         symbolTree.clearSelection();
 
-        SelectedTreeItemEnum selectedTreeItemEnum = data.getSelection(); 
+        SelectedTreeItemEnum selectedTreeItemEnum = data.getSelection();
         int layerIndex = data.getLayerIndex();
         int styleIndex = data.getStyleIndex();
         int featureTypeStyleIndex = data.getFeatureTypeStyleIndex();
@@ -470,105 +469,83 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
         TreePath path = null;
 
-        if((layerIndex < 0) || (layerIndex >= rootNode.getChildCount()))
-        {
+        if ((layerIndex < 0) || (layerIndex >= rootNode.getChildCount())) {
             return false;
         }
 
-        layerNode = (DefaultMutableTreeNode)rootNode.getChildAt(layerIndex);
+        layerNode = (DefaultMutableTreeNode) rootNode.getChildAt(layerIndex);
 
-        if(selectedTreeItemEnum == SelectedTreeItemEnum.LAYER)
-        {
+        if (selectedTreeItemEnum == SelectedTreeItemEnum.LAYER) {
             path = getPath(layerNode);
-        }
-        else
-        {
-            if(layerNode == null)
-            {
+        } else {
+            if (layerNode == null) {
                 return false;
             }
-            if((styleIndex < 0) || (styleIndex >= layerNode.getChildCount()))
-            {
+            if ((styleIndex < 0) || (styleIndex >= layerNode.getChildCount())) {
                 return false;
             }
 
-            styleNode = (DefaultMutableTreeNode)layerNode.getChildAt(styleIndex);
-            if(selectedTreeItemEnum == SelectedTreeItemEnum.STYLE)
-            {
+            styleNode = (DefaultMutableTreeNode) layerNode.getChildAt(styleIndex);
+            if (selectedTreeItemEnum == SelectedTreeItemEnum.STYLE) {
                 path = getPath(styleNode);
-            }
-            else
-            {
-                if(styleNode == null)
-                {
-                    return false;  
-                }
-
-                if((featureTypeStyleIndex < 0) || (featureTypeStyleIndex >= styleNode.getChildCount()))
-                {
+            } else {
+                if (styleNode == null) {
                     return false;
                 }
 
-                ftsNode = (DefaultMutableTreeNode)styleNode.getChildAt(featureTypeStyleIndex);
-                if(selectedTreeItemEnum == SelectedTreeItemEnum.FEATURETYPESTYLE)
-                {
-                    path = getPath(ftsNode);
+                if ((featureTypeStyleIndex < 0)
+                        || (featureTypeStyleIndex >= styleNode.getChildCount())) {
+                    return false;
                 }
-                else
-                {
-                    if(ftsNode == null)
-                    {
+
+                ftsNode = (DefaultMutableTreeNode) styleNode.getChildAt(featureTypeStyleIndex);
+                if (selectedTreeItemEnum == SelectedTreeItemEnum.FEATURETYPESTYLE) {
+                    path = getPath(ftsNode);
+                } else {
+                    if (ftsNode == null) {
                         return false;
                     }
-                    if((ruleIndex < 0) || (ruleIndex >= ftsNode.getChildCount()))
-                    {
+                    if ((ruleIndex < 0) || (ruleIndex >= ftsNode.getChildCount())) {
                         return false;
                     }
 
-                    ruleNode = (DefaultMutableTreeNode)ftsNode.getChildAt(ruleIndex);
-                    if(selectedTreeItemEnum == SelectedTreeItemEnum.RULE)
-                    {
+                    ruleNode = (DefaultMutableTreeNode) ftsNode.getChildAt(ruleIndex);
+                    if (selectedTreeItemEnum == SelectedTreeItemEnum.RULE) {
                         path = getPath(ruleNode);
-                    }
-                    else
-                    {
-                        if(ruleNode == null)
-                        {
+                    } else {
+                        if (ruleNode == null) {
                             return false;
                         }
-                        if((symbolizerIndex < 0) || (symbolizerIndex >= ruleNode.getChildCount()))
-                        {
+                        if ((symbolizerIndex < 0)
+                                || (symbolizerIndex >= ruleNode.getChildCount())) {
                             return false;
                         }
 
-                        symbolizerNode = (DefaultMutableTreeNode)ruleNode.getChildAt(symbolizerIndex);
+                        symbolizerNode = (DefaultMutableTreeNode) ruleNode
+                                .getChildAt(symbolizerIndex);
 
-                        if((selectedTreeItemEnum == SelectedTreeItemEnum.POINT_SYMBOLIZER) ||
-                                (selectedTreeItemEnum == SelectedTreeItemEnum.LINE_SYMBOLIZER) ||
-                                (selectedTreeItemEnum == SelectedTreeItemEnum.POLYGON_SYMBOLIZER) ||
-                                (selectedTreeItemEnum == SelectedTreeItemEnum.RASTER_SYMBOLIZER) ||
-                                (selectedTreeItemEnum == SelectedTreeItemEnum.TEXT_SYMBOLIZER))
-                        {
+                        if ((selectedTreeItemEnum == SelectedTreeItemEnum.POINT_SYMBOLIZER)
+                                || (selectedTreeItemEnum == SelectedTreeItemEnum.LINE_SYMBOLIZER)
+                                || (selectedTreeItemEnum == SelectedTreeItemEnum.POLYGON_SYMBOLIZER)
+                                || (selectedTreeItemEnum == SelectedTreeItemEnum.RASTER_SYMBOLIZER)
+                                || (selectedTreeItemEnum == SelectedTreeItemEnum.TEXT_SYMBOLIZER)) {
                             path = getPath(symbolizerNode);
-                        }
-                        else
-                        {
-                            if((symbolizerDetailIndex < 0) || (symbolizerDetailIndex >= symbolizerNode.getChildCount()))
-                            {
+                        } else {
+                            if ((symbolizerDetailIndex < 0)
+                                    || (symbolizerDetailIndex >= symbolizerNode.getChildCount())) {
                                 return false;
                             }
 
-                            symbolizerDetailNode = (DefaultMutableTreeNode)symbolizerNode.getChildAt(symbolizerDetailIndex);
+                            symbolizerDetailNode = (DefaultMutableTreeNode) symbolizerNode
+                                    .getChildAt(symbolizerDetailIndex);
 
-                            if(symbolizerDetailNode == null)
-                            {
+                            if (symbolizerDetailNode == null) {
                                 return false;
                             }
 
-                            if((selectedTreeItemEnum == SelectedTreeItemEnum.POINT_FILL) || 
-                                    (selectedTreeItemEnum == SelectedTreeItemEnum.POLYGON_FILL) || 
-                                    (selectedTreeItemEnum == SelectedTreeItemEnum.STROKE))
-                            {
+                            if ((selectedTreeItemEnum == SelectedTreeItemEnum.POINT_FILL)
+                                    || (selectedTreeItemEnum == SelectedTreeItemEnum.POLYGON_FILL)
+                                    || (selectedTreeItemEnum == SelectedTreeItemEnum.STROKE)) {
                                 path = getPath(symbolizerDetailNode);
                             }
                         }
@@ -587,33 +564,28 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
      *
      * @return the selected symbol panel
      */
-    public PopulateDetailsInterface getSelectedSymbolPanel()
-    {
+    public PopulateDetailsInterface getSelectedSymbolPanel() {
         PopulateDetailsInterface panel = null;
         TreePath path = symbolTree.getSelectionPath();
 
-        if(path != null)
-        {
+        if (path != null) {
             DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
 
-            if(lastNode != null)
-            {
+            if (lastNode != null) {
                 Object nodeInfo = lastNode.getUserObject();
-                if(nodeInfo != null)
-                {
+                if (nodeInfo != null) {
                     Class<?> classSelected = nodeInfo.getClass();
                     String key = classSelected.toString();
 
                     Class<?> parentClass = null;
-                    if(lastNode.getParent() != null)
-                    {
-                        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) lastNode.getParent();
+                    if (lastNode.getParent() != null) {
+                        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) lastNode
+                                .getParent();
 
                         parentClass = parent.getUserObject().getClass();
                     }
 
-                    if(displayPanel != null)
-                    {
+                    if (displayPanel != null) {
                         panel = displayPanel.getPanel(parentClass, key);
                     }
                 }
@@ -623,87 +595,78 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         return panel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeUpdatedInterface#leafSelected()
      */
     @Override
     public void leafSelected() {
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode)symbolTree.getLastSelectedPathComponent();
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) symbolTree
+                .getLastSelectedPathComponent();
         DefaultMutableTreeNode parent = null;
 
-        if (node != null)
-        {
+        if (node != null) {
             Object nodeInfo = node.getUserObject();
-            if(nodeInfo != null)
-            {
+            if (nodeInfo != null) {
                 Class<?> classSelected = nodeInfo.getClass();
                 SLDTreeItemInterface treeItem = TreeItemMap.getInstance().getValue(classSelected);
 
-                if(treeItem != null)
-                {
+                if (treeItem != null) {
                     treeItem.itemSelected(node, nodeInfo);
                 }
 
-                if(displayPanel != null)
-                {
+                if (displayPanel != null) {
                     Controller.getInstance().setPopulating(true);
 
                     Class<?> parentClass = null;
-                    if(node.getParent() != null)
-                    {
+                    if (node.getParent() != null) {
                         parent = (DefaultMutableTreeNode) node.getParent();
+                        parentClass = parent.getUserObject().getClass();
+
                         // Check to see if node represents a fill
-                        if(classSelected == FillImpl.class)
-                        {
+                        if (classSelected == FillImpl.class) {
                             // Check to see if fill has been selected
                             Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-                            if(!SLDTreeLeafFactory.getInstance().hasFill(symbolizer))
-                            {
+                            if (!SLDTreeLeafFactory.getInstance().hasFill(symbolizer)) {
+                                parentClass = null;
                                 classSelected = null;
                             }
-                        }
-                        else if(classSelected == StrokeImpl.class)
-                        {
+                        } else if (classSelected == StrokeImpl.class) {
                             // Check to see if stroke has been selected
                             Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
 
-                            if(!SLDTreeLeafFactory.getInstance().hasStroke(symbolizer))
-                            {
+                            if (!SLDTreeLeafFactory.getInstance().hasStroke(symbolizer)) {
+                                parentClass = null;
                                 classSelected = null;
                             }
-                        }
-                        else
-                        {
-                            parentClass = parent.getUserObject().getClass();
                         }
                     }
                     displayPanel.show(parentClass, classSelected);
                     Controller.getInstance().setPopulating(false);
                 }
 
-                if(renderList != null)
-                {
-                    for(RenderSymbolInterface render : renderList)
-                    {
+                if (renderList != null) {
+                    for (RenderSymbolInterface render : renderList) {
                         render.renderSymbol();
                     }
                 }
             }
         }
 
-        if(treeTools != null)
-        {
+        if (treeTools != null) {
             treeTools.setButtonState(parent, node, this.currentGeometryType);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        if(undoRedoObject != null)
-        {
+        if (undoRedoObject != null) {
             repopulateTree((String) undoRedoObject.getOldValue());
         }
     }
@@ -723,24 +686,26 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
 
         populateSLD();
 
-        if((selectedRows != null) && (selectedRows.length > 0))
-        {
+        if ((selectedRows != null) && (selectedRows.length > 0)) {
             symbolTree.setSelectionRow(selectedRows[0]);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        if(undoRedoObject != null)
-        {
+        if (undoRedoObject != null) {
             repopulateTree((String) undoRedoObject.getNewValue());
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#getUndoObject()
      */
     @Override
@@ -748,7 +713,9 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         return this;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
