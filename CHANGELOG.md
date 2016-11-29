@@ -1,20 +1,48 @@
 # Change Log
 
-## [0.6.0](https://github.com/robward-scisys/sldeditor/tree/0.6.0) (2016-11-29)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.3...0.6.0)
+## [0.6.1](https://github.com/robward-scisys/sldeditor/tree/0.6.1) (2016-11-29)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.0...0.6.1)
+
+**Implemented enhancements:**
+
+- Stop checking for versions when running integration tests [\#185](https://github.com/robward-scisys/sldeditor/issues/185)
+
+**Fixed bugs:**
+
+- Geometry function now stored in SLD [\#184](https://github.com/robward-scisys/sldeditor/pull/184) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.6.0](https://github.com/robward-scisys/sldeditor/tree/v0.6.0) (2016-11-29)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.3...v0.6.0)
 
 **Implemented enhancements:**
 
 - Removed restriction on adding any symbolizer to a symbol [\#168](https://github.com/robward-scisys/sldeditor/issues/168)
+- All symbolizer types can be added to a symbol [\#172](https://github.com/robward-scisys/sldeditor/pull/172) ([robward-scisys](https://github.com/robward-scisys))
+- Iss162 line marker [\#165](https://github.com/robward-scisys/sldeditor/pull/165) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
+- WKT MULTILINESTRING not displayed correctly in the WKT dialog [\#176](https://github.com/robward-scisys/sldeditor/issues/176)
 - Disabling polygon stroke not handled correctly [\#173](https://github.com/robward-scisys/sldeditor/issues/173)
 - Solid polygon fill opacity not set correctly [\#170](https://github.com/robward-scisys/sldeditor/issues/170)
 - Solid line opacity not set [\#167](https://github.com/robward-scisys/sldeditor/issues/167)
 - Save/Save As reload functionality not working [\#166](https://github.com/robward-scisys/sldeditor/issues/166)
 - Opacity in line marker symbols is set overall, not individually for fill and stroke [\#164](https://github.com/robward-scisys/sldeditor/issues/164)
 - Corrected flag marking MULTILINESTRING as having multiple geometries [\#178](https://github.com/robward-scisys/sldeditor/pull/178) ([robward-scisys](https://github.com/robward-scisys))
+- Iss173 polygon stroke checkbox [\#175](https://github.com/robward-scisys/sldeditor/pull/175) ([robward-scisys](https://github.com/robward-scisys))
+- Iss170 polygon solid opacity [\#174](https://github.com/robward-scisys/sldeditor/pull/174) ([robward-scisys](https://github.com/robward-scisys))
+- Iss162 line marker [\#165](https://github.com/robward-scisys/sldeditor/pull/165) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- SLD for line marker shape:// not correctly constructed [\#162](https://github.com/robward-scisys/sldeditor/issues/162)
+- Create version 0.5.3 [\#160](https://github.com/robward-scisys/sldeditor/issues/160)
+
+**Merged pull requests:**
+
+- Updated version number to 0.6.0 [\#180](https://github.com/robward-scisys/sldeditor/pull/180) ([robward-scisys](https://github.com/robward-scisys))
+- Opacity set correctly for solid lines [\#171](https://github.com/robward-scisys/sldeditor/pull/171) ([robward-scisys](https://github.com/robward-scisys))
+- Iss166 save saveas [\#169](https://github.com/robward-scisys/sldeditor/pull/169) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.5.3](https://github.com/robward-scisys/sldeditor/tree/v0.5.3) (2016-11-21)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.2...v0.5.3)
