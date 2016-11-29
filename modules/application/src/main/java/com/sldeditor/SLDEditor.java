@@ -141,6 +141,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     static {
         JAIExt.initJAIEXT();
     }
+
     /**
      * The main method.
      *
@@ -151,13 +152,11 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         String tmpFilename = null;
         List<String> tmpExtensionArgList = null;
 
-        if(args.length > 0)
-        {
+        if (args.length > 0) {
             // Set up localisation of text
             Localisation.getInstance().parseCommandLine(args);
 
-            if(args[0].startsWith("-") == false)
-            {
+            if (args[0].startsWith("-") == false) {
                 tmpFilename = args[0];
             }
 
@@ -174,17 +173,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } 
-                catch (UnsupportedLookAndFeelException e) {
+                } catch (UnsupportedLookAndFeelException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (ClassNotFoundException e) {
+                } catch (ClassNotFoundException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (InstantiationException e) {
+                } catch (InstantiationException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (IllegalAccessException e) {
+                } catch (IllegalAccessException e) {
                     ConsoleManager.getInstance().exception(this, e);
                 }
 
@@ -209,7 +204,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             Class params[] = new Class[1];
             params[0] = Image.class;
             Method setDockIconImage = util.getMethod("setDockIconImage", params);
-            URL url = SLDEditor.class.getClassLoader().getResource(APPLICATION_ICON_MEDIUM.substring(1));
+            URL url = SLDEditor.class.getClassLoader()
+                    .getResource(APPLICATION_ICON_MEDIUM.substring(1));
             Image image = Toolkit.getDefaultToolkit().getImage(url);
             setDockIconImage.invoke(application, image);
 
@@ -237,12 +233,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public SLDEditor(String filename, List<String> extensionArgList,
             SLDEditorDlgInterface overrideSLDEditorDlg) {
 
-        if(overrideSLDEditorDlg == null)
-        {
+        if (overrideSLDEditorDlg == null) {
             sldEditorDlg = new SLDEditorDlg();
-        }
-        else
-        {
+        } else {
             sldEditorDlg = overrideSLDEditorDlg;
         }
 
@@ -276,51 +269,46 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         ReloadManager.getInstance().addListener(this);
 
-        ExtensionFactory.updateForPreferences(PrefManager.getInstance().getPrefData(), extensionArgList);
+        ExtensionFactory.updateForPreferences(PrefManager.getInstance().getPrefData(),
+                extensionArgList);
 
         // Set the UI to show now SLD files loaded
         uiMgr.populateUI(0);
 
         // Pass command line arguments to all extensions
-        for(ExtensionInterface extension : extensionList)
-        {
-            List<String> extensionSpecificArgumentList = ExtensionFactory.getArguments(extension, extensionArgList);
+        for (ExtensionInterface extension : extensionList) {
+            List<String> extensionSpecificArgumentList = ExtensionFactory.getArguments(extension,
+                    extensionArgList);
 
             extension.setArguments(extensionSpecificArgumentList);
         }
 
         // If specified on the command line, load SLD file
-        if(filename != null)
-        {
+        if (filename != null) {
             File file = new File(filename);
 
             URL url;
-            try
-            {
+            try {
                 url = file.toURI().toURL();
                 List<SLDDataInterface> sldDataList = null;
-                for(ExtensionInterface extension : extensionList)
-                {
-                    if(sldDataList == null)
-                    {
+                for (ExtensionInterface extension : extensionList) {
+                    if (sldDataList == null) {
                         sldDataList = extension.open(url);
                     }
                 }
-            }
-            catch (MalformedURLException e)
-            {
+            } catch (MalformedURLException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
 
         // Check application version on startup
-        PrefData prefData = PrefManager.getInstance().getPrefData();
-        if(prefData != null)
-        {
-            if(prefData.isCheckAppVersionOnStartUp())
-            {
-                CheckUpdatePanel updatePanel = new CheckUpdatePanel();
-                updatePanel.showPanelSilent(Version.getVersionNumber());
+        if (!underTestFlag) {
+            PrefData prefData = PrefManager.getInstance().getPrefData();
+            if (prefData != null) {
+                if (prefData.isCheckAppVersionOnStartUp()) {
+                    CheckUpdatePanel updatePanel = new CheckUpdatePanel();
+                    updatePanel.showPanelSilent(Version.getVersionNumber());
+                }
             }
         }
     }
@@ -334,10 +322,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param overrideSLDEditorDlg the override SLD editor dlg
      * @return the SLD editor
      */
-    public static SLDEditor createAndShowGUI(String filename,
-            List<String> extensionArgList,
-            boolean underTest,
-            SLDEditorDlgInterface overrideSLDEditorDlg) {
+    public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList,
+            boolean underTest, SLDEditorDlgInterface overrideSLDEditorDlg) {
         underTestFlag = underTest;
         frame = new JFrame(generateApplicationTitleString());
 
@@ -365,8 +351,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return the string
      */
     private static String generateApplicationTitleString() {
-        return String.format("%s %s \251%s %s", APP_NAME, 
-                Version.getVersionNumber(), 
+        return String.format("%s %s \251%s %s", APP_NAME, Version.getVersionNumber(),
                 APP_COPYRIGHT_YEAR, APP_COMPANY);
     }
 
@@ -375,26 +360,26 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @param dataEditedFlag the data edited flag
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#updateWindowTitle(boolean)
      */
     @Override
     public void updateWindowTitle(boolean dataEditedFlag) {
-        this.dataEditedFlag  = dataEditedFlag;
+        this.dataEditedFlag = dataEditedFlag;
         String docName = NO_SLDEDITOR_FILE_SET;
         File file = SLDEditorFile.getInstance().getSldEditorFile();
 
-        if(file != null)
-        {
+        if (file != null) {
             docName = file.getName();
-        }
-        else
-        {
+        } else {
             docName = SLDEditorFile.getInstance().getSLDData().getLayerName();
         }
 
         char docDirtyChar = dataEditedFlag ? '*' : ' ';
-        frame.setTitle(String.format("%s - %s%c", generateApplicationTitleString(), docName, docDirtyChar));
+        frame.setTitle(String.format("%s - %s%c", generateApplicationTitleString(), docName,
+                docDirtyChar));
     }
 
     /**
@@ -416,13 +401,11 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         List<SLDDataInterface> newSLDList = panel.showDialog(Controller.getInstance().getFrame());
 
-        if(newSLDList != null)
-        {
+        if (newSLDList != null) {
             SelectedFiles selectedFiles = new SelectedFiles();
             selectedFiles.setSldData(newSLDList);
 
-            if(loadSLDString(selectedFiles))
-            {
+            if (loadSLDString(selectedFiles)) {
                 uiMgr.populateUI(1);
             }
         }
@@ -434,12 +417,10 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param data the tree selection data
      * @return true, if successful
      */
-    public boolean selectTreeItem(TreeSelectionData data)
-    {
+    public boolean selectTreeItem(TreeSelectionData data) {
         SLDTree sldTree = uiMgr.getSymbolTree();
 
-        if(sldTree == null)
-        {
+        if (sldTree == null) {
             return false;
         }
 
@@ -451,8 +432,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @return the symbol panel
      */
-    public PopulateDetailsInterface getSymbolPanel()
-    {
+    public PopulateDetailsInterface getSymbolPanel() {
         SLDTree sldTree = uiMgr.getSymbolTree();
 
         PopulateDetailsInterface panel = sldTree.getSelectedSymbolPanel();
@@ -465,8 +445,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @return the field data manager
      */
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return uiMgr.getFieldDataManager();
     }
 
@@ -475,8 +454,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @param vendorOptionList the list of vendor options
      */
-    public void setVendorOptions(List<VersionData> vendorOptionList)
-    {
+    public void setVendorOptions(List<VersionData> vendorOptionList) {
         PrefData prefData = PrefManager.getInstance().getPrefData();
 
         prefData.setVendorOptionVersionList(vendorOptionList);
@@ -487,7 +465,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /**
      * Empty sld.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.LoadSLDInterface#emptySLD()
      */
     @Override
@@ -507,7 +487,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @param urlToSave the url to save
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#saveFile(java.net.URL)
      */
     @Override
@@ -520,8 +502,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         StyleWrapper style = null;
 
-        if(isLocalFile(urlToSave))
-        {
+        if (isLocalFile(urlToSave)) {
             try {
                 File f = new File(urlToSave.toURI());
                 style = new StyleWrapper(f.getName());
@@ -539,14 +520,14 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     }
 
     /**
-     *  Whether the URL is a file in the local file system.
+     * Whether the URL is a file in the local file system.
      *
      * @param url the url
      * @return true, if is local file
      */
     private static boolean isLocalFile(URL url) {
-      String scheme = url.getProtocol();
-      return "file".equalsIgnoreCase(scheme) && !hasHost(url);
+        String scheme = url.getProtocol();
+        return "file".equalsIgnoreCase(scheme) && !hasHost(url);
     }
 
     /**
@@ -556,8 +537,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return true, if successful
      */
     private static boolean hasHost(URL url) {
-      String host = url.getHost();
-      return host != null && !"".equals(host);
+        String host = url.getHost();
+        return host != null && !"".equals(host);
     }
 
     /**
@@ -569,10 +550,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public void saveSLDData(SLDDataInterface sldData) {
         boolean saved = false;
 
-        for(ExtensionInterface extension : extensionList)
-        {
-            if(saved == false)
-            {
+        for (ExtensionInterface extension : extensionList) {
+            if (saved == false) {
                 saved = extension.save(sldData);
             }
         }
@@ -583,12 +562,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @return the app panel
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#getAppPanel()
      */
     @Override
-    public JPanel getAppPanel()
-    {
+    public JPanel getAppPanel() {
         return this;
     }
 
@@ -597,12 +577,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @return the load sld interface
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#getLoadSLDInterface()
      */
     @Override
-    public LoadSLDInterface getLoadSLDInterface()
-    {
+    public LoadSLDInterface getLoadSLDInterface() {
         return this;
     }
 
@@ -611,12 +592,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @return the application frame
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#getApplicationFrame()
      */
     @Override
-    public JFrame getApplicationFrame()
-    {
+    public JFrame getApplicationFrame() {
         return Controller.getInstance().getFrame();
     }
 
@@ -627,30 +609,24 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return true, if successful
      */
     @Override
-    public boolean loadSLDString(SelectedFiles selectedFiles)
-    {
+    public boolean loadSLDString(SelectedFiles selectedFiles) {
         boolean loadNewSymbol = true;
 
         PrefManager.getInstance().setLastFolderViewed(selectedFiles);
 
         List<SLDDataInterface> sldFilesToLoad = selectedFiles.getSldData();
 
-        if(!selectedFiles.isFolder())
-        {
+        if (!selectedFiles.isFolder()) {
             // Application can only support editing one SLD file at a time
-            if(sldFilesToLoad.size() == 1)
-            {
+            if (sldFilesToLoad.size() == 1) {
                 SLDDataInterface firstObject = sldFilesToLoad.get(0);
 
-                if(firstObject != null)
-                {
-                    if(dataEditedFlag && !isUnderTestFlag())
-                    {
+                if (firstObject != null) {
+                    if (dataEditedFlag && !isUnderTestFlag()) {
                         loadNewSymbol = sldEditorDlg.load(frame);
                     }
 
-                    if(loadNewSymbol)
-                    {
+                    if (loadNewSymbol) {
                         populate(firstObject);
                     }
 
@@ -658,8 +634,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                 }
             }
 
-            if(!selectedFiles.isDataSource())
-            {
+            if (!selectedFiles.isDataSource()) {
                 // Inform UndoManager that a new SLD file has been
                 // loaded and to clear undo history
                 UndoManager.getInstance().fileLoaded();
@@ -682,17 +657,14 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         String layerName = sldData.getLayerName();
 
         File sldEditorFile = sldData.getSldEditorFile();
-        if(sldEditorFile != null)
-        {
+        if (sldEditorFile != null) {
             ConsoleManager.getInstance().information(this,
                     String.format("%s : %s",
                             Localisation.getString(getClass(), "SLDEditor.loadedSLDEditorFile"),
                             sldEditorFile.getAbsolutePath()));
         }
-        ConsoleManager.getInstance().information(this,
-                String.format("%s : %s",
-                        Localisation.getString(getClass(), "SLDEditor.loadedSLDFile"),
-                        layerName));
+        ConsoleManager.getInstance().information(this, String.format("%s : %s",
+                Localisation.getString(getClass(), "SLDEditor.loadedSLDFile"), layerName));
 
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
@@ -709,15 +681,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         dataSource.reset();
 
-        if(isDataSourceSticky)
-        {
+        if (isDataSourceSticky) {
             SLDEditorFile.getInstance().setDataSource(previousDataSource);
         }
 
         dataSource.connect(SLDEditorFile.getInstance());
 
-        if(sldEditorFile != null)
-        {
+        if (sldEditorFile != null) {
             PrefData prefData = PrefManager.getInstance().getPrefData();
             prefData.setVendorOptionVersionList(sldData.getVendorOptionList());
             PrefManager.getInstance().setPrefData(prefData);
@@ -733,12 +703,13 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param file the file
      * @return the styled layer descriptor
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.LoadSLDInterface#readSLDFile(java.io.File)
      */
     @Override
-    public StyledLayerDescriptor readSLDFile(File file)
-    {
+    public StyledLayerDescriptor readSLDFile(File file) {
         return SLDUtils.readSLDFile(file);
     }
 
@@ -747,23 +718,21 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @param url the url
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#openFile(java.net.URL)
      */
     @Override
-    public void openFile(URL url)
-    {
+    public void openFile(URL url) {
         List<SLDDataInterface> sldDataList = null;
-        for(ExtensionInterface extension : extensionList)
-        {
-            if(sldDataList == null)
-            {
+        for (ExtensionInterface extension : extensionList) {
+            if (sldDataList == null) {
                 sldDataList = extension.open(url);
             }
         }
 
-        if(sldDataList != null)
-        {
+        if (sldDataList != null) {
             SelectedFiles selectedFiles = new SelectedFiles();
             selectedFiles.setSldData(sldDataList);
 
@@ -776,7 +745,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      *
      * @return the app name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.SLDEditorInterface#getAppName()
      */
     @Override
@@ -790,8 +761,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return the SLD string
      */
     public String getSLDString() {
-        if(sldWriter == null)
-        {
+        if (sldWriter == null) {
             sldWriter = SLDWriterFactory.createWriter(null);
         }
 
@@ -836,7 +806,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         return underTestFlag;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.LoadSLDInterface#preLoad()
      */
     @Override
@@ -845,37 +817,32 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         uiMgr.getDataSourceConfig().reset();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.LoadSLDInterface#reloadSLDFile()
      */
     @Override
     public void reloadSLDFile() {
         boolean reloadFile = true;
-        if(!underTestFlag)
-        {
+        if (!underTestFlag) {
             reloadFile = sldEditorDlg.reload(frame);
         }
 
-        if(reloadFile)
-        {
+        if (reloadFile) {
             SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
 
-            if(sldData != null)
-            {
+            if (sldData != null) {
                 URL url = sldData.getSLDURL();
-                if(url != null)
-                {
+                if (url != null) {
                     List<SLDDataInterface> sldDataList = null;
-                    for(ExtensionInterface extension : extensionList)
-                    {
-                        if(sldDataList == null)
-                        {
+                    for (ExtensionInterface extension : extensionList) {
+                        if (sldDataList == null) {
                             sldDataList = extension.open(url);
                         }
                     }
 
-                    if((sldDataList != null) && !sldDataList.isEmpty())
-                    {
+                    if ((sldDataList != null) && !sldDataList.isEmpty()) {
                         SLDDataInterface firstObject = sldDataList.get(0);
                         populate(firstObject);
                     }
