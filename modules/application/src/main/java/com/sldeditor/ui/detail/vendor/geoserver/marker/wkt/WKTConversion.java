@@ -270,12 +270,12 @@ public class WKTConversion {
 
         wktParser = new WKTParser(geometryFactory, primitiveFactory, positionFactory, aggregateFactory);
 
-        wktTypeList.add(new WKTType(WKT_POINT, false, 1, "Point", false));
-        wktTypeList.add(new WKTType(WKT_MULTIPOINT, true, 1, "Point", false));
-        wktTypeList.add(new WKTType(WKT_LINESTRING, false, 2, "Line", false));
-        wktTypeList.add(new WKTType("LINEARRING", false, 2, "Line", false));
-        wktTypeList.add(new WKTType(WKT_MULTILINESTRING, true, 2, "Line", false));
-        wktTypeList.add(new WKTType(WKT_POLYGON, false, -1, "Polygon", true));
+        wktTypeList.add(new WKTType(WKT_POINT, false, 1, "Point", false, false));
+        wktTypeList.add(new WKTType(WKT_MULTIPOINT, true, 1, "Point", true, false));
+        wktTypeList.add(new WKTType(WKT_LINESTRING, false, 2, "Line", false, false));
+        wktTypeList.add(new WKTType("LINEARRING", false, 2, "Line", false, false));
+        wktTypeList.add(new WKTType(WKT_MULTILINESTRING, true, 2, "Line", true, false));
+        wktTypeList.add(new WKTType(WKT_POLYGON, false, -1, "Polygon", false, true));
         wktTypeList.add(new WKTType(WKT_MULTIPOLYGON, true, -1, "Polygon", true, true));
 
         for(WKTType wkyType : wktTypeList)

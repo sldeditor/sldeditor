@@ -73,7 +73,8 @@ public class WKTTypeTest {
         WKTType wktType2 = new WKTType(name, 
                 multipleCoordinates,
                 numOfPoints,
-                listItem, 
+                listItem,
+                false,
                 doFirstLastHaveToBeSame);
         assertFalse(wktType2.canHaveMultipleShapes());
 
