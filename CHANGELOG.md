@@ -1,13 +1,42 @@
 # Change Log
 
-## [0.5.3](https://github.com/robward-scisys/sldeditor/tree/0.5.3) (2016-11-21)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.2...0.5.3)
+## [0.6.0](https://github.com/robward-scisys/sldeditor/tree/0.6.0) (2016-11-29)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.3...0.6.0)
+
+**Implemented enhancements:**
+
+- Removed restriction on adding any symbolizer to a symbol [\#168](https://github.com/robward-scisys/sldeditor/issues/168)
+
+**Fixed bugs:**
+
+- Disabling polygon stroke not handled correctly [\#173](https://github.com/robward-scisys/sldeditor/issues/173)
+- Solid polygon fill opacity not set correctly [\#170](https://github.com/robward-scisys/sldeditor/issues/170)
+- Solid line opacity not set [\#167](https://github.com/robward-scisys/sldeditor/issues/167)
+- Save/Save As reload functionality not working [\#166](https://github.com/robward-scisys/sldeditor/issues/166)
+- Opacity in line marker symbols is set overall, not individually for fill and stroke [\#164](https://github.com/robward-scisys/sldeditor/issues/164)
+- Corrected flag marking MULTILINESTRING as having multiple geometries [\#178](https://github.com/robward-scisys/sldeditor/pull/178) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.5.3](https://github.com/robward-scisys/sldeditor/tree/v0.5.3) (2016-11-21)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.2...v0.5.3)
 
 **Implemented enhancements:**
 
 - Allow symbolizer geometry field to enter a function [\#156](https://github.com/robward-scisys/sldeditor/issues/156)
 - Iss158 check app version at startup [\#159](https://github.com/robward-scisys/sldeditor/pull/159) ([robward-scisys](https://github.com/robward-scisys))
 - Iss156 symbolizer geometry field function [\#157](https://github.com/robward-scisys/sldeditor/pull/157) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Modification of underlying SLD file ignore sticky data source flag [\#152](https://github.com/robward-scisys/sldeditor/issues/152)
+
+**Closed issues:**
+
+- Add feature to check for latest application version on startup  [\#158](https://github.com/robward-scisys/sldeditor/issues/158)
+- Create version 0.5.2 [\#154](https://github.com/robward-scisys/sldeditor/issues/154)
+
+**Merged pull requests:**
+
+- Updated application to v0.5.3 [\#161](https://github.com/robward-scisys/sldeditor/pull/161) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.5.2](https://github.com/robward-scisys/sldeditor/tree/v0.5.2) (2016-11-18)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.1...v0.5.2)
