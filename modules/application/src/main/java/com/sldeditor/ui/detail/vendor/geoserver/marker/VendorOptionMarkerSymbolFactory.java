@@ -40,6 +40,9 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     /** The GeoServer vendor option for extshapes:// */
     private VOMarkerSymbolInterface vendorOptionGeoServerWeather = new VOGeoServerWeatherSymbol();
 
+    /** The GeoServer vendor option for extshape://arrow */
+    private VOMarkerSymbolInterface vendorOptionGeoServerArrow = new VOGeoServerArrowSymbol();
+
     /** The list of all the extensions. */
     private List<VOMarkerSymbolInterface> list = new ArrayList<VOMarkerSymbolInterface>();
 
@@ -50,6 +53,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     {
         list.add(vendorOptionGeoServerShape);
         list.add(vendorOptionGeoServerWeather);
+        list.add(vendorOptionGeoServerArrow);
     }
 
     /**

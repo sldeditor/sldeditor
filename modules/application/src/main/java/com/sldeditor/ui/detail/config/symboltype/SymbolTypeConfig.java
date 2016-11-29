@@ -38,10 +38,10 @@ import com.sldeditor.ui.detail.FieldEnableState;
  * <li>One SymbolTypeConfig could have an option name of None which if selected could disable all fields.</li>
  * <li>Another SymbolTypeConfigcould have several option names e.g. Solid, Cross, which if selected could enable all fields.<l/i>
  * </ul>
+ * 
  * @author Robert Ward (SCISYS)
  */
-public class SymbolTypeConfig
-{
+public class SymbolTypeConfig {
 
     /** The group name. */
     private String groupName = "Not set";
@@ -65,10 +65,11 @@ public class SymbolTypeConfig
     private Class<?> panelId = null;
 
     /**
-     * Constructor
+     * Constructor.
+     *
+     * @param panelId the panel id
      */
-    public SymbolTypeConfig(Class<?> panelId)
-    {
+    public SymbolTypeConfig(Class<?> panelId) {
         this.panelId = panelId;
     }
 
@@ -78,8 +79,7 @@ public class SymbolTypeConfig
      * @param key the key
      * @param title the title
      */
-    public void addOption(String key, String title)
-    {
+    public void addOption(String key, String title) {
         keyOrderList.add(key);
         optionMap.put(key, title);
     }
@@ -90,29 +90,24 @@ public class SymbolTypeConfig
      * @param fieldEnableState the field enable state
      * @param panelName the panel name
      */
-    public void updateFieldState(FieldEnableState fieldEnableState, String panelName)
-    {
-        for(String menuOption : keyOrderList)
-        {
+    public void updateFieldState(FieldEnableState fieldEnableState, String panelName) {
+        for (String menuOption : keyOrderList) {
             Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
 
-            for(FieldIdEnum fieldKey : fieldMap.keySet())
-            {
+            for (FieldIdEnum fieldKey : fieldMap.keySet()) {
                 boolean value = fieldMap.get(fieldKey);
 
                 fieldList.put(fieldKey, value);
             }
 
             Map<GroupIdEnum, Boolean> groupList = new HashMap<GroupIdEnum, Boolean>();
-            for(GroupIdEnum groupKey : groupMap.keySet())
-            {
+            for (GroupIdEnum groupKey : groupMap.keySet()) {
                 boolean value = groupMap.get(groupKey);
 
                 groupList.put(groupKey, value);
             }
 
-            if(fieldEnableState != null)
-            {
+            if (fieldEnableState != null) {
                 fieldEnableState.add(panelName, menuOption, fieldList, groupList);
             }
         }
@@ -123,14 +118,12 @@ public class SymbolTypeConfig
      *
      * @return the field map
      */
-    public Map<Class<?>, Map<FieldIdEnum, Boolean> > getFieldMap()
-    {
-        Map<Class<?>, Map<FieldIdEnum, Boolean> > map = new HashMap<Class<?>, Map<FieldIdEnum, Boolean> >();
+    public Map<Class<?>, Map<FieldIdEnum, Boolean>> getFieldMap() {
+        Map<Class<?>, Map<FieldIdEnum, Boolean>> map = new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
 
         Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
 
-        for(FieldIdEnum fieldKey : fieldMap.keySet())
-        {
+        for (FieldIdEnum fieldKey : fieldMap.keySet()) {
             boolean value = fieldMap.get(fieldKey);
 
             fieldList.put(fieldKey, value);
@@ -146,8 +139,7 @@ public class SymbolTypeConfig
      *
      * @return the key order list
      */
-    public List<String> getKeyOrderList()
-    {
+    public List<String> getKeyOrderList() {
         return keyOrderList;
     }
 
@@ -157,8 +149,7 @@ public class SymbolTypeConfig
      * @param key the key
      * @return the title
      */
-    public String getTitle(String key)
-    {
+    public String getTitle(String key) {
         return optionMap.get(key);
     }
 
@@ -168,8 +159,7 @@ public class SymbolTypeConfig
      * @param fieldId the field id
      * @param enabled the enabled flag
      */
-    public void addField(FieldIdEnum fieldId, boolean enabled)
-    {
+    public void addField(FieldIdEnum fieldId, boolean enabled) {
         fieldMap.put(fieldId, enabled);
     }
 
@@ -182,7 +172,7 @@ public class SymbolTypeConfig
     public void addGroup(GroupIdEnum groupId, boolean enabled) {
         groupMap.put(groupId, enabled);
     }
-    
+
     /**
      * Gets the option map.
      *
@@ -226,6 +216,15 @@ public class SymbolTypeConfig
      */
     public String getGroupName() {
         return groupName;
+    }
+
+    /**
+     * Gets the panel id.
+     *
+     * @return the panelId
+     */
+    public Class<?> getPanelId() {
+        return panelId;
     }
 
 }

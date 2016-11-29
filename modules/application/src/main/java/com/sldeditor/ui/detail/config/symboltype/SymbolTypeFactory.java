@@ -44,6 +44,7 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -73,6 +74,9 @@ public class SymbolTypeFactory {
 
     /** The WKT shape field. */
     private FieldConfigWKT wktShape = null;
+
+    /** The arrow shape field. */
+    private FieldConfigArrow arrowShape = null;
 
     /** The class map. */
     private Map<Class<?>, FieldState> classMap = new HashMap<Class<?>, FieldState>();
@@ -117,12 +121,15 @@ public class SymbolTypeFactory {
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        arrowShape = new FieldConfigArrow(new FieldConfigCommonData(panelId, FieldIdEnum.VO_ARROW, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);
         symbolTypeFieldList.add(ttfField);
         symbolTypeFieldList.add(windBarbs);
         symbolTypeFieldList.add(wktShape);
+        symbolTypeFieldList.add(arrowShape);
 
         // Create the ui for the fields
         for(FieldState fieldConfig : symbolTypeFieldList)

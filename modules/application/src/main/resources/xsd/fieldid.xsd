@@ -181,6 +181,11 @@
 
             <xs:enumeration value="VO_POINT_RANDOMFILL" />
             <xs:enumeration value="VO_POLYGON_RANDOMFILL" />
+            
+            <xs:enumeration value="VO_ARROW" />
+            <xs:enumeration value="VO_ARROW_THICKNESS" />
+            <xs:enumeration value="VO_ARROW_HEIGHT_OVER_WIDTH" />
+            <xs:enumeration value="VO_ARROW_HEAD" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

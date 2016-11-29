@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLSymbolTypeConfig>
+    <Panel type="com.sldeditor.ui.detail.PointFillDetails">
+        <Value>
+            <Item id="arrow" label="Arrow" />
+            <FieldList>
+                <Field id="VO_ARROW_THICKNESS" enabled="true" />
+                <Field id="VO_ARROW_HEIGHT_OVER_WIDTH" enabled="true" />
+                <Field id="VO_ARROW_HEAD" enabled="true" />
+
+                <Field id="SYMBOL_TYPE" enabled="true" />
+
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="false" />
+                <Field id="INITIAL_GAP" enabled="true" />
+                <Field id="GAP" enabled="true" />
+
+                <Group id="FILL" enabled="false" />
+                <Group id="STROKE" enabled="true" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
+        <Value>
+            <Item id="arrow" label="Arrow" />
+            <FieldList>
+                <Field id="VO_ARROW_THICKNESS" enabled="true" />
+                <Field id="VO_ARROW_HEIGHT_OVER_WIDTH" enabled="true" />
+                <Field id="VO_ARROW_HEAD" enabled="true" />
+
+                <Field id="SYMBOL_TYPE" enabled="true" />
+
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="false" />
+                <Field id="INITIAL_GAP" enabled="true" />
+                <Field id="GAP" enabled="true" />
+
+                <Group id="FILL" enabled="false" />
+                <Group id="STROKE" enabled="true" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
+    <Panel type="com.sldeditor.ui.detail.StrokeDetails">
+        <Value>
+            <Item id="arrow" label="Arrow" />
+            <FieldList>
+                <Field id="VO_ARROW_THICKNESS" enabled="true" />
+                <Field id="VO_ARROW_HEIGHT_OVER_WIDTH" enabled="true" />
+                <Field id="VO_ARROW_HEAD" enabled="true" />
+
+                <Field id="STROKE_STYLE" enabled="true" />
+
+                <Field id="STROKE_WIDTH" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
+                <Field id="STROKE_LINE_JOIN" enabled="false" />
+                <Field id="STROKE_LINE_CAP" enabled="false" />
+                <Field id="STROKE_DASH_ARRAY" enabled="false" />
+                <Field id="STROKE_OFFSET" enabled="false" />
+                <Field id="STROKE_FILL_WIDTH" enabled="false" />
+
+                <Group id="FILLCOLOUR" enabled="false" />
+                <Group id="STROKECOLOUR" enabled="true" />
+                <Group id="STROKESYMBOL" enabled="true" />
+                <Group id="STROKEANCHORPOINT" enabled="true" />
+                <Group id="STROKEDISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
+</XMLSymbolTypeConfig>
