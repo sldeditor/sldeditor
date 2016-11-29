@@ -46,16 +46,16 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * The Class FieldConfigGeometryField wraps a drop down GUI component the contains the
- * data source attributes
+ * The Class FieldConfigGeometryField wraps a drop down GUI component the contains the data source attributes
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigGeometryField extends FieldConfigBase implements UndoActionInterface, DataSourceUpdatedInterface {
+public class FieldConfigGeometryField extends FieldConfigBase
+        implements UndoActionInterface, DataSourceUpdatedInterface {
 
     /** The attribute combo box. */
     private JComboBox<String> attributeComboBox = new JComboBox<String>();
@@ -75,6 +75,8 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
     /** The populating attribute combo box. */
     private boolean populatingAttributeComboBox = false;
 
+    /** The field enabled flag. */
+    private boolean fieldEnabled = true;
 
     /**
      * Default constructor.
@@ -88,7 +90,9 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -98,22 +102,22 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
         int xPos = getXPos();
         FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        attributeComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        attributeComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
+                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
 
         fieldPanel.add(attributeComboBox);
         populateAttributeComboBox();
 
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this, true));
+        if (!isValueOnly()) {
+            setAttributeSelectionPanel(
+                    fieldPanel.internalCreateAttrButton(Geometry.class, this, true));
         }
 
         attributeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(isAttributeComboBoxPopulated())
-                {
+                if (isAttributeComboBoxPopulated()) {
                     String newValueObj = (String) attributeComboBox.getSelectedItem();
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, 
+                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
                             "DataSourceAttribute", oldValueObj, newValueObj));
 
                     valueUpdated();
@@ -128,16 +132,14 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
-        if(attributeComboBox != null)
-        {
-            attributeComboBox.setEnabled(enabled);
-        }
+    public void setEnabled(boolean enabled) {
+        // Do nothing
     }
 
     /**
@@ -145,18 +147,17 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(attributeComboBox != null)
-        {
+        if (attributeComboBox != null) {
             String value = getStringValue();
-            if(value != null)
-            {
+            if (value != null) {
                 expression = getFilterFactory().property(value);
             }
         }
@@ -169,28 +170,26 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if(attributeComboBox != null)
-        {
-            return attributeComboBox.isEnabled();
-        }
-        return false;
+    public boolean isEnabled() {
+        return fieldEnabled;
     }
 
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(defaultValue);
     }
 
@@ -199,37 +198,31 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         String propertyName = null;
 
-        if(objValue instanceof PropertyExistsFunction)
-        {
-            Expression e = ((PropertyExistsFunction)objValue).getParameters().get(0);
-            Object value = ((LiteralExpressionImpl)e).getValue();
-            propertyName = ((AttributeExpressionImpl)value).getPropertyName();
-        }
-        else if(objValue instanceof AttributeExpressionImpl)
-        {
-            propertyName = ((AttributeExpressionImpl)objValue).getPropertyName();
-        }
-        else if(objValue instanceof LiteralExpressionImpl)
-        {
-            propertyName = AttributeUtils.extract((String) ((LiteralExpressionImpl)objValue).getValue());
+        if (objValue instanceof PropertyExistsFunction) {
+            Expression e = ((PropertyExistsFunction) objValue).getParameters().get(0);
+            Object value = ((LiteralExpressionImpl) e).getValue();
+            propertyName = ((AttributeExpressionImpl) value).getPropertyName();
+        } else if (objValue instanceof AttributeExpressionImpl) {
+            propertyName = ((AttributeExpressionImpl) objValue).getPropertyName();
+        } else if (objValue instanceof LiteralExpressionImpl) {
+            propertyName = AttributeUtils
+                    .extract((String) ((LiteralExpressionImpl) objValue).getValue());
         }
 
-        if(propertyName != null)
-        {
+        if (propertyName != null) {
             oldValueObj = propertyName;
 
             attributeComboBox.setSelectedItem(propertyName);
-        }
-        else
-        {
+        } else {
             oldValueObj = propertyName;
             attributeComboBox.setSelectedIndex(-1);
         }
@@ -241,8 +234,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
+    public String getStringValue() {
         return (String) attributeComboBox.getSelectedItem();
     }
 
@@ -251,17 +243,16 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((attributeComboBox != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof String)
-            {
-                String oldValue = (String)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((attributeComboBox != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof String) {
+                String oldValue = (String) undoRedoObject.getOldValue();
 
                 attributeComboBox.setSelectedItem(oldValue);
             }
@@ -273,17 +264,16 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((attributeComboBox != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof String)
-            {
-                String newValue = (String)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((attributeComboBox != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof String) {
+                String newValue = (String) undoRedoObject.getNewValue();
 
                 attributeComboBox.setSelectedItem(newValue);
             }
@@ -310,14 +300,11 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      */
     @Override
     public void populateField(String value) {
-        if(value != null)
-        {
+        if (value != null) {
             oldValueObj = value;
 
             attributeComboBox.setSelectedItem(value);
-        }
-        else
-        {
+        } else {
             oldValueObj = value;
             attributeComboBox.setSelectedIndex(-1);
         }
@@ -328,8 +315,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(String defaultValue)
-    {
+    public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -343,8 +329,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigGeometryField copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigGeometryField(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -357,13 +342,14 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      */
     @Override
     public void setVisible(boolean visible) {
-        if(attributeComboBox != null)
-        {
+        if (attributeComboBox != null) {
             attributeComboBox.setVisible(visible);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
@@ -372,8 +358,7 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
-        if(dataSource != null)
-        {
+        if (dataSource != null) {
             attributeNameList = dataSource.getAttributes(Geometry.class);
         }
 
@@ -384,17 +369,14 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
      * Populate attribute combo box.
      */
     private void populateAttributeComboBox() {
-        if(attributeComboBox != null)
-        {
+        if (attributeComboBox != null) {
             setPopulatingComboBox(true);
             Object selectedItem = model.getSelectedItem();
             model.removeAllElements();
             model.addElement("");
 
-            if(attributeNameList != null)
-            {
-                for(String attribute : attributeNameList)
-                {
+            if (attributeNameList != null) {
+                for (String attribute : attributeNameList) {
                     model.addElement(attribute);
                 }
             }
@@ -422,7 +404,9 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
         return !populatingAttributeComboBox;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -430,7 +414,9 @@ public class FieldConfigGeometryField extends FieldConfigBase implements UndoAct
         // Does nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override

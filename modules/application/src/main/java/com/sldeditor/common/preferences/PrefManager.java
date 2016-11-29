@@ -87,7 +87,7 @@ public class PrefManager implements UndoActionInterface {
     private static PropertyManagerInterface propertyManagerInstance = null;
 
     /** The last viewed map. */
-    private static Map<PrefDataLastViewedEnum, String> lastViewedMap = null;
+    private Map<PrefDataLastViewedEnum, String> lastViewedMap = null;
 
     /**
      * Gets the single instance of PrefManager.
@@ -117,12 +117,9 @@ public class PrefManager implements UndoActionInterface {
      */
     private PrefManager()
     {
-        if(lastViewedMap == null)
-        {
-            lastViewedMap = new HashMap<PrefDataLastViewedEnum, String>();
-            lastViewedMap.put(PrefDataLastViewedEnum.FOLDER, LAST_FOLDER_VIEWED_FIELD);
-            lastViewedMap.put(PrefDataLastViewedEnum.GEOSERVER, LAST_GEOSERVER_VIEWED_FIELD);
-        }
+        lastViewedMap = new HashMap<PrefDataLastViewedEnum, String>();
+        lastViewedMap.put(PrefDataLastViewedEnum.FOLDER, LAST_FOLDER_VIEWED_FIELD);
+        lastViewedMap.put(PrefDataLastViewedEnum.GEOSERVER, LAST_GEOSERVER_VIEWED_FIELD);
     }
 
     /**
