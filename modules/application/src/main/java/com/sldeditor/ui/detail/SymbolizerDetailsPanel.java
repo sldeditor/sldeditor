@@ -52,10 +52,9 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 
 /**
- * The Class SymbolizerDetailsPanel handles the display of the correct panel when the
- * user clicks on the SLD tree structure. 
- * <p>Implemented as panel with a card layout, all possible panels are added to the layout
- * and displayed accordingly.
+ * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on the SLD tree structure.
+ * <p>
+ * Implemented as panel with a card layout, all possible panels are added to the layout and displayed accordingly.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -82,18 +81,25 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      * @param rendererList the renderer list
      * @param sldTree the sld tree
      */
-    public SymbolizerDetailsPanel(List<RenderSymbolInterface> rendererList, SLDTreeUpdatedInterface sldTree) {
+    public SymbolizerDetailsPanel(List<RenderSymbolInterface> rendererList,
+            SLDTreeUpdatedInterface sldTree) {
 
         FunctionNameInterface functionManager = null;
 
         populateMap(EMPTY_PANEL_KEY, new EmptyPanel(functionManager));
-        populateMap(PointSymbolizerImpl.class.toString(), new PointSymbolizerDetails(functionManager));
-        populateMap(LineSymbolizerImpl.class.toString(), new LineSymbolizerDetails(functionManager));
-        populateMap(TextSymbolizerImpl.class.toString(), new TextSymbolizerDetails(functionManager));
-        populateMap(PolygonSymbolizerImpl.class.toString(), new PolygonSymbolizerDetails(functionManager));
-        populateMap(RasterSymbolizerImpl.class.toString(), new RasterSymbolizerDetails(functionManager));
+        populateMap(PointSymbolizerImpl.class.toString(),
+                new PointSymbolizerDetails(functionManager));
+        populateMap(LineSymbolizerImpl.class.toString(),
+                new LineSymbolizerDetails(functionManager));
+        populateMap(TextSymbolizerImpl.class.toString(),
+                new TextSymbolizerDetails(functionManager));
+        populateMap(PolygonSymbolizerImpl.class.toString(),
+                new PolygonSymbolizerDetails(functionManager));
+        populateMap(RasterSymbolizerImpl.class.toString(),
+                new RasterSymbolizerDetails(functionManager));
         populateMap(RuleImpl.class.toString(), new RuleDetails(functionManager));
-        populateMap(FeatureTypeStyleImpl.class.toString(), new FeatureTypeStyleDetails(functionManager));
+        populateMap(FeatureTypeStyleImpl.class.toString(),
+                new FeatureTypeStyleDetails(functionManager));
         populateMap(StyleImpl.class.toString(), new StyleDetails(functionManager));
         populateMap(NamedLayerImpl.class.toString(), new NamedLayerDetails(functionManager));
         populateMap(UserLayerImpl.class.toString(), new UserLayerDetails(functionManager));
@@ -105,16 +111,12 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
         fillMap.put(PointSymbolizerImpl.class, PointFillDetails.class);
         fillMap.put(PolygonSymbolizerImpl.class, PolygonFillDetails.class);
 
-        for(String key : panelMap.keySet())
-        {
-            for(PopulateDetailsInterface panelInterface : panelMap.get(key))
-            {
+        for (String key : panelMap.keySet()) {
+            for (PopulateDetailsInterface panelInterface : panelMap.get(key)) {
                 BasePanel panel = (BasePanel) panelInterface;
 
-                if(rendererList != null)
-                {
-                    for(RenderSymbolInterface renderer : rendererList)
-                    {
+                if (rendererList != null) {
+                    for (RenderSymbolInterface renderer : rendererList) {
                         panel.addRenderer(renderer);
                     }
                 }
@@ -130,15 +132,13 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
         detailsPanel = new JPanel(false);
         detailsPanel.setLayout(new CardLayout());
 
-        for(String key : panelMap.keySet())
-        {
+        for (String key : panelMap.keySet()) {
             List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
-            for(PopulateDetailsInterface panel : panelList)
-            {
+            for (PopulateDetailsInterface panel : panelList) {
                 JPanel component = (JPanel) panel;
 
-                detailsPanel.add(component, encodePanelKey(key, panel) );
+                detailsPanel.add(component, encodePanelKey(key, panel));
             }
         }
 
@@ -165,8 +165,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     private void populateMap(String key, PopulateDetailsInterface panelDetails) {
         List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
-        if(panelList == null)
-        {
+        if (panelList == null) {
             panelList = new ArrayList<PopulateDetailsInterface>();
             panelMap.put(key, panelList);
         }
@@ -181,28 +180,22 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      * @return the panel
      */
     @Override
-    public PopulateDetailsInterface getPanel(Class<?> parentClass, String key)
-    {
+    public PopulateDetailsInterface getPanel(Class<?> parentClass, String key) {
         List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
-        if(panelList == null)
-        {
+        if (panelList == null) {
             key = EMPTY_PANEL_KEY;
             panelList = panelMap.get(key);
         }
 
-        if(panelList.size() == 1)
-        {
+        if (panelList.size() == 1) {
             return panelList.get(0);
         }
 
-        if(parentClass != null)
-        {
+        if (parentClass != null) {
             Class<?> panelTypeToFind = fillMap.get(parentClass);
-            for(PopulateDetailsInterface panel : panelList)
-            {
-                if(panel.getClass() == panelTypeToFind)
-                {
+            for (PopulateDetailsInterface panel : panelList) {
+                if (panel.getClass() == panelTypeToFind) {
                     return panel;
                 }
             }
@@ -218,21 +211,21 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      * @param classSelected the class selected
      */
     @Override
-    public void show(Class<?> parentClass, Class<?> classSelected)
-    {
-        if(classSelected != null)
-        {
-            String key = classSelected.toString();
+    public void show(Class<?> parentClass, Class<?> classSelected) {
+        String key = null;
+        if (classSelected != null) {
+            key = classSelected.toString();
+        } else {
+            key = EMPTY_PANEL_KEY;
+        }
 
-            PopulateDetailsInterface panel = getPanel(parentClass, key);
-            if(panel != null)
-            {
-                CardLayout cl = (CardLayout)(detailsPanel.getLayout());
-                cl.show(detailsPanel, encodePanelKey(key, panel));
+        PopulateDetailsInterface panel = getPanel(parentClass, key);
+        if (panel != null) {
+            CardLayout cl = (CardLayout) (detailsPanel.getLayout());
+            cl.show(detailsPanel, encodePanelKey(key, panel));
 
-                SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
-                panel.populate(selectedSymbol);
-            }
+            SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
+            panel.populate(selectedSymbol);
         }
         repaint();
     }
@@ -242,12 +235,13 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      *
      * @return the panel ids
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#getPanelIds()
      */
     @Override
-    public Set<String> getPanelIds()
-    {
+    public Set<String> getPanelIds() {
         return panelMap.keySet();
     }
 
@@ -258,12 +252,10 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      */
     public void mergeFieldDataManager(GraphicPanelFieldManager mergedData) {
 
-        for(String key : panelMap.keySet())
-        {
+        for (String key : panelMap.keySet()) {
             List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
-            for(PopulateDetailsInterface panel : panelList)
-            {
+            for (PopulateDetailsInterface panel : panelList) {
                 mergedData.add(panel.getFieldDataManager());
             }
         }
@@ -273,12 +265,10 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      * Method called before symbol loaded
      */
     public void preLoadSymbol() {
-        for(String key : panelMap.keySet())
-        {
+        for (String key : panelMap.keySet()) {
             List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
-            for(PopulateDetailsInterface panel : panelList)
-            {
+            for (PopulateDetailsInterface panel : panelList) {
                 panel.preLoadSymbol();
             }
         }

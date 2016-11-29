@@ -19,6 +19,7 @@ import javax.swing.tree.TreeCellEditor;
 import javax.swing.tree.TreePath;
 
 import org.geotools.styling.FillImpl;
+import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.StrokeImpl;
 import org.geotools.styling.Symbolizer;
 
@@ -117,7 +118,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
         if (event instanceof MouseEvent) {
             MouseEvent mouseEvent = (MouseEvent) event;
             TreePath path = tree.getPathForLocation(mouseEvent.getX(),
-                mouseEvent.getY());
+                    mouseEvent.getY());
             if (path != null) {
                 Object node = path.getLastPathComponent();
                 if ((node != null) && (node instanceof DefaultMutableTreeNode)) {
@@ -127,7 +128,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
                     {
                         Object parentUserObject = ((DefaultMutableTreeNode)treeNode.getParent()).getUserObject();
 
-                        if(parentUserObject instanceof Symbolizer)
+                        if(parentUserObject instanceof PolygonSymbolizer)
                         {
                             symbolizer = (Symbolizer)parentUserObject;
                             userObject = treeNode.getUserObject();
@@ -144,12 +145,18 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
      * @see javax.swing.tree.TreeCellEditor#getTreeCellEditorComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int)
      */
     public Component getTreeCellEditorComponent(JTree tree, Object value,
-        boolean selected, boolean expanded, boolean leaf, int row) {
+            boolean selected, boolean expanded, boolean leaf, int row) {
 
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
+        Object parentUserObject = null;
 
-        if(ComponentCellRenderer.showCheckbox(userObject))
+        DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
+        if (parentNode != null) {
+            parentUserObject = parentNode.getUserObject();
+        }
+
+        if(ComponentCellRenderer.showCheckbox(parentUserObject, userObject))
         {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
             Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
@@ -162,7 +169,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
         }
 
         Component editor = renderer.getTreeCellRendererComponent(tree, value,
-            true, expanded, leaf, row, true);
+                true, expanded, leaf, row, true);
 
         return editor;
     }

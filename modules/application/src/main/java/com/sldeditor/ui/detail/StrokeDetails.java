@@ -208,26 +208,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     }
 
     /**
-     * Creates the dash array list for an array of floats.
-     *
-     * @param dashes the dashes
-     * @return the list
-     */
-    private List<Expression> createDashArrayList(float[] dashes) {
-        List<Expression> dashExpressionList = null;
-
-        if(dashes != null)
-        {
-            dashExpressionList = new ArrayList<Expression>();
-            for(float dashValue : dashes)
-            {
-                dashExpressionList.add(getFilterFactory().literal(dashValue));
-            }
-        }
-        return dashExpressionList;
-    }
-
-    /**
      * Convert dash list to array.
      *
      * @param dashList the dash list
@@ -624,7 +604,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             }
             else
             {
-                System.err.println("Symbolizer == null");
+                ConsoleManager.getInstance().error(this, "symbolizer == null");
             }
         }
     }
