@@ -167,7 +167,14 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     }
 
     /**
-     * Checks if is leaf.
+     * Checks if tree node is leaf.<p>
+     * Is a leaf if the user object is one of the followinf:<p>
+     * <ul>
+     * <li>TextSymbolizer</li>
+     * <li>RasterSymbolizer</li>
+     * <li>Stroke</li>
+     * <li>Fill</li>
+     * </ul>
      *
      * @param parentUserObject the parent user object
      * @param userObject the user object
@@ -182,9 +189,10 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     }
 
     /**
-     * Show checkbox.
+     * Workout whether to show checkbox in the tree.
+     * Should only appear for PolygonSymbolizer fill and strokes
      *
-     * @param parentuserObject the parent user object
+     * @param parentUserObject the parent user object
      * @param userObject the user object
      * @return true, if successful
      */
