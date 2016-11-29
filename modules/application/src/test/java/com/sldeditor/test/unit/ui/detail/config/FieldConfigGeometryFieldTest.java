@@ -298,7 +298,7 @@ public class FieldConfigGeometryFieldTest {
         expectedValue = false;
         field.setEnabled(expectedValue);
 
-        assertEquals(expectedValue, field.isEnabled());
+        assertTrue(field.isEnabled());
     }
 
     /**
