@@ -31,6 +31,7 @@ import javax.swing.tree.TreeCellRenderer;
 
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
+import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
@@ -41,29 +42,31 @@ import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 import com.sldeditor.ui.tree.item.TreeItemMap;
 
 /**
- * A TreeCellRenderer displays each node of a tree. The default renderer
- * displays arbitrary Object nodes by calling their toString() method. The
- * Component.toString() method returns long strings with extraneous
- * information. Therefore, we use this "wrapper" implementation of
- * TreeCellRenderer to convert nodes from Component objects to useful String
- * values before passing those String values on to the default renderer.
+ * A TreeCellRenderer displays each node of a tree. The default renderer displays arbitrary Object nodes by calling their toString() method. The
+ * Component.toString() method returns long strings with extraneous information. Therefore, we use this "wrapper" implementation of TreeCellRenderer
+ * to convert nodes from Component objects to useful String values before passing those String values on to the default renderer.
  * 
  * @author Robert Ward (SCISYS)
  */
 public class ComponentCellRenderer implements TreeCellRenderer {
 
-    /**  The renderer we are a wrapper for. */
+    /** The renderer we are a wrapper for. */
     private TreeCellRenderer renderer;
 
     private JCheckBox leafRenderer = new JCheckBox();
 
     private JLabel label;
+
     private JCheckBox checkBox;
+
     private JPanel panel;
 
     private Color selectionForeground;
+
     private Color selectionBackground;
+
     private Color textForeground;
+
     private Color textBackground;
 
     /**
@@ -96,35 +99,41 @@ public class ComponentCellRenderer implements TreeCellRenderer {
 
     // This is the only TreeCellRenderer method.
     // Compute the string to display, and pass it to the wrapped renderer
-    /* (non-Javadoc)
-     * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int,
+     * boolean)
      */
-    public Component getTreeCellRendererComponent(JTree tree, Object value,
-            boolean selected, boolean expanded, boolean leaf, int row,
-            boolean hasFocus) {
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
+            boolean expanded, boolean leaf, int row, boolean hasFocus) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
+        Object parentUserObject = null;
+
+        DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
+        if (parentNode != null) {
+            parentUserObject = parentNode.getUserObject();
+        }
 
         String name = getItemText(node, userObject);
 
-        boolean showCheckbox = showCheckbox(userObject);
-        leaf = isLeaf(userObject);
+        boolean showCheckbox = showCheckbox(parentUserObject, userObject);
+        leaf = isLeaf(parentUserObject, userObject);
 
-        if(showCheckbox)
-        {
+        checkBox.setVisible(showCheckbox);
+        if (showCheckbox) {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
 
             Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
 
-            boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject, symbolizer);
+            boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject,
+                    symbolizer);
 
-            if (selected)
-            {
+            if (selected) {
                 leafRenderer.setForeground(selectionForeground);
                 leafRenderer.setBackground(selectionBackground);
-            }
-            else
-            {
+            } else {
                 leafRenderer.setForeground(textForeground);
                 leafRenderer.setBackground(textBackground);
             }
@@ -133,31 +142,55 @@ public class ComponentCellRenderer implements TreeCellRenderer {
             checkBox.setSelected(selectedItem);
 
             return panel;
+        } else {
+            if (leaf) {
+                DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+
+                if (parent != null) {
+                    if (selected) {
+                        leafRenderer.setForeground(selectionForeground);
+                        leafRenderer.setBackground(selectionBackground);
+                    } else {
+                        leafRenderer.setForeground(textForeground);
+                        leafRenderer.setBackground(textBackground);
+                    }
+
+                    label.setText(name);
+
+                    return panel;
+                }
+            }
         }
 
-        return renderer.getTreeCellRendererComponent(tree, name,
-                selected, expanded, leaf, row, hasFocus);
+        return renderer.getTreeCellRendererComponent(tree, name, selected, expanded, leaf, row,
+                hasFocus);
     }
 
     /**
      * Checks if is leaf.
      *
+     * @param parentUserObject the parent user object
      * @param userObject the user object
      * @return true, if is leaf
      */
-    public static boolean isLeaf(Object userObject) {
-        boolean leaf = (userObject instanceof TextSymbolizer) || (userObject instanceof RasterSymbolizer) || showCheckbox(userObject);
+    public static boolean isLeaf(Object parentUserObject, Object userObject) {
+        boolean leaf = (userObject instanceof TextSymbolizer)
+                || (userObject instanceof RasterSymbolizer)
+                || (userObject instanceof Stroke)
+                || (userObject instanceof Fill);
         return leaf;
     }
 
     /**
      * Show checkbox.
      *
+     * @param parentuserObject the parent user object
      * @param userObject the user object
      * @return true, if successful
      */
-    public static boolean showCheckbox(Object userObject) {
-        boolean showCheckbox = (userObject instanceof Stroke) || (userObject instanceof Fill);
+    public static boolean showCheckbox(Object parentUserObject, Object userObject) {
+        boolean showCheckbox = (parentUserObject instanceof PolygonSymbolizer)
+                && ((userObject instanceof Stroke) || (userObject instanceof Fill));
         return showCheckbox;
     }
 
@@ -171,23 +204,17 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     public static String getItemText(DefaultMutableTreeNode node, Object userObject) {
         String name = null;
 
-        if(userObject != null)
-        {
-            if(userObject instanceof String)
-            {
+        if (userObject != null) {
+            if (userObject instanceof String) {
                 name = (String) userObject;
-            }
-            else if(userObject instanceof ExternalGraphicImpl)
-            {
+            } else if (userObject instanceof ExternalGraphicImpl) {
                 ExternalGraphicImpl externalSymbol = (ExternalGraphicImpl) userObject;
                 name = externalSymbol.getFormat();
-            }
-            else
-            {
-                SLDTreeItemInterface treeItem = TreeItemMap.getInstance().getValue(userObject.getClass());
+            } else {
+                SLDTreeItemInterface treeItem = TreeItemMap.getInstance()
+                        .getValue(userObject.getClass());
 
-                if(treeItem != null)
-                {
+                if (treeItem != null) {
                     name = treeItem.getTreeString(node, userObject);
                 }
             }
