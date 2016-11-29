@@ -4,8 +4,8 @@
 [![Build Status](https://img.shields.io/travis/robward-scisys/sldeditor/master.svg)](https://travis-ci.org/robward-scisys/sldeditor)
 [![Coverage Status](https://img.shields.io/coveralls/robward-scisys/sldeditor/master.svg)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
 [![License](https://img.shields.io/github/license/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.6.0/SLDEditor.jar)
-[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.6.0/SLDEditor.jar)
+[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.6.1/SLDEditor.jar)
+[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.6.1/SLDEditor.jar)
 
 The SLD Editor is a Java desktop application developed by [SCISYS](http://gis.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
 
@@ -31,7 +31,7 @@ Main features include:
 
 ## Release
 A compiled single executable jar is available here :
-* [SLDEditor Release 0.6.0](https://github.com/robward-scisys/sldeditor/releases/download/v0.6.0/SLDEditor.jar) (MD5 : e730f3b9c645de3b27d3c8f4fe1ce3ef) Released 29 Nov 2016
+* [SLDEditor Release 0.6.1](https://github.com/robward-scisys/sldeditor/releases/download/v0.6.1/SLDEditor.jar) (MD5 : 07988c9a50e4da77f8c9b0f243ca364e) Released 29 Nov 2016
 
 ## Background
 I’ve been developing the application for about 18 months as a side project. The idea started when SciSys did some consultancy work and put together a proposal for an organisation to migrate from an Esri system to an OpenLayers/GeoServer stack. When it came to migrating ~1250 layers we didn’t know what number to put down for symbol conversion to SLD.  When you looked at the numbers this was a large percentage of the overall cost and something needed to be done to reduce it if we were going to be competitive in doing migrations to open source GIS systems.
