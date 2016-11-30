@@ -18,16 +18,16 @@
  */
 package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfigReader;
 
 /**
  * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
@@ -38,16 +38,14 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfigReader;
  */
 public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
 
-    /** The field enable map. */
-    private Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig>>();
+    /** The empty details. */
+    private EmptyDetails emptyDetails = null;
 
     /**
      * Instantiates a new VOGeoServerShapeSymbol.
      */
     public VOGeoServerExtShapeSymbol() {
-        String fullResourceName = "geoserver/SymbolTypeFieldState_ExtShape.xml";
-        SymbolTypeConfigReader.readConfig(FieldConfigMarker.class, fullResourceName,
-                fieldEnableMap);
+        emptyDetails = new EmptyDetails("geoserver/ExtShape.xml");
     }
 
     /* (non-Javadoc)
@@ -56,7 +54,17 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        return null;
+        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+
+        FieldConfigMarker markerField = new FieldConfigMarker("geoserver/SymbolTypeFieldState_ExtShape.xml",
+                new FieldConfigCommonData(FieldConfigMarker.class, FieldIdEnum.REPEATED, "", false),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+
+        markerField.setVendorOptionVersion(emptyDetails.getVendorOptionVersion());
+
+        fieldStateList.add(markerField);
+
+        return fieldStateList;
     }
 
     /* (non-Javadoc)
@@ -64,6 +72,6 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
-        return fieldEnableMap;
+        return null;
     }
 }

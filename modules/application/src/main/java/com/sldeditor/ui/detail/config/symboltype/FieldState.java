@@ -175,8 +175,6 @@ public abstract class FieldState extends FieldConfigBase {
             fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig>>();
 
             SymbolTypeConfigReader.readConfig(getClass(), resourceFile, fieldEnableMap);
-
-            populateVendorOptionFieldMap(fieldEnableMap);
         }
 
         return fieldEnableMap;

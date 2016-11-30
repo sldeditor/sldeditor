@@ -46,7 +46,6 @@ import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
@@ -75,12 +74,7 @@ public class FieldConfigMarker extends FieldState {
     /** The Constant SOLID_SYMBOL. */
     private static final String SOLID_SYMBOL_KEY = "solid";
 
-    //
-    // Vendor Option for marker symbols
-    //
-
-    /** The vendor option marker symbol factory. */
-    private VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory = null;
+    private VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
 
     /**
      * Constructor.
@@ -91,12 +85,24 @@ public class FieldConfigMarker extends FieldState {
      * @param symbolSelectionField the symbol selection field
      */
     public FieldConfigMarker(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField,
-            VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory) {
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
                 symbolSelectionField);
+    }
 
-        this.vendorOptionMarkerSymbolFactory = vendorOptionMarkerSymbolFactory;
+    /**
+     * Instantiates a new field config marker.
+     *
+     * @param resourceFile the resource file
+     * @param commonData the common data
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
+     */
+    public FieldConfigMarker(String resourceFile, FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        super(commonData, resourceFile, fillFieldConfig, strokeFieldConfig,
+                symbolSelectionField);
     }
 
     /**
@@ -185,7 +191,7 @@ public class FieldConfigMarker extends FieldState {
      */
     @Override
     public VendorOptionVersion getVendorOption() {
-        return VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+        return vendorOptionVersion;
     }
 
     /**
@@ -500,18 +506,6 @@ public class FieldConfigMarker extends FieldState {
     }
 
     /**
-     * Populate vendor option field map in derived class.
-     *
-     * @param fieldEnableMap the field enable map
-     */
-    protected void populateVendorOptionFieldMap(
-            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
-        if (vendorOptionMarkerSymbolFactory != null) {
-            vendorOptionMarkerSymbolFactory.getFieldMap(fieldEnableMap);
-        }
-    }
-
-    /**
      * Gets the field map.
      *
      * @param fieldConfigManager the field config manager
@@ -651,8 +645,7 @@ public class FieldConfigMarker extends FieldState {
 
         if (fieldConfigBase != null) {
             copy = new FieldConfigMarker(fieldConfigBase.getCommonData(), this.fillFieldConfig,
-                    this.strokeFieldConfig, this.symbolSelectionField,
-                    this.vendorOptionMarkerSymbolFactory);
+                    this.strokeFieldConfig, this.symbolSelectionField);
         }
         return copy;
     }
@@ -676,5 +669,30 @@ public class FieldConfigMarker extends FieldState {
     @Override
     public boolean isOverallOpacity(Class<?> symbolizerType) {
         return (symbolizerType == LineSymbolizerImpl.class);
+    }
+
+    /**
+     * Sets the vendor option version.
+     *
+     * @param vendorOptionVersion the vendorOptionVersion to set
+     */
+    public void setVendorOptionVersion(VendorOptionVersion vendorOptionVersion) {
+        if(vendorOptionVersion != null)
+        {
+            this.vendorOptionVersion = vendorOptionVersion;
+        }
+        else
+        {
+            this.vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#populateVendorOptionFieldMap(java.util.Map)
+     */
+    @Override
+    protected void populateVendorOptionFieldMap(
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+        
     }
 }

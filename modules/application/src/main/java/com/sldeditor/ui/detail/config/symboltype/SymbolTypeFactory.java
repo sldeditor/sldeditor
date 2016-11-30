@@ -103,8 +103,7 @@ public class SymbolTypeFactory {
         VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory = new VendorOptionMarkerSymbolFactory();
         markerField = new FieldConfigMarker(
                 new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField,
-                vendorOptionMarkerSymbolFactory);
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         externalImageField = new FieldConfigFilename(
                 new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);

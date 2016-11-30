@@ -36,8 +36,8 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
@@ -142,7 +142,7 @@ public class FieldConfigSymbolTypeTest {
         String actualValue1 = field.getStringValue();
         assertNull(actualValue1);
 
-        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null, null);
+        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
         marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
@@ -260,7 +260,7 @@ public class FieldConfigSymbolTypeTest {
 
         field.createUI();
 
-        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null, null);
+        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
         marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();

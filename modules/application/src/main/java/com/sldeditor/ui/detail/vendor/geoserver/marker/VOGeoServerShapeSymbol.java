@@ -25,32 +25,28 @@ import java.util.Map;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 
 /**
- * Class to handle the getting and setting of GeoServer weather symbol vendor option data.
+ * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
  * 
- * Sets the <WellKnownName> string, extra fields needed.
- * 
+ * Only sets the <WellKnownName> string, no extra fields needed.
+ *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
+public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
+
+    /** The empty details. */
+    private EmptyDetails emptyDetails = null;
 
     /**
-     * Instantiates a new VOGeoServerWKTSymbol
+     * Instantiates a new VOGeoServerShapeSymbol.
      */
-    public VOGeoServerWKTSymbol()
-    {
-    }
+    public VOGeoServerShapeSymbol() {
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
-     */
-    @Override
-    public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
-        return null;
+        emptyDetails = new EmptyDetails("geoserver/Shape.xml");
     }
 
     /* (non-Javadoc)
@@ -61,10 +57,22 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigWKT wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
+        FieldConfigMarker markerField = new FieldConfigMarker("geoserver/SymbolTypeFieldState_Shape.xml",
+                new FieldConfigCommonData(FieldConfigMarker.class, FieldIdEnum.FILL_COLOUR, "", false),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
-        fieldStateList.add(wktShape);
+        markerField.setVendorOptionVersion(emptyDetails.getVendorOptionVersion());
+
+        fieldStateList.add(markerField);
+
         return fieldStateList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
+     */
+    @Override
+    public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
+        return null;
     }
 }

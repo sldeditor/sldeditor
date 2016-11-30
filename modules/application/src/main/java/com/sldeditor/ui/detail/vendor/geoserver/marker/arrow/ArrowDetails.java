@@ -88,7 +88,7 @@ UpdateSymbolInterface {
      */
     public void populateExpression(String wellKnownName) {
 
-       Expression actual = ArrowUtils.decodeArrowThickness(wellKnownName);
+        Expression actual = ArrowUtils.decodeArrowThickness(wellKnownName);
         fieldConfigVisitor.populateField(FieldIdEnum.VO_ARROW_THICKNESS, actual);
 
         actual = ArrowUtils.decodeHeightOverWidth(wellKnownName);

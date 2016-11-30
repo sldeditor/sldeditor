@@ -37,10 +37,10 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInterface {
 
     /**  The GeoServer vendor option for shapes://. */
-    private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerExtShapeSymbol();
+    private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();
 
     /**  The GeoServer vendor option for extshapes://. */
-    private VOMarkerSymbolInterface vendorOptionGeoServerWeather = new VOGeoServerWeatherSymbol();
+    private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes = new VOGeoServerExtShapeSymbol();
 
     /**  The GeoServer vendor option for extshape://arrow. */
     private VOMarkerSymbolInterface vendorOptionGeoServerArrow = new VOGeoServerArrowSymbol();
@@ -59,7 +59,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
      */ 
     public VendorOptionMarkerSymbolFactory() {
         list.add(vendorOptionGeoServerShape);
-        list.add(vendorOptionGeoServerWeather);
+        list.add(vendorOptionGeoServerExtShapes);
         list.add(vendorOptionGeoServerWKT);
         list.add(vendorOptionGeoServerWindBarb);
         list.add(vendorOptionGeoServerArrow);
