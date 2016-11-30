@@ -24,8 +24,6 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -41,16 +39,13 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class ArrowDetails extends StandardPanel implements PopulateDetailsInterface, 
-UpdateSymbolInterface, UndoActionInterface {
+UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
     private ArrowUpdateInterface parentObj = null;
-
-    /** The old value obj. */
-    private Object oldValueObj = null;
 
     /**
      * Instantiates a new feature type style details.
@@ -185,30 +180,6 @@ UpdateSymbolInterface, UndoActionInterface {
                 field.revertToDefaultValue();
             }
         }
-    }
-
-    /**
-     * Undo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    @Override
-    public void undoAction(UndoInterface undoRedoObject) {
-        Object oldValue = undoRedoObject.getOldValue();
-
-        fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, (String) oldValue);
-    }
-
-    /**
-     * Redo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    @Override
-    public void redoAction(UndoInterface undoRedoObject) {
-        String newValue = (String)undoRedoObject.getNewValue();
-
-        fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, (String) newValue);
     }
 
     /* (non-Javadoc)

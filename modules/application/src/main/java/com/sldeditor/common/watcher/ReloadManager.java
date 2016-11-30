@@ -223,6 +223,6 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * @param underTest the new under test
      */
     public static void setUnderTest(boolean underTest) {
-        ReloadManager.underTest  = underTest;
+        ReloadManager.underTest = underTest;
     }
 }

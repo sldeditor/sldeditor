@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
-    start="2.4.2"
+    start="2.8.0"
     localisation="com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowDetails">
     <Group id="STANDARD" showLabel="false">
         <FieldConfigSlider id="VO_ARROW_THICKNESS" label="Base Thickness" valueOnly="false" default="0.2"/>

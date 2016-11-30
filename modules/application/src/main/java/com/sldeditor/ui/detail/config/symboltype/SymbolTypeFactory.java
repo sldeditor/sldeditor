@@ -46,8 +46,6 @@ import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -71,12 +69,6 @@ public class SymbolTypeFactory {
 
     /** The ttf field. */
     private FieldConfigTTF ttfField = null;
-
-    /** The wind barbs field. */
-    private FieldConfigWindBarbs windBarbs = null;
-
-    /** The WKT shape field. */
-    private FieldConfigWKT wktShape = null;
 
     /** The class map. */
     private Map<Class<?>, FieldState> classMap = new HashMap<Class<?>, FieldState>();
@@ -119,17 +111,10 @@ public class SymbolTypeFactory {
         ttfField = new FieldConfigTTF(
                 new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        windBarbs = new FieldConfigWindBarbs(
-                new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);
         symbolTypeFieldList.add(ttfField);
-        symbolTypeFieldList.add(windBarbs);
-        symbolTypeFieldList.add(wktShape);
 
         List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory.getVendorOptionMarkerSymbols(panelId, 
                 fillFieldConfig,

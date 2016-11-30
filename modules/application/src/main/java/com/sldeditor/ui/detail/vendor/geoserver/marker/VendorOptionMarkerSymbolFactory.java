@@ -36,14 +36,20 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
  */
 public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInterface {
 
-    /** The GeoServer vendor option for shapes:// */
-    private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();
+    /**  The GeoServer vendor option for shapes://. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerExtShapeSymbol();
 
-    /** The GeoServer vendor option for extshapes:// */
+    /**  The GeoServer vendor option for extshapes://. */
     private VOMarkerSymbolInterface vendorOptionGeoServerWeather = new VOGeoServerWeatherSymbol();
 
-    /** The GeoServer vendor option for extshape://arrow */
+    /**  The GeoServer vendor option for extshape://arrow. */
     private VOMarkerSymbolInterface vendorOptionGeoServerArrow = new VOGeoServerArrowSymbol();
+
+    /** The vendor option geo server WKT. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerWKT = new VOGeoServerWKTSymbol();
+
+    /** The vendor option geo server wind barb. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerWindBarb = new VOGeoServerWindbarbSymbol();
 
     /** The list of all the extensions. */
     private List<VOMarkerSymbolInterface> list = new ArrayList<VOMarkerSymbolInterface>();
@@ -54,6 +60,8 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     public VendorOptionMarkerSymbolFactory() {
         list.add(vendorOptionGeoServerShape);
         list.add(vendorOptionGeoServerWeather);
+        list.add(vendorOptionGeoServerWKT);
+        list.add(vendorOptionGeoServerWindBarb);
         list.add(vendorOptionGeoServerArrow);
     }
 
@@ -61,6 +69,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
      * Gets the field map.
      *
      * @param fieldEnableMap the field enable map
+     * @return the field map
      */
     public void getFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         for (VOMarkerSymbolInterface obj : list) {

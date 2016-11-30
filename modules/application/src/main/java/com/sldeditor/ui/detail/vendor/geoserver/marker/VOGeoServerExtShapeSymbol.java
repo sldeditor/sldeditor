@@ -30,32 +30,24 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfigReader;
 
 /**
- * Class to handle the getting and setting of GeoServer weather symbol vendor option data.
+ * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
  * 
  * Only sets the <WellKnownName> string, no extra fields needed.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerWeatherSymbol implements VOMarkerSymbolInterface {
+public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
 
     /** The field enable map. */
-    private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
+    private Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig>>();
 
     /**
-     * Instantiates a new VOGeoServerWeatherSymbol
+     * Instantiates a new VOGeoServerShapeSymbol.
      */
-    public VOGeoServerWeatherSymbol()
-    {
-        String fullResourceName = "geoserver/GeoServerExtShapeSymbol.xml";
-        SymbolTypeConfigReader.readConfig(FieldConfigMarker.class, fullResourceName, fieldEnableMap);
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
-     */
-    @Override
-    public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
-        return this.fieldEnableMap;
+    public VOGeoServerExtShapeSymbol() {
+        String fullResourceName = "geoserver/SymbolTypeFieldState_ExtShape.xml";
+        SymbolTypeConfigReader.readConfig(FieldConfigMarker.class, fullResourceName,
+                fieldEnableMap);
     }
 
     /* (non-Javadoc)
@@ -65,5 +57,13 @@ public class VOGeoServerWeatherSymbol implements VOMarkerSymbolInterface {
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
+     */
+    @Override
+    public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
+        return fieldEnableMap;
     }
 }

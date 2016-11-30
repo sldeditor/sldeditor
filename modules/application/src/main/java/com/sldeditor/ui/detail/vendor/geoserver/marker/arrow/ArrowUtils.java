@@ -23,27 +23,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.renderer.markwkt.MeteoMarkFactory;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 /**
- * The Class ArrowUtils.
+ * The Class ArrowUtils, handles deocoding/encoding of arrow to/from strings
  *
  * @author Robert Ward (SCISYS)
  */
 public class ArrowUtils {
 
     /** The Constant HEAD_BASE_RATIO_ATTRIBUTE. */
-    private static final String HEAD_BASE_RATIO_ATTRIBUTE = "ab";
+    private static final String HEAD_BASE_RATIO_ATTRIBUTE = MeteoMarkFactory.ARROWHEAD_BASE_KEY;
 
     /** The Constant HEIGHT_OVER_WIDTH_ATTRIBUTE. */
-    private static final String HEIGHT_OVER_WIDTH_ATTRIBUTE = "hr";
+    private static final String HEIGHT_OVER_WIDTH_ATTRIBUTE = MeteoMarkFactory.ARROW_HEIGHT_RATIO_KEY;
 
     /** The Constant ARROW_THICKNESS_ATTRIBUTE. */
-    private static final String ARROW_THICKNESS_ATTRIBUTE = "t";
+    private static final String ARROW_THICKNESS_ATTRIBUTE = MeteoMarkFactory.ARROW_THICKNESS_KEY;
 
     /** The Constant ARROW_PREFIX. */
-    private static final String ARROW_PREFIX = "extshape://arrow";
+    private static final String ARROW_PREFIX = MeteoMarkFactory.SHAPE_PREFIX + "arrow";
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );

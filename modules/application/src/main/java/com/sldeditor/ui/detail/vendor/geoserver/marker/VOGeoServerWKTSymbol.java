@@ -18,36 +18,31 @@
  */
 package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
-import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfigReader;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 
 /**
  * Class to handle the getting and setting of GeoServer weather symbol vendor option data.
  * 
- * Only sets the <WellKnownName> string, no extra fields needed.
+ * Sets the <WellKnownName> string, extra fields needed.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerWeatherSymbol implements VOMarkerSymbolInterface {
-
-    /** The field enable map. */
-    private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
+public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
 
     /**
      * Instantiates a new VOGeoServerWeatherSymbol
      */
-    public VOGeoServerWeatherSymbol()
+    public VOGeoServerWKTSymbol()
     {
-        String fullResourceName = "geoserver/GeoServerExtShapeSymbol.xml";
-        SymbolTypeConfigReader.readConfig(FieldConfigMarker.class, fullResourceName, fieldEnableMap);
     }
 
     /* (non-Javadoc)
@@ -55,7 +50,7 @@ public class VOGeoServerWeatherSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
-        return this.fieldEnableMap;
+        return null;
     }
 
     /* (non-Javadoc)
@@ -64,6 +59,12 @@ public class VOGeoServerWeatherSymbol implements VOMarkerSymbolInterface {
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        return null;
+        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+
+        FieldConfigWKT wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+
+        fieldStateList.add(wktShape);
+        return fieldStateList;
     }
 }
