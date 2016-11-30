@@ -33,6 +33,7 @@ import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -44,9 +45,11 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
+import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
@@ -60,7 +63,7 @@ public class SymbolTypeFactory {
     /** The list of symbol type fields. */
     private List<FieldState> symbolTypeFieldList = new ArrayList<FieldState>();
 
-    /**  The symbol marker field. */
+    /** The symbol marker field. */
     private FieldConfigMarker markerField = null;
 
     /** The external image field. */
@@ -74,9 +77,6 @@ public class SymbolTypeFactory {
 
     /** The WKT shape field. */
     private FieldConfigWKT wktShape = null;
-
-    /** The arrow shape field. */
-    private FieldConfigArrow arrowShape = null;
 
     /** The class map. */
     private Map<Class<?>, FieldState> classMap = new HashMap<Class<?>, FieldState>();
@@ -104,24 +104,25 @@ public class SymbolTypeFactory {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the selection combo box
      */
-    public SymbolTypeFactory(Class<?> panelId,
-            ColourFieldConfig fillFieldConfig, 
-            ColourFieldConfig strokeFieldConfig, 
-            FieldIdEnum symbolSelectionField)
-    {
+    public SymbolTypeFactory(Class<?> panelId, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
+        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory = new VendorOptionMarkerSymbolFactory();
+        markerField = new FieldConfigMarker(
+                new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
+                fillFieldConfig, strokeFieldConfig, symbolSelectionField,
+                vendorOptionMarkerSymbolFactory);
+        externalImageField = new FieldConfigFilename(
+                new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        externalImageField = new FieldConfigFilename(new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
+        ttfField = new FieldConfigTTF(
+                new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        ttfField = new FieldConfigTTF(new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        windBarbs = new FieldConfigWindBarbs(new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
+        windBarbs = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         wktShape = new FieldConfigWKT(new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        arrowShape = new FieldConfigArrow(new FieldConfigCommonData(panelId, FieldIdEnum.VO_ARROW, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
         symbolTypeFieldList.add(markerField);
@@ -129,12 +130,14 @@ public class SymbolTypeFactory {
         symbolTypeFieldList.add(ttfField);
         symbolTypeFieldList.add(windBarbs);
         symbolTypeFieldList.add(wktShape);
-        symbolTypeFieldList.add(arrowShape);
 
-        // Create the ui for the fields
-        for(FieldState fieldConfig : symbolTypeFieldList)
-        {
-            ((FieldConfigBase)fieldConfig).createUI();
+        List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory.getVendorOptionMarkerSymbols(panelId, 
+                fillFieldConfig,
+                strokeFieldConfig, symbolSelectionField);
+        symbolTypeFieldList.addAll(voFieldStateList);
+
+        for (FieldState fieldConfig : symbolTypeFieldList) {
+            ((FieldConfigBase) fieldConfig).createUI();
         }
 
         SOLID_FILL_VALUE = FieldConfigMarker.getSolidFillValue();
@@ -145,76 +148,26 @@ public class SymbolTypeFactory {
      * Populate polygon fill details.
      *
      * @param fillPanel the graphic panel
-     * @param panelDetails the panel details the configuration is for
      * @param fieldConfigManager the field config manager
      */
     public void populate(PolygonFillDetails fillPanel,
-            Class<?> panelDetails,
             GraphicPanelFieldManager fieldConfigManager) {
 
-        List<ValueComboBoxDataGroup> combinedSymbolList = populateSymbolList(panelDetails);
-
-        FieldConfigBase field = fieldConfigManager.get(this.selectionComboBox);
-        this.symbolTypeField = (FieldConfigSymbolType)field;
-        symbolTypeField.populate(fillPanel, combinedSymbolList);
-
-        for(FieldState panel : symbolTypeFieldList)
-        {
-            panel.setUpdateSymbolListener(fillPanel);
-
-            classMap.put(panel.getClass(), panel);
-
-            this.symbolTypeField.addField(panel);
-
-            fillPanel.updateFieldConfig(panel.getBasePanel());
-
-            Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
-            if(map != null)
-            {
-                for(FieldIdEnum panelField : map.keySet())
-                {
-                    fieldConfigManager.add(panelField, map.get(panelField));
-                }
-            }
-        }
+        internal_populate(fillPanel, fillPanel, fillPanel, this.selectionComboBox,
+                fieldConfigManager);
     }
 
     /**
      * Populate point fill details.
      *
      * @param fillPanel the graphic panel
-     * @param panelDetails the panel details the configuration is for
      * @param fieldConfigManager the field config manager
      */
     public void populate(PointFillDetails fillPanel,
-            Class<?> panelDetails,
             GraphicPanelFieldManager fieldConfigManager) {
 
-        List<ValueComboBoxDataGroup> combinedSymbolList = populateSymbolList(panelDetails);
-
-        FieldConfigBase field = fieldConfigManager.get(this.selectionComboBox);
-        this.symbolTypeField = (FieldConfigSymbolType)field;
-        symbolTypeField.populate(fillPanel, combinedSymbolList);
-
-        for(FieldState panel : symbolTypeFieldList)
-        {
-            panel.setUpdateSymbolListener(fillPanel);
-
-            classMap.put(panel.getClass(), panel);
-
-            this.symbolTypeField.addField(panel);
-
-            fillPanel.updateFieldConfig(panel.getBasePanel());
-
-            Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
-            if(map != null)
-            {
-                for(FieldIdEnum panelField : map.keySet())
-                {
-                    fieldConfigManager.add(panelField, map.get(panelField));
-                }
-            }
-        }
+        internal_populate(fillPanel, fillPanel, fillPanel, this.selectionComboBox,
+                fieldConfigManager);
     }
 
     /**
@@ -225,51 +178,54 @@ public class SymbolTypeFactory {
      */
     public void populate(StrokeDetails strokePanel, GraphicPanelFieldManager fieldConfigManager) {
 
-        List<ValueComboBoxDataGroup> combinedSymbolList = populateSymbolList(strokePanel.getClass());
+        internal_populate(strokePanel, strokePanel, strokePanel,
+                FieldIdEnum.STROKE_STYLE, fieldConfigManager);
+    }
 
-        FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.STROKE_STYLE);
-        this.symbolTypeField = (FieldConfigSymbolType)fieldConfig;
-        symbolTypeField.populate(strokePanel, combinedSymbolList);
+    /**
+     * Internal populate.
+     *
+     * @param basePanel the base panel
+     * @param multiOptionSelected the multi option selected
+     * @param updateSymbol the update symbol
+     * @param selectionField the selection field
+     * @param fieldConfigManager the field config manager
+     */
+    private void internal_populate(BasePanel basePanel,
+            MultiOptionSelectedInterface multiOptionSelected, UpdateSymbolInterface updateSymbol,
+            FieldIdEnum selectionField,
+            GraphicPanelFieldManager fieldConfigManager) {
+        List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
-        for(FieldState panel : symbolTypeFieldList)
-        {
-            panel.setUpdateSymbolListener(strokePanel);
+        /**
+         * Populate symbol type list. Given a panel details class iterate over all the 
+         * field panels asking them to populate the symbol type list.
+         */
+        for (FieldState panel : symbolTypeFieldList) {
+            panel.populateSymbolList(basePanel.getClass(), combinedSymbolList);
+        }
+
+        FieldConfigBase field = fieldConfigManager.get(selectionField);
+        this.symbolTypeField = (FieldConfigSymbolType) field;
+        symbolTypeField.populate(multiOptionSelected, combinedSymbolList);
+
+        for (FieldState panel : symbolTypeFieldList) {
+            panel.setUpdateSymbolListener(updateSymbol);
 
             classMap.put(panel.getClass(), panel);
 
             this.symbolTypeField.addField(panel);
 
-            strokePanel.updateFieldConfig(panel.getBasePanel());
+            basePanel.updateFieldConfig(panel.getBasePanel());
 
+            // Transfer all the fields in the child panels into this panel
             Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
-            if(map != null)
-            {
-                for(FieldIdEnum fieldId : map.keySet())
-                {
-                    fieldConfigManager.add(fieldId, map.get(fieldId));
+            if (map != null) {
+                for (FieldIdEnum panelField : map.keySet()) {
+                    fieldConfigManager.add(panelField, map.get(panelField));
                 }
             }
         }
-    }
-    /**
-     * Populate symbol type list. Given a panel details class iterate over all the field panels
-     * asking them to populate the symbol type list.
-     * <p>
-     * The returned the list contains all possible symbol types. 
-     *
-     * @param panelDetails the panel details the configuration is for
-     * @return the list of symbol types
-     */
-    private List<ValueComboBoxDataGroup> populateSymbolList(Class<?> panelDetails)
-    {
-        List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
-
-        for(FieldState panel : symbolTypeFieldList)
-        {
-            panel.populateSymbolList(panelDetails, combinedSymbolList);
-        }
-
-        return combinedSymbolList;
     }
 
     /**
@@ -280,18 +236,14 @@ public class SymbolTypeFactory {
      * @param graphic the graphic
      * @param symbol the new value
      */
-    public void setValue(Class<?> symbolizerType, 
-            GraphicPanelFieldManager fieldConfigManager,
-            Graphic graphic, 
-            GraphicalSymbol symbol) {
+    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
+            Graphic graphic, GraphicalSymbol symbol) {
 
-        for(FieldState panel : classMap.values())
-        {
-            if(panel != null)
-            {
-                if (panel.accept(symbol))
-                {
-                    panel.setValue(symbolizerType, fieldConfigManager, symbolTypeField, graphic, symbol);
+        for (FieldState panel : classMap.values()) {
+            if (panel != null) {
+                if (panel.accept(symbol)) {
+                    panel.setValue(symbolizerType, fieldConfigManager, symbolTypeField, graphic,
+                            symbol);
                 }
             }
         }
@@ -308,13 +260,10 @@ public class SymbolTypeFactory {
      * @return the value
      */
     public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, 
-            boolean fillEnabled,
-            boolean strokeEnabled,
+            Expression symbolType, boolean fillEnabled, boolean strokeEnabled,
             Class<?> selectedPanelId) {
         FieldState panel = classMap.get(selectedPanelId);
-        if(panel != null)
-        {
+        if (panel != null) {
             return panel.getValue(fieldConfigManager, symbolType, fillEnabled, strokeEnabled);
         }
 
@@ -328,9 +277,9 @@ public class SymbolTypeFactory {
      * @param expFillColour the exp fill colour
      * @param expFillColourOpacity the exp fill colour opacity
      */
-    public void setSolidFill(GraphicPanelFieldManager fieldConfigManager, Expression expFillColour, Expression expFillColourOpacity) {
-        if(symbolTypeField != null)
-        { 
+    public void setSolidFill(GraphicPanelFieldManager fieldConfigManager, Expression expFillColour,
+            Expression expFillColourOpacity) {
+        if (symbolTypeField != null) {
             FieldConfigBase field = fieldConfigManager.get(this.selectionComboBox);
             Literal expression = ff.literal(SOLID_FILL_VALUE);
             field.populate(expression);
@@ -351,14 +300,11 @@ public class SymbolTypeFactory {
         Fill fill = null;
         ValueComboBoxData obj = symbolTypeField.getSelectedValueObj();
 
-        if(obj != null)
-        {
-            if(!isNone(obj.getKey()))
-            {
+        if (obj != null) {
+            if (!isNone(obj.getKey())) {
                 FieldState panel = classMap.get(obj.getPanelId());
 
-                if(panel != null)
-                {
+                if (panel != null) {
                     fill = panel.getFill(graphicFill, fieldConfigManager);
                 }
             }
@@ -372,8 +318,7 @@ public class SymbolTypeFactory {
      * @return the fill colour
      */
     public Expression getFillColour() {
-        if(markerField != null)
-        {
+        if (markerField != null) {
             return markerField.getColourExpression();
         }
 
@@ -386,8 +331,7 @@ public class SymbolTypeFactory {
      * @return the fill colour opacity
      */
     public Expression getFillColourOpacity() {
-        if(markerField != null)
-        {
+        if (markerField != null) {
             return markerField.getFillColourOpacity();
         }
         return null;
@@ -402,8 +346,7 @@ public class SymbolTypeFactory {
     public FieldEnableState getFieldOverrides(Class<?> panelDetails) {
         FieldEnableState fieldEnableState = new FieldEnableState();
 
-        for(FieldState panel : symbolTypeFieldList)
-        {
+        for (FieldState panel : symbolTypeFieldList) {
             panel.populateFieldOverrideMap(panelDetails, fieldEnableState);
         }
         return fieldEnableState;
@@ -415,8 +358,7 @@ public class SymbolTypeFactory {
      * @param fieldConfigManager the field config manager
      */
     public void setNoFill(GraphicPanelFieldManager fieldConfigManager) {
-        if(symbolTypeField != null)
-        {
+        if (symbolTypeField != null) {
             symbolTypeField.populateField(NO_FILL_VALUE);
         }
     }
@@ -427,8 +369,7 @@ public class SymbolTypeFactory {
      * @param selectedItem the selected item
      * @return true, if is no fill
      */
-    public boolean isNone(String selectedItem)
-    {
+    public boolean isNone(String selectedItem) {
         return (selectedItem.compareTo(NO_FILL_VALUE) == 0);
     }
 
@@ -437,8 +378,7 @@ public class SymbolTypeFactory {
      *
      * @return the panel list
      */
-    public List<FieldState> getPanelList()
-    {
+    public List<FieldState> getPanelList() {
         return symbolTypeFieldList;
     }
 
@@ -448,12 +388,10 @@ public class SymbolTypeFactory {
      * @param selectedPanelId the selected panel id
      * @param value the value
      */
-    public void setTestValue(Class<?> selectedPanelId, String value)
-    {
+    public void setTestValue(Class<?> selectedPanelId, String value) {
         FieldState panel = classMap.get(selectedPanelId);
-        if(panel != null)
-        {
-            //          panel.setTestValue(value);
+        if (panel != null) {
+            // panel.setTestValue(value);
         }
     }
 
@@ -464,11 +402,9 @@ public class SymbolTypeFactory {
      * @param selectedPanelId the selected panel id
      * @return true, if is overall opacity
      */
-    public boolean isOverallOpacity(Class<?> symbolizerType, 
-            Class<?> selectedPanelId) {
+    public boolean isOverallOpacity(Class<?> symbolizerType, Class<?> selectedPanelId) {
         FieldState panel = classMap.get(selectedPanelId);
-        if(panel != null)
-        {
+        if (panel != null) {
             return panel.isOverallOpacity(symbolizerType);
         }
 

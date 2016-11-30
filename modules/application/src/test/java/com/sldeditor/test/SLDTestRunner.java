@@ -70,6 +70,7 @@ import com.sldeditor.common.xml.ui.XMLVendorOption;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.ReadPanelConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -221,14 +222,8 @@ public class SLDTestRunner
 
             for(XMLVendorOption vo : xmlVendorOptionList)
             {
-                try {
-                    String vendorOptionClassName = vo.getClassType().trim();
-                    Class<?> vendorOptionClass = Class.forName(vendorOptionClassName);
-                    VersionData versionData = VersionData.decode(vendorOptionClass, vo.getVersion());
-                    versionDataList.add(versionData);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                VersionData versionData = ReadPanelConfig.decodeVersionData(vo);
+                versionDataList.add(versionData);
             }
 
             if(!versionDataList.contains(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData()))

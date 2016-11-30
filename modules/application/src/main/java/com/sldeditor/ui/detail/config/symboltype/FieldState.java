@@ -44,8 +44,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * The base class FieldState provides functionality to support methods needed for fields that appear
- * in the FieldConfigSymbolType field.
+ * The base class FieldState provides functionality to support methods needed for fields that appear in the FieldConfigSymbolType field.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -58,13 +57,13 @@ public abstract class FieldState extends FieldConfigBase {
     private List<ValueComboBoxData> localSymbolList = null;
 
     /** The field enable map. */
-    private Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap = null;
+    private Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap = null;
 
     /** The fill field config. */
     protected ColourFieldConfig fillFieldConfig;
 
     /** The stroke field config. */
-    protected ColourFieldConfig strokeFieldConfig; 
+    protected ColourFieldConfig strokeFieldConfig;
 
     /** The symbol selection field. */
     protected FieldIdEnum symbolSelectionField;
@@ -75,12 +74,9 @@ public abstract class FieldState extends FieldConfigBase {
      * @param commonData the common data
      * @param resourceFile the resource file
      */
-    protected FieldState(FieldConfigCommonData commonData,
-            String resourceFile,
-            ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig,
-            FieldIdEnum symbolSelectionField)
-    {
+    protected FieldState(FieldConfigCommonData commonData, String resourceFile,
+            ColourFieldConfig fillFieldConfig, ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
         super(commonData);
         this.resourceFile = resourceFile;
         this.fillFieldConfig = fillFieldConfig;
@@ -117,7 +113,9 @@ public abstract class FieldState extends FieldConfigBase {
      * @param graphic the graphic
      * @param symbol the new value
      */
-    public abstract void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol);
+    public abstract void setValue(Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel,
+            Graphic graphic, GraphicalSymbol symbol);
 
     /**
      * Gets the value.
@@ -128,7 +126,8 @@ public abstract class FieldState extends FieldConfigBase {
      * @param strokeEnabled the stroke enabled
      * @return the value
      */
-    public abstract List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager, Expression symbolType, boolean fillEnabled, boolean strokeEnabled);
+    public abstract List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType, boolean fillEnabled, boolean strokeEnabled);
 
     /**
      * Populate symbol list.
@@ -136,36 +135,30 @@ public abstract class FieldState extends FieldConfigBase {
      * @param panelDetails the panel details the configuration is for
      * @param symbolList the symbol list
      */
-    public void populateSymbolList(Class<?> panelDetails, List<ValueComboBoxDataGroup> symbolList)
-    {
+    public void populateSymbolList(Class<?> panelDetails, List<ValueComboBoxDataGroup> symbolList) {
         List<SymbolTypeConfig> configList = getFieldMap().get(panelDetails);
 
-        if(configList == null)
-        {
-            ConsoleManager.getInstance().error(this, "No config for panel details class : " + panelDetails.getName());
-        }
-        else
-        {
-            if(localSymbolList == null)
-            {
+        if (configList == null) {
+            ConsoleManager.getInstance().error(this,
+                    "No config for panel details class : " + panelDetails.getName());
+        } else {
+            if (localSymbolList == null) {
                 localSymbolList = new ArrayList<ValueComboBoxData>();
-            }
-            else
-            {
+            } else {
                 localSymbolList.clear();
             }
 
-            for(SymbolTypeConfig config : configList)
-            {
+            for (SymbolTypeConfig config : configList) {
                 List<ValueComboBoxData> groupSymbolList = new ArrayList<ValueComboBoxData>();
 
-                for(String key : config.getKeyOrderList())
-                {
-                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key), this.getClass());
+                for (String key : config.getKeyOrderList()) {
+                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key),
+                            this.getVendorOption(), config.getPanelId());
                     groupSymbolList.add(data);
                 }
 
-                symbolList.add(new ValueComboBoxDataGroup(config.getGroupName(), groupSymbolList, config.isSeparateGroup()));
+                symbolList.add(new ValueComboBoxDataGroup(config.getGroupName(), groupSymbolList,
+                        config.isSeparateGroup()));
 
                 localSymbolList.addAll(groupSymbolList);
             }
@@ -177,11 +170,9 @@ public abstract class FieldState extends FieldConfigBase {
      *
      * @return the field map
      */
-    protected Map<Class<?>, List<SymbolTypeConfig> > getFieldMap()
-    {
-        if(fieldEnableMap == null)
-        {
-            fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig> >();
+    protected Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
+        if (fieldEnableMap == null) {
+            fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig>>();
 
             SymbolTypeConfigReader.readConfig(getClass(), resourceFile, fieldEnableMap);
 
@@ -196,7 +187,8 @@ public abstract class FieldState extends FieldConfigBase {
      *
      * @param fieldEnableMap the field enable map
      */
-    protected abstract void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap);
+    protected abstract void populateVendorOptionFieldMap(
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap);
 
     /**
      * Gets the fill.
@@ -205,7 +197,8 @@ public abstract class FieldState extends FieldConfigBase {
      * @param fieldConfigManager the field config manager
      * @return the fill
      */
-    public abstract Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager);
+    public abstract Fill getFill(GraphicFill graphicFill,
+            GraphicPanelFieldManager fieldConfigManager);
 
     /**
      * Gets the base panel interface.
@@ -220,23 +213,18 @@ public abstract class FieldState extends FieldConfigBase {
      * @param panelDetails the panel details the configuration is for
      * @param fieldEnableState the field enable state
      */
-    public void populateFieldOverrideMap(Class<?> panelDetails, FieldEnableState fieldEnableState)
-    {
+    public void populateFieldOverrideMap(Class<?> panelDetails, FieldEnableState fieldEnableState) {
         Map<Class<?>, List<SymbolTypeConfig>> fieldMap = getFieldMap();
         List<SymbolTypeConfig> configList = fieldMap.get(panelDetails);
-        if(configList != null)
-        {
-            for(SymbolTypeConfig config : configList)
-            {
-                if(config != null)
-                {
+        if (configList != null) {
+            for (SymbolTypeConfig config : configList) {
+                if (config != null) {
                     config.updateFieldState(fieldEnableState, getClass().getName());
                 }
             }
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(this, "No config for panel details class : " + panelDetails.getName());
+        } else {
+            ConsoleManager.getInstance().error(this,
+                    "No config for panel details class : " + panelDetails.getName());
         }
     }
 
@@ -246,7 +234,8 @@ public abstract class FieldState extends FieldConfigBase {
      * @param fieldConfigManager the field config manager
      * @return the field map
      */
-    public abstract Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager);
+    public abstract Map<FieldIdEnum, FieldConfigBase> getFieldList(
+            GraphicPanelFieldManager fieldConfigManager);
 
     /**
      * Returns true if the class can handle the graphical symbol.
@@ -269,8 +258,7 @@ public abstract class FieldState extends FieldConfigBase {
      *
      * @param listener the update symbol listener
      */
-    public void setUpdateSymbolListener(UpdateSymbolInterface listener)
-    {
+    public void setUpdateSymbolListener(UpdateSymbolInterface listener) {
         addDataChangedListener(listener);
     }
 

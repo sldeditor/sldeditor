@@ -142,7 +142,7 @@ public class FieldConfigSymbolTypeTest {
         String actualValue1 = field.getStringValue();
         assertNull(actualValue1);
 
-        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
+        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null, null);
         marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
@@ -260,7 +260,7 @@ public class FieldConfigSymbolTypeTest {
 
         field.createUI();
 
-        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
+        FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null, null);
         marker.createUI();
 
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();

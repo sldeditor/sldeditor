@@ -29,12 +29,14 @@ import org.geotools.styling.TextSymbolizer;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.StandardPanel;
+import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfigReader;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * Class to handle the getting and setting of GeoServer weather symbol vendor option data.
@@ -64,19 +66,6 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     @Override
     public VendorOptionVersion getVendorOption() {
         return VendorOptionManager.getInstance().getVendorOptionVersion(GeoServerVendorOption.class);
-    }
-
-    /**
-     * Adds the vendor option.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param symbolList the symbol list
-     * @param fieldEnableMap the field enable map
-     * @param panelId the panel id
-     */
-    @Override
-    public void addVendorOption(Class<?> symbolizerClass, List<ValueComboBoxData> symbolList, Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap, Class<?> panelId) {
-        fieldEnableMap.putAll(this.fieldEnableMap);
     }
 
     /* (non-Javadoc)
@@ -163,5 +152,14 @@ public class VOGeoServerWeatherSymbol implements VendorOptionInterface, VOMarker
     @Override
     public UpdateSymbolInterface getParentPanel() {
         return parentObj;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+     */
+    @Override
+    public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        return null;
     }
 }

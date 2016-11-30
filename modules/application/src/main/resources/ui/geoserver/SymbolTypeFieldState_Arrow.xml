@@ -16,7 +16,7 @@
                 <Field id="INITIAL_GAP" enabled="true" />
                 <Field id="GAP" enabled="true" />
 
-                <Group id="FILL" enabled="false" />
+                <Group id="FILL" enabled="true" />
                 <Group id="STROKE" enabled="true" />
                 <Group id="ANCHORPOINT" enabled="true" />
                 <Group id="DISPLACEMENT" enabled="true" />

@@ -39,14 +39,16 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.PointFillDetails;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow;
 
 /**
@@ -361,7 +363,9 @@ public class FieldConfigArrowTest {
         assertEquals(0, actualValue.size());
 
         // Try with symbol type of solid
-        FieldConfigArrow field2 = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        ColourFieldConfig fillFieldConfig = new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.SYMBOL_TYPE);
+        ColourFieldConfig strokeFieldConfig = new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.SYMBOL_TYPE);
+        FieldConfigArrow field2 = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillFieldConfig,strokeFieldConfig,null);
 
         actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
         assertNotNull(actualValue);
@@ -378,8 +382,8 @@ public class FieldConfigArrowTest {
         assertEquals(1, actualValue.size());
         Mark actualSymbol = (Mark) actualValue.get(0);
         assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
-        assertNotNull(actualSymbol.getFill());
-        assertNotNull(actualSymbol.getStroke());
+        assertNull(actualSymbol.getFill());
+        assertNull(actualSymbol.getStroke());
 
         // Enable stroke and fill flags
         actualValue = field2.getValue(fieldConfigManager, symbolType, true, true);

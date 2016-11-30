@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PanelConfig
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.4.2"
     localisation="com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowDetails">
     <Group id="STANDARD" showLabel="false">
         <FieldConfigSlider id="VO_ARROW_THICKNESS" label="Base Thickness" valueOnly="false" default="0.2"/>
-        <FieldConfigDouble id="VO_ARROW_HEIGHT_OVER_WIDTH" label="Height Over Width" valueOnly="false" minValue="0.0" default="2.0"/>
+        <FieldConfigDouble id="VO_ARROW_HEIGHT_OVER_WIDTH" label="Height Over Width" valueOnly="false" minValue="0.001" default="2.0"/>
         <FieldConfigSlider id="VO_ARROW_HEAD" label="Head Base Ratio" valueOnly="false" default="0.5"/>
     </Group>
 </PanelConfig>

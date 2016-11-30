@@ -27,6 +27,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.PanelConfig;
@@ -58,6 +59,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigVendorOption;
 import com.sldeditor.common.xml.ui.XMLGroupConfig;
 import com.sldeditor.common.xml.ui.XMLMultiOptionGroup;
 import com.sldeditor.common.xml.ui.XMLOptionGroup;
+import com.sldeditor.common.xml.ui.XMLVendorOption;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
@@ -76,8 +78,7 @@ import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
- * The Class ReadPanelConfig reads a XML configuration of field configuration
- * structures and instantiates and populates the relevant objects.
+ * The Class ReadPanelConfig reads a XML configuration of field configuration structures and instantiates and populates the relevant objects.
  * <p>
  * Configuration files exist at src/main/resources/ui/*
  * 
@@ -112,8 +113,8 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param vendorOptionFactory the vendor option factory
      * @param isRasterSymbol the is raster symbol
      */
-    public ReadPanelConfig(VendorOptionFactoryInterface vendorOptionFactory, boolean isRasterSymbol)
-    {
+    public ReadPanelConfig(VendorOptionFactoryInterface vendorOptionFactory,
+            boolean isRasterSymbol) {
         this.isRasterSymbol = isRasterSymbol;
         this.vendorOptionFactory = vendorOptionFactory;
 
@@ -128,20 +129,18 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param resourceString the resource string
      * @return true, if successful
      */
-    public boolean read(Class<?> panelId, String resourceString)
-    {
+    public boolean read(Class<?> panelId, String resourceString) {
         groupList = new ArrayList<GroupConfigInterface>();
 
-        PanelConfig panelConfig = (PanelConfig) ParseXML.parseUIFile(resourceString, SCHEMA_RESOURCE, PanelConfig.class);
+        PanelConfig panelConfig = (PanelConfig) ParseXML.parseUIFile(resourceString,
+                SCHEMA_RESOURCE, PanelConfig.class);
 
-        if(panelConfig == null)
-        {
+        if (panelConfig == null) {
             return false;
         }
 
         Class<?> localisationClass = ReadPanelConfig.class;
-        if(panelConfig.getLocalisation() != null)
-        {
+        if (panelConfig.getLocalisation() != null) {
             try {
                 localisationClass = Class.forName(panelConfig.getLocalisation());
             } catch (ClassNotFoundException e) {
@@ -152,17 +151,15 @@ public class ReadPanelConfig implements PanelConfigInterface {
         panelTitle = getLocalisedText(localisationClass, panelConfig.getPanelTitle());
         vendorOptionVersion = getVendorOptionVersion(panelConfig);
 
-        for(Object groupObj : panelConfig.getGroupOrMultiOptionGroup())
-        {
-            if(groupObj instanceof XMLGroupConfig)
-            {
-                GroupConfig groupConfig = parseGroup(localisationClass, panelId, (XMLGroupConfig)groupObj);
+        for (Object groupObj : panelConfig.getGroupOrMultiOptionGroup()) {
+            if (groupObj instanceof XMLGroupConfig) {
+                GroupConfig groupConfig = parseGroup(localisationClass, panelId,
+                        (XMLGroupConfig) groupObj);
 
                 groupList.add(groupConfig);
-            }
-            else if(groupObj instanceof XMLMultiOptionGroup)
-            {
-                MultiOptionGroup groupConfig = parseMultiOptionGroup(localisationClass, panelId, (XMLMultiOptionGroup)groupObj);
+            } else if (groupObj instanceof XMLMultiOptionGroup) {
+                MultiOptionGroup groupConfig = parseMultiOptionGroup(localisationClass, panelId,
+                        (XMLMultiOptionGroup) groupObj);
 
                 groupList.add(groupConfig);
             }
@@ -179,18 +176,19 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param xmlMultiGroupObj the xml multi group obj
      * @return the multi option group
      */
-    private MultiOptionGroup parseMultiOptionGroup(Class<?> localisationClass, Class<?> panelId, XMLMultiOptionGroup xmlMultiGroupObj) {
+    private MultiOptionGroup parseMultiOptionGroup(Class<?> localisationClass, Class<?> panelId,
+            XMLMultiOptionGroup xmlMultiGroupObj) {
         MultiOptionGroup multiOptionGroupConfig = new MultiOptionGroup();
 
         multiOptionGroupConfig.setId(xmlMultiGroupObj.getId());
-        multiOptionGroupConfig.setLabel(getLocalisedText(localisationClass, xmlMultiGroupObj.getLabel()));
+        multiOptionGroupConfig
+        .setLabel(getLocalisedText(localisationClass, xmlMultiGroupObj.getLabel()));
         multiOptionGroupConfig.setShowLabel(xmlMultiGroupObj.isShowLabel());
         multiOptionGroupConfig.setOptional(xmlMultiGroupObj.isOption());
 
         List<XMLOptionGroup> optionGroupList = xmlMultiGroupObj.getOptionGroup();
 
-        for(XMLOptionGroup xmlOptionGroup : optionGroupList)
-        {
+        for (XMLOptionGroup xmlOptionGroup : optionGroupList) {
             OptionGroup optionGroup = new OptionGroup();
 
             optionGroup.setId(xmlOptionGroup.getId());
@@ -198,11 +196,10 @@ public class ReadPanelConfig implements PanelConfigInterface {
             optionGroup.setShowLabel(xmlOptionGroup.isShowLabel());
 
             List<XMLGroupConfig> xmlGroupConfigList = xmlOptionGroup.getGroup();
-            if(xmlGroupConfigList != null)
-            {
-                for(XMLGroupConfig xmlGroupConfig : xmlGroupConfigList)
-                {
-                    GroupConfig groupConfig = parseGroup(localisationClass, panelId, xmlGroupConfig);
+            if (xmlGroupConfigList != null) {
+                for (XMLGroupConfig xmlGroupConfig : xmlGroupConfigList) {
+                    GroupConfig groupConfig = parseGroup(localisationClass, panelId,
+                            xmlGroupConfig);
 
                     optionGroup.addGroup(groupConfig);
                 }
@@ -221,14 +218,10 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the localised text
      */
     private static String getLocalisedText(Class<?> localisationClass, String text) {
-        if(text == null)
-        {
+        if (text == null) {
             return null;
-        }
-        else
-        {
-            if(text.startsWith("*"))
-            {
+        } else {
+            if (text.startsWith("*")) {
                 return Localisation.getString(ReadPanelConfig.class, text.substring(1));
             }
             return Localisation.getString(localisationClass, text);
@@ -241,26 +234,24 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param panelConfig the panel config
      * @return the vendor option version
      */
-    private VendorOptionVersion getVendorOptionVersion(PanelConfig panelConfig)
-    {
+    private VendorOptionVersion getVendorOptionVersion(PanelConfig panelConfig) {
         String vendorOptionClassName = panelConfig.getVendorOption();
         String startVersion = panelConfig.getStart();
         String endVersion = panelConfig.getEnd();
 
         VendorOptionVersion vendorOptionVersion = null;
 
-        if(vendorOptionClassName != null)
-        {
+        if (vendorOptionClassName != null) {
             Class<?> classType;
-            try
-            {
+            try {
                 classType = Class.forName(vendorOptionClassName);
-                vendorOptionVersion = VendorOptionManager.getInstance().getVendorOptionVersion(classType, startVersion, endVersion);
-            }
-            catch (ClassNotFoundException e)
-            {
-                ConsoleManager.getInstance().error(ReadPanelConfig.class, "Unknown vendor option class : " + vendorOptionClassName);
-                vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+                vendorOptionVersion = VendorOptionManager.getInstance()
+                        .getVendorOptionVersion(classType, startVersion, endVersion);
+            } catch (ClassNotFoundException e) {
+                ConsoleManager.getInstance().error(ReadPanelConfig.class,
+                        "Unknown vendor option class : " + vendorOptionClassName);
+                vendorOptionVersion = VendorOptionManager.getInstance()
+                        .getDefaultVendorOptionVersion();
             }
         }
 
@@ -275,51 +266,49 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param xmlGroupObj the xml group object
      * @return the group config
      */
-    private GroupConfig parseGroup(Class<?> localisationClass, Class<?> panelId, XMLGroupConfig xmlGroupObj) {
+    private GroupConfig parseGroup(Class<?> localisationClass, Class<?> panelId,
+            XMLGroupConfig xmlGroupObj) {
         GroupConfig groupConfig = new GroupConfig();
 
         groupConfig.setId(xmlGroupObj.getId());
-        groupConfig.setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
+        groupConfig
+        .setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
         groupConfig.setShowLabel(xmlGroupObj.isShowLabel());
         groupConfig.setOptional(xmlGroupObj.isOption());
 
-        for(Object obj : xmlGroupObj.getFieldList())
-        {
-            if(obj instanceof XMLFieldConfigData)
-            {
-                addField(localisationClass, panelId, groupConfig, (XMLFieldConfigData)obj);
-            }
-            else if(obj instanceof XMLGroupConfig)
-            {
-                GroupConfig subGroup = parseGroup(localisationClass, panelId, (XMLGroupConfig)obj);
+        for (Object obj : xmlGroupObj.getFieldList()) {
+            if (obj instanceof XMLFieldConfigData) {
+                addField(localisationClass, panelId, groupConfig, (XMLFieldConfigData) obj);
+            } else if (obj instanceof XMLGroupConfig) {
+                GroupConfig subGroup = parseGroup(localisationClass, panelId, (XMLGroupConfig) obj);
 
                 groupConfig.addGroup(subGroup);
-            }
-            else if(obj instanceof XMLMultiOptionGroup)
-            {
-                MultiOptionGroup subGroup = parseMultiOptionGroup(localisationClass, panelId, (XMLMultiOptionGroup)obj);
+            } else if (obj instanceof XMLMultiOptionGroup) {
+                MultiOptionGroup subGroup = parseMultiOptionGroup(localisationClass, panelId,
+                        (XMLMultiOptionGroup) obj);
 
                 groupConfig.addGroup(subGroup);
-            }
-            else if(obj instanceof XMLFieldConfigVendorOption)
-            {
-                XMLFieldConfigVendorOption vendorOption = (XMLFieldConfigVendorOption)obj;
+            } else if (obj instanceof XMLFieldConfigVendorOption) {
+                XMLFieldConfigVendorOption vendorOption = (XMLFieldConfigVendorOption) obj;
                 FieldIdEnum id = vendorOption.getId();
                 String label = null;
                 boolean valueOnly = true;
 
-                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly);
+                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label,
+                        valueOnly);
 
                 List<VendorOptionInterface> veList = null;
 
                 veList = vendorOptionFactory.getVendorOptionList(vendorOption.getClazz());
-                if((veList == null) || veList.isEmpty())
-                {
-                    ConsoleManager.getInstance().error(this, 
-                            Localisation.getField(FieldConfigBase.class, "FieldConfigVendorOption.missingVendorOptionClass") + vendorOption.getClazz());
+                if ((veList == null) || veList.isEmpty()) {
+                    ConsoleManager.getInstance().error(this,
+                            Localisation.getField(FieldConfigBase.class,
+                                    "FieldConfigVendorOption.missingVendorOptionClass")
+                            + vendorOption.getClazz());
                 }
 
-                FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(commonData, veList);
+                FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(commonData,
+                        veList);
 
                 groupConfig.addField(placeHolder);
             }
@@ -335,13 +324,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the string
      */
     private String groupTitle(String groupTitle) {
-        if(vendorOptionVersion == null)
-        {
+        if (vendorOptionVersion == null) {
             return groupTitle;
-        }
-        else
-        {
-            return groupTitle + " " + VendorOptionManager.getInstance().getTitle(vendorOptionVersion);
+        } else {
+            return groupTitle + " "
+                    + VendorOptionManager.getInstance().getTitle(vendorOptionVersion);
         }
     }
 
@@ -353,17 +340,18 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param groupConfig the group config
      * @param xmlFieldConfig the xml field config
      */
-    private void addField(Class<?> localisationClass, Class<?> panelId, GroupConfig groupConfig, XMLFieldConfigData xmlFieldConfig) {
+    private void addField(Class<?> localisationClass, Class<?> panelId, GroupConfig groupConfig,
+            XMLFieldConfigData xmlFieldConfig) {
 
         FieldIdEnum id = xmlFieldConfig.getId();
         String label = getLocalisedText(localisationClass, xmlFieldConfig.getLabel());
         boolean valueOnly = xmlFieldConfig.isValueOnly();
         String defaultValue = xmlFieldConfig.getDefault();
 
-        FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly, isRasterSymbol);
+        FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly,
+                isRasterSymbol);
 
-        if(xmlFieldConfig instanceof XMLFieldConfigString)
-        {
+        if (xmlFieldConfig instanceof XMLFieldConfigString) {
             XMLFieldConfigString xmlStringFieldConfig = (XMLFieldConfigString) xmlFieldConfig;
 
             FieldConfigString stringConfig = new FieldConfigString(commonData,
@@ -373,140 +361,115 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 stringConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigColourMap)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigColourMap) {
             commonData.setValueOnly(true);
             FieldConfigColourMap colourMapConfig = new FieldConfigColourMap(commonData);
 
             groupConfig.addField(colourMapConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigFeatureTypeConstraint)
-        {
-            FieldConfigFeatureTypeConstraint stringConfig = new FieldConfigFeatureTypeConstraint(commonData);
+        } else if (xmlFieldConfig instanceof XMLFieldConfigFeatureTypeConstraint) {
+            FieldConfigFeatureTypeConstraint stringConfig = new FieldConfigFeatureTypeConstraint(
+                    commonData);
 
             groupConfig.addField(stringConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigGeometryField)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigGeometryField) {
             FieldConfigGeometryField geometryFieldConfig = new FieldConfigGeometryField(commonData);
 
             DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-            if(dataSource != null)
-            {
+            if (dataSource != null) {
                 dataSource.addListener(geometryFieldConfig);
             }
 
             groupConfig.addField(geometryFieldConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigFont)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigFont) {
             FieldConfigFont fontConfig = new FieldConfigFont(commonData);
 
             groupConfig.addField(fontConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigInlineFeature)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigInlineFeature) {
             FieldConfigInlineFeature inlineFeatureConfig = new FieldConfigInlineFeature(commonData);
 
             groupConfig.addField(inlineFeatureConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigFontPreview)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigFontPreview) {
             FieldConfigFontPreview fontPreviewConfig = new FieldConfigFontPreview(commonData);
 
             groupConfig.addField(fontPreviewConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigTransformation)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigTransformation) {
             XMLFieldConfigTransformation xmlTransformationFieldConfig = (XMLFieldConfigTransformation) xmlFieldConfig;
 
-            FieldConfigTransformation transformationConfig = new FieldConfigTransformation(commonData, 
-                    getLocalisedText(localisationClass, xmlTransformationFieldConfig.getEditButtonText()), 
-                    getLocalisedText(localisationClass, xmlTransformationFieldConfig.getClearButtonText()));
+            FieldConfigTransformation transformationConfig = new FieldConfigTransformation(
+                    commonData,
+                    getLocalisedText(localisationClass,
+                            xmlTransformationFieldConfig.getEditButtonText()),
+                    getLocalisedText(localisationClass,
+                            xmlTransformationFieldConfig.getClearButtonText()));
 
             groupConfig.addField(transformationConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigGeometry)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigGeometry) {
             XMLFieldConfigGeometry xmlGeometryFieldConfig = (XMLFieldConfigGeometry) xmlFieldConfig;
 
-            FieldConfigGeometry geometryConfig = new FieldConfigGeometry(commonData, getLocalisedText(localisationClass, xmlGeometryFieldConfig.getButtonText()));
+            FieldConfigGeometry geometryConfig = new FieldConfigGeometry(commonData,
+                    getLocalisedText(localisationClass, xmlGeometryFieldConfig.getButtonText()));
 
             groupConfig.addField(geometryConfig);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 geometryConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigBoolean)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigBoolean) {
             FieldConfigBoolean boolConfig = new FieldConfigBoolean(commonData);
 
             groupConfig.addField(boolConfig);
 
             Boolean defaultValueObj = ConfigDefaultFactory.getBoolean(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 boolConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigDouble)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigDouble) {
             FieldConfigDouble doubleConfig = new FieldConfigDouble(commonData);
 
-            XMLFieldConfigDouble xmlDouble = (XMLFieldConfigDouble)xmlFieldConfig;
+            XMLFieldConfigDouble xmlDouble = (XMLFieldConfigDouble) xmlFieldConfig;
             doubleConfig.setDefaultValue(xmlDouble.getDefaultValue());
-            doubleConfig.setConfig(xmlDouble.getMinValue(), xmlDouble.getMaxValue(), xmlDouble.getStepSize(), xmlDouble.getNoOfDecimalPlaces());
+            doubleConfig.setConfig(xmlDouble.getMinValue(), xmlDouble.getMaxValue(),
+                    xmlDouble.getStepSize(), xmlDouble.getNoOfDecimalPlaces());
 
             groupConfig.addField(doubleConfig);
 
             Double defaultValueObj = ConfigDefaultFactory.getDouble(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 doubleConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigInteger)
-        {
-            XMLFieldConfigInteger xmlInteger = (XMLFieldConfigInteger)xmlFieldConfig;
+        } else if (xmlFieldConfig instanceof XMLFieldConfigInteger) {
+            XMLFieldConfigInteger xmlInteger = (XMLFieldConfigInteger) xmlFieldConfig;
 
             FieldConfigInteger integerConfig = new FieldConfigInteger(commonData);
             integerConfig.setDefaultValue(xmlInteger.getDefaultValue());
-            integerConfig.setConfig(xmlInteger.getMinValue(), xmlInteger.getMaxValue(), xmlInteger.getStepSize());
+            integerConfig.setConfig(xmlInteger.getMinValue(), xmlInteger.getMaxValue(),
+                    xmlInteger.getStepSize());
 
             groupConfig.addField(integerConfig);
 
             Integer defaultValueObj = ConfigDefaultFactory.getInteger(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 integerConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigColour)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigColour) {
             FieldConfigColour colourConfig = new FieldConfigColour(commonData);
 
             groupConfig.addField(colourConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigSlider)
-        {
-            XMLFieldConfigSlider xmlSlider = (XMLFieldConfigSlider)xmlFieldConfig;
+        } else if (xmlFieldConfig instanceof XMLFieldConfigSlider) {
+            XMLFieldConfigSlider xmlSlider = (XMLFieldConfigSlider) xmlFieldConfig;
 
             FieldConfigSlider sliderConfig = new FieldConfigSlider(commonData);
             sliderConfig.setDefaultValue(xmlSlider.getDefaultValue());
@@ -515,46 +478,39 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
             Double defaultValueObj = ConfigDefaultFactory.getDouble(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 sliderConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigSymbolType)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigSymbolType) {
             FieldConfigSymbolType fillSymbolConfig = new FieldConfigSymbolType(commonData);
 
             groupConfig.addField(fillSymbolConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigEnum)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigEnum) {
             FieldConfigEnum valueConfig = new FieldConfigEnum(commonData);
 
-            XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum)xmlFieldConfig).getValueList();
+            XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum) xmlFieldConfig)
+                    .getValueList();
 
-            List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId, valueList);
+            List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId,
+                    valueList);
 
             valueConfig.addConfig(configList);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 valueConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
 
             groupConfig.addField(valueConfig);
-        }
-        else if(xmlFieldConfig instanceof XMLFieldConfigMapUnit)
-        {
+        } else if (xmlFieldConfig instanceof XMLFieldConfigMapUnit) {
             FieldConfigMapUnits valueConfig = new FieldConfigMapUnits(commonData);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 valueConfig.setDefaultValue(defaultValueObj);
                 defaultFieldMap.put(id, defaultValueObj);
             }
@@ -571,17 +527,39 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param valueList the xml value obj
      * @return the list
      */
-    private List<SymbolTypeConfig> readValueListConfig(Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValueList valueList)
-    {
+    private List<SymbolTypeConfig> readValueListConfig(Class<?> localisationClass, Class<?> panelId,
+            XMLFieldConfigEnumValueList valueList) {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
 
-        for(XMLFieldConfigEnumValue valueObj : valueList.getValue())
-        {
+        for (XMLFieldConfigEnumValue valueObj : valueList.getValue()) {
             SymbolTypeConfig config = parseSymbolTypeConfig(localisationClass, panelId, valueObj);
             configList.add(config);
         }
 
         return configList;
+    }
+
+    /**
+     * Decode version data.
+     *
+     * @param xmlVendorOption the xml vendor option
+     * @return the version data
+     */
+    public static VersionData decodeVersionData(XMLVendorOption xmlVendorOption)
+    {
+        VersionData versionData = VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
+
+        if(xmlVendorOption != null)
+        {
+            try {
+                String vendorOptionClassName = xmlVendorOption.getClassType().trim();
+                Class<?> vendorOptionClass = Class.forName(vendorOptionClassName);
+                versionData = VersionData.decode(vendorOptionClass, xmlVendorOption.getVersion());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return versionData;
     }
 
     /**
@@ -593,34 +571,29 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the symbol type config
      */
     public static SymbolTypeConfig parseSymbolTypeConfig(Class<?> localisationClass,
-            Class<?> panelId,
-            XMLFieldConfigEnumValue valueObj) {
+            Class<?> panelId, XMLFieldConfigEnumValue valueObj) {
         SymbolTypeConfig config = new SymbolTypeConfig(panelId);
 
         String groupName = valueObj.getGroupName();
         boolean isSeparateGroup = valueObj.isSeparateGroup();
 
-        if(groupName != null)
-        {
+        if (groupName != null) {
             config.setGroupName(groupName);
         }
         config.setSeparateGroup(isSeparateGroup);
 
-        for(XMLFieldConfigEnumValueItem itemObj : valueObj.getItem())
-        {
-            config.addOption(itemObj.getId(), getLocalisedText(localisationClass, itemObj.getLabel()));
+        for (XMLFieldConfigEnumValueItem itemObj : valueObj.getItem()) {
+            config.addOption(itemObj.getId(),
+                    getLocalisedText(localisationClass, itemObj.getLabel()));
         }
 
         FieldList fieldList = valueObj.getFieldList();
-        if(fieldList != null)
-        {
-            for(XMLFieldConfigEnumValueField field : fieldList.getField())
-            {
+        if (fieldList != null) {
+            for (XMLFieldConfigEnumValueField field : fieldList.getField()) {
                 config.addField(field.getId(), field.isEnabled());
             }
 
-            for(XMLFieldConfigEnumValueGroup group : fieldList.getGroup())
-            {
+            for (XMLFieldConfigEnumValueGroup group : fieldList.getGroup()) {
                 config.addGroup(group.getId(), group.isEnabled());
             }
         }
@@ -633,8 +606,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the vendor option version
      */
     @Override
-    public VendorOptionVersion getVendorOptionVersion()
-    {
+    public VendorOptionVersion getVendorOptionVersion() {
         return vendorOptionVersion;
     }
 
@@ -644,8 +616,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @return the group list
      */
     @Override
-    public List<GroupConfigInterface> getGroupList()
-    {
+    public List<GroupConfigInterface> getGroupList() {
         return groupList;
     }
 

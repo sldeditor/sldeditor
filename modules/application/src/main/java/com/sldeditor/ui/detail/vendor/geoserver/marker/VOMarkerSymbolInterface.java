@@ -21,8 +21,10 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
+import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Interface VOMarkerSymbolInterface.
@@ -32,23 +34,24 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 public interface VOMarkerSymbolInterface {
 
     /**
-     * Adds the vendor option.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param symbolList the symbol list
-     * @param fieldEnableMap the field enable map
-     * @param panelId the panel id
-     */
-    public abstract void addVendorOption(Class<?> symbolizerClass,
-            List<ValueComboBoxData> symbolList, 
-            Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap,
-            Class<?> panelId);
-
-    /**
      * Gets the field map.
      *
      * @return the field map
      */
-    public abstract Map<Class<?>, List<SymbolTypeConfig>> getFieldMap();
+    public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap();
+
+    /**
+     * Gets the marker symbols.
+     *
+     * @param panelId the panel id
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
+     * @return the marker symbols
+     */
+    public List<FieldState> getMarkerSymbols(Class<?> panelId, 
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField);
 
 }
