@@ -28,6 +28,11 @@ import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.VOGeoServerArrowSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.VOGeoServerExtShapeSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.VOGeoServerShapeSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.VOGeoServerWindbarbSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.VOGeoServerWKTSymbol;
 
 /**
  * A factory for creating VendorOptionMarkerSymbolFactory objects.

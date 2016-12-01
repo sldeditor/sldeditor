@@ -55,6 +55,9 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 public class WindBarbDetails extends StandardPanel implements PopulateDetailsInterface, 
 UpdateSymbolInterface {
 
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/marker/windbarb/PanelConfig_WindBarbSymbol.xml";
+
     /** The Constant HEMISPHERE_S. */
     private static final String HEMISPHERE_S = "?hemisphere=s";
 
@@ -84,7 +87,7 @@ UpdateSymbolInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, "geoserver/GeoServerWindBarbSymbol.xml");
+        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
     }
 
     /**

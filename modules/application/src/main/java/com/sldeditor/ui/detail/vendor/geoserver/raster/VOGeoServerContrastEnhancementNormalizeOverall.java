@@ -33,7 +33,10 @@ import com.sldeditor.ui.detail.RasterSymbolizerDetails;
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerContrastEnhancementNormalizeOverall
-extends VOGeoServerContrastEnhancementNormalize {
+        extends VOGeoServerContrastEnhancementNormalize {
+
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/raster/PanelConfig_ContrastEnhancementNormalizeOverall.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -44,16 +47,19 @@ extends VOGeoServerContrastEnhancementNormalize {
      * @param panelId the panel id
      * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeOverall(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
-        super(panelId, "geoserver/GeoServerContrastEnhancementNormalizeOverall.xml",
-                parentPanel,
-                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
+    public VOGeoServerContrastEnhancementNormalizeOverall(Class<?> panelId,
+            RasterSymbolizerDetails parentPanel) {
+        super(panelId, PANEL_CONFIG, parentPanel, FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL);
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
+     * GroupIdEnum, org.geotools.styling.ChannelSelection)
      */
     @Override
     protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
@@ -62,30 +68,32 @@ extends VOGeoServerContrastEnhancementNormalize {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
 
-        if(rasterSymbolizer != null)
-        {
+        if (rasterSymbolizer != null) {
             ContrastEnhancement contrastEnhancement = rasterSymbolizer.getContrastEnhancement();
 
-            if(contrastEnhancement != null)
-            {
+            if (contrastEnhancement != null) {
                 extractNormalizeVendorOption(contrastEnhancement);
             }
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.RasterSymbolizer)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.
+     * RasterSymbolizer)
      */
     @Override
     protected ContrastEnhancement getContrastEnhancement(RasterSymbolizer rasterSymbolizer) {
-        if(rasterSymbolizer != null)
-        {
+        if (rasterSymbolizer != null) {
             return rasterSymbolizer.getContrastEnhancement();
         }
         return null;

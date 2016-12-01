@@ -54,6 +54,9 @@ import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
  */
 public class SelectedSymbol {
 
+    /** The Constant MARKER_SYMBOL_KEY. */
+    private static final String MARKER_SYMBOL_KEY = "MARKER_SYMBOL";
+
     /** The logger. */
     private static Logger logger = Logger.getLogger(SelectedSymbol.class);
 
@@ -1071,6 +1074,15 @@ public class SelectedSymbol {
     }
 
     /**
+     * Sets the valid symbol marker.
+     *
+     * @param valid the new valid symbol marker
+     */
+    public void setValidSymbolMarker(boolean valid) {
+        setValidSymbol(MARKER_SYMBOL_KEY, valid);
+    }
+
+    /**
      * Adds the symbolizer to raster.
      *
      * @param symbolizer the symbolizer
@@ -1129,4 +1141,5 @@ public class SelectedSymbol {
         }
         return false;
     }
+
 }

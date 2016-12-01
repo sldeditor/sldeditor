@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.ui.detail.vendor.geoserver.marker;
+package com.sldeditor.ui.detail.vendor.geoserver.marker.extshape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,10 @@ import java.util.Map;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.EmptyDetails;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
 
 /**
  * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
@@ -38,6 +39,9 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  */
 public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
 
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/marker/extshape/PanelConfig_ExtShape.xml";
+
     /** The empty details. */
     private EmptyDetails emptyDetails = null;
 
@@ -45,19 +49,22 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
      * Instantiates a new VOGeoServerShapeSymbol.
      */
     public VOGeoServerExtShapeSymbol() {
-        emptyDetails = new EmptyDetails("geoserver/ExtShape.xml");
+        emptyDetails = new EmptyDetails(PANEL_CONFIG);
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class,
+     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigMarker markerField = new FieldConfigMarker("geoserver/SymbolTypeFieldState_ExtShape.xml",
-                new FieldConfigCommonData(FieldConfigMarker.class, FieldIdEnum.REPEATED, "", false),
+        FieldConfigMarkerExtShape markerField = new FieldConfigMarkerExtShape(
+                new FieldConfigCommonData(panelId, FieldIdEnum.VO_EXTSHAPE, "", false),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
         markerField.setVendorOptionVersion(emptyDetails.getVendorOptionVersion());
@@ -67,7 +74,9 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
         return fieldStateList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
      */
     @Override

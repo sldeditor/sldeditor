@@ -66,7 +66,7 @@ public class FieldConfigMarker extends FieldState {
     private static final String GEOSERVER_MARKER_PREFIX = "shape://";
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Marker.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/standard/SymbolTypeFieldState_Marker.xml";
 
     /** The Constant NONE_SYMBOL_KEY. */
     private static final String NONE_SYMBOL_KEY = "none";
@@ -74,6 +74,7 @@ public class FieldConfigMarker extends FieldState {
     /** The Constant SOLID_SYMBOL. */
     private static final String SOLID_SYMBOL_KEY = "solid";
 
+    /** The vendor option version. */
     private VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
 
     /**
@@ -86,7 +87,7 @@ public class FieldConfigMarker extends FieldState {
      */
     public FieldConfigMarker(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+        this(SYMBOLTYPE_FIELD_STATE_RESOURCE, commonData, fillFieldConfig, strokeFieldConfig,
                 symbolSelectionField);
     }
 
@@ -99,7 +100,7 @@ public class FieldConfigMarker extends FieldState {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigMarker(String resourceFile, FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
+    protected FieldConfigMarker(String resourceFile, FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         super(commonData, resourceFile, fillFieldConfig, strokeFieldConfig,
                 symbolSelectionField);

@@ -49,16 +49,16 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigFilename wraps a text field GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigFilename wraps a text field GUI component and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
  * A button when clicked on displays a file dialog, the full path is written to the text field.
  * <p>
  * The field allows external images e.g. png, jpg, svg to be specified.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -74,7 +74,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     private ExternalGraphicDetails externalGraphicPanel = null;
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_Filename.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/external/SymbolTypeFieldState_Filename.xml";
 
     /**
      * Instantiates a new field config string.
@@ -84,17 +84,18 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigFilename(FieldConfigCommonData commonData,
-            ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig,
-            FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+    public FieldConfigFilename(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+                symbolSelectionField);
     }
 
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -115,12 +116,13 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -129,14 +131,14 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
-        if(externalGraphicPanel != null)
-        {
+    public void setEnabled(boolean enabled) {
+        if (externalGraphicPanel != null) {
             externalGraphicPanel.setEnabled(enabled);
         }
     }
@@ -146,16 +148,16 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(externalGraphicPanel != null)
-        {
+        if (externalGraphicPanel != null) {
             expression = externalGraphicPanel.getExpression();
         }
         return expression;
@@ -166,26 +168,27 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return true;
     }
 
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
-        if(externalGraphicPanel != null)
-        {
+    public void revertToDefaultValue() {
+        if (externalGraphicPanel != null) {
             externalGraphicPanel.revertToDefaultValue();
         }
     }
@@ -195,16 +198,15 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(externalGraphicPanel != null)
-        {
-            if(objValue instanceof String)
-            {
+    public void populateExpression(Object objValue) {
+        if (externalGraphicPanel != null) {
+            if (objValue instanceof String) {
                 externalGraphicPanel.populateExpression((String) objValue);
             }
         }
@@ -216,8 +218,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the vendor option
      */
     @Override
-    public VendorOptionVersion getVendorOption()
-    {
+    public VendorOptionVersion getVendorOption() {
         return VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
     }
 
@@ -227,8 +228,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the symbol class
      */
     @Override
-    public Class<?> getSymbolClass()
-    {
+    public Class<?> getSymbolClass() {
         return ExternalGraphicImpl.class;
     }
 
@@ -243,25 +243,20 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     @Override
     public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
-    {
-        if(symbol instanceof ExternalGraphicImpl)
-        {
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+        if (symbol instanceof ExternalGraphicImpl) {
             ExternalGraphicImpl markerSymbol = (ExternalGraphicImpl) symbol;
 
-            if(externalGraphicPanel != null)
-            {
+            if (externalGraphicPanel != null) {
                 externalGraphicPanel.setValue(markerSymbol);
             }
 
-            if(multiOptionPanel != null)
-            {
+            if (multiOptionPanel != null) {
                 multiOptionPanel.setSelectedItem(EXTERNAL_SYMBOL_KEY);
             }
 
             FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
-            if(opacity != null)
-            {
+            if (opacity != null) {
                 opacity.populate(graphic.getOpacity());
             }
         }
@@ -278,11 +273,9 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     @Override
     public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled)
-    {
+            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
         List<GraphicalSymbol> symbols = null;
-        if(externalGraphicPanel != null)
-        {
+        if (externalGraphicPanel != null) {
             ExternalGraphic extGraphic = externalGraphicPanel.getSymbol();
 
             symbols = SelectedSymbol.getInstance().getSymbolList(extGraphic);
@@ -298,26 +291,20 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the fill
      */
     @Override
-    public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager)
-    {
-        if(fieldConfigManager == null)
-        {
+    public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager) {
+        if (fieldConfigManager == null) {
             return null;
         }
 
         Fill fill = null;
         FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             Expression fillColour = null;
             Expression fillColourOpacity = null;
 
-            if(fieldConfig instanceof FieldConfigColour)
-            {
-                fillColourOpacity = ((FieldConfigColour)fieldConfig).getColourOpacityExpression();
-            }
-            else
-            {
+            if (fieldConfig instanceof FieldConfigColour) {
+                fillColourOpacity = ((FieldConfigColour) fieldConfig).getColourOpacityExpression();
+            } else {
                 fillColourOpacity = fieldConfig.getExpression();
             }
 
@@ -332,8 +319,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the base panel
      */
     @Override
-    public BasePanel getBasePanel()
-    {
+    public BasePanel getBasePanel() {
         return null;
     }
 
@@ -344,8 +330,8 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the field map
      */
     @Override
-    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
-    {
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(
+            GraphicPanelFieldManager fieldConfigManager) {
         Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
         map.put(FieldIdEnum.EXTERNAL_GRAPHIC, this);
@@ -360,12 +346,9 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return true, if successful
      */
     @Override
-    public boolean accept(GraphicalSymbol symbol)
-    {
-        if(symbol != null)
-        {
-            if(symbol instanceof ExternalGraphicImpl)
-            {
+    public boolean accept(GraphicalSymbol symbol) {
+        if (symbol != null) {
+            if (symbol instanceof ExternalGraphicImpl) {
                 return true;
             }
         }
@@ -378,8 +361,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the field
      */
     @Override
-    public FieldConfigBase getConfigField()
-    {
+    public FieldConfigBase getConfigField() {
         return this;
     }
 
@@ -389,15 +371,12 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(externalGraphicPanel == null)
-        {
+    public String getStringValue() {
+        if (externalGraphicPanel == null) {
             return null;
         }
 
-        if(externalGraphicPanel.getExpression() == null)
-        {
+        if (externalGraphicPanel.getExpression() == null) {
             return null;
         }
         return externalGraphicPanel.getExpression().toString();
@@ -413,8 +392,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         checkSymbolIsValid();
 
         FieldConfigBase parent = getParent();
-        if(parent != null)
-        {
+        if (parent != null) {
             parent.valueUpdated();
         }
     }
@@ -437,15 +415,13 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     @Override
     public void populateField(String value) {
-        if(externalGraphicPanel != null)
-        {
+        if (externalGraphicPanel != null) {
             externalGraphicPanel.setValue(value);
         }
     }
 
     /**
-     * Method called when the field has been selected from a combo box
-     * and may need to be initialised.
+     * Method called when the field has been selected from a combo box and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -461,8 +437,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         // Mark symbol as valid/invalid
         boolean valid = false;
         Expression expression = getExpression();
-        if(expression != null)
-        {
+        if (expression != null) {
             valid = !expression.toString().isEmpty();
         }
         SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
@@ -478,10 +453,9 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigFilename copy = null;
 
-        if(fieldConfigBase != null)
-        {
-            copy = new FieldConfigFilename(fieldConfigBase.getCommonData(),
-                    fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        if (fieldConfigBase != null) {
+            copy = new FieldConfigFilename(fieldConfigBase.getCommonData(), fillFieldConfig,
+                    strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -493,21 +467,25 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     @Override
     public void setVisible(boolean visible) {
-        if(externalGraphicPanel != null)
-        {
+        if (externalGraphicPanel != null) {
             externalGraphicPanel.setVisible(visible);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
      */
     @Override
-    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+    protected void populateVendorOptionFieldMap(
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override

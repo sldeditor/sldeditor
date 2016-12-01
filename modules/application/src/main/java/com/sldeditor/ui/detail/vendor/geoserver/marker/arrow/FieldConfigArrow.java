@@ -67,9 +67,6 @@ import com.sldeditor.ui.widgets.FieldPanel;
  */
 public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface {
 
-    /** The Constant VALIDITY_KEY. */
-    private static final String VALIDITY_KEY = "ARROW";
-
     /** The Constant ARROW_SYMBOL_KEY. */
     private static final String ARROW_SYMBOL_KEY = "Arrow";
 
@@ -77,7 +74,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     private ArrowDetails arrowPanel = null;
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "geoserver/SymbolTypeFieldState_Arrow.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/arrow/SymbolTypeFieldState_Arrow.xml";
 
     /**
      * Instantiates a new field config string.
@@ -487,7 +484,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
         if (expression != null) {
             valid = !expression.toString().isEmpty();
         }
-        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
+        SelectedSymbol.getInstance().setValidSymbolMarker(valid);
     }
 
     /**

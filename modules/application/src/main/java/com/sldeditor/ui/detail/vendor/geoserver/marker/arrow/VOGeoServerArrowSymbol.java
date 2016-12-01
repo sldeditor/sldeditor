@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.ui.detail.vendor.geoserver.marker;
+package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,28 +25,23 @@ import java.util.Map;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
 
 /**
- * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
+ * Class to handle the getting and setting of GeoServer marker arrow shape vendor option data.
  * 
- * Only sets the <WellKnownName> string, no extra fields needed.
- *
+ * Sets the <WellKnownName> string, extra fields needed.
+ * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
-
-    /** The empty details. */
-    private EmptyDetails emptyDetails = null;
+public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
 
     /**
-     * Instantiates a new VOGeoServerShapeSymbol.
+     * Instantiates a new VOGeoServerArrowSymbol.
      */
-    public VOGeoServerShapeSymbol() {
-
-        emptyDetails = new EmptyDetails("geoserver/Shape.xml");
+    public VOGeoServerArrowSymbol() {
     }
 
     /* (non-Javadoc)
@@ -55,16 +50,14 @@ public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigMarker markerField = new FieldConfigMarker("geoserver/SymbolTypeFieldState_Shape.xml",
-                new FieldConfigCommonData(FieldConfigMarker.class, FieldIdEnum.FILL_COLOUR, "", false),
+        FieldConfigArrow arrowShape = new FieldConfigArrow(
+                new FieldConfigCommonData(FieldConfigArrow.class, FieldIdEnum.VO_ARROW, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
-        markerField.setVendorOptionVersion(emptyDetails.getVendorOptionVersion());
-
-        fieldStateList.add(markerField);
-
+        fieldStateList.add(arrowShape);
         return fieldStateList;
     }
 

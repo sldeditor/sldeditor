@@ -41,6 +41,9 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 public class ArrowDetails extends StandardPanel implements PopulateDetailsInterface, 
 UpdateSymbolInterface {
 
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/marker/arrow/PanelConfig_Arrow.xml";
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +54,7 @@ UpdateSymbolInterface {
      * Instantiates a new feature type style details.
      *
      * @param parentObj the parent obj
+     * @param functionManager the function manager
      */
     public ArrowDetails(ArrowUpdateInterface parentObj, FunctionNameInterface functionManager)
     {
@@ -65,7 +69,7 @@ UpdateSymbolInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, "geoserver/Arrow.xml");
+        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
     }
 
     /**

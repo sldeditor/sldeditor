@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.ui.detail.vendor.geoserver.marker;
+package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,25 +27,26 @@ import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
 
 /**
- * Class to handle the getting and setting of GeoServer windbarb symbol vendor option data.
+ * Class to handle the getting and setting of GeoServer weather symbol vendor option data.
  * 
  * Sets the <WellKnownName> string, extra fields needed.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
+public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
 
     /**
-     * Instantiates a new VOGeoServerWindbarbSymbol
+     * Instantiates a new VOGeoServerWKTSymbol
      */
-    public VOGeoServerWindbarbSymbol()
-    {
+    public VOGeoServerWKTSymbol() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
      */
     @Override
@@ -53,19 +54,22 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class,
+     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigWindBarbs windBarbs = new FieldConfigWindBarbs(
-                new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        FieldConfigWKT wktShape = new FieldConfigWKT(
+                new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true), fillFieldConfig,
+                strokeFieldConfig, symbolSelectionField);
 
-        fieldStateList.add(windBarbs);
+        fieldStateList.add(wktShape);
         return fieldStateList;
     }
 }
