@@ -64,6 +64,9 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
+import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionStatus;
+import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
@@ -79,7 +82,8 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  *
  * @author Robert Ward (SCISYS)
  */
-public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, PrefUpdateInterface, DataSourceUpdatedInterface
+public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, PrefUpdateInterface,
+DataSourceUpdatedInterface, PrefUpdateVendorOptionInterface
 {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -156,6 +160,9 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     /** The under test flag. */
     private static boolean underTest = false;
 
+    /** The vendor option string. */
+    private String vendorOptionString = "";
+
     /**
      * Instantiates a new render panel.
      */
@@ -168,6 +175,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         wmsEnvVarValues.setImageHeight(ST_HEIGHT);
 
         PrefManager.getInstance().addListener(this);
+        PrefManager.getInstance().addVendorOptionListener(this);
     }
 
     /**
@@ -230,6 +238,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             g.drawString(displayString, (int) x, (int)y);
         }
         g.setColor(Color.black);
+        Rectangle2D bounds = g.getFontMetrics().getStringBounds(vendorOptionString, g);
+        g.drawString(vendorOptionString, 2, (int)bounds.getHeight());
         g.drawRect(0, 0, width - 1, height - 1);
     }
 
@@ -638,5 +648,15 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
      */
     public static void setUnderTest(boolean underTest) {
         RenderPanelImpl.underTest = underTest;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     */
+    @Override
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
+        vendorOptionString = VendorOptionStatus.getVersionString(vendorOptionVersionsList);
+
+        repaint();
     }
 }
