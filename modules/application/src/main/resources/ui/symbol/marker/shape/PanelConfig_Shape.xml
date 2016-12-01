@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption" start="2.4.0">
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.NoVendorOption" >
     <!-- No panel configuration -->
 </PanelConfig>
