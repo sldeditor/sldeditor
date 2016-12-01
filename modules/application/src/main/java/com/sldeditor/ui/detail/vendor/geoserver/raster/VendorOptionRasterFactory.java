@@ -27,6 +27,8 @@ import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
@@ -84,6 +86,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeOverall);
 
         PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
     }
 
     /**
@@ -169,5 +172,23 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
             }
         }
         return matchingList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
+     */
+    @Override
+    public List<VendorOptionInfo> getVendorOptionInfoList() {
+        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
+
+        for(VendorOptionInterface vendorOption : vendorOptionList)
+        {
+            VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();
+            if(vendorOptionInfo != null)
+            {
+                vendorOptionInfoList.add(vendorOptionInfo);
+            }
+        }
+        return vendorOptionInfoList;
     }
 }

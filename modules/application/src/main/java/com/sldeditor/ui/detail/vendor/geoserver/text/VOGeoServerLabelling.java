@@ -30,6 +30,7 @@ import org.geotools.styling.TextSymbolizer2;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -521,5 +522,14 @@ public class VOGeoServerLabelling extends StandardPanel
     @Override
     public UpdateSymbolInterface getParentPanel() {
         return parentObj;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

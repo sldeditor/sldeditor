@@ -46,6 +46,7 @@ import com.sldeditor.common.preferences.VersionCellRenderer;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.ui.layout.UILayoutFactory;
 
 /**
@@ -172,6 +173,9 @@ public class PrefPanel extends JDialog {
         vendorOptionTable.setModel(model);
         vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
         vendorOptionTable.getColumnModel().getColumn(1).setCellEditor(new VersionCellEditor(model));
+
+        // Vendor option information
+        panel_1.add(VendorOptionInfoManager.getInstance().getPanel());
 
         JPanel buttonPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();

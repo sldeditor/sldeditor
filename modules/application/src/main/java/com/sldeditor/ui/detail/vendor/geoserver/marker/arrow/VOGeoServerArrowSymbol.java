@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -38,6 +40,9 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
  */
 public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
 
+    /** The arrow shape. */
+    private FieldConfigArrow arrowShape = null;
+
     /**
      * Instantiates a new VOGeoServerArrowSymbol.
      */
@@ -53,7 +58,7 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
 
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigArrow arrowShape = new FieldConfigArrow(
+        arrowShape = new FieldConfigArrow(
                 new FieldConfigCommonData(FieldConfigArrow.class, FieldIdEnum.VO_ARROW, "", true),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
@@ -67,5 +72,17 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
     @Override
     public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        VendorOptionInfo info = new VendorOptionInfo("extshape://arrow",
+                arrowShape.getVersionData(),
+                Localisation.getString(VOGeoServerArrowSymbol.class, "VOGeoServerArrowSymbol.description"));
+
+        return info;
     }
 }

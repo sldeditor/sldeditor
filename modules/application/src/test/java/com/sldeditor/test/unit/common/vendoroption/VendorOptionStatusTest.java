@@ -46,9 +46,10 @@ public class VendorOptionStatusTest {
     @Test
     public void testGetAppTitle() {
         // The expected string returned is the last vendor option in the list
+        List<VersionData> expectedList = null;
         assertEquals("", VendorOptionStatus.getVersionString(null));
 
-        List<VersionData> expectedList = new ArrayList<VersionData>();
+        expectedList = new ArrayList<VersionData>();
         assertEquals("", VendorOptionStatus.getVersionString(expectedList));
 
         expectedList.add(null);

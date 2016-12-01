@@ -51,7 +51,7 @@ public class CheckUpdateTest {
          */
         @Override
         public UpdateData getLatest() {
-            UpdateData data = new UpdateData(VersionData.decode(getClass(), "0.5.0"), "Some description");
+            UpdateData data = new UpdateData(VersionData.decode(CheckUpdate.class, "0.5.0"), "Some description");
             return data;
         }
 

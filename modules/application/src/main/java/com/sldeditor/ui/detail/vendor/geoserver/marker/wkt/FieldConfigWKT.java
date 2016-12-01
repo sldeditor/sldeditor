@@ -521,4 +521,16 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     public boolean isOverallOpacity(Class<?> symbolizerType) {
         return true;
     }
+
+    /**
+     * Gets the vendor option version.
+     *
+     * @return the vendor option version
+     */
+    public VendorOptionVersion getVendorOptionVersion() {
+        if (wktPanel != null) {
+            return wktPanel.getVendorOptionVersion();
+        }
+        return null;
+    }
 }
