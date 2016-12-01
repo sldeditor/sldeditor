@@ -22,10 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
+import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.VOGeoServerArrowSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.VOGeoServerExtShapeSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.VOGeoServerShapeSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.VOGeoServerWindbarbSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.VOGeoServerWKTSymbol;
 
 /**
  * A factory for creating VendorOptionMarkerSymbolFactory objects.
@@ -34,58 +41,50 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInterface {
 
-    /** The GeoServer vendor option for shapes:// */
+    /**  The GeoServer vendor option for shapes://. */
     private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();
 
-    /** The GeoServer vendor option for extshapes:// */
-    private VOMarkerSymbolInterface vendorOptionGeoServerWeather = new VOGeoServerWeatherSymbol();
+    /**  The GeoServer vendor option for extshapes://. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes = new VOGeoServerExtShapeSymbol();
+
+    /**  The GeoServer vendor option for extshape://arrow. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerArrow = new VOGeoServerArrowSymbol();
+
+    /** The vendor option geo server WKT. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerWKT = new VOGeoServerWKTSymbol();
+
+    /** The vendor option geo server wind barb. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerWindBarb = new VOGeoServerWindbarbSymbol();
 
     /** The list of all the extensions. */
     private List<VOMarkerSymbolInterface> list = new ArrayList<VOMarkerSymbolInterface>();
 
     /**
      * Instantiates a new vendor option marker symbol factory.
-     */
-    public VendorOptionMarkerSymbolFactory()
-    {
+     */ 
+    public VendorOptionMarkerSymbolFactory() {
         list.add(vendorOptionGeoServerShape);
-        list.add(vendorOptionGeoServerWeather);
-    }
-
-    /**
-     * Adds the vendor option.
-     *
-     * @param symbolizerClass the symbolizer class
-     * @param symbolList the symbol list
-     * @param fieldEnableMap the field enable map
-     * @param panelId the panel id
-     */
-    public void addVendorOption(Class<?> symbolizerClass, List<ValueComboBoxData> symbolList, Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap, Class<?> panelId) {
-
-        for(VOMarkerSymbolInterface obj : list)
-        {
-            obj.addVendorOption(symbolizerClass, symbolList, fieldEnableMap, panelId);
-        }
+        list.add(vendorOptionGeoServerExtShapes);
+        list.add(vendorOptionGeoServerWKT);
+        list.add(vendorOptionGeoServerWindBarb);
+        list.add(vendorOptionGeoServerArrow);
     }
 
     /**
      * Gets the field map.
      *
      * @param fieldEnableMap the field enable map
+     * @return the field map
      */
     public void getFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
-        for(VOMarkerSymbolInterface obj : list)
-        {
+        for (VOMarkerSymbolInterface obj : list) {
             Map<Class<?>, List<SymbolTypeConfig>> map = obj.getFieldMap();
 
-            if(map != null)
-            {
-                for(Class<?> symbolizer : map.keySet())
-                {
+            if (map != null) {
+                for (Class<?> symbolizer : map.keySet()) {
                     List<SymbolTypeConfig> existing = fieldEnableMap.get(symbolizer);
 
-                    if(existing == null)
-                    {
+                    if (existing == null) {
                         existing = new ArrayList<SymbolTypeConfig>();
                         fieldEnableMap.put(symbolizer, existing);
                     }
@@ -97,7 +96,9 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList()
      */
     @Override
@@ -105,11 +106,38 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
         return null;
+    }
+
+    /**
+     * Gets the vendor option marker symbols.
+     *
+     * @param panelId the panel id
+     * @param fillFieldConfig the fill field config
+     * @param strokeFieldConfig the stroke field config
+     * @param symbolSelectionField the symbol selection field
+     * @return the vendor option marker symbols
+     */
+    public List<FieldState> getVendorOptionMarkerSymbols(Class<?> panelId,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+
+        for (VOMarkerSymbolInterface obj : list) {
+            List<FieldState> markerFieldStateList = obj.getMarkerSymbols(panelId, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+            if((markerFieldStateList != null) && !markerFieldStateList.isEmpty())
+            {
+                fieldStateList.addAll(markerFieldStateList);
+            }
+        }
+
+        return fieldStateList;
     }
 }

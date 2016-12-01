@@ -44,6 +44,7 @@ import javax.swing.border.EtchedBorder;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -77,6 +78,12 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
     /** The first value. */
     private ValueComboBoxData firstValue = null;
 
+    /** The data selection list. */
+    private List<ValueComboBoxDataGroup> dataSelectionList = null;
+
+    /** The vendor option versions list. */
+    private List<VersionData> vendorOptionVersionsList = null;
+
     /**
      * Instantiates a new menu combo box.
      *
@@ -95,45 +102,46 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
     private ComboMenu createMenu(List<ValueComboBoxDataGroup> listAll) {
         ComboMenu menu = new ComboMenu("");
 
-        for(ValueComboBoxDataGroup group : listAll)
-        {
-            if(group.isSubMenu())
-            {
-                JMenu subMenu = new JMenu(group.getGroupName());
-                for(ValueComboBoxData data : group.getDataList())
-                {
-                    ComboMenuItem menuItem = new ComboMenuItem(data);
+        if (listAll != null) {
+            for (ValueComboBoxDataGroup group : listAll) {
+                if (group.isSubMenu()) {
+                    JMenu subMenu = new JMenu(group.getGroupName());
+                    for (ValueComboBoxData data : group.getDataList()) {
+                        if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
+                                data.getVendorOption())) {
+                            ComboMenuItem menuItem = new ComboMenuItem(data);
 
-                    subMenu.add(menuItem);
+                            subMenu.add(menuItem);
 
-                    dataMap.put(data.getKey(), data);
+                            dataMap.put(data.getKey(), data);
 
-                    if(firstValue == null)
-                    {
-                        firstValue = data;
+                            if (firstValue == null) {
+                                firstValue = data;
+                            }
+                        }
                     }
-                }
 
-                menu.add(subMenu);
-            }
-            else
-            {
-                for(ValueComboBoxData data : group.getDataList())
-                {
-                    ComboMenuItem menuItem = new ComboMenuItem(data);
+                    if (subMenu.getMenuComponentCount() > 1) {
+                        menu.add(subMenu);
+                    }
+                } else {
+                    for (ValueComboBoxData data : group.getDataList()) {
+                        if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
+                                data.getVendorOption())) {
+                            ComboMenuItem menuItem = new ComboMenuItem(data);
 
-                    menu.add(menuItem);
+                            menu.add(menuItem);
 
-                    dataMap.put(data.getKey(), data);
+                            dataMap.put(data.getKey(), data);
 
-                    if(firstValue == null)
-                    {
-                        firstValue = data;
+                            if (firstValue == null) {
+                                firstValue = data;
+                            }
+                        }
                     }
                 }
             }
         }
-
         return menu;
     }
 
@@ -154,32 +162,28 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
     public void setSelectedData(ValueComboBoxData selectedData) {
         this.selectedData = selectedData;
 
-        if(selectedData != null)
-        {
+        if (selectedData != null) {
             this.menu.setText(selectedData.getText());
             this.menu.requestFocus();
         }
 
-        if(listener != null)
-        {
+        if (listener != null) {
             listener.optionSelected(selectedData);
         }
     }
 
     /**
-     * The listener interface for receiving menuItem events.
-     * The class that is interested in processing a menuItem
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addMenuItemListener<code> method. When
-     * the menuItem event occurs, that object's appropriate
-     * method is invoked.
+     * The listener interface for receiving menuItem events. The class that is interested in processing a menuItem event implements this interface,
+     * and the object created with that class is registered with a component using the component's <code>addMenuItemListener<code> method. When the
+     * menuItem event occurs, that object's appropriate method is invoked.
      *
      * @see MenuItemEvent
      */
     class MenuItemListener implements ActionListener {
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {
@@ -216,22 +220,25 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
         return menu.getText();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setPreferredSize(java.awt.Dimension)
      */
     public void setPreferredSize(Dimension size) {
         preferredSize = size;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#getPreferredSize()
      */
     public Dimension getPreferredSize() {
         if (preferredSize == null) {
             Dimension menuD = getItemSize(menu);
             Insets margin = menu.getMargin();
-            Dimension retD = new Dimension(menuD.width, margin.top
-                    + margin.bottom + menuD.height);
+            Dimension retD = new Dimension(menuD.width, margin.top + margin.bottom + menuD.height);
             menu.setPreferredSize(retD);
             preferredSize = retD;
         }
@@ -271,7 +278,8 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception evt) {}
+        } catch (Exception evt) {
+        }
 
         List<ValueComboBoxData> list1 = new ArrayList<ValueComboBoxData>();
         list1.add(new ValueComboBoxData("circle", "Circle", MenuComboBox.class));
@@ -324,8 +332,7 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
          *
          * @param data the data
          */
-        public ComboMenuItem(ValueComboBoxData data)
-        {
+        public ComboMenuItem(ValueComboBoxData data) {
             super(data.getText());
             this.data = data;
         }
@@ -365,7 +372,9 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
             setFocusPainted(true);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
          */
         public void paintComponent(Graphics g) {
@@ -383,6 +392,20 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
      * @param dataSelectionList the data selection list
      */
     public void initialiseMenu(List<ValueComboBoxDataGroup> dataSelectionList) {
+
+        this.dataSelectionList = dataSelectionList;
+
+        refreshMenu();
+    }
+
+    /**
+     * Refresh menu.
+     */
+    private void refreshMenu() {
+        if (menu != null) {
+            // Remove the previous menu
+            this.remove(menu);
+        }
         this.menu = createMenu(dataSelectionList);
 
         Color color = UIManager.getColor("Menu.selectionBackground");
@@ -396,12 +419,16 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
         add(menu);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
-        // Do nothing
+        this.vendorOptionVersionsList = vendorOptionVersionsList;
+
+        refreshMenu();
     }
 
     /**
@@ -420,12 +447,9 @@ public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInte
      */
     public void setSelectedDataKey(String key) {
         ValueComboBoxData value = dataMap.get(key);
-        if(value == null)
-        {
+        if (value == null) {
             ConsoleManager.getInstance().error(this, "Unknown menu combo box key : " + key);
-        }
-        else
-        {
+        } else {
             setSelectedData(value);
         }
     }

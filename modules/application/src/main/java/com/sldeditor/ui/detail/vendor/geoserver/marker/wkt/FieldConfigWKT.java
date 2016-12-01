@@ -54,22 +54,19 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigWKT wraps a text field GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigWKT wraps a text field GUI component and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
- * A button when clicked on displays a dialog ({@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog})
- * that allows the user to configure a WKT string.
+ * A button when clicked on displays a dialog ({@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog}) that allows the user to
+ * configure a WKT string.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
-
-    /** The Constant VALIDITY_KEY. */
-    private static final String VALIDITY_KEY = "WKT";
 
     /** The Constant WKT_PREFIX. */
     private static final String WKT_PREFIX = WKTConversion.WKT_PREFIX;
@@ -81,7 +78,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     private WKTDetails wktPanel = null;
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WKT.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/wkt/SymbolTypeFieldState_WKT.xml";
 
     /**
      * Instantiates a new field config string.
@@ -91,11 +88,10 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigWKT(FieldConfigCommonData commonData,
-            ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig,
-            FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+    public FieldConfigWKT(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+                symbolSelectionField);
 
     }
 
@@ -120,8 +116,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @param field the field
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -131,10 +126,8 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @param enabled the new enabled state
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
-        if(wktPanel != null)
-        {
+    public void setEnabled(boolean enabled) {
+        if (wktPanel != null) {
             wktPanel.setEnabled(enabled);
         }
     }
@@ -145,10 +138,8 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the expression
      */
     @Override
-    protected Expression generateExpression()
-    {
-        if(wktPanel != null)
-        {
+    protected Expression generateExpression() {
+        if (wktPanel != null) {
             return wktPanel.getExpression();
         }
 
@@ -161,10 +152,8 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return true, if is enabled
      */
     @Override
-    public boolean isEnabled()
-    {
-        if(wktPanel != null)
-        {
+    public boolean isEnabled() {
+        if (wktPanel != null) {
             return wktPanel.isEnabled();
         }
 
@@ -175,10 +164,8 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * Revert to default value.
      */
     @Override
-    public void revertToDefaultValue()
-    {
-        if(wktPanel != null)
-        {
+    public void revertToDefaultValue() {
+        if (wktPanel != null) {
             wktPanel.revertToDefaultValue();
         }
     }
@@ -188,16 +175,15 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(wktPanel != null)
-        {
-            if(objValue instanceof String)
-            {
+    public void populateExpression(Object objValue) {
+        if (wktPanel != null) {
+            if (objValue instanceof String) {
                 wktPanel.populateExpression((String) objValue);
             }
         }
@@ -209,8 +195,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the vendor option
      */
     @Override
-    public VendorOptionVersion getVendorOption()
-    {
+    public VendorOptionVersion getVendorOption() {
         return VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
     }
 
@@ -220,8 +205,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the symbol class
      */
     @Override
-    public Class<?> getSymbolClass()
-    {
+    public Class<?> getSymbolClass() {
         return ExternalGraphicImpl.class;
     }
 
@@ -235,42 +219,33 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, 
-            GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
-    {
-        if((symbol != null) && (fieldConfigManager != null))
-        {
-            if(symbol instanceof Mark)
-            {
+    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+        if ((symbol != null) && (fieldConfigManager != null)) {
+            if (symbol instanceof Mark) {
                 MarkImpl markerSymbol = (MarkImpl) symbol;
 
                 FillImpl fill = markerSymbol.getFill();
 
-                if(fill != null)
-                {
+                if (fill != null) {
                     Expression expFillColour = fill.getColor();
                     Expression expFillColourOpacity = fill.getOpacity();
 
                     FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-                    if(field != null)
-                    {
+                    if (field != null) {
                         field.populate(expFillColour);
                     }
                     field = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
-                    if(field != null)
-                    {
+                    if (field != null) {
                         field.populate(expFillColourOpacity);
                     }
                 }
 
-                if(wktPanel != null)
-                {
+                if (wktPanel != null) {
                     wktPanel.populateExpression(markerSymbol.getWellKnownName().toString());
                 }
 
-                if(multiOptionPanel != null)
-                {
+                if (multiOptionPanel != null) {
                     multiOptionPanel.setSelectedItem(WKT_SYMBOL_KEY);
                 }
             }
@@ -288,30 +263,23 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      */
     @Override
     public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled)
-    {
+            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             Expression wellKnownName = null;
-            if(getConfigField() != null)
-            {
+            if (getConfigField() != null) {
                 wellKnownName = getConfigField().getExpression();
-                if(wellKnownName != null)
-                {
+                if (wellKnownName != null) {
                     // Stroke colour
                     Expression expStrokeColour = null;
                     Expression expStrokeColourOpacity = null;
                     FieldConfigBase field = null;
-                    if(strokeEnabled)
-                    {
+                    if (strokeEnabled) {
                         field = fieldConfigManager.get(FieldIdEnum.STROKE_STROKE_COLOUR);
-                        if(field != null)
-                        {
-                            if(field instanceof FieldConfigColour)
-                            {
-                                FieldConfigColour colourField = (FieldConfigColour)field;
+                        if (field != null) {
+                            if (field instanceof FieldConfigColour) {
+                                FieldConfigColour colourField = (FieldConfigColour) field;
 
                                 expStrokeColour = colourField.getColourExpression();
                                 expStrokeColourOpacity = colourField.getColourOpacityExpression();
@@ -328,35 +296,28 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     expFillColourOpacity = expStrokeColourOpacity;
 
                     /*
-                    field = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
-                    if(field != null)
-                    {
-                        if(field instanceof FieldConfigColour)
-                        {
-                            FieldConfigColour colourField = (FieldConfigColour)field;
-
-                            expFillColour = colourField.getColourExpression();
-                            expFillColourOpacity = colourField.getColourOpacityExpression();
-                        }
-                    }
+                     * field = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR); if(field != null) { if(field instanceof FieldConfigColour) {
+                     * FieldConfigColour colourField = (FieldConfigColour)field;
+                     * 
+                     * expFillColour = colourField.getColourExpression(); expFillColourOpacity = colourField.getColourOpacityExpression(); } }
                      */
                     Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                    Stroke stroke = getStyleFactory().createStroke(expStrokeColour, expStrokeColourOpacity);
+                    Stroke stroke = getStyleFactory().createStroke(expStrokeColour,
+                            expStrokeColourOpacity);
                     field = fieldConfigManager.get(FieldIdEnum.STROKE_WIDTH);
-                    if(field != null)
-                    {
+                    if (field != null) {
                         Expression strokeWidth = field.getExpression();
                         stroke.setWidth(strokeWidth);
                     }
 
                     Expression symbolSize = null;
                     field = fieldConfigManager.get(FieldIdEnum.STROKE_SYMBOL_SIZE);
-                    if(field != null)
-                    {
+                    if (field != null) {
                         symbolSize = field.getExpression();
                     }
                     Expression rotation = null;
-                    Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, symbolSize, rotation);
+                    Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill,
+                            symbolSize, rotation);
 
                     symbolList.add(mark);
                 }
@@ -373,9 +334,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the fill
      */
     @Override
-    public Fill getFill(GraphicFill graphicFill,
-            GraphicPanelFieldManager fieldConfigManager)
-    {
+    public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager) {
         return null;
     }
 
@@ -385,8 +344,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the base panel
      */
     @Override
-    public BasePanel getBasePanel()
-    {
+    public BasePanel getBasePanel() {
         return null;
     }
 
@@ -397,8 +355,8 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the field map
      */
     @Override
-    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
-    {
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(
+            GraphicPanelFieldManager fieldConfigManager) {
         Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
         map.put(FieldIdEnum.WKT, this);
@@ -413,27 +371,21 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return true, if successful
      */
     @Override
-    public boolean accept(GraphicalSymbol symbol)
-    {
-        if(symbol != null)
-        {
-            if(symbol instanceof MarkImpl)
-            {
+    public boolean accept(GraphicalSymbol symbol) {
+        if (symbol != null) {
+            if (symbol instanceof MarkImpl) {
                 MarkImpl marker = (MarkImpl) symbol;
 
                 Expression expression = marker.getWellKnownName();
 
-                if(expression instanceof LiteralExpressionImpl)
-                {
+                if (expression instanceof LiteralExpressionImpl) {
                     LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
 
                     Object value = lExpression.getValue();
-                    if(value instanceof String)
-                    {
+                    if (value instanceof String) {
                         String valueString = (String) value;
 
-                        if(valueString.startsWith(WKT_PREFIX))
-                        {
+                        if (valueString.startsWith(WKT_PREFIX)) {
                             return true;
                         }
                     }
@@ -449,8 +401,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the field
      */
     @Override
-    public FieldConfigBase getConfigField()
-    {
+    public FieldConfigBase getConfigField() {
         return this;
     }
 
@@ -460,12 +411,9 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(wktPanel != null)
-        {
-            if(wktPanel.getExpression() != null)
-            {
+    public String getStringValue() {
+        if (wktPanel != null) {
+            if (wktPanel.getExpression() != null) {
                 return wktPanel.getExpression().toString();
             }
         }
@@ -483,8 +431,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
         checkSymbolIsValid();
 
         FieldConfigBase parent = getParent();
-        if(parent != null)
-        {
+        if (parent != null) {
             parent.valueUpdated();
         }
     }
@@ -497,15 +444,13 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      */
     @Override
     public void setTestValue(FieldIdEnum fieldId, String testValue) {
-        if(wktPanel != null)
-        {
+        if (wktPanel != null) {
             wktPanel.populateExpression(testValue);
         }
     }
 
     /**
-     * Method called when the field has been selected from a combo box
-     * and may need to be initialised.
+     * Method called when the field has been selected from a combo box and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -521,11 +466,10 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
         // Mark symbol as valid/invalid
         boolean valid = false;
         Expression expression = getExpression();
-        if(expression != null)
-        {
+        if (expression != null) {
             valid = !expression.toString().isEmpty();
         }
-        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
+        SelectedSymbol.getInstance().setValidSymbolMarker(valid);
     }
 
     /**
@@ -538,9 +482,9 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigWKT copy = null;
 
-        if(fieldConfigBase != null)
-        {
-            copy = new FieldConfigWKT(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        if (fieldConfigBase != null) {
+            copy = new FieldConfigWKT(fieldConfigBase.getCommonData(), fillFieldConfig,
+                    strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -552,21 +496,25 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      */
     @Override
     public void setVisible(boolean visible) {
-        if(wktPanel != null)
-        {
+        if (wktPanel != null) {
             wktPanel.setVisible(visible);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
      */
     @Override
-    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+    protected void populateVendorOptionFieldMap(
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override

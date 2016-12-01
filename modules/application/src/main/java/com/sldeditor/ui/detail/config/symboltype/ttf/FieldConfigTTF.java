@@ -70,9 +70,6 @@ import com.sldeditor.ui.widgets.FieldPanel;
  */
 public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
-    /** The Constant VALIDITY_KEY. */
-    private static final String VALIDITY_KEY = "TTF";
-
     /** The Constant TTF_PREFIX. */
     private static final String TTF_PREFIX = "ttf://";
 
@@ -83,7 +80,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     private TTFDetails ttfPanel = null;
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_TTF.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/ttf/SymbolTypeFieldState_TTF.xml";
 
     /**
      * Instantiates a new field config string.
@@ -256,7 +253,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
         Expression expFillColour = null;
         Expression expFillOpacity = null;
-        
+
         if(fill != null)
         {
             expFillColour = fill.getColor();
@@ -265,7 +262,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 expFillOpacity = fill.getOpacity();
             }
         }
-        
+
         FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
         if(field != null)
         {
@@ -281,7 +278,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 opacity.populate(graphic.getOpacity());
             }
         }
-    
+
         field = fieldConfigManager.get(fillFieldConfig.getOpacity());
         if(field != null)
         {
@@ -334,25 +331,29 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
             wellKnownName = getConfigField().getExpression();
             if(wellKnownName != null)
             {
-                Expression expFillColour = null;
-                Expression expFillColourOpacity = null;
-
-                FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
-                if(field != null)
-                {
-                    FieldConfigColour colourField = (FieldConfigColour)field;
-
-                    expFillColour = colourField.getColourExpression();
-                }
-
-                field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-                if(field != null)
-                {
-                    expFillColourOpacity = field.getExpression();
-                }
-
                 Stroke stroke = null;
-                Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
+                Fill fill = null;
+
+                if(fillEnabled)
+                {
+                    Expression expFillColour = null;
+                    Expression expFillColourOpacity = null;
+
+                    FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
+                    if(field != null)
+                    {
+                        FieldConfigColour colourField = (FieldConfigColour)field;
+
+                        expFillColour = colourField.getColourExpression();
+                    }
+
+                    field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+                    if(field != null)
+                    {
+                        expFillColourOpacity = field.getExpression();
+                    }
+                    fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
+                }
 
                 // Size
                 Expression expSize = null;
@@ -508,7 +509,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         {
             valid = !expression.toString().isEmpty();
         }
-        SelectedSymbol.getInstance().setValidSymbol(VALIDITY_KEY, valid);
+        SelectedSymbol.getInstance().setValidSymbolMarker(valid);
     }
 
     /**

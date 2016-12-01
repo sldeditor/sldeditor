@@ -826,7 +826,7 @@ public class BasePanel extends JPanel {
      *
      * @return the vendorOptionVersion
      */
-    protected VendorOptionVersion getVendorOptionVersion() {
+    public VendorOptionVersion getVendorOptionVersion() {
         return vendorOptionVersion;
     }
 

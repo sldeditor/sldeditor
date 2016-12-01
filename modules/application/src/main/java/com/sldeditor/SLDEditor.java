@@ -325,6 +325,10 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList,
             boolean underTest, SLDEditorDlgInterface overrideSLDEditorDlg) {
         underTestFlag = underTest;
+        if(underTestFlag)
+        {
+            System.out.println("Running in test mode");
+        }
         frame = new JFrame(generateApplicationTitleString());
 
         Controller.getInstance().setFrame(frame);

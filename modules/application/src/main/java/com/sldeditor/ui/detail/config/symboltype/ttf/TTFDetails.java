@@ -41,13 +41,15 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.ttf.CharMap4;
 
 /**
- * The Class TTFDetails panel contains all the fields to configure 
- * an TrueType fonts.
+ * The Class TTFDetails panel contains all the fields to configure an TrueType fonts.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class TTFDetails extends StandardPanel implements PopulateDetailsInterface, 
-UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+public class TTFDetails extends StandardPanel implements PopulateDetailsInterface,
+        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/marker/ttf/PanelConfig_TTFSymbol.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -64,8 +66,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @param parentObj the parent obj
      * @param functionManager the function manager
      */
-    public TTFDetails(TTFUpdateInterface parentObj, FunctionNameInterface functionManager)
-    {
+    public TTFDetails(TTFUpdateInterface parentObj, FunctionNameInterface functionManager) {
         super(TTFDetails.class, functionManager);
 
         this.parentObj = parentObj;
@@ -76,7 +77,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, "symboltype/TTFSymbol.xml");
+        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
 
         registerForTextFieldButton(FieldIdEnum.TTF_SYMBOL, this);
     }
@@ -86,7 +87,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -101,8 +104,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public void populateExpression(String wellKnownName) {
 
-        if(wellKnownName != null)
-        {
+        if (wellKnownName != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, wellKnownName);
         }
     }
@@ -112,7 +114,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -124,10 +128,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            if(parentObj != null)
-            {
+        if (!Controller.getInstance().isPopulating()) {
+            if (parentObj != null) {
                 parentObj.ttfValueUpdated();
             }
         }
@@ -138,12 +140,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -152,12 +155,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
@@ -180,12 +184,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
-        if(fieldList != null)
-        {
-            for(FieldConfigBase field : fieldList)
-            {
-                if(field != null)
-                {
+        if (fieldList != null) {
+            for (FieldConfigBase field : fieldList) {
+                if (field != null) {
                     field.revertToDefaultValue();
                 }
             }
@@ -211,7 +212,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValue = (String)undoRedoObject.getNewValue();
+        String newValue = (String) undoRedoObject.getNewValue();
 
         fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, (String) newValue);
     }
@@ -231,24 +232,26 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
         String selectedChar = charMap4.showDialog();
 
-        if(selectedChar != null)
-        {
+        if (selectedChar != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, selectedChar);
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.TTF_SYMBOL, oldValueObj, selectedChar));
+            UndoManager.getInstance().addUndoEvent(
+                    new UndoEvent(this, FieldIdEnum.TTF_SYMBOL, oldValueObj, selectedChar));
 
             oldValueObj = selectedChar;
 
-            EventQueue.invokeLater(new Runnable(){
+            EventQueue.invokeLater(new Runnable() {
 
-                public void run(){
+                public void run() {
                     updateSymbol();
                 }
             });
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override

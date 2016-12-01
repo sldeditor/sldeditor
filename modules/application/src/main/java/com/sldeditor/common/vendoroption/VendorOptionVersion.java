@@ -83,15 +83,15 @@ public class VendorOptionVersion
             return false;
         }
 
-        // Check to see if it is strict SLD, always allowed
-        if(versionData.getVendorOptionType() == NoVendorOption.class)
-        {
-            return true;
-        }
-
         if(versionData.getVendorOptionType() != this.classType)
         {
             return false;
+        }
+
+        // Check to see if it is strict SLD, always allowed
+        if(classType == NoVendorOption.class)
+        {
+            return true;
         }
 
         return versionData.inRange(this.minimumVersion, this.maximumVersion);

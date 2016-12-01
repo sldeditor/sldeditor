@@ -160,6 +160,13 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="COLOUR_RAMP_REVERSE"/&gt;
  *     &lt;enumeration value="VO_POINT_RANDOMFILL"/&gt;
  *     &lt;enumeration value="VO_POLYGON_RANDOMFILL"/&gt;
+ *     &lt;enumeration value="VO_SHAPE"/&gt;
+ *     &lt;enumeration value="VO_EXTSHAPE"/&gt;
+ *     &lt;enumeration value="VO_ARROW"/&gt;
+ *     &lt;enumeration value="VO_ARROW"/&gt;
+ *     &lt;enumeration value="VO_ARROW_THICKNESS"/&gt;
+ *     &lt;enumeration value="VO_ARROW_HEIGHT_OVER_WIDTH"/&gt;
+ *     &lt;enumeration value="VO_ARROW_HEAD"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -308,7 +315,13 @@ public enum FieldIdEnum {
     COLOUR_RAMP_COLOUR,
     COLOUR_RAMP_REVERSE,
     VO_POINT_RANDOMFILL,
-    VO_POLYGON_RANDOMFILL;
+    VO_POLYGON_RANDOMFILL,
+    VO_SHAPE,
+    VO_EXTSHAPE,
+    VO_ARROW,
+    VO_ARROW_THICKNESS,
+    VO_ARROW_HEIGHT_OVER_WIDTH,
+    VO_ARROW_HEAD;
 
     public String value() {
         return name();

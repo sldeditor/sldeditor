@@ -68,7 +68,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     private WindBarbDetails windBarbsPanel = null;
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symboltype/SymbolTypeFieldState_WindBarbs.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/windbarb/SymbolTypeFieldState_WindBarb.xml";
 
     /**
      * Instantiates a new field config string.
@@ -78,17 +78,18 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigWindBarbs(FieldConfigCommonData commonData,
-            ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig,
-            FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+    public FieldConfigWindBarbs(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+                symbolSelectionField);
     }
 
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -109,12 +110,13 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -123,12 +125,13 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
+    public void setEnabled(boolean enabled) {
         // Do nothin
     }
 
@@ -137,14 +140,14 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
-        if(windBarbsPanel == null)
-        {
+    protected Expression generateExpression() {
+        if (windBarbsPanel == null) {
             return null;
         }
         Expression expression = windBarbsPanel.getExpression();
@@ -157,26 +160,27 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return true;
     }
 
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
-        if(windBarbsPanel != null)
-        {
+    public void revertToDefaultValue() {
+        if (windBarbsPanel != null) {
             windBarbsPanel.revertToDefaultValue();
         }
     }
@@ -186,16 +190,15 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(windBarbsPanel != null)
-        {
-            if(objValue instanceof String)
-            {
+    public void populateExpression(Object objValue) {
+        if (windBarbsPanel != null) {
+            if (objValue instanceof String) {
                 windBarbsPanel.populateExpression((String) objValue);
             }
         }
@@ -207,8 +210,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the vendor option
      */
     @Override
-    public VendorOptionVersion getVendorOption()
-    {
+    public VendorOptionVersion getVendorOption() {
         return VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
     }
 
@@ -218,8 +220,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the symbol class
      */
     @Override
-    public Class<?> getSymbolClass()
-    {
+    public Class<?> getSymbolClass() {
         return ExternalGraphicImpl.class;
     }
 
@@ -233,23 +234,17 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, 
-            GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
-    {
-        if(symbol != null)
-        {
-            if(symbol instanceof Mark)
-            {
+    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+        if (symbol != null) {
+            if (symbol instanceof Mark) {
                 MarkImpl markerSymbol = (MarkImpl) symbol;
 
-                if(getConfigField() != null)
-                {
+                if (getConfigField() != null) {
                     getConfigField().populate(markerSymbol.getWellKnownName());
                 }
 
-                if(multiOptionPanel != null)
-                {
+                if (multiOptionPanel != null) {
                     multiOptionPanel.setSelectedItem(WINDBARB_SYMBOL_KEY);
                 }
             }
@@ -267,23 +262,19 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     @Override
     public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled)
-    {
+            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Expression wellKnownName = null;
-        if((getConfigField() != null) && (fieldConfigManager != null))
-        {
+        if ((getConfigField() != null) && (fieldConfigManager != null)) {
             wellKnownName = getConfigField().getExpression();
-            if(wellKnownName != null)
-            {
+            if (wellKnownName != null) {
                 Expression expFillColour = null;
                 Expression expFillColourOpacity = null;
 
                 FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-                if(field != null)
-                {
-                    FieldConfigColour colourField = (FieldConfigColour)field;
+                if (field != null) {
+                    FieldConfigColour colourField = (FieldConfigColour) field;
 
                     expFillColour = colourField.getColourExpression();
                 }
@@ -292,7 +283,8 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                 Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
                 Expression size = null;
                 Expression rotation = null;
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
+                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size,
+                        rotation);
 
                 symbolList.add(mark);
             }
@@ -308,9 +300,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the fill
      */
     @Override
-    public Fill getFill(GraphicFill graphicFill,
-            GraphicPanelFieldManager fieldConfigManager)
-    {
+    public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager) {
         return null;
     }
 
@@ -320,8 +310,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the base panel
      */
     @Override
-    public BasePanel getBasePanel()
-    {
+    public BasePanel getBasePanel() {
         return null;
     }
 
@@ -332,8 +321,8 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the field map
      */
     @Override
-    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
-    {
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(
+            GraphicPanelFieldManager fieldConfigManager) {
         Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
         map.put(FieldIdEnum.WINDBARBS, this);
@@ -351,27 +340,21 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return true, if successful
      */
     @Override
-    public boolean accept(GraphicalSymbol symbol)
-    {
-        if(symbol != null)
-        {
-            if(symbol instanceof MarkImpl)
-            {
+    public boolean accept(GraphicalSymbol symbol) {
+        if (symbol != null) {
+            if (symbol instanceof MarkImpl) {
                 MarkImpl marker = (MarkImpl) symbol;
 
                 Expression expression = marker.getWellKnownName();
 
-                if(expression instanceof LiteralExpressionImpl)
-                {
+                if (expression instanceof LiteralExpressionImpl) {
                     LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
 
                     Object value = lExpression.getValue();
-                    if(value instanceof String)
-                    {
+                    if (value instanceof String) {
                         String valueString = (String) value;
 
-                        if(valueString.startsWith(WINDBARBS_PREFIX))
-                        {
+                        if (valueString.startsWith(WINDBARBS_PREFIX)) {
                             return true;
                         }
                     }
@@ -387,8 +370,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the field
      */
     @Override
-    public FieldConfigBase getConfigField()
-    {
+    public FieldConfigBase getConfigField() {
         return this;
     }
 
@@ -398,19 +380,16 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
+    public String getStringValue() {
         return null;
     }
 
     /**
-     * Checks if is a single value is legal
-     * To be overridden if necessary.
+     * Checks if is a single value is legal To be overridden if necessary.
      *
      * @return true, if is a single value
      */
-    public boolean isASingleValue()
-    {
+    public boolean isASingleValue() {
         return false;
     }
 
@@ -422,15 +401,13 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         setCachedExpression(generateExpression());
 
         FieldConfigBase parent = getParent();
-        if(parent != null)
-        {
+        if (parent != null) {
             parent.valueUpdated();
         }
     }
 
     /**
-     * Method called when the field has been selected from a combo box
-     * and may need to be initialised
+     * Method called when the field has been selected from a combo box and may need to be initialised
      * 
      * Will be be overridden if necessary.
      */
@@ -448,8 +425,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     @Override
     public void setTestValue(FieldIdEnum fieldId, String testValue) {
-        if(windBarbsPanel != null)
-        {
+        if (windBarbsPanel != null) {
             windBarbsPanel.setTestValue(fieldId, testValue);
         }
     }
@@ -464,9 +440,9 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigWindBarbs copy = null;
 
-        if(fieldConfigBase != null)
-        {
-            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        if (fieldConfigBase != null) {
+            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData(), fillFieldConfig,
+                    strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -478,22 +454,26 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     @Override
     public void setVisible(boolean visible) {
-        if(windBarbsPanel != null)
-        {
+        if (windBarbsPanel != null) {
             windBarbsPanel.setVisible(visible);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
      */
     @Override
-    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+    protected void populateVendorOptionFieldMap(
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override

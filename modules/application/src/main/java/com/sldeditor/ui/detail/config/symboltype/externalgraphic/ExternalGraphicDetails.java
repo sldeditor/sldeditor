@@ -52,13 +52,15 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExternalGraphicFilter;
 
 /**
- * The Class ExternalGraphicDetails panel contains all the fields to configure 
- * an external graphic.
+ * The Class ExternalGraphicDetails panel contains all the fields to configure an external graphic.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ExternalGraphicDetails extends StandardPanel implements PopulateDetailsInterface, 
-UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+public class ExternalGraphicDetails extends StandardPanel implements PopulateDetailsInterface,
+        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/marker/external/PanelConfig_ExternalGraphicSymbol.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -78,8 +80,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @param parentObj the parent obj
      * @param functionManager the function manager
      */
-    public ExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj, FunctionNameInterface functionManager)
-    {
+    public ExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj,
+            FunctionNameInterface functionManager) {
         super(ExternalGraphicDetails.class, functionManager);
 
         this.parentObj = parentObj;
@@ -90,12 +92,11 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, "symboltype/ExternalGraphicSymbol.xml");
+        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
 
         registerForTextFieldButton(FieldIdEnum.EXTERNAL_GRAPHIC, this);
 
-        for(FieldConfigBase fieldConfig : this.getFieldConfigList())
-        {
+        for (FieldConfigBase fieldConfig : this.getFieldConfigList()) {
             CurrentFieldState fieldState = fieldConfig.getFieldState();
             fieldState.setFieldEnabled(true);
             fieldConfig.setFieldState(fieldState);
@@ -107,7 +108,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -122,8 +125,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public void populateExpression(String wellKnownName) {
 
-        if(wellKnownName != null)
-        {
+        if (wellKnownName != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, wellKnownName);
         }
     }
@@ -133,7 +135,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -145,10 +149,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            if(parentObj != null)
-            {
+        if (!Controller.getInstance().isPopulating()) {
+            if (parentObj != null) {
                 parentObj.externalGraphicValueUpdated();
             }
         }
@@ -159,12 +161,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -173,12 +176,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
@@ -201,10 +205,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
-        for(FieldConfigBase field : fieldList)
-        {
-            if(field != null)
-            {
+        for (FieldConfigBase field : fieldList) {
+            if (field != null) {
                 field.revertToDefaultValue();
             }
         }
@@ -217,22 +219,23 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public void setValue(ExternalGraphicImpl externalGraphic) {
         try {
-            if(externalGraphic != null)
-            {
+            if (externalGraphic != null) {
                 externalFileURL = externalGraphic.getLocation();
             }
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
+        UndoManager.getInstance().addUndoEvent(
+                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
         try {
             oldValueObj = new URL(externalFileURL.toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
-        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL);
+        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(),
+                externalFileURL);
         populateExpression(path);
     }
 
@@ -248,14 +251,16 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
+        UndoManager.getInstance().addUndoEvent(
+                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
         try {
             oldValueObj = new URL(externalFileURL.toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
-        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), externalFileURL);
+        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(),
+                externalFileURL);
         populateExpression(path);
     }
 
@@ -264,12 +269,10 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return the symbol
      */
-    public ExternalGraphic getSymbol()
-    {
+    public ExternalGraphic getSymbol() {
         ExternalGraphic extGraphic = null;
 
-        if(externalFileURL != null)
-        {
+        if (externalFileURL != null) {
             String fileExtension = ExternalFilenames.getFileExtension(externalFileURL.toString());
             String imageFormat = ExternalFilenames.getImageFormat(fileExtension);
             String uri = "";
@@ -285,44 +288,44 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         return extGraphic;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getOldValue() instanceof URL)
-            {
-                URL oldValue = (URL)undoRedoObject.getOldValue();
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getOldValue() instanceof URL) {
+                URL oldValue = (URL) undoRedoObject.getOldValue();
 
-                populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), oldValue));
+                populateExpression(ExternalFilenames
+                        .getText(SLDEditorFile.getInstance().getSLDData(), oldValue));
                 externalFileURL = oldValue;
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
                 }
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getNewValue() instanceof URL)
-            {
-                URL newValue = (URL)undoRedoObject.getNewValue();
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getNewValue() instanceof URL) {
+                URL newValue = (URL) undoRedoObject.getNewValue();
 
-                populateExpression(ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(), newValue));
+                populateExpression(ExternalFilenames
+                        .getText(SLDEditorFile.getInstance().getSLDData(), newValue));
                 externalFileURL = newValue;
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
                 }
             }
@@ -338,13 +341,12 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     public void buttonPressed(Component buttonExternal) {
         JFileChooser fc = new JFileChooser();
 
-        if(externalFileURL != null)
-        {
+        if (externalFileURL != null) {
             String filename = externalFileURL.toExternalForm();
-            File currentFile = ExternalFilenames.getFile(SLDEditorFile.getInstance().getSLDData(), filename);
+            File currentFile = ExternalFilenames.getFile(SLDEditorFile.getInstance().getSLDData(),
+                    filename);
 
-            if(currentFile.exists())
-            {
+            if (currentFile.exists()) {
                 fc.setCurrentDirectory(currentFile.getParentFile());
             }
         }
@@ -353,18 +355,17 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
         int returnVal = fc.showOpenDialog(buttonExternal);
 
-        if(returnVal == JFileChooser.APPROVE_OPTION)
-        {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
                 externalFileURL = fc.getSelectedFile().toURI().toURL();
 
                 populateExpression(externalFileURL.toExternalForm());
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
+                        FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
                 oldValueObj = externalFileURL;
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
                 }
             } catch (MalformedURLException e1) {
@@ -373,7 +374,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -381,13 +384,14 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
     public void setEnabled(boolean enabled) {
-        for(FieldConfigBase fieldConfig : getFieldConfigList())
-        {
+        for (FieldConfigBase fieldConfig : getFieldConfigList()) {
             fieldConfig.setEnabled(enabled);
         }
         super.setEnabled(enabled);

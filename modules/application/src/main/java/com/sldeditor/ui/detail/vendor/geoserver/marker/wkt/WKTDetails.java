@@ -40,13 +40,15 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
- * The Class WKTDetails panel contains all the fields to configure 
- * an WKT strings.
+ * The Class WKTDetails panel contains all the fields to configure WKT strings.
  * 
  * @author Robert Ward (SCISYS)
  */
 public class WKTDetails extends StandardPanel implements PopulateDetailsInterface, 
 UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+
+    /** The Constant PANEL_CONFIG. */
+    private static final String PANEL_CONFIG = "symbol/marker/wkt/PanelConfig_WKT.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -58,7 +60,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     private Object oldValueObj = null;
 
     /**
-     * Instantiates a new feature type style details.
+     * Instantiates a new WKT details.
      *
      * @param parentObj the parent obj
      */
@@ -74,7 +76,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, "symboltype/WKT.xml");
+        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
 
         registerForTextFieldButton(FieldIdEnum.WKT, this);
     }

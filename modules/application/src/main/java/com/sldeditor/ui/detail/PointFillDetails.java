@@ -113,7 +113,7 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
 
         readConfigFile(vendorOptionFillFactory, this, configFile);
 
-        symbolTypeFactory.populate(this, panelDetails, fieldConfigManager);
+        symbolTypeFactory.populate(this, fieldConfigManager);
     }
 
     /**
