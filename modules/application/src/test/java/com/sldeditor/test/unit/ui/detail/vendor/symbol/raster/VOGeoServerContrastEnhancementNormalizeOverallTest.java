@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.geoserver.raster;
+package com.sldeditor.test.unit.ui.detail.vendor.symbol.raster;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

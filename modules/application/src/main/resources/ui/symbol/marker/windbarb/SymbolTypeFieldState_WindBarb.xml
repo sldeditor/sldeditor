@@ -4,7 +4,6 @@
         <Value>
             <Item id="windbarb" label="Windbarbs" />
             <FieldList>
-                <Field id="WKT" enabled="true" />
                 <Field id="ANGLE" enabled="true" />
                 <Field id="SIZE" enabled="true" />
                 <Field id="OVERALL_OPACITY" enabled="false" />

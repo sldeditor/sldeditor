@@ -38,7 +38,8 @@ import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Class that manages user preference data.
- * <p>Implemented as a singleton.
+ * <p>
+ * Implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -94,10 +95,8 @@ public class PrefManager implements UndoActionInterface {
      *
      * @return single instance of PrefManager
      */
-    public static PrefManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static PrefManager getInstance() {
+        if (instance == null) {
             instance = new PrefManager();
         }
 
@@ -107,16 +106,14 @@ public class PrefManager implements UndoActionInterface {
     /**
      * Destroy instance.
      */
-    public static void destroyInstance()
-    {
+    public static void destroyInstance() {
         instance = null;
     }
 
     /**
      * Private default constructor.
      */
-    private PrefManager()
-    {
+    private PrefManager() {
         lastViewedMap = new HashMap<PrefDataLastViewedEnum, String>();
         lastViewedMap.put(PrefDataLastViewedEnum.FOLDER, LAST_FOLDER_VIEWED_FIELD);
         lastViewedMap.put(PrefDataLastViewedEnum.GEOSERVER, LAST_GEOSERVER_VIEWED_FIELD);
@@ -127,10 +124,8 @@ public class PrefManager implements UndoActionInterface {
      *
      * @param listener the listener
      */
-    public void addListener(PrefUpdateInterface listener)
-    {
-        if(!listenerList.contains(listener))
-        {
+    public void addListener(PrefUpdateInterface listener) {
+        if (!listenerList.contains(listener)) {
             listenerList.add(listener);
 
             listener.useAntiAliasUpdated(this.prefData.isUseAntiAlias());
@@ -142,10 +137,8 @@ public class PrefManager implements UndoActionInterface {
      *
      * @param listener the listener
      */
-    public void addVendorOptionListener(PrefUpdateVendorOptionInterface listener)
-    {
-        if(!vendorOptionListenerList.contains(listener))
-        {
+    public void addVendorOptionListener(PrefUpdateVendorOptionInterface listener) {
+        if (!vendorOptionListenerList.contains(listener)) {
             vendorOptionListenerList.add(listener);
             listener.vendorOptionsUpdated(this.prefData.getVendorOptionVersionList());
         }
@@ -157,17 +150,14 @@ public class PrefManager implements UndoActionInterface {
      * @param useAntiAlias the new use anti alias
      */
     private void setUseAntiAlias(boolean useAntiAlias) {
-        if(this.prefData.isUseAntiAlias() != useAntiAlias)
-        {
+        if (this.prefData.isUseAntiAlias() != useAntiAlias) {
             this.prefData.setUseAntiAlias(useAntiAlias);
 
-            if(propertyManagerInstance != null)
-            {
+            if (propertyManagerInstance != null) {
                 propertyManagerInstance.updateValue(USE_ANTI_ALIAS_FIELD, useAntiAlias);
             }
 
-            for(PrefUpdateInterface listener : listenerList)
-            {
+            for (PrefUpdateInterface listener : listenerList) {
                 listener.useAntiAliasUpdated(useAntiAlias);
             }
         }
@@ -178,13 +168,11 @@ public class PrefManager implements UndoActionInterface {
      *
      * @param propertyManager the property manager
      */
-    public static void initialise(PropertyManagerInterface propertyManager)
-    {
+    public static void initialise(PropertyManagerInterface propertyManager) {
         propertyManagerInstance = propertyManager;
         PrefManager.destroyInstance();
 
-        if(propertyManager != null)
-        {
+        if (propertyManager != null) {
             String uiLayoutClass = propertyManager.getStringValue(UILAYOUT_FIELD, null);
             PrefManager.getInstance().setUiLayoutClass(uiLayoutClass);
         }
@@ -193,53 +181,54 @@ public class PrefManager implements UndoActionInterface {
     /**
      * Finish.
      */
-    public void finish()
-    {
-        if(propertyManagerInstance != null)
-        {
+    public void finish() {
+        if (propertyManagerInstance != null) {
             PrefData newPrefData = new PrefData();
-            newPrefData.setCheckAppVersionOnStartUp(propertyManagerInstance.getBooleanValue(CHECK_APP_VERSION_ON_STARTUP_FIELD, true));
-            newPrefData.setUseAntiAlias(propertyManagerInstance.getBooleanValue(USE_ANTI_ALIAS_FIELD, true));
+            newPrefData.setCheckAppVersionOnStartUp(propertyManagerInstance
+                    .getBooleanValue(CHECK_APP_VERSION_ON_STARTUP_FIELD, true));
+            newPrefData.setUseAntiAlias(
+                    propertyManagerInstance.getBooleanValue(USE_ANTI_ALIAS_FIELD, true));
 
-            List<String> stringList = propertyManagerInstance.getStringListValue(VENDOROPTIONS_FIELD);
+            List<String> stringList = propertyManagerInstance
+                    .getStringListValue(VENDOROPTIONS_FIELD);
             List<VersionData> vendorOptionVersionList = new ArrayList<VersionData>();
 
-            if(stringList != null)
-            {
-                for(String string : stringList)
-                {
+            if (stringList != null) {
+                for (String string : stringList) {
                     VersionData versionData = VersionData.getDecodedString(string);
 
-                    if(versionData != null)
-                    {
+                    if (versionData != null) {
                         vendorOptionVersionList.add(versionData);
                     }
                 }
             }
 
-            VersionData defaultVendorOption = VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
-            if(!vendorOptionVersionList.contains(defaultVendorOption))
-            {
+            VersionData defaultVendorOption = VendorOptionManager.getInstance()
+                    .getDefaultVendorOptionVersionData();
+            if (!vendorOptionVersionList.contains(defaultVendorOption)) {
                 vendorOptionVersionList.add(defaultVendorOption);
             }
             newPrefData.setVendorOptionVersionList(vendorOptionVersionList);
-            newPrefData.setBackgroundColour(propertyManagerInstance.getColourValue(BACKGROUND_COLOUR_FIELD, Color.WHITE));
-            newPrefData.setSaveLastFolderView(propertyManagerInstance.getBooleanValue(SAVE_LAST_FOLDER_VIEWED_FIELD, false));
+            newPrefData.setBackgroundColour(
+                    propertyManagerInstance.getColourValue(BACKGROUND_COLOUR_FIELD, Color.WHITE));
+            newPrefData.setSaveLastFolderView(
+                    propertyManagerInstance.getBooleanValue(SAVE_LAST_FOLDER_VIEWED_FIELD, false));
 
-            String folderName = propertyManagerInstance.getStringValue(LAST_FOLDER_VIEWED_FIELD, null);
-            if(folderName != null)
-            {
+            String folderName = propertyManagerInstance.getStringValue(LAST_FOLDER_VIEWED_FIELD,
+                    null);
+            if (folderName != null) {
                 newPrefData.setLastViewedKey(PrefDataLastViewedEnum.FOLDER);
                 newPrefData.setLastFolderViewed(folderName);
             }
-            String geoServerConnection = propertyManagerInstance.getStringValue(LAST_GEOSERVER_VIEWED_FIELD, null);
-            if(geoServerConnection != null)
-            {
+            String geoServerConnection = propertyManagerInstance
+                    .getStringValue(LAST_GEOSERVER_VIEWED_FIELD, null);
+            if (geoServerConnection != null) {
                 newPrefData.setLastViewedKey(PrefDataLastViewedEnum.GEOSERVER);
                 newPrefData.setLastFolderViewed(geoServerConnection);
             }
 
-            newPrefData.setUiLayoutClass(propertyManagerInstance.getStringValue(UILAYOUT_FIELD, null));
+            newPrefData
+                    .setUiLayoutClass(propertyManagerInstance.getStringValue(UILAYOUT_FIELD, null));
 
             setPrefData(newPrefData);
         }
@@ -252,21 +241,19 @@ public class PrefManager implements UndoActionInterface {
      * @param l2 the l2
      * @return true, if successful
      */
-    public static boolean cmpList( List<?> l1, List<?> l2 ) {
-        if((l1 == null) && (l2 == null))
-        {
+    public static boolean cmpList(List<?> l1, List<?> l2) {
+        if ((l1 == null) && (l2 == null)) {
             return true;
         }
 
-        if((l1 == null) || (l2 == null))
-        {
+        if ((l1 == null) || (l2 == null)) {
             return false;
         }
 
         // make a copy of the list so the original list is not changed, and remove() is supported
-        ArrayList<?> cp = new ArrayList<>( l1 );
-        for ( Object o : l2 ) {
-            if ( !cp.remove( o ) ) {
+        ArrayList<?> cp = new ArrayList<>(l1);
+        for (Object o : l2) {
+            if (!cp.remove(o)) {
                 return false;
             }
         }
@@ -277,35 +264,46 @@ public class PrefManager implements UndoActionInterface {
      * Sets the vendor option list.
      *
      * @param vendorOptionVersionList the new vendor option list
+     * @param saveChange the save change flag
      */
-    private void setVendorOptionList(List<VersionData> vendorOptionVersionList) {
+    private void setVendorOptionList(List<VersionData> vendorOptionVersionList,
+            boolean saveChange) {
 
-        if(vendorOptionVersionList == null)
-        {
+        if (vendorOptionVersionList == null) {
             vendorOptionVersionList = new ArrayList<VersionData>();
-            vendorOptionVersionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
+            vendorOptionVersionList.add(
+                    VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
         }
 
-        if(!cmpList(this.prefData.getVendorOptionVersionList(), vendorOptionVersionList))
-        {
+        if (!cmpList(this.prefData.getVendorOptionVersionList(), vendorOptionVersionList)) {
             this.prefData.setVendorOptionVersionList(vendorOptionVersionList);
 
             List<String> vendorOptionVersionStringList = new ArrayList<String>();
-            for(VersionData versionData : vendorOptionVersionList)
-            {
+            for (VersionData versionData : vendorOptionVersionList) {
                 vendorOptionVersionStringList.add(versionData.getEncodedString());
             }
 
-            if(propertyManagerInstance != null)
-            {
-                propertyManagerInstance.updateValue(VENDOROPTIONS_FIELD, vendorOptionVersionStringList);
+            if (saveChange) {  // When running integration tests don't update users preferences
+                if (propertyManagerInstance != null) {
+                    propertyManagerInstance.updateValue(VENDOROPTIONS_FIELD,
+                            vendorOptionVersionStringList);
+                }
             }
 
-            for(PrefUpdateVendorOptionInterface listener : vendorOptionListenerList)
-            {
+            for (PrefUpdateVendorOptionInterface listener : vendorOptionListenerList) {
                 listener.vendorOptionsUpdated(vendorOptionVersionList);
             }
         }
+    }
+
+    /**
+     * Override vendor option list,  when running integration tests
+     * don't update users preferences
+     *
+     * @param vendorOptionVersionList the vendor option version list
+     */
+    public void overrideVendorOptionList(List<VersionData> vendorOptionVersionList) {
+        setVendorOptionList(vendorOptionVersionList, false);
     }
 
     /**
@@ -313,20 +311,19 @@ public class PrefManager implements UndoActionInterface {
      *
      * @param newPrefData the new pref data
      */
-    public void setPrefData(PrefData newPrefData)
-    {
+    public void setPrefData(PrefData newPrefData) {
         oldValueObj = prefData.clone();
 
         setUseAntiAlias(newPrefData.isUseAntiAlias());
-        setVendorOptionList(newPrefData.getVendorOptionVersionList());
+        setVendorOptionList(newPrefData.getVendorOptionVersionList(), true);
         setUiLayoutClass(newPrefData.getUiLayoutClass());
         setBackgroundColour(newPrefData.getBackgroundColour());
-        setLastFolderViewed(newPrefData.isSaveLastFolderView(),
-                newPrefData.getLastViewedKey(),
+        setLastFolderViewed(newPrefData.isSaveLastFolderView(), newPrefData.getLastViewedKey(),
                 newPrefData.getLastFolderViewed());
         setCheckAppVersionOnStartUp(newPrefData.isCheckAppVersionOnStartUp());
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, newPrefData));
+        UndoManager.getInstance()
+                .addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, newPrefData));
     }
 
     /**
@@ -335,13 +332,12 @@ public class PrefManager implements UndoActionInterface {
      * @param checkAppVersionOnStartUp the new check app version on start up
      */
     private void setCheckAppVersionOnStartUp(boolean checkAppVersionOnStartUp) {
-        if(this.prefData.isCheckAppVersionOnStartUp() != checkAppVersionOnStartUp)
-        {
+        if (this.prefData.isCheckAppVersionOnStartUp() != checkAppVersionOnStartUp) {
             this.prefData.setCheckAppVersionOnStartUp(checkAppVersionOnStartUp);
 
-            if(propertyManagerInstance != null)
-            {
-                propertyManagerInstance.updateValue(CHECK_APP_VERSION_ON_STARTUP_FIELD, checkAppVersionOnStartUp);
+            if (propertyManagerInstance != null) {
+                propertyManagerInstance.updateValue(CHECK_APP_VERSION_ON_STARTUP_FIELD,
+                        checkAppVersionOnStartUp);
             }
         }
     }
@@ -351,24 +347,19 @@ public class PrefManager implements UndoActionInterface {
      *
      * @param selectedFiles the new last folder viewed
      */
-    public void setLastFolderViewed(SelectedFiles selectedFiles)
-    {
+    public void setLastFolderViewed(SelectedFiles selectedFiles) {
         String lastViewed = null;
         PrefDataLastViewedEnum key = PrefDataLastViewedEnum.FOLDER;
 
-        if(selectedFiles != null)
-        {
-            if(selectedFiles.getFolderName() != null)
-            {
+        if (selectedFiles != null) {
+            if (selectedFiles.getFolderName() != null) {
                 lastViewed = selectedFiles.getFolderName();
-                key = PrefDataLastViewedEnum.FOLDER; 
-            }
-            else if(selectedFiles.getConnectionData() != null)
-            {
+                key = PrefDataLastViewedEnum.FOLDER;
+            } else if (selectedFiles.getConnectionData() != null) {
                 GeoServerConnection connectData = selectedFiles.getConnectionData();
 
                 lastViewed = connectData.getConnectionName();
-                key = PrefDataLastViewedEnum.GEOSERVER; 
+                key = PrefDataLastViewedEnum.GEOSERVER;
             }
         }
 
@@ -382,34 +373,29 @@ public class PrefManager implements UndoActionInterface {
      * @param key the key
      * @param lastFolderViewed the new last folder viewed
      */
-    private void setLastFolderViewed(boolean saveLastFolderViewed,
-            PrefDataLastViewedEnum key,
+    private void setLastFolderViewed(boolean saveLastFolderViewed, PrefDataLastViewedEnum key,
             String lastFolderViewed) {
 
-        boolean different = (this.prefData.isSaveLastFolderView() != saveLastFolderViewed) ||
-                ((this.prefData.getLastViewedKey() != key));
+        boolean different = (this.prefData.isSaveLastFolderView() != saveLastFolderViewed)
+                || ((this.prefData.getLastViewedKey() != key));
 
-        if(!different)
-        {
-            if((this.prefData.getLastFolderViewed() == null) || (lastFolderViewed == null))
-            {
-                different = !((this.prefData.getLastFolderViewed() == null) && (lastFolderViewed == null));
-            }
-            else if((this.prefData.getLastFolderViewed() != null) && (lastFolderViewed != null))
-            {
+        if (!different) {
+            if ((this.prefData.getLastFolderViewed() == null) || (lastFolderViewed == null)) {
+                different = !((this.prefData.getLastFolderViewed() == null)
+                        && (lastFolderViewed == null));
+            } else if ((this.prefData.getLastFolderViewed() != null)
+                    && (lastFolderViewed != null)) {
                 different = (this.prefData.getLastFolderViewed().compareTo(lastFolderViewed) != 0);
             }
         }
 
         this.prefData.setSaveLastFolderView(saveLastFolderViewed);
-        if((key != null) && (lastFolderViewed != null))
-        {
+        if ((key != null) && (lastFolderViewed != null)) {
             this.prefData.setLastViewedKey(key);
             this.prefData.setLastFolderViewed(lastFolderViewed);
         }
 
-        if(different)
-        {
+        if (different) {
             updateLastFolderViewed();
         }
     }
@@ -421,12 +407,11 @@ public class PrefManager implements UndoActionInterface {
         propertyManagerInstance.clearValue(LAST_FOLDER_VIEWED_FIELD, false);
         propertyManagerInstance.clearValue(LAST_GEOSERVER_VIEWED_FIELD, false);
 
-        propertyManagerInstance.updateValue(SAVE_LAST_FOLDER_VIEWED_FIELD, this.prefData.isSaveLastFolderView());
-        if(this.prefData.isSaveLastFolderView())
-        {
+        propertyManagerInstance.updateValue(SAVE_LAST_FOLDER_VIEWED_FIELD,
+                this.prefData.isSaveLastFolderView());
+        if (this.prefData.isSaveLastFolderView()) {
             String key = lastViewedMap.get(this.prefData.getLastViewedKey());
-            propertyManagerInstance.updateValue(key, 
-                    this.prefData.getLastFolderViewed());
+            propertyManagerInstance.updateValue(key, this.prefData.getLastFolderViewed());
         }
     }
 
@@ -437,33 +422,25 @@ public class PrefManager implements UndoActionInterface {
      */
     private void setBackgroundColour(Color backgroundColour) {
         boolean different = false;
-        if(this.prefData.getBackgroundColour() == null)
-        {
+        if (this.prefData.getBackgroundColour() == null) {
             different = (backgroundColour != null);
-        }
-        else
-        {
-            if(backgroundColour == null)
-            {
+        } else {
+            if (backgroundColour == null) {
                 different = true;
-            }
-            else
-            {
-                different = (this.prefData.getBackgroundColour().getRGB() != backgroundColour.getRGB());
+            } else {
+                different = (this.prefData.getBackgroundColour().getRGB() != backgroundColour
+                        .getRGB());
             }
         }
 
-        if(different)
-        {
+        if (different) {
             this.prefData.setBackgroundColour(backgroundColour);
 
-            if(propertyManagerInstance != null)
-            {
+            if (propertyManagerInstance != null) {
                 propertyManagerInstance.updateValue(BACKGROUND_COLOUR_FIELD, backgroundColour);
             }
 
-            for(PrefUpdateInterface listener : listenerList)
-            {
+            for (PrefUpdateInterface listener : listenerList) {
                 listener.backgroundColourUpdate(backgroundColour);
             }
         }
@@ -476,61 +453,51 @@ public class PrefManager implements UndoActionInterface {
      */
     private void setUiLayoutClass(String uiLayoutClassName) {
         boolean different = false;
-        if(this.prefData.getUiLayoutClass() == null)
-        {
+        if (this.prefData.getUiLayoutClass() == null) {
             different = (uiLayoutClassName != null);
-        }
-        else
-        {
-            if(uiLayoutClassName == null)
-            {
+        } else {
+            if (uiLayoutClassName == null) {
                 different = true;
-            }
-            else
-            {
+            } else {
                 different = (this.prefData.getUiLayoutClass().compareTo(uiLayoutClassName) != 0);
             }
         }
 
-        if(different)
-        {
+        if (different) {
             this.prefData.setUiLayoutClass(uiLayoutClassName);
 
-            if(propertyManagerInstance != null)
-            {
+            if (propertyManagerInstance != null) {
                 propertyManagerInstance.updateValue(UILAYOUT_FIELD, uiLayoutClassName);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getOldValue() instanceof PrefData)
-            {
-                PrefData prefData = (PrefData)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getOldValue() instanceof PrefData) {
+                PrefData prefData = (PrefData) undoRedoObject.getOldValue();
 
                 setPrefData(prefData);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getNewValue() instanceof PrefData)
-            {
-                PrefData prefData = (PrefData)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getNewValue() instanceof PrefData) {
+                PrefData prefData = (PrefData) undoRedoObject.getNewValue();
 
                 setPrefData(prefData);
             }
