@@ -20,16 +20,15 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.VOGeoServerArrowSymbol;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.VOGeoServerExtShapeSymbol;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.VOGeoServerQGISSymbol;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.VOGeoServerShapeSymbol;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.VOGeoServerWindbarbSymbol;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.VOGeoServerWKTSymbol;
@@ -41,13 +40,13 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.VOGeoServerWKTSymbol;
  */
 public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInterface {
 
-    /**  The GeoServer vendor option for shapes://. */
+    /** The GeoServer vendor option for shapes://. */
     private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();
 
-    /**  The GeoServer vendor option for extshapes://. */
+    /** The GeoServer vendor option for extshapes://. */
     private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes = new VOGeoServerExtShapeSymbol();
 
-    /**  The GeoServer vendor option for extshape://arrow. */
+    /** The GeoServer vendor option for extshape://arrow. */
     private VOMarkerSymbolInterface vendorOptionGeoServerArrow = new VOGeoServerArrowSymbol();
 
     /** The vendor option geo server WKT. */
@@ -56,44 +55,22 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     /** The vendor option geo server wind barb. */
     private VOMarkerSymbolInterface vendorOptionGeoServerWindBarb = new VOGeoServerWindbarbSymbol();
 
+    /** The GeoServer vendor option for qgis://. */
+    private VOMarkerSymbolInterface vendorOptionGeoServerQGIS = new VOGeoServerQGISSymbol();
+
     /** The list of all the extensions. */
     private List<VOMarkerSymbolInterface> list = new ArrayList<VOMarkerSymbolInterface>();
 
     /**
      * Instantiates a new vendor option marker symbol factory.
-     */ 
+     */
     public VendorOptionMarkerSymbolFactory() {
         list.add(vendorOptionGeoServerShape);
         list.add(vendorOptionGeoServerExtShapes);
         list.add(vendorOptionGeoServerWKT);
         list.add(vendorOptionGeoServerWindBarb);
         list.add(vendorOptionGeoServerArrow);
-    }
-
-    /**
-     * Gets the field map.
-     *
-     * @param fieldEnableMap the field enable map
-     * @return the field map
-     */
-    public void getFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
-        for (VOMarkerSymbolInterface obj : list) {
-            Map<Class<?>, List<SymbolTypeConfig>> map = obj.getFieldMap();
-
-            if (map != null) {
-                for (Class<?> symbolizer : map.keySet()) {
-                    List<SymbolTypeConfig> existing = fieldEnableMap.get(symbolizer);
-
-                    if (existing == null) {
-                        existing = new ArrayList<SymbolTypeConfig>();
-                        fieldEnableMap.put(symbolizer, existing);
-                    }
-
-                    List<SymbolTypeConfig> newData = map.get(symbolizer);
-                    existing.addAll(newData);
-                }
-            }
-        }
+        list.add(vendorOptionGeoServerQGIS);
     }
 
     /*
@@ -126,14 +103,14 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
      * @return the vendor option marker symbols
      */
     public List<FieldState> getVendorOptionMarkerSymbols(Class<?> panelId,
-            ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+            ColourFieldConfig fillFieldConfig, ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
         for (VOMarkerSymbolInterface obj : list) {
-            List<FieldState> markerFieldStateList = obj.getMarkerSymbols(panelId, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-            if((markerFieldStateList != null) && !markerFieldStateList.isEmpty())
-            {
+            List<FieldState> markerFieldStateList = obj.getMarkerSymbols(panelId, fillFieldConfig,
+                    strokeFieldConfig, symbolSelectionField);
+            if ((markerFieldStateList != null) && !markerFieldStateList.isEmpty()) {
                 fieldStateList.addAll(markerFieldStateList);
             }
         }
