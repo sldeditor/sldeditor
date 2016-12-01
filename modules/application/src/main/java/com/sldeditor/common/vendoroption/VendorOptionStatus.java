@@ -101,21 +101,35 @@ public class VendorOptionStatus {
      * @return the version string
      */
     public static String getVendorOptionVersionString(VendorOptionVersion versionData) {
-        boolean hasEarliest = !versionData.getEarliest().isEarliest();
-        boolean hasLatest = !versionData.getLatest().isLatest();
+        if(versionData == null)
+        {
+            return "";
+        }
+        boolean hasEarliest = false;
+        VersionData earliest = versionData.getEarliest();
+        if(earliest != null)
+        {
+            hasEarliest = !earliest.isEarliest();
+        }
+        boolean hasLatest = false;
+        VersionData latest = versionData.getEarliest();
+        if(latest != null)
+        {
+            hasLatest = !latest.isLatest();
+        }
 
         String vendorOptionName = getVendorOptionName(versionData.getClassType());
 
         if (versionData.getClassType() != NoVendorOption.class) {
             if (hasEarliest && !hasLatest) {
                 return String.format("%s %s-", vendorOptionName,
-                        versionData.getEarliest().getVersionString());
+                        earliest.getVersionString());
             } else if (!hasEarliest && hasLatest) {
                 return String.format("%s -%s", vendorOptionName,
                         versionData.getLatest().getVersionString());
             } else if (hasEarliest && hasLatest) {
                 return String.format("%s %s-%s", vendorOptionName,
-                        versionData.getEarliest().getVersionString(),
+                        earliest.getVersionString(),
                         versionData.getLatest().getVersionString());
             }
         }

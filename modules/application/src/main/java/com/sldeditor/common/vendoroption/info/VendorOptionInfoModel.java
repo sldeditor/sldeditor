@@ -148,15 +148,6 @@ public class VendorOptionInfoModel extends AbstractTableModel {
     }
 
     /**
-     * Gets the selected version.
-     *
-     * @return the selectedVersion
-     */
-    public VersionData getSelectedVersion() {
-        return selectedVersion;
-    }
-
-    /**
      * Checks if is vendor option available.
      *
      * @param row the row
