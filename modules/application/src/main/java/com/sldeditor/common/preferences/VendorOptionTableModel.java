@@ -29,6 +29,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 
 /**
  * Table model that allows the viewing and editing of VendorOption objects.
@@ -202,6 +203,7 @@ public class VendorOptionTableModel extends AbstractTableModel
                     {
                         found = true;
                         this.selectedVersionList.add(versionData);
+                        VendorOptionInfoManager.getInstance().setSelectedVersion(versionData);
                     }
                 }
 
@@ -244,5 +246,6 @@ public class VendorOptionTableModel extends AbstractTableModel
     public void setSelectedVersion(VersionData versionData, int selectedRowIndex)
     {
         setValueAt(versionData, selectedRowIndex, 1);
+        VendorOptionInfoManager.getInstance().setSelectedVersion(versionData);
     }
 }

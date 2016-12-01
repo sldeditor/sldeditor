@@ -25,8 +25,7 @@ import com.sldeditor.common.console.ConsoleManager;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionVersion
-{
+public class VendorOptionVersion {
 
     /** The Constant DELIMETER. */
     private static final String DELIMETER = ";";
@@ -50,8 +49,8 @@ public class VendorOptionVersion
      * @param minimumVersion the minimum version
      * @param maximumVersion the maximum version
      */
-    public VendorOptionVersion(Class<?> classType, VersionData minimumVersion, VersionData maximumVersion)
-    {
+    public VendorOptionVersion(Class<?> classType, VersionData minimumVersion,
+            VersionData maximumVersion) {
         this.classType = classType;
         this.minimumVersion = minimumVersion;
         this.maximumVersion = maximumVersion;
@@ -63,8 +62,7 @@ public class VendorOptionVersion
      * @param classType the class type
      * @param version the version
      */
-    public VendorOptionVersion(Class<?> classType, VersionData version)
-    {
+    public VendorOptionVersion(Class<?> classType, VersionData version) {
         this.classType = classType;
         this.minimumVersion = version;
         this.maximumVersion = version;
@@ -76,22 +74,18 @@ public class VendorOptionVersion
      * @param versionData the version data
      * @return true, if is allowed
      */
-    public boolean isAllowed(VersionData versionData)
-    {
-        if(versionData == null)
-        {
-            return false;
-        }
-
-        if(versionData.getVendorOptionType() != this.classType)
-        {
+    public boolean isAllowed(VersionData versionData) {
+        if (versionData == null) {
             return false;
         }
 
         // Check to see if it is strict SLD, always allowed
-        if(classType == NoVendorOption.class)
-        {
+        if (classType == NoVendorOption.class) {
             return true;
+        }
+
+        if (versionData.getVendorOptionType() != this.classType) {
+            return false;
         }
 
         return versionData.inRange(this.minimumVersion, this.maximumVersion);
@@ -103,12 +97,10 @@ public class VendorOptionVersion
      * @param value the value
      * @return the vendor option version
      */
-    public static VendorOptionVersion fromString(String value)
-    {
+    public static VendorOptionVersion fromString(String value) {
         String[] components = value.split(DELIMETER);
 
-        if(components.length == 3)
-        {
+        if (components.length == 3) {
             Class<?> classType = null;
             VersionData minimumVersion = null;
             VersionData maximumVersion = null;
@@ -116,19 +108,19 @@ public class VendorOptionVersion
             try {
                 classType = Class.forName(components[0]);
             } catch (ClassNotFoundException e) {
-                ConsoleManager.getInstance().error(VendorOptionVersion.class, "Unknown VendorOption class : " + components[0] );
+                ConsoleManager.getInstance().error(VendorOptionVersion.class,
+                        "Unknown VendorOption class : " + components[0]);
                 return null;
             }
-            if(components[1].compareTo(NULL_STRING) != 0)
-            {
+            if (components[1].compareTo(NULL_STRING) != 0) {
                 minimumVersion = VersionData.getDecodedString(components[1]);
             }
 
-            if(components[2].compareTo(NULL_STRING) != 0)
-            {
+            if (components[2].compareTo(NULL_STRING) != 0) {
                 maximumVersion = VersionData.getDecodedString(components[2]);
             }
-            VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(classType, minimumVersion, maximumVersion);
+            VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(classType,
+                    minimumVersion, maximumVersion);
 
             return vendorOptionVersion;
         }
@@ -141,8 +133,7 @@ public class VendorOptionVersion
      *
      * @return the earliest version
      */
-    public VersionData getEarliest()
-    {
+    public VersionData getEarliest() {
         return this.minimumVersion;
     }
 
@@ -151,21 +142,21 @@ public class VendorOptionVersion
      *
      * @return the latest version
      */
-    public VersionData getLatest()
-    {
+    public VersionData getLatest() {
         return this.maximumVersion;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        String string = String.format("%s%s%s%s%s", classType.getName(),
+        String string = String.format("%s%s%s%s%s", classType.getName(), DELIMETER,
+                (minimumVersion != null) ? minimumVersion.getEncodedString() : NULL_STRING,
                 DELIMETER,
-                (minimumVersion != null) ? minimumVersion.getEncodedString() : NULL_STRING, 
-                        DELIMETER, 
-                        (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
+                (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
 
         return string;
     }

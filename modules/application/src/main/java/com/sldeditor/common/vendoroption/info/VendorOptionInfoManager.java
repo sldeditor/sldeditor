@@ -22,6 +22,7 @@ package com.sldeditor.common.vendoroption.info;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 
 /**
@@ -38,7 +39,7 @@ public class VendorOptionInfoManager {
     private VendorOptionInfoModel infoModel = null;
 
     /** The panel. */
-    private VendorOptionPanel panel = null;
+    private VendorOptionInfoPanel panel = null;
 
     /** The list of classes received data from. */
     private List<Class<?>> receivedFromList = new ArrayList<Class<?>>();
@@ -86,7 +87,7 @@ public class VendorOptionInfoManager {
      *
      * @return the panel
      */
-    public VendorOptionPanel getPanel() {
+    public VendorOptionInfoPanel getPanel() {
         if (panel == null) {
 
             List<VendorOptionInfo> infoList = new ArrayList<VendorOptionInfo>();
@@ -100,8 +101,20 @@ public class VendorOptionInfoManager {
 
             infoModel = new VendorOptionInfoModel();
             infoModel.addVendorOptionInfo(infoList);
-            panel = new VendorOptionPanel(infoModel);
+            panel = new VendorOptionInfoPanel(infoModel);
         }
         return panel;
+    }
+
+    /**
+     * Sets the selected version.
+     *
+     * @param versionData the new selected version
+     */
+    public void setSelectedVersion(VersionData versionData) {
+        if(infoModel != null)
+        {
+            infoModel.setSelectedVersion(versionData);
+        }
     }
 }

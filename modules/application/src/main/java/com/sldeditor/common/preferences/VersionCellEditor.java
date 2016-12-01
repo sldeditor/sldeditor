@@ -42,16 +42,16 @@ public class VersionCellEditor extends AbstractCellEditor implements TableCellEd
 
     /** The version data. */
     private VersionData versionData;
-    
+
     /** The list version data. */
     private List<VersionData> listVersionData;
 
     /** The model. */
     private VendorOptionTableModel model = null;
-    
+
     /** The selected row index. */
     private int selectedRowIndex = -1;
-    
+
     /**
      * Version data cell editor.
      *
@@ -74,10 +74,10 @@ public class VersionCellEditor extends AbstractCellEditor implements TableCellEd
      */
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value,
-        boolean isSelected, int row, int column) {
-        
+            boolean isSelected, int row, int column) {
+
         selectedRowIndex = row;
-        
+
         if (value instanceof VersionData) {
             this.versionData = (VersionData) value;
         }
@@ -109,7 +109,7 @@ public class VersionCellEditor extends AbstractCellEditor implements TableCellEd
         @SuppressWarnings("unchecked")
         JComboBox<VersionData> comboVersionData = (JComboBox<VersionData>) event.getSource();
         this.versionData = (VersionData) comboVersionData.getSelectedItem();
-        
+
         model.setSelectedVersion(this.versionData, selectedRowIndex);
     }
 

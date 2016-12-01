@@ -26,6 +26,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * The Class VendorOptionInfoModel.
@@ -42,6 +43,9 @@ public class VendorOptionInfoModel extends AbstractTableModel {
 
     /** The info list. */
     private List<VendorOptionInfo> infoList = new ArrayList<VendorOptionInfo>();
+
+    /** The selected version. */
+    private VersionData selectedVersion = null;
 
     /**
      * Instantiates a new vendor option info model.
@@ -130,5 +134,40 @@ public class VendorOptionInfoModel extends AbstractTableModel {
 
             Collections.sort(infoList);
         }
+    }
+
+    /**
+     * Sets the selected version.
+     *
+     * @param versionData the new selected version
+     */
+    public void setSelectedVersion(VersionData versionData) {
+        this.selectedVersion = versionData;
+
+        this.fireTableDataChanged();
+    }
+
+    /**
+     * Gets the selected version.
+     *
+     * @return the selectedVersion
+     */
+    public VersionData getSelectedVersion() {
+        return selectedVersion;
+    }
+
+    /**
+     * Checks if is vendor option available.
+     *
+     * @param row the row
+     * @return true, if is vendor option available
+     */
+    public boolean isVendorOptionAvailable(int row) {
+        if ((row >= 0) && (row < infoList.size())) {
+            VendorOptionInfo info = infoList.get(row);
+
+            return (info.getVersionData().isAllowed(selectedVersion));
+        }
+        return false;
     }
 }

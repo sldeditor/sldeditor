@@ -19,6 +19,8 @@
 
 package com.sldeditor.common.vendoroption.info;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,7 +30,7 @@ import javax.swing.JTable;
  *
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionPanel extends JPanel {
+public class VendorOptionInfoPanel extends JPanel {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -44,7 +46,7 @@ public class VendorOptionPanel extends JPanel {
      *
      * @param tableModel the table model
      */
-    public VendorOptionPanel(VendorOptionInfoModel tableModel) {
+    public VendorOptionInfoPanel(VendorOptionInfoModel tableModel) {
         this.model = tableModel;
 
         createUI();
@@ -54,11 +56,16 @@ public class VendorOptionPanel extends JPanel {
      * Creates the UI.
      */
     private void createUI() {
+        setLayout(new BorderLayout());
+
         JScrollPane scrollPane = new JScrollPane();
-        add(scrollPane);
+        add(scrollPane, BorderLayout.CENTER);
 
         vendorOptionTable = new JTable();
         scrollPane.setViewportView(vendorOptionTable);
         vendorOptionTable.setModel(model);
+        vendorOptionTable.getColumnModel().getColumn(0).setCellRenderer(new VendorOptionInfoCellRenderer(model));
+        vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VendorOptionInfoCellRenderer(model));
+        vendorOptionTable.getColumnModel().getColumn(2).setCellRenderer(new VendorOptionInfoCellRenderer(model));
     }
 }
