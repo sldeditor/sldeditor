@@ -65,6 +65,9 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /** The button pressed listener list. */
     private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
 
+    /** The suppress update on set flag. */
+    private boolean suppressUpdateOnSet = false;
+
     /**
      * Instantiates a new field config string.
      *
@@ -349,11 +352,14 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         {
             textField.setText(value);
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            if(!suppressUpdateOnSet)
+            {
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-            oldValueObj = value;
+                oldValueObj = value;
 
-            valueUpdated();
+                valueUpdated();
+            }
         }
     }
 
@@ -387,5 +393,14 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         {
             textField.setVisible(visible);
         }
+    }
+
+    /**
+     * Sets the suppress updates on set.
+     *
+     * @param suppressUpdateOnSet the new suppress updates on set
+     */
+    public void setSuppressUpdatesOnSet(boolean suppressUpdateOnSet) {
+        this.suppressUpdateOnSet  = suppressUpdateOnSet;
     }
 }

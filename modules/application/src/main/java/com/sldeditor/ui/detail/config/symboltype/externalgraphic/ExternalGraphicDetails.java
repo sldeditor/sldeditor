@@ -74,6 +74,9 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
     /** The old value obj. */
     private Object oldValueObj = null;
 
+    /** The display relative paths flag. */
+    private boolean useRelativePaths = true;
+    
     /**
      * Instantiates a new feature type style details.
      *
@@ -150,6 +153,10 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
+            String path = RelativePath.convert(externalFileURL, useRelativePaths);
+
+            fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
+
             if (parentObj != null) {
                 parentObj.externalGraphicValueUpdated();
             }
@@ -359,17 +366,13 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
             try {
                 externalFileURL = fc.getSelectedFile().toURI().toURL();
 
-                populateExpression(externalFileURL.toExternalForm());
-
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
                         FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
                 oldValueObj = externalFileURL;
 
-                if (parentObj != null) {
-                    parentObj.externalGraphicValueUpdated();
-                }
+                updateSymbol();
             } catch (MalformedURLException e1) {
-                e1.printStackTrace();
+                ConsoleManager.getInstance().exception(this, e1);
             }
         }
     }

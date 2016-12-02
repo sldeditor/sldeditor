@@ -16,19 +16,18 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
- *                 Configuration for a string field
+ *                 Configuration for a filename field
  *             
  * 
- * <p>Java class for XMLFieldConfigString complex type.
+ * <p>Java class for XMLFieldConfigFilename complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="XMLFieldConfigString"&gt;
+ * &lt;complexType name="XMLFieldConfigFilename"&gt;
  *   &lt;complexContent&gt;
  *     &lt;extension base="{}XMLFieldConfigData"&gt;
  *       &lt;attribute name="buttonText" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="suppressUpdateOnSet" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
  *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -37,15 +36,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "XMLFieldConfigString")
-public class XMLFieldConfigString
+@XmlType(name = "XMLFieldConfigFilename")
+public class XMLFieldConfigFilename
     extends XMLFieldConfigData
 {
 
     @XmlAttribute(name = "buttonText")
     protected String buttonText;
-    @XmlAttribute(name = "suppressUpdateOnSet")
-    protected Boolean suppressUpdateOnSet;
 
     /**
      * Gets the value of the buttonText property.
@@ -69,34 +66,6 @@ public class XMLFieldConfigString
      */
     public void setButtonText(String value) {
         this.buttonText = value;
-    }
-
-    /**
-     * Gets the value of the suppressUpdateOnSet property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public boolean isSuppressUpdateOnSet() {
-        if (suppressUpdateOnSet == null) {
-            return false;
-        } else {
-            return suppressUpdateOnSet;
-        }
-    }
-
-    /**
-     * Sets the value of the suppressUpdateOnSet property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setSuppressUpdateOnSet(Boolean value) {
-        this.suppressUpdateOnSet = value;
     }
 
 }

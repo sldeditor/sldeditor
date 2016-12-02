@@ -51,21 +51,24 @@ import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFile
 
 /**
  * The unit test for FieldConfigFilename.
- * <p>{@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename}
+ * <p>
+ * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename}
  *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFilenameTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#isEnabled()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setEnabled(boolean)}. Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +87,9 @@ public class FieldConfigFilenameTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigFilename field2 = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field2 = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -108,7 +113,9 @@ public class FieldConfigFilenameTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -119,26 +126,31 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateField(java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#generateExpression()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateField(java.lang.String)}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        field.populateExpression((Double)null);
-        field.populateField((String)null);
+        field.populateExpression((Double) null);
+        field.populateField((String) null);
         assertNull(field.getStringValue());
 
         // Create ui
         field.createUI();
-        field.populateExpression((Double)null);
+        field.populateExpression((Double) null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
-        assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
+
+        // The FieldConfigString suppress update value on set affects the ExternalGraphicsDetail panel
+        assertEquals("", field.getStringValue());
 
         File f = null;
         try {
@@ -147,10 +159,8 @@ public class FieldConfigFilenameTest {
             e.printStackTrace();
         }
         try {
-            if((f != null) && (f.toURI() != null))
-            {
-                if(f.toURI().toURL() != null)
-                {
+            if ((f != null) && (f.toURI() != null)) {
+                if (f.toURI().toURL() != null) {
                     expectedValue = f.toURI().toURL().toString();
                 }
             }
@@ -160,7 +170,9 @@ public class FieldConfigFilenameTest {
         field.setTestValue(null, expectedValue);
 
         field.populateExpression(expectedValue);
-        assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
+
+        // The FieldConfigString suppress update value on set affects the ExternalGraphicsDetail panel
+        assertTrue("".compareTo(field.getStringValue()) == 0);
 
         f.delete();
     }
@@ -171,7 +183,9 @@ public class FieldConfigFilenameTest {
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.revertToDefaultValue();
 
@@ -185,32 +199,34 @@ public class FieldConfigFilenameTest {
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.justSelected();
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigFilename extends FieldConfigFilename
-        {
+        class TestFieldConfigFilename extends FieldConfigFilename {
 
             public TestFieldConfigFilename(FieldConfigCommonData commonData) {
-                super(commonData, null,null,null);
+                super(commonData, null, null, null);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigFilename field = new TestFieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        TestFieldConfigFilename field = new TestFieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigFilename copy = (FieldConfigFilename) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -226,7 +242,9 @@ public class FieldConfigFilenameTest {
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.attributeSelection("field");
         // Does nothing
@@ -238,9 +256,12 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
+        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(),
+                field.getVendorOption());
     }
 
     /**
@@ -249,13 +270,16 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testSetValue() {
@@ -266,16 +290,18 @@ public class FieldConfigFilenameTest {
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setValue(null, null, null, null, null);
-        field.setValue(null, fieldConfigManager, null, null,null);
+        field.setValue(null, fieldConfigManager, null, null, null);
 
         field.createUI();
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
         field.setValue(null, null, null, null, marker);
-        field.setValue(null, fieldConfigManager, null, null,marker);
+        field.setValue(null, fieldConfigManager, null, null, marker);
 
         File f = null;
         String filename = null;
@@ -285,10 +311,8 @@ public class FieldConfigFilenameTest {
             e.printStackTrace();
         }
         try {
-            if((f != null) && (f.toURI() != null))
-            {
-                if(f.toURI().toURL() != null)
-                {
+            if ((f != null) && (f.toURI() != null)) {
+                if (f.toURI().toURL() != null) {
                     filename = f.toURI().toURL().toString();
                 }
             }
@@ -296,22 +320,25 @@ public class FieldConfigFilenameTest {
             e.printStackTrace();
         }
 
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
+        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
+                .createExternalGraphic(filename, "png");
         field.setValue(null, fieldConfigManager, null, null, externalGraphic);
 
-        if(f != null)
-        {
+        if (f != null) {
             f.delete();
         }
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
      */
     @Test
     public void testGetValue() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getValue(null, null, false, false));
 
@@ -321,12 +348,15 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         GraphicFill graphicFill = null;
         GraphicPanelFieldManager fieldConfigManager = null;
@@ -334,17 +364,20 @@ public class FieldConfigFilenameTest {
 
         Class<?> panelId = PointFillDetails.class;
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(FieldIdEnum.UNKNOWN, expectedColourValue);
         FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
@@ -358,7 +391,8 @@ public class FieldConfigFilenameTest {
 
         Fill actualValue = field.getFill(graphicFill, fieldConfigManager);
 
-        assertTrue(actualValue.getOpacity().toString().compareTo(String.valueOf(expectedOpacityValue)) == 0);
+        assertTrue(actualValue.getOpacity().toString()
+                .compareTo(String.valueOf(expectedOpacityValue)) == 0);
     }
 
     /**
@@ -367,34 +401,43 @@ public class FieldConfigFilenameTest {
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getBasePanel());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(1, field.getFieldList(null).size());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#accept(org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#accept(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertFalse(field.accept(null));
 
         StyleBuilder styleBuilder = new StyleBuilder();
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic("test.tmp", "png");
+        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
+                .createExternalGraphic("test.tmp", "png");
         assertTrue(field.accept(externalGraphic));
 
         Mark marker = styleBuilder.createMark("triangle");
@@ -402,12 +445,15 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
      */
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigFilename field = new FieldConfigFilename(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigFilename field = new FieldConfigFilename(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setUpdateSymbolListener(null);
     }

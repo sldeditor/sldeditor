@@ -3,6 +3,6 @@
     localisation="com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails">
     <Group id="STANDARD" showLabel="false">
         <FieldConfigString id="EXTERNAL_GRAPHIC"
-            valueOnly="true" buttonText="..." />
+            valueOnly="true" buttonText="..." suppressUpdateOnSet="true"/>
     </Group>
 </PanelConfig>
