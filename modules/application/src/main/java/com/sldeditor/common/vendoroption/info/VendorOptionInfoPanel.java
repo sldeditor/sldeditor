@@ -20,10 +20,14 @@
 package com.sldeditor.common.vendoroption.info;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * The Class VendorOptionPanel.
@@ -37,6 +41,9 @@ public class VendorOptionInfoPanel extends JPanel {
 
     /** The vendor option table. */
     private JTable vendorOptionTable;
+
+    /** The description area. */
+    private JTextArea descriptionArea = null;
 
     /** The model. */
     private VendorOptionInfoModel model = null;
@@ -64,8 +71,37 @@ public class VendorOptionInfoPanel extends JPanel {
         vendorOptionTable = new JTable();
         scrollPane.setViewportView(vendorOptionTable);
         vendorOptionTable.setModel(model);
-        vendorOptionTable.getColumnModel().getColumn(0).setCellRenderer(new VendorOptionInfoCellRenderer(model));
-        vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VendorOptionInfoCellRenderer(model));
-        vendorOptionTable.getColumnModel().getColumn(2).setCellRenderer(new VendorOptionInfoCellRenderer(model));
+        vendorOptionTable.getColumnModel().getColumn(0)
+        .setCellRenderer(new VendorOptionInfoCellRenderer(model));
+        vendorOptionTable.getColumnModel().getColumn(1)
+        .setCellRenderer(new VendorOptionInfoCellRenderer(model));
+        vendorOptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                displayDescription(vendorOptionTable.getSelectedRow());
+            }
+        });
+
+        descriptionArea = new JTextArea();
+        descriptionArea.setEditable(false);
+        descriptionArea.setRows(5);
+        descriptionArea.setLineWrap(true);
+        descriptionArea.setWrapStyleWord(true);
+        descriptionArea.setFont(vendorOptionTable.getFont());
+        JScrollPane descriptionAreaScrollPane = new JScrollPane(descriptionArea);
+        add(descriptionAreaScrollPane, BorderLayout.EAST);
+        descriptionAreaScrollPane.setPreferredSize(new Dimension(200, 100));
+    }
+
+    /**
+     * Display description.
+     *
+     * @param selectedRow the selected row
+     */
+    private void displayDescription(int selectedRow) {
+        String description = model.getDescription(selectedRow);
+
+        descriptionArea.setText(description);
     }
 }

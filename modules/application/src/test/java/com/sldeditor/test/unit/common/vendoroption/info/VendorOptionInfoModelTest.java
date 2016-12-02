@@ -49,7 +49,7 @@ public class VendorOptionInfoModelTest {
     public void testGetColumnCount() {
         VendorOptionInfoModel model = new VendorOptionInfoModel();
 
-        assertEquals(3, model.getColumnCount());
+        assertEquals(2, model.getColumnCount());
     }
 
     /**
@@ -96,7 +96,12 @@ public class VendorOptionInfoModelTest {
         assertEquals(name2, model.getValueAt(0,0));
         assertEquals("Strict SLD", model.getValueAt(0,1));
         assertEquals("GeoServer 2.4.1-2.8.3", model.getValueAt(1,1));
-        assertEquals(description2, model.getValueAt(0,2));
+
+        // Test get description
+        assertNull(model.getDescription(-1));
+        assertNull(model.getDescription(10));
+
+        assertEquals(description2, model.getDescription(0));
 
         model.setSelectedVersion(VersionData.decode(getClass(), "2.5.1"));
 

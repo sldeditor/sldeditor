@@ -39,7 +39,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
 
     /** The column names. */
-    private String[] columnNames = new String[3];
+    private String[] columnNames = new String[2];
 
     /** The info list. */
     private List<VendorOptionInfo> infoList = new ArrayList<VendorOptionInfo>();
@@ -55,8 +55,6 @@ public class VendorOptionInfoModel extends AbstractTableModel {
                 "VendorOptionInfoModel.name");
         columnNames[1] = Localisation.getString(VendorOptionInfoModel.class,
                 "VendorOptionInfoModel.version");
-        columnNames[2] = Localisation.getString(VendorOptionInfoModel.class,
-                "VendorOptionInfoModel.description");
     }
 
     /*
@@ -94,8 +92,6 @@ public class VendorOptionInfoModel extends AbstractTableModel {
                 return info.getName();
             case 1:
                 return info.getVersionString();
-            case 2:
-                return info.getDescription();
             default:
                 break;
             }
@@ -160,5 +156,22 @@ public class VendorOptionInfoModel extends AbstractTableModel {
             return (info.getVersionData().isAllowed(selectedVersion));
         }
         return false;
+    }
+
+    /**
+     * Gets the description.
+     *
+     * @param rowIndex the row index
+     * @return the description
+     */
+    public String getDescription(int rowIndex) {
+        if ((rowIndex >= 0) && (rowIndex < infoList.size())) {
+            VendorOptionInfo info = infoList.get(rowIndex);
+
+            if (info != null) {
+                return info.getDescription();
+            }
+        }
+        return null;
     }
 }
