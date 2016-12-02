@@ -19,6 +19,7 @@
 package com.sldeditor.ui.preferences;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,6 +47,8 @@ import com.sldeditor.common.preferences.VersionCellRenderer;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
 import com.sldeditor.ui.layout.UILayoutFactory;
 
 /**
@@ -160,18 +163,25 @@ public class PrefPanel extends JDialog {
 
         // Vendor options
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), Localisation.getString(PrefPanel.class, "PrefPanel.vendorOptions"), TitledBorder.LEADING, TitledBorder.TOP, null, null)); //$NON-NLS-2$
+        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), Localisation.getString(PrefPanel.class, "PrefPanel.vendorOptions"), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_1.setLayout(new BorderLayout());
         panel.add(panel_1);
 
         JScrollPane scrollPane = new JScrollPane();
-        panel_1.add(scrollPane);
+        panel_1.add(scrollPane, BorderLayout.CENTER);
 
         vendorOptionTable = new JTable();
         scrollPane.setViewportView(vendorOptionTable);
+        panel_1.setPreferredSize(new Dimension(500, 200));
 
         vendorOptionTable.setModel(model);
         vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
         vendorOptionTable.getColumnModel().getColumn(1).setCellEditor(new VersionCellEditor(model));
+
+        // Vendor option information
+        VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance().getPanel();
+        vendorOptionInfoPanel.setPreferredSize(new Dimension(500, 200));
+        panel.add(vendorOptionInfoPanel);
 
         JPanel buttonPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();

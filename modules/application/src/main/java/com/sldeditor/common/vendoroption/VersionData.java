@@ -66,7 +66,13 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     private Class<?> vendorOptionType = null;
 
     /** The snapshot flag. */
-    private boolean snapshot = false;;
+    private boolean snapshot = false;
+
+    /** The is earliest flag. */
+    private boolean isEarliest = false;
+
+    /** The is latest flag. */
+    private boolean isLatest = false;
 
     /**
      * Default constructor
@@ -91,6 +97,8 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         versionData.subPointNumber = subPointNumber;
         versionData.vendorOption = vendorOption;
         versionData.versionString = versionString;
+        versionData.isEarliest = isEarliest;
+        versionData.isLatest = isLatest;
 
         return versionData;
     }
@@ -152,6 +160,11 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     @Override
     public int compareTo(VersionData o)
     {
+        if(vendorOptionType != o.vendorOptionType)
+        {
+            return (vendorOptionType == NoVendorOption.class) ? -1 : 1;
+        }
+
         if(majorNumber == o.majorNumber)
         {
             if(minorNumber == o.minorNumber)
@@ -203,6 +216,15 @@ public class VersionData implements Comparable<VersionData>, Cloneable
         this.minorNumber = version;
         this.pointNumber = version;
         this.subPointNumber = version;
+
+        if(versionString.compareToIgnoreCase(EARLIEST) == 0)
+        {
+            this.isEarliest = true;
+        }
+        else if(versionString.compareToIgnoreCase(LATEST) == 0)
+        {
+            this.isLatest = true;
+        }
     }
 
     /**
@@ -468,6 +490,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
             this.minorNumber = Integer.MIN_VALUE;
             this.pointNumber = Integer.MIN_VALUE;
             this.subPointNumber = Integer.MIN_VALUE;
+            this.isEarliest = true;
         }
         else if(versionString.compareToIgnoreCase(LATEST) == 0)
         {
@@ -475,6 +498,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
             this.minorNumber = Integer.MAX_VALUE;
             this.pointNumber = Integer.MAX_VALUE;
             this.subPointNumber = Integer.MAX_VALUE;
+            this.isLatest = true;
         }
         else
         {
@@ -535,5 +559,25 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     public boolean isNotSet()
     {
         return isNotSet;
+    }
+    
+    /**
+     * Returns true if earliest.
+     *
+     * @return true, if is earliest
+     */
+    public boolean isEarliest()
+    {
+        return isEarliest;
+    }
+
+    /**
+     * Returns true if latest.
+     *
+     * @return true, if is latest
+     */
+    public boolean isLatest()
+    {
+        return isLatest;
     }
 }

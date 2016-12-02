@@ -536,4 +536,17 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     public boolean isOverallOpacity(Class<?> symbolizerType) {
         return true;
     }
+
+    /**
+     * Gets the version data.
+     *
+     * @return the version data
+     */
+    public VendorOptionVersion getVersionData() {
+        if (arrowPanel != null) {
+            return arrowPanel.getVendorOptionVersion();
+        }
+
+        return null;
+    }
 }

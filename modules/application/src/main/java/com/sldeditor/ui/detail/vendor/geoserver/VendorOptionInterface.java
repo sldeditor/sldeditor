@@ -23,6 +23,7 @@ import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -102,4 +103,11 @@ public interface VendorOptionInterface {
      * @return the parent panel
      */
     UpdateSymbolInterface getParentPanel();
+
+    /**
+     * Gets the vendor option info.
+     *
+     * @return the vendor option info
+     */
+    public VendorOptionInfo getVendorOptionInfo();
 }

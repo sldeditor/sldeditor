@@ -480,4 +480,16 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     public boolean isOverallOpacity(Class<?> symbolizerType) {
         return true;
     }
+
+    /**
+     * Gets the vendor option version.
+     *
+     * @return the vendor option version
+     */
+    public VendorOptionVersion getVendorOptionVersion() {
+        if (windBarbsPanel != null) {
+            return windBarbsPanel.getVendorOptionVersion();
+        }
+        return null;
+    }
 }

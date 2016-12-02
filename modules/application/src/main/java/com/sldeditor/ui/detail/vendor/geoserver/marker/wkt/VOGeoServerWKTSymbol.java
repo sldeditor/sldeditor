@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -37,6 +39,9 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
+
+    private FieldConfigWKT wktShape;
+
 
     /**
      * Instantiates a new VOGeoServerWKTSymbol
@@ -65,11 +70,25 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigWKT wktShape = new FieldConfigWKT(
+        wktShape = new FieldConfigWKT(
                 new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true), fillFieldConfig,
                 strokeFieldConfig, symbolSelectionField);
 
         fieldStateList.add(wktShape);
         return fieldStateList;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+
+        VendorOptionInfo info = new VendorOptionInfo("WKT",
+                wktShape.getVendorOptionVersion(),
+                Localisation.getString(WKTDetails.class, "WKTDetails.description"));
+
+        return info;
     }
 }

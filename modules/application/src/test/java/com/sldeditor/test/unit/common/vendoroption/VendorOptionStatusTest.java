@@ -29,6 +29,7 @@ import org.junit.Test;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionStatus;
+import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 
 /**
@@ -44,11 +45,12 @@ public class VendorOptionStatusTest {
      * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionStatus#getVersionString(java.util.List)}.
      */
     @Test
-    public void testGetAppTitle() {
+    public void getVersionString() {
         // The expected string returned is the last vendor option in the list
+        List<VersionData> expectedList = null;
         assertEquals("", VendorOptionStatus.getVersionString(null));
 
-        List<VersionData> expectedList = new ArrayList<VersionData>();
+        expectedList = new ArrayList<VersionData>();
         assertEquals("", VendorOptionStatus.getVersionString(expectedList));
 
         expectedList.add(null);
@@ -67,4 +69,26 @@ public class VendorOptionStatusTest {
         assertEquals("", VendorOptionStatus.getVersionString(expectedList));
     }
 
+    /**
+     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionStatus#getVendorOptionVersionString(VersionData)}.
+     */
+    @Test
+    public void testGetVendorOptionVersionString()
+    {
+        VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
+        VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
+
+        VendorOptionVersion versionData = new VendorOptionVersion(GeoServerVendorOption.class,
+                versionDataMin, versionDataMax);
+        assertEquals("", VendorOptionStatus.getVendorOptionVersionString(null));
+        assertEquals("GeoServer 2.4.1-2.8.3", VendorOptionStatus.getVendorOptionVersionString(versionData));
+
+        versionData = new VendorOptionVersion(GeoServerVendorOption.class,
+                versionDataMin, VersionData.decode(getClass(), "Latest"));
+        assertEquals("GeoServer 2.4.1-", VendorOptionStatus.getVendorOptionVersionString(versionData));
+
+        versionData = new VendorOptionVersion(GeoServerVendorOption.class,
+                VersionData.decode(getClass(), "Earliest"), versionDataMax);
+        assertEquals("GeoServer -2.8.3", VendorOptionStatus.getVendorOptionVersionString(versionData));
+    }
 }

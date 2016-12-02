@@ -21,6 +21,8 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
@@ -71,6 +73,8 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
         list.add(vendorOptionGeoServerWindBarb);
         list.add(vendorOptionGeoServerArrow);
         list.add(vendorOptionGeoServerQGIS);
+
+        VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
     }
 
     /*
@@ -116,5 +120,23 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
         }
 
         return fieldStateList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
+     */
+    @Override
+    public List<VendorOptionInfo> getVendorOptionInfoList() {
+        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
+
+        for(VOMarkerSymbolInterface vendorOption : list)
+        {
+            VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();
+            if(vendorOptionInfo != null)
+            {
+                vendorOptionInfoList.add(vendorOptionInfo);
+            }
+        }
+        return vendorOptionInfoList;
     }
 }

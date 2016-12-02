@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.update.CheckUpdate;
 import com.sldeditor.update.CheckUpdateClientInterface;
 import com.sldeditor.update.CheckUpdatePanel;
 import com.sldeditor.update.UpdateData;
@@ -138,7 +139,7 @@ public class CheckUpdatePanelTest {
          */
         @Override
         public UpdateData getLatest() {
-            UpdateData updateData = new UpdateData(VersionData.decode(getClass(), TestCheckUpdatePanel.LATEST_VERSION), TestCheckUpdatePanel.DESCRIPTION);
+            UpdateData updateData = new UpdateData(VersionData.decode(CheckUpdate.class, TestCheckUpdatePanel.LATEST_VERSION), TestCheckUpdatePanel.DESCRIPTION);
             return updateData;
         }
 

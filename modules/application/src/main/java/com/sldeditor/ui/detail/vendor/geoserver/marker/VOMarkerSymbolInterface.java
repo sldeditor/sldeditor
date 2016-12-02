@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
@@ -53,5 +54,12 @@ public interface VOMarkerSymbolInterface {
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField);
+
+    /**
+     * Gets the vendor option info.
+     *
+     * @return the vendor option info
+     */
+    public VendorOptionInfo getVendorOptionInfo();
 
 }

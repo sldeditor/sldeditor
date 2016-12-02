@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -84,5 +86,17 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
     @Override
     public Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        VendorOptionInfo info = new VendorOptionInfo("qgis://",
+                emptyDetails.getVendorOptionVersion(),
+                Localisation.getString(VOGeoServerQGISSymbol.class, "VOGeoServerQGISSymbol.description"));
+
+        return info;
     }
 }
