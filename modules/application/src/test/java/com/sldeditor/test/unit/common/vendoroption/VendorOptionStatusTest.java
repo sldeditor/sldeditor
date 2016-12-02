@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
@@ -32,7 +31,6 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionStatus;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 
 /**
  * Unit test for VendorOptionStatus.
@@ -71,7 +69,9 @@ public class VendorOptionStatusTest {
         assertEquals("", VendorOptionStatus.getVersionString(expectedList));
     }
 
-    @Ignore
+    /**
+     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionStatus#getVendorOptionVersionString(VersionData)}.
+     */
     @Test
     public void testGetVendorOptionVersionString()
     {

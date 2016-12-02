@@ -112,7 +112,7 @@ public class VendorOptionStatus {
             hasEarliest = !earliest.isEarliest();
         }
         boolean hasLatest = false;
-        VersionData latest = versionData.getEarliest();
+        VersionData latest = versionData.getLatest();
         if(latest != null)
         {
             hasLatest = !latest.isLatest();
