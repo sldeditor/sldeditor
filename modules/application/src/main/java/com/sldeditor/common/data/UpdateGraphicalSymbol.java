@@ -19,6 +19,7 @@
 
 package com.sldeditor.common.data;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,6 +32,7 @@ import org.geotools.styling.ExternalGraphicImpl;
 import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 
 /**
  * The Class UpdateGraphicalSymbol.
@@ -55,13 +57,15 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                 OnLineResourceImpl onlineResource = (OnLineResourceImpl) externalGraphic.getOnlineResource();
 
                 String currentValue = null;
+                URL currentValueURL = null;
                 try {
-                    currentValue = onlineResource.getLinkage().toURL().toExternalForm();
+                    currentValueURL = onlineResource.getLinkage().toURL();
+                    currentValue = currentValueURL.toExternalForm();
                 } catch (MalformedURLException e) {
                     ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
                 }
 
-                if(resourceLocator == null)
+                if((resourceLocator == null) || RelativePath.hasHost(currentValueURL))
                 {
                     // Just report back the external image
                     URI uri = null;
@@ -74,20 +78,21 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                 }
                 else
                 {
-                    String prefix = resourceLocator.toExternalForm();
                     try {
-                        if(currentValue.startsWith(prefix))
-                        {
-                            currentValue = currentValue.substring(prefix.length());
+                        File file = new File(currentValueURL.getFile());
+                        File folder = new File(resourceLocator.getFile());
+                        currentValue = RelativePath.getRelativePath(file, folder);
 
-                            OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
-                            URI uri = new URI(currentValue);
-                            updatedOnlineResource.setLinkage(uri);
-                            externalGraphic.setOnlineResource(updatedOnlineResource);
+                        // If the backslashes are not converted to forward slashes 
+                        // creating the URI does not work
+                        currentValue = currentValue.replace('\\', '/');
+                        OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
+                        URI uri = new URI(currentValue);
+                        updatedOnlineResource.setLinkage(uri);
+                        externalGraphic.setOnlineResource(updatedOnlineResource);
 
-                            externalGraphic.setURI(uri.toASCIIString());
-                            externalImageList.add(uri.toASCIIString());
-                        }
+                        externalGraphic.setURI(uri.toASCIIString());
+                        externalImageList.add(uri.toASCIIString());
                     } catch (URISyntaxException e) {
                         ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
                     }

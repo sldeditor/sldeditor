@@ -26,6 +26,15 @@ package com.sldeditor.generated;
  */
 public class Version {
 
+    /** The Constant APP_NAME. */
+    private static final String APP_NAME = "SLD Editor";
+
+    /** The Constant APP_COMPANY. */
+    private static final String APP_COMPANY = "SCISYS";
+
+    /** The Constant APP_COPYRIGHT_YEAR. */
+    private static final String APP_COPYRIGHT_YEAR = "2016";
+
     /** The version taken from the maven pom. */
     public static String pomVersionString = "xx";
 
@@ -36,5 +45,32 @@ public class Version {
      */
     public static String getVersionNumber() {
         return pomVersionString;
+    }
+
+    /**
+     * Gets the app name.
+     *
+     * @return the appName
+     */
+    public static String getAppName() {
+        return APP_NAME;
+    }
+
+    /**
+     * Gets the app company.
+     *
+     * @return the appCompany
+     */
+    public static String getAppCompany() {
+        return APP_COMPANY;
+    }
+
+    /**
+     * Gets the app copyright year.
+     *
+     * @return the appCopyrightYear
+     */
+    public static String getAppCopyrightYear() {
+        return APP_COPYRIGHT_YEAR;
     }
 }

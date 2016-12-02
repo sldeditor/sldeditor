@@ -107,11 +107,14 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                 String originalValue = (String) evt.getOldValue();
                 String newValueObj = (String) evt.getNewValue();
 
-                if(originalValue.compareTo(newValueObj) != 0)
+                if((originalValue.compareTo(newValueObj) != 0))
                 {
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                    if(!suppressUpdateOnSet)
+                    {
+                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
-                    oldValueObj = originalValue;
+                        oldValueObj = originalValue;
+                    }
 
                     valueUpdated();
                 }

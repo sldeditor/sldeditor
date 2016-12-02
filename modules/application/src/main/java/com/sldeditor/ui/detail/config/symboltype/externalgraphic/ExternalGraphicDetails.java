@@ -32,6 +32,7 @@ import org.geotools.styling.ExternalGraphicImpl;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -57,7 +58,7 @@ import com.sldeditor.ui.widgets.ExternalGraphicFilter;
  * @author Robert Ward (SCISYS)
  */
 public class ExternalGraphicDetails extends StandardPanel implements PopulateDetailsInterface,
-        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/marker/external/PanelConfig_ExternalGraphicSymbol.xml";
@@ -68,15 +69,18 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
     /** The parent obj. */
     private ExternalGraphicUpdateInterface parentObj = null;
 
-    /** The external file url. */
-    private URL externalFileURL;
+    /** The external url. */
+    private URL externalURL = null;
+
+    /** The last URL value. */
+    private String lastURLValue = "";
 
     /** The old value obj. */
     private Object oldValueObj = null;
 
     /** The display relative paths flag. */
     private boolean useRelativePaths = true;
-    
+
     /**
      * Instantiates a new feature type style details.
      *
@@ -129,6 +133,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
     public void populateExpression(String wellKnownName) {
 
         if (wellKnownName != null) {
+            lastURLValue = wellKnownName;
             fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, wellKnownName);
         }
     }
@@ -153,9 +158,36 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
-            String path = RelativePath.convert(externalFileURL, useRelativePaths);
 
-            fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
+            Expression expression = fieldConfigVisitor.getExpression(FieldIdEnum.EXTERNAL_GRAPHIC);
+            if(!lastURLValue.equals(expression.toString()))
+            {
+                URL url = null;
+                boolean isFile = true;
+                try {
+                    url = new URL(expression.toString());
+                    isFile = false;
+                } catch (MalformedURLException e) {
+                }
+
+                if(!isFile && RelativePath.hasHost(url))
+                {
+                    externalURL = url;
+                }
+                else
+                {
+                    File f = new File(expression.toString());
+                    try {
+                        externalURL = f.toURI().toURL();
+                    } catch (MalformedURLException e) {
+                        ConsoleManager.getInstance().exception(this, e);
+                    }
+                }
+                lastURLValue = expression.toString();
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
+                        FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+                oldValueObj = externalURL;
+            }
 
             if (parentObj != null) {
                 parentObj.externalGraphicValueUpdated();
@@ -227,23 +259,30 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
     public void setValue(ExternalGraphicImpl externalGraphic) {
         try {
             if (externalGraphic != null) {
-                externalFileURL = externalGraphic.getLocation();
+                externalURL = externalGraphic.getLocation();
             }
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
         UndoManager.getInstance().addUndoEvent(
-                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
+                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+        lastURLValue = externalURL.toExternalForm();
         try {
-            oldValueObj = new URL(externalFileURL.toExternalForm());
+            oldValueObj = new URL(lastURLValue);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
-        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(),
-                externalFileURL);
-        populateExpression(path);
+        if(RelativePath.hasHost(externalURL))
+        {
+            populateExpression(lastURLValue);
+        }
+        else
+        {
+            String path = RelativePath.convert(externalURL, useRelativePaths);
+            populateExpression(path);
+        }
     }
 
     /**
@@ -253,21 +292,21 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     public void setValue(String filename) {
         try {
-            externalFileURL = new URL(filename);
+            externalURL = new URL(filename);
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
         UndoManager.getInstance().addUndoEvent(
-                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
+                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
         try {
-            oldValueObj = new URL(externalFileURL.toExternalForm());
+            oldValueObj = new URL(externalURL.toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
         String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(),
-                externalFileURL);
+                externalURL);
         populateExpression(path);
     }
 
@@ -279,12 +318,12 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
     public ExternalGraphic getSymbol() {
         ExternalGraphic extGraphic = null;
 
-        if (externalFileURL != null) {
-            String fileExtension = ExternalFilenames.getFileExtension(externalFileURL.toString());
+        if (externalURL != null) {
+            String fileExtension = ExternalFilenames.getFileExtension(externalURL.toString());
             String imageFormat = ExternalFilenames.getImageFormat(fileExtension);
             String uri = "";
             try {
-                uri = externalFileURL.toURI().toString();
+                uri = externalURL.toURI().toString();
             } catch (URISyntaxException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
@@ -306,9 +345,10 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
             if (undoRedoObject.getOldValue() instanceof URL) {
                 URL oldValue = (URL) undoRedoObject.getOldValue();
 
-                populateExpression(ExternalFilenames
-                        .getText(SLDEditorFile.getInstance().getSLDData(), oldValue));
-                externalFileURL = oldValue;
+                String path = RelativePath.convert(oldValue, useRelativePaths);
+                fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
+
+                externalURL = oldValue;
 
                 if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
@@ -328,9 +368,9 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
             if (undoRedoObject.getNewValue() instanceof URL) {
                 URL newValue = (URL) undoRedoObject.getNewValue();
 
-                populateExpression(ExternalFilenames
-                        .getText(SLDEditorFile.getInstance().getSLDData(), newValue));
-                externalFileURL = newValue;
+                String path = RelativePath.convert(newValue, useRelativePaths);
+                fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
+                externalURL = newValue;
 
                 if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
@@ -348,13 +388,27 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
     public void buttonPressed(Component buttonExternal) {
         JFileChooser fc = new JFileChooser();
 
-        if (externalFileURL != null) {
-            String filename = externalFileURL.toExternalForm();
-            File currentFile = ExternalFilenames.getFile(SLDEditorFile.getInstance().getSLDData(),
-                    filename);
-
-            if (currentFile.exists()) {
-                fc.setCurrentDirectory(currentFile.getParentFile());
+        if (externalURL != null) {
+            String filename = externalURL.toExternalForm();
+            SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+            if(RelativePath.hasHost(externalURL))
+            {
+                if(sldData != null)
+                {
+                    File currentFile = sldData.getSLDFile();
+                    if(currentFile != null)
+                    {
+                        fc.setCurrentDirectory(currentFile.getParentFile());
+                    }
+                }
+            }
+            else
+            {
+                File currentFile = ExternalFilenames.getFile(sldData,
+                        filename);
+                if (currentFile.exists()) {
+                    fc.setCurrentDirectory(currentFile.getParentFile());
+                }
             }
         }
 
@@ -364,11 +418,14 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                externalFileURL = fc.getSelectedFile().toURI().toURL();
+                externalURL = fc.getSelectedFile().toURI().toURL();
 
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
-                        FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalFileURL));
-                oldValueObj = externalFileURL;
+                        FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+                oldValueObj = externalURL;
+
+                String path = RelativePath.convert(externalURL, useRelativePaths);
+                fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
 
                 updateSymbol();
             } catch (MalformedURLException e1) {

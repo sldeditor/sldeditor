@@ -21,6 +21,8 @@ package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorFile;
@@ -39,8 +41,7 @@ public class RelativePath {
      * @return true if the path is relative
      */
     public static Boolean isRelativePath(String path) {
-        if(path == null)
-        {
+        if (path == null) {
             return false;
         }
 
@@ -101,7 +102,7 @@ public class RelativePath {
      * @param url the url
      * @return true, if successful
      */
-    private static boolean hasHost(URL url) {
+    public static boolean hasHost(URL url) {
         if (url == null) {
             return false;
         }
@@ -117,21 +118,18 @@ public class RelativePath {
      * @return the relative path
      */
     public static String getRelativePath(File file, File folder) {
-        if(file == null)
-        {
-            return null;
-        }
-        if(folder == null)
-        {
+        if (file == null) {
             return null;
         }
 
-        String filePath = file.getAbsolutePath();
-        String folderPath = folder.getAbsolutePath();
-        if (filePath.startsWith(folderPath) && (filePath.length() != folderPath.length()) ) {
-            return filePath.substring(folderPath.length() + 1);
-        } else {
+        if (folder == null) {
             return null;
         }
+
+        Path filePath = Paths.get(file.getAbsolutePath());
+        Path folderPath = Paths.get(folder.getAbsolutePath());
+        Path path = folderPath.relativize(filePath);
+
+        return path.toString();
     }
 }
