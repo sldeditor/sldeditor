@@ -349,6 +349,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
                 fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
 
                 externalURL = oldValue;
+                lastURLValue = path;
 
                 if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
@@ -371,6 +372,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
                 String path = RelativePath.convert(newValue, useRelativePaths);
                 fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
                 externalURL = newValue;
+                lastURLValue = path;
 
                 if (parentObj != null) {
                     parentObj.externalGraphicValueUpdated();
@@ -424,8 +426,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
                         FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
                 oldValueObj = externalURL;
 
-                String path = RelativePath.convert(externalURL, useRelativePaths);
-                fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, path);
+                lastURLValue = RelativePath.convert(externalURL, useRelativePaths);
+                fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, lastURLValue);
 
                 updateSymbol();
             } catch (MalformedURLException e1) {
