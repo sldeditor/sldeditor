@@ -52,7 +52,7 @@ public class RelativePathTest {
         assertTrue(RelativePath.isRelativePath("testfile.sld"));
         assertTrue(RelativePath.isRelativePath("a/b/c/testfile.sld"));
         assertFalse(RelativePath.isRelativePath("c:\\testfile.sld"));
-        assertFalse(RelativePath.isRelativePath("c:\\testfile.sld"));
+        assertFalse(RelativePath.isRelativePath("/tmp/testfile.sld"));
         assertFalse(RelativePath.isRelativePath(new File(".").getAbsolutePath()));
     }
 
@@ -109,7 +109,7 @@ public class RelativePathTest {
         assertNull(RelativePath.getRelativePath(file, null));
 
         String actualResult = RelativePath.getRelativePath(file, folder);
-        assertNull(actualResult);
+        assertEquals("", actualResult);
 
         folder = file.getParentFile();
         actualResult = RelativePath.getRelativePath(file, folder);

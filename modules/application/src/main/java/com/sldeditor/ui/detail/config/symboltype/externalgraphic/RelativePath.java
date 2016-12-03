@@ -24,6 +24,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.commons.io.FilenameUtils;
+
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 
@@ -45,8 +47,21 @@ public class RelativePath {
             return false;
         }
 
+        int prefixLen = FilenameUtils.getPrefixLength(path);
+        return !(testPathWin(path, prefixLen) || testPathLinux(prefixLen));
+    }
+
+    private static boolean testPathWin(String path, int prefixLen) {
+        if (prefixLen == 3)
+            return true;
         File f = new File(path);
-        return !f.isAbsolute();
+        if ((prefixLen == 2) && (f.getPath().charAt(0) == '/'))
+            return true;
+        return false;
+    }
+
+    private static boolean testPathLinux(int prefixLen) {
+        return (prefixLen != 0);
     }
 
     /**

@@ -149,8 +149,7 @@ public class FieldConfigFilenameTest {
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
 
-        // The FieldConfigString suppress update value on set affects the ExternalGraphicsDetail panel
-        assertEquals("", field.getStringValue());
+        assertEquals(expectedValue, field.getStringValue());
 
         File f = null;
         try {
@@ -171,8 +170,7 @@ public class FieldConfigFilenameTest {
 
         field.populateExpression(expectedValue);
 
-        // The FieldConfigString suppress update value on set affects the ExternalGraphicsDetail panel
-        assertTrue("".compareTo(field.getStringValue()) == 0);
+        assertTrue(expectedValue.compareTo(field.getStringValue()) == 0);
 
         f.delete();
     }
