@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<SldEditor_test testsldfile="point/sld/point_pointasgraphic.sld">
+<SldEditor_test testsldfile="point/sld/point_pointasgraphichttp.sld">
     <PanelTests>
         <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
             <Layer index="0"/>
@@ -27,7 +27,7 @@
             <SymbolizerDetail index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="smileyface.png" field="SYMBOL_TYPE"/>
+            <LiteralString value="https://github.com/robward-scisys/sldeditor/raw/master/doc/img/sldeditor-logo.png" field="SYMBOL_TYPE"/>
             <LiteralDouble value="32.0" field="SIZE"/>
             <LiteralDouble value="0.0" field="ANGLE"/>
             <LiteralDouble value="0.0" field="GAP"/>
