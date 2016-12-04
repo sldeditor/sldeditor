@@ -29,6 +29,7 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDExternalImages;
 import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.generated.Version;
 
 /**
  * Class that converts an SLD stored as a StyledLayerDescriptor to a SLD formatted string.
@@ -37,11 +38,20 @@ import com.sldeditor.common.output.SLDWriterInterface;
  */
 public class SLDWriterImpl implements SLDWriterInterface {
 
+    /** The Constant START_OF_XML_HEADER. */
+    private static final String START_OF_XML_HEADER = "<?";
+
+    /** The Constant END_OF_XML_HEADER. */
+    private static final String END_OF_XML_HEADER = "?>";
+
+    /** The header. */
+    private static final String header = String.format("<!-- Created by %s %s -->\n",
+            Version.getAppName(), Version.getVersionNumber());
+
     /**
      * Default constructor.
      */
-    public SLDWriterImpl()
-    {
+    public SLDWriterImpl() {
     }
 
     /**
@@ -52,18 +62,15 @@ public class SLDWriterImpl implements SLDWriterInterface {
      * @return the string
      */
     @Override
-    public String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld)
-    {
+    public String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld) {
         String xml = "";
 
-        if(sld != null)
-        {
+        if (sld != null) {
             DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
             sld.accept(duplicator);
-            StyledLayerDescriptor sldCopy = (StyledLayerDescriptor)duplicator.getCopy();
+            StyledLayerDescriptor sldCopy = (StyledLayerDescriptor) duplicator.getCopy();
 
-            if(resourceLocator != null)
-            {
+            if (resourceLocator != null) {
                 SLDExternalImages.updateOnlineResources(resourceLocator, sldCopy);
             }
 
@@ -71,6 +78,16 @@ public class SLDWriterImpl implements SLDWriterInterface {
             transformer.setIndentation(2);
             try {
                 xml = transformer.transform(sldCopy);
+                if (xml.startsWith(START_OF_XML_HEADER)) {
+                    int pos = xml.indexOf(END_OF_XML_HEADER, 0);
+                    if (pos > 1) {
+                        pos = pos + END_OF_XML_HEADER.length() + 1;
+                        String xmlHeader = xml.substring(0, pos);
+                        String sldBody = xml.substring(pos);
+
+                        xml = xmlHeader + header + sldBody;
+                    }
+                }
             } catch (TransformerException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
@@ -78,6 +95,5 @@ public class SLDWriterImpl implements SLDWriterInterface {
 
         return xml;
     }
-
 
 }

@@ -145,6 +145,7 @@ public class SLDFileHandlerTest {
             List<SLDDataInterface> sldDataList = handler.getSLDContents(fileTreeNode);
 
             List<String> expectedLayerNameList = Arrays.asList("point_attribute.sld", "point_pointasgraphic.sld",
+                    "point_pointasgraphichttp.sld",
                     "point_pointwithdefaultlabel.sld", "point_pointwithrotatedlabel.sld",
                     "point_pointwithstyledlabel.sld","point_rotatedsquare.sld",
                     "point_simplepoint.sld", "point_simplepointwithstroke.sld",

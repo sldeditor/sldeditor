@@ -357,6 +357,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
             FieldConfigString stringConfig = new FieldConfigString(commonData,
                     getLocalisedText(localisationClass, xmlStringFieldConfig.getButtonText()));
 
+            stringConfig.setSuppressUpdatesOnSet(xmlStringFieldConfig.isSuppressUpdateOnSet());
             groupConfig.addField(stringConfig);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);

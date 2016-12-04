@@ -441,6 +441,13 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
+                <xs:attribute type="xs:boolean" name="suppressUpdateOnSet" use="optional" default="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Flag which enables/disables update notifications when setting data
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

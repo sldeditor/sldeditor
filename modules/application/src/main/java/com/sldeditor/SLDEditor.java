@@ -87,20 +87,11 @@ import it.geosolutions.jaiext.JAIExt;
  */
 public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInterface {
 
-    /** The Constant APP_NAME. */
-    private static final String APP_NAME = "SLD Editor";
-
-    /** The Constant APP_COMPANY. */
-    private static final String APP_COMPANY = "SCISYS";
-
     /** The Constant APPLICATION_FRAME_WIDTH. */
     private static final int APPLICATION_FRAME_WIDTH = 1024;
 
     /** The Constant APPLICATION_FRAME_HEIGHT. */
     private static final int APPLICATION_FRAME_HEIGHT = 800;
-
-    /** The Constant APP_COPYRIGHT_YEAR. */
-    private static final String APP_COPYRIGHT_YEAR = "2016";
 
     /** The Constant NO_SLDEDITOR_FILE_SET. */
     private static final String NO_SLDEDITOR_FILE_SET = "Not set";
@@ -355,8 +346,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @return the string
      */
     private static String generateApplicationTitleString() {
-        return String.format("%s %s \251%s %s", APP_NAME, Version.getVersionNumber(),
-                APP_COPYRIGHT_YEAR, APP_COMPANY);
+        return String.format("%s %s \251%s %s", Version.getAppName(), Version.getVersionNumber(),
+                Version.getAppCopyrightYear(), Version.getAppCompany());
     }
 
     /**
@@ -752,7 +743,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     @Override
     public String getAppName() {
-        return APP_NAME;
+        return Version.getAppName();
     }
 
     /**

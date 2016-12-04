@@ -84,6 +84,12 @@ public class SLDCookbookPoint
     }
 
     @Test
+    public void point_pointasgraphichttp()
+    {
+        test.runTest("point", "point_pointasgraphichttp.xml");
+    }
+
+    @Test
     public void point_rotatedsquare()
     {
         test.runTest("point", "point_rotatedsquare.xml");

@@ -19,16 +19,10 @@
 
 package com.sldeditor.common.data;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geotools.metadata.iso.citation.OnLineResourceImpl;
-import org.geotools.styling.ExternalGraphic;
-import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.LineSymbolizer;
@@ -44,9 +38,6 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayer;
 import org.geotools.styling.UserLayerImpl;
-import org.opengis.style.GraphicalSymbol;
-
-import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * The Class SLDExternalImages.
@@ -54,6 +45,9 @@ import com.sldeditor.common.console.ConsoleManager;
  * @author Robert Ward (SCISYS)
  */
 public class SLDExternalImages {
+
+    /** The update graphic symbol. */
+    private static ProcessGraphicSymbolInterface updateGraphicSymbol = new UpdateGraphicalSymbol();
 
     /**
      * Update online resources.
@@ -65,7 +59,7 @@ public class SLDExternalImages {
 
         List<String> externalImageList = new ArrayList<String>();
 
-        internal_updateOnlineResources(resourceLocator, sld, externalImageList);
+        externalGraphicSymbolVisitor(resourceLocator, sld, externalImageList, updateGraphicSymbol);
     }
 
     /**
@@ -79,74 +73,68 @@ public class SLDExternalImages {
 
         List<String> externalImageList = new ArrayList<String>();
 
-        internal_updateOnlineResources(resourceLocator, sld, externalImageList);
+        externalGraphicSymbolVisitor(resourceLocator, sld, externalImageList, updateGraphicSymbol);
 
         return externalImageList;
     }
 
     /**
-     * Internal update online resources.
+     * Find the SLD graphical symbols
      *
      * @param resourceLocator the resource locator
      * @param sld the sld
      * @param externalImageList the external image list
+     * @param process the process
      */
-    private static void internal_updateOnlineResources(URL resourceLocator,
-            StyledLayerDescriptor sld,
-            List<String> externalImageList)
-    {
-        if(sld == null)
-        {
+    private static void externalGraphicSymbolVisitor(URL resourceLocator,
+            StyledLayerDescriptor sld, List<String> externalImageList,
+            ProcessGraphicSymbolInterface process) {
+        if (sld == null) {
             return;
         }
 
-        for(StyledLayer styledLayer : sld.layers())
-        {
+        if (process == null) {
+            return;
+        }
+
+        for (StyledLayer styledLayer : sld.layers()) {
             List<Style> styles = null;
-            if(styledLayer instanceof NamedLayer)
-            {
+            if (styledLayer instanceof NamedLayer) {
                 NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
                 styles = namedLayer.styles();
-            }
-            else if(styledLayer instanceof UserLayer)
-            {
+            } else if (styledLayer instanceof UserLayer) {
                 UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
                 styles = userLayer.userStyles();
             }
 
-            if(styles != null)
-            {
-                for(Style style : styles)
-                {
-                    for(FeatureTypeStyle fts : style.featureTypeStyles())
-                    {
-                        for(Rule rule : fts.rules())
-                        {
-                            for(Symbolizer symbolizer : rule.symbolizers())
-                            {
-                                if(symbolizer instanceof PointSymbolizer)
-                                {
+            if (styles != null) {
+                for (Style style : styles) {
+                    for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                        for (Rule rule : fts.rules()) {
+                            for (Symbolizer symbolizer : rule.symbolizers()) {
+                                if (symbolizer instanceof PointSymbolizer) {
                                     PointSymbolizer point = (PointSymbolizer) symbolizer;
 
-                                    if(point.getGraphic() != null)
-                                    {
-                                        updateGraphicalSymbol(resourceLocator,
-                                                point.getGraphic().graphicalSymbols(), 
+                                    if (point.getGraphic() != null) {
+                                        process.processGraphicalSymbol(resourceLocator,
+                                                point.getGraphic().graphicalSymbols(),
                                                 externalImageList);
                                     }
-                                }
-                                else if(symbolizer instanceof LineSymbolizer)
-                                {
+                                } else if (symbolizer instanceof LineSymbolizer) {
                                     LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-                                    updateStroke(resourceLocator, line.getStroke(), externalImageList);
-                                }
-                                else if(symbolizer instanceof PolygonSymbolizer)
-                                {
+                                    updateStroke(resourceLocator, line.getStroke(),
+                                            externalImageList,
+                                            process);
+                                } else if (symbolizer instanceof PolygonSymbolizer) {
                                     PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-                                    updateStroke(resourceLocator, polygon.getStroke(), externalImageList);
-                                    updateFill(resourceLocator, polygon.getFill(), externalImageList);
+                                    updateStroke(resourceLocator, polygon.getStroke(),
+                                            externalImageList,
+                                            process);
+                                    updateFill(resourceLocator, polygon.getFill(),
+                                            externalImageList,
+                                            process);
                                 }
                             }
                         }
@@ -163,13 +151,11 @@ public class SLDExternalImages {
      * @param fill the fill
      * @param externalImageList the external image list
      */
-    private static void updateFill(URL resourceLocator, Fill fill, List<String> externalImageList) {
-        if(fill != null)
-        {
-            if(fill.getGraphicFill() != null)
-            {
-                updateGraphicalSymbol(resourceLocator,
-                        fill.getGraphicFill().graphicalSymbols(),
+    private static void updateFill(URL resourceLocator, Fill fill, List<String> externalImageList,
+            ProcessGraphicSymbolInterface process) {
+        if (fill != null) {
+            if (fill.getGraphicFill() != null) {
+                process.processGraphicalSymbol(resourceLocator, fill.getGraphicFill().graphicalSymbols(),
                         externalImageList);
             }
         }
@@ -182,78 +168,20 @@ public class SLDExternalImages {
      * @param stroke the stroke
      * @param externalImageList the external image list
      */
-    private static void updateStroke(URL resourceLocator, Stroke stroke, List<String> externalImageList) {
-        if(stroke != null)
-        {
-            if(stroke.getGraphicFill() != null)
-            {
-                updateGraphicalSymbol(resourceLocator, stroke.getGraphicFill().graphicalSymbols(), externalImageList);
+    private static void updateStroke(URL resourceLocator, Stroke stroke,
+            List<String> externalImageList,
+            ProcessGraphicSymbolInterface process) {
+        if (stroke != null) {
+            if (stroke.getGraphicFill() != null) {
+                process.processGraphicalSymbol(resourceLocator, stroke.getGraphicFill().graphicalSymbols(),
+                        externalImageList);
             }
 
-            if(stroke.getGraphicStroke() != null)
-            {
-                updateGraphicalSymbol(resourceLocator, stroke.getGraphicStroke().graphicalSymbols(), externalImageList);
-            }
-        }
-    }
-
-    /**
-     * Update graphical symbol.
-     *
-     * @param resourceLocator the resource locator
-     * @param graphicalSymbolList the graphical symbol list
-     * @param externalImageList the external image list
-     */
-    private static void updateGraphicalSymbol(URL resourceLocator,
-            List<GraphicalSymbol> graphicalSymbolList,
-            List<String> externalImageList)
-    {
-        for(GraphicalSymbol symbol : graphicalSymbolList)
-        {
-            if(symbol instanceof ExternalGraphic)
-            {
-                ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) symbol;
-                OnLineResourceImpl onlineResource = (OnLineResourceImpl) externalGraphic.getOnlineResource();
-
-                String currentValue = null;
-                try {
-                    currentValue = onlineResource.getLinkage().toURL().toExternalForm();
-                } catch (MalformedURLException e) {
-                    ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
-                }
-
-                if(resourceLocator == null)
-                {
-                    // Just report back the external image
-                    URI uri = null;
-                    try {
-                        uri = new URI(currentValue);
-                        externalImageList.add(uri.toASCIIString());
-                    } catch (URISyntaxException e) {
-                        ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
-                    }
-                }
-                else
-                {
-                    String prefix = resourceLocator.toExternalForm();
-                    try {
-                        if(currentValue.startsWith(prefix))
-                        {
-                            currentValue = currentValue.substring(prefix.length());
-
-                            OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
-                            URI uri = new URI(currentValue);
-                            updatedOnlineResource.setLinkage(uri);
-                            externalGraphic.setOnlineResource(updatedOnlineResource);
-
-                            externalGraphic.setURI(uri.toASCIIString());
-                            externalImageList.add(uri.toASCIIString());
-                        }
-                    } catch (URISyntaxException e) {
-                        ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
-                    }
-                }
+            if (stroke.getGraphicStroke() != null) {
+                process.processGraphicalSymbol(resourceLocator, stroke.getGraphicStroke().graphicalSymbols(),
+                        externalImageList);
             }
         }
     }
+
 }
