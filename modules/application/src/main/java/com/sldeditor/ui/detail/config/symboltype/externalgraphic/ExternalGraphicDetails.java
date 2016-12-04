@@ -160,29 +160,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         if (!Controller.getInstance().isPopulating()) {
 
             Expression expression = fieldConfigVisitor.getExpression(FieldIdEnum.EXTERNAL_GRAPHIC);
-            if(!lastURLValue.equals(expression.toString()))
-            {
-                URL url = null;
-                boolean isFile = true;
-                try {
-                    url = new URL(expression.toString());
-                    isFile = false;
-                } catch (MalformedURLException e) {
-                }
-
-                if(!isFile && RelativePath.hasHost(url))
-                {
-                    externalURL = url;
-                }
-                else
-                {
-                    File f = new File(expression.toString());
-                    try {
-                        externalURL = f.toURI().toURL();
-                    } catch (MalformedURLException e) {
-                        ConsoleManager.getInstance().exception(this, e);
-                    }
-                }
+            if (!lastURLValue.equals(expression.toString())) {
+                externalURL = parseString(expression.toString());
                 lastURLValue = expression.toString();
                 UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
                         FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
@@ -193,6 +172,34 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
                 parentObj.externalGraphicValueUpdated();
             }
         }
+    }
+
+    /**
+     * Parses the string.
+     *
+     * @param path the path
+     */
+    private URL parseString(String path) {
+        URL url = null;
+        boolean isFile = true;
+        try {
+            url = new URL(path);
+            isFile = false;
+        } catch (MalformedURLException e) {
+        }
+
+        if (!isFile && RelativePath.hasHost(url)) {
+            return url;
+        } else {
+            File f = new File(path);
+            try {
+                return f.toURI().toURL();
+            } catch (MalformedURLException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -257,29 +264,17 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @param externalGraphic the new value
      */
     public void setValue(ExternalGraphicImpl externalGraphic) {
-        try {
-            if (externalGraphic != null) {
+        if (externalGraphic != null) {
+            try {
                 externalURL = externalGraphic.getLocation();
+            } catch (MalformedURLException e) {
+                ConsoleManager.getInstance().exception(this, e);
             }
-        } catch (MalformedURLException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        }
 
-        UndoManager.getInstance().addUndoEvent(
-                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
-        lastURLValue = externalURL.toExternalForm();
-        try {
-            oldValueObj = new URL(lastURLValue);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+            UndoManager.getInstance().addUndoEvent(
+                    new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            oldValueObj = externalURL;
 
-        if(RelativePath.hasHost(externalURL))
-        {
-            populateExpression(lastURLValue);
-        }
-        else
-        {
             String path = RelativePath.convert(externalURL, useRelativePaths);
             populateExpression(path);
         }
@@ -291,23 +286,15 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @param filename the new value
      */
     public void setValue(String filename) {
-        try {
-            externalURL = new URL(filename);
-        } catch (MalformedURLException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        }
+        if (filename != null) {
+            externalURL = parseString(filename);
 
-        UndoManager.getInstance().addUndoEvent(
-                new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
-        try {
-            oldValueObj = new URL(externalURL.toExternalForm());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+            UndoManager.getInstance().addUndoEvent(
+                    new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            oldValueObj = externalURL;
 
-        String path = ExternalFilenames.getText(SLDEditorFile.getInstance().getSLDData(),
-                externalURL);
-        populateExpression(path);
+            populateExpression(filename);
+        }
     }
 
     /**
@@ -393,21 +380,15 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         if (externalURL != null) {
             String filename = externalURL.toExternalForm();
             SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
-            if(RelativePath.hasHost(externalURL))
-            {
-                if(sldData != null)
-                {
+            if (RelativePath.hasHost(externalURL)) {
+                if (sldData != null) {
                     File currentFile = sldData.getSLDFile();
-                    if(currentFile != null)
-                    {
+                    if (currentFile != null) {
                         fc.setCurrentDirectory(currentFile.getParentFile());
                     }
                 }
-            }
-            else
-            {
-                File currentFile = ExternalFilenames.getFile(sldData,
-                        filename);
+            } else {
+                File currentFile = ExternalFilenames.getFile(sldData, filename);
                 if (currentFile.exists()) {
                     fc.setCurrentDirectory(currentFile.getParentFile());
                 }
@@ -420,19 +401,31 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                externalURL = fc.getSelectedFile().toURI().toURL();
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
-                        FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
-                oldValueObj = externalURL;
-
-                lastURLValue = RelativePath.convert(externalURL, useRelativePaths);
-                fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, lastURLValue);
-
-                updateSymbol();
+                userSelectedFileURL(fc.getSelectedFile().toURI().toURL());
             } catch (MalformedURLException e1) {
                 ConsoleManager.getInstance().exception(this, e1);
             }
+        }
+    }
+
+    /**
+     * User selected file URL.
+     *
+     * @param url the url
+     */
+    protected void userSelectedFileURL(URL url) {
+        if(url != null)
+        {
+            externalURL = url;
+
+            UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
+                    FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            oldValueObj = externalURL;
+
+            lastURLValue = RelativePath.convert(externalURL, useRelativePaths);
+            fieldConfigVisitor.populateTextField(FieldIdEnum.EXTERNAL_GRAPHIC, lastURLValue);
+
+            updateSymbol();
         }
     }
 
