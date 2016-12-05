@@ -20,6 +20,7 @@
 package com.sldeditor.minversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.geotools.styling.FeatureTypeStyle;
@@ -130,6 +131,8 @@ public class MinimumVersion {
         }
 
         vendorOptionsPresentList = newList;
+
+        Collections.sort(vendorOptionsPresentList);
     }
 
     /**

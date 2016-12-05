@@ -54,7 +54,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerLabelling extends StandardPanel
-implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
+        implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/text/PanelConfig_Label.xml";
@@ -530,36 +530,39 @@ implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterfac
         return parentObj;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo  = new VendorOptionInfo(Localisation.getString(VOGeoServerLabelling.class, "VOGeoServerLabelling.geoserver.label"),
-                    this.getVendorOption(),
-                    Localisation.getString(VOGeoServerLabelling.class, "VOGeoServerLabelling.geoserver.label.description"));
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo(
+                    Localisation.getString(VOGeoServerLabelling.class,
+                            "geoserver.label"),
+                    this.getVendorOption(), Localisation.getString(VOGeoServerLabelling.class,
+                            "geoserver.label.description"));
         }
         return vendorOptionInfo;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        if(sldObj instanceof TextSymbolizer)
-        {
+        if (sldObj instanceof TextSymbolizer) {
             TextSymbolizer textSymbolizer = (TextSymbolizer) sldObj;
             Map<String, String> options = textSymbolizer.getOptions();
 
             for (FieldIdEnum key : fieldMap.keySet()) {
                 String vendorOptionAttributeKey = fieldMap.get(key);
 
-                if(options.containsKey(vendorOptionAttributeKey))
-                {
+                if (options.containsKey(vendorOptionAttributeKey)) {
                     VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                             getVendorOptionInfo());
 

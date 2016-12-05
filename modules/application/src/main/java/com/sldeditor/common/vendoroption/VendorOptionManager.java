@@ -19,6 +19,7 @@
 package com.sldeditor.common.vendoroption;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -332,5 +333,22 @@ public class VendorOptionManager
         }
 
         return title.toString();
+    }
+
+    /**
+     * Gets the latest version data.
+     *
+     * @return the latest
+     */
+    public List<VersionData> getLatest() {
+        VendorOptionTypeInterface geoServer = getClass(GeoServerVendorOption.class);
+
+        List<VersionData> last = new ArrayList<VersionData>();
+        List<VersionData> versionList = geoServer.getVersionList();
+
+        VersionData data = versionList.get(versionList.size() - 1);
+        last.add(data);
+
+        return last;
     }
 }

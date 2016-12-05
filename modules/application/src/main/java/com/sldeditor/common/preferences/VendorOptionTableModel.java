@@ -202,6 +202,7 @@ public class VendorOptionTableModel extends AbstractTableModel
                     if(versionData.getVendorOptionType() == key.getClass())
                     {
                         found = true;
+                        this.selectedVersionList.clear();
                         this.selectedVersionList.add(versionData);
                         VendorOptionInfoManager.getInstance().setSelectedVersion(versionData);
                     }
@@ -216,6 +217,8 @@ public class VendorOptionTableModel extends AbstractTableModel
             VersionData defaultVendorOption = VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
 
             this.selectedVersionList.remove(defaultVendorOption);
+
+            this.fireTableDataChanged();
         }
     }
 

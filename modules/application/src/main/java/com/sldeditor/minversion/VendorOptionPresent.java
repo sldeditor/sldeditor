@@ -26,7 +26,7 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
  *
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionPresent {
+public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
 
     /** The sld obj. */
     private Object sldObj = null;
@@ -60,5 +60,23 @@ public class VendorOptionPresent {
      */
     public VendorOptionInfo getVendorOptionInfo() {
         return vendorOptionInfo;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(VendorOptionPresent o) {
+        if(o == null)
+        {
+            return -1;
+        }
+
+        if(this.vendorOptionInfo == null)
+        {
+            return (o.vendorOptionInfo == null) ? 0 : 1;
+        }
+
+        return this.vendorOptionInfo.compareTo(o.vendorOptionInfo);
     }
 }

@@ -19,11 +19,13 @@
 
 package com.sldeditor.minversion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 
 /**
@@ -113,6 +115,21 @@ public class VendorOptionPresentModel extends AbstractTableModel {
         this.vendorOptionsPresentList = vendorOptionsPresentList;
 
         this.fireTableDataChanged();
+    }
+
+    /**
+     * Gets the minimum vendor option version.
+     *
+     * @return the minimum vendor option version
+     */
+    public List<VersionData> getMinimum() {
+        List<VersionData> minimum = new ArrayList<VersionData>();
+        VendorOptionPresent voPresent = vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
+
+        VersionData data = voPresent.getVendorOptionInfo().getVersionData().getEarliest();
+        minimum.add(data);
+
+        return minimum;
     }
 
 }
