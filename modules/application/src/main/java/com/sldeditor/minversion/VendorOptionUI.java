@@ -76,13 +76,16 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
     /** The table. */
     private JTable vendorOptionPresentTable = null;
 
+    /** The vendor option present model. */
     private VendorOptionPresentModel vendorOptionPresentModel = new VendorOptionPresentModel();
 
-    // Find the minimum version supported by the SLD
+    /** Find the minimum version supported by the SLD */
     private MinimumVersion minimumVersion = null;
 
+    /** The latest button. */
     private JButton btnLatestVO;
 
+    /** The minimum vendor option button. */
     private JButton btnMinimumVendorOption;
 
     /**
