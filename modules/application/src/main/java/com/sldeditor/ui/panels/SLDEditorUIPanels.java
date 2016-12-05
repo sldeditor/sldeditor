@@ -21,6 +21,7 @@ package com.sldeditor.ui.panels;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComponent;
@@ -28,6 +29,8 @@ import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.config.DataSourceConfigPanel;
+import com.sldeditor.minversion.VendorOptionPresent;
+import com.sldeditor.minversion.VendorOptionUI;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;
@@ -87,6 +90,9 @@ public class SLDEditorUIPanels
 
     /** The data source config. */
     private DataSourceConfigPanel dataSourceConfig = null;
+
+    /** The vendor option UI. */
+    private VendorOptionUI vendorOptionUI = null;
 
     /**
      * Instantiates a new SLD editor ui manager.
@@ -269,6 +275,32 @@ public class SLDEditorUIPanels
         outerPanelLegendTab.add(panelLegendTab, BorderLayout.CENTER);
 
         return outerPanelLegendTab;
+    }
+
+    /**
+     * Gets the minimum version vendor option present in the SLD.
+     *
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        singleSymbolUI.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+    }
+
+    /**
+     * Gets the vendor option.
+     *
+     * @return the vendor option
+     */
+    public JPanel getVendorOption() {
+        if(vendorOptionUI  == null)
+        {
+            vendorOptionUI = new VendorOptionUI(this);
+        }
+
+        return vendorOptionUI;
     }
 
 }

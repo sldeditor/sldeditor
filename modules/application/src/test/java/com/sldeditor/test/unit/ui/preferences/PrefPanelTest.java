@@ -19,11 +19,12 @@
 
 package com.sldeditor.test.unit.ui.preferences;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.ui.preferences.PrefPanel;
 
 /**
@@ -61,13 +62,13 @@ public class PrefPanelTest {
 
         panel.testPopulate(null);
 
-        PrefData prefData = new PrefData();
+        PrefData prefData = PrefManager.getInstance().getPrefData();
         prefData.setUiLayoutClass("com.sldeditor.ui.layout.SLDEditorDefaultLayout");
         panel.testPopulate(prefData);
 
         PrefData actual = panel.getPrefData();
 
-        assertEquals(prefData, actual);
+        assertTrue(prefData.equals(actual));
     }
 
 }

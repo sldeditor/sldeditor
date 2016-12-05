@@ -19,7 +19,12 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.extshape;
 
+import java.util.List;
+
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
@@ -34,6 +39,9 @@ public class FieldConfigMarkerExtShape extends FieldConfigMarker {
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/extshape/SymbolTypeFieldState_ExtShape.xml";
 
+    /** The vendor option info. */
+    private VendorOptionInfo vendorOptionInfo = null;
+
     /**
      * Instantiates a new field config marker ext shape.
      *
@@ -47,6 +55,32 @@ public class FieldConfigMarkerExtShape extends FieldConfigMarker {
             FieldIdEnum symbolSelectionField) {
         super(SYMBOLTYPE_FIELD_STATE_RESOURCE, commonData, fillFieldConfig, strokeFieldConfig,
                 symbolSelectionField);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
+                getVendorOptionInfo());
+
+        vendorOptionsPresentList.add(voPresent);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        if(vendorOptionInfo == null)
+        {
+            vendorOptionInfo = new VendorOptionInfo("extshape://",
+                    getVendorOption(),
+                    Localisation.getString(VOGeoServerExtShapeSymbol.class, "VOGeoServerExtShapeSymbol.description"));
+        }
+        return vendorOptionInfo;
     }
 
 }

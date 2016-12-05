@@ -44,6 +44,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -511,5 +512,15 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        symbolTypeFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        vendorOptionFillFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

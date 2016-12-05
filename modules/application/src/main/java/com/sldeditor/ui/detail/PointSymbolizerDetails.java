@@ -18,6 +18,8 @@
  */
 package com.sldeditor.ui.detail;
 
+import java.util.List;
+
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.Symbolizer;
 import org.opengis.filter.expression.Expression;
@@ -27,6 +29,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -138,5 +141,14 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // No vendor options
     }
 }

@@ -43,6 +43,7 @@ import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.filter.FilterPanelInterface;
 import com.sldeditor.filter.v2.FilterString;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -345,5 +346,14 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // No vendor options
     }
 }

@@ -33,6 +33,7 @@ import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
@@ -393,5 +394,36 @@ public class SymbolTypeFactory {
         }
 
         return true;
+    }
+
+    /**
+     * Gets the minimum version for the SLD symbol.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        GraphicalSymbol symbol = null;
+
+        if(sldObj instanceof Graphic)
+        {
+            List<GraphicalSymbol> graphicalSymbolList = ((Graphic)sldObj).graphicalSymbols();
+
+            if((graphicalSymbolList != null) && !graphicalSymbolList.isEmpty())
+            {
+                symbol = graphicalSymbolList.get(0);
+            }
+        }
+        if(symbol != null)
+        {
+            for (FieldState panel : symbolTypeFieldList) {
+                if (panel.accept(symbol)) {
+                    panel.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+                }
+            }
+        }
     }
 }

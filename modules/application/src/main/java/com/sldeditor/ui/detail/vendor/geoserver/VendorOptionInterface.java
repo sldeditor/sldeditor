@@ -18,12 +18,15 @@
  */
 package com.sldeditor.ui.detail.vendor.geoserver;
 
+import java.util.List;
+
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -110,4 +113,14 @@ public interface VendorOptionInterface {
      * @return the vendor option info
      */
     public VendorOptionInfo getVendorOptionInfo();
+
+    /**
+     * Gets the minimum version for the SLD symbol.
+     *
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList);
 }

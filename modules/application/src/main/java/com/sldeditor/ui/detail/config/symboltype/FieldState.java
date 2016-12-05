@@ -31,7 +31,9 @@ import org.opengis.style.GraphicalSymbol;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
@@ -236,6 +238,17 @@ public abstract class FieldState extends FieldConfigBase {
             GraphicPanelFieldManager fieldConfigManager);
 
     /**
+     * Gets the minimum version for SLD symbol.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    abstract public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList);
+
+    /**
      * Returns true if the class can handle the graphical symbol.
      *
      * @param symbol the symbol
@@ -268,4 +281,12 @@ public abstract class FieldState extends FieldConfigBase {
     protected List<ValueComboBoxData> getLocalSymbolList() {
         return localSymbolList;
     }
+
+    /**
+     * Gets the vendor option info.
+     *
+     * @return the vendor option info
+     */
+    abstract public VendorOptionInfo getVendorOptionInfo();
+
 }

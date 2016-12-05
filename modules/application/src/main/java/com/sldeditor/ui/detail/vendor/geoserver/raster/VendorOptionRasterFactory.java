@@ -30,6 +30,7 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
@@ -190,5 +191,21 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
             }
         }
         return vendorOptionInfoList;
+    }
+
+    /**
+     * Gets the minimum version.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        for(VendorOptionInterface vo : vendorOptionList)
+        {
+            vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        }
     }
 }

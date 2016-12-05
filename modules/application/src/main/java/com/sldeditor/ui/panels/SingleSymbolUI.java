@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.SymbolizerDetailsPanel;
@@ -186,5 +187,19 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         panelSymbolizerDetails.mergeFieldDataManager(mergedData);
 
         return mergedData;
+    }
+
+    /**
+     * Gets the minimum version vendor option present in the SLD.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        panelSymbolizerDetails.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

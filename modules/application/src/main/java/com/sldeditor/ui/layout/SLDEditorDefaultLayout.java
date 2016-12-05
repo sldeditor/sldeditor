@@ -90,7 +90,6 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol.tooltip"));
 
         // Legend data panel
-
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend"), null, legendPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend.tooltip"));
 
@@ -106,6 +105,10 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
         JComponent dataSourceConfig = uiMgr.getDataSourceConfig();
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource"), null, dataSourceConfig,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource.tooltip"));
+
+        JComponent vendorOptionConfig = uiMgr.getVendorOption();
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption"), null, vendorOptionConfig,
+                Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption.tooltip"));
 
         panel.add(tabbedPane);
         tabbedPane.addChangeListener(new ChangeListener() {

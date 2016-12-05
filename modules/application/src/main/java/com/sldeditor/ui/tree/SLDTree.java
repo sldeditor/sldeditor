@@ -263,7 +263,7 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
             if (sld != null) {
                 List<StyledLayer> styledLayerList = sld.layers();
 
-                if (sld != null) {
+                if (styledLayerList != null) {
                     for (StyledLayer styledLayer : styledLayerList) {
                         DefaultMutableTreeNode styledLayerTreeNode = null;
                         List<Style> styleList = null;

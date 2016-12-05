@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
@@ -79,10 +78,6 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info = new VendorOptionInfo("Windbarbs",
-                windBarbs.getVendorOptionVersion(),
-                Localisation.getString(WindBarbDetails.class, "VOGeoServerWindbarbSymbol.description"));
-
-        return info;
+        return windBarbs.getVendorOptionInfo();
     }
 }

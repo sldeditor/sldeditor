@@ -19,6 +19,7 @@
 package com.sldeditor.ui.detail.vendor.geoserver.fill;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
@@ -33,6 +34,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -51,7 +53,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerRandomFill extends StandardPanel
-        implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
+implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/fill/PanelConfig_GeoServerRandomFill.xml";
@@ -64,6 +66,8 @@ public class VOGeoServerRandomFill extends StandardPanel
 
     /** The parent obj. */
     private UpdateSymbolInterface parentObj = null;
+
+    private VendorOptionInfo vendorOptionInfo;
 
     /**
      * Instantiates a new VOGeoServerRandomFill class.
@@ -477,10 +481,38 @@ public class VOGeoServerRandomFill extends StandardPanel
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info = new VendorOptionInfo("Polygon Random Fill",
-                getVendorOptionVersion(),
-                Localisation.getString(VOGeoServerRandomFill.class, "VOGeoServerRandomFill.description"));
+        if(vendorOptionInfo == null)
+        {
+            vendorOptionInfo = new VendorOptionInfo("Polygon Random Fill",
+                    getVendorOptionVersion(),
+                    Localisation.getString(VOGeoServerRandomFill.class, "VOGeoServerRandomFill.description"));
+        }
+        return vendorOptionInfo;
+    }
 
-        return info;
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+
+        if(parentObj instanceof PolygonSymbolizer)
+        {
+            PolygonSymbolizer polygon = (PolygonSymbolizer) parentObj;
+            Map<String, String> options = polygon.getOptions();
+
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                String vendorOptionAttributeKey = fieldMap.get(key);
+
+                if(options.containsKey(vendorOptionAttributeKey))
+                {
+                    VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
+                            getVendorOptionInfo());
+
+                    vendorOptionsPresentList.add(voPresent);
+                }
+            }
+        }
     }
 }

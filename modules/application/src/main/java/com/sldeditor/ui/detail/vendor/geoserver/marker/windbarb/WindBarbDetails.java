@@ -38,6 +38,7 @@ import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.attribute.AttributeUtils;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
@@ -74,6 +75,7 @@ UpdateSymbolInterface {
      * Instantiates a new feature type style details.
      *
      * @param parentObj the parent obj
+     * @param functionManager the function manager
      */
     public WindBarbDetails(WindBarbUpdateInterface parentObj, FunctionNameInterface functionManager)
     {
@@ -101,9 +103,23 @@ UpdateSymbolInterface {
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        Expression wellKnownName = null;
-
         Symbolizer symbolizer = selectedSymbol.getSymbolizer();
+        Expression wellKnownName = getWellKnownName(symbolizer);
+
+        if(wellKnownName != null)
+        {
+            populateExpression(wellKnownName.toString());
+        }
+    }
+
+    /**
+     * Gets the well known name.
+     *
+     * @param symbolizer the symbolizer
+     * @return the well known name
+     */
+    private Expression getWellKnownName(Symbolizer symbolizer) {
+        Expression wellKnownName = null;
         if(symbolizer instanceof PointSymbolizerImpl)
         {
             PointSymbolizerImpl point = (PointSymbolizerImpl) symbolizer;
@@ -121,11 +137,7 @@ UpdateSymbolInterface {
                 }
             }
         }
-
-        if(wellKnownName != null)
-        {
-            populateExpression(wellKnownName.toString());
-        }
+        return wellKnownName;
     }
 
     /**
@@ -321,4 +333,14 @@ UpdateSymbolInterface {
     public void preLoadSymbol() {
         setAllDefaultValues();
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // Do nothing
+    }
+
 }

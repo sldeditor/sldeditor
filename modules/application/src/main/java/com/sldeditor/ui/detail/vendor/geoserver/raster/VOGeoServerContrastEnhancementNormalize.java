@@ -18,6 +18,7 @@
  */
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
+import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.ChannelSelection;
@@ -35,6 +36,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.StandardPanel;
@@ -424,5 +426,15 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                 Localisation.getString(VOGeoServerContrastEnhancementNormalize.class, "VOGeoServerContrastEnhancementNormalize.description"));
 
         return info;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // No vendor options
     }
 }

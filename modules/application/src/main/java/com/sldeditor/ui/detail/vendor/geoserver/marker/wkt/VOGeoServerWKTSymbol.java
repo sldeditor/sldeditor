@@ -78,7 +78,6 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
         return fieldStateList;
     }
 
-
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
