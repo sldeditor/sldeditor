@@ -143,7 +143,15 @@ public class RelativePath {
 
         Path filePath = Paths.get(file.getAbsolutePath());
         Path folderPath = Paths.get(folder.getAbsolutePath());
-        Path path = folderPath.relativize(filePath);
+        Path path = null;
+        try
+        {
+            path = folderPath.relativize(filePath);
+        }
+        catch(Exception e)
+        {
+            path = filePath;
+        }
 
         return path.toString();
     }
