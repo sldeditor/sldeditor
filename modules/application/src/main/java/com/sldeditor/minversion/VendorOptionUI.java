@@ -51,6 +51,7 @@ import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
+import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
@@ -99,6 +100,9 @@ public class VendorOptionUI extends JPanel
         createUI();
 
         minimumVersion = new MinimumVersion(uiMgr);
+
+        // Listen for changes in the SLD
+        RenderPanelFactory.addSLDOutputListener(this);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
     }

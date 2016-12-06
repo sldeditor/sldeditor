@@ -26,6 +26,7 @@ import java.util.Map;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
+import org.geotools.styling.Stroke;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
@@ -116,9 +117,9 @@ public class SymbolTypeFactory {
         symbolTypeFieldList.add(externalImageField);
         symbolTypeFieldList.add(ttfField);
 
-        List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory.getVendorOptionMarkerSymbols(panelId, 
-                fillFieldConfig,
-                strokeFieldConfig, symbolSelectionField);
+        List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory
+                .getVendorOptionMarkerSymbols(panelId, fillFieldConfig, strokeFieldConfig,
+                        symbolSelectionField);
         symbolTypeFieldList.addAll(voFieldStateList);
 
         for (FieldState fieldConfig : symbolTypeFieldList) {
@@ -148,8 +149,7 @@ public class SymbolTypeFactory {
      * @param fillPanel the graphic panel
      * @param fieldConfigManager the field config manager
      */
-    public void populate(PointFillDetails fillPanel,
-            GraphicPanelFieldManager fieldConfigManager) {
+    public void populate(PointFillDetails fillPanel, GraphicPanelFieldManager fieldConfigManager) {
 
         internal_populate(fillPanel, fillPanel, fillPanel, this.selectionComboBox,
                 fieldConfigManager);
@@ -163,8 +163,8 @@ public class SymbolTypeFactory {
      */
     public void populate(StrokeDetails strokePanel, GraphicPanelFieldManager fieldConfigManager) {
 
-        internal_populate(strokePanel, strokePanel, strokePanel,
-                FieldIdEnum.STROKE_STYLE, fieldConfigManager);
+        internal_populate(strokePanel, strokePanel, strokePanel, FieldIdEnum.STROKE_STYLE,
+                fieldConfigManager);
     }
 
     /**
@@ -178,13 +178,11 @@ public class SymbolTypeFactory {
      */
     private void internal_populate(BasePanel basePanel,
             MultiOptionSelectedInterface multiOptionSelected, UpdateSymbolInterface updateSymbol,
-            FieldIdEnum selectionField,
-            GraphicPanelFieldManager fieldConfigManager) {
+            FieldIdEnum selectionField, GraphicPanelFieldManager fieldConfigManager) {
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
         /**
-         * Populate symbol type list. Given a panel details class iterate over all the 
-         * field panels asking them to populate the symbol type list.
+         * Populate symbol type list. Given a panel details class iterate over all the field panels asking them to populate the symbol type list.
          */
         for (FieldState panel : symbolTypeFieldList) {
             panel.populateSymbolList(basePanel.getClass(), combinedSymbolList);
@@ -408,17 +406,27 @@ public class SymbolTypeFactory {
             List<VendorOptionPresent> vendorOptionsPresentList) {
         GraphicalSymbol symbol = null;
 
-        if(sldObj instanceof Graphic)
-        {
-            List<GraphicalSymbol> graphicalSymbolList = ((Graphic)sldObj).graphicalSymbols();
+        Graphic graphic = null;
 
-            if((graphicalSymbolList != null) && !graphicalSymbolList.isEmpty())
-            {
+        if (sldObj instanceof Graphic) {
+            graphic = (Graphic) sldObj;
+        } else if (sldObj instanceof Fill) {
+            Fill fill = (Fill) sldObj;
+            graphic = fill.getGraphicFill();
+        } else if (sldObj instanceof Stroke) {
+            Stroke stroke = (Stroke) sldObj;
+            graphic = stroke.getGraphicStroke();
+        }
+
+        if (graphic != null) {
+            List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
+
+            if ((graphicalSymbolList != null) && !graphicalSymbolList.isEmpty()) {
                 symbol = graphicalSymbolList.get(0);
             }
         }
-        if(symbol != null)
-        {
+
+        if (symbol != null) {
             for (FieldState panel : symbolTypeFieldList) {
                 if (panel.accept(symbol)) {
                     panel.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
