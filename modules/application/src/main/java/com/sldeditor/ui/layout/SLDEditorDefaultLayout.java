@@ -98,14 +98,17 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.sld"), null, sldPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.sld.tooltip"));
 
+        // Map renderer
         MapRender mapTabPanel = RenderPanelFactory.getMapRenderer();
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.map"), null, mapTabPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.map.tooltip"));
 
+        // Data source
         JComponent dataSourceConfig = uiMgr.getDataSourceConfig();
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource"), null, dataSourceConfig,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource.tooltip"));
 
+        // Vendor option
         JComponent vendorOptionConfig = uiMgr.getVendorOption();
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption"), null, vendorOptionConfig,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption.tooltip"));

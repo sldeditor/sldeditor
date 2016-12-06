@@ -63,7 +63,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     private String vendorOption = null;
 
     /** The vendor option type. */
-    private Class<?> vendorOptionType = null;
+    private Class<?> vendorOptionType = NoVendorOption.class;
 
     /** The snapshot flag. */
     private boolean snapshot = false;

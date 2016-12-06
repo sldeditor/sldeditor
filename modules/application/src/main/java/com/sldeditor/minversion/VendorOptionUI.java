@@ -20,11 +20,15 @@
 package com.sldeditor.minversion;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -49,9 +53,6 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.panels.SLDEditorUIPanels;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * The Class VendorOptionUI.
@@ -120,20 +121,20 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
      */
     public void createUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         // Vendor options
-        JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+        JPanel vendorOptionSelectionPanel = new JPanel();
+        vendorOptionSelectionPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
                 Localisation.getString(VendorOptionUI.class, "VendorOptionUI.vendorOptions"),
                 TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panel_1.setLayout(new BorderLayout());
-        add(panel_1);
-
-        JScrollPane scrollPane = new JScrollPane();
-        panel_1.add(scrollPane, BorderLayout.CENTER);
+        vendorOptionSelectionPanel.setLayout(new BorderLayout());
+        add(vendorOptionSelectionPanel);
 
         vendorOptionTable = new JTable();
-        scrollPane.setViewportView(vendorOptionTable);
+        JScrollPane scrollPane = new JScrollPane(vendorOptionTable);
+        vendorOptionSelectionPanel.add(scrollPane, BorderLayout.CENTER);
 
+        vendorOptionSelectionPanel.setPreferredSize(new Dimension(400, 100));
         vendorOptionModel = new VendorOptionTableModel(options);
 
         vendorOptionTable.setModel(vendorOptionModel);
@@ -144,6 +145,7 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
         // Vendor option information
         VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance()
                 .getPanel();
+        vendorOptionInfoPanel.setPreferredSize(new Dimension(400, 200));
         add(vendorOptionInfoPanel);
 
         // VendorOption present table
@@ -152,12 +154,13 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
                 Localisation.getString(VendorOptionUI.class, "VendorOptionUI.loadedSymbol"),
                 TitledBorder.LEADING, TitledBorder.TOP, null, null));
         voPresentPanel.setLayout(new BorderLayout());
-        JScrollPane scrollPaneTable = new JScrollPane();
-        voPresentPanel.add(scrollPaneTable, BorderLayout.CENTER);
+        voPresentPanel.setPreferredSize(new Dimension(400, 300));
 
         vendorOptionPresentTable = new JTable();
         vendorOptionPresentTable.setModel(vendorOptionPresentModel);
-        scrollPaneTable.setViewportView(vendorOptionPresentTable);
+
+        JScrollPane scrollPaneTable = new JScrollPane(vendorOptionPresentTable);
+        voPresentPanel.add(scrollPaneTable, BorderLayout.CENTER);
 
         add(voPresentPanel);
 
