@@ -90,7 +90,7 @@ public class VendorOptionManager {
         if (fXmlFile == null) {
             ConsoleManager.getInstance().error(VendorOptionManager.class,
                     Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
-                    + RESOURCE_FILE);
+                            + RESOURCE_FILE);
             return;
         }
 
@@ -365,8 +365,7 @@ public class VendorOptionManager {
      * @param selectedVendorOptions the selectedVendorOptions to set
      */
     public void setSelectedVendorOptions(List<VersionData> selectedVendorOptions) {
-        if(!this.selectedVendorOptions.equals(selectedVendorOptions))
-        {
+        if (!this.selectedVendorOptions.equals(selectedVendorOptions)) {
             this.selectedVendorOptions = selectedVendorOptions;
 
             for (VendorOptionUpdateInterface listener : vendorOptionListenerList) {
@@ -382,20 +381,28 @@ public class VendorOptionManager {
      * @param sld the sld
      * @param sldData the sld data
      */
-    public void loadSLDFile(GetMinimumVersionInterface uiMgr, StyledLayerDescriptor sld, SLDDataInterface sldData)
-    {
-        if(sldData != null)
-        {
-            if(sldData.getSldEditorFile() == null)
-            {
+    public void loadSLDFile(GetMinimumVersionInterface uiMgr, StyledLayerDescriptor sld,
+            SLDDataInterface sldData) {
+        if (sldData != null) {
+            if (sldData.getSldEditorFile() == null) {
                 MinimumVersion minimumVersion = new MinimumVersion(uiMgr);
 
                 minimumVersion.findMinimumVersion(sld);
-                setSelectedVendorOptions(minimumVersion.getMinimumVersion());
-            }
-            else
-            {
-                setSelectedVendorOptions(sldData.getVendorOptionList());
+                List<VersionData> selectedVendorOptionVersion = minimumVersion.getMinimumVersion();
+                setSelectedVendorOptions(selectedVendorOptionVersion);
+                ConsoleManager.getInstance().information(this,
+                        String.format("%s : %s",
+                                Localisation.getString(VendorOptionManager.class,
+                                        "VendorOptionManager.loadedFromFile"),
+                                selectedVendorOptionVersion.get(0).getVersionString()));
+            } else {
+                List<VersionData> selectedVendorOptionVersion = sldData.getVendorOptionList();
+                setSelectedVendorOptions(selectedVendorOptionVersion);
+                ConsoleManager.getInstance().information(this,
+                        String.format("%s : %s",
+                                Localisation.getString(VendorOptionManager.class,
+                                        "VendorOptionManager.loadedFromSLDEditorFile"),
+                                selectedVendorOptionVersion.get(0).getVersionString()));
             }
         }
     }

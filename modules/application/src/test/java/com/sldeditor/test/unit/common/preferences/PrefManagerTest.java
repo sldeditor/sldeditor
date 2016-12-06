@@ -316,8 +316,6 @@ public class PrefManagerTest {
         {
             encodelist.add(versionData.getEncodedString());
         }
-        assertTrue(PrefManager.cmpList(encodelist, propertyManager.getStringListValue("SldEditor.vendorOptions")));
-
         PrefManager.initialise(null);
     }
 
