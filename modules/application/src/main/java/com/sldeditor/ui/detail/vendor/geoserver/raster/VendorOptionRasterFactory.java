@@ -23,9 +23,8 @@ import java.util.List;
 
 import org.geotools.styling.RasterSymbolizer;
 
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
@@ -42,7 +41,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, PrefUpdateVendorOptionInterface {
+public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option geo server contrast enhancement normalize (red). */
     private VOGeoServerContrastEnhancementNormalizeRed vendorOptionGeoServerContrastEnhancementNormalizeRed = null;
@@ -86,7 +85,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeGrey);
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeOverall);
 
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
     }
 

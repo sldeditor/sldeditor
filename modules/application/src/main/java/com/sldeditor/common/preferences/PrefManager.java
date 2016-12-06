@@ -27,7 +27,6 @@ import java.util.Map;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -78,9 +77,6 @@ public class PrefManager implements UndoActionInterface {
     /** The listener list. */
     private List<PrefUpdateInterface> listenerList = new ArrayList<PrefUpdateInterface>();
 
-    /** The vendor option listener list. */
-    private List<PrefUpdateVendorOptionInterface> vendorOptionListenerList = new ArrayList<PrefUpdateVendorOptionInterface>();
-
     /** The old value obj. */
     private Object oldValueObj = null;
 
@@ -129,18 +125,6 @@ public class PrefManager implements UndoActionInterface {
             listenerList.add(listener);
 
             listener.useAntiAliasUpdated(this.prefData.isUseAntiAlias());
-        }
-    }
-
-    /**
-     * Adds the vendor option listener.
-     *
-     * @param listener the listener
-     */
-    public void addVendorOptionListener(PrefUpdateVendorOptionInterface listener) {
-        if (!vendorOptionListenerList.contains(listener)) {
-            vendorOptionListenerList.add(listener);
-            listener.vendorOptionsUpdated(this.prefData.getVendorOptionVersionList());
         }
     }
 
@@ -208,7 +192,6 @@ public class PrefManager implements UndoActionInterface {
             if (!vendorOptionVersionList.contains(defaultVendorOption)) {
                 vendorOptionVersionList.add(defaultVendorOption);
             }
-            newPrefData.setVendorOptionVersionList(vendorOptionVersionList);
             newPrefData.setBackgroundColour(
                     propertyManagerInstance.getColourValue(BACKGROUND_COLOUR_FIELD, Color.WHITE));
             newPrefData.setSaveLastFolderView(
@@ -261,52 +244,6 @@ public class PrefManager implements UndoActionInterface {
     }
 
     /**
-     * Sets the vendor option list.
-     *
-     * @param vendorOptionVersionList the new vendor option list
-     * @param saveChange the save change flag
-     */
-    private void setVendorOptionList(List<VersionData> vendorOptionVersionList,
-            boolean saveChange) {
-
-        if (vendorOptionVersionList == null) {
-            vendorOptionVersionList = new ArrayList<VersionData>();
-            vendorOptionVersionList.add(
-                    VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
-        }
-
-        if (!cmpList(this.prefData.getVendorOptionVersionList(), vendorOptionVersionList)) {
-            this.prefData.setVendorOptionVersionList(vendorOptionVersionList);
-
-            List<String> vendorOptionVersionStringList = new ArrayList<String>();
-            for (VersionData versionData : vendorOptionVersionList) {
-                vendorOptionVersionStringList.add(versionData.getEncodedString());
-            }
-
-            if (saveChange) {  // When running integration tests don't update users preferences
-                if (propertyManagerInstance != null) {
-                    propertyManagerInstance.updateValue(VENDOROPTIONS_FIELD,
-                            vendorOptionVersionStringList);
-                }
-            }
-
-            for (PrefUpdateVendorOptionInterface listener : vendorOptionListenerList) {
-                listener.vendorOptionsUpdated(vendorOptionVersionList);
-            }
-        }
-    }
-
-    /**
-     * Override vendor option list,  when running integration tests
-     * don't update users preferences
-     *
-     * @param vendorOptionVersionList the vendor option version list
-     */
-    public void overrideVendorOptionList(List<VersionData> vendorOptionVersionList) {
-        setVendorOptionList(vendorOptionVersionList, false);
-    }
-
-    /**
      * Sets the pref data.
      *
      * @param newPrefData the new pref data
@@ -315,7 +252,6 @@ public class PrefManager implements UndoActionInterface {
         oldValueObj = prefData.clone();
 
         setUseAntiAlias(newPrefData.isUseAntiAlias());
-        setVendorOptionList(newPrefData.getVendorOptionVersionList(), true);
         setUiLayoutClass(newPrefData.getUiLayoutClass());
         setBackgroundColour(newPrefData.getBackgroundColour());
         setLastFolderViewed(newPrefData.isSaveLastFolderView(), newPrefData.getLastViewedKey(),

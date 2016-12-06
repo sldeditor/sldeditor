@@ -43,7 +43,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
@@ -55,7 +55,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class MenuComboBox extends JMenuBar implements PrefUpdateVendorOptionInterface {
+public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;

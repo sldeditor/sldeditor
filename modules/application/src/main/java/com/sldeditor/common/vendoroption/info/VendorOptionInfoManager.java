@@ -22,8 +22,7 @@ package com.sldeditor.common.vendoroption.info;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sldeditor.common.preferences.PrefData;
-import com.sldeditor.common.preferences.PrefManager;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 
@@ -119,11 +118,9 @@ public class VendorOptionInfoManager {
             infoModel.setSelectedVersion(versionData);
         }
 
-        PrefData prefData = PrefManager.getInstance().getPrefData();
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();
         vendorOptionList.add(versionData);
-        prefData.setVendorOptionVersionList(vendorOptionList);
 
-        PrefManager.getInstance().setPrefData(prefData);
+        VendorOptionManager.getInstance().setSelectedVendorOptions(vendorOptionList);
     }
 }

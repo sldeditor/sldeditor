@@ -174,7 +174,6 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         Expression expGap = null;
         Expression expInitialGap = null;
 
-        PolygonSymbolizer polygon = null;
         Fill fill = null;
         Expression expOpacity = null;
 
@@ -299,7 +298,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
 
         if(vendorOptionFillFactory != null)
         {
-            vendorOptionFillFactory.populate(polygon);
+            if(symbolizer instanceof PolygonSymbolizer)
+            {
+                vendorOptionFillFactory.populate((PolygonSymbolizer) symbolizer);
+            }
         }
 
         updateSymbol();

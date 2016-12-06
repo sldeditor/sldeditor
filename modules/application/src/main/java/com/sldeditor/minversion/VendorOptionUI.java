@@ -38,21 +38,20 @@ import javax.swing.border.TitledBorder;
 import org.geotools.styling.StyledLayerDescriptor;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputInterface;
-import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.VendorOptionTableModel;
 import com.sldeditor.common.preferences.VersionCellEditor;
 import com.sldeditor.common.preferences.VersionCellRenderer;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
-import com.sldeditor.render.RenderPanelFactory;
-import com.sldeditor.ui.panels.SLDEditorUIPanels;
+import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
  * The Class VendorOptionUI.
@@ -60,7 +59,7 @@ import com.sldeditor.ui.panels.SLDEditorUIPanels;
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionUI extends JPanel
-implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
+        implements SLDOutputInterface, VendorOptionUpdateInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -94,17 +93,14 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
      *
      * @param uiMgr the ui mgr
      */
-    public VendorOptionUI(SLDEditorUIPanels uiMgr) {
+    public VendorOptionUI(GetMinimumVersionInterface uiMgr) {
         addVendorOption(VendorOptionManager.getInstance().getClass(GeoServerVendorOption.class));
 
         createUI();
 
         minimumVersion = new MinimumVersion(uiMgr);
 
-        // Listen for changes in the SLD
-        RenderPanelFactory.addSLDOutputListener(this);
-
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
     }
 
     /**
@@ -124,9 +120,11 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
 
         // Vendor options
         JPanel vendorOptionSelectionPanel = new JPanel();
-        vendorOptionSelectionPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-                Localisation.getString(VendorOptionUI.class, "VendorOptionUI.vendorOptions"),
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        vendorOptionSelectionPanel
+                .setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+                        Localisation.getString(VendorOptionUI.class,
+                                "VendorOptionUI.vendorOptions"),
+                        TitledBorder.LEADING, TitledBorder.TOP, null, null));
         vendorOptionSelectionPanel.setLayout(new BorderLayout());
         add(vendorOptionSelectionPanel);
 
@@ -140,7 +138,7 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
         vendorOptionTable.setModel(vendorOptionModel);
         vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
         vendorOptionTable.getColumnModel().getColumn(1)
-        .setCellEditor(new VersionCellEditor(vendorOptionModel));
+                .setCellEditor(new VersionCellEditor(vendorOptionModel));
 
         // Vendor option information
         VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance()
@@ -167,7 +165,8 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
         JPanel panel = new JPanel();
         voPresentPanel.add(panel, BorderLayout.SOUTH);
 
-        btnLatestVO = new JButton(Localisation.getString(VendorOptionUI.class, "VendorOptionUI.latest"));
+        btnLatestVO = new JButton(
+                Localisation.getString(VendorOptionUI.class, "VendorOptionUI.latest"));
         btnLatestVO.setEnabled(false);
         btnLatestVO.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -176,7 +175,8 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
         });
         panel.add(btnLatestVO);
 
-        btnMinimumVendorOption = new JButton(Localisation.getString(VendorOptionUI.class, "VendorOptionUI.minimumVO"));
+        btnMinimumVendorOption = new JButton(
+                Localisation.getString(VendorOptionUI.class, "VendorOptionUI.minimumVO"));
         btnMinimumVendorOption.setEnabled(false);
         btnMinimumVendorOption.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -194,13 +194,7 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
      */
     @Override
     public void updatedSLD(SLDDataInterface sldData, StyledLayerDescriptor sld) {
-        minimumVersion.findMinimumVersion(sld);
-
-        vendorOptionPresentModel.populate(minimumVersion.getVendorOptionsPresentList());
-
-        boolean hasVendorOptionData = vendorOptionPresentModel.getRowCount() > 0;
-        btnLatestVO.setEnabled(hasVendorOptionData);
-        btnMinimumVendorOption.setEnabled(hasVendorOptionData);
+        updatePanel(sld);
     }
 
     /*
@@ -211,5 +205,30 @@ implements SLDOutputInterface, PrefUpdateVendorOptionInterface {
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
         vendorOptionModel.setSelectedVendorOptionVersions(vendorOptionVersionsList);
+    }
+
+    /**
+     * @param instance
+     */
+    public void populate(SelectedSymbol selectedSymbol) {
+        if (selectedSymbol != null) {
+            StyledLayerDescriptor sld = selectedSymbol.getSld();
+            updatePanel(sld);
+        }
+    }
+
+    /**
+     * Update panel.
+     *
+     * @param sld the sld
+     */
+    private void updatePanel(StyledLayerDescriptor sld) {
+        minimumVersion.findMinimumVersion(sld);
+
+        vendorOptionPresentModel.populate(minimumVersion.getVendorOptionsPresentList());
+
+        boolean hasVendorOptionData = (vendorOptionPresentModel.getRowCount() > 0);
+        btnLatestVO.setEnabled(hasVendorOptionData);
+        btnMinimumVendorOption.setEnabled(hasVendorOptionData);
     }
 }

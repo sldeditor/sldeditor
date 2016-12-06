@@ -24,9 +24,8 @@ import java.util.List;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
@@ -42,7 +41,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionFillFactory implements VendorOptionFactoryInterface, PrefUpdateVendorOptionInterface {
+public class VendorOptionFillFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option GeoServer random fill. */
     private VOGeoServerRandomFill vendorOptionGeoServerRandomFill = null;
@@ -65,7 +64,7 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Pr
 
         vendorOptionList.add(vendorOptionGeoServerRandomFill);
 
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
 
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
     }

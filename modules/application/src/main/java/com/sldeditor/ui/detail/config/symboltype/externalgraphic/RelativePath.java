@@ -51,6 +51,13 @@ public class RelativePath {
         return !(testPathWin(path, prefixLen) || testPathLinux(prefixLen));
     }
 
+    /**
+     * Test path (Windows).
+     *
+     * @param path the path
+     * @param prefixLen the prefix length
+     * @return true, if successful
+     */
     private static boolean testPathWin(String path, int prefixLen) {
         if (prefixLen == 3)
             return true;
@@ -60,6 +67,12 @@ public class RelativePath {
         return false;
     }
 
+    /**
+     * Test path (Linux(.
+     *
+     * @param prefixLen the prefix length
+     * @return true, if successful
+     */
     private static boolean testPathLinux(int prefixLen) {
         return (prefixLen != 0);
     }
@@ -103,7 +116,7 @@ public class RelativePath {
      * @param url the url
      * @return true, if is local file
      */
-    private static boolean isLocalFile(URL url) {
+    public static boolean isLocalFile(URL url) {
         if (url == null) {
             return false;
         }

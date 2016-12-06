@@ -25,9 +25,8 @@ import javax.swing.Box;
 
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
@@ -37,7 +36,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpdateVendorOptionInterface {
+public class FieldConfigVendorOption extends FieldConfigBase implements VendorOptionUpdateInterface {
 
     /** The vendor option versions list. */
     private List<VersionData> vendorOptionVersionsList = null;
@@ -64,7 +63,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements PrefUpda
 
         this.veList = veList;
 
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
     }
 
     /**

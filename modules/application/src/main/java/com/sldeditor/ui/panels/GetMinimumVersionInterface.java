@@ -16,23 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.common.preferences.iface;
+
+package com.sldeditor.ui.panels;
 
 import java.util.List;
 
-import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.minversion.VendorOptionPresent;
 
 /**
- * The Interface PrefUpdateVendorOptionInterface.
- * 
  * @author Robert Ward (SCISYS)
+ *
  */
-public interface PrefUpdateVendorOptionInterface {
+public interface GetMinimumVersionInterface {
 
     /**
-     * Vendor options updated.
+     * Gets the minimum version vendor option present in the SLD.
      *
-     * @param vendorOptionVersionsList the vendor option versions list
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
      */
-    void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList);
+    void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList);
+
 }

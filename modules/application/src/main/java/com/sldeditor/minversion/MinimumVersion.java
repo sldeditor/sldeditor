@@ -34,7 +34,9 @@ import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.ui.panels.SLDEditorUIPanels;
+import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
  * The Class MinimumVersion.
@@ -44,7 +46,7 @@ import com.sldeditor.ui.panels.SLDEditorUIPanels;
 public class MinimumVersion {
 
     /** The ui manager. */
-    private SLDEditorUIPanels uiMgr = null;
+    private GetMinimumVersionInterface uiMgr = null;
 
     /** The vendor options present list. */
     private List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<VendorOptionPresent>();
@@ -57,7 +59,7 @@ public class MinimumVersion {
      *
      * @param uiMgr the ui mgr
      */
-    public MinimumVersion(SLDEditorUIPanels uiMgr) {
+    public MinimumVersion(GetMinimumVersionInterface uiMgr) {
         this.uiMgr = uiMgr;
     }
 
@@ -142,5 +144,26 @@ public class MinimumVersion {
      */
     public List<VendorOptionPresent> getVendorOptionsPresentList() {
         return vendorOptionsPresentList;
+    }
+
+    /**
+     * Gets the minimum version.
+     *
+     * @return the minimum version
+     */
+    public List<VersionData> getMinimumVersion() {
+        List<VersionData> list = new ArrayList<VersionData>();
+        if(vendorOptionsPresentList.isEmpty())
+        {
+            list.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+        }
+        else
+        {
+            VendorOptionPresent lastVendorOption = vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
+            VendorOptionInfo vendorOptionInfo = lastVendorOption.getVendorOptionInfo();
+            list.add(vendorOptionInfo.getVersionData().getEarliest());
+        }
+
+        return list;
     }
 }

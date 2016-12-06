@@ -38,11 +38,11 @@ import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -239,7 +239,7 @@ public class PrefManagerTest {
         }
     }
 
-    class DummyVendorOptionChanged implements PrefUpdateVendorOptionInterface
+    class DummyVendorOptionChanged implements VendorOptionUpdateInterface
     {
         public List<VersionData> vendorOptionVersionsList = null;
 
@@ -259,24 +259,16 @@ public class PrefManagerTest {
         prefData.setUseAntiAlias(true);
         Color backgroundColour = Color.GRAY;
         prefData.setBackgroundColour(backgroundColour);
-        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
-        vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
-        prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
 
         prefData.setUiLayoutClass(uiLayoutClass);
-
-        DummyVendorOptionChanged voListener = new DummyVendorOptionChanged();
-
-        PrefManager.getInstance().addVendorOptionListener(voListener);
 
         PrefManager.getInstance().setPrefData(prefData);
 
         assertEquals(backgroundColour, PrefManager.getInstance().getPrefData().getBackgroundColour());
         assertEquals(uiLayoutClass, PrefManager.getInstance().getPrefData().getUiLayoutClass());
         assertEquals(true, PrefManager.getInstance().getPrefData().isUseAntiAlias());
-        assertEquals(vendorOptionList, voListener.vendorOptionVersionsList);
     }
 
     /**
@@ -293,10 +285,6 @@ public class PrefManagerTest {
         prefData.setUseAntiAlias(true);
         Color backgroundColour = Color.GRAY;
         prefData.setBackgroundColour(backgroundColour);
-        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
-        vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
-
-        prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
 
         prefData.setUiLayoutClass(uiLayoutClass);
@@ -321,10 +309,6 @@ public class PrefManagerTest {
         List<VersionData> newVendorOptionList = new ArrayList<VersionData>();
         newVendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
-        prefData.setVendorOptionVersionList(newVendorOptionList);
-        PrefManager.getInstance().setPrefData(prefData);
-        newVendorOptionList.add(VersionData.getLatestVersion(GeoServerVendorOption.class));
-        prefData.setVendorOptionVersionList(newVendorOptionList);
         PrefManager.getInstance().setPrefData(prefData);
 
         List<String> encodelist = new ArrayList<String>();
@@ -418,7 +402,6 @@ public class PrefManagerTest {
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
         vendorOptionList.add(VersionData.getEarliestVersion(GeoServerVendorOption.class));
 
-        prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
         prefData.setUiLayoutClass(uiLayoutClass);
         String lastFolderViewed = "secret";
@@ -456,7 +439,6 @@ public class PrefManagerTest {
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
         vendorOptionList.add(VersionData.getEarliestVersion(GeoServerVendorOption.class));
 
-        prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
         prefData.setUiLayoutClass(uiLayoutClass);
         String lastFolderViewed = "secret";
