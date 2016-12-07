@@ -83,8 +83,8 @@ public class VendorOptionInfoManager {
      * @param obj the obj
      */
     public void addVendorOptionInfo(VendorOptionFactoryInterface obj) {
-        Class<?> classReceivedFrom = obj.getClass();
         if (obj != null) {
+            Class<?> classReceivedFrom = obj.getClass();
             // Make sure data is only added once for each class sending data
             if (!receivedFromList.contains(classReceivedFrom)) {
                 receivedFromList.add(classReceivedFrom);
@@ -109,8 +109,9 @@ public class VendorOptionInfoManager {
 
             for (VendorOptionFactoryInterface vo : voFactoryList) {
                 List<VendorOptionInfo> vendorOptionInfoList = vo.getVendorOptionInfoList();
-
-                infoList.addAll(vendorOptionInfoList);
+                if (vendorOptionInfoList != null) {
+                    infoList.addAll(vendorOptionInfoList);
+                }
             }
 
             data.infoModel = new VendorOptionInfoModel();

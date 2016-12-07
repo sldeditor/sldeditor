@@ -9,6 +9,7 @@ package com.sldeditor.test.unit.common.vendoroption.info;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class VendorOptionInfoModelTest {
         VendorOptionInfoModel model = new VendorOptionInfoModel();
 
         assertEquals(2, model.getColumnCount());
+        assertNotNull(model.getColumnName(0));
+        assertNotNull(model.getColumnName(1));
     }
 
     /**
@@ -59,6 +62,7 @@ public class VendorOptionInfoModelTest {
     public void testAddVendorOptionInfo() {
         VendorOptionInfoModel model = new VendorOptionInfoModel();
 
+        assertEquals(0, model.getRowCount());
         model.addVendorOptionInfo(null);
         List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
         String name = "name";
