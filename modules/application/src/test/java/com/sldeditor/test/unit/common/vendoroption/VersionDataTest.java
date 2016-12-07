@@ -188,6 +188,7 @@ public class VersionDataTest {
         VersionData versionData4 = VersionData.decode(getClass(), "2.5.1");
         VersionData versionData5 = VersionData.decode(getClass(), "2.8.3");
         VersionData versionData6 = VersionData.decode(getClass(), "2.8.4");
+        VersionData versionData7 = VersionData.getNotSetVersion(getClass());
 
         assertFalse(versionData1.inRange(versionDataMin, versionDataMax));
         assertFalse(versionData2.inRange(versionDataMin, versionDataMax));
@@ -195,6 +196,7 @@ public class VersionDataTest {
         assertTrue(versionData4.inRange(versionDataMin, versionDataMax));
         assertTrue(versionData5.inRange(versionDataMin, versionDataMax));
         assertFalse(versionData6.inRange(versionDataMin, versionDataMax));
+        assertFalse(versionData7.inRange(versionDataMin, versionDataMax));
 
         assertFalse(versionData1.inRange(null, versionDataMax));
         assertFalse(versionData1.inRange(versionDataMin, null));

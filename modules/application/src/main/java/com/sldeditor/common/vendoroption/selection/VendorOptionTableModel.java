@@ -55,7 +55,7 @@ public class VendorOptionTableModel extends AbstractTableModel {
 
     /** The instance. */
     private Class<?> instance = null;
-    
+
     /**
      * Instantiates a new vendor option model.
      *
@@ -211,13 +211,16 @@ public class VendorOptionTableModel extends AbstractTableModel {
                         found = true;
                         this.selectedVersionList.clear();
                         this.selectedVersionList.add(versionData);
-                        VendorOptionInfoManager.getInstance()
-                                .setSelectedVersion(instance, versionData);
+                        VendorOptionInfoManager.getInstance().setSelectedVersion(instance,
+                                versionData);
                     }
                 }
 
                 if (!found) {
-                    this.selectedVersionList.add(VersionData.getNotSetVersion(key.getClass()));
+                    VersionData notSetVersion = VersionData.getNotSetVersion(key.getClass());
+                    this.selectedVersionList.add(notSetVersion);
+                    VendorOptionInfoManager.getInstance().setSelectedVersion(instance,
+                            notSetVersion);
                 }
             }
 

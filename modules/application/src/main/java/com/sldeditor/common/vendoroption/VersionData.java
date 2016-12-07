@@ -343,7 +343,11 @@ public class VersionData implements Comparable<VersionData>, Cloneable
      */
     private boolean greaterThan(VersionData versionData)
     {
-        if(versionData.majorNumber > this.majorNumber)
+        if(versionData.isNotSet != this.isNotSet)
+        {
+            return this.isNotSet;
+        }
+        else if(versionData.majorNumber > this.majorNumber)
         {
             return true;
         }
