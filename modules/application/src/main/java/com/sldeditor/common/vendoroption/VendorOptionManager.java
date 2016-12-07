@@ -71,12 +71,17 @@ public class VendorOptionManager {
     /** The selected vendor options. */
     private List<VersionData> selectedVendorOptions = new ArrayList<VersionData>();
 
+    /** The flag indicating whether vendor option overridden. */
+    private boolean vendorOptionOverridden = false;
+
     /**
      * Instantiates a new vendor option manager.
      */
     private VendorOptionManager() {
         internal_addVendorOption(new NoVendorOption());
         internal_addVendorOption(new GeoServerVendorOption());
+
+        selectedVendorOptions.add(this.getDefaultVendorOptionVersionData());
 
         populate();
     }
@@ -90,7 +95,7 @@ public class VendorOptionManager {
         if (fXmlFile == null) {
             ConsoleManager.getInstance().error(VendorOptionManager.class,
                     Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
-                            + RESOURCE_FILE);
+                    + RESOURCE_FILE);
             return;
         }
 
@@ -347,6 +352,7 @@ public class VendorOptionManager {
     public void addVendorOptionListener(VendorOptionUpdateInterface listener) {
         if (!vendorOptionListenerList.contains(listener)) {
             vendorOptionListenerList.add(listener);
+            notifyVendorOptionUpdated();
         }
     }
 
@@ -366,11 +372,21 @@ public class VendorOptionManager {
      */
     public void setSelectedVendorOptions(List<VersionData> selectedVendorOptions) {
         if (!this.selectedVendorOptions.equals(selectedVendorOptions)) {
-            this.selectedVendorOptions = selectedVendorOptions;
+            if(!vendorOptionOverridden)
+            {
+                this.selectedVendorOptions = selectedVendorOptions;
 
-            for (VendorOptionUpdateInterface listener : vendorOptionListenerList) {
-                listener.vendorOptionsUpdated(this.selectedVendorOptions);
+                notifyVendorOptionUpdated();
             }
+        }
+    }
+
+    /**
+     * Notify vendor option updated.
+     */
+    private void notifyVendorOptionUpdated() {
+        for (VendorOptionUpdateInterface listener : vendorOptionListenerList) {
+            listener.vendorOptionsUpdated(this.selectedVendorOptions);
         }
     }
 
@@ -405,5 +421,16 @@ public class VendorOptionManager {
                                 selectedVendorOptionVersion.get(0).getVersionString()));
             }
         }
+    }
+
+    /**
+     * Override selected vendor options.
+     *
+     * @param vendorOptionList the vendor option list
+     */
+    public void overrideSelectedVendorOptions(List<VersionData> vendorOptionList) {
+        vendorOptionOverridden = false;
+        setSelectedVendorOptions(vendorOptionList);
+        vendorOptionOverridden = true;
     }
 }

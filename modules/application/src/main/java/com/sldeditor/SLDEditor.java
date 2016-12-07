@@ -452,7 +452,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param vendorOptionList the list of vendor options
      */
     public void setVendorOptions(List<VersionData> vendorOptionList) {
-        VendorOptionManager.getInstance().setSelectedVendorOptions(vendorOptionList);
+        VendorOptionManager.getInstance().overrideSelectedVendorOptions(vendorOptionList);
     }
 
     /**
