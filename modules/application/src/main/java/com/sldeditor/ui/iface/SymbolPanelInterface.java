@@ -23,7 +23,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.minversion.VendorOptionPresent;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 
 /**

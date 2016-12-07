@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.minversion;
+package com.sldeditor.common.vendoroption.minversion;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -33,8 +33,8 @@ import org.opengis.filter.expression.Literal;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
 
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;

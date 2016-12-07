@@ -21,8 +21,8 @@ package com.sldeditor.ui.detail;
 import java.util.List;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
-import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 
 /**

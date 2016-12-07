@@ -50,8 +50,8 @@ import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ParseXML;
-import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**

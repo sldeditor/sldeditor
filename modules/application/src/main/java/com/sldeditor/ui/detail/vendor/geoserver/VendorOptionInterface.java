@@ -26,7 +26,7 @@ import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
-import com.sldeditor.minversion.VendorOptionPresent;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 

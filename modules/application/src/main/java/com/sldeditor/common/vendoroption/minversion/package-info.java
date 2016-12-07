@@ -17,26 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.ui.panels;
-
-import java.util.List;
-
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-
 /**
  * @author Robert Ward (SCISYS)
  *
  */
-public interface GetMinimumVersionInterface {
-
-    /**
-     * Gets the minimum version vendor option present in the SLD.
-     *
-     * @param sldObj the sld obj
-     * @param vendorOptionsPresentList the vendor options present list
-     * @return the minimum version
-     */
-    void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList);
-
-}
+package com.sldeditor.common.vendoroption.minversion;

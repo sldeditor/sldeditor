@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.minversion.VendorOptionPresent;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;

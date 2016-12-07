@@ -39,8 +39,8 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefManager;
+import com.sldeditor.common.vendoroption.minversion.MinimumVersion;
 import com.sldeditor.common.xml.ParseXML;
-import com.sldeditor.minversion.MinimumVersion;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**

@@ -27,8 +27,8 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.minversion.VendorOptionPresent;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
