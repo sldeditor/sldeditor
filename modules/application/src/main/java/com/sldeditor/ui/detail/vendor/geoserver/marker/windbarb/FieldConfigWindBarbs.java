@@ -36,8 +36,11 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
 
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
@@ -69,6 +72,8 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/windbarb/SymbolTypeFieldState_WindBarb.xml";
+
+    private VendorOptionInfo vendorOptionInfo;
 
     /**
      * Instantiates a new field config string.
@@ -492,4 +497,31 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         }
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
+                getVendorOptionInfo());
+
+        vendorOptionsPresentList.add(voPresent);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        if(vendorOptionInfo == null)
+        {
+            vendorOptionInfo = new VendorOptionInfo("Windbarbs",
+                    getVendorOptionVersion(),
+                    Localisation.getString(WindBarbDetails.class, "VOGeoServerWindbarbSymbol.description"));
+        }
+        return vendorOptionInfo;
+    }
 }
+

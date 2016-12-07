@@ -37,6 +37,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.utils.ScaleUtil;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.ExpressionPanelFactory;
@@ -345,5 +346,14 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // No vendor options
     }
 }

@@ -23,7 +23,8 @@ import java.util.List;
 
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
@@ -36,7 +37,7 @@ import com.sldeditor.filter.v2.expression.FilterPanelv2;
  *
  * @author Robert Ward (SCISYS)
  */
-public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVendorOptionInterface {
+public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOptionUpdateInterface {
 
     /** The singleton instance. */
     private static ExpressionPanelFactory instance = null;
@@ -65,7 +66,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, PrefUpdateVe
     private ExpressionPanelFactory()
     {
         PrefManager.getInstance().addListener(this);
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
 
         EnvironmentManagerInterface envMgr = EnvironmentVariableManager.getInstance();
         ExpressionNode.setEnvMgr(envMgr);

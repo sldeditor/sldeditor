@@ -26,6 +26,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.NoVendorOption;
+import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 
 /**
@@ -152,8 +154,18 @@ public class VendorOptionInfoModel extends AbstractTableModel {
     public boolean isVendorOptionAvailable(int row) {
         if ((row >= 0) && (row < infoList.size())) {
             VendorOptionInfo info = infoList.get(row);
+            VendorOptionVersion vendorOptionVersion = info.getVersionData();
+ 
+            // Check to see if it is strict SLD, always allowed
+            if (vendorOptionVersion.getClassType() == NoVendorOption.class) {
+                return true;
+            }
 
-            return (info.getVersionData().isAllowed(selectedVersion));
+            if (vendorOptionVersion.getClassType() != selectedVersion.getVendorOptionType()) {
+                return false;
+            }
+
+            return selectedVersion.inRange(vendorOptionVersion.getEarliest(), vendorOptionVersion.getLatest());
         }
         return false;
     }

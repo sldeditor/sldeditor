@@ -30,6 +30,7 @@ import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
@@ -242,5 +243,14 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // No vendor options
     }
 }

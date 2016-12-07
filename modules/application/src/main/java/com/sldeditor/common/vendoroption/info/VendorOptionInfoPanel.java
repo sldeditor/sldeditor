@@ -26,8 +26,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.sldeditor.common.localisation.Localisation;
 
 /**
  * The Class VendorOptionPanel.
@@ -54,6 +58,9 @@ public class VendorOptionInfoPanel extends JPanel {
      * @param tableModel the table model
      */
     public VendorOptionInfoPanel(VendorOptionInfoModel tableModel) {
+        setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+                Localisation.getString(VendorOptionInfoModel.class, "VendorOptionInfoModel.title"),
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
         this.model = tableModel;
 
         createUI();
@@ -72,9 +79,9 @@ public class VendorOptionInfoPanel extends JPanel {
         scrollPane.setViewportView(vendorOptionTable);
         vendorOptionTable.setModel(model);
         vendorOptionTable.getColumnModel().getColumn(0)
-        .setCellRenderer(new VendorOptionInfoCellRenderer(model));
+                .setCellRenderer(new VendorOptionInfoCellRenderer(model));
         vendorOptionTable.getColumnModel().getColumn(1)
-        .setCellRenderer(new VendorOptionInfoCellRenderer(model));
+                .setCellRenderer(new VendorOptionInfoCellRenderer(model));
         vendorOptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override

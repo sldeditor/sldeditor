@@ -30,11 +30,11 @@ import org.apache.log4j.Logger;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
@@ -118,7 +118,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
         comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
 
         // Register for changes in vendor option selections
-        PrefManager.getInstance().addVendorOptionListener(comboBox);
+        VendorOptionManager.getInstance().addVendorOptionListener(comboBox);
         fieldPanel.add(comboBox);
 
         if(!isValueOnly())

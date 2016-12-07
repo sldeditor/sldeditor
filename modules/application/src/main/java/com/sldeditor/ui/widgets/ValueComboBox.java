@@ -27,9 +27,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 
 /**
@@ -37,7 +36,7 @@ import com.sldeditor.common.vendoroption.VersionData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefUpdateVendorOptionInterface {
+public class ValueComboBox extends JComboBox<ValueComboBoxData> implements VendorOptionUpdateInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -71,7 +70,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements PrefU
      */
     public void initialiseSingle(List<ValueComboBoxData> valueList)
     {
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
 
         if(valueList != null)
         {

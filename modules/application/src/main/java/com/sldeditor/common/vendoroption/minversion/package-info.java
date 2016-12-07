@@ -16,23 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.common.preferences.iface;
-
-import java.util.List;
-
-import com.sldeditor.common.vendoroption.VersionData;
 
 /**
- * The Interface PrefUpdateVendorOptionInterface.
- * 
  * @author Robert Ward (SCISYS)
+ *
  */
-public interface PrefUpdateVendorOptionInterface {
-
-    /**
-     * Vendor options updated.
-     *
-     * @param vendorOptionVersionsList the vendor option versions list
-     */
-    void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList);
-}
+package com.sldeditor.common.vendoroption.minversion;

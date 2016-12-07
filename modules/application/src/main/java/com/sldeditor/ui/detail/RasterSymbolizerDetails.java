@@ -33,6 +33,7 @@ import org.opengis.style.ContrastMethod;
 import org.opengis.style.OverlapBehavior;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -556,5 +557,14 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        vendorOptionRasterFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

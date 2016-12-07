@@ -45,6 +45,7 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -71,8 +72,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The fill factory. */
-    private SymbolTypeFactory fillFactory = null;
+    /** The symbol type factory. */
+    private SymbolTypeFactory symbolTypeFactory = null;
 
     /**  The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
@@ -91,6 +92,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
     /**
      * Constructor.
+     *
+     * @param functionManager the function manager
      */
     public StrokeDetails(FunctionNameInterface functionManager)
     {
@@ -98,12 +101,12 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         setUpdateSymbolListener(this);
 
-        fillFactory = new SymbolTypeFactory(StrokeDetails.class, 
+        symbolTypeFactory = new SymbolTypeFactory(StrokeDetails.class, 
                 new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.LINE_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
                 new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.LINE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.STROKE_STYLE);
 
-        fieldEnableState = fillFactory.getFieldOverrides(this.getClass());
+        fieldEnableState = symbolTypeFactory.getFieldOverrides(this.getClass());
 
         createUI();
     }
@@ -115,7 +118,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         readConfigFile(null, this, "Stroke.xml");
 
-        fillFactory.populate(this, fieldConfigManager);
+        symbolTypeFactory.populate(this, fieldConfigManager);
     }
 
     /**
@@ -186,7 +189,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                 displacement = null;
             }
 
-            List<GraphicalSymbol> symbols = fillFactory.getValue(this.fieldConfigManager, symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
+            List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager, symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
 
             Expression initalGap = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_INITIAL_GAP);
             Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_GAP);
@@ -338,7 +341,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         {
             expColour = getFilterFactory().literal("#000000");
             expOpacity = getFilterFactory().literal(1.0);
-            fillFactory.setSolidFill(fieldConfigManager, expColour, expOpacity);
+            symbolTypeFactory.setSolidFill(fieldConfigManager, expColour, expOpacity);
 
             expStrokeWidth = getFilterFactory().literal(1.0);
             expStrokeOffset = getFilterFactory().literal(0.0);
@@ -356,7 +359,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             if((graphicFill == null) && (graphicStroke == null))
             {
                 expOpacity = stroke.getOpacity();
-                fillFactory.setSolidFill(fieldConfigManager, stroke.getColor(), stroke.getOpacity());
+                symbolTypeFactory.setSolidFill(fieldConfigManager, stroke.getColor(), stroke.getOpacity());
             }
 
             expOpacity = stroke.getOpacity();
@@ -436,7 +439,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                         @SuppressWarnings("unused") 
                         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl)graphicSymbol;
                     }
-                    fillFactory.setValue(symbolizerType, this.fieldConfigManager, graphicStroke, graphicSymbol);
+                    symbolTypeFactory.setValue(symbolizerType, this.fieldConfigManager, graphicStroke, graphicSymbol);
                 }
             }
 
@@ -602,10 +605,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                 this.fireUpdateSymbol();
             }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "symbolizer == null");
-            }
         }
     }
 
@@ -711,5 +710,14 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        symbolTypeFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

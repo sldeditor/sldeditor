@@ -246,41 +246,56 @@ public class PrefData implements Cloneable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         PrefData other = (PrefData) obj;
         if (backgroundColour == null) {
-            if (other.backgroundColour != null)
+            if (other.backgroundColour != null) {
                 return false;
-        } else if (!backgroundColour.equals(other.backgroundColour))
+            }
+        } else if (!backgroundColour.equals(other.backgroundColour)) {
             return false;
-        if (checkAppVersionOnStartUp != other.checkAppVersionOnStartUp)
+        }
+        if (checkAppVersionOnStartUp != other.checkAppVersionOnStartUp) {
             return false;
+        }
         if (lastFolderViewed == null) {
-            if (other.lastFolderViewed != null)
+            if (other.lastFolderViewed != null) {
                 return false;
-        } else if (!lastFolderViewed.equals(other.lastFolderViewed))
+            }
+        } else if (!lastFolderViewed.equals(other.lastFolderViewed)) {
             return false;
-        if (lastViewedKey != other.lastViewedKey)
+        }
+        if (lastViewedKey != other.lastViewedKey) {
             return false;
-        if (saveLastFolderView != other.saveLastFolderView)
+        }
+        if (saveLastFolderView != other.saveLastFolderView) {
             return false;
+        }
         if (uiLayoutClass == null) {
-            if (other.uiLayoutClass != null)
+            if (other.uiLayoutClass != null) {
                 return false;
-        } else if (!uiLayoutClass.equals(other.uiLayoutClass))
+            }
+        } else if (!uiLayoutClass.equals(other.uiLayoutClass)) {
             return false;
-        if (useAntiAlias != other.useAntiAlias)
+        }
+        if (useAntiAlias != other.useAntiAlias) {
             return false;
+        }
         if (vendorOptionList == null) {
-            if (other.vendorOptionList != null)
+            if (other.vendorOptionList != null) {
                 return false;
-        } else if (!vendorOptionList.equals(other.vendorOptionList))
+            }
+        } else if (!vendorOptionList.equals(other.vendorOptionList)) {
             return false;
+        }
         return true;
     }
 

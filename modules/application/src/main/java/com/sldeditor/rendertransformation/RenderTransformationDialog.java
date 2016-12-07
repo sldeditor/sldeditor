@@ -57,9 +57,8 @@ import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.connection.GeoServerConnectionManagerInterface;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.preferences.PrefData;
-import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClient;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClientInterface;
@@ -541,12 +540,10 @@ public class RenderTransformationDialog extends JDialog {
             }
         };
 
-        PrefData newPrefData = new PrefData();
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();
         vendorOptionList.add(VersionData.getLatestVersion(GeoServerVendorOption.class));
-        newPrefData.setVendorOptionVersionList(vendorOptionList);
+        VendorOptionManager.getInstance().setSelectedVendorOptions(vendorOptionList);
 
-        PrefManager.getInstance().setPrefData(newPrefData);
         RenderTransformationDialog dlg = new RenderTransformationDialog(dummyInterface);
 
         dlg.showDialog(null);

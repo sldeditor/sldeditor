@@ -18,9 +18,12 @@
  */
 package com.sldeditor.ui.iface;
 
+import java.util.List;
+
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 
 /**
@@ -64,5 +67,16 @@ public interface SymbolPanelInterface {
      * @return the field data manager
      */
     public abstract GraphicPanelFieldManager getFieldDataManager();
+
+    /**
+     * Gets the minimum version vendor option present in the SLD.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList);
 
 }

@@ -32,7 +32,7 @@
         </Value>
     </Panel>
     <Panel type="com.sldeditor.ui.detail.PolygonFillDetails">
-        <Value groupName="shape://" separateGroup="true">
+        <Value groupName="qgis://" separateGroup="true">
             <Item id="qgis://cross" label="qgis://cross" />
             <Item id="qgis://circle" label="qgis://circle" />
             <Item id="qgis://triangle" label="qgis://triangle" />
@@ -63,7 +63,7 @@
         </Value>
     </Panel>
     <Panel type="com.sldeditor.ui.detail.StrokeDetails">
-        <Value groupName="shape://" separateGroup="true">
+        <Value groupName="qgis://" separateGroup="true">
             <Item id="qgis://cross" label="qgis://cross" />
             <Item id="qgis://circle" label="qgis://circle" />
             <Item id="qgis://triangle" label="qgis://triangle" />

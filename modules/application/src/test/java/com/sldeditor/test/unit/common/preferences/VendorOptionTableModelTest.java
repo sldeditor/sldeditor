@@ -32,29 +32,29 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.preferences.VendorOptionTableModel;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
 
 /**
  * Unit test for VendorOptionTableModel.
- * <p>{@link com.sldeditor.common.preferences.VendorOptionTableModel}
+ * <p>{@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel}
  * 
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionTableModelTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getColumnCount()}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getColumnName(int)}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getColumnClass(int)}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#isCellEditable(int, int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnCount()}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnName(int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnClass(int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#isCellEditable(int, int)}.
      */
     @Test
     public void testGetColumnCount() {
-        VendorOptionTableModel model = new VendorOptionTableModel(null);
+        VendorOptionTableModel model = new VendorOptionTableModel(null, null);
 
         assertEquals(2, model.getColumnCount());
         assertEquals(Localisation.getString(VendorOptionTableModel.class, "VendorOptionTableModel.vendor"), model.getColumnName(0));
@@ -70,8 +70,8 @@ public class VendorOptionTableModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getValueAt(int, int)}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getRowCount()}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getValueAt(int, int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getRowCount()}.
      */
     @Test
     public void testGetValueAt() {
@@ -80,7 +80,7 @@ public class VendorOptionTableModelTest {
 
         options.put(vendorOption, vendorOption.getName());
 
-        VendorOptionTableModel model = new VendorOptionTableModel(options);
+        VendorOptionTableModel model = new VendorOptionTableModel(options, null);
 
         assertEquals(1, model.getRowCount());
         String actualValue1 = (String) model.getValueAt(0, 0);
@@ -95,8 +95,8 @@ public class VendorOptionTableModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#setValueAt(java.lang.Object, int, int)}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#setSelectedVersion(com.sldeditor.common.vendoroption.VersionData, int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setValueAt(java.lang.Object, int, int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setSelectedVersion(com.sldeditor.common.vendoroption.VersionData, int)}.
      */
     @Test
     public void testSetValueAtObjectIntInt() {
@@ -105,7 +105,7 @@ public class VendorOptionTableModelTest {
 
         options.put(vendorOption, vendorOption.getName());
 
-        VendorOptionTableModel model = new VendorOptionTableModel(options);
+        VendorOptionTableModel model = new VendorOptionTableModel(options, null);
 
         assertEquals(1, model.getRowCount());
 
@@ -138,9 +138,9 @@ public class VendorOptionTableModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getVendorOption(int)}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#setSelectedVendorOptionVersions(java.util.List)}.
-     * Test method for {@link com.sldeditor.common.preferences.VendorOptionTableModel#getVendorOptionVersionList()}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getVendorOption(int)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setSelectedVendorOptionVersions(java.util.List)}.
+     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getVendorOptionVersionList()}.
      */
     @Test
     public void testGetVendorOption() {
@@ -149,7 +149,7 @@ public class VendorOptionTableModelTest {
 
         options.put(vendorOption, vendorOption.getName());
 
-        VendorOptionTableModel model = new VendorOptionTableModel(options);
+        VendorOptionTableModel model = new VendorOptionTableModel(options, null);
 
         assertEquals(1, model.getRowCount());
 

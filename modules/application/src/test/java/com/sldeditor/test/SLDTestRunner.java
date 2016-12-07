@@ -221,10 +221,9 @@ public class SLDTestRunner {
                 versionDataList.add(versionData);
             }
         }
-        
+
         // If in doubt revert to strict SLD
-        if (!versionDataList
-                .contains(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData())) {
+        if (versionDataList.isEmpty()) {
             versionDataList
                     .add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
         }

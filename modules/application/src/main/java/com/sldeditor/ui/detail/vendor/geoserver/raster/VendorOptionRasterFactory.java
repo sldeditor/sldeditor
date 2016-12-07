@@ -23,12 +23,12 @@ import java.util.List;
 
 import org.geotools.styling.RasterSymbolizer;
 
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
@@ -41,7 +41,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, PrefUpdateVendorOptionInterface {
+public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option geo server contrast enhancement normalize (red). */
     private VOGeoServerContrastEnhancementNormalizeRed vendorOptionGeoServerContrastEnhancementNormalizeRed = null;
@@ -85,7 +85,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeGrey);
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeOverall);
 
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
     }
 
@@ -190,5 +190,21 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
             }
         }
         return vendorOptionInfoList;
+    }
+
+    /**
+     * Gets the minimum version.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        for(VendorOptionInterface vo : vendorOptionList)
+        {
+            vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        }
     }
 }

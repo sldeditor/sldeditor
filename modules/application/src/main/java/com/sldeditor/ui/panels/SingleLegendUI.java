@@ -27,6 +27,7 @@ import java.util.Set;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -212,5 +213,14 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
     @Override
     public void show(Class<?> parentClass, Class<?> classSelected) {
         // Currently display the same panel for all types of symbol
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.SymbolPanelInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // Does nothing
     }
 }

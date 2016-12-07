@@ -19,6 +19,7 @@
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.geotools.styling.PolygonSymbolizer;
@@ -29,8 +30,10 @@ import org.geotools.styling.TextSymbolizer2;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -64,6 +67,9 @@ public class VOGeoServerLabelling extends StandardPanel
 
     /** The parent obj. */
     private UpdateSymbolInterface parentObj = null;
+
+    /** The vendor option info. */
+    private VendorOptionInfo vendorOptionInfo = null;
 
     /**
      * Constructor.
@@ -524,12 +530,45 @@ public class VOGeoServerLabelling extends StandardPanel
         return parentObj;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        // TODO Auto-generated method stub
-        return null;
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo(
+                    Localisation.getString(VOGeoServerLabelling.class,
+                            "geoserver.label"),
+                    this.getVendorOption(), Localisation.getString(VOGeoServerLabelling.class,
+                            "geoserver.label.description"));
+        }
+        return vendorOptionInfo;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        if (sldObj instanceof TextSymbolizer) {
+            TextSymbolizer textSymbolizer = (TextSymbolizer) sldObj;
+            Map<String, String> options = textSymbolizer.getOptions();
+
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                String vendorOptionAttributeKey = fieldMap.get(key);
+
+                if (options.containsKey(vendorOptionAttributeKey)) {
+                    VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
+                            getVendorOptionInfo());
+
+                    vendorOptionsPresentList.add(voPresent);
+                }
+            }
+        }
     }
 }

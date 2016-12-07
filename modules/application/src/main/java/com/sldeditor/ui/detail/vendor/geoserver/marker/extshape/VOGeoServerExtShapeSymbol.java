@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
@@ -47,6 +46,8 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
     /** The empty details. */
     private EmptyDetails emptyDetails = null;
 
+    private FieldConfigMarkerExtShape markerField;
+
     /**
      * Instantiates a new VOGeoServerShapeSymbol.
      */
@@ -65,7 +66,7 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigMarkerExtShape markerField = new FieldConfigMarkerExtShape(
+        markerField = new FieldConfigMarkerExtShape(
                 new FieldConfigCommonData(panelId, FieldIdEnum.VO_EXTSHAPE, "", false),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
 
@@ -91,10 +92,6 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info = new VendorOptionInfo("extshape://",
-                emptyDetails.getVendorOptionVersion(),
-                Localisation.getString(VOGeoServerExtShapeSymbol.class, "VOGeoServerExtShapeSymbol.description"));
-
-        return info;
+        return markerField.getVendorOptionInfo();
     }
 }

@@ -20,8 +20,11 @@
 package com.sldeditor.common.vendoroption.info;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 
@@ -35,11 +38,19 @@ public class VendorOptionInfoManager {
     /** The singleton instance. */
     private static VendorOptionInfoManager instance = null;
 
-    /** The info model. */
-    private VendorOptionInfoModel infoModel = null;
+    /**
+     * The Class InstanceData.
+     */
+    class InstanceData {
+        /** The info model. */
+        private VendorOptionInfoModel infoModel = null;
 
-    /** The panel. */
-    private VendorOptionInfoPanel panel = null;
+        /** The panel. */
+        private VendorOptionInfoPanel panel = null;
+    }
+
+    /** The instance map. */
+    private Map<Class<?>, InstanceData> instanceMap = new HashMap<Class<?>, InstanceData>();
 
     /** The list of classes received data from. */
     private List<Class<?>> receivedFromList = new ArrayList<Class<?>>();
@@ -72,8 +83,8 @@ public class VendorOptionInfoManager {
      * @param obj the obj
      */
     public void addVendorOptionInfo(VendorOptionFactoryInterface obj) {
-        Class<?> classReceivedFrom = obj.getClass();
         if (obj != null) {
+            Class<?> classReceivedFrom = obj.getClass();
             // Make sure data is only added once for each class sending data
             if (!receivedFromList.contains(classReceivedFrom)) {
                 receivedFromList.add(classReceivedFrom);
@@ -87,23 +98,28 @@ public class VendorOptionInfoManager {
      *
      * @return the panel
      */
-    public VendorOptionInfoPanel getPanel() {
-        if (panel == null) {
+    public VendorOptionInfoPanel getPanel(Class<?> instance) {
+
+        InstanceData data = instanceMap.get(instance);
+
+        if (data == null) {
+            data = new InstanceData();
 
             List<VendorOptionInfo> infoList = new ArrayList<VendorOptionInfo>();
 
-            for(VendorOptionFactoryInterface vo : voFactoryList)
-            {
+            for (VendorOptionFactoryInterface vo : voFactoryList) {
                 List<VendorOptionInfo> vendorOptionInfoList = vo.getVendorOptionInfoList();
-
-                infoList.addAll(vendorOptionInfoList);
+                if (vendorOptionInfoList != null) {
+                    infoList.addAll(vendorOptionInfoList);
+                }
             }
 
-            infoModel = new VendorOptionInfoModel();
-            infoModel.addVendorOptionInfo(infoList);
-            panel = new VendorOptionInfoPanel(infoModel);
+            data.infoModel = new VendorOptionInfoModel();
+            data.infoModel.addVendorOptionInfo(infoList);
+            data.panel = new VendorOptionInfoPanel(data.infoModel);
+            instanceMap.put(instance, data);
         }
-        return panel;
+        return data.panel;
     }
 
     /**
@@ -111,10 +127,18 @@ public class VendorOptionInfoManager {
      *
      * @param versionData the new selected version
      */
-    public void setSelectedVersion(VersionData versionData) {
-        if(infoModel != null)
-        {
-            infoModel.setSelectedVersion(versionData);
+    public void setSelectedVersion(Class<?> instance, VersionData versionData) {
+        InstanceData data = instanceMap.get(instance);
+
+        if (data != null) {
+            if (data.infoModel != null) {
+                data.infoModel.setSelectedVersion(versionData);
+            }
+
+            List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+            vendorOptionList.add(versionData);
+
+            VendorOptionManager.getInstance().setSelectedVendorOptions(vendorOptionList);
         }
     }
 }

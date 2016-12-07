@@ -36,6 +36,8 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
@@ -695,5 +697,23 @@ public class FieldConfigMarker extends FieldState {
     protected void populateVendorOptionFieldMap(
             Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // Strict SLD
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        // Strict SLD
+        return null;
     }
 }

@@ -64,8 +64,9 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionStatus;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -83,7 +84,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  * @author Robert Ward (SCISYS)
  */
 public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, PrefUpdateInterface,
-DataSourceUpdatedInterface, PrefUpdateVendorOptionInterface
+DataSourceUpdatedInterface, VendorOptionUpdateInterface
 {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -175,7 +176,7 @@ DataSourceUpdatedInterface, PrefUpdateVendorOptionInterface
         wmsEnvVarValues.setImageHeight(ST_HEIGHT);
 
         PrefManager.getInstance().addListener(this);
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
     }
 
     /**

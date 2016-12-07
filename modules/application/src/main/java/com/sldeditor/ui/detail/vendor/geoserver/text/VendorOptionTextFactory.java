@@ -23,12 +23,12 @@ import java.util.List;
 
 import org.geotools.styling.TextSymbolizer;
 
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
@@ -40,7 +40,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionTextFactory implements VendorOptionFactoryInterface, PrefUpdateVendorOptionInterface {
+public class VendorOptionTextFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option geo server labelling. */
     private VOGeoServerLabelling vendorOptionGeoServerLabelling = null;
@@ -63,7 +63,7 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Pr
 
         vendorOptionList.add(vendorOptionGeoServerLabelling);
 
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
     }
 
@@ -159,14 +159,29 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Pr
     public List<VendorOptionInfo> getVendorOptionInfoList() {
         List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
 
-        for(VendorOptionInterface markerSymbol : vendorOptionList)
+        for(VendorOptionInterface vo : vendorOptionList)
         {
-            VendorOptionInfo vendorOptionInfo = markerSymbol.getVendorOptionInfo();
+            VendorOptionInfo vendorOptionInfo = vo.getVendorOptionInfo();
             if(vendorOptionInfo != null)
             {
                 vendorOptionInfoList.add(vendorOptionInfo);
             }
         }
         return vendorOptionInfoList;
+    }
+
+    /**
+     * Gets the minimum version.
+     *
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        for(VendorOptionInterface vo : vendorOptionList)
+        {
+            vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        }
     }
 }

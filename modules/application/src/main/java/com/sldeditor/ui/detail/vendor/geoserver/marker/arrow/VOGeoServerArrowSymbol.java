@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
@@ -79,10 +78,6 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info = new VendorOptionInfo("extshape://arrow",
-                arrowShape.getVersionData(),
-                Localisation.getString(VOGeoServerArrowSymbol.class, "VOGeoServerArrowSymbol.description"));
-
-        return info;
+        return arrowShape.getVendorOptionInfo();
     }
 }

@@ -38,7 +38,6 @@ import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
@@ -49,14 +48,14 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Unit test for PrefManager.
- * <p>{@link com.sldeditor.common.preferences.PrefManager}
+ * <p>
+ * {@link com.sldeditor.common.preferences.PrefManager}
  * 
  * @author Robert Ward (SCISYS)
  */
 public class PrefManagerTest {
 
-    class DummyPropertyManager implements PropertyManagerInterface
-    {
+    class DummyPropertyManager implements PropertyManagerInterface {
         public Map<String, String> fieldValueMap = new HashMap<String, String>();
 
         @Override
@@ -75,31 +74,23 @@ public class PrefManagerTest {
 
         @Override
         public double getDoubleValue(String field, double defaultValue) {
-            if(fieldValueMap.containsKey(field))
-            {
-                try
-                {
+            if (fieldValueMap.containsKey(field)) {
+                try {
                     return Double.valueOf(fieldValueMap.get(field));
-                }
-                catch(NumberFormatException e)
-                {
+                } catch (NumberFormatException e) {
                     return defaultValue;
                 }
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
         }
 
         @Override
         public String getStringValue(String field, String defaultValue) {
-            if(fieldValueMap.containsKey(field))
-            {
+            if (fieldValueMap.containsKey(field)) {
                 String value = fieldValueMap.get(field);
 
-                if(value != null)
-                {
+                if (value != null) {
                     return value;
                 }
             }
@@ -109,14 +100,12 @@ public class PrefManagerTest {
 
         @Override
         public Color getColourValue(String field, Color defaultValue) {
-            if(fieldValueMap.containsKey(field))
-            {
+            if (fieldValueMap.containsKey(field)) {
                 String value = fieldValueMap.get(field);
 
                 String[] components = value.split("\\.");
 
-                if(components.length == 4)
-                {
+                if (components.length == 4) {
                     int red = Integer.valueOf(components[0]);
                     int green = Integer.valueOf(components[1]);
                     int blue = Integer.valueOf(components[2]);
@@ -131,12 +120,10 @@ public class PrefManagerTest {
 
         @Override
         public boolean getBooleanValue(String field, boolean defaultValue) {
-            if(fieldValueMap.containsKey(field))
-            {
+            if (fieldValueMap.containsKey(field)) {
                 String value = fieldValueMap.get(field);
 
-                if(value != null)
-                {
+                if (value != null) {
                     return (value.compareToIgnoreCase("true") == 0);
                 }
             }
@@ -148,12 +135,10 @@ public class PrefManagerTest {
         public List<String> getStringListValue(String field) {
             List<String> valueList = null;
 
-            if(fieldValueMap.containsKey(field))
-            {
+            if (fieldValueMap.containsKey(field)) {
                 String value = fieldValueMap.get(field);
 
-                if(value != null)
-                {
+                if (value != null) {
                     String[] components = value.split(",");
 
                     valueList = Arrays.asList(components);
@@ -167,10 +152,8 @@ public class PrefManagerTest {
         public void updateValue(String key, List<String> stringList) {
             StringBuilder sb = new StringBuilder();
 
-            for(String string : stringList)
-            {
-                if(sb.length() > 0)
-                {
+            for (String string : stringList) {
+                if (sb.length() > 0) {
                     sb.append(",");
                 }
                 sb.append(string);
@@ -193,13 +176,8 @@ public class PrefManagerTest {
 
         @Override
         public void updateValue(String key, Color backgroundColour) {
-            String value = String.format("%03d%s%03d%s%03d%s%03d", 
-                    backgroundColour.getRed(),
-                    '.',
-                    backgroundColour.getGreen(), 
-                    '.',
-                    backgroundColour.getBlue(),
-                    '.',
+            String value = String.format("%03d%s%03d%s%03d%s%03d", backgroundColour.getRed(), '.',
+                    backgroundColour.getGreen(), '.', backgroundColour.getBlue(), '.',
                     backgroundColour.getAlpha());
 
             updateValue(key, value);
@@ -209,45 +187,32 @@ public class PrefManagerTest {
         public void clearValue(String key, boolean useDelimeter) {
             StringBuilder sb = new StringBuilder();
             sb.append(key);
-            if(useDelimeter)
-            {
+            if (useDelimeter) {
                 sb.append(".");
             }
 
             String prefix = sb.toString();
 
             List<String> keyToRemove = new ArrayList<String>();
-            for(String existingKey : fieldValueMap.keySet())
-            {
-                if(existingKey.startsWith(prefix))
-                {
+            for (String existingKey : fieldValueMap.keySet()) {
+                if (existingKey.startsWith(prefix)) {
                     keyToRemove.add(existingKey);
                 }
             }
 
-            for(String existingKey : keyToRemove)
-            {
+            for (String existingKey : keyToRemove) {
                 fieldValueMap.remove(existingKey);
             }
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.property.PropertyManagerInterface#setPropertyFile(java.io.File)
          */
         @Override
         public void setPropertyFile(File configPropertiesFile) {
         }
-    }
-
-    class DummyVendorOptionChanged implements PrefUpdateVendorOptionInterface
-    {
-        public List<VersionData> vendorOptionVersionsList = null;
-
-        @Override
-        public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
-            this.vendorOptionVersionsList = vendorOptionVersionsList;
-        }
-
     }
 
     /**
@@ -267,16 +232,12 @@ public class PrefManagerTest {
 
         prefData.setUiLayoutClass(uiLayoutClass);
 
-        DummyVendorOptionChanged voListener = new DummyVendorOptionChanged();
-
-        PrefManager.getInstance().addVendorOptionListener(voListener);
-
         PrefManager.getInstance().setPrefData(prefData);
 
-        assertEquals(backgroundColour, PrefManager.getInstance().getPrefData().getBackgroundColour());
+        assertEquals(backgroundColour,
+                PrefManager.getInstance().getPrefData().getBackgroundColour());
         assertEquals(uiLayoutClass, PrefManager.getInstance().getPrefData().getUiLayoutClass());
         assertEquals(true, PrefManager.getInstance().getPrefData().isUseAntiAlias());
-        assertEquals(vendorOptionList, voListener.vendorOptionVersionsList);
     }
 
     /**
@@ -306,7 +267,8 @@ public class PrefManagerTest {
         Color newBackgroundColour = Color.RED;
         prefData.setBackgroundColour(newBackgroundColour);
         PrefManager.getInstance().setPrefData(prefData);
-        assertEquals(newBackgroundColour, propertyManager.getColourValue("SldEditor.backgroundColour", null));
+        assertEquals(newBackgroundColour,
+                propertyManager.getColourValue("SldEditor.backgroundColour", null));
 
         boolean newAntiAlias = false;
         prefData.setUseAntiAlias(newAntiAlias);
@@ -319,7 +281,8 @@ public class PrefManagerTest {
         assertEquals(newLayoutClass, propertyManager.getStringValue("SldEditor.uilayout", null));
 
         List<VersionData> newVendorOptionList = new ArrayList<VersionData>();
-        newVendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+        newVendorOptionList
+                .add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
         prefData.setVendorOptionVersionList(newVendorOptionList);
         PrefManager.getInstance().setPrefData(prefData);
@@ -328,11 +291,11 @@ public class PrefManagerTest {
         PrefManager.getInstance().setPrefData(prefData);
 
         List<String> encodelist = new ArrayList<String>();
-        for(VersionData versionData : newVendorOptionList)
-        {
+        for (VersionData versionData : newVendorOptionList) {
             encodelist.add(versionData.getEncodedString());
         }
-        assertTrue(PrefManager.cmpList(encodelist, propertyManager.getStringListValue("SldEditor.vendorOptions")));
+        assertTrue(PrefManager.cmpList(encodelist,
+                propertyManager.getStringListValue("SldEditor.vendorOptions")));
 
         PrefManager.initialise(null);
     }
@@ -436,8 +399,8 @@ public class PrefManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefManager#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefManager#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefManager#undoAction(com.sldeditor.common.undo.UndoInterface)}. Test method for
+     * {@link com.sldeditor.common.preferences.PrefManager#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
@@ -469,11 +432,11 @@ public class PrefManagerTest {
         PrefData copy = prefData.clone();
         copy.setLastViewedKey(PrefDataLastViewedEnum.GEOSERVER);
         PrefManager.getInstance().setPrefData(copy);
-        
+
         PrefData actual = PrefManager.getInstance().getPrefData();
         assertEquals(PrefDataLastViewedEnum.GEOSERVER, actual.getLastViewedKey());
         UndoManager.getInstance().undo();
-        
+
         actual = PrefManager.getInstance().getPrefData();
         assertEquals(PrefDataLastViewedEnum.FOLDER, actual.getLastViewedKey());
 
@@ -485,7 +448,7 @@ public class PrefManagerTest {
         PrefManager.getInstance().undoAction(null);
         PrefManager.getInstance().undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         PrefManager.getInstance().redoAction(null);
-        PrefManager.getInstance().redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));    }
-
+        PrefManager.getInstance().redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
 
 }

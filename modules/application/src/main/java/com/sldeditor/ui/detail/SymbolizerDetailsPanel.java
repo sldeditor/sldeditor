@@ -30,6 +30,7 @@ import java.util.Set;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.FillImpl;
 import org.geotools.styling.LineSymbolizerImpl;
@@ -37,15 +38,21 @@ import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizerImpl;
 import org.geotools.styling.RasterSymbolizerImpl;
+import org.geotools.styling.Rule;
 import org.geotools.styling.RuleImpl;
 import org.geotools.styling.StrokeImpl;
+import org.geotools.styling.Style;
 import org.geotools.styling.StyleImpl;
+import org.geotools.styling.StyledLayer;
+import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.StyledLayerDescriptorImpl;
+import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizerImpl;
 import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
@@ -271,6 +278,111 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
             for (PopulateDetailsInterface panel : panelList) {
                 panel.preLoadSymbol();
             }
+        }
+    }
+
+    /**
+     * Gets the minimum version vendor option present in the SLD.
+     *
+     * @param parentObj the parent obj
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @return the minimum version
+     */
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        Class<?> parentClass = null;
+        Class<?> classSelected = sldObj.getClass();
+
+        if(sldObj instanceof StyledLayerDescriptor)
+        {
+            // No parent
+        }
+        else if(sldObj instanceof StyledLayer)
+        {
+            parentClass = StyledLayerDescriptor.class;
+        }
+        else if(sldObj instanceof Style)
+        {
+            parentClass = StyledLayer.class;
+        }
+        else if(sldObj instanceof FeatureTypeStyle)
+        {
+            parentClass = Style.class;
+        }
+        else if(sldObj instanceof Rule)
+        {
+            parentClass = FeatureTypeStyle.class;
+        }
+        else if(sldObj instanceof Symbolizer)
+        {
+            parentClass = Rule.class;
+        }
+
+        internal_getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList, parentClass, classSelected);
+
+        if(sldObj instanceof PointSymbolizerImpl)
+        {
+            PointSymbolizerImpl pointSymbolizer = (PointSymbolizerImpl) sldObj;
+            parentClass = PointSymbolizerImpl.class;
+            classSelected = FillImpl.class;
+            internal_getMinimumVersion(pointSymbolizer, pointSymbolizer.getGraphic(), vendorOptionsPresentList, parentClass, classSelected);
+        }
+        else if(sldObj instanceof LineSymbolizerImpl)
+        {
+            LineSymbolizerImpl lineSymbolizer = (LineSymbolizerImpl) sldObj;
+            parentClass = LineSymbolizerImpl.class;
+            classSelected = StrokeImpl.class;
+            internal_getMinimumVersion(lineSymbolizer, lineSymbolizer.getStroke(), vendorOptionsPresentList, parentClass, classSelected);
+        }
+        else if(sldObj instanceof PolygonSymbolizerImpl)
+        {
+            PolygonSymbolizerImpl polygonSymbolizer = (PolygonSymbolizerImpl) sldObj;
+            parentClass = PolygonSymbolizerImpl.class;
+            classSelected = FillImpl.class;
+            internal_getMinimumVersion(polygonSymbolizer, polygonSymbolizer.getFill(), vendorOptionsPresentList, parentClass, classSelected);
+            classSelected = StrokeImpl.class;
+            internal_getMinimumVersion(polygonSymbolizer, polygonSymbolizer.getStroke(), vendorOptionsPresentList, parentClass, classSelected);
+        }
+        else if(sldObj instanceof TextSymbolizerImpl)
+        {
+            TextSymbolizerImpl textSymbolizer = (TextSymbolizerImpl) sldObj;
+            parentClass = Rule.class;
+            classSelected = TextSymbolizerImpl.class;
+            internal_getMinimumVersion(parentObj, textSymbolizer, vendorOptionsPresentList, parentClass, classSelected);
+        }
+        else if(sldObj instanceof RasterSymbolizerImpl)
+        {
+            RasterSymbolizerImpl rasterSymbolizer = (RasterSymbolizerImpl) sldObj;
+            parentClass = Rule.class;
+            classSelected = RasterSymbolizerImpl.class;
+            internal_getMinimumVersion(parentObj, rasterSymbolizer, vendorOptionsPresentList, parentClass, classSelected);
+        }
+    }
+
+    /**
+     * Internal get minimum version.
+     *
+     * @param sldObj the sld obj
+     * @param vendorOptionsPresentList the vendor options present list
+     * @param parentClass the parent class
+     * @param classSelected the class selected
+     */
+    private void internal_getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList, Class<?> parentClass,
+            Class<?> classSelected) {
+        String key = null;
+        if (classSelected != null) {
+            key = classSelected.toString();
+        } else {
+            key = EMPTY_PANEL_KEY;
+        }
+
+        PopulateDetailsInterface panel = getPanel(parentClass, key);
+
+        if(panel != null)
+        {
+            panel.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }
     }
 

@@ -21,31 +21,29 @@ package com.sldeditor.ui.panels;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionUI;
 import com.sldeditor.datasource.config.DataSourceConfigPanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;
 
 /**
- * The Class SLDEditorUIPanels contains references to the panels to display for:
- * - no symbols selected
- * - one symbol selected
- * - multiple symbols selected
+ * The Class SLDEditorUIPanels contains references to the panels to display for: - no symbols selected - one symbol selected - multiple symbols
+ * selected
  * 
- * Also contains references for the following panels:
- * - DataSourceConfigPanel
- * - Panel layout for the SLD viewing/editing component
+ * Also contains references for the following panels: - DataSourceConfigPanel - Panel layout for the SLD viewing/editing component
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorUIPanels
-{
+public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     /** The Constant SINGLE_SYMBOL. */
     private static final String SINGLE_SYMBOL = "Single Symbol";
 
@@ -88,11 +86,13 @@ public class SLDEditorUIPanels
     /** The data source config. */
     private DataSourceConfigPanel dataSourceConfig = null;
 
+    /** The vendor option UI. */
+    private VendorOptionUI vendorOptionUI = null;
+
     /**
      * Instantiates a new SLD editor ui manager.
      */
-    public SLDEditorUIPanels()
-    {
+    public SLDEditorUIPanels() {
         singleSymbolUI = new SingleSymbolUI();
         uiSymbolMap.put(SINGLE_SYMBOL, singleSymbolUI);
 
@@ -155,6 +155,8 @@ public class SLDEditorUIPanels
 
             legendPanelUI.populate(SelectedSymbol.getInstance());
         }
+
+        vendorOptionUI.populate(SelectedSymbol.getInstance());
     }
 
     /**
@@ -169,24 +171,20 @@ public class SLDEditorUIPanels
         panelDataTab = new JPanel(false);
         panelDataTab.setLayout(new CardLayout());
 
-        for(String key : uiSymbolMap.keySet())
-        {
+        for (String key : uiSymbolMap.keySet()) {
             SymbolPanelInterface symbolPanel = uiSymbolMap.get(key);
 
             JPanel panel = new JPanel(new BorderLayout());
 
-            if(symbolPanel.addNorthPanel() != null)
-            {
+            if (symbolPanel.addNorthPanel() != null) {
                 panel.add(symbolPanel.addNorthPanel(), BorderLayout.NORTH);
             }
 
-            if(symbolPanel.addWestPanel() != null)
-            {
+            if (symbolPanel.addWestPanel() != null) {
                 panel.add(symbolPanel.addWestPanel(), BorderLayout.WEST);
             }
 
-            if(symbolPanel.addCentrePanel() != null)
-            {
+            if (symbolPanel.addCentrePanel() != null) {
                 panel.add(symbolPanel.addCentrePanel(), BorderLayout.CENTER);
             }
             panelDataTab.add(panel, key);
@@ -203,8 +201,7 @@ public class SLDEditorUIPanels
      * @return the data source config
      */
     public DataSourceConfigPanel getDataSourceConfig() {
-        if(dataSourceConfig  == null)
-        {
+        if (dataSourceConfig == null) {
             dataSourceConfig = new DataSourceConfigPanel();
         }
 
@@ -216,8 +213,7 @@ public class SLDEditorUIPanels
      *
      * @return the symbol tree
      */
-    public SLDTree getSymbolTree()
-    {
+    public SLDTree getSymbolTree() {
         return singleSymbolUI.getSymbolTree();
     }
 
@@ -226,8 +222,7 @@ public class SLDEditorUIPanels
      *
      * @return the field data manager
      */
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return singleSymbolUI.getFieldDataManager();
     }
 
@@ -243,24 +238,20 @@ public class SLDEditorUIPanels
         panelLegendTab = new JPanel(false);
         panelLegendTab.setLayout(new CardLayout());
 
-        for(String key : uiLegendMap.keySet())
-        {
+        for (String key : uiLegendMap.keySet()) {
             SymbolPanelInterface legendPanel = uiLegendMap.get(key);
 
             JPanel panel = new JPanel(new BorderLayout());
 
-            if(legendPanel.addNorthPanel() != null)
-            {
+            if (legendPanel.addNorthPanel() != null) {
                 panel.add(legendPanel.addNorthPanel(), BorderLayout.NORTH);
             }
 
-            if(legendPanel.addWestPanel() != null)
-            {
+            if (legendPanel.addWestPanel() != null) {
                 panel.add(legendPanel.addWestPanel(), BorderLayout.WEST);
             }
 
-            if(legendPanel.addCentrePanel() != null)
-            {
+            if (legendPanel.addCentrePanel() != null) {
                 panel.add(legendPanel.addCentrePanel(), BorderLayout.CENTER);
             }
             panelLegendTab.add(panel, key);
@@ -269,6 +260,30 @@ public class SLDEditorUIPanels
         outerPanelLegendTab.add(panelLegendTab, BorderLayout.CENTER);
 
         return outerPanelLegendTab;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.panels.GetMinimumVersionInterface#getMinimumVersion(java.lang.Object, java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        singleSymbolUI.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+    }
+
+    /**
+     * Gets the vendor option.
+     *
+     * @return the vendor option
+     */
+    public JPanel getVendorOption() {
+        if (vendorOptionUI == null) {
+            vendorOptionUI = new VendorOptionUI(this);
+        }
+
+        return vendorOptionUI;
     }
 
 }

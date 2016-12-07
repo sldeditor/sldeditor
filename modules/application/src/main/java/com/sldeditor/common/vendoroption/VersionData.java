@@ -63,7 +63,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     private String vendorOption = null;
 
     /** The vendor option type. */
-    private Class<?> vendorOptionType = null;
+    private Class<?> vendorOptionType = NoVendorOption.class;
 
     /** The snapshot flag. */
     private boolean snapshot = false;
@@ -343,7 +343,11 @@ public class VersionData implements Comparable<VersionData>, Cloneable
      */
     private boolean greaterThan(VersionData versionData)
     {
-        if(versionData.majorNumber > this.majorNumber)
+        if(versionData.isNotSet != this.isNotSet)
+        {
+            return this.isNotSet;
+        }
+        else if(versionData.majorNumber > this.majorNumber)
         {
             return true;
         }

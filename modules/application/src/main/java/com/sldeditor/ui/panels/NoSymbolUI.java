@@ -21,6 +21,7 @@ package com.sldeditor.ui.panels;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -28,6 +29,7 @@ import javax.swing.JPanel;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;
@@ -109,5 +111,14 @@ public class NoSymbolUI implements SymbolPanelInterface {
     public GraphicPanelFieldManager getFieldDataManager()
     {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.SymbolPanelInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        // Does nothing
     }
 }

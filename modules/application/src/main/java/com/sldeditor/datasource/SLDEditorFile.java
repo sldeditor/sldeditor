@@ -29,8 +29,8 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.output.SLDOutputInterface;
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
@@ -50,7 +50,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterface, EnvVarUpdateInterface, PrefUpdateVendorOptionInterface {
+public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterface, EnvVarUpdateInterface, VendorOptionUpdateInterface {
 
     /** The Constant SLD_FILE_EXTENSION. */
     private static final String SLD_FILE_EXTENSION = "sld";
@@ -94,7 +94,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     private SLDEditorFile()
     {
         EnvironmentVariableManager.getInstance().addEnvVarUpdatedListener(this);
-        PrefManager.getInstance().addVendorOptionListener(this);
+        VendorOptionManager.getInstance().addVendorOptionListener(this);
     }
 
     /**

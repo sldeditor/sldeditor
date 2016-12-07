@@ -19,6 +19,8 @@
 package com.sldeditor.common.vendoroption;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,22 +28,27 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.geotools.styling.StyledLayerDescriptor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefManager;
+import com.sldeditor.common.vendoroption.minversion.MinimumVersion;
 import com.sldeditor.common.xml.ParseXML;
+import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
  * Manages access to the supported vendor options.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionManager
-{
+public class VendorOptionManager {
 
     /** The Constant RESOURCE_FILE. */
     private static final String RESOURCE_FILE = "/vendoroption/versions.xml";
@@ -61,13 +68,23 @@ public class VendorOptionManager
     /** The default vendor option. */
     private VendorOptionTypeInterface defaultVendorOption = null;
 
+    /** The vendor option listener list. */
+    private List<VendorOptionUpdateInterface> vendorOptionListenerList = new ArrayList<VendorOptionUpdateInterface>();
+
+    /** The selected vendor options. */
+    private List<VersionData> selectedVendorOptions = new ArrayList<VersionData>();
+
+    /** The flag indicating whether vendor option overridden. */
+    private boolean vendorOptionOverridden = false;
+
     /**
      * Instantiates a new vendor option manager.
      */
-    private VendorOptionManager()
-    {
+    private VendorOptionManager() {
         internal_addVendorOption(new NoVendorOption());
         internal_addVendorOption(new GeoServerVendorOption());
+
+        selectedVendorOptions.add(this.getDefaultVendorOptionVersionData());
 
         populate();
     }
@@ -75,24 +92,23 @@ public class VendorOptionManager
     /**
      * Populate.
      */
-    private void populate()
-    {
+    private void populate() {
         InputStream fXmlFile = VendorOptionManager.class.getResourceAsStream(RESOURCE_FILE);
 
-        if(fXmlFile == null)
-        {
-            ConsoleManager.getInstance().error(VendorOptionManager.class, Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource") + RESOURCE_FILE);
+        if (fXmlFile == null) {
+            ConsoleManager.getInstance().error(VendorOptionManager.class,
+                    Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
+                            + RESOURCE_FILE);
             return;
         }
 
-        try
-        {
+        try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
 
-            //optional, but recommended
-            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+            // optional, but recommended
+            // read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getFirstChild().getChildNodes();
@@ -106,10 +122,8 @@ public class VendorOptionManager
                     Element eElement = (Element) nNode;
 
                     String nodeName = nNode.getNodeName();
-                    if(nodeName != null)
-                    {
-                        if(nodeName.compareToIgnoreCase("VendorOption") == 0)
-                        {
+                    if (nodeName != null) {
+                        if (nodeName.compareToIgnoreCase("VendorOption") == 0) {
                             String className = eElement.getAttribute("class");
 
                             Class<?> classType = Class.forName(className);
@@ -121,8 +135,8 @@ public class VendorOptionManager
 
                             NodeList versionList = eElement.getElementsByTagName("Version");
 
-                            for(int versionIndex = 0; versionIndex < versionList.getLength(); versionIndex ++)
-                            {
+                            for (int versionIndex = 0; versionIndex < versionList
+                                    .getLength(); versionIndex++) {
                                 Node vNode = versionList.item(versionIndex);
 
                                 if (vNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -140,7 +154,7 @@ public class VendorOptionManager
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 
@@ -149,8 +163,7 @@ public class VendorOptionManager
      *
      * @param vendorOption the vendor option
      */
-    private void internal_addVendorOption(VendorOptionTypeInterface vendorOption)
-    {
+    private void internal_addVendorOption(VendorOptionTypeInterface vendorOption) {
         vendorOptionClassMap.put(vendorOption.getClass(), vendorOption);
         vendorOptionMap.put(vendorOption.getName(), vendorOption);
     }
@@ -160,14 +173,19 @@ public class VendorOptionManager
      *
      * @return single instance of VendorOptionManager
      */
-    public static VendorOptionManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static VendorOptionManager getInstance() {
+        if (instance == null) {
             instance = new VendorOptionManager();
         }
 
         return instance;
+    }
+
+    /**
+     * Destroy instance.
+     */
+    public static void destroyInstance() {
+        instance = null;
     }
 
     /**
@@ -176,8 +194,7 @@ public class VendorOptionManager
      * @param classType the class type
      * @return the class
      */
-    public VendorOptionTypeInterface getClass(Class<?> classType)
-    {
+    public VendorOptionTypeInterface getClass(Class<?> classType) {
         return vendorOptionClassMap.get(classType);
     }
 
@@ -189,23 +206,20 @@ public class VendorOptionManager
      * @param endVersion the end version
      * @return the vendor option version
      */
-    public VendorOptionVersion getVendorOptionVersion(Class<?> classType, String startVersion, String endVersion)
-    {
-        if(classType == null)
-        {
+    public VendorOptionVersion getVendorOptionVersion(Class<?> classType, String startVersion,
+            String endVersion) {
+        if (classType == null) {
             return null;
         }
 
         VendorOptionTypeInterface veType = vendorOptionClassMap.get(classType);
 
         VersionData minimum = veType.getVersion(startVersion);
-        if(minimum == null)
-        {
+        if (minimum == null) {
             minimum = VersionData.getEarliestVersion(veType.getClass());
         }
         VersionData maximum = veType.getVersion(endVersion);
-        if(maximum == null)
-        {
+        if (maximum == null) {
             maximum = VersionData.getLatestVersion(veType.getClass());
         }
 
@@ -217,10 +231,8 @@ public class VendorOptionManager
      *
      * @return the default vendor option
      */
-    public VendorOptionTypeInterface getDefaultVendorOption()
-    {
-        if(defaultVendorOption == null)
-        {
+    public VendorOptionTypeInterface getDefaultVendorOption() {
+        if (defaultVendorOption == null) {
             defaultVendorOption = getClass(NoVendorOption.class);
         }
 
@@ -232,14 +244,13 @@ public class VendorOptionManager
      *
      * @return the default vendor option version
      */
-    public VendorOptionVersion getDefaultVendorOptionVersion()
-    {
-        if(defaultVendorOptionVersion == null)
-        {
+    public VendorOptionVersion getDefaultVendorOptionVersion() {
+        if (defaultVendorOptionVersion == null) {
             VersionData minimum = VersionData.getEarliestVersion(NoVendorOption.class);
             VersionData maximum = VersionData.getLatestVersion(NoVendorOption.class);
 
-            defaultVendorOptionVersion = new VendorOptionVersion(NoVendorOption.class, minimum, maximum);
+            defaultVendorOptionVersion = new VendorOptionVersion(NoVendorOption.class, minimum,
+                    maximum);
         }
 
         return defaultVendorOptionVersion;
@@ -251,10 +262,8 @@ public class VendorOptionManager
      * @param classType the class type
      * @return the vendor option version
      */
-    public VendorOptionVersion getVendorOptionVersion(Class<?> classType)
-    {
-        if(classType == null)
-        {
+    public VendorOptionVersion getVendorOptionVersion(Class<?> classType) {
+        if (classType == null) {
             return null;
         }
 
@@ -271,14 +280,11 @@ public class VendorOptionManager
      * @param vendorOptionVersion the vendor option version
      * @return true, if is allowed
      */
-    public boolean isAllowed(List<VersionData> versionList, VendorOptionVersion vendorOptionVersion)
-    {
-        if((versionList != null) && (vendorOptionVersion != null))
-        {
-            for(VersionData versionData : versionList)
-            {
-                if(vendorOptionVersion.isAllowed(versionData))
-                {
+    public boolean isAllowed(List<VersionData> versionList,
+            VendorOptionVersion vendorOptionVersion) {
+        if ((versionList != null) && (vendorOptionVersion != null)) {
+            for (VersionData versionData : versionList) {
+                if (vendorOptionVersion.isAllowed(versionData)) {
                     return true;
                 }
             }
@@ -291,8 +297,7 @@ public class VendorOptionManager
      *
      * @return the default vendor option version data
      */
-    public VersionData getDefaultVendorOptionVersionData()
-    {
+    public VersionData getDefaultVendorOptionVersionData() {
         VendorOptionVersion version = getDefaultVendorOptionVersion();
 
         return version.getLatest();
@@ -310,11 +315,10 @@ public class VendorOptionManager
         title.append(Localisation.getString(ParseXML.class, "ParseXML.vendorOption"));
         title.append(" ");
 
-        if(vendorOptionVersion != null)
-        {
-            VendorOptionTypeInterface vendorOption = vendorOptionClassMap.get(vendorOptionVersion.getClassType());
-            if(vendorOption != null)
-            {
+        if (vendorOptionVersion != null) {
+            VendorOptionTypeInterface vendorOption = vendorOptionClassMap
+                    .get(vendorOptionVersion.getClassType());
+            if (vendorOption != null) {
                 title.append("(");
                 title.append(vendorOption.getName());
                 title.append(" ");
@@ -322,8 +326,7 @@ public class VendorOptionManager
                 VersionData latest = vendorOptionVersion.getLatest();
                 title.append(earliest.toString());
 
-                if(earliest.toString().compareTo(latest.toString()) != 0)
-                {
+                if (earliest.toString().compareTo(latest.toString()) != 0) {
                     title.append("-");
                     title.append(latest.toString());
                 }
@@ -332,5 +335,113 @@ public class VendorOptionManager
         }
 
         return title.toString();
+    }
+
+    /**
+     * Gets the latest version data.
+     *
+     * @return the latest
+     */
+    public List<VersionData> getLatest() {
+        VendorOptionTypeInterface geoServer = getClass(GeoServerVendorOption.class);
+
+        List<VersionData> last = new ArrayList<VersionData>();
+        List<VersionData> versionList = geoServer.getVersionList();
+
+        VersionData data = versionList.get(versionList.size() - 1);
+        last.add(data);
+
+        return last;
+    }
+
+    /**
+     * Adds the vendor option listener.
+     *
+     * @param listener the listener
+     */
+    public void addVendorOptionListener(VendorOptionUpdateInterface listener) {
+        if (!vendorOptionListenerList.contains(listener)) {
+            vendorOptionListenerList.add(listener);
+            notifyVendorOptionUpdated();
+        }
+    }
+
+    /**
+     * Sets the selected vendor options.
+     *
+     * @param selectedVendorOptions the selectedVendorOptions to set
+     */
+    public void setSelectedVendorOptions(List<VersionData> selectedVendorOptions) {
+        if (!this.selectedVendorOptions.equals(selectedVendorOptions)) {
+            if (!vendorOptionOverridden) {
+                this.selectedVendorOptions = selectedVendorOptions;
+
+                notifyVendorOptionUpdated();
+            }
+        }
+    }
+
+    /**
+     * Notify vendor option updated.
+     */
+    private void notifyVendorOptionUpdated() {
+        for (VendorOptionUpdateInterface listener : vendorOptionListenerList) {
+            listener.vendorOptionsUpdated(this.selectedVendorOptions);
+        }
+    }
+
+    /**
+     * Load SLD file.
+     *
+     * @param uiMgr the ui mgr
+     * @param sld the sld
+     * @param sldData the sld data
+     */
+    public void loadSLDFile(GetMinimumVersionInterface uiMgr, StyledLayerDescriptor sld,
+            SLDDataInterface sldData) {
+        if (sldData != null) {
+            List<VersionData> selectedVendorOptionVersion = null;
+            String messageString = null;
+
+            if (sldData.getSldEditorFile() == null) {
+                MinimumVersion minimumVersion = new MinimumVersion(uiMgr);
+
+                minimumVersion.findMinimumVersion(sld);
+
+                // Find out what the default is
+                PrefData prefData = PrefManager.getInstance().getPrefData();
+
+                selectedVendorOptionVersion = minimumVersion
+                        .getMinimumVersion(prefData.getVendorOptionVersionList());
+                messageString = Localisation.getString(VendorOptionManager.class,
+                        "VendorOptionManager.loadedFromFile");
+            } else {
+                selectedVendorOptionVersion = sldData.getVendorOptionList();
+                messageString = Localisation.getString(VendorOptionManager.class,
+                        "VendorOptionManager.loadedFromSLDEditorFile");
+            }
+
+            if (selectedVendorOptionVersion != null) {
+                setSelectedVendorOptions(selectedVendorOptionVersion);
+
+                List<VersionData> listCopy = new ArrayList<>(selectedVendorOptionVersion);
+                Collections.sort(listCopy);
+                VersionData versionData = listCopy.get(listCopy.size() - 1);
+
+                ConsoleManager.getInstance().information(this, String.format("%s : %s",
+                        messageString, VendorOptionStatus.getVersionString(versionData)));
+            }
+        }
+    }
+
+    /**
+     * Override selected vendor options.
+     *
+     * @param vendorOptionList the vendor option list
+     */
+    public void overrideSelectedVendorOptions(List<VersionData> vendorOptionList) {
+        vendorOptionOverridden = false;
+        setSelectedVendorOptions(vendorOptionList);
+        vendorOptionOverridden = true;
     }
 }

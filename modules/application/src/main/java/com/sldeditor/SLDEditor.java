@@ -57,6 +57,7 @@ import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.watcher.ReloadManager;
 import com.sldeditor.create.NewSLDPanel;
@@ -69,6 +70,7 @@ import com.sldeditor.generated.Version;
 import com.sldeditor.map.MapRender;
 import com.sldeditor.render.RenderPanelImpl;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.layout.UILayoutFactory;
 import com.sldeditor.ui.layout.UILayoutInterface;
@@ -450,7 +452,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * @param vendorOptionList the list of vendor options
      */
     public void setVendorOptions(List<VersionData> vendorOptionList) {
-        PrefManager.getInstance().overrideVendorOptionList(vendorOptionList);
+        VendorOptionManager.getInstance().overrideSelectedVendorOptions(vendorOptionList);
     }
 
     /**
@@ -493,7 +495,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         StyleWrapper style = null;
 
-        if (isLocalFile(urlToSave)) {
+        if (RelativePath.isLocalFile(urlToSave)) {
             try {
                 File f = new File(urlToSave.toURI());
                 style = new StyleWrapper(f.getName());
@@ -508,28 +510,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         SLDEditorFile.getInstance().fileOpenedSaved();
         UndoManager.getInstance().fileSaved();
-    }
-
-    /**
-     * Whether the URL is a file in the local file system.
-     *
-     * @param url the url
-     * @return true, if is local file
-     */
-    private static boolean isLocalFile(URL url) {
-        String scheme = url.getProtocol();
-        return "file".equalsIgnoreCase(scheme) && !hasHost(url);
-    }
-
-    /**
-     * Checks for host.
-     *
-     * @param url the url
-     * @return true, if successful
-     */
-    private static boolean hasHost(URL url) {
-        String host = url.getHost();
-        return host != null && !"".equals(host);
     }
 
     /**
@@ -678,11 +658,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         dataSource.connect(SLDEditorFile.getInstance());
 
-        if (sldEditorFile != null) {
-            PrefData prefData = PrefManager.getInstance().getPrefData();
-            prefData.setVendorOptionVersionList(sldData.getVendorOptionList());
-            PrefManager.getInstance().setPrefData(prefData);
-        }
+        VendorOptionManager.getInstance().loadSLDFile(uiMgr, sld, sldData);
 
         LegendManager.getInstance().SLDLoaded(sldData.getLegendOptions());
         SLDEditorFile.getInstance().fileOpenedSaved();

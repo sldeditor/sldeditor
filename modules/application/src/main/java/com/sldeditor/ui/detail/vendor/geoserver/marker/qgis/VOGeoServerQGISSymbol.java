@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
@@ -47,6 +46,8 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
     /** The empty details. */
     private EmptyDetails emptyDetails = null;
 
+    private FieldConfigMarkerQGIS markerField;
+
     /**
      * Instantiates a new VOGeoServerQGISSymbol.
      */
@@ -66,7 +67,7 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        FieldConfigMarkerQGIS markerField = new FieldConfigMarkerQGIS(
+        markerField = new FieldConfigMarkerQGIS(
                 new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "",
                         false),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
@@ -93,10 +94,6 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info = new VendorOptionInfo("qgis://",
-                emptyDetails.getVendorOptionVersion(),
-                Localisation.getString(VOGeoServerQGISSymbol.class, "VOGeoServerQGISSymbol.description"));
-
-        return info;
+        return markerField.getVendorOptionInfo();
     }
 }

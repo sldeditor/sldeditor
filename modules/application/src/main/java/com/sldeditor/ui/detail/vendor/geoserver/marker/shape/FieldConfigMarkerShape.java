@@ -19,6 +19,11 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.shape;
 
+import java.util.List;
+
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -33,6 +38,9 @@ public class FieldConfigMarkerShape extends FieldConfigMarker {
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE. */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/shape/SymbolTypeFieldState_Shape.xml";
+
+    /** The vendor option info. */
+    private VendorOptionInfo vendorOptionInfo = null;
 
     /**
      * Instantiates a new field config marker shape.
@@ -49,4 +57,29 @@ public class FieldConfigMarkerShape extends FieldConfigMarker {
                 symbolSelectionField);
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
+                getVendorOptionInfo());
+
+        vendorOptionsPresentList.add(voPresent);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
+     */
+    @Override
+    public VendorOptionInfo getVendorOptionInfo() {
+        if(vendorOptionInfo == null)
+        {
+            vendorOptionInfo = new VendorOptionInfo("shape://",
+                    this.getVendorOption(),
+                    Localisation.getString(VOGeoServerShapeSymbol.class, "VOGeoServerShapeSymbol.description"));
+        }
+        return vendorOptionInfo;
+    }
 }

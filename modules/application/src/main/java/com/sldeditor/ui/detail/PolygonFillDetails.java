@@ -41,6 +41,7 @@ import org.opengis.style.GraphicalSymbol;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.v2.function.FunctionNameInterface;
@@ -173,7 +174,6 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         Expression expGap = null;
         Expression expInitialGap = null;
 
-        PolygonSymbolizer polygon = null;
         Fill fill = null;
         Expression expOpacity = null;
 
@@ -218,10 +218,6 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
                         graphic = fill.getGraphicFill();
                     }
                 }
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "symbolizer == null");
             }
 
             if(graphic == null)
@@ -298,7 +294,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
 
         if(vendorOptionFillFactory != null)
         {
-            vendorOptionFillFactory.populate(polygon);
+            if(symbolizer instanceof PolygonSymbolizer)
+            {
+                vendorOptionFillFactory.populate((PolygonSymbolizer) symbolizer);
+            }
         }
 
         updateSymbol();
@@ -511,5 +510,15 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     */
+    @Override
+    public void getMinimumVersion(Object parentObj, Object sldObj,
+            List<VendorOptionPresent> vendorOptionsPresentList) {
+        symbolTypeFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        vendorOptionFillFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

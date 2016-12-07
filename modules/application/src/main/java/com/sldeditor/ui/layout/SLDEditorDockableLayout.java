@@ -76,6 +76,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         SingleCDockable sld = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.sld"), SLDTextArea.getPanel());
         SingleCDockable map = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.map"), RenderPanelFactory.getMapRenderer());
         SingleCDockable dataSource = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.dataSource"), uiMgr.getDataSourceConfig());
+        SingleCDockable vendorOption = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.vendorOption"), uiMgr.getVendorOption());
 
         SingleCDockable console = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.console"), ConsoleManager.getInstance().getPanel());
 
@@ -84,6 +85,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         control.addDockable(symbol);
         control.addDockable(map);
         control.addDockable(dataSource);
+        control.addDockable(vendorOption);
         control.addDockable(console);
 
         ToolManager toolManagerInstance = ToolManager.getInstance();
@@ -102,6 +104,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         grid.add(1,0,2,4, legend);
         grid.add(1,0,2,4, map);
         grid.add(1,0,2,4, dataSource);
+        grid.add(1,0,2,4, vendorOption);
         grid.add(1,0,2,4, symbol);
 
         grid.add(0,4,3,1, console);
