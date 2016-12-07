@@ -41,7 +41,7 @@ public class VendorOptionStatus {
 
         if (vendorOptionVersionsList != null) {
             for (VersionData versionData : vendorOptionVersionsList) {
-                versionString = internal_getVersionString(versionData);
+                versionString = getVersionString(versionData);
             }
         }
         return versionString;
@@ -53,7 +53,7 @@ public class VendorOptionStatus {
      * @param versionData the version data
      * @return the version string
      */
-    private static String internal_getVersionString(VersionData versionData) {
+    public static String getVersionString(VersionData versionData) {
         String versionString = "";
         if (versionData != null) {
             String vendorOptionName = getVendorOptionName(versionData.getVendorOptionType());

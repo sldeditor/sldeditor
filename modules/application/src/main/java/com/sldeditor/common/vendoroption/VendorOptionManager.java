@@ -20,6 +20,7 @@ package com.sldeditor.common.vendoroption;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ public class VendorOptionManager {
         if (fXmlFile == null) {
             ConsoleManager.getInstance().error(VendorOptionManager.class,
                     Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
-                    + RESOURCE_FILE);
+                            + RESOURCE_FILE);
             return;
         }
 
@@ -374,8 +375,7 @@ public class VendorOptionManager {
      */
     public void setSelectedVendorOptions(List<VersionData> selectedVendorOptions) {
         if (!this.selectedVendorOptions.equals(selectedVendorOptions)) {
-            if(!vendorOptionOverridden)
-            {
+            if (!vendorOptionOverridden) {
                 this.selectedVendorOptions = selectedVendorOptions;
 
                 notifyVendorOptionUpdated();
@@ -402,6 +402,9 @@ public class VendorOptionManager {
     public void loadSLDFile(GetMinimumVersionInterface uiMgr, StyledLayerDescriptor sld,
             SLDDataInterface sldData) {
         if (sldData != null) {
+            List<VersionData> selectedVendorOptionVersion = null;
+            String messageString = null;
+
             if (sldData.getSldEditorFile() == null) {
                 MinimumVersion minimumVersion = new MinimumVersion(uiMgr);
 
@@ -410,21 +413,25 @@ public class VendorOptionManager {
                 // Find out what the default is
                 PrefData prefData = PrefManager.getInstance().getPrefData();
 
-                List<VersionData> selectedVendorOptionVersion = minimumVersion.getMinimumVersion(prefData.getVendorOptionVersionList());
-                setSelectedVendorOptions(selectedVendorOptionVersion);
-                ConsoleManager.getInstance().information(this,
-                        String.format("%s : %s",
-                                Localisation.getString(VendorOptionManager.class,
-                                        "VendorOptionManager.loadedFromFile"),
-                                selectedVendorOptionVersion.get(0).getVersionString()));
+                selectedVendorOptionVersion = minimumVersion
+                        .getMinimumVersion(prefData.getVendorOptionVersionList());
+                messageString = Localisation.getString(VendorOptionManager.class,
+                        "VendorOptionManager.loadedFromFile");
             } else {
-                List<VersionData> selectedVendorOptionVersion = sldData.getVendorOptionList();
+                selectedVendorOptionVersion = sldData.getVendorOptionList();
+                messageString = Localisation.getString(VendorOptionManager.class,
+                        "VendorOptionManager.loadedFromSLDEditorFile");
+            }
+
+            if (selectedVendorOptionVersion != null) {
                 setSelectedVendorOptions(selectedVendorOptionVersion);
-                ConsoleManager.getInstance().information(this,
-                        String.format("%s : %s",
-                                Localisation.getString(VendorOptionManager.class,
-                                        "VendorOptionManager.loadedFromSLDEditorFile"),
-                                selectedVendorOptionVersion.get(0).getVersionString()));
+
+                List<VersionData> listCopy = new ArrayList<>(selectedVendorOptionVersion);
+                Collections.sort(listCopy);
+                VersionData versionData = listCopy.get(listCopy.size() - 1);
+
+                ConsoleManager.getInstance().information(this, String.format("%s : %s",
+                        messageString, VendorOptionStatus.getVersionString(versionData)));
             }
         }
     }
