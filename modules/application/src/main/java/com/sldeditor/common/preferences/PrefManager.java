@@ -192,6 +192,7 @@ public class PrefManager implements UndoActionInterface {
             if (!vendorOptionVersionList.contains(defaultVendorOption)) {
                 vendorOptionVersionList.add(defaultVendorOption);
             }
+            newPrefData.setVendorOptionVersionList(vendorOptionVersionList);
             newPrefData.setBackgroundColour(
                     propertyManagerInstance.getColourValue(BACKGROUND_COLOUR_FIELD, Color.WHITE));
             newPrefData.setSaveLastFolderView(
@@ -252,6 +253,7 @@ public class PrefManager implements UndoActionInterface {
         oldValueObj = prefData.clone();
 
         setUseAntiAlias(newPrefData.isUseAntiAlias());
+        setVendorOptionList(newPrefData.getVendorOptionVersionList(), true);
         setUiLayoutClass(newPrefData.getUiLayoutClass());
         setBackgroundColour(newPrefData.getBackgroundColour());
         setLastFolderViewed(newPrefData.isSaveLastFolderView(), newPrefData.getLastViewedKey(),
@@ -260,6 +262,39 @@ public class PrefManager implements UndoActionInterface {
 
         UndoManager.getInstance()
                 .addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, newPrefData));
+    }
+
+    /**
+     * Sets the vendor option list.
+     *
+     * @param vendorOptionVersionList the new vendor option list
+     * @param saveChange the save change flag
+     */
+    private void setVendorOptionList(List<VersionData> vendorOptionVersionList,
+            boolean saveChange) {
+
+        if (vendorOptionVersionList == null) {
+            vendorOptionVersionList = new ArrayList<VersionData>();
+            vendorOptionVersionList.add(
+                    VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
+        }
+
+        if (!cmpList(this.prefData.getVendorOptionVersionList(), vendorOptionVersionList)) {
+
+            this.prefData.setVendorOptionVersionList(vendorOptionVersionList);
+
+            List<String> vendorOptionVersionStringList = new ArrayList<String>();
+            for (VersionData versionData : vendorOptionVersionList) {
+                vendorOptionVersionStringList.add(versionData.getEncodedString());
+            }
+
+            if (saveChange) { // When running integration tests don't update users preferences
+                if (propertyManagerInstance != null) {
+                    propertyManagerInstance.updateValue(VENDOROPTIONS_FIELD,
+                            vendorOptionVersionStringList);
+                }
+            }
+        }
     }
 
     /**

@@ -605,10 +605,6 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                 this.fireUpdateSymbol();
             }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "symbolizer == null");
-            }
         }
     }
 

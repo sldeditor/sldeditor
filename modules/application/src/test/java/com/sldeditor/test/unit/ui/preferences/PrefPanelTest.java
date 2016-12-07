@@ -62,6 +62,7 @@ public class PrefPanelTest {
 
         panel.testPopulate(null);
 
+        PrefManager.destroyInstance();
         PrefData prefData = PrefManager.getInstance().getPrefData();
         prefData.setUiLayoutClass("com.sldeditor.ui.layout.SLDEditorDefaultLayout");
         panel.testPopulate(prefData);

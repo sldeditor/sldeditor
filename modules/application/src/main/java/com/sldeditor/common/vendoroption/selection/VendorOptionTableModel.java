@@ -36,8 +36,7 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionTableModel extends AbstractTableModel
-{
+public class VendorOptionTableModel extends AbstractTableModel {
 
     /** The column names. */
     private String[] columnNames = new String[2];
@@ -54,24 +53,29 @@ public class VendorOptionTableModel extends AbstractTableModel
     /** The name order. */
     private List<VendorOptionTypeInterface> nameOrder = null;
 
+    /** The instance. */
+    private Class<?> instance = null;
+    
     /**
      * Instantiates a new vendor option model.
      *
      * @param options the options
+     * @param instance the instance
      */
-    public VendorOptionTableModel(Map<VendorOptionTypeInterface, String> options)
-    {
-        columnNames[0] = Localisation.getString(VendorOptionTableModel.class, "VendorOptionTableModel.vendor");
-        columnNames[1] = Localisation.getString(VendorOptionTableModel.class, "VendorOptionTableModel.selected");
+    public VendorOptionTableModel(Map<VendorOptionTypeInterface, String> options,
+            Class<?> instance) {
+        this.instance = instance;
+        columnNames[0] = Localisation.getString(VendorOptionTableModel.class,
+                "VendorOptionTableModel.vendor");
+        columnNames[1] = Localisation.getString(VendorOptionTableModel.class,
+                "VendorOptionTableModel.selected");
 
         List<VendorOptionTypeInterface> orderList = new ArrayList<VendorOptionTypeInterface>();
 
-        if(options != null)
-        {
+        if (options != null) {
             nameMap = options;
 
-            for(VendorOptionTypeInterface key : options.keySet())
-            {
+            for (VendorOptionTypeInterface key : options.keySet()) {
                 orderList.add(key);
                 selectedVersionList.add(VersionData.getLatestVersion(key.getClass()));
             }
@@ -79,7 +83,9 @@ public class VendorOptionTableModel extends AbstractTableModel
         nameOrder = orderList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -87,7 +93,9 @@ public class VendorOptionTableModel extends AbstractTableModel
         return nameMap.size();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -95,28 +103,28 @@ public class VendorOptionTableModel extends AbstractTableModel
         return columnNames.length;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if((rowIndex >= 0) && (rowIndex < nameOrder.size()))
-        {
+        if ((rowIndex >= 0) && (rowIndex < nameOrder.size())) {
             VendorOptionTypeInterface index = nameOrder.get(rowIndex);
 
-            if(columnIndex == 0)
-            {
+            if (columnIndex == 0) {
                 return nameMap.get(index);
-            }
-            else if(columnIndex == 1)
-            {
+            } else if (columnIndex == 1) {
                 return selectedVersionList.get(rowIndex);
             }
         }
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     @Override
@@ -124,7 +132,9 @@ public class VendorOptionTableModel extends AbstractTableModel
         return columnNames[column];
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
     @Override
@@ -132,14 +142,15 @@ public class VendorOptionTableModel extends AbstractTableModel
         return (columnIndex == 1);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
-        if((columnIndex == 1) && (rowIndex >= 0) && (rowIndex < selectedVersionList.size()))
-        {
+        if ((columnIndex == 1) && (rowIndex >= 0) && (rowIndex < selectedVersionList.size())) {
             VersionData value = (VersionData) aValue;
 
             selectedVersionList.remove(rowIndex);
@@ -149,13 +160,14 @@ public class VendorOptionTableModel extends AbstractTableModel
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
      */
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if(columnIndex == 1)
-        {
+        if (columnIndex == 1) {
             return String.class;
         }
         return super.getColumnClass(columnIndex);
@@ -170,13 +182,12 @@ public class VendorOptionTableModel extends AbstractTableModel
 
         List<VersionData> localVendorOptionList = new ArrayList<VersionData>();
 
-        localVendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+        localVendorOptionList
+                .add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
         // Add all non-Not Set values
-        for(VersionData versionData : selectedVersionList)
-        {
-            if(!versionData.isNotSet())
-            {
+        for (VersionData versionData : selectedVersionList) {
+            if (!versionData.isNotSet()) {
                 localVendorOptionList.add(versionData);
             }
         }
@@ -190,31 +201,28 @@ public class VendorOptionTableModel extends AbstractTableModel
      * @param selectedVersionList the new selected vendor option versions
      */
     public void setSelectedVendorOptionVersions(List<VersionData> selectedVersionList) {
-        if(selectedVersionList != null)
-        {
+        if (selectedVersionList != null) {
             this.selectedVersionList = new ArrayList<VersionData>();
 
-            for(VendorOptionTypeInterface key : nameOrder)
-            {
+            for (VendorOptionTypeInterface key : nameOrder) {
                 boolean found = false;
-                for(VersionData versionData : selectedVersionList)
-                {
-                    if(versionData.getVendorOptionType() == key.getClass())
-                    {
+                for (VersionData versionData : selectedVersionList) {
+                    if (versionData.getVendorOptionType() == key.getClass()) {
                         found = true;
                         this.selectedVersionList.clear();
                         this.selectedVersionList.add(versionData);
-                        VendorOptionInfoManager.getInstance().setSelectedVersion(versionData);
+                        VendorOptionInfoManager.getInstance()
+                                .setSelectedVersion(instance, versionData);
                     }
                 }
 
-                if(!found)
-                {
+                if (!found) {
                     this.selectedVersionList.add(VersionData.getNotSetVersion(key.getClass()));
                 }
             }
 
-            VersionData defaultVendorOption = VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
+            VersionData defaultVendorOption = VendorOptionManager.getInstance()
+                    .getDefaultVendorOptionVersionData();
 
             this.selectedVersionList.remove(defaultVendorOption);
 
@@ -228,10 +236,8 @@ public class VendorOptionTableModel extends AbstractTableModel
      * @param row the row
      * @return the vendor option
      */
-    public List<VersionData> getVendorOption(int row)
-    {
-        if((row >= 0) && (row < nameOrder.size()))
-        {
+    public List<VersionData> getVendorOption(int row) {
+        if ((row >= 0) && (row < nameOrder.size())) {
             VendorOptionTypeInterface vendorOption = nameOrder.get(row);
 
             return vendorOption.getVersionList();
@@ -246,9 +252,8 @@ public class VendorOptionTableModel extends AbstractTableModel
      * @param versionData the version data
      * @param selectedRowIndex the selected row index
      */
-    public void setSelectedVersion(VersionData versionData, int selectedRowIndex)
-    {
+    public void setSelectedVersion(VersionData versionData, int selectedRowIndex) {
         setValueAt(versionData, selectedRowIndex, 1);
-        VendorOptionInfoManager.getInstance().setSelectedVersion(versionData);
+        VendorOptionInfoManager.getInstance().setSelectedVersion(instance, versionData);
     }
 }

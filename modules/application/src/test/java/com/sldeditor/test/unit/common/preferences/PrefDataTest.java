@@ -23,11 +23,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Unit test for PrefData.
@@ -45,6 +49,10 @@ public class PrefDataTest {
         PrefData prefData = new PrefData();
         prefData.setUseAntiAlias(true);
 
+        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+        vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+
+        prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
 
         prefData.setUiLayoutClass(uiLayoutClass);
@@ -54,6 +62,7 @@ public class PrefDataTest {
 
         assertEquals(newObj.getBackgroundColour(), prefData.getBackgroundColour());
         assertEquals(newObj.getUiLayoutClass(), prefData.getUiLayoutClass());
+        assertEquals(newObj.getVendorOptionVersionList(), prefData.getVendorOptionVersionList());
         assertEquals(newObj.isUseAntiAlias(), prefData.isUseAntiAlias());
         assertEquals(newObj.isSaveLastFolderView(), prefData.isSaveLastFolderView());
         assertEquals(newObj.getLastViewedKey(), prefData.getLastViewedKey());
@@ -88,6 +97,21 @@ public class PrefDataTest {
 
         prefData.setCheckAppVersionOnStartUp(true);
         assertTrue(prefData.isCheckAppVersionOnStartUp());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#getVendorOptionVersionList()}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#setVendorOptionVersionList()}.
+     */
+    @Test
+    public void testVendorOptionVersionList() {
+        PrefData prefData = new PrefData();
+
+        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+        vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+
+        prefData.setVendorOptionVersionList(vendorOptionList);
+        assertEquals(vendorOptionList, prefData.getVendorOptionVersionList());
     }
 
     /**

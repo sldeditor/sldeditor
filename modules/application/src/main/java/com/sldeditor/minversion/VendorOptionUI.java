@@ -137,7 +137,7 @@ public class VendorOptionUI extends JPanel
         vendorOptionSelectionPanel.add(scrollPane, BorderLayout.CENTER);
 
         vendorOptionSelectionPanel.setPreferredSize(new Dimension(400, 100));
-        vendorOptionModel = new VendorOptionTableModel(options);
+        vendorOptionModel = new VendorOptionTableModel(options, getClass());
 
         vendorOptionTable.setModel(vendorOptionModel);
         vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
@@ -146,7 +146,7 @@ public class VendorOptionUI extends JPanel
 
         // Vendor option information
         VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance()
-                .getPanel();
+                .getPanel(getClass());
         vendorOptionInfoPanel.setPreferredSize(new Dimension(400, 200));
         add(vendorOptionInfoPanel);
 

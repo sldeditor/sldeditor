@@ -36,6 +36,8 @@ import org.w3c.dom.NodeList;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.preferences.PrefData;
+import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.minversion.MinimumVersion;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
@@ -404,7 +406,11 @@ public class VendorOptionManager {
                 MinimumVersion minimumVersion = new MinimumVersion(uiMgr);
 
                 minimumVersion.findMinimumVersion(sld);
-                List<VersionData> selectedVendorOptionVersion = minimumVersion.getMinimumVersion();
+
+                // Find out what the default is
+                PrefData prefData = PrefManager.getInstance().getPrefData();
+
+                List<VersionData> selectedVendorOptionVersion = minimumVersion.getMinimumVersion(prefData.getVendorOptionVersionList());
                 setSelectedVendorOptions(selectedVendorOptionVersion);
                 ConsoleManager.getInstance().information(this,
                         String.format("%s : %s",

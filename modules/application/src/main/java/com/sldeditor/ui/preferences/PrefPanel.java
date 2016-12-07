@@ -19,9 +19,11 @@
 package com.sldeditor.ui.preferences;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
@@ -31,11 +33,22 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefData;
-import com.sldeditor.common.preferences.PrefManager;
+import com.sldeditor.common.vendoroption.GeoServerVendorOption;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
+import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
+import com.sldeditor.common.vendoroption.selection.VersionCellEditor;
+import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
 import com.sldeditor.ui.layout.UILayoutFactory;
 
 /**
@@ -47,6 +60,15 @@ public class PrefPanel extends JDialog {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The vendor option table. */
+    private JTable vendorOptionTable;
+
+    /** The model. */
+    private VendorOptionTableModel model = null;
+
+    /** The vendor options. */
+    private Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<VendorOptionTypeInterface, String>();
 
     /** The ok button pressed flag. */
     private boolean okPressed = false;
@@ -79,19 +101,9 @@ public class PrefPanel extends JDialog {
 
         this.setModal(true);
 
-        createUI();
+        addVendorOption(VendorOptionManager.getInstance().getClass(GeoServerVendorOption.class));
 
-        pack();
-
-        setSize(400, 200);
-
-        Controller.getInstance().centreDialog(this);
-    }
-
-    /**
-     * Creates the UI.
-     */
-    private void createUI() {
+        model = new VendorOptionTableModel(options, getClass());
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -151,7 +163,31 @@ public class PrefPanel extends JDialog {
             }
         });
 
-        // Ok/Cancel buttons
+        // Vendor options
+        JPanel panel_1 = new JPanel();
+        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+                Localisation.getString(PrefPanel.class, "PrefPanel.vendorOptions"),
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_1.setLayout(new BorderLayout());
+        panel.add(panel_1);
+
+        JScrollPane scrollPane = new JScrollPane();
+        panel_1.add(scrollPane, BorderLayout.CENTER);
+
+        vendorOptionTable = new JTable();
+        scrollPane.setViewportView(vendorOptionTable);
+        panel_1.setPreferredSize(new Dimension(500, 200));
+
+        vendorOptionTable.setModel(model);
+        vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
+        vendorOptionTable.getColumnModel().getColumn(1).setCellEditor(new VersionCellEditor(model));
+
+        // Vendor option information
+        VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance()
+                .getPanel(getClass());
+        vendorOptionInfoPanel.setPreferredSize(new Dimension(500, 200));
+        panel.add(vendorOptionInfoPanel);
+
         JPanel buttonPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();
         flowLayout.setHgap(1);
@@ -179,6 +215,19 @@ public class PrefPanel extends JDialog {
             }
         });
         buttonPanel.add(btnCancel);
+
+        pack();
+
+        Controller.getInstance().centreDialog(this);
+    }
+
+    /**
+     * Adds the vendor option.
+     *
+     * @param vendorOption the vendor option
+     */
+    private void addVendorOption(VendorOptionTypeInterface vendorOption) {
+        options.put(vendorOption, vendorOption.getName());
     }
 
     /**
@@ -206,6 +255,7 @@ public class PrefPanel extends JDialog {
             chckbxCheckAppVersionOnStartUp.setSelected(prefData.isCheckAppVersionOnStartUp());
             chckbxUseAntiAlias.setSelected(prefData.isUseAntiAlias());
             chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
+            model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
 
             for (String displayName : uiLayoutMap.keySet()) {
                 String className = uiLayoutMap.get(displayName);
@@ -228,10 +278,11 @@ public class PrefPanel extends JDialog {
      */
     public PrefData getPrefData() {
 
-        PrefData prefData = PrefManager.getInstance().getPrefData();
+        PrefData prefData = new PrefData();
 
         prefData.setCheckAppVersionOnStartUp(chckbxCheckAppVersionOnStartUp.isSelected());
         prefData.setUseAntiAlias(chckbxUseAntiAlias.isSelected());
+        prefData.setVendorOptionVersionList(model.getVendorOptionVersionList());
         String uiLayoutClass = uiLayoutMap.get(uiLayoutComboBox.getSelectedItem());
         prefData.setUiLayoutClass(uiLayoutClass);
         prefData.setSaveLastFolderView(chckbxSetSaveLastFolderViewed.isSelected());

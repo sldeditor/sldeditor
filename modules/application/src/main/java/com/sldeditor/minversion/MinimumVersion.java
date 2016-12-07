@@ -52,7 +52,8 @@ public class MinimumVersion {
     private List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<VendorOptionPresent>();
 
     /** The default vendor option version. */
-    private VendorOptionVersion defaultVendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+    private VendorOptionVersion defaultVendorOptionVersion = VendorOptionManager.getInstance()
+            .getDefaultVendorOptionVersion();
 
     /**
      * Instantiates a new minimum version.
@@ -101,11 +102,13 @@ public class MinimumVersion {
                                 parentObj = fts;
 
                                 for (Rule rule : fts.rules()) {
-                                    uiMgr.getMinimumVersion(parentObj, rule, vendorOptionsPresentList);
+                                    uiMgr.getMinimumVersion(parentObj, rule,
+                                            vendorOptionsPresentList);
                                     parentObj = rule;
 
                                     for (Symbolizer symbolizer : rule.symbolizers()) {
-                                        uiMgr.getMinimumVersion(parentObj, symbolizer, vendorOptionsPresentList);
+                                        uiMgr.getMinimumVersion(parentObj, symbolizer,
+                                                vendorOptionsPresentList);
                                     }
                                 }
                             }
@@ -124,10 +127,8 @@ public class MinimumVersion {
     private void removeStrictSLD() {
         List<VendorOptionPresent> newList = new ArrayList<VendorOptionPresent>();
 
-        for(VendorOptionPresent obj : vendorOptionsPresentList)
-        {
-            if(obj.getVendorOptionInfo().getVersionData() != defaultVendorOptionVersion)
-            {
+        for (VendorOptionPresent obj : vendorOptionsPresentList) {
+            if (obj.getVendorOptionInfo().getVersionData() != defaultVendorOptionVersion) {
                 newList.add(obj);
             }
         }
@@ -149,21 +150,41 @@ public class MinimumVersion {
     /**
      * Gets the minimum version.
      *
+     * @param userDefaultVendorOption the user default vendor option
      * @return the minimum version
      */
-    public List<VersionData> getMinimumVersion() {
+    public List<VersionData> getMinimumVersion(List<VersionData> userDefaultVendorOption) {
         List<VersionData> list = new ArrayList<VersionData>();
-        if(vendorOptionsPresentList.isEmpty())
-        {
-            list.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
-        }
-        else
-        {
-            VendorOptionPresent lastVendorOption = vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
+        if (vendorOptionsPresentList.isEmpty()) {
+            list = userDefaultVendorOption;
+        } else {
+            VendorOptionPresent lastVendorOption = vendorOptionsPresentList
+                    .get(vendorOptionsPresentList.size() - 1);
             VendorOptionInfo vendorOptionInfo = lastVendorOption.getVendorOptionInfo();
-            list.add(vendorOptionInfo.getVersionData().getEarliest());
+            VersionData earliestReadFromSymbol = vendorOptionInfo.getVersionData().getEarliest();
+            list.add(findLatest(earliestReadFromSymbol, userDefaultVendorOption));
         }
 
         return list;
+    }
+
+    /**
+     * Find latest version data between the vendor option version read from the symbol
+     * and the user default.
+     *
+     * @param earliestReadFromSymbol the earliest read from symbol
+     * @param userDefaultVendorOptionList the user default vendor option
+     * @return the version data
+     */
+    protected VersionData findLatest(VersionData earliestReadFromSymbol,
+            List<VersionData> userDefaultVendorOptionList) {
+        // Sort the list, the latest will be last
+        Collections.sort(userDefaultVendorOptionList);
+
+        VersionData latestUserDefault = userDefaultVendorOptionList
+                .get(userDefaultVendorOptionList.size() - 1);
+
+        return (earliestReadFromSymbol.compareTo(latestUserDefault) == -1) ? latestUserDefault
+                : earliestReadFromSymbol;
     }
 }

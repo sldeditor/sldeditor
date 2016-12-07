@@ -54,7 +54,7 @@ public class VendorOptionTableModelTest {
      */
     @Test
     public void testGetColumnCount() {
-        VendorOptionTableModel model = new VendorOptionTableModel(null);
+        VendorOptionTableModel model = new VendorOptionTableModel(null, null);
 
         assertEquals(2, model.getColumnCount());
         assertEquals(Localisation.getString(VendorOptionTableModel.class, "VendorOptionTableModel.vendor"), model.getColumnName(0));
@@ -80,7 +80,7 @@ public class VendorOptionTableModelTest {
 
         options.put(vendorOption, vendorOption.getName());
 
-        VendorOptionTableModel model = new VendorOptionTableModel(options);
+        VendorOptionTableModel model = new VendorOptionTableModel(options, null);
 
         assertEquals(1, model.getRowCount());
         String actualValue1 = (String) model.getValueAt(0, 0);
@@ -105,7 +105,7 @@ public class VendorOptionTableModelTest {
 
         options.put(vendorOption, vendorOption.getName());
 
-        VendorOptionTableModel model = new VendorOptionTableModel(options);
+        VendorOptionTableModel model = new VendorOptionTableModel(options, null);
 
         assertEquals(1, model.getRowCount());
 
@@ -149,7 +149,7 @@ public class VendorOptionTableModelTest {
 
         options.put(vendorOption, vendorOption.getName());
 
-        VendorOptionTableModel model = new VendorOptionTableModel(options);
+        VendorOptionTableModel model = new VendorOptionTableModel(options, null);
 
         assertEquals(1, model.getRowCount());
 

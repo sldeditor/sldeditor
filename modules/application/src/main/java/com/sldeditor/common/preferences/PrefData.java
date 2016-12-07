@@ -19,6 +19,11 @@
 package com.sldeditor.common.preferences;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Class that encapsulates user preference data.
@@ -29,6 +34,9 @@ public class PrefData implements Cloneable {
 
     /** The use anti alias flag. */
     private boolean useAntiAlias = false;
+
+    /** The vendor option list. */
+    private List<VersionData> vendorOptionList = new ArrayList<VersionData>();
 
     /** The ui layout class. */
     private String uiLayoutClass;
@@ -53,6 +61,7 @@ public class PrefData implements Cloneable {
      */
     public PrefData()
     {
+        vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
     }
 
     /**
@@ -74,6 +83,15 @@ public class PrefData implements Cloneable {
         copy.lastViewedKey = this.lastViewedKey;
         copy.checkAppVersionOnStartUp = this.checkAppVersionOnStartUp;
 
+        if(this.vendorOptionList != null)
+        {
+            copy.vendorOptionList = new ArrayList<VersionData>();
+
+            for(VersionData versionData : vendorOptionList)
+            {
+                copy.vendorOptionList.add(versionData.clone());
+            }
+        }
         return copy;
     }
 
@@ -93,6 +111,24 @@ public class PrefData implements Cloneable {
      */
     public void setUseAntiAlias(boolean useAntiAlias) {
         this.useAntiAlias = useAntiAlias;
+    }
+
+    /**
+     * Gets the vendor option version list.
+     *
+     * @return the vendor option version list
+     */
+    public List<VersionData> getVendorOptionVersionList() {
+        return vendorOptionList;
+    }
+
+    /**
+     * Sets the vendor option version list.
+     *
+     * @param vendorOptionList the new vendor option version list
+     */
+    public void setVendorOptionVersionList(List<VersionData> vendorOptionList) {
+        this.vendorOptionList = vendorOptionList;
     }
 
     /**
@@ -201,6 +237,7 @@ public class PrefData implements Cloneable {
         result = prime * result + (saveLastFolderView ? 1231 : 1237);
         result = prime * result + ((uiLayoutClass == null) ? 0 : uiLayoutClass.hashCode());
         result = prime * result + (useAntiAlias ? 1231 : 1237);
+        result = prime * result + ((vendorOptionList == null) ? 0 : vendorOptionList.hashCode());
         return result;
     }
 
@@ -250,6 +287,13 @@ public class PrefData implements Cloneable {
             return false;
         }
         if (useAntiAlias != other.useAntiAlias) {
+            return false;
+        }
+        if (vendorOptionList == null) {
+            if (other.vendorOptionList != null) {
+                return false;
+            }
+        } else if (!vendorOptionList.equals(other.vendorOptionList)) {
             return false;
         }
         return true;
