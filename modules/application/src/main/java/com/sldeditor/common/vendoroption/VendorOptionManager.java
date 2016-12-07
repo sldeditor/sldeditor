@@ -154,7 +154,7 @@ public class VendorOptionManager {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 
@@ -179,6 +179,13 @@ public class VendorOptionManager {
         }
 
         return instance;
+    }
+
+    /**
+     * Destroy instance.
+     */
+    public static void destroyInstance() {
+        instance = null;
     }
 
     /**
@@ -357,15 +364,6 @@ public class VendorOptionManager {
             vendorOptionListenerList.add(listener);
             notifyVendorOptionUpdated();
         }
-    }
-
-    /**
-     * Gets the selected vendor options.
-     *
-     * @return the selectedVendorOptions
-     */
-    public List<VersionData> getSelectedVendorOptions() {
-        return selectedVendorOptions;
     }
 
     /**
