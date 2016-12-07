@@ -48,6 +48,7 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.generated.Version;
+import com.sldeditor.help.HelpPanel;
 import com.sldeditor.ui.about.AboutDialog;
 import com.sldeditor.ui.preferences.PrefManagerUI;
 import com.sldeditor.update.CheckUpdatePanel;
@@ -151,6 +152,11 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         // Tools menu
         //
         createToolsMenu(extensionList, menuBar);
+        
+        //
+        // Help menu
+        //
+        createHelpMenu(menuBar);
     }
 
     /**
@@ -231,15 +237,35 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
 
         mnTools.add(mntmOptions);
         mnTools.add(mntmCheckUpdates);
+    }
 
-        JMenuItem mntmAboutDlg = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "tools.menu.about"));
+    /**
+     * Creates the help menu.
+     *
+     * @param extensionList the extension list
+     * @param menuBar the menu bar
+     */
+    private void createHelpMenu(JMenuBar menuBar)
+    {
+        JMenu mnHelp = new JMenu(Localisation.getString(SLDEditorMenus.class, "help.menu"));
+        menuBar.add(mnHelp);
+
+        JMenuItem mntmHelp = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "help.menu.help"));
+        mntmHelp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                HelpPanel.showDialog(null);
+            }
+        });
+
+        JMenuItem mntmAboutDlg = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "help.menu.about"));
         mntmAboutDlg.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 AboutDialog ad = new AboutDialog();
                 ad.setVisible(true);
             }
         });
-        mnTools.add(mntmAboutDlg);
+        mnHelp.add(mntmHelp);
+        mnHelp.add(mntmAboutDlg);
     }
 
     /**

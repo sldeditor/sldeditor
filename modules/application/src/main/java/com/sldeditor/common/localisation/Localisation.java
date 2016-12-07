@@ -29,12 +29,11 @@ import com.sldeditor.common.console.ConsoleManager;
 /**
  * The Class Localisation, the central point for getting localised strings.
  * <p>
- * The localisation is implemented as resource bundles.  The root folder is
- * <code>src/main/resources/i18n</code>
- * <p>Underneath is a folder for each of the top level folders in the source tree
- * containing all the package's classes.
- * <p>Calls are made to <code>getString()</code> supplying a class name.  The string is
- * looked up in the correspondingly named resource bundle.
+ * The localisation is implemented as resource bundles. The root folder is <code>src/main/resources/i18n</code>
+ * <p>
+ * Underneath is a folder for each of the top level folders in the source tree containing all the package's classes.
+ * <p>
+ * Calls are made to <code>getString()</code> supplying a class name. The string is looked up in the correspondingly named resource bundle.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -67,8 +66,7 @@ public class Localisation {
     /**
      * Instantiates a new localisation.
      */
-    private Localisation()
-    {
+    private Localisation() {
 
     }
 
@@ -77,10 +75,8 @@ public class Localisation {
      *
      * @return single instance of Localisation
      */
-    public static Localisation getInstance()
-    {
-        if(instance == null)
-        {
+    public static Localisation getInstance() {
+        if (instance == null) {
             instance = new Localisation();
         }
 
@@ -92,23 +88,18 @@ public class Localisation {
      *
      * @param args the args
      */
-    public void parseCommandLine(String[] args)
-    {
+    public void parseCommandLine(String[] args) {
         String language = DEFAULT_LANGUAGE;
         String country = DEFAULT_COUNTRY;
 
-        if(args != null)
-        {
-            for(String arg : args)
-            {
-                if(arg.startsWith(ARG_STRING))
-                {
+        if (args != null) {
+            for (String arg : args) {
+                if (arg.startsWith(ARG_STRING)) {
                     String locale = arg.substring(ARG_STRING.length());
 
                     String[] components = locale.split("\\:");
 
-                    if(components.length == 2)
-                    {
+                    if (components.length == 2) {
                         language = components[0];
                         country = components[1];
                     }
@@ -125,24 +116,18 @@ public class Localisation {
      * @param baseName the base name
      * @return the resource bundle
      */
-    public ResourceBundle getResourceBundle(String baseName)
-    {
+    public ResourceBundle getResourceBundle(String baseName) {
         ResourceBundle resourceBundle = resourceBundleMap.get(baseName);
 
-        if(resourceBundle == null)
-        {
-            if(currentLocale == null)
-            {
+        if (resourceBundle == null) {
+            if (currentLocale == null) {
                 currentLocale = new Locale(DEFAULT_LANGUAGE, DEFAULT_COUNTRY);
             }
 
-            try
-            {
+            try {
                 resourceBundle = ResourceBundle.getBundle(baseName, currentLocale);
                 resourceBundleMap.put(baseName, resourceBundle);
-            }
-            catch(MissingResourceException e)
-            {
+            } catch (MissingResourceException e) {
                 ConsoleManager.getInstance().error(this, "Missing resource : " + baseName);
             }
         }
@@ -158,48 +143,49 @@ public class Localisation {
      */
     public static String getString(Class<?> clazz, String key) {
 
+        ResourceBundle resourceBundle = findResourceBundle(clazz, key);
+
+        if ((resourceBundle == null) || (key == null)) {
+            return key;
+        } else {
+            if (resourceBundle.containsKey(key)) {
+                return resourceBundle.getString(key);
+            } else {
+                return key;
+            }
+        }
+    }
+
+    /**
+     * Find resource bundle.
+     *
+     * @param clazz the clazz
+     * @param key the key
+     * @return the resource bundle
+     */
+    private static ResourceBundle findResourceBundle(Class<?> clazz, String key) {
         String baseName = null;
         String className;
 
-        if((key != null) && key.startsWith(COMMON_PREFIX))
-        {
+        if ((key != null) && key.startsWith(COMMON_PREFIX)) {
             baseName = DEFAULT_BASE_NAME;
             className = "SLDEditor";
-        }
-        else
-        {
+        } else {
             String fullPackageName = clazz.getPackage().getName();
             String[] packages = fullPackageName.split("\\.");
 
-            if(packages.length == 2)
-            {
+            if (packages.length == 2) {
                 baseName = DEFAULT_BASE_NAME;
-            }
-            else
-            {
+            } else {
                 baseName = packages[2];
             }
 
             className = clazz.getSimpleName();
         }
 
-        ResourceBundle resourceBundle = getInstance().getResourceBundle(String.format("%s/%s/%s", RESOURCE_FOLDER, baseName, className));
-
-        if((resourceBundle == null) || (key == null))
-        {
-            return key;
-        }
-        else
-        {
-            if(resourceBundle.containsKey(key))
-            {
-                return resourceBundle.getString(key);
-            }
-            else
-            {
-                return key;
-            }
-        }
+        ResourceBundle resourceBundle = getInstance()
+                .getResourceBundle(String.format("%s/%s/%s", RESOURCE_FOLDER, baseName, className));
+        return resourceBundle;
     }
 
     /**
@@ -220,5 +206,14 @@ public class Localisation {
      */
     public static void preload(Class<?> clazz) {
         getString(clazz, null);
+    }
+
+    /**
+     * Gets the current locale.
+     *
+     * @return the currentLocale
+     */
+    public Locale getCurrentLocale() {
+        return currentLocale;
     }
 }
