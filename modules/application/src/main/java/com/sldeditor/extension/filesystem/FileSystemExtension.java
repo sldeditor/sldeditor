@@ -318,6 +318,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                         if(handlerDataList != null)
                         {
                             combinedFiles.appendSLDData(handlerDataList);
+                            sldDataList.addAll(handlerDataList);
                         }
                     }
 
