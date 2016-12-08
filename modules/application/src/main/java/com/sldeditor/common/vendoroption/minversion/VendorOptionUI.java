@@ -51,6 +51,7 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
 import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
 import com.sldeditor.common.vendoroption.selection.VersionCellEditor;
 import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
+import com.sldeditor.help.Help;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
@@ -61,6 +62,9 @@ import com.sldeditor.ui.panels.GetMinimumVersionInterface;
  */
 public class VendorOptionUI extends JPanel
         implements SLDOutputInterface, VendorOptionUpdateInterface {
+
+    /** The Constant CONTEXT_HELP. */
+    private static final String CONTEXT_HELP = "sld-tree-structure";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -80,7 +84,7 @@ public class VendorOptionUI extends JPanel
     /** The vendor option present model. */
     private VendorOptionPresentModel vendorOptionPresentModel = new VendorOptionPresentModel();
 
-    /** Find the minimum version supported by the SLD */
+    /**  Find the minimum version supported by the SLD. */
     private MinimumVersion minimumVersion = null;
 
     /** The latest button. */
@@ -168,26 +172,41 @@ public class VendorOptionUI extends JPanel
 
         JPanel panel = new JPanel();
         voPresentPanel.add(panel, BorderLayout.SOUTH);
+        panel.setLayout(new BorderLayout(0, 0));
+
+        JPanel panel_2 = new JPanel();
+        panel.add(panel_2, BorderLayout.EAST);
+
+        JButton btnHelp = new JButton("Help");
+        panel_2.add(btnHelp);
+        btnHelp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Help.getInstance().display(CONTEXT_HELP);
+            }
+        });
+
+        JPanel panel_1 = new JPanel();
+        panel.add(panel_1, BorderLayout.CENTER);
 
         btnLatestVO = new JButton(
                 Localisation.getString(VendorOptionUI.class, "VendorOptionUI.latest"));
+        panel_1.add(btnLatestVO);
         btnLatestVO.setEnabled(false);
-        btnLatestVO.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                vendorOptionsUpdated(VendorOptionManager.getInstance().getLatest());
-            }
-        });
-        panel.add(btnLatestVO);
 
         btnMinimumVendorOption = new JButton(
                 Localisation.getString(VendorOptionUI.class, "VendorOptionUI.minimumVO"));
+        panel_1.add(btnMinimumVendorOption);
         btnMinimumVendorOption.setEnabled(false);
         btnMinimumVendorOption.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 vendorOptionsUpdated(vendorOptionPresentModel.getMinimum());
             }
         });
-        panel.add(btnMinimumVendorOption);
+        btnLatestVO.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                vendorOptionsUpdated(VendorOptionManager.getInstance().getLatest());
+            }
+        });
     }
 
     /*
@@ -212,7 +231,9 @@ public class VendorOptionUI extends JPanel
     }
 
     /**
-     * @param instance
+     * Populate.
+     *
+     * @param selectedSymbol the selected symbol
      */
     public void populate(SelectedSymbol selectedSymbol) {
         if (selectedSymbol != null) {

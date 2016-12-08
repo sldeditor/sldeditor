@@ -48,7 +48,7 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.generated.Version;
-import com.sldeditor.help.HelpPanel;
+import com.sldeditor.help.Help;
 import com.sldeditor.ui.about.AboutDialog;
 import com.sldeditor.ui.preferences.PrefManagerUI;
 import com.sldeditor.update.CheckUpdatePanel;
@@ -253,7 +253,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         JMenuItem mntmHelp = new JMenuItem(Localisation.getString(SLDEditorMenus.class, "help.menu.help"));
         mntmHelp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                HelpPanel.showDialog(null);
+                Help.getInstance().display(null);
             }
         });
 

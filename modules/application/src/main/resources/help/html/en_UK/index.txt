@@ -1,3 +1,0 @@
-File System,filesystem.html
-SLD File,sldfile.html
-SLD Editor,userguide.html
