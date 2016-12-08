@@ -24,20 +24,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
-
-import org.apache.commons.codec.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.commonmark.Extension;
-import org.commonmark.ext.gfm.tables.TablesExtension;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
@@ -52,49 +42,42 @@ public class HelpReader {
     /** The help list. */
     private DefaultListModel<HelpData> helpList = new DefaultListModel<HelpData>();
 
-    /** The Constant RESOURCE_FOLDER. */
-    private static final String RESOURCE_FOLDER = "help";
+    /** The Constant HTML_RESOURCE_FOLDER. */
+    private static final String HTML_RESOURCE_FOLDER = "help/html";
 
-    /** The parser. */
-    private Parser parser;
-
-    /** The extension list. */
-    private List<Extension> extensionList = null;
+    /** The Constant INDEX_FILE. */
+    private static final String INDEX_FILE = "index.txt";
 
     /**
      * Instantiates a new help reader.
      */
     public HelpReader() {
-        extensionList = Arrays.asList(TablesExtension.create());
-
-        parser = Parser.builder().extensions(extensionList).build();
     }
 
     /**
      * Read help data.
      */
     private void readHelpData() {
-
-        List<String> files = null;
         Locale locale = Localisation.getInstance().getCurrentLocale();
-        String folder = String.format("%s/%s/", RESOURCE_FOLDER, locale.toString());
+        String indexFile = String.format("/%s/%s/%s", HTML_RESOURCE_FOLDER, locale.toString(),
+                INDEX_FILE);
+
+        InputStream inStream = HelpReader.class.getResourceAsStream(indexFile);
+        Reader reader = new InputStreamReader(inStream);
+        BufferedReader br = new BufferedReader(reader);
+
+        String line = null;
+
         try {
-            files = IOUtils.readLines(HelpReader.class.getClassLoader().getResourceAsStream(folder),
-                    Charsets.UTF_8);
+            while ((line = br.readLine()) != null) {
+                String[] components = line.split(",");
+                String htmlFile = String.format("/%s/%s/%s", HTML_RESOURCE_FOLDER, locale.toString(), components[1]);
+
+                HelpData helpData = new HelpData(components[0], htmlFile);
+                helpList.addElement(helpData);
+            }
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-
-        if (files != null) {
-            for (String key : files) {
-
-                String title = key;
-                String file = folder + key;
-
-                HelpData data = new HelpData(title, file);
-
-                helpList.addElement(data);
-            }
         }
     }
 
@@ -117,24 +100,22 @@ public class HelpReader {
      * @return the string
      */
     public String parse(HelpData helpData) {
-        InputStream inStream = HelpReader.class.getResourceAsStream("/" + helpData.getFile());
+        InputStream inStream = HelpReader.class.getResourceAsStream(helpData.getFile());
         Reader reader = new InputStreamReader(inStream);
         BufferedReader br = new BufferedReader(reader);
+        StringBuilder sb = new StringBuilder();
 
-        Node document;
+        String line = null;
+
         try {
-            document = parser.parseReader(br);
-            HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensionList).build();
-            StringBuilder sb = new StringBuilder();
-            sb.append("<div class=\"markdown-body\">");
-            sb.append(renderer.render(document));
-            sb.append("</div>");
-
-            return sb.toString();
-          } catch (IOException e) {
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
-        return "";
+
+        return sb.toString();
     }
 
 }

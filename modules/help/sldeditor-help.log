@@ -1,0 +1,4 @@
+INFO  com.sldeditor.help.HelpProcessor: Parsing filesystem.md
+INFO  com.sldeditor.help.HelpProcessor: Parsing sldfile.md
+INFO  com.sldeditor.help.HelpProcessor: Parsing userguide.md
+INFO  com.sldeditor.help.HelpProcessor: Writing index

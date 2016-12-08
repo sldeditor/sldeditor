@@ -1,0 +1,279 @@
+<div class="markdown-body"><h1>SLD Editor</h1>
+<p>The SLD Editor is a graphical editor written in Java that allows a user to create, and edit <a href="http://www.opengeospatial.org/standards/sld" title="Styled Layer Descriptors">Styled Layer Descriptors</a></p>
+<h2>File System</h2>
+<p>The file system is displayed in a window, it displays all folders in the file system and any known SLD Editor file types:</p>
+<table>
+<thead>
+<tr><th>File</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>file.sld</td><td>Styled Layer Description File</td></tr>
+<tr><td>file.sldeditor</td><td>SLD Editor Workspace file</td></tr>
+<tr><td>file.json</td><td>Esri MXD Import intermediate file</td></tr>
+</tbody>
+</table>
+<p>By clicking on a file in the file system window it is loaded and displayed in the editing window.</p>
+<h2>SLD File</h2>
+<p>An SLD file can be viewed or edited by:</p>
+<ul>
+<li>Clicking on an SLD file in the file system window.</li>
+<li>Using the SLD-&gt;Open menu option.</li>
+</ul>
+<p>The symbol can be viewed and edited, any changes can be saved by choosing the SLD-&gt;Save or SLD-&gt;Save As menu options.</p>
+<h3>Data Source Attributes</h3>
+<p>When an SLD file is loaded the application tries to extract all data source attributes referenced in the SLD.
+When specifying a data source field as the source of an SLD data attribute then attributes of the correct type are presented to the user.
+Further attributes can be added by extending the data source attributes.
+When saving an SLD file only the SLD data is saved, any knowledge of other fields available in the data source are lost unless the SLD is saved as part of an SLD Editor workspace.</p>
+<p>SLD Editor workspace files contain the following information:</p>
+<ul>
+<li>Point to an SLD file</li>
+<li>Data source attributes</li>
+<li>SLD options, e.g. vendor options supported</li>
+</ul>
+<p>SLD Editor workspace files allow SLD files to be worked on without the constraint of be being attached to the data source.</p>
+<h3>Opening SLD Editor Workspace File</h3>
+<p>SLD Editor workspace files are opened by:</p>
+<ul>
+<li>Selecting a .sldeditor file in the file system window.</li>
+<li>File-&gt;Open menu option</li>
+</ul>
+<h3>Saving SLD Editor Workspace File</h3>
+<p>SLD Editor workspace files are saved by selecting either menu option:</p>
+<ul>
+<li>File-&gt;Save</li>
+<li>File-&gt;Save As</li>
+</ul>
+<h2>Data Sources</h2>
+<p>Data sources contain the data that the SLD renders, typically this is a database, shape file etc.</p>
+<p>Clicking on the Data Source tab shows the fields the SLD Editor is aware of.
+When loading a SLD file the SLD Editor extracts all the fields so that they can be be used to specify SLD attributes and the <em>Data source connector</em> is set to <em>No data source</em>.</p>
+<p>To connect an SLD to data source, e.g. shape file, database etc. choose the data source from the drop down.</p>
+<p>Configure the properties for the selected data source.</p>
+<p>On successful connection to the data source the field names and types are read and stored within the SLD Editor workspace.</p>
+<h3>Updating Fields</h3>
+<p>Fields can be added and removed as required.</p>
+<h2>GeoServer</h2>
+<p>The SLD Editor application can maintain a persisted set of GeoServer connections.</p>
+<h3>GeoServer Connections</h3>
+<p>Connections to GeoServer instances appear at the top of the file system window, under the <strong>GeoServer</strong> tree node.</p>
+<p>To add a new connection, click on the <strong>GeoServer</strong> tree node and then click on the <em>New</em> button.
+A dialog is displayed allowing GeoServer connection properties to be configured, on press the <em>OK</em> button the
+GeoServer connection is displayed under the <strong>GeoServer</strong> tree node and is written to the application property file.
+When the SLD Editor is started in the future the GeoServer connection will be read from the application property file and displayed
+in the filesystem window.</p>
+<p>Passwords are stored in the application property file as encrypted strings.</p>
+<h3>Connecting to GeoServer</h3>
+<p>To connect to GeoServer click on the GeoServer connection name and then click on the <em>Connect</em> button.
+On connection to a GeoServer instances the following information is read:</p>
+<ul>
+<li>All styles in all the workspaces.</li>
+<li>All layers in all the workspaces and the styles used to render them.</li>
+</ul>
+<p>Once an sld file has been loaded it is displayed in the editor window.</p>
+<h2>SLD Tree Structure</h2>
+<p>The structure of the SLD symbol is displayed in the tree view, clicking on individual tree components will:</p>
+<ul>
+<li>Display the selected part of the symbol in a form allowing attribute data to be viewed and edited.</li>
+<li>Render the selected part of the symbol.</li>
+</ul>
+<p>Where a SLD symbol contains multiple rules they are all displayed at once.</p>
+<p>Where items are optional, e.g. fills and strokes, they can be enabled/disabled using the associated checkbox.</p>
+<h3>Adding Items</h3>
+<p>By selecting an item within the tree structure for SLD to feature type style and clicking on the + button will create an item of the correct type.</p>
+<p>E.g. click on a feature type style will create an additional rule.</p>
+<p>When clicking on a rule the specific point, line, polygon or text button must be clicked on to create the correct symbolizer.</p>
+<h3>SLD Attribute Editing</h3>
+<p>The attributes for a part of the SLD symbol can be updated in a form view.  As changes are made they are reflected in the rendered symbol.</p>
+<p>Most SLD attributes can be configured to take their value from:</p>
+<table>
+<thead>
+<tr><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Literal Value</td><td>Hardcoded value</td></tr>
+<tr><td>Attribute</td><td>A list of the fields contained within the associated data source that are valid for the field type</td></tr>
+<tr><td>Expression</td><td>An expression.</td></tr>
+</tbody>
+</table>
+<p>After each item is selected the Apply button must be pressed.  Pressing Revert will discard any changes.</p>
+<h3>Expression Panel</h3>
+<p>The panel is configured for the data type of the field.
+The property fields are read from the connected data source and are restricted to the supplied field data type.
+The functions are restricted according to the function return type matching the supplied field data type.</p>
+<h2>Vendor Options</h2>
+<p>The SLD standard can be extended through the use of vendor options.
+The vendor option supported for the symbol can be changed by selecting the Tools-&gt;Options menu option.
+The following vendor options are supported:</p>
+<ul>
+<li>
+<p>No Vendor options, strict SLD standard with no vendor options.</p>
+</li>
+<li>
+<p>GeoServer Vendor Options, the following GeoServer vendor options are supported:</p>
+</li>
+<li>
+<p>Labelling</p>
+</li>
+<li>
+<p>Random fill</p>
+</li>
+<li>
+<p>WKT</p>
+</li>
+<li>
+<p>ext:// shapes</p>
+</li>
+<li>
+<p>windbarb:// Weather wind barbs</p>
+</li>
+</ul>
+<h3>Legend</h3>
+<p>The legend entry graphic is displayed in the editing window and redrawn when SLD attributes are updated.</p>
+<p>The following options are available by clicking the right mouse button on the legend graphic:</p>
+<ul>
+<li>Show Filename - displays the filename of the sld file</li>
+<li>Show Style Name - displays the name of the style</li>
+<li>Copy to clipboard - copies the contents of the displayed legend graphic to the clipboard.</li>
+<li>Save As - presents a file dialog to save the contents of the displayed legend graphic to a file.</li>
+</ul>
+<p>Further legend options are available as tools.</p>
+<h2>Tools</h2>
+<p>The SLD Editor application tools are accessed by clicking on items in the file system window.</p>
+<h3>Save Legend</h3>
+<p>Saves the legend images for a single style or group of styles to an output folder.</p>
+<p>The tool is available if the following tree items are selected in the file system window:</p>
+<table>
+<thead>
+<tr><th>File</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>file.sld</td><td>Saves the legend image of the selected Styled Layer Description file</td></tr>
+<tr><td>Folder</td><td>Saves the legend images of all the Styled Layer Description file in the selected folder</td></tr>
+<tr><td>GeoServer Style</td><td>Saves the legend image of the selected GeoServer Style</td></tr>
+<tr><td>GeoServer Workspace folder</td><td>Saves the legend images of all the Styled Layer Description file in the selected GeoServer workspace</td></tr>
+<tr><td>Layer within file.json</td><td>Saves the legend image of the layer in Esri MXD Import intermediate file</td></tr>
+<tr><td>file.json</td><td>Saves the legend images of all the layers in Esri MXD Import intermediate file</td></tr>
+</tbody>
+</table>
+<p>Clicking on the <em>Legend</em> button presents a file dialog to allow the user to select a destination folder into which the legend images will be written.</p>
+<p>The filename of the legend image is the name of the style with the file extension of the selected image format.</p>
+<p>When saving a legend image the current legend drawing options are applied.  The legend drawing options can set by either:</p>
+<ul>
+<li>Updating them in the editor window</li>
+<li>Clicking on the <em>Options</em> button which will ensure the current selection in the file system window is not changed.</li>
+</ul>
+<h3>Save Legend HTML</h3>
+<p>Saves the legend images for a single style or group of styles to an output folder as an HTML page.</p>
+<p>The tool is available if the following tree items are selected in the file system window:</p>
+<table>
+<thead>
+<tr><th>File</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>file.sld</td><td>Saves the legend image of the selected Styled Layer Description file</td></tr>
+<tr><td>Folder</td><td>Saves the legend images of all the Styled Layer Description file in the selected folder</td></tr>
+<tr><td>GeoServer Style</td><td>Saves the legend image of the selected GeoServer Style</td></tr>
+<tr><td>GeoServer Workspace folder</td><td>Saves the legend images of all the Styled Layer Description file in the selected GeoServer workspace</td></tr>
+<tr><td>Layer within file.json</td><td>Saves the legend image of the layer in Esri MXD Import intermediate file</td></tr>
+<tr><td>file.json</td><td>Saves the legend images of all the layers in Esri MXD Import intermediate file</td></tr>
+</tbody>
+</table>
+<p>Clicking on the <em>HTML</em> button presents a file dialog to allow the user to select a destination folder into which the HTML will be written.</p>
+<p>When saving a legend image the current legend drawing options are applied.  The legend drawing options can set by either:</p>
+<ul>
+<li>Updating them in the editor window</li>
+<li>Clicking on the <em>Options</em> button which will ensure the current selection in the file system window is not changed.</li>
+</ul>
+<p>Loading the <em>index.html</em> written to the output folder in a web page viewer will display the table of legend entries.</p>
+<h3>Scale</h3>
+<p>Displays in a table the scales at which SLD rules are displayed and allows the user to update them.</p>
+<p>The tool is available if the following tree items are selected in the file system window:</p>
+<table>
+<thead>
+<tr><th>File</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>file.sld</td><td>Displays the scales at which rules in a Styled Layer Description file are displayed.</td></tr>
+<tr><td>Folder</td><td>Displays the scales at which rules in all the Styled Layer Description files in the selected folder are displayed.</td></tr>
+<tr><td>GeoServer Style</td><td>Displays the scales at which rules in a GeoServer style are displayed.</td></tr>
+<tr><td>GeoServer Workspace folder</td><td>Displays the scales at which rules in all the GeoServer styles within the selected GeoServer workspace are displayed.</td></tr>
+</tbody>
+</table>
+<p>Clicking on the <em>Scale</em> button displays the dialog.</p>
+<p>To change a scale double click in the table cell and enter a new scale.  The background of edited scales changes to red, white are unchanged.</p>
+<table>
+<thead>
+<tr><th>Button</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Revert</td><td>Discard all changes.</td></tr>
+<tr><td>Apply</td><td>Saves all changes to the updated files.</td></tr>
+<tr><td>Ok</td><td>Saves all changes to the updated files and closes the dialog.</td></tr>
+<tr><td>Cancel</td><td>Discard all changes and close the dialog.</td></tr>
+</tbody>
+</table>
+<h3>Updating GeoServer Layer Styles</h3>
+<p>Allows the style of a GeoServer layer to be updated from the SLD Editor application.</p>
+<p>The tool is available if the following tree items are selected in the file system window:
+| File            | Description                                          |
+|-----------------|------------------------------------------------------|
+| GeoServer Layer | Allows the style to be updated for a GeoServer layer |</p>
+<p>Clicking on the <em>Layer</em> button presents a dialog of all the styles present on the GeoServer instance and allows the user to select a new style.</p>
+<p>Clicking <em>Ok</em> updates the layer style.</p>
+<h3>Save Separate SLD Files</h3>
+<p>Saves the layers within a collection to separate SLD files in a destination folder.</p>
+<p>This tool is only available if the Import Esri MXD extension is built, this will require a valid Esri ArcGIS license to generate the intermediate file from an Esri MXD file.</p>
+<p>The tool is available if the following tree items are selected in the file system window:</p>
+<table>
+<thead>
+<tr><th>File</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Esri MXD Layer - Intermediate file</td><td>Saves the selected MXD layer to a SLD file in the supplied output folder.</td></tr>
+<tr><td>Esri MXD File - Intermediate file</td><td>Saves all the MXD layers in the MXD file to separate SLD files in the supplied output folder.</td></tr>
+</tbody>
+</table>
+<p>Clicking on the <em>SLD</em> button presents a file dialog to allow the user to select a destination folder into which the SLD files will be written.</p>
+<p>The filename of the SLD file is the layer name with the file extension <em>'.sld</em></p>
+<h3>Vector</h3>
+<p>There are two tools available when a user clicks on a supported vector format:</p>
+<table>
+<thead>
+<tr><th>Tool</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Import</td><td>Creates a new SLD symbol from the selected vector file.,The data source is set to the selected vector file which therefore contains the data source attributes.</td></tr>
+<tr><td>Data Source</td><td>Assigns the selected vector file as the data source of the currently loaded symbol.</td></tr>
+</tbody>
+</table>
+<p>The currently supported vector file formats:</p>
+<ul>
+<li>Shape files</li>
+</ul>
+<h3>Raster</h3>
+<p>There are two tools available when a user clicks on a supported raster format:</p>
+<table>
+<thead>
+<tr><th>Tool</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Import</td><td>Creates a new SLD symbol from the selected rasterfile. The data source is set to the selected raster file.</td></tr>
+<tr><td>Data Source</td><td>Assigns the selected raster file as the data source of the currently loaded symbol.</td></tr>
+</tbody>
+</table>
+<p>The currently supported raster file formats:</p>
+<ul>
+<li>Image files (tiff/tif, jpg, gif)</li>
+</ul>
+<h2>Undo</h2>
+<p>The SLD Editor application supports undo and redo functionality throughout.</p>
+<h2>Importing Symbology</h2>
+<p>Symbology from other formats can be imported into the SLD Editor application as follows:</p>
+<ul>
+<li>Esri MXD - Esri MXD symbology can be imported into the application using a standalone application which generates an intermediate json file.
+The file appears in the file system window as a folder which when expanded shows all the layers within the MXD file.
+Clicking on a layer displays it in the editor window which allows it to be edited.
+The contents of the intermediate file are read-only, and need to be saved to separate SLD files to retain any changes.</li>
+</ul>
+</div>
