@@ -49,6 +49,7 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
 import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
 import com.sldeditor.common.vendoroption.selection.VersionCellEditor;
 import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
+import com.sldeditor.help.Help;
 import com.sldeditor.ui.layout.UILayoutFactory;
 
 /**
@@ -60,6 +61,9 @@ public class PrefPanel extends JDialog {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The Constant CONTEXT_HELP. */
+    private static final String CONTEXT_HELP = "pref-panel";
 
     /** The vendor option table. */
     private JTable vendorOptionTable;
@@ -189,13 +193,36 @@ public class PrefPanel extends JDialog {
         panel.add(vendorOptionInfoPanel);
 
         JPanel buttonPanel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();
-        flowLayout.setHgap(1);
-        flowLayout.setAlignment(FlowLayout.TRAILING);
 
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.setLayout(new BorderLayout(0, 0));
+
+        JPanel panel_2 = new JPanel();
+        buttonPanel.add(panel_2, BorderLayout.EAST);
 
         JButton btnOk = new JButton(Localisation.getString(PrefPanel.class, "common.ok"));
+        panel_2.add(btnOk);
+
+        JButton btnCancel = new JButton(Localisation.getString(PrefPanel.class, "common.cancel"));
+        panel_2.add(btnCancel);
+
+        JPanel panel_3 = new JPanel();
+        buttonPanel.add(panel_3, BorderLayout.WEST);
+
+        JButton btnHelp = new JButton(Localisation.getString(PrefPanel.class, "common.help"));
+        btnHelp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Help.getInstance().display(CONTEXT_HELP);
+            }
+        });
+        panel_3.add(btnHelp);
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                okPressed = false;
+                setVisible(false);
+                dispose();
+            }
+        });
         btnOk.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -204,17 +231,6 @@ public class PrefPanel extends JDialog {
                 dispose();
             }
         });
-        buttonPanel.add(btnOk);
-
-        JButton btnCancel = new JButton(Localisation.getString(PrefPanel.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okPressed = false;
-                setVisible(false);
-                dispose();
-            }
-        });
-        buttonPanel.add(btnCancel);
 
         pack();
 

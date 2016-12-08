@@ -64,7 +64,7 @@ public class VendorOptionUI extends JPanel
         implements SLDOutputInterface, VendorOptionUpdateInterface {
 
     /** The Constant CONTEXT_HELP. */
-    private static final String CONTEXT_HELP = "sld-tree-structure";
+    private static final String CONTEXT_HELP = "vendor-options";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -177,7 +177,7 @@ public class VendorOptionUI extends JPanel
         JPanel panel_2 = new JPanel();
         panel.add(panel_2, BorderLayout.EAST);
 
-        JButton btnHelp = new JButton("Help");
+        JButton btnHelp = new JButton(Localisation.getString(VendorOptionUI.class, "common.help"));
         panel_2.add(btnHelp);
         btnHelp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
