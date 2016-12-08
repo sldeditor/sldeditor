@@ -63,7 +63,7 @@ public class PrefPanel extends JDialog {
     private static final long serialVersionUID = 1L;
 
     /** The Constant CONTEXT_HELP. */
-    private static final String CONTEXT_HELP = "pref-panel";
+    private static final String CONTEXT_HELP = "preferences";
 
     /** The vendor option table. */
     private JTable vendorOptionTable;
