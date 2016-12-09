@@ -7,7 +7,7 @@
     <!-- =========================================================== -->
     <groupId>com.sldeditor</groupId>
     <artifactId>sldeditor</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <version>0.6.2</version>
     <name>SLDEditor</name>
     <packaging>pom</packaging>
 
