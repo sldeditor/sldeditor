@@ -65,6 +65,9 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     /** The file saved flag. */
     private boolean fileSaved = false;
 
+    /** The Constant RELOAD_ENABLED. */
+    private static final boolean RELOAD_ENABLED = false;
+
     /**
      * Instantiates a new reload manager.
      */
@@ -92,7 +95,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     @Override
     public void fileAdded(Path f) {
-        // Ignore
+        fileModified(f);
     }
 
     /*
@@ -157,15 +160,26 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     /**
      * Gets the current loaded file list.
      *
+     * @param updated the updated
      * @return the current loaded file list
      */
     private synchronized boolean proceed(Path updated) {
-        if (this.currentLoadedFileList.keySet().contains(updated)) {
-            this.currentLoadedFileList.put(updated, false);
-            System.out.println(this.currentLoadedFileList);
+        if (RELOAD_ENABLED) {
+            if (this.currentLoadedFileList.keySet().contains(updated)) {
+                this.currentLoadedFileList.put(updated, false);
+                System.out.println("Proceed : " + this.currentLoadedFileList);
+
+                if (fileSaved) {
+                    fileSaved = !this.currentLoadedFileList.values().contains(true);
+                    System.out.println("Proceed file saved : " + fileSaved);
+                    return fileSaved;
+                } else {
+                    System.out.println("Proceed");
+                    return !this.currentLoadedFileList.isEmpty();
+                }
+            }
         }
-        
-        return this.currentLoadedFileList.values().contains(true);
+        return false;
     }
 
     /**
@@ -210,19 +224,22 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * Sets the file saved.
      */
     public synchronized void setFileSaved() {
-        for(Path key : this.currentLoadedFileList.keySet()) {
+        fileSaved = true;
+
+        for (Path key : this.currentLoadedFileList.keySet()) {
             this.currentLoadedFileList.put(key, true);
         }
-        System.out.println(this.currentLoadedFileList);
+        System.out.println("FILE SAVED : " + this.currentLoadedFileList);
     }
 
     /**
      * Reset file saved flag.
      */
     public synchronized void reset() {
-        for(Path key : this.currentLoadedFileList.keySet()) {
+        for (Path key : this.currentLoadedFileList.keySet()) {
             this.currentLoadedFileList.put(key, false);
         }
+        fileSaved = false;
         System.out.println("RESET : " + this.currentLoadedFileList);
     }
 

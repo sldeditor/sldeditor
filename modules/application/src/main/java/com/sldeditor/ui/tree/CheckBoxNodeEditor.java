@@ -25,6 +25,7 @@ import org.geotools.styling.Symbolizer;
 
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
+import com.sldeditor.datasource.SLDEditorFile;
 
 /**
  * Class to allow the selecting of checkboxes in a JTree.
@@ -81,6 +82,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
                 if(sldTree != null)
                 {
                     sldTree.leafSelected();
+                    SLDEditorFile.getInstance().renderSymbol();
                 }
             }
         });

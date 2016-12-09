@@ -318,8 +318,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public static SLDEditor createAndShowGUI(String filename, List<String> extensionArgList,
             boolean underTest, SLDEditorDlgInterface overrideSLDEditorDlg) {
         underTestFlag = underTest;
-        if(underTestFlag)
-        {
+        if (underTestFlag) {
             System.out.println("Running in test mode");
         }
         frame = new JFrame(generateApplicationTitleString());
@@ -368,10 +367,11 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         String docName = NO_SLDEDITOR_FILE_SET;
         File file = SLDEditorFile.getInstance().getSldEditorFile();
 
+        String sldLayerName = SLDEditorFile.getInstance().getSLDData().getLayerName();
         if (file != null) {
-            docName = file.getName();
+            docName = file.getName() + " - " + sldLayerName;
         } else {
-            docName = SLDEditorFile.getInstance().getSLDData().getLayerName();
+            docName = sldLayerName;
         }
 
         char docDirtyChar = dataEditedFlag ? '*' : ' ';
@@ -815,14 +815,15 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
                     }
                 }
             }
+
+            // Inform UndoManager that a new SLD file has been
+            // loaded and to clear undo history
+            UndoManager.getInstance().fileLoaded();
+
+            Controller.getInstance().setPopulating(true);
+            uiMgr.populateUI(1);
+            Controller.getInstance().setPopulating(false);
         }
         ReloadManager.getInstance().reset();
-        // Inform UndoManager that a new SLD file has been
-        // loaded and to clear undo history
-        UndoManager.getInstance().fileLoaded();
-
-        Controller.getInstance().setPopulating(true);
-        uiMgr.populateUI(1);
-        Controller.getInstance().setPopulating(false);
     }
 }
