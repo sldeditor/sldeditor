@@ -23,6 +23,8 @@ Main features include:
   * Labelling
   * WKT geometry
   * Windbarbs
+  * extshapes://, qgis:// marker shapes
+  * Polygon random fills
 * Integration with GeoServer
 * Map viewer
 * YSLD import and export facility
