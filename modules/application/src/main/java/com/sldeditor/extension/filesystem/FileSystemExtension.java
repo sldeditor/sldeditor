@@ -527,6 +527,14 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
             }
         }
 
+        if(saved)
+        {
+            FileSystemInput fileSystemInput = FileSystemExtensionFactory.getFileSystemInput();
+            if(fileSystemInput != null)
+            {
+                fileSystemInput.setFolder(sldData.getSLDURL(), true);
+            }
+        }
         sldSaved = true;
 
         return saved;

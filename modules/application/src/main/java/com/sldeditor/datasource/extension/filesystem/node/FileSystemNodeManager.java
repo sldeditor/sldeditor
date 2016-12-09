@@ -53,8 +53,7 @@ public class FileSystemNodeManager {
     /**
      * Private default constructor.
      */
-    private FileSystemNodeManager()
-    {
+    private FileSystemNodeManager() {
     }
 
     /**
@@ -73,8 +72,7 @@ public class FileSystemNodeManager {
      *
      * @param url the url
      */
-    public static void showNodeInTree(URL url)
-    {
+    public static void showNodeInTree(URL url) {
         getTreePath(url, true);
     }
 
@@ -85,10 +83,8 @@ public class FileSystemNodeManager {
      * @param showInTree the show in tree
      * @return the tree path
      */
-    private static DefaultMutableTreeNode getTreePath(URL url, boolean showInTree)
-    {
-        if(url == null)
-        {
+    private static DefaultMutableTreeNode getTreePath(URL url, boolean showInTree) {
+        if (url == null) {
             return null;
         }
 
@@ -96,92 +92,74 @@ public class FileSystemNodeManager {
         File file = new File(urlFilename);
         File folder = getFolder(file);
 
-        if(folder != null)
-        {
+        if (folder != null) {
             File parent = folder;
 
             boolean finished = false;
 
             List<String> folderList = new ArrayList<String>();
 
-            while(!finished)
-            {
-                if(parent.getParentFile() == null)
-                {
+            while (!finished) {
+                if (parent.getParentFile() == null) {
                     finished = true;
-                }
-                else
-                {
+                } else {
                     folderList.add(0, parent.getName());
                     parent = parent.getParentFile();
                 }
             }
 
-            if(parent != null)
-            {
+            if (parent != null) {
                 folderList.add(0, parent.getPath());
                 folderList.add(0, FileSystemExtension.ROOT_NODE);
 
-                DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
+                DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
 
                 boolean isRoot = true;
 
-                for(String subFolder : folderList)
-                {
+                for (String subFolder : folderList) {
                     node = searchNode(isRoot, node, subFolder);
 
-                    if(node == null)
-                    {
+                    if (node == null) {
                         break;
                     }
                     isRoot = false;
                 }
 
-                if(node != null)
-                {
+                if (node != null) {
                     TreeNode[] nodes = treeModel.getPathToRoot(node);
                     TreePath path = new TreePath(nodes);
 
-                    if(showInTree)
-                    {
+                    if (showInTree) {
                         fileSystemTreeComponent.scrollPathToVisible(path);
                         fileSystemTreeComponent.expandPath(path);
                     }
 
                     // Select file
-                    if(file.isFile())
-                    {
+                    if (file.isFile()) {
                         node = searchNode(isRoot, node, file.getName());
-                        if(node != null)
-                        {
+                        if (node != null) {
                             nodes = treeModel.getPathToRoot(node);
                             path = new TreePath(nodes);
 
-                            if(showInTree)
-                            {
+                            if (showInTree) {
                                 fileSystemTreeComponent.setSelectionPath(path);
 
-                                if(!node.isLeaf())
-                                {
+                                if (!node.isLeaf()) {
                                     fileSystemTreeComponent.expandPath(path);
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        if(showInTree)
-                        {
+                    } else {
+                        if (showInTree) {
                             fileSystemTreeComponent.setSelectionPath(path);
                         }
                     }
 
                     return node;
                 }
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(FileSystemNodeManager.class, "Failed to find parent path for folder : " + folder.getAbsolutePath());
+            } else {
+                ConsoleManager.getInstance().error(FileSystemNodeManager.class,
+                        "Failed to find parent path for folder : " + folder.getAbsolutePath());
             }
         }
 
@@ -194,16 +172,12 @@ public class FileSystemNodeManager {
      * @param file the file or folder
      * @return the folder
      */
-    private static File getFolder(File file)
-    {
+    private static File getFolder(File file) {
         File folder = null;
 
-        if(file.isFile())
-        {
+        if (file.isFile()) {
             folder = file.getParentFile();
-        }
-        else if(file.isDirectory())
-        {
+        } else if (file.isDirectory()) {
             folder = file;
         }
 
@@ -218,22 +192,22 @@ public class FileSystemNodeManager {
      * @param nodeStr the node str
      * @return the default mutable tree node
      */
-    private static DefaultMutableTreeNode searchNode(boolean isRoot, DefaultMutableTreeNode rootNode, String nodeStr) {
+    private static DefaultMutableTreeNode searchNode(boolean isRoot,
+            DefaultMutableTreeNode rootNode, String nodeStr) {
         DefaultMutableTreeNode node = null;
         @SuppressWarnings("rawtypes")
         Enumeration e = rootNode.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
             node = (DefaultMutableTreeNode) e.nextElement();
 
-            if(isRoot || (node != rootNode))
-            {
+            if (isRoot || (node != rootNode)) {
                 Object userObject = node.getUserObject();
 
                 if (nodeStr.equals(userObject.toString())) {
-                    if(node instanceof FileTreeNode)
-                    {
-                        if (((FileTreeNode)node).populateDirectories(true)) {
-                            ((DefaultTreeModel)fileSystemTreeComponent.getModel()).nodeStructureChanged(node);
+                    if (node instanceof FileTreeNode) {
+                        if (((FileTreeNode) node).populateDirectories(true)) {
+                            ((DefaultTreeModel) fileSystemTreeComponent.getModel())
+                                    .nodeStructureChanged(node);
                         }
                     }
                     return node;
@@ -264,14 +238,30 @@ public class FileSystemNodeManager {
     }
 
     /**
-     * Refresh node.
+     * Node added.
      *
      * @param parentNode the parent node
+     * @param index the index
      */
-    public static void refreshNode(DefaultMutableTreeNode parentNode) {
-        if(fileSystemTreeComponent != null)
-        {
-            ((DefaultTreeModel)fileSystemTreeComponent.getModel()).nodeStructureChanged(parentNode);
+    public static void nodeAdded(DefaultMutableTreeNode parentNode, int index) {
+        if (fileSystemTreeComponent != null) {
+            ((DefaultTreeModel) fileSystemTreeComponent.getModel()).nodesWereInserted(parentNode,
+                    new int[] { index });
+        }
+    }
+
+    /**
+     * Node removed.
+     *
+     * @param parentNode the parent node
+     * @param index the index
+     * @param nodeRemoved the node removed
+     */
+    public static void nodeRemoved(DefaultMutableTreeNode parentNode, int index,
+            DefaultMutableTreeNode nodeRemoved) {
+        if (fileSystemTreeComponent != null) {
+            ((DefaultTreeModel) fileSystemTreeComponent.getModel()).nodesWereRemoved(parentNode,
+                    new int[] { index }, new DefaultMutableTreeNode[] { nodeRemoved });
         }
     }
 
@@ -292,43 +282,36 @@ public class FileSystemNodeManager {
      * @return the tree path
      */
     private static DefaultMutableTreeNode getTreePath(GeoServerConnection connectionData,
-            boolean showInTree)
-    {
-        if(treeModel == null)
-        {
+            boolean showInTree) {
+        if (treeModel == null) {
             return null;
         }
 
         List<String> folderList = new ArrayList<String>();
         folderList.add(FileSystemExtension.ROOT_NODE);
         folderList.add(GeoServerOverallNode.GEOSERVER_NODE);
-        if(connectionData != null)
-        {
+        if (connectionData != null) {
             folderList.add(connectionData.getConnectionName());
         }
 
-        DefaultMutableTreeNode node = ((DefaultMutableTreeNode)treeModel.getRoot());
+        DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
 
         boolean isRoot = true;
 
-        for(String subFolder : folderList)
-        {
+        for (String subFolder : folderList) {
             node = searchNode(isRoot, node, subFolder);
 
-            if(node == null)
-            {
+            if (node == null) {
                 break;
             }
             isRoot = false;
         }
 
-        if(node != null)
-        {
+        if (node != null) {
             TreeNode[] nodes = treeModel.getPathToRoot(node);
             TreePath path = new TreePath(nodes);
 
-            if(showInTree)
-            {
+            if (showInTree) {
                 fileSystemTreeComponent.scrollPathToVisible(path);
                 fileSystemTreeComponent.expandPath(path);
                 fileSystemTreeComponent.setSelectionPath(path);

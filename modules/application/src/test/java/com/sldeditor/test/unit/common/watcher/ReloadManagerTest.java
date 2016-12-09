@@ -25,6 +25,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.LoadSLDInterface;
@@ -40,6 +41,7 @@ import com.sldeditor.common.watcher.ReloadManager;
  * @author Robert Ward (SCISYS)
  *
  */
+@Ignore
 public class ReloadManagerTest {
 
     class DummyCallback implements LoadSLDInterface

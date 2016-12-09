@@ -21,6 +21,8 @@ package com.sldeditor.common.watcher;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,13 +32,10 @@ import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 
 /**
- * The Class ReloadManager, class implemented as a singleton.
- * Receives the currently load SLD file when it updates and compares it to all
- * modified files from the FileWatcher.  If the currently loaded when is modified
- * and the save flag has n't been set then inform the application that the currently
- * loaded file has been modified.
- * Added some protection to prevent multiple file watcher events for the currently loaded
- * file to trigger more than once.
+ * The Class ReloadManager, class implemented as a singleton. Receives the currently load SLD file when it updates and compares it to all modified
+ * files from the FileWatcher. If the currently loaded when is modified and the save flag has n't been set then inform the application that the
+ * currently loaded file has been modified. Added some protection to prevent multiple file watcher events for the currently loaded file to trigger
+ * more than once.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -51,8 +50,8 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     /** The under test flag. */
     private static boolean underTest = false;;
 
-    /** The current loaded file. */
-    private Path currentLoadedFile = null;
+    /** The current loaded file list. */
+    private Map<Path, Boolean> currentLoadedFileList = new HashMap<Path, Boolean>();
 
     /** The timing out flag. */
     private boolean timingOut = false;
@@ -66,11 +65,13 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     /** The file saved flag. */
     private boolean fileSaved = false;
 
+    /** The Constant RELOAD_ENABLED. */
+    private static final boolean RELOAD_ENABLED = false;
+
     /**
      * Instantiates a new reload manager.
      */
-    private ReloadManager()
-    {
+    private ReloadManager() {
         SLDEditorFile.getInstance().addSLDEditorFileUpdateListener(this);
     }
 
@@ -79,56 +80,53 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      *
      * @return single instance of ReloadManager
      */
-    public static ReloadManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static ReloadManager getInstance() {
+        if (instance == null) {
             instance = new ReloadManager();
         }
 
         return instance;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.watcher.FileWatcherUpdateInterface#fileAdded(java.nio.file.Path)
      */
     @Override
     public void fileAdded(Path f) {
-        // Ignore
+        fileModified(f);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.watcher.FileWatcherUpdateInterface#fileModified(java.nio.file.Path)
      */
     @Override
     public void fileModified(Path updated) {
-        if(!underTest)
-        {
-            Path current = getCurrentLoadedFile();
-            if((updated != null) && (current != null))
-            {
-                if(current.equals(updated))
-                {
-                    if(startTimeout())
-                    {
-                        timer.schedule(new TimerTask() {
+        if (!underTest) {
+            if ((updated != null) && proceed(updated)) {
+                if (startTimeout()) {
+                    timer.schedule(new TimerTask() {
 
-                            @Override
-                            public void run() {
-                                timingOutFinished();
+                        @Override
+                        public void run() {
+                            timingOutFinished();
 
-                                if(listener != null)
-                                {
-                                    listener.reloadSLDFile();
-                                }
-                            }}, TIMEOUT);
-                    }
+                            if (listener != null) {
+                                listener.reloadSLDFile();
+                            }
+                        }
+                    }, TIMEOUT);
                 }
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.watcher.FileWatcherUpdateInterface#fileDeleted(java.nio.file.Path)
      */
     @Override
@@ -136,39 +134,61 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         // Ignore
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)
      */
     @Override
     public void sldDataUpdated(SLDDataInterface sldData, boolean dataEditedFlag) {
-        Path path = null;
-        if(sldData != null)
-        {
+        Map<Path, Boolean> pathList = new HashMap<Path, Boolean>();
+
+        if (sldData != null) {
             File sldFile = sldData.getSLDFile();
-            if(sldFile != null)
-            {
-                path = sldFile.toPath();
+            if (sldFile != null) {
+                pathList.put(sldFile.toPath(), fileSaved);
+            }
+
+            File sldEditorFile = sldData.getSldEditorFile();
+            if (sldEditorFile != null) {
+                pathList.put(sldEditorFile.toPath(), fileSaved);
             }
         }
-        setCurrentLoadedFile(path);
+        setCurrentLoadedFileList(pathList);
     }
 
     /**
-     * Gets the current loaded file.
+     * Gets the current loaded file list.
      *
-     * @return the currentLoadedFile
+     * @param updated the updated
+     * @return the current loaded file list
      */
-    private synchronized Path getCurrentLoadedFile() {
-        return currentLoadedFile;
+    private synchronized boolean proceed(Path updated) {
+        if (RELOAD_ENABLED) {
+            if (this.currentLoadedFileList.keySet().contains(updated)) {
+                this.currentLoadedFileList.put(updated, false);
+                System.out.println("Proceed : " + this.currentLoadedFileList);
+
+                if (fileSaved) {
+                    fileSaved = !this.currentLoadedFileList.values().contains(true);
+                    System.out.println("Proceed file saved : " + fileSaved);
+                    return fileSaved;
+                } else {
+                    System.out.println("Proceed");
+                    return !this.currentLoadedFileList.isEmpty();
+                }
+            }
+        }
+        return false;
     }
 
     /**
-     * Sets the current loaded file.
+     * Sets the current loaded file list.
      *
-     * @param currentLoadedFile the currentLoadedFile to set
+     * @param currentLoadedFileList the new current loaded file list
      */
-    private synchronized void setCurrentLoadedFile(Path currentLoadedFile) {
-        this.currentLoadedFile = currentLoadedFile;
+    private synchronized void setCurrentLoadedFileList(Map<Path, Boolean> currentLoadedFileList) {
+        this.currentLoadedFileList = currentLoadedFileList;
     }
 
     /**
@@ -184,10 +204,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * @return true, if timeout should be started, false it is already running
      */
     private synchronized boolean startTimeout() {
-        boolean isFileSaved = fileSaved;
-        fileSaved = false;
-        if((this.timingOut == false) && !isFileSaved)
-        {
+        if (this.timingOut == false) {
             this.timingOut = true;
             return true;
         }
@@ -207,14 +224,23 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * Sets the file saved.
      */
     public synchronized void setFileSaved() {
-        this.fileSaved = true;
+        fileSaved = true;
+
+        for (Path key : this.currentLoadedFileList.keySet()) {
+            this.currentLoadedFileList.put(key, true);
+        }
+        System.out.println("FILE SAVED : " + this.currentLoadedFileList);
     }
 
     /**
      * Reset file saved flag.
      */
     public synchronized void reset() {
-        this.fileSaved = false;
+        for (Path key : this.currentLoadedFileList.keySet()) {
+            this.currentLoadedFileList.put(key, false);
+        }
+        fileSaved = false;
+        System.out.println("RESET : " + this.currentLoadedFileList);
     }
 
     /**
