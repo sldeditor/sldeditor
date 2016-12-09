@@ -187,7 +187,6 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
      * @param parentObj the parent obj
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
-     * @return the minimum version
      */
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {

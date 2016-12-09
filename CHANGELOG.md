@@ -1,7 +1,34 @@
 # Change Log
 
-## [0.6.1](https://github.com/robward-scisys/sldeditor/tree/0.6.1) (2016-11-29)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.0...0.6.1)
+## [0.6.2](https://github.com/robward-scisys/sldeditor/tree/0.6.2) (2016-12-09)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.1...0.6.2)
+
+**Implemented enhancements:**
+
+- Add an online help facility [\#201](https://github.com/robward-scisys/sldeditor/issues/201)
+- Add check to see what the minimum GeoServer version supported by the SLD [\#200](https://github.com/robward-scisys/sldeditor/issues/200)
+- Add ability to specify external paths as absolute paths or relative [\#197](https://github.com/robward-scisys/sldeditor/issues/197)
+- Provide information for vendor options and what targets they are available for [\#194](https://github.com/robward-scisys/sldeditor/issues/194)
+- Show target SLD / vendor option in the application window title [\#191](https://github.com/robward-scisys/sldeditor/issues/191)
+- Implement qgis:// marker symbols [\#190](https://github.com/robward-scisys/sldeditor/issues/190)
+- Implement extshape://arrow marker functionality [\#189](https://github.com/robward-scisys/sldeditor/issues/189)
+- Underlying file modifications reload functionality disabled [\#206](https://github.com/robward-scisys/sldeditor/issues/206)
+
+**Fixed bugs:**
+
+- The tools now work again [\#205](https://github.com/robward-scisys/sldeditor/pull/205) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Create release 0.6.1 [\#187](https://github.com/robward-scisys/sldeditor/issues/187)
+
+**Merged pull requests:**
+
+- Iss197 relative paths [\#198](https://github.com/robward-scisys/sldeditor/pull/198) ([robward-scisys](https://github.com/robward-scisys))
+- Vendor option string displayed in render panel [\#193](https://github.com/robward-scisys/sldeditor/pull/193) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.6.1](https://github.com/robward-scisys/sldeditor/tree/v0.6.1) (2016-11-29)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.0...v0.6.1)
 
 **Implemented enhancements:**
 
@@ -9,7 +36,19 @@
 
 **Fixed bugs:**
 
+- Geometry function not stored in SLD [\#183](https://github.com/robward-scisys/sldeditor/issues/183)
 - Geometry function now stored in SLD [\#184](https://github.com/robward-scisys/sldeditor/pull/184) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Create 0.7.0-SNAPSHOT release [\#181](https://github.com/robward-scisys/sldeditor/issues/181)
+- Create release 0.6.0 [\#179](https://github.com/robward-scisys/sldeditor/issues/179)
+
+**Merged pull requests:**
+
+- Updated version to 0.6.1 [\#188](https://github.com/robward-scisys/sldeditor/pull/188) ([robward-scisys](https://github.com/robward-scisys))
+- Disable version check when running integration tests [\#186](https://github.com/robward-scisys/sldeditor/pull/186) ([robward-scisys](https://github.com/robward-scisys))
+- Updated version to 0.7.0-SNAPSHOT [\#182](https://github.com/robward-scisys/sldeditor/pull/182) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.6.0](https://github.com/robward-scisys/sldeditor/tree/v0.6.0) (2016-11-29)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.5.3...v0.6.0)
