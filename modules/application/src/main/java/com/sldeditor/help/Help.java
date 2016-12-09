@@ -62,7 +62,6 @@ public class Help {
      * Display user guide section.
      *
      * @param section the section
-     * @return the string
      */
     public void display(String section) {
         URL url = null;

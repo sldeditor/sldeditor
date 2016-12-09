@@ -167,14 +167,11 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         if (RELOAD_ENABLED) {
             if (this.currentLoadedFileList.keySet().contains(updated)) {
                 this.currentLoadedFileList.put(updated, false);
-                System.out.println("Proceed : " + this.currentLoadedFileList);
 
                 if (fileSaved) {
                     fileSaved = !this.currentLoadedFileList.values().contains(true);
-                    System.out.println("Proceed file saved : " + fileSaved);
                     return fileSaved;
                 } else {
-                    System.out.println("Proceed");
                     return !this.currentLoadedFileList.isEmpty();
                 }
             }
@@ -229,7 +226,6 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         for (Path key : this.currentLoadedFileList.keySet()) {
             this.currentLoadedFileList.put(key, true);
         }
-        System.out.println("FILE SAVED : " + this.currentLoadedFileList);
     }
 
     /**
@@ -240,7 +236,6 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
             this.currentLoadedFileList.put(key, false);
         }
         fileSaved = false;
-        System.out.println("RESET : " + this.currentLoadedFileList);
     }
 
     /**
