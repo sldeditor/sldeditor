@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="polygon/sld/polygon_wkt.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Polygon WKT" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="wkt://POLYGON((0 0, 1 0, 0 1, 0 0))" field="SYMBOL_TYPE" />
+            <LiteralString value="#3333FF" field="FILL_COLOUR"/>
+            <LiteralDouble value="0.3" field="POLYGON_FILL_OPACITY"/>
+            <LiteralString value="#FF9999" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="0.62" field="POLYGON_STROKE_OPACITY"/>
+            <LiteralDouble value="1.0" field="STROKE_FILL_WIDTH"/>
+            <LiteralDouble value="22.0" field="SIZE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails" enabled="true">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+          <FieldTests>
+                <LiteralString value="#FF0000" field="STROKE_FILL_COLOUR" />
+                <LiteralString value="#000000" field="STROKE_STROKE_COLOUR" />
+                <LiteralDouble value="0.23" field="LINE_FILL_OPACITY" />
+                <LiteralDouble value="0.52" field="LINE_STROKE_OPACITY" />
+          </FieldTests>
+    </PanelTests>
+    
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PolygonFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="wkt://POLYGON((0 0, 1 0, 0 1, 0 0))" field="SYMBOL_TYPE" />
+            <LiteralString value="#0033CC" field="FILL_COLOUR"/>
+            <Disabled field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="5.0" field="SIZE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails" enabled="true">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+            <SymbolizerDetail index="1"/>
+        </Setup>
+          <FieldTests>
+                <LiteralString value="#33FF33" field="STROKE_STROKE_COLOUR" />
+                <LiteralDouble value="0.79" field="LINE_STROKE_OPACITY" />
+                <Disabled field="STROKE_FILL_COLOUR" />
+                <Disabled field="LINE_FILL_OPACITY" />
+          </FieldTests>
+    </PanelTests>
+    
+</SldEditor_test>

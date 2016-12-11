@@ -361,7 +361,10 @@ public class StrokeDetails extends StandardPanel
 
             expStrokeDashArray = getFilterFactory().literal(createDashArrayString(dashesArray));
 
-            if (graphicStroke != null) {
+            if (graphicStroke == null) {
+                fillColourEnabled = true;
+            }
+            else {
                 // Anchor points
                 AnchorPoint anchorPoint = graphicStroke.getAnchorPoint();
                 if (anchorPoint != null) {
