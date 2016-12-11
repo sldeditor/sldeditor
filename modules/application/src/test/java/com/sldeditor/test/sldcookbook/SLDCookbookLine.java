@@ -124,4 +124,10 @@ public class SLDCookbookLine
     {
         test.runTest("line", "line_external.xml");
     }
+
+    @Test
+    public void line_wkt()
+    {
+        test.runTest("line", "line_wkt.xml");
+    }
 }

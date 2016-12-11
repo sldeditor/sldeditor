@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="line/sld/line_wkt.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Simple Line" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0"/>
+            <Style index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="SLD Cook Book: Simple Line" field="TITLE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StrokeDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="wkt://POLYGON((5 0, 0 0, 0 5, 5 0))" field="STROKE_STYLE"/>
+            <LiteralDouble value="2.0" field="STROKE_WIDTH"/>
+            <LiteralString value="FF0000" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="0.18" field="LINE_FILL_OPACITY"/>
+            <LiteralString value="0033FF" field="STROKE_STROKE_COLOUR"/>
+            <LiteralDouble value="1.0" field="LINE_STROKE_OPACITY"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>
