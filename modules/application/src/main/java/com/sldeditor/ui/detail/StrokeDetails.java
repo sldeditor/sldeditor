@@ -204,8 +204,16 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                     initalGap,
                     gap);
 
+            boolean overallOpacity = symbolTypeFactory.isOverallOpacity(PointSymbolizer.class,selectedFillPanelId);
+            if(overallOpacity)
+            {
+                stroke.setOpacity(opacity);
+            }
+
             stroke.setGraphicStroke(graphicStroke);
             stroke.setWidth(strokeWidth);
+            
+
         }
         return stroke;
     }
