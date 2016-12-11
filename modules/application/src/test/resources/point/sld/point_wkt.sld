@@ -26,7 +26,7 @@
                 <sld:WellKnownName>wkt://POLYGON((5 0, 0 0, 0 5, 5 0))</sld:WellKnownName>
                 <sld:Stroke>
                   <sld:CssParameter name="stroke">#6666FF</sld:CssParameter>
-                  <sld:CssParameter name="stroke-width">0.37</sld:CssParameter>
+                  <sld:CssParameter name="stroke-opacity">0.37</sld:CssParameter>
                 </sld:Stroke>
               </sld:Mark>
               <sld:Size>10.0</sld:Size>
@@ -41,7 +41,7 @@
                   <sld:CssParameter name="fill-opacity">0.53</sld:CssParameter>
                 </sld:Fill>
                 <sld:Stroke>
-                  <sld:CssParameter name="stroke-opacity">0.29</sld:CssParameter>
+                  <sld:CssParameter name="stroke-opacity">0.28</sld:CssParameter>
                 </sld:Stroke>
               </sld:Mark>
               <sld:Size>10.0</sld:Size>
