@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SldEditor_test testsldfile="point/sld/point_wkt.sld">
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="Point WKT" field="NAME"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="0"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="wkt" field="SYMBOL_TYPE"/>
+            <LiteralString value="wkt://POLYGON((5 0, 0 0, 0 5, 5 0))" field="WKT"/>
+            <LiteralString value="#FF0000" field="FILL_COLOUR"/>
+            <LiteralDouble value="0.31" field="POINT_FILL_OPACITY"/>
+            <LiteralDouble value="42.0" field="SIZE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="1"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="wkt" field="SYMBOL_TYPE"/>
+            <LiteralString value="wkt://POLYGON((5 0, 0 0, 0 5, 5 0))" field="WKT"/>
+            <LiteralString value="#6666FF" field="STROKE_FILL_COLOUR"/>
+            <LiteralDouble value="0.37" field="POINT_STROKE_OPACITY"/>
+            <LiteralDouble value="10.0" field="SIZE"/>
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.PointFillDetails">
+            <FeatureTypeStyle index="0"/>
+            <Layer index="0"/>
+            <Rule index="0"/>
+            <Style index="0"/>
+            <Symbolizer index="2"/>
+            <SymbolizerDetail index="0"/>
+        </Setup>
+        <FieldTests>
+            <LiteralString value="wkt" field="SYMBOL_TYPE"/>
+            <LiteralString value="wkt://POLYGON((5 0, 0 0, 0 5, 5 0))" field="WKT"/>
+            <LiteralString value="#FF0000" field="FILL_COLOUR"/>
+            <LiteralDouble value="0.53" field="POINT_FILL_OPACITY"/>
+            <LiteralDouble value="0.29" field="POINT_STROKE_OPACITY"/>
+            <LiteralDouble value="10.0" field="SIZE"/>
+        </FieldTests>
+    </PanelTests>
+</SldEditor_test>

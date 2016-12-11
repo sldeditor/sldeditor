@@ -106,4 +106,10 @@ public class SLDCookbookPoint
     {
         test.runTest("point", "point_zoom.xml");
     }
+
+    @Test
+    public void point_wkt()
+    {
+        test.runTest("point", "point_wkt.xml");
+    }
 }

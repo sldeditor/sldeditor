@@ -2,7 +2,7 @@
 <!-- Created by SLD Editor 0.7.0-SNAPSHOT -->
 <sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" version="1.0.0">
   <sld:NamedLayer>
-    <sld:Name/>
+    <sld:Name>Point WKT</sld:Name>
     <sld:UserStyle>
       <sld:Name>Default Styler</sld:Name>
       <sld:FeatureTypeStyle>
@@ -41,7 +41,7 @@
                   <sld:CssParameter name="fill-opacity">0.53</sld:CssParameter>
                 </sld:Fill>
                 <sld:Stroke>
-                  <sld:CssParameter name="stroke-width">0.29</sld:CssParameter>
+                  <sld:CssParameter name="stroke-opacity">0.29</sld:CssParameter>
                 </sld:Stroke>
               </sld:Mark>
               <sld:Size>10.0</sld:Size>
