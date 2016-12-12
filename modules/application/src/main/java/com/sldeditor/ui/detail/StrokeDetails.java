@@ -341,9 +341,6 @@ public class StrokeDetails extends StandardPanel
             Graphic graphicFill = stroke.getGraphicFill();
             Graphic graphicStroke = stroke.getGraphicStroke();
 
-            boolean strokeColourEnabled = false;
-            boolean fillColourEnabled = false;
-
             if ((graphicFill == null) && (graphicStroke == null)) {
                 expOpacity = stroke.getOpacity();
                 symbolTypeFactory.setSolidFill(fieldConfigManager, stroke.getColor(),
@@ -361,10 +358,7 @@ public class StrokeDetails extends StandardPanel
 
             expStrokeDashArray = getFilterFactory().literal(createDashArrayString(dashesArray));
 
-            if (graphicStroke == null) {
-                fillColourEnabled = true;
-            }
-            else {
+            if (graphicStroke != null) {
                 // Anchor points
                 AnchorPoint anchorPoint = graphicStroke.getAnchorPoint();
                 if (anchorPoint != null) {
@@ -402,7 +396,6 @@ public class StrokeDetails extends StandardPanel
                         Fill markFill = mark.getFill();
 
                         if (markFill != null) {
-                            fillColourEnabled = true;
                             expColour = markFill.getColor();
                         }
 
@@ -411,7 +404,6 @@ public class StrokeDetails extends StandardPanel
                         Stroke markStroke = mark.getStroke();
 
                         if (markStroke != null) {
-                            strokeColourEnabled = true;
                             expStrokeColour = markStroke.getColor();
                         }
                     } else if (graphicSymbol instanceof ExternalGraphicImpl) {
@@ -447,15 +439,17 @@ public class StrokeDetails extends StandardPanel
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_COLOUR, expColour);
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_STROKE_COLOUR, expStrokeColour);
 
-            GroupConfigInterface fillColourGroup = getGroup(GroupIdEnum.FILLCOLOUR);
-            if (fillColourGroup != null) {
-                fillColourGroup.enable(fillColourEnabled);
+            if ((graphicFill == null) && (graphicStroke == null)) {
+                GroupConfigInterface fillColourGroup = getGroup(GroupIdEnum.FILLCOLOUR);
+                if (fillColourGroup != null) {
+                    fillColourGroup.enable(true);
+                }
             }
-
-            GroupConfigInterface strokeColourGroup = getGroup(GroupIdEnum.STROKECOLOUR);
-            if (strokeColourGroup != null) {
-                strokeColourGroup.enable(strokeColourEnabled);
-            }
+            //
+            // GroupConfigInterface strokeColourGroup = getGroup(GroupIdEnum.STROKECOLOUR);
+            // if (strokeColourGroup != null) {
+            // strokeColourGroup.enable(strokeColourEnabled);
+            // }
         }
     }
 
