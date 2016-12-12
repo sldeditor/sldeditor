@@ -19,35 +19,37 @@
 package com.sldeditor.common.console;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 /**
  * Default implementation of the console panel.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
-{
+public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /** The text pane. */
-    private JTextArea textPane;
+    private JList<ConsoleData> textPane;
+
+    /** The model. */
+    private DefaultListModel<ConsoleData> model = new DefaultListModel<ConsoleData>();
 
     /**
      * Instantiates a new console panel.
      */
-    public DefaultConsolePanel()
-    {
+    public DefaultConsolePanel() {
         setLayout(new BorderLayout(0, 0));
 
-        textPane = new JTextArea();
-        textPane.setRows(5);
-        textPane.setEditable(false);
+        textPane = new JList<ConsoleData>();
+        textPane.setCellRenderer(new ConsoleCellRenderer());
+        textPane.setModel(model);
 
         JScrollPane jp = new JScrollPane(textPane);
         add(jp, BorderLayout.CENTER);
@@ -58,15 +60,15 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
      *
      * @param message the message
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.console.ConsolePanelInterface#addMessage(java.lang.String)
      */
     @Override
-    public void addMessage(String message)
-    {
-        textPane.setForeground(Color.BLACK);
-        textPane.append(message);
-        textPane.append("\n");
+    public void addMessage(String message) {
+        model.addElement(new ConsoleData(message, ConsoleDataEnum.INFORMATION));
+        showLastItem();
     }
 
     /**
@@ -74,19 +76,36 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
      *
      * @param errorMessage the error message
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.console.ConsolePanelInterface#addErrorMessage(java.lang.String)
      */
     @Override
-    public void addErrorMessage(String errorMessage)
-    {
-        textPane.setForeground(Color.RED);
-        textPane.append(errorMessage);
-        textPane.append("\n");
+    public void addErrorMessage(String errorMessage) {
+        model.addElement(new ConsoleData(errorMessage, ConsoleDataEnum.ERROR));
+        showLastItem();
     }
 
     @Override
     public void clear() {
-        textPane.setText("");
+        model.clear();
+    }
+
+    /**
+     * Show last item.
+     */
+    private void showLastItem() {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                int lastIndex = model.getSize() - 1;
+
+                if (lastIndex >= 0) {
+                    textPane.ensureIndexIsVisible(lastIndex);
+                }
+            }
+        });
     }
 }
