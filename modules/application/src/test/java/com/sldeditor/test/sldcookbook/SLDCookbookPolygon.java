@@ -124,4 +124,10 @@ public class SLDCookbookPolygon
     {
         test.runTest("polygon", "polygon_ttffill.xml");
     }
+
+    @Test
+    public void polygon_wkt()
+    {
+        test.runTest("polygon", "polygon_wkt.xml");
+    }
 }

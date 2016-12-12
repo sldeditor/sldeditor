@@ -149,7 +149,7 @@ public class SLDFileHandlerTest {
                     "point_pointwithdefaultlabel.sld", "point_pointwithrotatedlabel.sld",
                     "point_pointwithstyledlabel.sld","point_rotatedsquare.sld",
                     "point_simplepoint.sld", "point_simplepointwithstroke.sld",
-                    "point_transparenttriangle.sld", "point_zoom.sld");
+                    "point_transparenttriangle.sld", "point_zoom.sld", "point_wkt.sld");
             assertEquals(expectedLayerNameList.size(), sldDataList.size());
 
             for(SLDDataInterface sldData : sldDataList)

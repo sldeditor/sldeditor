@@ -64,7 +64,8 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class StrokeDetails extends StandardPanel implements MultiOptionSelectedInterface, PopulateDetailsInterface, UpdateSymbolInterface {
+public class StrokeDetails extends StandardPanel
+        implements MultiOptionSelectedInterface, PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant SOLID_LINE_KEY. */
     private static final String SOLID_LINE_KEY = "solid";
@@ -75,10 +76,10 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     /** The symbol type factory. */
     private SymbolTypeFactory symbolTypeFactory = null;
 
-    /**  The panel id of the selected fill. */
+    /** The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
 
-    /**  The field enable state map, indicates which fields to enable. */
+    /** The field enable state map, indicates which fields to enable. */
     private FieldEnableState fieldEnableState = null;
 
     /** The default anchor point. */
@@ -95,15 +96,16 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      *
      * @param functionManager the function manager
      */
-    public StrokeDetails(FunctionNameInterface functionManager)
-    {
+    public StrokeDetails(FunctionNameInterface functionManager) {
         super(StrokeDetails.class, functionManager);
 
         setUpdateSymbolListener(this);
 
-        symbolTypeFactory = new SymbolTypeFactory(StrokeDetails.class, 
-                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.LINE_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.LINE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+        symbolTypeFactory = new SymbolTypeFactory(StrokeDetails.class,
+                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR,
+                        FieldIdEnum.LINE_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR,
+                        FieldIdEnum.LINE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.STROKE_STYLE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(this.getClass());
@@ -133,24 +135,24 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         Expression offset = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_OFFSET);
         Expression strokeWidth = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_WIDTH);
 
-        ValueComboBoxData symbolTypeValue = fieldConfigVisitor.getComboBox(FieldIdEnum.STROKE_STYLE);
+        ValueComboBoxData symbolTypeValue = fieldConfigVisitor
+                .getComboBox(FieldIdEnum.STROKE_STYLE);
         Expression symbolType = null;
-        if(symbolTypeValue != null)
-        {
+        if (symbolTypeValue != null) {
             symbolType = getFilterFactory().literal(symbolTypeValue.getKey());
         }
 
-        List<Float> dashList = createDashArray(fieldConfigVisitor.getText(FieldIdEnum.STROKE_DASH_ARRAY));
+        List<Float> dashList = createDashArray(
+                fieldConfigVisitor.getText(FieldIdEnum.STROKE_DASH_ARRAY));
         float[] dashes = convertDashListToArray(dashList);
 
         FieldConfigBase fdmFillColour = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
-        FieldConfigColour colourField = (FieldConfigColour)fdmFillColour;
+        FieldConfigColour colourField = (FieldConfigColour) fdmFillColour;
         Expression fillColour = colourField.getColourExpression();
         Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OVERALL_OPACITY);
 
         boolean isLine = true;
-        if(symbolTypeValue != null)
-        {
+        if (symbolTypeValue != null) {
             isLine = (symbolTypeValue.getKey().compareTo(SOLID_LINE_KEY) == 0);
         }
 
@@ -158,54 +160,55 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         boolean strokeColourEnabled = isPanelEnabled(GroupIdEnum.STROKECOLOUR);
 
         Stroke stroke = null;
-        if(isLine)
-        {
+        if (isLine) {
             opacity = fieldConfigVisitor.getExpression(FieldIdEnum.LINE_FILL_OPACITY);
 
-            stroke = getStyleFactory().stroke(fillColour,
-                    opacity,
-                    strokeWidth,
-                    join, lineCap, dashes, offset);
-        }
-        else
-        {
+            stroke = getStyleFactory().stroke(fillColour, opacity, strokeWidth, join, lineCap,
+                    dashes, offset);
+        } else {
             stroke = getStyleFactory().getDefaultStroke();
 
-            AnchorPoint anchorPoint = getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
+            AnchorPoint anchorPoint = getStyleFactory().anchorPoint(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint))
-            {
+            if (DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint)) {
                 anchorPoint = null;
             }
 
-            Displacement displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
+            Displacement displacement = getStyleFactory().displacement(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
-            {
+            if (DetailsUtilities.isSame(defaultDisplacement, displacement)) {
                 displacement = null;
             }
 
-            List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager, symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
+            List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager,
+                    symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
 
-            Expression initalGap = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_INITIAL_GAP);
+            Expression initalGap = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.STROKE_SYMBOL_INITIAL_GAP);
             Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_GAP);
 
             Expression rotation = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANGLE);
-            Expression symbolSize = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_SIZE);
+            Expression symbolSize = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.STROKE_SYMBOL_SIZE);
 
             GraphicStroke graphicStroke = getStyleFactory().graphicStroke(symbols, opacity,
-                    symbolSize,
-                    rotation, 
-                    anchorPoint, displacement,
-                    initalGap,
-                    gap);
+                    symbolSize, rotation, anchorPoint, displacement, initalGap, gap);
+
+            boolean overallOpacity = symbolTypeFactory.isOverallOpacity(PointSymbolizer.class,
+                    selectedFillPanelId);
+            if (overallOpacity) {
+                stroke.setOpacity(opacity);
+            }
 
             stroke.setGraphicStroke(graphicStroke);
             stroke.setWidth(strokeWidth);
+
         }
         return stroke;
     }
@@ -216,10 +219,8 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      * @param dashList the dash list
      * @return the float[]
      */
-    private float[] convertDashListToArray(List<Float> dashList)
-    {
-        if(dashList == null)
-        {
+    private float[] convertDashListToArray(List<Float> dashList) {
+        if (dashList == null) {
             return null;
         }
 
@@ -243,14 +244,10 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         List<Float> floatDashArray = new ArrayList<Float>();
 
-        for(String dashValue : dashes)
-        {
-            try
-            {
+        for (String dashValue : dashes) {
+            try {
                 floatDashArray.add(Float.parseFloat(dashValue));
-            }
-            catch(NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 return null;
             }
         }
@@ -262,7 +259,9 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -270,43 +269,34 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
         Stroke stroke = null;
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             symbolizer = selectedSymbol.getSymbolizer();
-            if(symbolizer instanceof PointSymbolizer)
-            {
-                PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer; 
-                Graphic graphic = pointSymbolizer.getGraphic(); 
+            if (symbolizer instanceof PointSymbolizer) {
+                PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
+                Graphic graphic = pointSymbolizer.getGraphic();
 
                 List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
 
-                if(graphicalSymbols.size() > 0)
-                {
+                if (graphicalSymbols.size() > 0) {
                     GraphicalSymbol symbol = graphicalSymbols.get(0);
 
-                    if(symbol instanceof MarkImpl)
-                    {
+                    if (symbol instanceof MarkImpl) {
                         MarkImpl markerSymbol = (MarkImpl) symbol;
 
                         stroke = markerSymbol.getStroke();
                     }
                 }
-            }
-            else if(symbolizer instanceof LineSymbolizer)
-            {
+            } else if (symbolizer instanceof LineSymbolizer) {
                 LineSymbolizer lineSymbol = (LineSymbolizer) symbolizer;
                 stroke = lineSymbol.getStroke();
-            }
-            else if(symbolizer instanceof PolygonSymbolizer)
-            {
+            } else if (symbolizer instanceof PolygonSymbolizer) {
                 PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) symbolizer;
                 stroke = polygonSymbol.getStroke();
             }
         }
 
         Class<?> symbolizerClass = null;
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             symbolizerClass = symbolizer.getClass();
         }
         populateStroke(symbolizerClass, stroke);
@@ -337,8 +327,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         Expression expSymbolSize = null;
         Expression expSymbolRotation = null;
 
-        if(stroke == null)
-        {
+        if (stroke == null) {
             expColour = getFilterFactory().literal("#000000");
             expOpacity = getFilterFactory().literal(1.0);
             symbolTypeFactory.setSolidFill(fieldConfigManager, expColour, expOpacity);
@@ -348,18 +337,14 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             expStrokeLineCap = getFilterFactory().literal("round");
             expStrokeLineJoin = getFilterFactory().literal("round");
             expStrokeDashArray = getFilterFactory().literal("");
-        }
-        else
-        {
+        } else {
             Graphic graphicFill = stroke.getGraphicFill();
             Graphic graphicStroke = stroke.getGraphicStroke();
 
-            boolean strokeColourEnabled = false;
-
-            if((graphicFill == null) && (graphicStroke == null))
-            {
+            if ((graphicFill == null) && (graphicStroke == null)) {
                 expOpacity = stroke.getOpacity();
-                symbolTypeFactory.setSolidFill(fieldConfigManager, stroke.getColor(), stroke.getOpacity());
+                symbolTypeFactory.setSolidFill(fieldConfigManager, stroke.getColor(),
+                        stroke.getOpacity());
             }
 
             expOpacity = stroke.getOpacity();
@@ -373,30 +358,23 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
             expStrokeDashArray = getFilterFactory().literal(createDashArrayString(dashesArray));
 
-            if(graphicStroke != null)
-            {
+            if (graphicStroke != null) {
                 // Anchor points
                 AnchorPoint anchorPoint = graphicStroke.getAnchorPoint();
-                if(anchorPoint != null)
-                {
+                if (anchorPoint != null) {
                     expAnchorPointX = anchorPoint.getAnchorPointX();
                     expAnchorPointY = anchorPoint.getAnchorPointY();
-                }
-                else
-                {
+                } else {
                     expAnchorPointX = defaultAnchorPoint.getAnchorPointX();
                     expAnchorPointY = defaultAnchorPoint.getAnchorPointY();
                 }
 
                 // Displacement
                 Displacement displacement = graphicStroke.getDisplacement();
-                if(displacement != null)
-                {
+                if (displacement != null) {
                     expDisplacementX = displacement.getDisplacementX();
                     expDisplacementY = displacement.getDisplacementY();
-                }
-                else
-                {
+                } else {
                     expDisplacementX = defaultDisplacement.getDisplacementX();
                     expDisplacementY = defaultDisplacement.getDisplacementY();
                 }
@@ -409,18 +387,15 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                 List<GraphicalSymbol> graphicSymbolList = graphicStroke.graphicalSymbols();
 
-                for(GraphicalSymbol graphicSymbol : graphicSymbolList)
-                {
-                    if(graphicSymbol instanceof MarkImpl)
-                    {
-                        MarkImpl mark = (MarkImpl)graphicSymbol;
+                for (GraphicalSymbol graphicSymbol : graphicSymbolList) {
+                    if (graphicSymbol instanceof MarkImpl) {
+                        MarkImpl mark = (MarkImpl) graphicSymbol;
 
                         Mark defaultMark = getStyleFactory().getDefaultMark();
 
                         Fill markFill = mark.getFill();
 
-                        if(markFill != null)
-                        {
+                        if (markFill != null) {
                             expColour = markFill.getColor();
                         }
 
@@ -428,18 +403,15 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                         Stroke markStroke = mark.getStroke();
 
-                        if(markStroke != null) 
-                        { 
-                            strokeColourEnabled = true;
+                        if (markStroke != null) {
                             expStrokeColour = markStroke.getColor();
                         }
+                    } else if (graphicSymbol instanceof ExternalGraphicImpl) {
+                        @SuppressWarnings("unused")
+                        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) graphicSymbol;
                     }
-                    else if(graphicSymbol instanceof ExternalGraphicImpl)
-                    {
-                        @SuppressWarnings("unused") 
-                        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl)graphicSymbol;
-                    }
-                    symbolTypeFactory.setValue(symbolizerType, this.fieldConfigManager, graphicStroke, graphicSymbol);
+                    symbolTypeFactory.setValue(symbolizerType, this.fieldConfigManager,
+                            graphicStroke, graphicSymbol);
                 }
             }
 
@@ -454,26 +426,30 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_SIZE, expSymbolSize);
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANGLE, expSymbolRotation);
 
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H, expAnchorPointX);
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V, expAnchorPointY);
+            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H,
+                    expAnchorPointX);
+            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V,
+                    expAnchorPointY);
 
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X, expDisplacementX);
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y, expDisplacementY);
+            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X,
+                    expDisplacementX);
+            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y,
+                    expDisplacementY);
 
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_COLOUR, expColour);
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_STROKE_COLOUR, expStrokeColour);
 
-            GroupConfigInterface fillColourGroup = getGroup(GroupIdEnum.FILLCOLOUR);
-            if(fillColourGroup != null)
-            {
-                fillColourGroup.enable(true);
+            if ((graphicFill == null) && (graphicStroke == null)) {
+                GroupConfigInterface fillColourGroup = getGroup(GroupIdEnum.FILLCOLOUR);
+                if (fillColourGroup != null) {
+                    fillColourGroup.enable(true);
+                }
             }
-
-            GroupConfigInterface strokeColourGroup = getGroup(GroupIdEnum.STROKECOLOUR);
-            if(strokeColourGroup != null)
-            {
-                strokeColourGroup.enable(strokeColourEnabled);
-            }
+            //
+            // GroupConfigInterface strokeColourGroup = getGroup(GroupIdEnum.STROKECOLOUR);
+            // if (strokeColourGroup != null) {
+            // strokeColourGroup.enable(strokeColourEnabled);
+            // }
         }
     }
 
@@ -483,36 +459,27 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      * @param stroke the stroke
      * @return the stroke dash array
      */
-    private List<Float> getStrokeDashArray(Stroke stroke)
-    {
+    private List<Float> getStrokeDashArray(Stroke stroke) {
         List<Expression> expressionList = stroke.dashArray();
         List<Float> valueList = new ArrayList<Float>();
 
-        if(expressionList != null)
-        {
-            for(Expression expression : expressionList)
-            {
-                if(expression instanceof LiteralExpressionImpl)
-                {
+        if (expressionList != null) {
+            for (Expression expression : expressionList) {
+                if (expression instanceof LiteralExpressionImpl) {
                     LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
 
                     Float objValue = null;
-                    if(lExpression.getValue() instanceof Float)
-                    {
-                        objValue = (Float)lExpression.getValue();
-                    }
-                    else if(lExpression.getValue() instanceof Double)
-                    {
-                        objValue = ((Double)lExpression.getValue()).floatValue();
+                    if (lExpression.getValue() instanceof Float) {
+                        objValue = (Float) lExpression.getValue();
+                    } else if (lExpression.getValue() instanceof Double) {
+                        objValue = ((Double) lExpression.getValue()).floatValue();
                     }
 
                     valueList.add(objValue);
-                }
-                else if(expression instanceof ConstantExpression)
-                {
+                } else if (expression instanceof ConstantExpression) {
                     ConstantExpression cExpression = (ConstantExpression) expression;
 
-                    Float objValue = (Float)cExpression.getValue();
+                    Float objValue = (Float) cExpression.getValue();
 
                     valueList.add(objValue);
                 }
@@ -530,28 +497,22 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
     private String createDashArrayString(List<Float> dashesArray) {
         StringBuilder sb = new StringBuilder();
 
-        if(dashesArray != null)
-        {
+        if (dashesArray != null) {
             int index = 0;
 
-            for(Float value : dashesArray)
-            {
+            for (Float value : dashesArray) {
                 String str = Float.toString(value);
 
-                if(str.endsWith(".0"))
-                {
+                if (str.endsWith(".0")) {
                     sb.append(value.intValue());
-                }
-                else
-                {
+                } else {
                     sb.append(value);
                 }
 
-                if(index < dashesArray.size() - 1)
-                {
+                if (index < dashesArray.size() - 1) {
                     sb.append(" ");
                 }
-                index ++;
+                index++;
             }
         }
 
@@ -562,20 +523,17 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             Stroke stroke = getStroke();
 
-            if(symbolizer instanceof PointSymbolizer)
-            {
+            if (symbolizer instanceof PointSymbolizer) {
                 PointSymbolizer pointSymbol = (PointSymbolizer) symbolizer;
 
                 Graphic graphic = pointSymbol.getGraphic();
 
                 GraphicalSymbol symbol = graphic.graphicalSymbols().get(0);
 
-                if(symbol instanceof MarkImpl)
-                {
+                if (symbol instanceof MarkImpl) {
                     MarkImpl markerSymbol = (MarkImpl) symbol;
 
                     markerSymbol.setStroke(stroke);
@@ -584,9 +542,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
 
                     this.fireUpdateSymbol();
                 }
-            }
-            else if(symbolizer instanceof LineSymbolizer)
-            {
+            } else if (symbolizer instanceof LineSymbolizer) {
                 LineSymbolizer lineSymbol = (LineSymbolizer) symbolizer;
 
                 lineSymbol.setStroke(stroke);
@@ -594,9 +550,7 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
                 SelectedSymbol.getInstance().replaceSymbolizer(lineSymbol);
 
                 this.fireUpdateSymbol();
-            }
-            else if(symbolizer instanceof PolygonSymbolizer)
-            {
+            } else if (symbolizer instanceof PolygonSymbolizer) {
                 PolygonSymbolizer polygonSymbol = (PolygonSymbolizer) symbolizer;
 
                 polygonSymbol.setStroke(stroke);
@@ -623,12 +577,13 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -653,39 +608,35 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      * @param panelId the panel id
      * @param selectedItem the selected item
      */
-    private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem)
-    {
-        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
+    private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
+        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(),
+                selectedItem);
 
-        for(GroupIdEnum groupId : groupList.keySet())
-        {
+        for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(), groupId);
-            if(groupConfig != null)
-            {
+            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(),
+                    groupId);
+            if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find group : " + groupId.toString());
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find group : " + groupId.toString());
             }
         }
 
-        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(),
+                selectedItem);
 
-        for(FieldIdEnum fieldId : fieldList.keySet())
-        {
+        for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 CurrentFieldState fieldState = fieldConfig.getFieldState();
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find field : " + fieldId.toString());
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find field : " + fieldId.toString());
             }
         }
     }
@@ -695,16 +646,19 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return SelectedSymbol.getInstance().hasStroke();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -712,7 +666,9 @@ public class StrokeDetails extends StandardPanel implements MultiOptionSelectedI
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

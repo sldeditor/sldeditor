@@ -45,7 +45,7 @@ public class SLDWriterImpl implements SLDWriterInterface {
     private static final String END_OF_XML_HEADER = "?>";
 
     /** The header. */
-    private static final String header = String.format("<!-- Created by %s %s -->",
+    private static final String header = String.format("<!-- Created by %s %s -->\n",
             Version.getAppName(), Version.getVersionNumber());
 
     /**

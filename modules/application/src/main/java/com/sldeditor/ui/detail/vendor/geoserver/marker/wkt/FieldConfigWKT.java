@@ -33,6 +33,7 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.Stroke;
+import org.geotools.styling.StrokeImpl;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
@@ -52,6 +53,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
@@ -84,7 +86,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/wkt/SymbolTypeFieldState_WKT.xml";
 
     /** The vendor option info. */
-    private VendorOptionInfo vendorOptionInfo= null;
+    private VendorOptionInfo vendorOptionInfo = null;
 
     /**
      * Instantiates a new field config string.
@@ -231,20 +233,31 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
             if (symbol instanceof Mark) {
                 MarkImpl markerSymbol = (MarkImpl) symbol;
 
+                // Fill
                 FillImpl fill = markerSymbol.getFill();
 
                 if (fill != null) {
-                    Expression expFillColour = fill.getColor();
-                    Expression expFillColourOpacity = fill.getOpacity();
+                    populateColour(fieldConfigManager, fillFieldConfig, fill.getColor(),
+                            fill.getOpacity());
+                }
+                
+                GroupConfigInterface fillGroup = fieldConfigManager.getGroup(fieldConfigManager.getComponentId(), fillFieldConfig.getGroup());
+                if(fillGroup != null)
+                {
+                    fillGroup.enable(fill != null);
+                }
 
-                    FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-                    if (field != null) {
-                        field.populate(expFillColour);
-                    }
-                    field = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
-                    if (field != null) {
-                        field.populate(expFillColourOpacity);
-                    }
+                // Stroke
+                StrokeImpl stroke = markerSymbol.getStroke();
+
+                if (stroke != null) {
+                    populateColour(fieldConfigManager, strokeFieldConfig, stroke.getColor(),
+                            stroke.getOpacity());
+                }
+                GroupConfigInterface strokeGroup = fieldConfigManager.getGroup(fieldConfigManager.getComponentId(), strokeFieldConfig.getGroup());
+                if(strokeGroup != null)
+                {
+                    strokeGroup.enable(stroke != null);
                 }
 
                 if (wktPanel != null) {
@@ -255,6 +268,27 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     multiOptionPanel.setSelectedItem(WKT_SYMBOL_KEY);
                 }
             }
+        }
+    }
+
+    /**
+     * Populate colour.
+     *
+     * @param fieldConfigManager the field config manager
+     * @param fieldConfig the field config
+     * @param expColour the exp colour
+     * @param expOpacity the exp opacity
+     */
+    private void populateColour(GraphicPanelFieldManager fieldConfigManager,
+            ColourFieldConfig fieldConfig, Expression expColour, Expression expOpacity) {
+        FieldConfigBase field = fieldConfigManager.get(fieldConfig.getColour());
+        if (field != null) {
+            field.populate(expColour);
+        }
+
+        field = fieldConfigManager.get(fieldConfig.getOpacity());
+        if (field != null) {
+            field.populate(expOpacity);
         }
     }
 
@@ -277,43 +311,61 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
             if (getConfigField() != null) {
                 wellKnownName = getConfigField().getExpression();
                 if (wellKnownName != null) {
+                    Stroke stroke = null;
+                    Fill fill = null;
+
                     // Stroke colour
-                    Expression expStrokeColour = null;
-                    Expression expStrokeColourOpacity = null;
                     FieldConfigBase field = null;
                     if (strokeEnabled) {
-                        field = fieldConfigManager.get(FieldIdEnum.STROKE_STROKE_COLOUR);
+                        Expression expStrokeColour = null;
+                        Expression expStrokeColourOpacity = null;
+                        field = fieldConfigManager.get(this.strokeFieldConfig.getColour());
                         if (field != null) {
                             if (field instanceof FieldConfigColour) {
                                 FieldConfigColour colourField = (FieldConfigColour) field;
 
                                 expStrokeColour = colourField.getColourExpression();
-                                expStrokeColourOpacity = colourField.getColourOpacityExpression();
                             }
                         }
+
+                        // Stroke width
+                        Expression strokeWidth = null;
+                        field = fieldConfigManager.get(this.strokeFieldConfig.getWidth());
+                        if (field != null) {
+                            strokeWidth = field.getExpression();
+                        }
+
+                        // Opacity
+                        field = fieldConfigManager.get(this.strokeFieldConfig.getOpacity());
+                        if (field != null) {
+                            expStrokeColourOpacity = field.getExpression();
+                        }
+
+                        stroke = getStyleFactory().createStroke(expStrokeColour,
+                                strokeWidth,
+                                expStrokeColourOpacity);
                     }
 
                     // Fill colour
-                    Expression expFillColour = null;
-                    Expression expFillColourOpacity = null;
+                    if (fillEnabled) {
+                        Expression expFillColour = null;
+                        Expression expFillColourOpacity = null;
 
-                    // Fill colour is ignored, uses stroke colour
-                    expFillColour = expStrokeColour;
-                    expFillColourOpacity = expStrokeColourOpacity;
+                        field = fieldConfigManager.get(this.fillFieldConfig.getColour());
+                        if (field != null) {
+                            if (field instanceof FieldConfigColour) {
+                                FieldConfigColour colourField = (FieldConfigColour) field;
 
-                    /*
-                     * field = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR); if(field != null) { if(field instanceof FieldConfigColour) {
-                     * FieldConfigColour colourField = (FieldConfigColour)field;
-                     * 
-                     * expFillColour = colourField.getColourExpression(); expFillColourOpacity = colourField.getColourOpacityExpression(); } }
-                     */
-                    Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                    Stroke stroke = getStyleFactory().createStroke(expStrokeColour,
-                            expStrokeColourOpacity);
-                    field = fieldConfigManager.get(FieldIdEnum.STROKE_WIDTH);
-                    if (field != null) {
-                        Expression strokeWidth = field.getExpression();
-                        stroke.setWidth(strokeWidth);
+                                expFillColour = colourField.getColourExpression();
+                            }
+                        }
+
+                        // Opacity
+                        field = fieldConfigManager.get(this.fillFieldConfig.getOpacity());
+                        if (field != null) {
+                            expFillColourOpacity = field.getExpression();
+                        }
+                        fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
                     }
 
                     Expression symbolSize = null;
@@ -341,7 +393,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      */
     @Override
     public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager) {
-        return null;
+        return getStyleFactory().fill(graphicFill, null, null);
     }
 
     /**
@@ -540,27 +592,28 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                getVendorOptionInfo());
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo = new VendorOptionInfo("WKT",
-                    getVendorOptionVersion(),
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo("WKT", getVendorOptionVersion(),
                     Localisation.getString(WKTDetails.class, "WKTDetails.description"));
         }
         return vendorOptionInfo;
