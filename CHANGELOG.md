@@ -1,7 +1,18 @@
 # Change Log
 
-## [0.6.2](https://github.com/robward-scisys/sldeditor/tree/0.6.2) (2016-12-09)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.1...0.6.2)
+## [0.6.3](https://github.com/robward-scisys/sldeditor/tree/0.6.3) (2016-12-12)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.2...0.6.3)
+
+**Implemented enhancements:**
+
+- Convert console panel to use a JList [\#212](https://github.com/robward-scisys/sldeditor/issues/212)
+
+**Fixed bugs:**
+
+- Iss210 wkt polygon fill [\#211](https://github.com/robward-scisys/sldeditor/pull/211) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.6.2](https://github.com/robward-scisys/sldeditor/tree/v0.6.2) (2016-12-09)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.1...v0.6.2)
 
 **Implemented enhancements:**
 
@@ -12,11 +23,19 @@
 - Show target SLD / vendor option in the application window title [\#191](https://github.com/robward-scisys/sldeditor/issues/191)
 - Implement qgis:// marker symbols [\#190](https://github.com/robward-scisys/sldeditor/issues/190)
 - Implement extshape://arrow marker functionality [\#189](https://github.com/robward-scisys/sldeditor/issues/189)
-- Underlying file modifications reload functionality disabled [\#206](https://github.com/robward-scisys/sldeditor/issues/206)
+- Iss201 help [\#203](https://github.com/robward-scisys/sldeditor/pull/203) ([robward-scisys](https://github.com/robward-scisys))
+- Iss200 minimum vendor option supported [\#202](https://github.com/robward-scisys/sldeditor/pull/202) ([robward-scisys](https://github.com/robward-scisys))
+- Iss194 vendor option information [\#196](https://github.com/robward-scisys/sldeditor/pull/196) ([robward-scisys](https://github.com/robward-scisys))
+- Added QGIS:// marker symbols [\#195](https://github.com/robward-scisys/sldeditor/pull/195) ([robward-scisys](https://github.com/robward-scisys))
+- Iss189 Implement GeoServer arrow \(extshape://arrow\) [\#192](https://github.com/robward-scisys/sldeditor/pull/192) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
+- SLD Editor workspace files need to be accounted for when the reload functionality is triggered [\#206](https://github.com/robward-scisys/sldeditor/issues/206)
+- Tools have stopped working [\#204](https://github.com/robward-scisys/sldeditor/issues/204)
+- Iss206 sldeditor reload [\#207](https://github.com/robward-scisys/sldeditor/pull/207) ([robward-scisys](https://github.com/robward-scisys))
 - The tools now work again [\#205](https://github.com/robward-scisys/sldeditor/pull/205) ([robward-scisys](https://github.com/robward-scisys))
+- Fixed unit tests for Windows builds [\#199](https://github.com/robward-scisys/sldeditor/pull/199) ([robward-scisys](https://github.com/robward-scisys))
 
 **Closed issues:**
 
@@ -24,6 +43,7 @@
 
 **Merged pull requests:**
 
+- Release v0.6.2 [\#209](https://github.com/robward-scisys/sldeditor/pull/209) ([robward-scisys](https://github.com/robward-scisys))
 - Iss197 relative paths [\#198](https://github.com/robward-scisys/sldeditor/pull/198) ([robward-scisys](https://github.com/robward-scisys))
 - Vendor option string displayed in render panel [\#193](https://github.com/robward-scisys/sldeditor/pull/193) ([robward-scisys](https://github.com/robward-scisys))
 
