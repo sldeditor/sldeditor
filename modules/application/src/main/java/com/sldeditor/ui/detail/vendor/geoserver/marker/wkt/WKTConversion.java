@@ -233,8 +233,9 @@ public class WKTConversion {
                     wktGeometry.setGeometryType(wktType);
                 }
             }
+        } catch (IllegalArgumentException e) {
+            ConsoleManager.getInstance().error(WKTConversion.class, e.getLocalizedMessage());
         }
-
         return wktGeometry;
     }
 
