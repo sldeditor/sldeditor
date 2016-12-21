@@ -1,15 +1,34 @@
 # Change Log
 
-## [0.6.3](https://github.com/robward-scisys/sldeditor/tree/0.6.3) (2016-12-12)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.2...0.6.3)
+## [0.6.4](https://github.com/robward-scisys/sldeditor/tree/0.6.4) (2016-12-21)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.3...0.6.4)
+
+**Implemented enhancements:**
+
+- Add support for GeoTools 16.1 vendor options [\#217](https://github.com/robward-scisys/sldeditor/issues/217)
+
+- Iss217 geotools 16 1 vendor options [\#218](https://github.com/robward-scisys/sldeditor/pull/218) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.6.3](https://github.com/robward-scisys/sldeditor/tree/v0.6.3) (2016-12-12)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.2...v0.6.3)
 
 **Implemented enhancements:**
 
 - Convert console panel to use a JList [\#212](https://github.com/robward-scisys/sldeditor/issues/212)
+- Console messages now appear in a JList [\#213](https://github.com/robward-scisys/sldeditor/pull/213) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
 - Iss210 wkt polygon fill [\#211](https://github.com/robward-scisys/sldeditor/pull/211) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Implement WKT polygon fills [\#210](https://github.com/robward-scisys/sldeditor/issues/210)
+- Create release 0.6.2 [\#208](https://github.com/robward-scisys/sldeditor/issues/208)
+
+**Merged pull requests:**
+
+- Updated to version 0.6.3 [\#215](https://github.com/robward-scisys/sldeditor/pull/215) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.6.2](https://github.com/robward-scisys/sldeditor/tree/v0.6.2) (2016-12-09)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.1...v0.6.2)
