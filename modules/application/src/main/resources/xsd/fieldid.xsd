@@ -106,6 +106,7 @@
             <xs:enumeration value="LABEL_PARTIALS" />
             <xs:enumeration value="LABEL_POLYGONALIGN" />
             <xs:enumeration value="LABEL_SPACE_AROUND" />
+            <xs:enumeration value="LABEL_UNDERLINE" />
 
             <xs:enumeration value="MAX_DISPLACEMENT" />
             <xs:enumeration value="PERPENDICULAR_OFFSET" />
@@ -198,6 +199,8 @@
             <xs:enumeration value="VO_ARROW_HEIGHT_OVER_WIDTH" />
             <xs:enumeration value="VO_ARROW_HEAD" />
             <xs:enumeration value="VO_QGIS" />
+
+            <xs:enumeration value="VO_TEXT_LABEL_UNDERLINE" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

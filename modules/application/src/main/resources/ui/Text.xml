@@ -89,4 +89,7 @@
     <Group id="VO_TEXT_LABEL" showLabel="false">
         <FieldConfigVendorOption id="VO_TEXT_LABEL" class="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerLabelling"/>
     </Group>
+    <Group id="VO_TEXT_LABEL_UNDERLINE" showLabel="false">
+        <FieldConfigVendorOption id="VO_TEXT_LABEL_UNDERLINE" class="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerLabellingUnderline"/>
+    </Group>
 </PanelConfig>

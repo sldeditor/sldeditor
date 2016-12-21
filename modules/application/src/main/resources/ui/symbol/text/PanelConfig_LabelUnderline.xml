@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.10.1"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerLabellingUnderline">
+    <Group id="VO_LABELLING_UNDERLINE" label="geoserver.label.underline" showLabel="true">
+        <FieldConfigBoolean id="LABEL_UNDERLINE"
+            label="geoserver.label.underline" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer2.DEFAULT_UNDERLINE_TEXT" />
+    </Group>
+</PanelConfig>

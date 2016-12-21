@@ -87,7 +87,7 @@ public class BasePanel extends JPanel {
     public static final int WIDGET_TITLE_WIDTH = 202;
 
     /** The Constant FIELD_PANEL_WIDTH. */
-    public static final int FIELD_PANEL_WIDTH = 550;
+    public static final int FIELD_PANEL_WIDTH = 700;
 
     /** The Constant WIDGET_EXTENDED_WIDTH. */
     public static final int WIDGET_EXTENDED_WIDTH = 202;
