@@ -51,6 +51,7 @@
             <xs:enumeration value="LINEPLACEMENT" />
             <xs:enumeration value="HALO" />
             <xs:enumeration value="VO_LABELLING" />
+            <xs:enumeration value="VO_LABELLING_UNDERLINE" />
             <xs:enumeration value="VO_RANDOMFILL" />
             <xs:enumeration value="VO_POINT_RANDOMFILL" />
             <xs:enumeration value="VO_POLYGON_RANDOMFILL" />
@@ -128,6 +129,7 @@
             <xs:enumeration value="USER_LAYER_SOURCE" />
 
             <xs:enumeration value="VO_TEXT_LABEL" />
+            <xs:enumeration value="VO_TEXT_LABEL_UNDERLINE" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

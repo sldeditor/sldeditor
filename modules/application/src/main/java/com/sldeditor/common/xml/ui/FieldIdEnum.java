@@ -93,6 +93,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="LABEL_PARTIALS"/&gt;
  *     &lt;enumeration value="LABEL_POLYGONALIGN"/&gt;
  *     &lt;enumeration value="LABEL_SPACE_AROUND"/&gt;
+ *     &lt;enumeration value="LABEL_UNDERLINE"/&gt;
  *     &lt;enumeration value="MAX_DISPLACEMENT"/&gt;
  *     &lt;enumeration value="PERPENDICULAR_OFFSET"/&gt;
  *     &lt;enumeration value="LABEL_PLACEMENT"/&gt;
@@ -167,6 +168,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_ARROW_HEIGHT_OVER_WIDTH"/&gt;
  *     &lt;enumeration value="VO_ARROW_HEAD"/&gt;
  *     &lt;enumeration value="VO_QGIS"/&gt;
+ *     &lt;enumeration value="VO_TEXT_LABEL_UNDERLINE"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -249,6 +251,7 @@ public enum FieldIdEnum {
     LABEL_PARTIALS,
     LABEL_POLYGONALIGN,
     LABEL_SPACE_AROUND,
+    LABEL_UNDERLINE,
     MAX_DISPLACEMENT,
     PERPENDICULAR_OFFSET,
     LABEL_PLACEMENT,
@@ -322,7 +325,8 @@ public enum FieldIdEnum {
     VO_ARROW_THICKNESS,
     VO_ARROW_HEIGHT_OVER_WIDTH,
     VO_ARROW_HEAD,
-    VO_QGIS;
+    VO_QGIS,
+    VO_TEXT_LABEL_UNDERLINE;
 
     public String value() {
         return name();

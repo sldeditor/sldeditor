@@ -45,6 +45,9 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
     /** The vendor option geo server labelling. */
     private VOGeoServerLabelling vendorOptionGeoServerLabelling = null;
 
+    /** The vendor option geo server labelling underline. */
+    private VOGeoServerLabellingUnderline vendorOptionGeoServerLabellingUnderline = null;
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -60,8 +63,10 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
     public VendorOptionTextFactory(Class<?> panelId, FunctionNameInterface functionManager)
     {
         vendorOptionGeoServerLabelling = new VOGeoServerLabelling(panelId, functionManager);
-
         vendorOptionList.add(vendorOptionGeoServerLabelling);
+
+        vendorOptionGeoServerLabellingUnderline = new VOGeoServerLabellingUnderline(panelId, functionManager);
+        vendorOptionList.add(vendorOptionGeoServerLabellingUnderline);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
