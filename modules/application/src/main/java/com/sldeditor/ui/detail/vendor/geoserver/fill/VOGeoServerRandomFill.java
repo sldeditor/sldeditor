@@ -224,7 +224,7 @@ implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterfac
             String key) {
         if ((options != null) && options.containsKey(key)) {
             String storedValue = options.get(key);
-            Integer value = Integer.valueOf(storedValue);
+            Integer value = Double.valueOf(storedValue).intValue();
             fieldConfigVisitor.populateIntegerField(fieldId, value);
         } else {
             setDefaultValue(fieldId);
