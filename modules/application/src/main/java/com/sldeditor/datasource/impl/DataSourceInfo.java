@@ -322,9 +322,12 @@ public class DataSourceInfo {
         {
             for(PropertyDescriptor property : descriptorList)
             {
-                logger.debug(String.format("    %-20s %s", property.getName(), property.getType().getBinding().getName()));
-                fieldNameMap.put(index, property.getName());
-                fieldTypeMap.put(index, property.getType().getBinding());
+                if(property != null)
+                {
+                    logger.debug(String.format("    %-20s %s", property.getName(), property.getType().getBinding().getName()));
+                    fieldNameMap.put(index, property.getName());
+                    fieldTypeMap.put(index, property.getType().getBinding());
+                }
                 index ++;
             }
         }

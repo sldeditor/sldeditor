@@ -253,7 +253,7 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
     {
         if(!underTest)
         {
-            if(!dataLoaded)
+          //  if(!dataLoaded)
             {
                 createFeature();
             }

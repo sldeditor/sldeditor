@@ -19,7 +19,9 @@
 package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.data.memory.MemoryDataStore;
@@ -81,9 +83,17 @@ public class CreateSampleData {
      * @param fieldList the field list
      */
     public void create(FeatureType schema, List<DataSourceAttributeData> fieldList) {
-        if(schema == null)
-        {
+        if (schema == null) {
             return;
+        }
+
+        // Put fields into map for speed
+        Map<String, DataSourceAttributeData> fieldMap = new HashMap<String, DataSourceAttributeData>();
+        if(fieldList != null)
+        {
+            for (DataSourceAttributeData attributeData : fieldList) {
+                fieldMap.put(attributeData.getName(), attributeData);
+            }
         }
 
         SimpleFeatureType featureType = (SimpleFeatureType) schema;
@@ -97,7 +107,7 @@ public class CreateSampleData {
         }
         SimpleFeatureBuilder builder = new SimpleFeatureBuilder(featureType);
 
-        SimpleFeature feature = DataUtilities.template( featureType );
+        SimpleFeature feature = DataUtilities.template(featureType);
 
         builder.init((SimpleFeature) feature);
         int index = 0;
@@ -105,14 +115,13 @@ public class CreateSampleData {
             AttributeType attributeType = descriptor.getType();
             Object value = null;
             Class<?> fieldType = attributeType.getBinding();
-            if(attributeType instanceof GeometryTypeImpl)
-            {
+            if (attributeType instanceof GeometryTypeImpl) {
                 geometryType = GeometryTypeMapping.getGeometryType(fieldType);
 
-                switch(geometryType)
-                {
+                switch (geometryType) {
                 case POLYGON:
-                    ExamplePolygonInterface examplePolygon = DataSourceFactory.createExamplePolygon(null);
+                    ExamplePolygonInterface examplePolygon = DataSourceFactory
+                    .createExamplePolygon(null);
                     value = examplePolygon.getPolygon();
                     break;
                 case LINE:
@@ -125,25 +134,22 @@ public class CreateSampleData {
                     value = examplePoint.getPoint();
                     break;
                 }
-            }
-            else
-            {
-                if((fieldList != null) && (index < fieldList.size()))
-                {
-                    value = fieldList.get(index).getValue();
+            } else {
+                if ((fieldList != null) && (index < fieldList.size())) {
+                    DataSourceAttributeData attrData = fieldMap.get(descriptor.getLocalName());
+
+                    if (attrData != null) {
+                        value = attrData.getValue();
+                    }
                 }
 
-                if(value == null)
-                {
-                    value = getFieldTypeValue(index, attributeType.getName().getLocalPart(), fieldType);
-                }
-                else
-                {
-                    value = fieldList.get(index).getValue();
+                if (value == null) {
+                    value = getFieldTypeValue(index, attributeType.getName().getLocalPart(),
+                            fieldType);
                 }
             }
             builder.add(value);
-            index ++;
+            index++;
         }
 
         SimpleFeature newFeature = builder.buildFeature("1234");
@@ -158,36 +164,23 @@ public class CreateSampleData {
      * @param fieldType the field type
      * @return the field type value
      */
-    public static Object getFieldTypeValue(int index, String name, Class<?> fieldType)
-    {
+    public static Object getFieldTypeValue(int index, String name, Class<?> fieldType) {
         Object value = null;
 
-        if(fieldType == String.class)
-        {
-            if(name != null)
-            {
+        if (fieldType == String.class) {
+            if (name != null) {
                 value = name;
             }
-        }
-        else if(fieldType == Long.class)
-        {
+        } else if (fieldType == Long.class) {
             value = Long.valueOf(index);
-        }
-        else if(fieldType == Integer.class)
-        {
+        } else if (fieldType == Integer.class) {
             value = Integer.valueOf(index);
-        }
-        else if(fieldType == Double.class)
-        {
+        } else if (fieldType == Double.class) {
             value = Double.valueOf(index);
-        }
-        else if(fieldType == Float.class)
-        {
+        } else if (fieldType == Float.class) {
             value = Float.valueOf(index);
-        }
-        else if(fieldType == Short.class)
-        {
-            value = Short.valueOf((short)index);
+        } else if (fieldType == Short.class) {
+            value = Short.valueOf((short) index);
         }
         return value;
     }

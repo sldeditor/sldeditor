@@ -229,7 +229,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                         ((DefaultTreeModel)tree.getModel()).nodeStructureChanged((TreeNode)selectedItem);
                     }
                 }
-            } 
+            }
 
             /* (non-Javadoc)
              * @see javax.swing.event.TreeExpansionListener#treeCollapsed(javax.swing.event.TreeExpansionEvent)

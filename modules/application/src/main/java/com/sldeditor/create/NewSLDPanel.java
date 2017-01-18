@@ -36,6 +36,7 @@ import javax.swing.JPanel;
 
 import org.geotools.styling.StyledLayerDescriptor;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
@@ -76,6 +77,7 @@ public class NewSLDPanel extends JDialog {
         setModalityType(ModalityType.APPLICATION_MODAL);
         setSize(300, 110);
         createUI();
+        Controller.getInstance().centreDialog(this);
     }
 
     /**
