@@ -224,7 +224,17 @@ public class LegendManager implements LegendOptionDataUpdateInterface
                     }
                 }
 
-                imageMap.put("", legendBuilder.buildLegendGraphic(request));
+                BufferedImage legendGraphic = null;
+                
+                try
+                {
+                    legendGraphic = legendBuilder.buildLegendGraphic(request);
+                }
+                catch(Exception e)
+                {
+                    // Ignore
+                }
+                imageMap.put("", legendGraphic);
             }
             else
             {
@@ -235,7 +245,18 @@ public class LegendManager implements LegendOptionDataUpdateInterface
                     legendEntryRequest.setStyle(styleMap.get(key));
                     legendEntryRequest.setStyleName(key);
                     request.getLegends().add(legendEntryRequest);
-                    imageMap.put(key, legendBuilder.buildLegendGraphic(request));
+
+                    BufferedImage legendGraphic = null;
+                    
+                    try
+                    {
+                        legendGraphic = legendBuilder.buildLegendGraphic(request);
+                    }
+                    catch(Exception e)
+                    {
+                        // Ignore
+                    }
+                    imageMap.put(key, legendGraphic);
                 }
             }
         }
