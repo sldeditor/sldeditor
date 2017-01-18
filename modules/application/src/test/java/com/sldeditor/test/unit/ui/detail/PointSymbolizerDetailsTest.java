@@ -51,6 +51,7 @@ public class PointSymbolizerDetailsTest {
      */
     @Test
     public void testAddRenderer() {
+        SelectedSymbol.destroyInstance();
         PointSymbolizerDetails panel = new PointSymbolizerDetails(null);
         panel.addRenderer(null);
     }
@@ -65,6 +66,7 @@ public class PointSymbolizerDetailsTest {
      */
     @Test
     public void testPointSymbolizerDetails() {
+        SelectedSymbol.destroyInstance();
         PointSymbolizerDetails panel = new PointSymbolizerDetails(null);
         panel.populate(null);
 
