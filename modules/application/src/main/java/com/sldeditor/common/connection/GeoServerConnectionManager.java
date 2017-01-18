@@ -19,11 +19,18 @@
 package com.sldeditor.common.connection;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.property.PropertyManagerFactory;
+import com.sldeditor.extension.filesystem.geoserver.GeoServerInput;
+import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
+import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient;
+import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 
 /**
  * The Class GeoServerConnectionManager.
@@ -42,15 +49,19 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
      */
     private static GeoServerConnectionManagerInterface instance = null;
 
+    /** The GeoServerClientInterface class to create. */
+    public static Class<?> geoServerClientClass = GeoServerClient.class;
+
+    /** The connection map. */
+    private Map<GeoServerConnection, GeoServerClientInterface> connectionMap = new LinkedHashMap<GeoServerConnection, GeoServerClientInterface>();
+
     /**
      * Gets the singleton instance of GeoServerConnectionManager.
      *
      * @return singleton instance of GeoServerConnectionManager
      */
-    public static GeoServerConnectionManagerInterface getInstance()
-    {
-        if(instance == null)
-        {
+    public static GeoServerConnectionManagerInterface getInstance() {
+        if (instance == null) {
             instance = new GeoServerConnectionManager();
         }
 
@@ -66,13 +77,12 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     public List<GeoServerConnection> getConnectionList() {
         List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
 
-        List<String> valueList = PropertyManagerFactory.getInstance().getMultipleValues(GEOSERVER_CONNECTION_FIELD);
+        List<String> valueList = PropertyManagerFactory.getInstance()
+                .getMultipleValues(GEOSERVER_CONNECTION_FIELD);
 
-        for(String connectionString : valueList)
-        {
+        for (String connectionString : valueList) {
             GeoServerConnection connection = GeoServerConnection.decodeString(connectionString);
-            if(connection != null)
-            {
+            if (connection != null) {
                 connectionList.add(connection);
             }
         }
@@ -86,32 +96,97 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
      * @param keySet the key set
      */
     @Override
-    public void updateList(Set<GeoServerConnection> keySet) {
+    public void updateList() {
+        Set<GeoServerConnection> keySet = connectionMap.keySet();
         int count = 0;
         PropertyManagerFactory.getInstance().clearValue(GEOSERVER_CONNECTION_FIELD, true);
-        for(GeoServerConnection connection : keySet)
-        {
-            count ++;
-            PropertyManagerFactory.getInstance().updateValue(GEOSERVER_CONNECTION_FIELD, count, connection.encodeAsString());
+        for (GeoServerConnection connection : keySet) {
+            count++;
+            PropertyManagerFactory.getInstance().updateValue(GEOSERVER_CONNECTION_FIELD, count,
+                    connection.encodeAsString());
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#getConnection(java.lang.String)
      */
     @Override
     public GeoServerConnection getConnection(String connectionDataName) {
-        if(connectionDataName != null)
-        {
+        if (connectionDataName != null) {
             List<GeoServerConnection> connectionList = getConnectionList();
-            for(GeoServerConnection existingConnectionData : connectionList)
-            {
-                if(existingConnectionData.getConnectionName().compareTo(connectionDataName) == 0)
-                {
+            for (GeoServerConnection existingConnectionData : connectionList) {
+                if (existingConnectionData.getConnectionName().compareTo(connectionDataName) == 0) {
                     return existingConnectionData;
                 }
             }
         }
         return null;
+    }
+
+    public void readPropertyFile(GeoServerReadProgress progress) {
+        List<GeoServerConnection> connectionList = getConnectionList();
+
+        for (GeoServerConnection connection : connectionList) {
+            connectionMap.put(connection, createGeoServerClient(progress, connection));
+        }
+    }
+
+    /**
+     * Creates the GeoServer client.
+     *
+     * @param connection the connection
+     * @return the GeoServer client
+     */
+    private GeoServerClientInterface createGeoServerClient(GeoServerReadProgress progress,
+            GeoServerConnection connection) {
+        GeoServerClientInterface client = null;
+        try {
+            client = (GeoServerClientInterface) Class
+                    .forName(GeoServerConnectionManager.geoServerClientClass.getName())
+                    .newInstance();
+            client.initialise(progress, connection);
+        } catch (InstantiationException e) {
+            ConsoleManager.getInstance().exception(GeoServerInput.class, e);
+        } catch (IllegalAccessException e) {
+            ConsoleManager.getInstance().exception(GeoServerInput.class, e);
+        } catch (ClassNotFoundException e) {
+            ConsoleManager.getInstance().exception(GeoServerInput.class, e);
+        }
+
+        return client;
+    }
+
+    /**
+     * Gets the connection map.
+     *
+     * @return the connectionMap
+     */
+    public Map<GeoServerConnection, GeoServerClientInterface> getConnectionMap() {
+        return connectionMap;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#removeConnection(com.sldeditor.common.data.GeoServerConnection)
+     */
+    @Override
+    public void removeConnection(GeoServerConnection connection) {
+        connectionMap.remove(connection);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#addNewConnection(com.sldeditor.extension.filesystem.geoserver.
+     * GeoServerReadProgress, com.sldeditor.common.data.GeoServerConnection)
+     */
+    @Override
+    public void addNewConnection(GeoServerReadProgress progress,
+            GeoServerConnection newConnectionDetails) {
+        connectionMap.put(newConnectionDetails,
+                createGeoServerClient(progress, newConnectionDetails));
     }
 }

@@ -300,8 +300,8 @@ public class FileSystemExtensionTest {
         }
         geoServerConnection.setUserName("username");
         geoServerConnection.setPassword("password");
-        connectionMap.put(geoServerConnection, null);
-        GeoServerConnectionManager.getInstance().updateList(connectionMap.keySet());
+        GeoServerConnectionManager.getInstance().addNewConnection(null, geoServerConnection);
+        GeoServerConnectionManager.getInstance().updateList();
 
         extensionArgList.clear();
         expectedGeoServer = "geoserver=" + geoServerConnection.getConnectionName();

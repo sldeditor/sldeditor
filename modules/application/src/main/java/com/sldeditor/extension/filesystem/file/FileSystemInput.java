@@ -36,6 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -47,7 +48,9 @@ import org.apache.log4j.Logger;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
+import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
@@ -61,6 +64,7 @@ import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
+import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.legend.LegendTool;
 import com.sldeditor.tool.raster.RasterTool;
@@ -74,8 +78,7 @@ import com.sldeditor.tool.ysld.YSLDTool;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FileSystemInput implements FileSystemInterface
-{
+public class FileSystemInput implements FileSystemInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7208594826312684233L;
 
@@ -96,8 +99,7 @@ public class FileSystemInput implements FileSystemInterface
      *
      * @param toolMgr the tool manager
      */
-    public FileSystemInput(ToolSelectionInterface toolMgr)
-    {
+    public FileSystemInput(ToolSelectionInterface toolMgr) {
         List<String> fileHandlerClassList = new ArrayList<String>();
         fileHandlerClassList.add(SLDFileHandler.class.getName());
         fileHandlerClassList.add(SLDEditorFileHandler.class.getName());
@@ -105,12 +107,11 @@ public class FileSystemInput implements FileSystemInterface
         fileHandlerClassList.add(VectorFileHandler.class.getName());
         fileHandlerClassList.add(YSLDFileHandler.class.getName());
 
-        for(String fileHandlerClass : fileHandlerClassList)
-        {
+        for (String fileHandlerClass : fileHandlerClassList) {
             try {
-                FileHandlerInterface fileHandler = (FileHandlerInterface) Class.forName(fileHandlerClass).newInstance();
-                for(String fileExtension : fileHandler.getFileExtensionList())
-                {
+                FileHandlerInterface fileHandler = (FileHandlerInterface) Class
+                        .forName(fileHandlerClass).newInstance();
+                for (String fileExtension : fileHandler.getFileExtensionList()) {
                     fileHandlerMap.put(fileExtension, fileHandler);
                 }
                 logger.debug("Added FileSystemInput extension : " + fileHandlerClass);
@@ -122,37 +123,38 @@ public class FileSystemInput implements FileSystemInterface
 
         FileTreeNode.setFileHandlerMap(fileHandlerMap);
 
-        if(toolMgr != null)
-        {
+        if (toolMgr != null) {
             ToolManager.getInstance().registerTool(FileTreeNode.class, new LegendTool());
-            ToolManager.getInstance().registerTool(FileTreeNode.class, new ScaleTool(toolMgr.getApplication()));
-            ToolManager.getInstance().registerTool(FileTreeNode.class, new RasterTool(toolMgr.getApplication()));
-            ToolManager.getInstance().registerTool(FileTreeNode.class, new VectorTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(FileTreeNode.class,
+                    new ScaleTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(FileTreeNode.class,
+                    new RasterTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(FileTreeNode.class,
+                    new VectorTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class, new StickyDataSourceTool());
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree,
+     * javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
      */
     @Override
-    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
-    {
+    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
         this.treeModel = model;
         this.tree = tree;
 
         FileTreeNode.setTreeModel(model);
         FileTreeNode.setInputInterface(this);
 
-        try
-        {
-            if(rootNode != null)
-            {
+        try {
+            if (rootNode != null) {
                 boolean prePopulateFirstLevelFolders = false;
 
-                for(Path path : FileSystems.getDefault().getRootDirectories())
-                {
+                for (Path path : FileSystems.getDefault().getRootDirectories()) {
                     logger.debug("Adding root folder : " + path.toString());
 
                     FileTreeNode fileSystemRootNode = new FileTreeNode(path);
@@ -161,56 +163,51 @@ public class FileSystemInput implements FileSystemInterface
                     rootNode.add(fileSystemRootNode);
                 }
             }
-        }
-        catch (SecurityException e)
-        {
+        } catch (SecurityException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#treeExpanded(java.lang.Object)
      */
     @Override
-    public boolean treeExpanded(Object selectedItem)
-    {
+    public boolean treeExpanded(Object selectedItem) {
         boolean changed = false;
-        if(selectedItem instanceof FileTreeNode)
-        {
+        if (selectedItem instanceof FileTreeNode) {
             // Get the last component of the path and
             // arrange to have it fully populated.
-            FileTreeNode node = (FileTreeNode)selectedItem;
+            FileTreeNode node = (FileTreeNode) selectedItem;
             if (node.populateDirectories(true)) {
                 changed = true;
-            } 
+            }
         }
 
         return changed;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)
      */
     @Override
-    public void rightMouseButton(Object selectedItem, MouseEvent e)
-    {
-        if(selectedItem instanceof FileTreeNode)
-        {
-            FileTreeNode fileTreeNode = (FileTreeNode)selectedItem;
+    public void rightMouseButton(Object selectedItem, MouseEvent e) {
+        if (selectedItem instanceof FileTreeNode) {
+            FileTreeNode fileTreeNode = (FileTreeNode) selectedItem;
 
             File file = fileTreeNode.getFile();
 
             JPopupMenu popupMenu = new JPopupMenu();
 
-            JMenuItem connectMenuItem = new JMenuItem("Copy path to clipboard");
-            connectMenuItem.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent event)
-                {
+            JMenuItem connectMenuItem = new JMenuItem(Localisation.getString(FileSystemInput.class,
+                    "FileSystemInput.copyPathToClipboard"));
+            connectMenuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
                     StringSelection selection = new StringSelection(file.getAbsolutePath());
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clipboard.setContents(selection, selection);
@@ -218,9 +215,55 @@ public class FileSystemInput implements FileSystemInterface
             });
             popupMenu.add(connectMenuItem);
 
-            if(e != null)
-            {
+            JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(FileSystemInput.class,
+                    "FileSystemInput.uploadToGeoServer"));
+            populateGeoServerConnections(uploadToGeoServerMenu);
+            popupMenu.add(uploadToGeoServerMenu);
+
+            if (e != null) {
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
+    }
+
+    /**
+     * Populate geo server connections.
+     *
+     * @param uploadToGeoServerMenu the upload to geo server menu
+     */
+    private void populateGeoServerConnections(JMenu uploadToGeoServerMenu) {
+        if (uploadToGeoServerMenu != null) {
+            Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
+                    .getInstance().getConnectionMap();
+
+            if (connectionMap.isEmpty()) {
+                JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation.getString(
+                        FileSystemInput.class, "FileSystemInput.noGeoServerConnections"));
+
+                uploadToGeoServerMenu.add(noGeoServerMenuItem);
+            } else {
+                for (GeoServerConnection connection : connectionMap.keySet()) {
+                    JMenu geoServer = new JMenu(connection.getConnectionName());
+
+                    uploadToGeoServerMenu.add(geoServer);
+
+                    GeoServerClientInterface client = connectionMap.get(connection);
+                    if (client.isConnected()) {
+                        for(String workspaceName : client.getWorkspaceList())
+                        {
+                            JMenuItem workspaceMenuItem = new JMenuItem(workspaceName);
+
+                            geoServer.add(workspaceMenuItem);
+                        }
+                    }
+                    else
+                    {
+                        JMenuItem connectMenuItem = new JMenuItem(Localisation.getString(
+                                FileSystemInput.class, "FileSystemInput.connect"));
+
+                        geoServer.add(connectMenuItem);
+                    }
+                }
             }
         }
     }
@@ -232,12 +275,10 @@ public class FileSystemInput implements FileSystemInterface
      * @return the SLD contents
      */
     @Override
-    public SelectedFiles getSLDContents(NodeInterface node)
-    {
+    public SelectedFiles getSLDContents(NodeInterface node) {
         SelectedFiles selectedFiles = new SelectedFiles();
-        if(node instanceof FileTreeNode)
-        {
-            FileTreeNode fileTreeNode = (FileTreeNode)node;
+        if (node instanceof FileTreeNode) {
+            FileTreeNode fileTreeNode = (FileTreeNode) node;
 
             selectedFiles.setIsFolder(fileTreeNode.isDir());
 
@@ -246,12 +287,10 @@ public class FileSystemInput implements FileSystemInterface
             selectedFiles.setFolderName(folderName);
         }
 
-        for(FileHandlerInterface handler : fileHandlerMap.values())
-        {
+        for (FileHandlerInterface handler : fileHandlerMap.values()) {
             List<SLDDataInterface> sldContentList = handler.getSLDContents(node);
 
-            if(sldContentList != null)
-            {
+            if (sldContentList != null) {
                 selectedFiles.setSldData(sldContentList);
                 selectedFiles.setDataSource(handler.isDataSource());
 
@@ -262,21 +301,20 @@ public class FileSystemInput implements FileSystemInterface
         return selectedFiles;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#open(java.net.URL)
      */
     @Override
-    public List<SLDDataInterface> open(URL url)
-    {
-        if(url != null)
-        {
+    public List<SLDDataInterface> open(URL url) {
+        if (url != null) {
             try {
                 String urlString = URLDecoder.decode(url.getFile(), "UTF-8");
                 File file = new File(urlString);
                 FileHandlerInterface fileHandler = getFileHandler(file.getAbsolutePath());
 
-                if(fileHandler != null)
-                {
+                if (fileHandler != null) {
                     return fileHandler.open(file);
                 }
             } catch (UnsupportedEncodingException e) {
@@ -292,16 +330,12 @@ public class FileSystemInput implements FileSystemInterface
      * @param filename the filename
      * @return the file handler
      */
-    private FileHandlerInterface getFileHandler(String filename)
-    {
+    private FileHandlerInterface getFileHandler(String filename) {
         String fileExtensionToCheck = DataSourceConnectorFactory.getFileExtension(filename);
 
-        if(fileExtensionToCheck != null)
-        {
-            for(String fileExtension : fileHandlerMap.keySet())
-            {
-                if(fileExtension.compareToIgnoreCase(fileExtensionToCheck) == 0)
-                {
+        if (fileExtensionToCheck != null) {
+            for (String fileExtension : fileHandlerMap.keySet()) {
+                if (fileExtension.compareToIgnoreCase(fileExtensionToCheck) == 0) {
                     return fileHandlerMap.get(fileExtension);
                 }
             }
@@ -309,14 +343,14 @@ public class FileSystemInput implements FileSystemInterface
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public boolean save(SLDDataInterface sldData)
-    {
-        if(sldData == null)
-        {
+    public boolean save(SLDDataInterface sldData) {
+        if (sldData == null) {
             return false;
         }
 
@@ -328,30 +362,31 @@ public class FileSystemInput implements FileSystemInterface
 
         FileHandlerInterface fileHandler = getFileHandler(sldFilename);
 
-        if(fileHandler != null)
-        {
+        if (fileHandler != null) {
             result1 = fileHandler.save(sldData);
 
-            if(result1)
-            {
-                ConsoleManager.getInstance().information(this, "SLD file saved : " + sldFilename);
+            if (result1) {
+                ConsoleManager.getInstance().information(this,
+                        Localisation.getField(FileSystemInput.class, "FileSystemInput.sldfilesaved")
+                                + sldFilename);
             }
         }
 
         // Save SLD editor file
         File sldEditorFile = sldData.getSldEditorFile();
 
-        if(sldEditorFile != null)
-        {
+        if (sldEditorFile != null) {
             fileHandler = getFileHandler(sldEditorFile.getAbsolutePath());
 
-            if(fileHandler != null)
-            {
+            if (fileHandler != null) {
                 result2 = fileHandler.save(sldData);
 
-                if(result2)
-                {
-                    ConsoleManager.getInstance().information(this, "SLD Editor file saved : " + sldEditorFile.getAbsolutePath());
+                if (result2) {
+                    ;
+                    ConsoleManager.getInstance().information(this,
+                            Localisation.getField(FileSystemInput.class,
+                                    "FileSystemInput.sldeditorfilesaved")
+                                    + sldEditorFile.getAbsolutePath());
                 }
             }
         }
@@ -359,55 +394,52 @@ public class FileSystemInput implements FileSystemInterface
         return result1 || result2;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#getNodeTypes()
      */
     @Override
-    public List<NodeInterface> getNodeTypes()
-    {
+    public List<NodeInterface> getNodeTypes() {
         List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
 
         return nodeTypeList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#drop(com.sldeditor.extension.input.NodeInterface, java.util.Map)
      */
     @Override
-    public boolean copyNodes(NodeInterface destinationTreeNode, Map<NodeInterface, List<SLDDataInterface>> copyDataMap)
-    {
-        if((destinationTreeNode == null) || (copyDataMap == null))
-        {
+    public boolean copyNodes(NodeInterface destinationTreeNode,
+            Map<NodeInterface, List<SLDDataInterface>> copyDataMap) {
+        if ((destinationTreeNode == null) || (copyDataMap == null)) {
             return false;
         }
 
-        FileTreeNode destinationNode = (FileTreeNode)destinationTreeNode;
+        FileTreeNode destinationNode = (FileTreeNode) destinationTreeNode;
 
-        if(!destinationNode.isDir())
-        {
-            destinationNode = (FileTreeNode)destinationNode.getParent();
+        if (!destinationNode.isDir()) {
+            destinationNode = (FileTreeNode) destinationNode.getParent();
         }
 
         File destinationFolder = destinationNode.getFile();
 
-        for(NodeInterface key : copyDataMap.keySet())
-        {
+        for (NodeInterface key : copyDataMap.keySet()) {
             List<SLDDataInterface> sldDataList = copyDataMap.get(key);
 
-            for(SLDDataInterface sldData : sldDataList)
-            {
+            for (SLDDataInterface sldData : sldDataList) {
                 String sldFilename = sldData.getSLDFile().getAbsolutePath();
 
                 FileHandlerInterface handler = getFileHandler(sldFilename);
 
-                if(handler != null)
-                {
+                if (handler != null) {
                     String sldName = handler.getSLDName(sldData);
 
                     File existingFolder = new File(sldFilename).getParentFile();
 
-                    if(existingFolder.equals(destinationFolder))
-                    {
+                    if (existingFolder.equals(destinationFolder)) {
                         sldName = "Copy of " + sldName;
                     }
 
@@ -421,8 +453,7 @@ public class FileSystemInput implements FileSystemInterface
 
             destinationNode.refreshFolder();
 
-            if(treeModel != null)
-            {
+            if (treeModel != null) {
                 treeModel.reload(destinationNode);
             }
         }
@@ -430,21 +461,19 @@ public class FileSystemInput implements FileSystemInterface
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#deleteNodes(com.sldeditor.extension.input.NodeInterface, java.util.List)
      */
     @Override
-    public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList)
-    {
-        if(sldDataList == null)
-        {
+    public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {
+        if (sldDataList == null) {
             return;
         }
 
-        if(nodeToTransfer instanceof FileTreeNode)
-        {
-            for(SLDDataInterface sldData : sldDataList)
-            {
+        if (nodeToTransfer instanceof FileTreeNode) {
+            for (SLDDataInterface sldData : sldDataList) {
                 String sldFilename = sldData.getSLDFile().getAbsolutePath();
 
                 File file = new File(sldFilename);
@@ -452,31 +481,29 @@ public class FileSystemInput implements FileSystemInterface
                 file.delete();
             }
 
-            DefaultMutableTreeNode destinationNode = (DefaultMutableTreeNode)nodeToTransfer;
+            DefaultMutableTreeNode destinationNode = (DefaultMutableTreeNode) nodeToTransfer;
 
             TreeNode parent = destinationNode.getParent();
 
             destinationNode.removeFromParent();
 
-            if(treeModel != null)
-            {
+            if (treeModel != null) {
                 treeModel.reload(parent);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#getDestinationText(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public String getDestinationText(NodeInterface destinationTreeNode)
-    {
-        if(destinationTreeNode != null)
-        {
+    public String getDestinationText(NodeInterface destinationTreeNode) {
+        if (destinationTreeNode != null) {
             String text = destinationTreeNode.getDestinationText();
 
-            if(text != null)
-            {
+            if (text != null) {
                 return text;
             }
         }
@@ -490,21 +517,17 @@ public class FileSystemInput implements FileSystemInterface
      * @param url the url
      * @param disableTreeSelection the disable tree selection
      */
-    public void setFolder(URL url, boolean disableTreeSelection)
-    {
-        if(tree != null)
-        {
+    public void setFolder(URL url, boolean disableTreeSelection) {
+        if (tree != null) {
             // Disable the tree selection
-            if(disableTreeSelection)
-            {
+            if (disableTreeSelection) {
                 tree.setIgnoreSelection(true);
             }
             tree.clearSelection();
 
             FileSystemNodeManager.showNodeInTree(url);
 
-            if(disableTreeSelection)
-            {
+            if (disableTreeSelection) {
                 // Enable the tree selection
                 tree.setIgnoreSelection(false);
             }
