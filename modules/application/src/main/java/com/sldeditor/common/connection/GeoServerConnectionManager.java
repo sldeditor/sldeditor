@@ -92,8 +92,6 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
 
     /**
      * Update connection list.
-     *
-     * @param keySet the key set
      */
     @Override
     public void updateList() {
@@ -125,6 +123,9 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
         return null;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress)
+     */
     public void readPropertyFile(GeoServerReadProgress progress) {
         List<GeoServerConnection> connectionList = getConnectionList();
 
@@ -136,6 +137,7 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     /**
      * Creates the GeoServer client.
      *
+     * @param progress the progress
      * @param connection the connection
      * @return the GeoServer client
      */
@@ -188,5 +190,12 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
             GeoServerConnection newConnectionDetails) {
         connectionMap.put(newConnectionDetails,
                 createGeoServerClient(progress, newConnectionDetails));
+    }
+
+    /**
+     * Destroy instance.
+     */
+    public static void destroyInstance() {
+        instance = null;
     }
 }

@@ -44,6 +44,7 @@ import org.junit.Test;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
+import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.SLDData;
@@ -102,6 +103,7 @@ public class GeoServerInputTest {
     @Before
     public void beforeEachTest()
     {
+        GeoServerConnectionManager.destroyInstance();
         PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
     }
     
