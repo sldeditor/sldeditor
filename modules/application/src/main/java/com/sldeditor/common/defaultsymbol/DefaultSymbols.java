@@ -529,8 +529,12 @@ public class DefaultSymbols {
         // Arrow rotation
         List<Expression> rotationArgumentList = new ArrayList<Expression>();
 
+        String geometryFieldName = "geom";
         DataSourceInterface dsInfo = DataSourceFactory.getDataSource();
-        String geometryFieldName = dsInfo.getGeometryFieldName();
+        if(dsInfo != null)
+        {
+            geometryFieldName = dsInfo.getGeometryFieldName();
+        }
         rotationArgumentList.add(ff.property(geometryFieldName));
 
         Expression rotation = FunctionManager.getInstance().createExpression(angleFunction, rotationArgumentList);
