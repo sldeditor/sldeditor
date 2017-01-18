@@ -207,7 +207,14 @@ public class DataSourceConnectorShapeFile implements DataSourceConnectorInterfac
 
         if(dsProperties != null)
         {
-            dataSourceString = ExternalFilenames.convertURLToFile(dsProperties.getFilename());
+            if(dsProperties.getDataSourceConnector().getClass() == getClass())
+            {
+                dataSourceString = ExternalFilenames.convertURLToFile(dsProperties.getFilename());
+            }
+            else
+            {
+                dataSourceString = dataSourceTextField.getText();
+            }
         }
 
         JFileChooser fileChooser = new JFileChooser();

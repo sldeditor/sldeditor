@@ -362,7 +362,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             }
             else
             {
-                if(!fieldList.containsKey(attribute.getPropertyName()))
+                if(!fieldList.containsKey(attribute.getPropertyName()) && (attribute.getPropertyName() != null))
                 {
                     DataSourceAttributeData field = new DataSourceAttributeData(attribute.getPropertyName(),
                             attributeType, null);
@@ -466,7 +466,10 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             // Add non-geometry fields to the feature type builder
             for(DataSourceAttributeData dsAttribute : processedFieldList)
             {
-                b.add(dsAttribute.getName(), dsAttribute.getType());
+                if(dsAttribute.getName() != null)
+                {
+                    b.add(dsAttribute.getName(), dsAttribute.getType());
+                }
             }
         }
     }
