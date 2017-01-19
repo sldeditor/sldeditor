@@ -30,11 +30,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -130,11 +130,12 @@ public class FileSystemExtensionTest {
         /**
          * Right mouse button.
          *
+         * @param popupMenu the popup menu
          * @param selectedItem the selected item
          * @param e the e
          */
         @Override
-        public void rightMouseButton(Object selectedItem, MouseEvent e) {
+        public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
         }
 
         /**
@@ -289,7 +290,6 @@ public class FileSystemExtensionTest {
         assertNull(actual);
 
         // Valid GeoServer
-        Map<GeoServerConnection, String> connectionMap = new HashMap<GeoServerConnection, String>();
         GeoServerConnection geoServerConnection = new GeoServerConnection();
         geoServerConnection.setConnectionName("GeoServer connection");
         try {
@@ -300,8 +300,8 @@ public class FileSystemExtensionTest {
         }
         geoServerConnection.setUserName("username");
         geoServerConnection.setPassword("password");
-        connectionMap.put(geoServerConnection, null);
-        GeoServerConnectionManager.getInstance().updateList(connectionMap.keySet());
+        GeoServerConnectionManager.getInstance().addNewConnection(null, geoServerConnection);
+        GeoServerConnectionManager.getInstance().updateList();
 
         extensionArgList.clear();
         expectedGeoServer = "geoserver=" + geoServerConnection.getConnectionName();

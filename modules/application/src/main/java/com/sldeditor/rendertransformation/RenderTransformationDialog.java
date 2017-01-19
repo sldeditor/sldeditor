@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -60,6 +59,8 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
+import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClient;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClientInterface;
 import com.sldeditor.filter.ExpressionPanelFactory;
@@ -531,12 +532,30 @@ public class RenderTransformationDialog extends JDialog {
             }
 
             @Override
-            public void updateList(Set<GeoServerConnection> keySet) {
+            public void updateList() {
             }
 
             @Override
             public GeoServerConnection getConnection(String connectionDataName) {
                 return null;
+            }
+
+            @Override
+            public void readPropertyFile(GeoServerReadProgress progress) {
+            }
+
+            @Override
+            public Map<GeoServerConnection, GeoServerClientInterface> getConnectionMap() {
+                return null;
+            }
+
+            @Override
+            public void removeConnection(GeoServerConnection connection) {
+            }
+
+            @Override
+            public void addNewConnection(GeoServerReadProgress progress,
+                    GeoServerConnection newConnectionDetails) {
             }
         };
 

@@ -19,9 +19,11 @@
 package com.sldeditor.common.connection;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import com.sldeditor.common.data.GeoServerConnection;
+import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
+import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 
 /**
  * The Interface GeoServerConnectionManagerInterface.
@@ -42,7 +44,7 @@ public interface GeoServerConnectionManagerInterface {
      *
      * @param keySet the key set
      */
-    void updateList(Set<GeoServerConnection> keySet);
+    void updateList();
 
     /**
      * Gets the connection data for the given name.
@@ -51,4 +53,33 @@ public interface GeoServerConnectionManagerInterface {
      * @return the connection
      */
     GeoServerConnection getConnection(String connectionDataName);
+
+    /**
+     * Read property file.
+     *
+     * @param progress the progress
+     */
+    void readPropertyFile(GeoServerReadProgress progress);
+
+    /**
+     * Gets the connection map.
+     *
+     * @return the connection map
+     */
+    Map<GeoServerConnection, GeoServerClientInterface> getConnectionMap();
+
+    /**
+     * Removes the connection.
+     *
+     * @param connection the connection
+     */
+    void removeConnection(GeoServerConnection connection);
+
+    /**
+     * Adds the new connection.
+     *
+     * @param progress the progress
+     * @param newConnectionDetails the new connection details
+     */
+    void addNewConnection(GeoServerReadProgress progress, GeoServerConnection newConnectionDetails);
 }
