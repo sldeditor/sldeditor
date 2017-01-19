@@ -72,4 +72,27 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value>
+            <Item id="arrow" label="Arrow" />
+            <FieldList>
+                <Field id="VO_ARROW_THICKNESS" enabled="true" />
+                <Field id="VO_ARROW_HEIGHT_OVER_WIDTH" enabled="true" />
+                <Field id="VO_ARROW_HEAD" enabled="true" />
+
+                <Field id="SYMBOL_TYPE" enabled="true" />
+
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="false" />
+                <Field id="INITIAL_GAP" enabled="true" />
+                <Field id="GAP" enabled="true" />
+
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="true" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>

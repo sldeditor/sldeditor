@@ -169,6 +169,20 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_ARROW_HEAD"/&gt;
  *     &lt;enumeration value="VO_QGIS"/&gt;
  *     &lt;enumeration value="VO_TEXT_LABEL_UNDERLINE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_SNIPPET"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_SIZE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FILL_COLOUR"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FILL_OPACITY"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_OPACITY"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -326,7 +340,20 @@ public enum FieldIdEnum {
     VO_ARROW_HEIGHT_OVER_WIDTH,
     VO_ARROW_HEAD,
     VO_QGIS,
-    VO_TEXT_LABEL_UNDERLINE;
+    VO_TEXT_LABEL_UNDERLINE,
+    VO_TEXTSYMBOLIZER_2,
+    VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION,
+    VO_TEXTSYMBOLIZER_2_SNIPPET,
+    VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE,
+    VO_TEXTSYMBOLIZER_2_ANGLE,
+    VO_TEXTSYMBOLIZER_2_SIZE,
+    VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
+    VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
+    VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,
+    VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
+    VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH,
+    VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET,
+    VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT;
 
     public String value() {
         return name();

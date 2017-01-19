@@ -67,5 +67,26 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value groupName="extshape://" separateGroup="true">
+            <Item id="extshape://triangle" label="Cold Front (extshape://triangle)" />
+            <Item id="extshape://emicircle" label="Warm Front (extshape://emicircle)" />
+            <Item id="extshape://triangleemicircle" label="Stationary Front (extshape://triangleemicircle)" />
+            <Item id="extshape://narrow" label="North Arrow (extshape://narrow)" />
+            <Item id="extshape://sarrow" label="South Arrow (extshape://sarrow)" />
+            <FieldList>
+                <Field id="SYMBOL_TYPE" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>
-	

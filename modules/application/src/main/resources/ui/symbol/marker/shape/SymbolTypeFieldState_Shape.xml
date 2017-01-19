@@ -82,5 +82,30 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value groupName="shape://" separateGroup="true">
+            <Item id="shape://vertline" label="shape://vertline" />
+            <Item id="shape://horline" label="shape://horline" />
+            <Item id="shape://slash" label="shape://slash" />
+            <Item id="shape://backslash" label="shape://backslash" />
+            <Item id="shape://dot" label="shape://dot" />
+            <Item id="shape://plus" label="shape://plus" />
+            <Item id="shape://times" label="shape://times" />
+            <Item id="shape://oarrow" label="shape://oarrow" />
+            <Item id="shape://carrow" label="shape://carrow" />
+            <FieldList>
+                <Field id="SYMBOL_TYPE" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="false" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>
-	

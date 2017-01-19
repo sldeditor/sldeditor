@@ -48,6 +48,9 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
     /** The vendor option geo server labelling underline. */
     private VOGeoServerLabellingUnderline vendorOptionGeoServerLabellingUnderline = null;
 
+    /** The vendor option geo server text symbolizer 2 */
+    private VOGeoServerTextSymbolizer2 vendorOptionGeoServerTextSymbolizer2 = null;
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -67,6 +70,9 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
 
         vendorOptionGeoServerLabellingUnderline = new VOGeoServerLabellingUnderline(panelId, functionManager);
         vendorOptionList.add(vendorOptionGeoServerLabellingUnderline);
+
+        vendorOptionGeoServerTextSymbolizer2 = new VOGeoServerTextSymbolizer2(panelId, functionManager);
+        vendorOptionList.add(vendorOptionGeoServerTextSymbolizer2);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);

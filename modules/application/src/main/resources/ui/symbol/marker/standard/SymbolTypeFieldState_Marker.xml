@@ -124,4 +124,22 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value>
+            <Item id="square" label="symbolType.square" />
+            <Item id="circle" label="symbolType.circle" />
+            <Item id="triangle" label="symbolType.triangle" />
+            <Item id="star" label="symbolType.star" />
+            <Item id="cross" label="symbolType.cross" />
+            <Item id="x" label="symbolType.x" />
+            <FieldList>
+                <Field id="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_ANGLE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_SIZE" enabled="true" />
+
+                <Group id="VO_TEXTSYMBOLIZER_2_FILL" enabled="true" />
+                <Group id="VO_TEXTSYMBOLIZER_2_STROKE" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>

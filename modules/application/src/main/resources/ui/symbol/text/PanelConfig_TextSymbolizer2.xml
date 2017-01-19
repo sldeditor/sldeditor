@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.4.1"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+    <Group id="VO_TEXTSYMBOLIZER_2" label="geoserver.textSymbolizer2" showLabel="true">
+        <FieldConfigString id="VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION"
+            label="geoserver.textsymbolizer2.featureDescription" valueOnly="false" />
+        <FieldConfigString id="VO_TEXTSYMBOLIZER_2_SNIPPET"
+            label="geoserver.textsymbolizer2.snippet" valueOnly="false" />
+    </Group>
+    <Group id="VO_TEXTSYMBOLIZER_2_GRAPHIC" label="fillSymbol.graphic" showLabel="true"
+        option="true">
+        <FieldConfigSymbolType id="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE"
+            label="geoserver.textsymbolizer2.symbolType" />
+        <FieldConfigDouble id="VO_TEXTSYMBOLIZER_2_ANGLE" label="fillSymbol.angle" />
+        <FieldConfigDouble id="VO_TEXTSYMBOLIZER_2_SIZE" label="fillSymbol.size" defaultValue="5.0" minValue="0.1"/>
+        <Group id="VO_TEXTSYMBOLIZER_2_FILL" label="fillSymbol.fill" showLabel="true"
+            option="true">
+            <FieldConfigColour id="VO_TEXTSYMBOLIZER_2_FILL_COLOUR" label="fillSymbol.fill.colour" />
+            <FieldConfigSlider id="VO_TEXTSYMBOLIZER_2_FILL_OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
+        </Group>
+        <Group id="VO_TEXTSYMBOLIZER_2_STROKE" label="fillSymbol.stroke" showLabel="true"
+            option="true">
+            <FieldConfigColour id="VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR"
+                label="fillSymbol.stroke.colour" />
+            <FieldConfigSlider id="VO_TEXTSYMBOLIZER_2_STROKE_OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
+            <FieldConfigDouble id="VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH"
+                label="fillSymbol.stroke.width" defaultValue="1.0" />
+        </Group>
+    </Group>
+    <Group id="VO_TEXTSYMBOLIZER_2_OTHERTEXT" label="geoserver.textSymbolizer2.othertext" showLabel="true" option="true">
+        <FieldConfigString id="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET"
+            label="geoserver.textsymbolizer2.otherTextTarget" valueOnly="true" />
+        <FieldConfigString id="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT"
+            label="geoserver.textsymbolizer2.otherTextText" valueOnly="false" />
+    </Group>
+</PanelConfig>

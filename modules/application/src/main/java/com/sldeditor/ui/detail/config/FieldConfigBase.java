@@ -35,6 +35,7 @@ import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.BinaryExpression;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.NilExpression;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.ui.attribute.AttributeSelection;
@@ -366,6 +367,16 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
                 ConstantExpression cExpression = (ConstantExpression) expression;
 
                 Object objValue = cExpression.getValue();
+
+                expressionType = ExpressionTypeEnum.E_VALUE;
+
+                populateExpression(objValue);
+
+                valueUpdated();
+            }
+            else if(expression instanceof NilExpression)
+            {
+                Object objValue = null;
 
                 expressionType = ExpressionTypeEnum.E_VALUE;
 

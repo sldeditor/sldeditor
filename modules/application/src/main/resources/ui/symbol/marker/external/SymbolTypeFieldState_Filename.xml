@@ -63,4 +63,24 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value>
+            <Item id="External" label="External" />
+            <FieldList>
+                <Field id="EXTERNAL_GRAPHIC" enabled="true" />
+
+                <Field id="SYMBOL_TYPE" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="true" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="true" />
+
+                <Group id="FILL" enabled="false" />
+                <Group id="STROKE" enabled="false" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>

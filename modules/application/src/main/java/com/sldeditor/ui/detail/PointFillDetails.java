@@ -23,9 +23,7 @@ import java.util.Map;
 
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
-import org.geotools.styling.AnchorPointImpl;
 import org.geotools.styling.Displacement;
-import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PointSymbolizerImpl;
@@ -66,7 +64,7 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
     /** The symbol type factory. */
     private SymbolTypeFactory symbolTypeFactory = null;
 
-    /**  The field override map, indicates which fields to enable. */
+    /** The field override map, indicates which fields to enable. */
     private FieldEnableState fieldEnableState = null;
 
     /**  The panel id of the selected fill. */
@@ -74,12 +72,6 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
 
     /** The vendor option fill factory. */
     private VendorOptionFillFactory vendorOptionFillFactory = null;
-
-    /** The default anchor point. */
-    private static AnchorPoint defaultAnchorPoint = new AnchorPointImpl();
-
-    /** The default displacement. */
-    private static Displacement defaultDisplacement = new DisplacementImpl();
 
     /**
      * Constructor.
@@ -191,8 +183,8 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
                     }
                     else
                     {
-                        expAnchorPointX = defaultAnchorPoint.getAnchorPointX();
-                        expAnchorPointY = defaultAnchorPoint.getAnchorPointY();
+                        expAnchorPointX = AnchorPoint.DEFAULT.getAnchorPointX();
+                        expAnchorPointY = AnchorPoint.DEFAULT.getAnchorPointY();
                     }
 
                     // Offset
@@ -205,8 +197,8 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
                     }
                     else
                     {
-                        expDisplacementX = defaultDisplacement.getDisplacementX();
-                        expDisplacementY = defaultDisplacement.getDisplacementY();
+                        expDisplacementX = Displacement.DEFAULT.getDisplacementX();
+                        expDisplacementY = Displacement.DEFAULT.getDisplacementY();
                     }
 
                     expGap = graphic.getGap();
@@ -295,7 +287,7 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(defaultAnchorPoint, anchor))
+            if(DetailsUtilities.isSame(AnchorPoint.DEFAULT, anchor))
             {
                 anchor = null;
             }
@@ -312,7 +304,7 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
+            if(DetailsUtilities.isSame(Displacement.DEFAULT, displacement))
             {
                 displacement = null;
             }

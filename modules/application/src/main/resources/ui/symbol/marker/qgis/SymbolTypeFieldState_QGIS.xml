@@ -97,5 +97,35 @@
             </FieldList>
         </Value>
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value groupName="qgis://" separateGroup="true">
+            <Item id="qgis://cross" label="qgis://cross" />
+            <Item id="qgis://circle" label="qgis://circle" />
+            <Item id="qgis://triangle" label="qgis://triangle" />
+            <Item id="qgis://equilateral_triangle" label="qgis://equilateral_triangle" />
+            <Item id="qgis://star" label="qgis://star" />
+            <Item id="qgis://cross2" label="qgis://cross2" />
+            <Item id="qgis://arrow" label="qgis://arrow" />
+            <Item id="qgis://diamond" label="qgis://diamond" />
+            <Item id="qgis://pentagon" label="qgis://pentagon" />
+            <Item id="qgis://rectangle" label="qgis://rectangle" />
+            <Item id="qgis://regular_star" label="qgis://regular_star" />
+            <Item id="qgis://line" label="qgis://line" />
+            <Item id="qgis://arrowhead" label="qgis://arrowhead" />
+            <Item id="qgis://filled_arrowhead" label="qgis://filled_arrowhead" />
+            <FieldList>
+                <Field id="SYMBOL_TYPE" enabled="true" />
+                <Field id="ANGLE" enabled="true" />
+                <Field id="SIZE" enabled="true" />
+                <Field id="OVERALL_OPACITY" enabled="false" />
+                <Field id="INITIAL_GAP" enabled="false" />
+                <Field id="GAP" enabled="false" />
+
+                <Group id="FILL" enabled="true" />
+                <Group id="STROKE" enabled="true" />
+                <Group id="ANCHORPOINT" enabled="true" />
+                <Group id="DISPLACEMENT" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>
-	
