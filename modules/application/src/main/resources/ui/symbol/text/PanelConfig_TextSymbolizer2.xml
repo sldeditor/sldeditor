@@ -14,6 +14,7 @@
             label="geoserver.textsymbolizer2.symbolType" />
         <FieldConfigDouble id="VO_TEXTSYMBOLIZER_2_ANGLE" label="fillSymbol.angle" />
         <FieldConfigDouble id="VO_TEXTSYMBOLIZER_2_SIZE" label="fillSymbol.size" defaultValue="5.0" minValue="0.1"/>
+        <FieldConfigSlider id="VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY" label="fillSymbol.opacity" defaultValue="1.0" />
         <Group id="VO_TEXTSYMBOLIZER_2_FILL" label="fillSymbol.fill" showLabel="true"
             option="true">
             <FieldConfigColour id="VO_TEXTSYMBOLIZER_2_FILL_COLOUR" label="fillSymbol.fill.colour" />

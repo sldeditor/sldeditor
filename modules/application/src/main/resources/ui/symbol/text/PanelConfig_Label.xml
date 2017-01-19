@@ -23,7 +23,7 @@
             default="org.geotools.styling.TextSymbolizer2.DEFAULT_GOODNESS_OF_FIT" />
         <FieldConfigInteger id="LABEL_GRAPHIC_MARGIN"
             label="geoserver.label.graphicMargin" valueOnly="true"
-            default="0" />
+            default="2" minValue="2" />
         <FieldConfigEnum id="LABEL_GRAPHIC_RESIZE"
             label="geoserver.label.graphicResize" valueOnly="true"
             default="none">

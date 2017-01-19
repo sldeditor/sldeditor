@@ -175,7 +175,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_SIZE"/&gt;
- *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FILL_COLOUR"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FILL_OPACITY"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR"/&gt;
@@ -347,6 +347,7 @@ public enum FieldIdEnum {
     VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE,
     VO_TEXTSYMBOLIZER_2_ANGLE,
     VO_TEXTSYMBOLIZER_2_SIZE,
+    VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY,
     VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
     VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
     VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,

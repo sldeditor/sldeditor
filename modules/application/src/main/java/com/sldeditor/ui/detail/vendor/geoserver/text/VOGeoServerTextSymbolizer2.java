@@ -23,11 +23,13 @@ import java.util.Map;
 
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Displacement;
+import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.OtherText;
 import org.geotools.styling.OtherTextImpl;
+import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Stroke;
@@ -65,7 +67,7 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorOptionInterface,
-        PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
+PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/text/PanelConfig_TextSymbolizer2.xml";
@@ -281,18 +283,20 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH,
                     strokeLineWidth);
 
-            group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
-            if (group != null) {
-                group.enable(enableFill);
+            GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
+            if (fillGroup != null) {
+                fillGroup.enable(enableFill);
             }
-            group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
-            if (group != null) {
+            GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
+            if (strokeGroup != null) {
                 group.enable(enableStroke);
             }
 
             group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
             if (group != null) {
                 group.enable(textSymbol2.getGraphic() != null);
+                fillGroup.setGroupStateOverride(textSymbol2.getGraphic() != null);
+                strokeGroup.setGroupStateOverride(textSymbol2.getGraphic() != null);
             }
         }
     }
@@ -309,6 +313,16 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     @Override
     public void updateSymbol(TextSymbolizer textSymbolizer) {
+        GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
+        GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
+
+        GroupConfigInterface group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
+        if (group != null) {
+            boolean enable = group.isPanelEnabled();
+            fillGroup.setGroupStateOverride(enable);
+            strokeGroup.setGroupStateOverride(enable);
+        }
+
         if (textSymbolizer instanceof TextSymbolizer2) {
             TextSymbolizer2 textSymbol2 = (TextSymbolizer2) textSymbolizer;
 
@@ -322,7 +336,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
             // Extract OtherText
             OtherText otherText = null;
-            GroupConfigInterface group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT);
+            group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT);
             if (group != null) {
                 if (group.isPanelEnabled()) {
                     String target = fieldConfigVisitor
@@ -338,29 +352,39 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             textSymbol2.setOtherText(otherText);
 
             // Graphic
-            Expression symbolType = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE);
+            Graphic graphic = null;
+            group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
 
-            GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
-            boolean hasFill = fillGroup.isPanelEnabled();
+            if (group.isPanelEnabled()) {
+                Expression symbolType = fieldConfigVisitor
+                        .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE);
 
-            GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
-            boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
+                boolean hasFill = (fillGroup == null) ? false : fillGroup.isPanelEnabled();
+                boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
-            Expression size = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE);
-            Expression rotation = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE);
+                Expression size = fieldConfigVisitor
+                        .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE);
+                Expression rotation = fieldConfigVisitor
+                        .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE);
 
-            List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(fieldConfigManager,
-                    symbolType, hasFill, hasStroke, selectedFillPanelId);
+                List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(fieldConfigManager,
+                        symbolType, hasFill, hasStroke, selectedFillPanelId);
 
-            // boolean overallOpacity = symbolTypeFactory.isOverallOpacity(PointSymbolizer.class,selectedFillPanelId);
+                AnchorPoint anchor = null;
+                Displacement displacement = null;
+                graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor,
+                        displacement);
 
-            AnchorPoint anchor = null;
-            Displacement displacement = null;
-            Graphic graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor,
-                    displacement);
+                if(!symbols.isEmpty())
+                {
+                    boolean overallOpacity = (symbols.get(0) instanceof ExternalGraphic);
+                    if (overallOpacity) {
+                        Expression opacity = fieldConfigVisitor
+                                .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY);
+                        graphic.setOpacity(opacity);
+                    }
+                }
+            }
 
             textSymbol2.setGraphic(graphic);
         }

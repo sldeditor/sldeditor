@@ -208,7 +208,7 @@
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_SIZE" />
-            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_FILL_COLOUR" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_FILL_OPACITY" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR" />

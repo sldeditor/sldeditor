@@ -70,16 +70,13 @@
                 <Field id="WKT" enabled="true" />
                 <Field id="SYMBOL_TYPE" enabled="true" />
 
-                <Field id="ANGLE" enabled="true" />
-                <Field id="SIZE" enabled="true" />
-                <Field id="OVERALL_OPACITY" enabled="false" />
-                <Field id="INITIAL_GAP" enabled="true" />
-                <Field id="GAP" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_ANGLE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_SIZE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY" enabled="false" />
 
-                <Group id="FILL" enabled="true" />
-                <Group id="STROKE" enabled="true" />
-                <Group id="ANCHORPOINT" enabled="true" />
-                <Group id="DISPLACEMENT" enabled="true" />
+                <Group id="VO_TEXTSYMBOLIZER_2_FILL" enabled="true" />
+                <Group id="VO_TEXTSYMBOLIZER_2_STROKE" enabled="true" />
             </FieldList>
         </Value>
     </Panel>
