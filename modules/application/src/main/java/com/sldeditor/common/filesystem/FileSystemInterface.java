@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -60,10 +61,11 @@ public interface FileSystemInterface extends Serializable
     /**
      * Right mouse button pressed.
      *
+     * @param popupMenu the popup menu
      * @param selectedItem the selected item
      * @param e the e
      */
-    void rightMouseButton(Object selectedItem, MouseEvent e);
+    void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e);
 
     /**
      * Gets the SLD contents.

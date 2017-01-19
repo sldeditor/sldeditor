@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -71,11 +72,12 @@ public class DummyFileSystemInput implements FileSystemInterface
     /**
      * Right mouse button.
      *
+     * @param popupMenu the popup menu
      * @param selectedItem the selected item
      * @param e the e
      */
     @Override
-    public void rightMouseButton(Object selectedItem, MouseEvent e) {
+    public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
 
     }
 

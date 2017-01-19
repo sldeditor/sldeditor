@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -38,14 +39,18 @@ import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.connection.GeoServerConnectionManager;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.GeoServerConnectUpdateInterface;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
@@ -69,8 +74,9 @@ import com.sldeditor.tool.scale.ScaleTool;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpdateInterface, GeoServerConnectStateInterface, GeoServerLayerUpdateInterface, GeoServerParseCompleteInterface
-{
+public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpdateInterface,
+        GeoServerConnectStateInterface, GeoServerLayerUpdateInterface,
+        GeoServerParseCompleteInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6659749130067227L;
 
@@ -100,14 +106,12 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      *
      * @param toolMgr the tool mgr
      */
-    public GeoServerInput(ToolSelectionInterface toolMgr)
-    {
+    public GeoServerInput(ToolSelectionInterface toolMgr) {
         logger.debug("Adding GeoServerInput extension");
 
         this.toolMgr = toolMgr;
 
-        if(toolMgr != null)
-        {
+        if (toolMgr != null) {
             geoServerConnectionTool = new GeoServerConnectionTool(this);
             ToolManager.getInstance().registerTool(GeoServerNode.class, geoServerConnectionTool);
             GeoServerConnectionListTool connectionListTool = new GeoServerConnectionListTool(this);
@@ -117,23 +121,29 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             ToolManager.getInstance().registerTool(GeoServerStyleNode.class, new LegendTool());
 
             // Scale tool
-            ToolManager.getInstance().registerTool(GeoServerStyleHeadingNode.class, new ScaleTool(toolMgr.getApplication()));
-            ToolManager.getInstance().registerTool(GeoServerWorkspaceNode.class, new ScaleTool(toolMgr.getApplication()));
-            ToolManager.getInstance().registerTool(GeoServerStyleNode.class, new ScaleTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(GeoServerStyleHeadingNode.class,
+                    new ScaleTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(GeoServerWorkspaceNode.class,
+                    new ScaleTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(GeoServerStyleNode.class,
+                    new ScaleTool(toolMgr.getApplication()));
 
             // Layer update tool
-            ToolManager.getInstance().registerTool(GeoServerLayerNode.class, new GeoServerLayerUpdateTool(this));
-            ToolManager.getInstance().registerTool(GeoServerOverallNode.class, new GeoServerLayerUpdateTool(this));
-            ToolManager.getInstance().registerTool(GeoServerWorkspaceNode.class, new GeoServerLayerUpdateTool(this));
-            ToolManager.getInstance().registerTool(GeoServerLayerHeadingNode.class, new GeoServerLayerUpdateTool(this));
+            ToolManager.getInstance().registerTool(GeoServerLayerNode.class,
+                    new GeoServerLayerUpdateTool(this));
+            ToolManager.getInstance().registerTool(GeoServerOverallNode.class,
+                    new GeoServerLayerUpdateTool(this));
+            ToolManager.getInstance().registerTool(GeoServerWorkspaceNode.class,
+                    new GeoServerLayerUpdateTool(this));
+            ToolManager.getInstance().registerTool(GeoServerLayerHeadingNode.class,
+                    new GeoServerLayerUpdateTool(this));
         }
     }
 
     /**
      * Read property file.
      */
-    public void readPropertyFile()
-    {
+    public void readPropertyFile() {
         GeoServerConnectionManager.getInstance().readPropertyFile(progress);
     }
 
@@ -149,26 +159,26 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
     /**
      * Update property file.
      */
-    private void updatePropertyFile()
-    {
+    private void updatePropertyFile() {
         GeoServerConnectionManager.getInstance().updateList();
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree,
+     * javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
      */
     @Override
-    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode)
-    {
+    public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
         progress.setTreeModel(tree, model);
 
-        if(rootNode != null)
-        {
+        if (rootNode != null) {
             rootNode.add(getRootGeoServerNode());
         }
 
-        for(GeoServerConnection connection : GeoServerConnectionManager.getInstance().getConnectionMap().keySet())
-        {
+        for (GeoServerConnection connection : GeoServerConnectionManager.getInstance()
+                .getConnectionMap().keySet()) {
             addConnectionNode(connection);
         }
     }
@@ -178,10 +188,8 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      *
      * @return the root GeoServer node
      */
-    private DefaultMutableTreeNode getRootGeoServerNode()
-    {
-        if(geoServerRootNode == null)
-        {
+    private DefaultMutableTreeNode getRootGeoServerNode() {
+        if (geoServerRootNode == null) {
             geoServerRootNode = new GeoServerOverallNode(this);
         }
 
@@ -193,72 +201,134 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      *
      * @param connection the connection
      */
-    private void addConnectionNode(GeoServerConnection connection)
-    {
+    private void addConnectionNode(GeoServerConnection connection) {
         GeoServerNode node = new GeoServerNode(this, connection);
         getRootGeoServerNode().add(node);
 
         progress.addNewConnectionNode(connection, node);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#treeExpanded(java.lang.Object)
      */
     @Override
-    public boolean treeExpanded(Object selectedItem)
-    {
+    public boolean treeExpanded(Object selectedItem) {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.FileSystemInterface#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#rightMouseButton(javax.swing.JPopupMenu, java.lang.Object, java.awt.event.MouseEvent)
      */
     @Override
-    public void rightMouseButton(Object selectedItem, MouseEvent e)
-    {
-        if(selectedItem instanceof GeoServerNode)
-        {
-            GeoServerNode geoServerNode = (GeoServerNode)selectedItem;
+    public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
+        if (selectedItem instanceof GeoServerNode) {
+            GeoServerNode geoServerNode = (GeoServerNode) selectedItem;
 
             GeoServerConnection connection = geoServerNode.getConnection();
 
-            JPopupMenu popupMenu = new JPopupMenu();
-
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connection);
-            if(client != null)
-            {
-                if(client.isConnected())
-                {
-                    JMenuItem connectMenuItem = new JMenuItem("Disconnect");
-                    connectMenuItem.addActionListener(new ActionListener()
-                    {
-                        public void actionPerformed(ActionEvent event)
-                        {
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(connection);
+            if (client != null) {
+                if (client.isConnected()) {
+                    JMenuItem connectMenuItem = new JMenuItem(Localisation
+                            .getString(GeoServerInput.class, "GeoServerInput.disconnect"));
+                    connectMenuItem.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent event) {
                             disconnectFromGeoServer(client);
                         }
                     });
                     popupMenu.add(connectMenuItem);
-                }
-                else
-                {
-                    JMenuItem connectMenuItem = new JMenuItem("Connect");
-                    connectMenuItem.addActionListener(new ActionListener()
-                    {
-                        public void actionPerformed(ActionEvent event)
-                        {
-                            GeoServerNode geoserver = (GeoServerNode)selectedItem;
+                } else {
+                    JMenuItem connectMenuItem = new JMenuItem(
+                            Localisation.getString(GeoServerInput.class, "GeoServerInput.connect"));
+                    connectMenuItem.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent event) {
+                            GeoServerNode geoserver = (GeoServerNode) selectedItem;
                             GeoServerConnection connection = geoserver.getConnection();
                             connectToGeoServer(connection);
                         }
                     });
                     popupMenu.add(connectMenuItem);
                 }
+            }
+        } else if (selectedItem instanceof FileTreeNode) {
+            JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(GeoServerInput.class,
+                    "GeoServerInput.uploadToGeoServer"));
+            populateGeoServerConnections(uploadToGeoServerMenu);
+            popupMenu.add(uploadToGeoServerMenu);
 
-                if(e != null)
-                {
-                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+        }
+    }
+
+    /**
+     * Populate geo server connections.
+     *
+     * @param uploadToGeoServerMenu the upload to geo server menu
+     */
+    private void populateGeoServerConnections(JMenu uploadToGeoServerMenu) {
+        if (uploadToGeoServerMenu != null) {
+            Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
+                    .getInstance().getConnectionMap();
+
+            if (connectionMap.isEmpty()) {
+                JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation
+                        .getString(GeoServerInput.class, "GeoServerInput.noGeoServerConnections"));
+
+                uploadToGeoServerMenu.add(noGeoServerMenuItem);
+            } else {
+                for (GeoServerConnection connection : connectionMap.keySet()) {
+                    JMenu geoServer = new JMenu(connection.getConnectionName());
+
+                    uploadToGeoServerMenu.add(geoServer);
+
+                    GeoServerClientInterface client = connectionMap.get(connection);
+                    if (client.isConnected()) {
+                        populateWorkspaceList(client, geoServer);
+                    } else {
+                        JMenuItem connectMenuItem = new JMenuItem(Localisation
+                                .getString(GeoServerInput.class, "GeoServerInput.connect"));
+                        connectMenuItem.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent event) {
+                                connectMenuItem.setEnabled(false);
+                                connectToGeoServer(connection);
+                                connectMenuItem.setEnabled(true);
+                            }
+                        });
+
+                        geoServer.add(connectMenuItem);
+                    }
                 }
             }
+        }
+    }
+
+    /**
+     * Populate workspace list.
+     *
+     * @param client the client
+     * @param parentMenu the parent menu
+     */
+    private void populateWorkspaceList(GeoServerClientInterface client, JMenu parentMenu) {
+        for (String workspaceName : client.getWorkspaceList()) {
+            JMenuItem workspaceMenuItem = new JMenuItem(workspaceName);
+            workspaceMenuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+
+                    StyleWrapper styleWrapper = sldData.getStyle();
+
+                    removeStyleFileExtension(styleWrapper);
+
+                    styleWrapper.setWorkspace(workspaceName);
+                    client.uploadSLD(styleWrapper, sldData.getSld());
+                    client.refreshWorkspace(workspaceName);
+                }
+            });
+            parentMenu.add(workspaceMenuItem);
         }
     }
 
@@ -267,16 +337,13 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      *
      * @param client the connection
      */
-    private void disconnectFromGeoServer(GeoServerClientInterface client)
-    {
-        if(client != null)
-        {
+    private void disconnectFromGeoServer(GeoServerClientInterface client) {
+        if (client != null) {
             client.disconnect();
 
             GeoServerConnection connection = client.getConnection();
 
-            if(connection != null)
-            {
+            if (connection != null) {
                 geoServerStyleMap.remove(connection);
                 geoServerLayerMap.remove(connection);
                 progress.disconnect(connection);
@@ -288,36 +355,56 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      * Connect to GeoServer.
      *
      * @param connection the connection
+     * @return true, if successful
      */
-    private void connectToGeoServer(GeoServerConnection connection)
-    {
-        GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connection);
+    private boolean connectToGeoServer(GeoServerConnection connection) {
+        boolean isConnected = false;
 
-        if(client != null)
-        {
+        GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                .getConnectionMap().get(connection);
+
+        if (client != null) {
             client.connect();
-            if(client.isConnected())
+            String url = "";
+            if(connection.getUrl() != null)
             {
+                url = connection.getUrl().toExternalForm();
+            }
+            if (client.isConnected()) {
+                String message = String.format("%s : %s (%s)",
+                        Localisation.getString(GeoServerConnectionTool.class,
+                                "GeoServerConnectionTool.connected"),
+                        connection.getConnectionName(), url);
+                ConsoleManager.getInstance().information(GeoServerConnectionTool.class, message);
                 client.retrieveData();
+                isConnected = true;
+            } else {
+                String errorMessage = String.format("%s : %s (%s)",
+                        Localisation.getString(GeoServerConnectionTool.class,
+                                "GeoServerConnectionTool.failedToConnect"),
+                        connection.getConnectionName(), url);
+                ConsoleManager.getInstance().error(GeoServerConnectionTool.class, errorMessage);
             }
         }
+
+        return isConnected;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public SelectedFiles getSLDContents(NodeInterface node)
-    {
-        if(node instanceof GeoServerStyleNode)
-        {
+    public SelectedFiles getSLDContents(NodeInterface node) {
+        if (node instanceof GeoServerStyleNode) {
             GeoServerStyleNode styleNode = (GeoServerStyleNode) node;
 
             GeoServerConnection connectionData = styleNode.getConnectionData();
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connectionData);
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(connectionData);
 
-            if(client != null)
-            {
+            if (client != null) {
                 String sldContent = client.getStyle(styleNode.getStyle());
 
                 SLDDataInterface sldData = new SLDData(styleNode.getStyle(), sldContent);
@@ -335,24 +422,20 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
 
                 return selectedFiles;
             }
-        }
-        else if(node instanceof GeoServerWorkspaceNode)
-        {
+        } else if (node instanceof GeoServerWorkspaceNode) {
             GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
 
             GeoServerConnection connectionData = workspaceNode.getConnection();
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connectionData);
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(connectionData);
 
             List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
 
-            if(workspaceNode.isStyle())
-            {
+            if (workspaceNode.isStyle()) {
                 Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
 
-                if((client != null) && (styleMap != null))
-                {
-                    for(StyleWrapper style : styleMap.get(workspaceNode.getWorkspaceName()))
-                    {
+                if ((client != null) && (styleMap != null)) {
+                    for (StyleWrapper style : styleMap.get(workspaceNode.getWorkspaceName())) {
                         String sldContent = client.getStyle(style);
 
                         SLDDataInterface sldData = new SLDData(style, sldContent);
@@ -370,24 +453,20 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             selectedFiles.setConnectionData(connectionData);
 
             return selectedFiles;
-        }
-        else if(node instanceof GeoServerStyleHeadingNode)
-        {
+        } else if (node instanceof GeoServerStyleHeadingNode) {
             GeoServerStyleHeadingNode styleHeadingNode = (GeoServerStyleHeadingNode) node;
 
             GeoServerConnection connectionData = styleHeadingNode.getConnection();
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connectionData);
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(connectionData);
 
             List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
 
             Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
 
-            if((client != null) && (styleMap != null))
-            {
-                for(String workspaceName : styleMap.keySet())
-                {
-                    for(StyleWrapper style : styleMap.get(workspaceName))
-                    {
+            if ((client != null) && (styleMap != null)) {
+                for (String workspaceName : styleMap.keySet()) {
+                    for (StyleWrapper style : styleMap.get(workspaceName)) {
                         String sldContent = client.getStyle(style);
 
                         SLDDataInterface sldData = new SLDData(style, sldContent);
@@ -405,9 +484,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             selectedFiles.setConnectionData(connectionData);
 
             return selectedFiles;
-        }
-        else if(node instanceof GeoServerNode)
-        {
+        } else if (node instanceof GeoServerNode) {
             GeoServerNode geoServerNode = (GeoServerNode) node;
 
             GeoServerConnection connectionData = geoServerNode.getConnection();
@@ -422,26 +499,27 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#open(java.net.URL)
      */
     @Override
-    public List<SLDDataInterface> open(URL url)
-    {
+    public List<SLDDataInterface> open(URL url) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#save(java.net.URL, com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public boolean save(SLDDataInterface sldData)
-    {
-        if(sldData != null)
-        {
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(sldData.getConnectionData());
-            if(client != null)
-            {
+    public boolean save(SLDDataInterface sldData) {
+        if (sldData != null) {
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(sldData.getConnectionData());
+            if (client != null) {
                 return client.uploadSLD(sldData.getStyle(), sldData.getSld());
             }
         }
@@ -449,78 +527,78 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#getConnectionDetails()
      */
     @Override
-    public List<GeoServerConnection> getConnectionDetails()
-    {
+    public List<GeoServerConnection> getConnectionDetails() {
         List<GeoServerConnection> list = new ArrayList<GeoServerConnection>();
-        for(GeoServerConnection key : GeoServerConnectionManager.getInstance().getConnectionMap().keySet())
-        {
+        for (GeoServerConnection key : GeoServerConnectionManager.getInstance().getConnectionMap()
+                .keySet()) {
             list.add(key);
         }
         return list;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#getNodeTypes()
      */
     @Override
-    public List<NodeInterface> getNodeTypes()
-    {
+    public List<NodeInterface> getNodeTypes() {
         List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
 
         return nodeTypeList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.GeoServerConnectStateInterface#isConnected(com.sldeditor.extension.input.geoserver.GeoServerConnection)
      */
     @Override
-    public boolean isConnected(GeoServerConnection connection)
-    {
-        GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connection);
-        if(client != null)
-        {
+    public boolean isConnected(GeoServerConnection connection) {
+        GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                .getConnectionMap().get(connection);
+        if (client != null) {
             return client.isConnected();
         }
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.GeoServerConnectStateInterface#connect(java.util.List)
      */
     @Override
-    public void connect(List<GeoServerConnection> connectionList)
-    {
-        if(connectionList != null)
-        {
-            for(GeoServerConnection connection : connectionList)
-            {
+    public void connect(List<GeoServerConnection> connectionList) {
+        if (connectionList != null) {
+            for (GeoServerConnection connection : connectionList) {
                 connectToGeoServer(connection);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.GeoServerConnectStateInterface#disconnect(java.util.List)
      */
     @Override
-    public void disconnect(List<GeoServerConnection> connectionList)
-    {
-        if(connectionList != null)
-        {
-            for(GeoServerConnection connection : connectionList)
-            {
-                GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connection);
+    public void disconnect(List<GeoServerConnection> connectionList) {
+        if (connectionList != null) {
+            for (GeoServerConnection connection : connectionList) {
+                GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                        .getConnectionMap().get(connection);
 
-                if(client != null)
-                {
+                if (client != null) {
                     disconnectFromGeoServer(client);
 
-                    if(geoServerConnectionTool != null)
-                    {
+                    if (geoServerConnectionTool != null) {
                         geoServerConnectionTool.populateComplete(connection);
                     }
                 }
@@ -535,8 +613,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      * @return the style map
      */
     @Override
-    public Map<String, List<StyleWrapper>> getStyleMap(GeoServerConnection connection)
-    {
+    public Map<String, List<StyleWrapper>> getStyleMap(GeoServerConnection connection) {
         return this.geoServerStyleMap.get(connection);
     }
 
@@ -546,50 +623,49 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      * @param layerList the layer list
      */
     @Override
-    public void updateLayerStyle(List<GeoServerLayer> layerList)
-    {
-        if(layerList != null)
-        {
-            for(GeoServerLayer layer : layerList)
-            {
-                GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(layer.getConnection());
+    public void updateLayerStyle(List<GeoServerLayer> layerList) {
+        if (layerList != null) {
+            for (GeoServerLayer layer : layerList) {
+                GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                        .getConnectionMap().get(layer.getConnection());
 
-                if(client != null)
-                {
+                if (client != null) {
                     client.updateLayerStyles(layer);
                 }
             }
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.geoserver.GeoServerParseCompleteInterface#populateComplete(com.sldeditor.extension.input.geoserver.GeoServerConnection, java.util.Map, java.util.Map)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.geoserver.GeoServerParseCompleteInterface#populateComplete(com.sldeditor.extension.input.geoserver.
+     * GeoServerConnection, java.util.Map, java.util.Map)
      */
     @Override
     public void populateComplete(GeoServerConnection connection,
-            Map<String, List<StyleWrapper>> styleMap,
-            Map<String, List<GeoServerLayer>> layerMap)
-    {
+            Map<String, List<StyleWrapper>> styleMap, Map<String, List<GeoServerLayer>> layerMap) {
         geoServerStyleMap.put(connection, styleMap);
         geoServerLayerMap.put(connection, layerMap);
 
-        if(geoServerConnectionTool != null)
-        {
+        if (geoServerConnectionTool != null) {
             geoServerConnectionTool.populateComplete(connection);
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#addNewConnection(com.sldeditor.extension.input.geoserver.GeoServerConnection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#addNewConnection(com.sldeditor.extension.input.geoserver.
+     * GeoServerConnection)
      */
     @Override
-    public void addNewConnection(GeoServerConnection newConnectionDetails)
-    {
-        if(newConnectionDetails != null)
-        {
+    public void addNewConnection(GeoServerConnection newConnectionDetails) {
+        if (newConnectionDetails != null) {
             logger.debug("Add new connection : " + newConnectionDetails.getConnectionName());
-            
-            GeoServerConnectionManager.getInstance().addNewConnection(progress, newConnectionDetails);
+
+            GeoServerConnectionManager.getInstance().addNewConnection(progress,
+                    newConnectionDetails);
 
             addConnectionNode(newConnectionDetails);
 
@@ -600,53 +676,53 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#updateConnectionDetails(com.sldeditor.extension.input.geoserver.GeoServerConnection, com.sldeditor.extension.input.geoserver.GeoServerConnection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#updateConnectionDetails(com.sldeditor.extension.input.geoserver.
+     * GeoServerConnection, com.sldeditor.extension.input.geoserver.GeoServerConnection)
      */
     @Override
-    public void updateConnectionDetails(GeoServerConnection originalConnectionDetails, GeoServerConnection newConnectionDetails)
-    {
-        if((originalConnectionDetails == null) || (newConnectionDetails == null))
-        {
+    public void updateConnectionDetails(GeoServerConnection originalConnectionDetails,
+            GeoServerConnection newConnectionDetails) {
+        if ((originalConnectionDetails == null) || (newConnectionDetails == null)) {
             return;
         }
 
         logger.debug("Updating connection : " + newConnectionDetails.getConnectionName());
 
-        GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(originalConnectionDetails);
-        if(client != null)
-        {
+        GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                .getConnectionMap().get(originalConnectionDetails);
+        if (client != null) {
             disconnectFromGeoServer(client);
         }
 
         progress.updateConnection(originalConnectionDetails, newConnectionDetails);
 
-        if(toolMgr != null)
-        {
+        if (toolMgr != null) {
             toolMgr.refreshSelection();
         }
 
         updatePropertyFile();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#deleteConnections(java.util.List)
      */
     @Override
-    public void deleteConnections(List<GeoServerConnection> connectionList)
-    {
-        if(connectionList == null)
-        {
+    public void deleteConnections(List<GeoServerConnection> connectionList) {
+        if (connectionList == null) {
             return;
         }
 
-        for(GeoServerConnection connection : connectionList)
-        {
+        for (GeoServerConnection connection : connectionList) {
             logger.debug("Deleting connection : " + connection.getConnectionName());
 
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(connection);
-            if(client != null)
-            {
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(connection);
+            if (client != null) {
                 disconnectFromGeoServer(client);
 
                 geoServerLayerMap.remove(connection);
@@ -661,33 +737,29 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         progress.setFolder(null, false);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#drop(com.sldeditor.extension.input.NodeInterface, java.util.Map)
      */
     @Override
-    public boolean copyNodes(NodeInterface destinationTreeNode, Map<NodeInterface, List<SLDDataInterface>> droppedDataMap)
-    {
-        if(droppedDataMap == null)
-        {
+    public boolean copyNodes(NodeInterface destinationTreeNode,
+            Map<NodeInterface, List<SLDDataInterface>> droppedDataMap) {
+        if (droppedDataMap == null) {
             return false;
         }
 
-        if(destinationTreeNode instanceof GeoServerWorkspaceNode)
-        {
-            GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode)destinationTreeNode;
+        if (destinationTreeNode instanceof GeoServerWorkspaceNode) {
+            GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) destinationTreeNode;
 
-            GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(workspaceNode.getConnection());
+            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                    .getConnectionMap().get(workspaceNode.getConnection());
 
-            if(client == null)
-            {
+            if (client == null) {
                 return false;
-            }
-            else
-            {
-                for(NodeInterface key : droppedDataMap.keySet())
-                {
-                    for(SLDDataInterface sldData : droppedDataMap.get(key))
-                    {
+            } else {
+                for (NodeInterface key : droppedDataMap.keySet()) {
+                    for (SLDDataInterface sldData : droppedDataMap.get(key)) {
                         StyleWrapper styleWrapper = sldData.getStyle();
 
                         removeStyleFileExtension(styleWrapper);
@@ -711,67 +783,62 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      * @param styleWrapper the style wrapper
      */
     protected void removeStyleFileExtension(StyleWrapper styleWrapper) {
-        if(styleWrapper != null)
-        {
+        if (styleWrapper != null) {
             String original = styleWrapper.getStyle();
-            if(original != null)
-            {
+            if (original != null) {
                 int pos = original.lastIndexOf('.');
-                if(pos > 0)
-                {
+                if (pos > 0) {
                     styleWrapper.setStyle(original.substring(0, pos));
                 }
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#deleteNodes(com.sldeditor.extension.input.NodeInterface, java.util.List)
      */
     @Override
-    public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList)
-    {
-        if((nodeToTransfer == null) || (sldDataList == null))
-        {
+    public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {
+        if ((nodeToTransfer == null) || (sldDataList == null)) {
             return;
         }
 
-        if(nodeToTransfer instanceof GeoServerWorkspaceNode)
-        {
+        if (nodeToTransfer instanceof GeoServerWorkspaceNode) {
             Map<GeoServerClientInterface, String> connectionsToRefreshMap = new HashMap<GeoServerClientInterface, String>();
 
-            for(SLDDataInterface sldData : sldDataList)
-            {
-                GeoServerClientInterface client = GeoServerConnectionManager.getInstance().getConnectionMap().get(sldData.getConnectionData());
+            for (SLDDataInterface sldData : sldDataList) {
+                GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+                        .getConnectionMap().get(sldData.getConnectionData());
 
-                if(client != null)
-                {
+                if (client != null) {
                     connectionsToRefreshMap.put(client, sldData.getStyle().getWorkspace());
                     client.deleteStyle(sldData.getStyle());
                 }
             }
 
             // Refreshing the workspace re-populates the user interface
-            for(GeoServerClientInterface client : connectionsToRefreshMap.keySet())
-            {
+            for (GeoServerClientInterface client : connectionsToRefreshMap.keySet()) {
                 client.refreshWorkspace(connectionsToRefreshMap.get(client));
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileSystemInterface#getDestinationText(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public String getDestinationText(NodeInterface destinationTreeNode)
-    {
-        if(destinationTreeNode instanceof GeoServerWorkspaceNode)
-        {
-            GeoServerWorkspaceNode destinationNode = (GeoServerWorkspaceNode)destinationTreeNode;
+    public String getDestinationText(NodeInterface destinationTreeNode) {
+        if (destinationTreeNode instanceof GeoServerWorkspaceNode) {
+            GeoServerWorkspaceNode destinationNode = (GeoServerWorkspaceNode) destinationTreeNode;
 
             GeoServerConnection connection = destinationNode.getConnection();
 
-            return String.format("GeoServer %s / Workspace %s", connection.getConnectionName(), destinationNode.getWorkspaceName());
+            return String.format("GeoServer %s / Workspace %s", connection.getConnectionName(),
+                    destinationNode.getWorkspaceName());
         }
 
         return "Unknown";

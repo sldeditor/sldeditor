@@ -36,7 +36,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -48,9 +47,7 @@ import org.apache.log4j.Logger;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
-import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
@@ -64,7 +61,6 @@ import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
-import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.legend.LegendTool;
 import com.sldeditor.tool.raster.RasterTool;
@@ -190,19 +186,15 @@ public class FileSystemInput implements FileSystemInterface {
         return changed;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.extension.input.FileSystemInterface#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#rightMouseButton(javax.swing.JPopupMenu, java.lang.Object, java.awt.event.MouseEvent)
      */
     @Override
-    public void rightMouseButton(Object selectedItem, MouseEvent e) {
+    public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
         if (selectedItem instanceof FileTreeNode) {
             FileTreeNode fileTreeNode = (FileTreeNode) selectedItem;
 
             File file = fileTreeNode.getFile();
-
-            JPopupMenu popupMenu = new JPopupMenu();
 
             JMenuItem connectMenuItem = new JMenuItem(Localisation.getString(FileSystemInput.class,
                     "FileSystemInput.copyPathToClipboard"));
@@ -214,57 +206,6 @@ public class FileSystemInput implements FileSystemInterface {
                 }
             });
             popupMenu.add(connectMenuItem);
-
-            JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(FileSystemInput.class,
-                    "FileSystemInput.uploadToGeoServer"));
-            populateGeoServerConnections(uploadToGeoServerMenu);
-            popupMenu.add(uploadToGeoServerMenu);
-
-            if (e != null) {
-                popupMenu.show(e.getComponent(), e.getX(), e.getY());
-            }
-        }
-    }
-
-    /**
-     * Populate geo server connections.
-     *
-     * @param uploadToGeoServerMenu the upload to geo server menu
-     */
-    private void populateGeoServerConnections(JMenu uploadToGeoServerMenu) {
-        if (uploadToGeoServerMenu != null) {
-            Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
-                    .getInstance().getConnectionMap();
-
-            if (connectionMap.isEmpty()) {
-                JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation.getString(
-                        FileSystemInput.class, "FileSystemInput.noGeoServerConnections"));
-
-                uploadToGeoServerMenu.add(noGeoServerMenuItem);
-            } else {
-                for (GeoServerConnection connection : connectionMap.keySet()) {
-                    JMenu geoServer = new JMenu(connection.getConnectionName());
-
-                    uploadToGeoServerMenu.add(geoServer);
-
-                    GeoServerClientInterface client = connectionMap.get(connection);
-                    if (client.isConnected()) {
-                        for(String workspaceName : client.getWorkspaceList())
-                        {
-                            JMenuItem workspaceMenuItem = new JMenuItem(workspaceName);
-
-                            geoServer.add(workspaceMenuItem);
-                        }
-                    }
-                    else
-                    {
-                        JMenuItem connectMenuItem = new JMenuItem(Localisation.getString(
-                                FileSystemInput.class, "FileSystemInput.connect"));
-
-                        geoServer.add(connectMenuItem);
-                    }
-                }
-            }
         }
     }
 
