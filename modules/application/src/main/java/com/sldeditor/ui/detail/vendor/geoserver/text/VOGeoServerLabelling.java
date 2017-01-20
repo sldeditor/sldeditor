@@ -653,7 +653,10 @@ public class VOGeoServerLabelling extends StandardPanel
                     VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                             getVendorOptionInfo());
 
-                    vendorOptionsPresentList.add(voPresent);
+                    if(!vendorOptionsPresentList.contains(voPresent))
+                    {
+                        vendorOptionsPresentList.add(voPresent);
+                    }
                 }
             }
         }

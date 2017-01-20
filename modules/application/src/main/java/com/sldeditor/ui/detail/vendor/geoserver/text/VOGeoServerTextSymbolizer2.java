@@ -532,7 +532,20 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof TextSymbolizer2) {
+            TextSymbolizer2 textSymbolizer = (TextSymbolizer2) sldObj;
+            if((textSymbolizer.getFeatureDescription() != null) ||
+                    (textSymbolizer.getSnippet() != null) ||
+                    (textSymbolizer.getGraphic() != null) ||
+                    (textSymbolizer.getOtherText() != null))
+            {
+                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
+                        getVendorOptionInfo());
 
+                if(!vendorOptionsPresentList.contains(voPresent))
+                {
+                    vendorOptionsPresentList.add(voPresent);
+                }
+            }
         }
     }
 

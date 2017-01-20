@@ -169,4 +169,56 @@ public class VendorOptionVersion {
     public Class<?> getClassType() {
         return classType;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((classType == null) ? 0 : classType.hashCode());
+        result = prime * result + ((maximumVersion == null) ? 0 : maximumVersion.hashCode());
+        result = prime * result + ((minimumVersion == null) ? 0 : minimumVersion.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        VendorOptionVersion other = (VendorOptionVersion) obj;
+        if (classType == null) {
+            if (other.classType != null) {
+                return false;
+            }
+        } else if (!classType.getName().equals(other.classType.getName())) {
+            return false;
+        }
+        if (maximumVersion == null) {
+            if (other.maximumVersion != null) {
+                return false;
+            }
+        } else if (!maximumVersion.equals(other.maximumVersion)) {
+            return false;
+        }
+        if (minimumVersion == null) {
+            if (other.minimumVersion != null) {
+                return false;
+            }
+        } else if (!minimumVersion.equals(other.minimumVersion)) {
+            return false;
+        }
+        return true;
+    }
 }
