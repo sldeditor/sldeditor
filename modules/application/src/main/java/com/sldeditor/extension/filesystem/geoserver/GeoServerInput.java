@@ -47,6 +47,7 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.GeoServerConnectUpdateInterface;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
@@ -77,8 +78,12 @@ import com.sldeditor.tool.scale.ScaleTool;
 public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpdateInterface,
         GeoServerConnectStateInterface, GeoServerLayerUpdateInterface,
         GeoServerParseCompleteInterface {
+    
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6659749130067227L;
+
+    /** The Constant SLD_FILE_EXTENSION. */
+    private static final String SLD_FILE_EXTENSION = "sld";
 
     /** The GeoServer connection tool. */
     private transient GeoServerConnectionTool geoServerConnectionTool = null;
@@ -256,11 +261,13 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                 }
             }
         } else if (selectedItem instanceof FileTreeNode) {
-            JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(GeoServerInput.class,
-                    "GeoServerInput.uploadToGeoServer"));
-            populateGeoServerConnections(uploadToGeoServerMenu);
-            popupMenu.add(uploadToGeoServerMenu);
-
+            FileTreeNode fileNode = (FileTreeNode) selectedItem;
+            if (ExternalFilenames.getFileExtension(fileNode.getFile().getAbsolutePath()).compareToIgnoreCase(SLD_FILE_EXTENSION) == 0) {
+                JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(GeoServerInput.class,
+                        "GeoServerInput.uploadToGeoServer"));
+                populateGeoServerConnections(uploadToGeoServerMenu);
+                popupMenu.add(uploadToGeoServerMenu);
+            }
         }
     }
 
@@ -366,8 +373,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         if (client != null) {
             client.connect();
             String url = "";
-            if(connection.getUrl() != null)
-            {
+            if (connection.getUrl() != null) {
                 url = connection.getUrl().toExternalForm();
             }
             if (client.isConnected()) {

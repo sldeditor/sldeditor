@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
