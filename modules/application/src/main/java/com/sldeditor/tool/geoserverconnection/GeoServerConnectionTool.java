@@ -100,20 +100,7 @@ public class GeoServerConnectionTool implements ToolInterface
                     {
                         if(!geoServerConnectState.isConnected(connection))
                         {
-                            String errorMessage = String.format("%s : %s (%s)",
-                                    Localisation.getString(GeoServerConnectionTool.class, "GeoServerConnectionTool.failedToConnect"),
-                                    connection.getConnectionName(),
-                                    connection.getUrl().toExternalForm() );
-                            ConsoleManager.getInstance().error(GeoServerConnectionTool.class, errorMessage);
                             connectButton.setEnabled(true);
-                        }
-                        else
-                        {
-                            String message = String.format("%s : %s (%s)",
-                                    Localisation.getString(GeoServerConnectionTool.class, "GeoServerConnectionTool.connected"),
-                                    connection.getConnectionName(),
-                                    connection.getUrl().toExternalForm() );
-                            ConsoleManager.getInstance().information(GeoServerConnectionTool.class, message);
                         }
                     }
                 }
