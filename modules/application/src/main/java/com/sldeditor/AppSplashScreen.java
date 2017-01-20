@@ -29,8 +29,11 @@ import java.awt.geom.Rectangle2D;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
+import org.geotools.factory.GeoTools;
 
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.generated.Version;
+import com.sldeditor.ui.about.AboutDialog;
 
 /**
  * The application splash screen
@@ -131,6 +134,8 @@ public class AppSplashScreen
             splashGraphics.setColor(Color.black);
 
             splashGraphics.drawString(str, (int)getTextPosition().getX(), (int)getTextPosition().getY());
+            String geoToolsVersionString = String.format("%s GeoTools %s", Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"), GeoTools.getVersion().toString());
+            splashGraphics.drawString(geoToolsVersionString, (int)getTextPosition().getX(), (int)(getTextPosition().getY() + AppSplashScreen.getFont().getSize2D()));
 
             // make sure it's displayed
             splashScreenObj.update();
