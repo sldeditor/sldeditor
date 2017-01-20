@@ -118,7 +118,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(null, this, PANEL_CONFIG);
+        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
         symbolTypeFactory.populate(this, fieldConfigManager);
     }
 
@@ -320,11 +320,17 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
             Expression featureDescription = fieldConfigVisitor
                     .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION);
-            textSymbol2.setFeatureDescription(featureDescription);
+            if(!featureDescription.toString().isEmpty())
+            {
+                textSymbol2.setFeatureDescription(featureDescription);
+            }
 
             Expression snippet = fieldConfigVisitor
                     .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET);
-            textSymbol2.setSnippet(snippet);
+            if(!snippet.toString().isEmpty())
+            {
+                textSymbol2.setSnippet(snippet);
+            }
 
             // Extract OtherText
             OtherText otherText = null;
@@ -336,9 +342,12 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
                     Expression text = fieldConfigVisitor
                             .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT);
 
-                    otherText = new OtherTextImpl();
-                    otherText.setTarget(target);
-                    otherText.setText(text);
+                    if(!target.isEmpty() && !text.toString().isEmpty())
+                    {
+                        otherText = new OtherTextImpl();
+                        otherText.setTarget(target);
+                        otherText.setText(text);
+                    }
                 }
             }
             textSymbol2.setOtherText(otherText);
