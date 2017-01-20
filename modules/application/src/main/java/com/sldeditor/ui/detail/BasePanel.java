@@ -78,7 +78,7 @@ public class BasePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The Constant WIDGET_X_START. */
-    public static final int WIDGET_X_START = 90;
+    public static final int WIDGET_X_START = 120;
 
     /** The Constant WIDGET_MAX_WIDTH. */
     public static final int WIDGET_STANDARD_WIDTH = 132;
@@ -96,10 +96,10 @@ public class BasePanel extends JPanel {
     public static final int WIDGET_HEIGHT = 24;
 
     /** The Constant LABEL_WIDTH. */
-    public static final int LABEL_WIDTH = 77;
+    public static final int LABEL_WIDTH = WIDGET_X_START - 12;
 
     /** The Constant ATTRIBUTE_BTN_X. */
-    public static final int ATTRIBUTE_BTN_X = 230;
+    public static final int ATTRIBUTE_BTN_X = WIDGET_X_START + WIDGET_STANDARD_WIDTH + 8;
 
     /** The Constant WIDGET_BUTTON_WIDTH. */
     public static final int WIDGET_BUTTON_WIDTH = 89;
