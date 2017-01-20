@@ -53,7 +53,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * <p>
  * Handles the following common tasks:
  * <ul>
- * <li>value/attribute/expression drop down list, ({@link com.sldeditor.ui.attribute.AttributeSelection}) </li>
+ * <li>value/attribute/expression drop down list, ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
  * <li>setting/getting of values via Expression</li>
  * <li>field enable/disable state</li>
  * <li>firing data changed notifications</li>
@@ -63,7 +63,8 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public abstract class FieldConfigBase extends FieldConfigPopulate implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
+public abstract class FieldConfigBase extends FieldConfigPopulate
+        implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
     /** The Constant X_POS. */
     private static final int X_POS = 0;
@@ -87,7 +88,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
     private List<UpdateSymbolInterface> updateSymbolListenerList = new ArrayList<UpdateSymbolInterface>();
 
     /** The style factory. */
-    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /** The field state flag. */
     private CurrentFieldState fieldState = new CurrentFieldState();
@@ -160,9 +162,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the common data
      */
-    public FieldConfigCommonData getCommonData()
-    {
-        return (FieldConfigCommonData)this;
+    public FieldConfigCommonData getCommonData() {
+        return (FieldConfigCommonData) this;
     }
 
     /**
@@ -179,8 +180,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the custom panels
      */
-    public List<Component> getCustomPanels()
-    {
+    public List<Component> getCustomPanels() {
         return customPanelList;
     }
 
@@ -189,11 +189,9 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @param customPanel the custom panel
      */
-    protected void addCustomPanel(JPanel customPanel)
-    {
+    protected void addCustomPanel(JPanel customPanel) {
         // Create the list if it hasn't been created before
-        if(customPanelList == null)
-        {
+        if (customPanelList == null) {
             customPanelList = new ArrayList<Component>();
         }
 
@@ -209,8 +207,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
 
         this.attributeSelectionPanel = attributeSelectionPanel;
 
-        if(this.attributeSelectionPanel != null)
-        {
+        if (this.attributeSelectionPanel != null) {
             this.attributeSelectionPanel.addListener(this);
             this.attributeSelectionPanel.addExpressionListener(this);
         }
@@ -225,8 +222,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
 
         setEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
 
-        if(attributeSelectionPanel != null)
-        {
+        if (attributeSelectionPanel != null) {
             attributeSelectionPanel.setEnabled(fieldEnabled);
         }
     }
@@ -235,10 +231,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * Fire data changed.
      */
     protected void fireDataChanged() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            for(UpdateSymbolInterface listener : updateSymbolListenerList)
-            {
+        if (!Controller.getInstance().isPopulating()) {
+            for (UpdateSymbolInterface listener : updateSymbolListenerList) {
                 listener.dataChanged(getFieldId());
             }
         }
@@ -248,8 +242,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * Value updated.
      */
     @Override
-    public void valueUpdated()
-    {
+    public void valueUpdated() {
         expressionType = ExpressionTypeEnum.E_VALUE;
 
         setCachedExpression(generateExpression());
@@ -265,8 +258,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param attributeName the attribute name
      */
     @Override
-    public void attributeUpdated(String attributeName)
-    {
+    public void attributeUpdated(String attributeName) {
         expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
 
         NameImpl name = new NameImpl(attributeName);
@@ -281,12 +273,13 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @param updatedExpression the updated expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.ExpressionUpdateInterface#expressionUpdated(org.opengis.filter.expression.Expression)
      */
     @Override
-    public void expressionUpdated(Expression updatedExpression)
-    {
+    public void expressionUpdated(Expression updatedExpression) {
         expressionType = ExpressionTypeEnum.E_EXPRESSION;
 
         setCachedExpression(updatedExpression);
@@ -300,12 +293,13 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @param updatedExpression the updated expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.ExpressionUpdateInterface#expressionUpdated(org.opengis.filter.expression.Expression)
      */
     @Override
-    public void functionUpdated(Expression updatedExpression)
-    {
+    public void functionUpdated(Expression updatedExpression) {
         expressionType = ExpressionTypeEnum.E_FUNCTION;
 
         setCachedExpression(updatedExpression);
@@ -319,51 +313,39 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @param expression the expression
      */
-    public void populate(Expression expression)
-    {
-        if(attributeSelectionPanel != null)
-        {
+    public void populate(Expression expression) {
+        if (attributeSelectionPanel != null) {
             attributeSelectionPanel.populateAttributeComboxBox(expression);
         }
 
-        if(expression == null)
-        {
+        if (expression == null) {
             expressionType = ExpressionTypeEnum.E_VALUE;
 
             revertToDefaultValue();
 
             valueUpdated();
-        }
-        else
-        {
-            if(expression instanceof LiteralExpressionImpl)
-            {
+        } else {
+            if (expression instanceof LiteralExpressionImpl) {
                 LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
 
                 Object objValue = lExpression.getValue();
 
-                if(objValue instanceof AttributeExpressionImpl)
-                {
+                if (objValue instanceof AttributeExpressionImpl) {
                     expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
 
-                    if(attributeSelectionPanel != null)
-                    {
-                        attributeSelectionPanel.setAttribute((AttributeExpressionImpl)objValue);
+                    if (attributeSelectionPanel != null) {
+                        attributeSelectionPanel.setAttribute((AttributeExpressionImpl) objValue);
                     }
 
-                    setCachedExpression((AttributeExpressionImpl)objValue);
-                }
-                else
-                {
+                    setCachedExpression((AttributeExpressionImpl) objValue);
+                } else {
                     expressionType = ExpressionTypeEnum.E_VALUE;
 
                     populateExpression(objValue);
 
                     valueUpdated();
                 }
-            }
-            else if(expression instanceof ConstantExpression)
-            {
+            } else if (expression instanceof ConstantExpression) {
                 ConstantExpression cExpression = (ConstantExpression) expression;
 
                 Object objValue = cExpression.getValue();
@@ -373,9 +355,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
                 populateExpression(objValue);
 
                 valueUpdated();
-            }
-            else if(expression instanceof NilExpression)
-            {
+            } else if (expression instanceof NilExpression) {
                 Object objValue = null;
 
                 expressionType = ExpressionTypeEnum.E_VALUE;
@@ -383,9 +363,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
                 populateExpression(objValue);
 
                 valueUpdated();
-            }
-            else if(expression instanceof ProcessFunction)
-            {
+            } else if (expression instanceof ProcessFunction) {
                 ProcessFunction processExpression = (ProcessFunction) expression;
 
                 Object objValue = processExpression;
@@ -395,46 +373,33 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
                 populateExpression(objValue);
 
                 valueUpdated();
-            }
-            else if(expression instanceof AttributeExpressionImpl)
-            {
+            } else if (expression instanceof AttributeExpressionImpl) {
                 expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
 
-                if(attributeSelectionPanel != null)
-                {
+                if (attributeSelectionPanel != null) {
                     attributeSelectionPanel.setAttribute(expression);
-                }
-                else
-                {
+                } else {
                     populateExpression(expression);
                 }
 
                 setCachedExpression(expression);
-            }
-            else if(expression instanceof FunctionExpressionImpl)
-            {
+            } else if (expression instanceof FunctionExpressionImpl) {
                 expressionType = ExpressionTypeEnum.E_EXPRESSION;
 
-                if(attributeSelectionPanel != null)
-                {
+                if (attributeSelectionPanel != null) {
                     attributeSelectionPanel.populate(expression);
                 }
 
                 setCachedExpression(expression);
-            }
-            else if(expression instanceof BinaryExpression)
-            {
+            } else if (expression instanceof BinaryExpression) {
                 expressionType = ExpressionTypeEnum.E_EXPRESSION;
 
-                if(attributeSelectionPanel != null)
-                {
+                if (attributeSelectionPanel != null) {
                     attributeSelectionPanel.populate(expression);
                 }
 
                 setCachedExpression(expression);
-            }
-            else
-            {
+            } else {
                 expressionType = ExpressionTypeEnum.E_EXPRESSION;
             }
         }
@@ -447,10 +412,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @param listener the listener
      */
-    public void addDataChangedListener(UpdateSymbolInterface listener)
-    {
-        if(!updateSymbolListenerList.contains(listener))
-        {
+    public void addDataChangedListener(UpdateSymbolInterface listener) {
+        if (!updateSymbolListenerList.contains(listener)) {
             updateSymbolListenerList.add(listener);
         }
     }
@@ -460,16 +423,11 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the expression
      */
-    public Expression getExpression()
-    {
-        if(getExpressionType() == ExpressionTypeEnum.E_VALUE)
-        {
+    public Expression getExpression() {
+        if (getExpressionType() == ExpressionTypeEnum.E_VALUE) {
             cachedExpression = generateExpression();
-        }
-        else
-        {
-            if(attributeSelectionPanel != null)
-            {
+        } else {
+            if (attributeSelectionPanel != null) {
                 cachedExpression = attributeSelectionPanel.getExpression();
             }
         }
@@ -481,19 +439,16 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the style factory
      */
-    protected StyleFactoryImpl getStyleFactory()
-    {
+    protected StyleFactoryImpl getStyleFactory() {
         return styleFactory;
     }
 
     /**
-     * Checks if is a single value is legal
-     * To be overridden if necessary.
+     * Checks if is a single value is legal To be overridden if necessary.
      *
      * @return true, if is a single value
      */
-    public boolean isASingleValue()
-    {
+    public boolean isASingleValue() {
         return true;
     }
 
@@ -512,15 +467,13 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param expression the expression
      */
     protected void fireExpressionUpdated(Expression expression) {
-        if(expressionUpdateListener != null)
-        {
+        if (expressionUpdateListener != null) {
             expressionUpdateListener.expressionUpdated(expression);
         }
     }
 
     /**
-     * Method called when the field has been selected from a combo box
-     * and may need to be initialised
+     * Method called when the field has been selected from a combo box and may need to be initialised
      * 
      * Will be be overridden if necessary.
      */
@@ -552,10 +505,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param fieldLabel the field label
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel(int xPos, String fieldLabel)
-    {
-        if(fieldPanel == null)
-        {
+    protected FieldPanel createFieldPanel(int xPos, String fieldLabel) {
+        if (fieldPanel == null) {
             fieldPanel = new FieldPanel(xPos, fieldLabel);
         }
 
@@ -567,10 +518,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel()
-    {
-        if(fieldPanel == null)
-        {
+    protected FieldPanel createFieldPanel() {
+        if (fieldPanel == null) {
             fieldPanel = new FieldPanel();
         }
 
@@ -585,8 +534,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param fieldLabel the field label
      * @return the field panel
      */
-    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel)
-    {
+    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel) {
         fieldPanel = new FieldPanel(xPos, fieldLabel, height);
 
         return fieldPanel;
@@ -615,8 +563,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the parent
      */
-    public FieldConfigBase getParent()
-    {
+    public FieldConfigBase getParent() {
         return parentFieldConfig;
     }
 
@@ -628,8 +575,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
     public FieldConfigBase duplicate() {
         FieldConfigBase copy = createCopy(this);
 
-        if(copy != null)
-        {
+        if (copy != null) {
             copy.setParent(getParent());
             copy.updateSymbolListenerList = this.updateSymbolListenerList;
         }
@@ -649,8 +595,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      *
      * @return the x pos
      */
-    protected int getXPos()
-    {
+    protected int getXPos() {
         return X_POS;
     }
 
@@ -663,16 +608,13 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param height the height
      */
     public void addUI(Component component, int buffer, int width, int height) {
-        if(fieldPanel != null)
-        {
+        if (fieldPanel != null) {
             int lastX = -1;
 
-            for(Component c : fieldPanel.getComponents())
-            {
+            for (Component c : fieldPanel.getComponents()) {
                 int x = c.getX() + c.getWidth();
 
-                if(x > lastX)
-                {
+                if (x > lastX) {
                     lastX = x;
                 }
             }
@@ -687,18 +629,20 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param isRasterSymbol the is raster symbol flag
      */
     public void updateAttributeSelection(boolean isRasterSymbol) {
-        if(attributeSelectionPanel != null)
-        {
+        if (attributeSelectionPanel != null) {
             attributeSelectionPanel.updateAttributeSelection(isRasterSymbol);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return String.format("%s : (%s) %s", getClass().getName(), getFieldId().toString(), getLabel());
+        return String.format("%s : (%s) %s", getClass().getName(), getFieldId().toString(),
+                getLabel());
     }
 
     /**
@@ -716,10 +660,9 @@ public abstract class FieldConfigBase extends FieldConfigPopulate implements Att
      * @param fieldState the fieldState to set
      */
     public void setFieldState(CurrentFieldState fieldState) {
-        if(fieldState != null)
-        {
+        if (fieldState != null) {
             this.fieldState = fieldState;
-            
+
             setValueFieldState();
         }
     }

@@ -29,7 +29,6 @@ import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
 import org.geotools.styling.OtherText;
 import org.geotools.styling.OtherTextImpl;
-import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Stroke;
@@ -295,8 +294,6 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
             group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
             if (group != null) {
                 group.enable(textSymbol2.getGraphic() != null);
-                fillGroup.setGroupStateOverride(textSymbol2.getGraphic() != null);
-                strokeGroup.setGroupStateOverride(textSymbol2.getGraphic() != null);
             }
         }
     }
@@ -316,12 +313,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
         GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
         GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
 
-        GroupConfigInterface group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
-        if (group != null) {
-            boolean enable = group.isPanelEnabled();
-            fillGroup.setGroupStateOverride(enable);
-            strokeGroup.setGroupStateOverride(enable);
-        }
+        GroupConfigInterface group = null;
 
         if (textSymbolizer instanceof TextSymbolizer2) {
             TextSymbolizer2 textSymbol2 = (TextSymbolizer2) textSymbolizer;

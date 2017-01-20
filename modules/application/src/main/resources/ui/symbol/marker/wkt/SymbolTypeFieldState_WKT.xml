@@ -68,8 +68,6 @@
             <Item id="wkt" label="WKT" />
             <FieldList>
                 <Field id="WKT" enabled="true" />
-                <Field id="SYMBOL_TYPE" enabled="true" />
-
                 <Field id="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE" enabled="true" />
                 <Field id="VO_TEXTSYMBOLIZER_2_ANGLE" enabled="true" />
                 <Field id="VO_TEXTSYMBOLIZER_2_SIZE" enabled="true" />

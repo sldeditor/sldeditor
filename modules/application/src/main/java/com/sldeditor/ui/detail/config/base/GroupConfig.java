@@ -438,19 +438,18 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      * Sets the value group state.
      */
     private void setValueGroupState() {
-        boolean enabled = groupEnabled;
         boolean isSelected = true;
 
         if(isShowLabel())
         {
             if(isOptional())
             {
-                groupCheckbox.setEnabled(enabled);
+                groupCheckbox.setEnabled(groupEnabled);
                 isSelected = groupCheckbox.isSelected();
             }
             else
             {
-                groupTitle.setEnabled(enabled);
+                groupTitle.setEnabled(groupEnabled);
             }
         }
 
