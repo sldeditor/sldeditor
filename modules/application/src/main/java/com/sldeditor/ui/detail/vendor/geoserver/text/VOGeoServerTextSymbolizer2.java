@@ -95,7 +95,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
      * @param panelId the panel id
      */
     public VOGeoServerTextSymbolizer2(Class<?> panelId, FunctionNameInterface functionManager) {
-        super(VOGeoServerTextSymbolizer2.class, functionManager);
+        super(panelId, functionManager);
 
         setUpdateSymbolListener(this);
 
