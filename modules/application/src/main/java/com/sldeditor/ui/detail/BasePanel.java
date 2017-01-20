@@ -326,8 +326,8 @@ public class BasePanel extends JPanel {
      * @param filename the filename
      */
     protected void readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
-            UpdateSymbolInterface parent, String filename) {
-        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true,
+            Class<?> panelId, UpdateSymbolInterface parent, String filename) {
+        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true,
                 false);
     }
 
@@ -335,12 +335,13 @@ public class BasePanel extends JPanel {
      * Read raster panel configuration file.
      *
      * @param vendorOptionFactory the vendor option factory
+     * @param panelId the panel id
      * @param parent the parent
      * @param filename the filename
      */
     protected void readRasterConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
-            UpdateSymbolInterface parent, String filename) {
-        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, true,
+            Class<?> panelId, UpdateSymbolInterface parent, String filename) {
+        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true,
                 true);
     }
 
@@ -352,8 +353,8 @@ public class BasePanel extends JPanel {
      * @param filename the filename
      */
     protected void readConfigFileNoScrollPane(VendorOptionFactoryInterface vendorOptionFactory,
-            UpdateSymbolInterface parent, String filename) {
-        internal_readConfigFile(vendorOptionFactory, parent.getClass(), parent, filename, false,
+            Class<?> panelId, UpdateSymbolInterface parent, String filename) {
+        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, false,
                 false);
     }
 
@@ -643,7 +644,7 @@ public class BasePanel extends JPanel {
      * @return the group
      */
     public GroupConfigInterface getGroup(GroupIdEnum groupId) {
-        return fieldConfigManager.getGroup(getClass(), groupId);
+        return fieldConfigManager.getGroup(panelId, groupId);
     }
 
     /**

@@ -82,7 +82,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
         createVendorOptionPanel();
 
-        readConfigFile(vendorOptionTextFactory, this, "Text.xml");
+        readConfigFile(vendorOptionTextFactory, getClass(), this, "Text.xml");
     }
 
     /**

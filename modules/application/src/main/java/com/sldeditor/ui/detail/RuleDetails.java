@@ -76,7 +76,7 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(null, this, "Rule.xml");
+        readConfigFile(null, getClass(), this, "Rule.xml");
 
         createFilter();
     }

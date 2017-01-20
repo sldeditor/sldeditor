@@ -156,7 +156,7 @@ public class VOGeoServerLabelling extends StandardPanel
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
+        readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
     }
 
     /**

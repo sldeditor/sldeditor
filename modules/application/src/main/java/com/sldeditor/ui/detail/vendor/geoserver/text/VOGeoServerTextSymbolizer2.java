@@ -118,7 +118,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
+        readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
         symbolTypeFactory.populate(this, fieldConfigManager);
     }
 
@@ -575,7 +575,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
         for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(),
+            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(getPanelId(),
                     groupId);
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);

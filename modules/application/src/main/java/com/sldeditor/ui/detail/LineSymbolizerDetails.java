@@ -57,7 +57,7 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
      */
     private void createUI() {
 
-        readConfigFile(null, this, "Line.xml");
+        readConfigFile(null, getClass(), this, "Line.xml");
     }
 
     /* (non-Javadoc)
