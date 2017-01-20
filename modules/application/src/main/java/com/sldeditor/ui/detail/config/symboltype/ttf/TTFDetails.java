@@ -78,7 +78,7 @@ public class TTFDetails extends StandardPanel implements PopulateDetailsInterfac
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
+        readConfigFileNoScrollPane(null, getClass(), this, PANEL_CONFIG);
 
         registerForTextFieldButton(FieldIdEnum.TTF_SYMBOL, this);
     }

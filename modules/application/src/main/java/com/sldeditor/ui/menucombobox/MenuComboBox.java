@@ -453,4 +453,27 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
             setSelectedData(value);
         }
     }
+
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        if(this.menu != null)
+        {
+            this.menu.setEnabled(enabled);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see java.awt.Component#isEnabled()
+     */
+    @Override
+    public boolean isEnabled() {
+        if(this.menu != null)
+        {
+            return this.menu.isEnabled();
+        }
+        return false;
+    }
 }

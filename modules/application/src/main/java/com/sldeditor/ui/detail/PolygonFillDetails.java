@@ -120,7 +120,7 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
 
         createVendorOptionPanel();
 
-        readConfigFile(vendorOptionFillFactory, this, configFile);
+        readConfigFile(vendorOptionFillFactory, getClass(), this, configFile);
 
         symbolTypeFactory.populate(this, fieldConfigManager);
     }

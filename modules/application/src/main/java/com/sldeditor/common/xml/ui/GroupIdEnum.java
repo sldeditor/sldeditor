@@ -109,6 +109,11 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="USER_LAYER_SOURCE"/&gt;
  *     &lt;enumeration value="VO_TEXT_LABEL"/&gt;
  *     &lt;enumeration value="VO_TEXT_LABEL_UNDERLINE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_GRAPHIC"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FILL"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE"/&gt;
+ *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -204,7 +209,12 @@ public enum GroupIdEnum {
     INLINE_FEATURE,
     USER_LAYER_SOURCE,
     VO_TEXT_LABEL,
-    VO_TEXT_LABEL_UNDERLINE;
+    VO_TEXT_LABEL_UNDERLINE,
+    VO_TEXTSYMBOLIZER_2,
+    VO_TEXTSYMBOLIZER_2_GRAPHIC,
+    VO_TEXTSYMBOLIZER_2_FILL,
+    VO_TEXTSYMBOLIZER_2_STROKE,
+    VO_TEXTSYMBOLIZER_2_OTHERTEXT;
 
     public String value() {
         return name();

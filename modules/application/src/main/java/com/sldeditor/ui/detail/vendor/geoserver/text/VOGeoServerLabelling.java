@@ -18,6 +18,7 @@
  */
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,9 +73,55 @@ public class VOGeoServerLabelling extends StandardPanel
     private VendorOptionInfo vendorOptionInfo = null;
 
     /**
+     * The Class DefaultOverride.
+     */
+    class DefaultOverride {
+
+        /** The field. */
+        private FieldIdEnum field;
+
+        /** The legal values. */
+        private List<String> legalValues;
+
+        /**
+         * Instantiates a new default override.
+         *
+         * @param field the field
+         * @param legalValues the legal values
+         */
+        public DefaultOverride(FieldIdEnum field, String[] legalValues) {
+            super();
+            this.field = field;
+            this.legalValues = Arrays.asList(legalValues);
+        }
+
+        /**
+         * Gets the field.
+         *
+         * @return the field
+         */
+        public FieldIdEnum getField() {
+            return field;
+        }
+
+        /**
+         * Gets the legal values.
+         *
+         * @return the legalValues
+         */
+        public List<String> getLegalValues() {
+            return legalValues;
+        }
+    }
+
+    /** The override map. */
+    private Map<FieldIdEnum, DefaultOverride> overrideMap = new HashMap<FieldIdEnum, DefaultOverride>();
+
+    /**
      * Constructor.
      *
      * @param panelId the panel id
+     * @param functionManager the function manager
      */
     public VOGeoServerLabelling(Class<?> panelId, FunctionNameInterface functionManager) {
         super(panelId, functionManager);
@@ -99,6 +146,9 @@ public class VOGeoServerLabelling extends StandardPanel
         fieldMap.put(FieldIdEnum.LABEL_POLYGONALIGN, TextSymbolizer2.POLYGONALIGN_KEY);
         fieldMap.put(FieldIdEnum.LABEL_SPACE_AROUND, TextSymbolizer2.SPACE_AROUND_KEY);
 
+        String[] graphicResizeValues = { "Proportional", "Stretch" };
+        overrideMap.put(FieldIdEnum.LABEL_GRAPHIC_MARGIN,
+                new DefaultOverride(FieldIdEnum.LABEL_GRAPHIC_RESIZE, graphicResizeValues));
         createUI();
     }
 
@@ -106,7 +156,7 @@ public class VOGeoServerLabelling extends StandardPanel
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
+        readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
     }
 
     /**
@@ -261,7 +311,7 @@ public class VOGeoServerLabelling extends StandardPanel
             String key) {
         if ((options != null) && options.containsKey(key)) {
             String storedValue = options.get(key);
-            
+
             Integer value = Double.valueOf(storedValue).intValue();
             fieldConfigVisitor.populateIntegerField(fieldId, value);
         } else {
@@ -352,7 +402,7 @@ public class VOGeoServerLabelling extends StandardPanel
 
         if (defaultValue == null) {
             ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
-        } else if (value.getKey().compareToIgnoreCase(defaultValue) != 0) {
+        } else if ((value.getKey().compareToIgnoreCase(defaultValue) != 0) || includeValue(field)) {
             options.put(key, value.getKey());
         }
     }
@@ -372,7 +422,7 @@ public class VOGeoServerLabelling extends StandardPanel
 
         if (defaultValue == null) {
             ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
-        } else if (value != defaultValue) {
+        } else if ((value != defaultValue) || (includeValue(field))) {
             options.put(key, String.valueOf(value));
         }
     }
@@ -392,9 +442,46 @@ public class VOGeoServerLabelling extends StandardPanel
 
         if (defaultValue == null) {
             ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
-        } else if (value != defaultValue) {
+        } else if ((value != defaultValue) || (includeValue(field))) {
             options.put(key, String.valueOf(value));
         }
+    }
+
+    /**
+     * Find out whether to include value based on the value of another field.
+     *
+     * @param field the field
+     * @return true, if successful
+     */
+    private boolean includeValue(FieldIdEnum field) {
+        DefaultOverride override = overrideMap.get(field);
+
+        if (override != null) {
+            String value = null;
+            FieldConfigBase fieldConfig = fieldConfigManager.get(override.getField());
+            if (fieldConfig instanceof FieldConfigBoolean) {
+                value = String.valueOf(fieldConfigVisitor.getBoolean(override.getField()));
+            } else if (fieldConfig instanceof FieldConfigInteger) {
+                value = String.valueOf(fieldConfigVisitor.getInteger(override.getField()));
+            } else if (fieldConfig instanceof FieldConfigDouble) {
+                value = String.valueOf(fieldConfigVisitor.getDouble(override.getField()));
+            } else if (fieldConfig instanceof FieldConfigEnum) {
+                value = String.valueOf(fieldConfigVisitor.getComboBox(override.getField()));
+            } else {
+                ConsoleManager.getInstance().error(this, "Unsupported field type : " + field + " "
+                        + fieldConfig.getClass().getName());
+            }
+
+            if (value != null) {
+                for (String legalValue : override.getLegalValues()) {
+                    if (value.compareToIgnoreCase(legalValue) == 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -412,7 +499,7 @@ public class VOGeoServerLabelling extends StandardPanel
 
         if (defaultValue == null) {
             ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
-        } else if (value != defaultValue) {
+        } else if ((value != defaultValue) || (includeValue(field))) {
             options.put(key, String.valueOf(value));
         }
     }
@@ -540,8 +627,7 @@ public class VOGeoServerLabelling extends StandardPanel
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
             vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(VOGeoServerLabelling.class,
-                            "geoserver.label"),
+                    Localisation.getString(VOGeoServerLabelling.class, "geoserver.label"),
                     this.getVendorOption(), Localisation.getString(VOGeoServerLabelling.class,
                             "geoserver.label.description"));
         }
@@ -567,7 +653,10 @@ public class VOGeoServerLabelling extends StandardPanel
                     VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                             getVendorOptionInfo());
 
-                    vendorOptionsPresentList.add(voPresent);
+                    if(!vendorOptionsPresentList.contains(voPresent))
+                    {
+                        vendorOptionsPresentList.add(voPresent);
+                    }
                 }
             }
         }

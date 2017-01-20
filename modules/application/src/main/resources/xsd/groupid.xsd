@@ -130,6 +130,12 @@
 
             <xs:enumeration value="VO_TEXT_LABEL" />
             <xs:enumeration value="VO_TEXT_LABEL_UNDERLINE" />
+
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_GRAPHIC" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_FILL" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

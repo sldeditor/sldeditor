@@ -201,6 +201,21 @@
             <xs:enumeration value="VO_QGIS" />
 
             <xs:enumeration value="VO_TEXT_LABEL_UNDERLINE" />
+
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_SNIPPET" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_ANGLE" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_SIZE" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_FILL_COLOUR" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_FILL_OPACITY" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_OPACITY" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET" />
+            <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

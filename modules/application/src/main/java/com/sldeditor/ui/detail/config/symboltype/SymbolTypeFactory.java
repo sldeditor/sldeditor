@@ -48,6 +48,7 @@ import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VendorOptionMarkerSymbolFactory;
+import com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -128,6 +129,20 @@ public class SymbolTypeFactory {
 
         SOLID_FILL_VALUE = FieldConfigMarker.getSolidFillValue();
         NO_FILL_VALUE = FieldConfigMarker.getNoFillValue();
+    }
+
+
+    /**
+     * Populate polygon fill details.
+     *
+     * @param textPanel the text panel
+     * @param fieldConfigManager the field config manager
+     */
+    public void populate(VOGeoServerTextSymbolizer2 textPanel,
+            GraphicPanelFieldManager fieldConfigManager) {
+
+        internal_populate(textPanel, textPanel, textPanel, this.selectionComboBox,
+                fieldConfigManager);
     }
 
     /**

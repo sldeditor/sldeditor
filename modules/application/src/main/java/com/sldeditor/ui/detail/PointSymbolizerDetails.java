@@ -57,7 +57,7 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
      */
     private void createUI() {
 
-        readConfigFile(null, this, "Point.xml");
+        readConfigFile(null, getClass(), this, "Point.xml");
     }
 
     /* (non-Javadoc)

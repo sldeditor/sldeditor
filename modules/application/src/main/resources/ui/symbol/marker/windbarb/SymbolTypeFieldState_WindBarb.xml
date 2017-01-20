@@ -22,4 +22,18 @@
     <Panel type="com.sldeditor.ui.detail.StrokeDetails">
         <!-- Not used -->
     </Panel>
+    <Panel type="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2">
+        <Value>
+            <Item id="windbarb" label="Windbarbs" />
+            <FieldList>
+                <Field id="VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_ANGLE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_SIZE" enabled="true" />
+                <Field id="VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY" enabled="false" />
+
+                <Group id="VO_TEXTSYMBOLIZER_2_FILL" enabled="true" />
+                <Group id="VO_TEXTSYMBOLIZER_2_STROKE" enabled="true" />
+            </FieldList>
+        </Value>
+    </Panel>
 </XMLSymbolTypeConfig>

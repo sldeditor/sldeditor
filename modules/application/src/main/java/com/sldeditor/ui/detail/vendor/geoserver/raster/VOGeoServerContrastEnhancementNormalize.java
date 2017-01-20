@@ -108,7 +108,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     private void createUI(String resourceFile)
     {
-        readConfigFileNoScrollPane(null, this, resourceFile);
+        readConfigFileNoScrollPane(null, getPanelId(), this, resourceFile);
     }
 
     /**

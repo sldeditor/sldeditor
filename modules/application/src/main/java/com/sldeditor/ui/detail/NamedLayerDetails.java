@@ -58,7 +58,7 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(null, this, "NamedLayer.xml");
+        readConfigFile(null, getClass(), this, "NamedLayer.xml");
     }
 
     /* (non-Javadoc)

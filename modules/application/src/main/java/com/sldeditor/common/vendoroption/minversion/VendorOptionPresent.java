@@ -79,4 +79,48 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
 
         return this.vendorOptionInfo.compareTo(o.vendorOptionInfo);
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((sldObj == null) ? 0 : sldObj.hashCode());
+        result = prime * result + ((vendorOptionInfo == null) ? 0 : vendorOptionInfo.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        VendorOptionPresent other = (VendorOptionPresent) obj;
+        if (sldObj == null) {
+            if (other.sldObj != null) {
+                return false;
+            }
+        } else if (!sldObj.equals(other.sldObj)) {
+            return false;
+        }
+        if (vendorOptionInfo == null) {
+            if (other.vendorOptionInfo != null) {
+                return false;
+            }
+        } else if (!vendorOptionInfo.equals(other.vendorOptionInfo)) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -89,7 +89,7 @@ UpdateSymbolInterface {
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFileNoScrollPane(null, this, PANEL_CONFIG);
+        readConfigFileNoScrollPane(null, getClass(), this, PANEL_CONFIG);
     }
 
     /**

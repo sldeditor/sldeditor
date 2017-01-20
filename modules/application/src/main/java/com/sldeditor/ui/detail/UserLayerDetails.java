@@ -67,7 +67,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(null, this, "UserLayer.xml");
+        readConfigFile(null, getClass(), this, "UserLayer.xml");
     }
 
     /* (non-Javadoc)

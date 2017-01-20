@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SldEditor_test testsldfile="line/sld/line_labelfollowingline.sld">
+    <VendorOption>
+        <ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption</ClassType>
+        <Version>2.4.2</Version>
+    </VendorOption>
     <PanelTests>
         <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
             <Layer index="0"/>

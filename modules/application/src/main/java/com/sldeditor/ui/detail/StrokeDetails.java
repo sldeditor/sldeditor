@@ -118,7 +118,7 @@ public class StrokeDetails extends StandardPanel
      */
     private void createUI() {
 
-        readConfigFile(null, this, "Stroke.xml");
+        readConfigFile(null, getClass(), this, "Stroke.xml");
 
         symbolTypeFactory.populate(this, fieldConfigManager);
     }

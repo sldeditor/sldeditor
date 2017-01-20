@@ -112,4 +112,10 @@ public class SLDCookbookPoint
     {
         test.runTest("point", "point_wkt.xml");
     }
+
+    @Test
+    public void point_pointwithenhancedlabel()
+    {
+        test.runTest("point", "point_pointwithenhancedlabel.xml");
+    }
 }

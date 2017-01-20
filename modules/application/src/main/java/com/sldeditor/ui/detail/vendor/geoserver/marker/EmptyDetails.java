@@ -42,7 +42,7 @@ public class EmptyDetails extends StandardPanel implements UpdateSymbolInterface
     {
         super(EmptyDetails.class, null);
 
-        readConfigFileNoScrollPane(null, this, resourceFile);
+        readConfigFileNoScrollPane(null, getClass(), this, resourceFile);
     }
 
     /**

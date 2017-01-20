@@ -78,7 +78,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
         createVendorOptionPanel();
 
-        readRasterConfigFile(vendorOptionRasterFactory, this, "Raster.xml");
+        readRasterConfigFile(vendorOptionRasterFactory, getClass(), this, "Raster.xml");
     }
 
     /**

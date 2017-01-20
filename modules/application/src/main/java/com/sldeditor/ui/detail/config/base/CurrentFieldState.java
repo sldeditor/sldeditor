@@ -28,10 +28,10 @@ public class CurrentFieldState {
 
     /** The group enabled flag. */
     private boolean groupEnabledFlag = true;
-    
+
     /** The group selected flag. */
     private boolean groupSelectedFlag = true;
-    
+
     /** The field enabled flag. */
     private boolean fieldEnabledFlag = true;
 
@@ -96,11 +96,21 @@ public class CurrentFieldState {
      */
     public boolean getFieldEnabledState() {
         boolean enabled = false;
-        
-        if(groupEnabledFlag)
-        {
+
+        if (groupEnabledFlag) {
             enabled = groupSelectedFlag && fieldEnabledFlag;
         }
         return enabled;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "CurrentFieldState [groupEnabledFlag=" + groupEnabledFlag + ", groupSelectedFlag="
+                + groupSelectedFlag + ", fieldEnabledFlag=" + fieldEnabledFlag + "]";
     }
 }
