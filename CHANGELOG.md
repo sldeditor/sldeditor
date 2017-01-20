@@ -1,5 +1,24 @@
 # Change Log
 
+## [0.6.5](https://github.com/robward-scisys/sldeditor/tree/0.6.5) (2017-01-20)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.4...0.6.5)
+
+**Fixed bugs:**
+
+- Iss221 Fix crash when double value read in when expecting integer values [\#223](https://github.com/robward-scisys/sldeditor/pull/223) ([robward-scisys](https://github.com/robward-scisys))
+
+- Iss225 Added missing maven repository for docking-frames-common library [\#226](https://github.com/robward-scisys/sldeditor/pull/223) ([robward-scisys](https://github.com/robward-scisys))
+
+- Iss231 Fixed crash when data source values set [\#232](https://github.com/robward-scisys/sldeditor/pull/232) ([robward-scisys](https://github.com/robward-scisys))
+
+**Implemented enhancements:**
+
+- Iss233 Added ability to upload sld file using right mouse button on file system entries [\#236](https://github.com/robward-scisys/sldeditor/pull/236) ([robward-scisys](https://github.com/robward-scisys))
+
+- Iss222 Added TextSymbolizer2 support [\#237](https://github.com/robward-scisys/sldeditor/pull/237) ([robward-scisys](https://github.com/robward-scisys))
+
+- Iss228 Replaced deprecated DefaultHttpClient class [\#239](https://github.com/robward-scisys/sldeditor/pull/239) ([robward-scisys](https://github.com/robward-scisys))
+
 ## [0.6.4](https://github.com/robward-scisys/sldeditor/tree/0.6.4) (2016-12-21)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.3...0.6.4)
 
