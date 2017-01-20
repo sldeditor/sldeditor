@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -73,10 +73,12 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     private static final String REPO = "sldeditor";
 
     /** The Constant DOWNLOAD_URL. */
-    private static final String DOWNLOAD_URL = String.format("https://github.com/%s/%s/releases", USER, REPO);
+    private static final String DOWNLOAD_URL = String.format("https://github.com/%s/%s/releases",
+            USER, REPO);
 
     /** The Constant URL. */
-    private static final String URL = String.format("https://api.github.com/repos/%s/%s/releases", USER, REPO);
+    private static final String URL = String.format("https://api.github.com/repos/%s/%s/releases",
+            USER, REPO);
 
     /** The destination reached flag. */
     private boolean destinationReached = false;
@@ -84,16 +86,16 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     /**
      * Instantiates a new check update github.
      */
-    public CheckUpdateGitHub()
-    {
+    public CheckUpdateGitHub() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.update.CheckUpdateClientInterface#getLatest()
      */
     @Override
-    public UpdateData getLatest()
-    {
+    public UpdateData getLatest() {
         String json = readData();
 
         return check(json);
@@ -104,8 +106,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      *
      * @return the string
      */
-    private String readData()
-    {
+    private String readData() {
         return readDataFromURL(URL);
     }
 
@@ -115,16 +116,13 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      * @param url the url
      * @return the string
      */
-    protected String readDataFromURL(String url)
-    {
+    protected String readDataFromURL(String url) {
         destinationReached = false;
 
         StringBuilder sb = new StringBuilder();
-        if(url != null)
-        {
-            try
-            {
-                DefaultHttpClient httpClient = new DefaultHttpClient();
+        if (url != null) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+
                 HttpGet getRequest = new HttpGet(url);
                 getRequest.addHeader("accept", "application/json");
 
@@ -133,11 +131,10 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                 if (response.getStatusLine().getStatusCode() != 200) {
                     ConsoleManager.getInstance().error(this,
                             String.format("%s %s",
-                                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdateGitHub.httpError"),
+                                    Localisation.getField(CheckUpdatePanel.class,
+                                            "CheckUpdateGitHub.httpError"),
                                     response.getStatusLine().getStatusCode()));
-                }
-                else
-                {
+                } else {
                     BufferedReader br = new BufferedReader(
                             new InputStreamReader((response.getEntity().getContent())));
 
@@ -149,13 +146,10 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                     destinationReached = true;
                 }
 
-                httpClient.getConnectionManager().shutdown();
-
-            } catch (ClientProtocolException e) {
-                ConsoleManager.getInstance().exception(this, e);
+                httpClient.close();
             } catch (IOException e) {
-                ConsoleManager.getInstance().error(this, 
-                        Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
+                ConsoleManager.getInstance().error(this, Localisation.getString(
+                        CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
             }
         }
 
@@ -169,18 +163,15 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      * @return the update data
      */
     protected UpdateData check(String jsonString) {
-        if(jsonString == null)
-        {
+        if (jsonString == null) {
             return null;
         }
 
-        if(jsonString.isEmpty())
-        {
+        if (jsonString.isEmpty()) {
             return null;
         }
 
-        try
-        {
+        try {
             JsonParser parser = new JsonParser();
             JsonArray o = parser.parse(jsonString).getAsJsonArray();
 
@@ -189,13 +180,11 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             Map<String, String> descriptionMap = new HashMap<String, String>();
             List<Calendar> calList = new ArrayList<Calendar>();
 
-            for(int index = 0; index < o.size(); index ++)
-            {
+            for (int index = 0; index < o.size(); index++) {
                 JsonObject obj = o.get(index).getAsJsonObject();
 
                 String tagName = obj.get(TAG_NAME).getAsString();
-                if(tagName.startsWith(TAG_PREFIX))
-                {
+                if (tagName.startsWith(TAG_PREFIX)) {
                     tagName = tagName.substring(1);
                 }
                 String published = obj.get(PUBLISHED_AT).getAsString();
@@ -214,8 +203,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             String latest = map.get(latestTime);
             StringBuilder description = new StringBuilder();
 
-            for(Calendar time : calList)
-            {
+            for (Calendar time : calList) {
                 String tag = map.get(time);
                 formatDescription(description, tag, descriptionMap.get(tag));
             }
@@ -242,27 +230,25 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      * @param description the description
      */
     private void formatDescription(StringBuilder stringBuilder, String tag, String description) {
-        if(stringBuilder == null)
-        {
+        if (stringBuilder == null) {
             return;
         }
-        stringBuilder.append(String.format("<h2>Version : %s</h2>",tag));
-        stringBuilder.append(description.replace("\r\n","<br>"));
+        stringBuilder.append(String.format("<h2>Version : %s</h2>", tag));
+        stringBuilder.append(description.replace("\r\n", "<br>").replace("\n", "<br>"));
     }
 
     /**
-     *  Transform ISO 8601 string to Calendar.
+     * Transform ISO 8601 string to Calendar.
      *
      * @param iso8601string the iso 8601 string
      * @return the calendar
      * @throws ParseException the parse exception
      */
-    private static Calendar ISO8601toCalendar(final String iso8601string)
-            throws ParseException {
+    private static Calendar ISO8601toCalendar(final String iso8601string) throws ParseException {
         Calendar calendar = GregorianCalendar.getInstance();
         String s = iso8601string.replace("Z", "+00:00");
         try {
-            s = s.substring(0, 22) + s.substring(23);  // to get rid of the ":"
+            s = s.substring(0, 22) + s.substring(23); // to get rid of the ":"
         } catch (IndexOutOfBoundsException e) {
             throw new ParseException("Invalid length", 0);
         }
@@ -272,7 +258,9 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
         return calendar;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.update.CheckUpdateClientInterface#getDownloadURL()
      */
     @Override
