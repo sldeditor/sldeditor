@@ -63,7 +63,7 @@ public class CheckUpdate {
 
             if(latestData != null)
             {
-                VersionData current = VersionData.decode(getClass(), currentVersion);
+                VersionData current = VersionData.decode(latestData.getVersion().getVendorOptionType(), currentVersion);
 
                 int result = current.compareTo(latestData.getVersion());
 
