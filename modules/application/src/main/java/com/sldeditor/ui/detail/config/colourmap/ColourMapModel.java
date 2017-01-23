@@ -230,7 +230,7 @@ public class ColourMapModel extends AbstractTableModel {
             }
         }
 
-        data.setColour(ff.literal(ColourUtils.createRandomColour()));
+        data.setColour(ff.literal(ColourUtils.fromColour(ColourUtils.createRandomColour())));
         data.setOpacity(ff.literal(DefaultSymbols.defaultColourOpacity()));
         data.setQuantity(quantity);
 
