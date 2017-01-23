@@ -333,7 +333,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
             }
             else if(quantityValue instanceof String)
             {
-                quantity = Integer.valueOf((String) quantityValue);
+                quantity = Double.valueOf((String) quantityValue).intValue();
             }
         }
 
