@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.scale;
+package com.sldeditor.tool.batchupdatefont;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +46,7 @@ import java.awt.FlowLayout;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ScaleTool implements ToolInterface {
+public class BatchUpdateFontTool implements ToolInterface {
 
     /** The Scale button. */
     private JButton scaleButton;
@@ -69,7 +69,7 @@ public class ScaleTool implements ToolInterface {
      *
      * @param application the application
      */
-    public ScaleTool(SLDEditorInterface application)
+    public BatchUpdateFontTool(SLDEditorInterface application)
     {
         super();
         this.application = application;
@@ -85,15 +85,15 @@ public class ScaleTool implements ToolInterface {
         FlowLayout flowLayout = (FlowLayout) scaleGroupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        scaleGroupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(ScaleTool.class, "ScaleTool.scale")));
+        scaleGroupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title")));
 
-        scaleButton = new ToolButton(Localisation.getString(ScaleTool.class, "ScaleTool.scale"),
-                "tool/scaletool.png");
+        scaleButton = new ToolButton(Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title"),
+                "tool/batchupdatefont.png");
         scaleGroupPanel.add(scaleButton);
         scaleButton.setEnabled(false);
         scaleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ScaleToolPanel scalePanel = new ScaleToolPanel(application);
+                BatchUpdateFontPanel scalePanel = new BatchUpdateFontPanel(application);
 
                 scalePanel.populate(sldDataList);
                 scalePanel.setVisible(true);

@@ -46,6 +46,7 @@ import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.html.ExportHTML;
 import com.sldeditor.ui.legend.LegendManager;
+import java.awt.FlowLayout;
 
 /**
  * Groups all the legend tools together.
@@ -90,6 +91,9 @@ public class LegendTool implements ToolInterface {
      */
     private void createUI() {
         legendPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) legendPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         legendPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(LegendTool.class, "LegendTool.legend")));
 
         saveAllLegend = new ToolButton(Localisation.getString(LegendTool.class, "LegendTool.legend"),

@@ -48,6 +48,7 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import java.awt.FlowLayout;
 
 /**
  * The Class VectorTool.
@@ -92,6 +93,9 @@ public class VectorTool implements ToolInterface {
      */
     private void createUI() {
         vectorPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) vectorPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         vectorPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(VectorTool.class, "VectorTool.title")));
 
         //

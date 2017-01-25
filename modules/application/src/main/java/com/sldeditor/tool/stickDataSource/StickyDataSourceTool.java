@@ -22,6 +22,7 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.tool.ToggleToolButton;
 import com.sldeditor.tool.ToolInterface;
+import java.awt.FlowLayout;
 
 /**
  * The Class StickyDataSourceTool.
@@ -50,6 +51,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
      */
     private void createUI() {
         groupPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(StickyDataSourceTool.class, "StickyDataSourceTool.groupTitle")));
 
         // Export to YSLD

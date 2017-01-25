@@ -61,6 +61,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
+import java.awt.FlowLayout;
 
 /**
  * Tool which given a list of SLD objects saves them to SLD files.
@@ -119,6 +120,9 @@ public class SaveSLDTool implements ToolInterface {
     private void createUI()
     {
         groupPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.save")));
 
         saveAllSLD = new ToolButton(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.sld"),

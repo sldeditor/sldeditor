@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import java.awt.FlowLayout;
 
 /**
  * Panel that contains all application tools.
@@ -59,6 +60,10 @@ public class ToolPanel extends JPanel
      */
     public ToolPanel(Map<Class<?>, List<ToolInterface> > toolMap)
     {
+        FlowLayout flowLayout = (FlowLayout) getLayout();
+        flowLayout.setAlignOnBaseline(true);
+        flowLayout.setVgap(1);
+        flowLayout.setHgap(1);
         this.toolMap = toolMap;
     }
 
@@ -106,7 +111,7 @@ public class ToolPanel extends JPanel
         for(ToolInterface tool : consolidatedToolList)
         {
             JPanel panel = tool.getPanel();
-            add(panel);
+            this.add(panel);
             displayedPanels.add(panel);
             tool.setSelectedItems(nodeTypeList, sldDataList);
             logger.debug("Displaying tool : " + tool.getToolName());

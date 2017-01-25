@@ -49,6 +49,7 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.vector.VectorTool;
+import java.awt.FlowLayout;
 
 /**
  * The Class RasterTool.
@@ -93,6 +94,9 @@ public class RasterTool implements ToolInterface {
      */
     private void createUI() {
         rasterPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) rasterPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         rasterPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(RasterTool.class, "RasterTool.title")));
 
         //
