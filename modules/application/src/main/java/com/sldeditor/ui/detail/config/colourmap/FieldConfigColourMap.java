@@ -20,6 +20,8 @@ package com.sldeditor.ui.detail.config.colourmap;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -48,13 +50,14 @@ import com.sldeditor.ui.widgets.FieldPanel;
 /**
  * The Class FieldConfigColourMap wraps a table GUI component and allows a colour map to be configured.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigColourMap extends FieldConfigBase implements UndoActionInterface, ColourMapModelUpdateInterface, ColourMapEntryUpdateInterface {
+public class FieldConfigColourMap extends FieldConfigBase implements UndoActionInterface,
+        ColourMapModelUpdateInterface, ColourMapEntryUpdateInterface {
 
     /** The table. */
     private JTable table;
@@ -96,8 +99,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param row the row
      * @return the row y
      */
-    private static int getRowY(int row)
-    {
+    private static int getRowY(int row) {
         return BasePanel.WIDGET_HEIGHT * row;
     }
 
@@ -114,62 +116,80 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel());
 
         colourRampConfig = new ColourRampConfigPanel(this, model);
-        colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(maxNoOfConfigRows));
+        colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH,
+                getRowY(maxNoOfConfigRows));
         fieldPanel.add(colourRampConfig);
 
         table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        table.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(totalRows - 2));
+        table.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH,
+                getRowY(totalRows - 2));
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting())
-                {
+                if (!e.getValueIsAdjusting()) {
                     removeButton.setEnabled(true);
 
-                    ColorMapEntry entry = model.getColourMapEntry(table.getSelectedRow());
-                    colourMapEntryPanel.setSelectedEntry(entry);
+                    List<ColorMapEntry> entries;
+                    if (table.getSelectedRowCount() == 1) {
+                        ColorMapEntry entry = model.getColourMapEntry(table.getSelectedRow());
+                        entries = new ArrayList<ColorMapEntry>();
+                        entries.add(entry);
+                    }
+                    else {
+                        entries = model.getColourMapEntries(table.getSelectedRows());
+                    }
+                    colourMapEntryPanel.setSelectedEntry(entries);
                 }
-            }});
+            }
+        });
         model.setCellRenderer(table);
 
         JScrollPane scrollPanel = new JScrollPane(table);
         int endOfTableRow = maxNoOfConfigRows + maxNoOfTableRows - 2;
-        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH, getRowY(endOfTableRow) - getRowY(maxNoOfConfigRows));
+        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH,
+                getRowY(endOfTableRow) - getRowY(maxNoOfConfigRows));
         fieldPanel.add(scrollPanel);
 
         int buttonY = getRowY(endOfTableRow);
         //
         // Add button
         //
-        addButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.add"));
-        addButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        addButton.addActionListener(new ActionListener(){
+        addButton = new JButton(
+                Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.add"));
+        addButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
+        addButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 addEntry();
-            }});
+            }
+        });
         fieldPanel.add(addButton);
 
         //
         // Remove button
         //
-        removeButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.remove"));
-        removeButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        removeButton = new JButton(
+                Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.remove"));
+        removeButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10,
+                buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         removeButton.setEnabled(false);
-        removeButton.addActionListener(new ActionListener(){
+        removeButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeEntry();
-            }});
+            }
+        });
         fieldPanel.add(removeButton);
 
         colourMapEntryPanel = new ColourMapEntryPanel(getPanelId(), this);
-        colourMapEntryPanel.setBounds(xPos, getRowY(maxNoOfConfigRows + maxNoOfTableRows - 1), BasePanel.FIELD_PANEL_WIDTH, colourMapEntryPanel.getPanelHeight());
+        colourMapEntryPanel.setBounds(xPos, getRowY(maxNoOfConfigRows + maxNoOfTableRows - 1),
+                BasePanel.FIELD_PANEL_WIDTH, colourMapEntryPanel.getPanelHeight());
         fieldPanel.add(colourMapEntryPanel);
     }
 
@@ -185,7 +205,8 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * Removes the selected colour map entries.
      */
     private void removeEntry() {
-        model.removeEntries(table.getSelectionModel().getMinSelectionIndex(), table.getSelectionModel().getMaxSelectionIndex());
+        model.removeEntries(table.getSelectionModel().getMinSelectionIndex(),
+                table.getSelectionModel().getMaxSelectionIndex());
         removeButton.setEnabled(false);
     }
 
@@ -194,12 +215,13 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -209,10 +231,8 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param enabled the new enabled
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
-        if(table != null)
-        {
+    public void setEnabled(boolean enabled) {
+        if (table != null) {
             table.setEnabled(enabled);
         }
     }
@@ -222,12 +242,13 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
         return expression;
@@ -238,20 +259,17 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(table != null)
-            {
+        } else {
+            if (table != null) {
                 return table.isEnabled();
             }
         }
@@ -261,12 +279,13 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(defaultValue);
     }
 
@@ -275,12 +294,13 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         // Do nothing
     }
 
@@ -290,10 +310,8 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @return the string value
      */
     @Override
-    public ColorMap getColourMap()
-    {
-        if(table != null)
-        {
+    public ColorMap getColourMap() {
+        if (table != null) {
             return model.getColourMap();
         }
         return null;
@@ -305,13 +323,10 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((table != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof ColorMap)
-            {
-                ColorMap oldValue = (ColorMap)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((table != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof ColorMap) {
+                ColorMap oldValue = (ColorMap) undoRedoObject.getOldValue();
 
                 populateField(oldValue);
             }
@@ -324,13 +339,10 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((table != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof ColorMap)
-            {
-                ColorMap newValue = (ColorMap)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((table != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof ColorMap) {
+                ColorMap newValue = (ColorMap) undoRedoObject.getNewValue();
 
                 populateField(newValue);
             }
@@ -355,22 +367,19 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     @Override
     public void populateField(ColorMap value) {
-        if(model != null)
-        {
-            if(value != null)
-            {
-                if(colourRampConfig != null)
-                {
+        if (model != null) {
+            if (value != null) {
+                if (colourRampConfig != null) {
                     colourRampConfig.populate(value);
                 }
                 model.populate(value);
 
-                if(colourMapEntryPanel != null)
-                {
+                if (colourMapEntryPanel != null) {
                     colourMapEntryPanel.setSelectedEntry(null);
                 }
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
                 oldValueObj = value;
 
@@ -389,8 +398,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigColourMap copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigColourMap(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -403,8 +411,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     @Override
     public void setVisible(boolean visible) {
-        if(table != null)
-        {
+        if (table != null) {
             table.setVisible(visible);
         }
     }
@@ -419,28 +426,33 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
         return EncodeColourMap.encode(model.getColourMap());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.colourmap.ColourMapModelUpdateInterface#colourMapUpdated()
      */
     @Override
     public void colourMapUpdated() {
         ColorMap colourMap = model.getColourMap();
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, colourMap));
+        UndoManager.getInstance()
+                .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, colourMap));
 
         oldValueObj = colourMap;
 
         valueUpdated();
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.colourmap.ColourMapEntryUpdateInterface#colourMapEntryUpdated(com.sldeditor.ui.detail.config.colourmap.ColourMapData)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.config.colourmap.ColourMapEntryUpdateInterface#colourMapEntryUpdated(com.sldeditor.ui.detail.config.colourmap.
+     * ColourMapData)
      */
     @Override
     public void colourMapEntryUpdated(ColourMapData data) {
-        if(model != null)
-        {
-            model.updateColourMapEntry(table.getSelectedRow(), data);
+        if (model != null) {
+            model.updateColourMapEntry(table.getSelectedRows(), data);
         }
         removeButton.setEnabled(false);
     }

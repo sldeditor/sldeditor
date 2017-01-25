@@ -38,14 +38,14 @@ import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigColour wraps a button GUI component displaying the current colour
- * and an optional value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigColour wraps a button GUI component displaying the current colour and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
  * Clicking on the button displays the standard Java colour selection dialog.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -72,7 +72,9 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -83,12 +85,13 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
         FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
         colourButton = new ColourButton();
-        colourButton.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        colourButton.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(colourButton);
 
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
+        if (!isValueOnly()) {
+            setAttributeSelectionPanel(
+                    fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
         }
 
         colourButton.registerObserver(new ColourNotifyInterface() {
@@ -97,7 +100,8 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
 
                 Color newValueObj = colourButton.getColour();
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                UndoManager.getInstance().addUndoEvent(
+                        new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
                 oldValueObj = newValueObj;
 
@@ -111,12 +115,13 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -125,14 +130,14 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
-        if(colourButton != null)
-        {
+    public void setEnabled(boolean enabled) {
+        if (colourButton != null) {
             colourButton.setEnabled(enabled);
         }
     }
@@ -142,12 +147,13 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         // Handled by getColourExpression() and getColourOpacityExpression()
         return null;
     }
@@ -157,20 +163,17 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(colourButton != null)
-            {
+        } else {
+            if (colourButton != null) {
                 return colourButton.isEnabled();
             }
         }
@@ -180,14 +183,14 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
-        if(colourButton != null)
-        {
+    public void revertToDefaultValue() {
+        if (colourButton != null) {
             oldValueObj = this.defaultValue;
             colourButton.populate(this.defaultValue);
         }
@@ -198,49 +201,42 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         String sValue = null;
         boolean validColour = true;
 
-        if(objValue instanceof LiteralExpressionImpl)
-        {
-            sValue = ((LiteralExpressionImpl)objValue).toString();
-        }
-        else if(objValue instanceof String)
-        {
+        if (objValue instanceof LiteralExpressionImpl) {
+            sValue = ((LiteralExpressionImpl) objValue).toString();
+        } else if (objValue instanceof String) {
             sValue = (String) objValue;
-        }
-        else
-        {
+        } else {
             validColour = false;
-            if(objValue != null)
-            {
-                ConsoleManager.getInstance().error(this, "Colour expression is of unknown type : " + objValue.getClass().getName());
-            }
-            else
-            {
+            if (objValue != null) {
+                ConsoleManager.getInstance().error(this,
+                        "Colour expression is of unknown type : " + objValue.getClass().getName());
+            } else {
                 // Null is allowed, just will not be shown
             }
         }
 
-        if((colourButton != null) && validColour)
-        {
-            if(!sValue.startsWith("#"))
-            {
-                ConsoleManager.getInstance().error(this, "Colour string does not start with #" + sValue);
-            }
-            else
-            {
-                Expression opacity = getFilterFactory().literal(DefaultSymbols.defaultColourOpacity());
+        if ((colourButton != null) && validColour) {
+            if (!sValue.startsWith("#")) {
+                ConsoleManager.getInstance().error(this,
+                        "Colour string does not start with #" + sValue);
+            } else {
+                Expression opacity = getFilterFactory()
+                        .literal(DefaultSymbols.defaultColourOpacity());
                 colourButton.populate(sValue, opacity);
                 Color newValue = colourButton.getColour();
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValue));
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValue));
 
                 oldValueObj = newValue;
             }
@@ -253,16 +249,17 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @return the colour expression
      */
     public Expression getColourExpression() {
-        if(colourButton == null)
-        {
+        if (colourButton == null) {
             return null;
         }
-        if((getExpressionType() == ExpressionTypeEnum.E_ATTRIBUTE) ||
-                (getExpressionType() == ExpressionTypeEnum.E_EXPRESSION))
-        {
-            return getExpression();
+        if (getPanel().isValueReadable()) {
+            if ((getExpressionType() == ExpressionTypeEnum.E_ATTRIBUTE)
+                    || (getExpressionType() == ExpressionTypeEnum.E_EXPRESSION)) {
+                return getExpression();
+            }
+            return getFilterFactory().literal(colourButton.getColourString());
         }
-        return getFilterFactory().literal(colourButton.getColourString()); 
+        return null;
     }
 
     /**
@@ -271,18 +268,14 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @return the colour opacity expression
      */
     public Expression getColourOpacityExpression() {
-        if((getExpressionType() == ExpressionTypeEnum.E_ATTRIBUTE) ||
-                (getExpressionType() == ExpressionTypeEnum.E_EXPRESSION))
-        {
+        if ((getExpressionType() == ExpressionTypeEnum.E_ATTRIBUTE)
+                || (getExpressionType() == ExpressionTypeEnum.E_EXPRESSION)) {
             return getExpression();
         }
 
-        if(colourButton != null)
-        {
+        if (colourButton != null) {
             return getFilterFactory().literal(colourButton.getColourOpacity());
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -293,10 +286,8 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(colourButton == null)
-        {
+    public String getStringValue() {
+        if (colourButton == null) {
             return "";
         }
         return colourButton.getColourString();
@@ -308,13 +299,10 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((colourButton != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof Color)
-            {
-                Color oldValue = (Color)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((colourButton != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof Color) {
+                Color oldValue = (Color) undoRedoObject.getOldValue();
 
                 colourButton.setColour(oldValue);
 
@@ -329,13 +317,10 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((colourButton != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof Color)
-            {
-                Color newValue = (Color)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((colourButton != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof Color) {
+                Color newValue = (Color) undoRedoObject.getNewValue();
 
                 colourButton.setColour(newValue);
 
@@ -352,12 +337,12 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void setTestValue(FieldIdEnum fieldId, String testValue) {
-        if(colourButton != null)
-        {
+        if (colourButton != null) {
             colourButton.populate(testValue, null);
 
             Color value = ColourUtils.toColour(testValue);
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
             oldValueObj = value;
 
@@ -374,8 +359,7 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigColour copy = null;
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigColour(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -388,8 +372,7 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void setVisible(boolean visible) {
-        if(colourButton != null)
-        {
+        if (colourButton != null) {
             colourButton.setVisible(visible);
         }
     }

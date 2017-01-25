@@ -47,6 +47,7 @@ import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
+import org.geotools.filter.function.string.ConcatenateFunction;
 import org.geotools.filter.text.cql2.CQL;
 import org.opengis.filter.Filter;
 import org.opengis.filter.Not;
@@ -542,6 +543,18 @@ public class ExpressionPanelv2 extends JDialog implements ExpressionFilterInterf
             mathExpression.setExpression2(addExpression(rightChildNode));
 
             return mathExpression;
+        }
+        else if(expression instanceof ConcatenateFunction)
+        {
+            ConcatenateFunction concatenateExpression = (ConcatenateFunction) expression;
+            List<Expression> parameters = new ArrayList<Expression>();
+            ExpressionNode leftChildNode = (ExpressionNode) node.getChildAt(0);
+            parameters.add(addExpression(leftChildNode));
+            ExpressionNode rightChildNode = (ExpressionNode) node.getChildAt(1);
+            parameters.add(addExpression(rightChildNode));
+            concatenateExpression.setParameters(parameters);
+
+            return concatenateExpression;
         }
         return null;
     }

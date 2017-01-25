@@ -43,6 +43,9 @@ public class FieldConfigCommonData {
     /** The raster symbol. */
     private boolean rasterSymbol = false;
 
+    /** The optional field checkbox. */
+    private boolean optionalField = false;
+    
     /**
      * Instantiates a new field config common data.
      *
@@ -60,6 +63,27 @@ public class FieldConfigCommonData {
         this.label = label;
         this.valueOnly = valueOnly;
         this.rasterSymbol = rasterSymbol;
+    }
+
+    /**
+     * Instantiates a new field config common data.
+     *
+     * @param panelId the panel id
+     * @param id the id
+     * @param label the label
+     * @param valueOnly the value only
+     * @param rasterSymbol the raster symbol
+     * @param optionalCheckbox the optional checkbox
+     */
+    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly,
+            boolean rasterSymbol, boolean optionalCheckbox) {
+        super();
+        this.panelId = panelId;
+        this.id = id;
+        this.label = label;
+        this.valueOnly = valueOnly;
+        this.rasterSymbol = rasterSymbol;
+        this.optionalField = optionalCheckbox;
     }
 
     /**
@@ -91,6 +115,7 @@ public class FieldConfigCommonData {
             this.label = commonData.label;
             this.valueOnly = commonData.valueOnly;
             this.rasterSymbol = commonData.rasterSymbol;
+            this.optionalField = commonData.optionalField;
         }
     }
 
@@ -146,5 +171,14 @@ public class FieldConfigCommonData {
      */
     public void setValueOnly(boolean valueOnly) {
         this.valueOnly = valueOnly;
+    }
+
+    /**
+     * Checks if is optional field.
+     *
+     * @return true, if is optional field
+     */
+    public boolean isOptionalField() {
+        return optionalField;
     }
 }
