@@ -21,11 +21,9 @@ package com.sldeditor.ui.detail.config.colourmap;
 import java.awt.Color;
 
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
-import org.springframework.expression.common.LiteralExpression;
 
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.utils.ColourUtils;
@@ -56,13 +54,12 @@ public class ColourMapData {
     private String label;
 
     /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /**
      * Instantiates a new colour map data.
      */
-    public ColourMapData()
-    {
+    public ColourMapData() {
 
     }
 
@@ -82,22 +79,16 @@ public class ColourMapData {
      */
     public void setColour(Expression colourExpression) {
         this.colourExpression = colourExpression;
-        if(colourExpression instanceof LiteralExpressionImpl)
-        {
-            colourString = ((LiteralExpressionImpl)colourExpression).toString();
+        if (colourExpression instanceof LiteralExpressionImpl) {
+            colourString = ((LiteralExpressionImpl) colourExpression).toString();
 
-            if(ColourUtils.validColourString(colourString))
-            {
+            if (ColourUtils.validColourString(colourString)) {
                 this.colour = ColourUtils.toColour(colourString);
-            }
-            else
-            {
+            } else {
                 this.colour = Color.white;
             }
-        }
-        else if(colourExpression instanceof FunctionExpressionImpl)
-        {
-            colourString = ((FunctionExpressionImpl)colourExpression).toString();
+        } else if (colourExpression instanceof Expression) {
+            colourString = ((Expression) colourExpression).toString();
             this.colour = Color.white;
         }
     }
@@ -135,8 +126,7 @@ public class ColourMapData {
      * @return the opacity
      */
     public Expression getOpacity() {
-        if(opacity == null)
-        {
+        if (opacity == null) {
             opacity = ff.literal(DefaultSymbols.defaultColourOpacity());
         }
         return opacity;
@@ -186,15 +176,12 @@ public class ColourMapData {
     public Expression getNextQuantity() {
         Expression nextQuantity = null;
 
-        if(quantity != null)
-        {
-            if(quantity instanceof LiteralExpression)
-            {
+        if (quantity != null) {
+            if (quantity instanceof LiteralExpressionImpl) {
                 double quantityValue = Double.valueOf(quantity.toString());
                 nextQuantity = ff.literal(quantityValue + 1);
-            }
-            else
-            {
+            } else {
+                // Could be a function expression so just leave alone
                 nextQuantity = quantity;
             }
         }
@@ -207,9 +194,22 @@ public class ColourMapData {
      * @param newData the new data
      */
     public void update(ColourMapData newData) {
-        this.label = newData.label;
-        setColour(newData.getColourExpression());
-        setOpacity(newData.getOpacity());
-        setQuantity(newData.getQuantity());
+        if (newData != null) {
+            if (newData.label != null) {
+                this.label = newData.label;
+            }
+
+            if (newData.getColourExpression() != null) {
+                setColour(newData.getColourExpression());
+            }
+
+            if (newData.getOpacity() != null) {
+                setOpacity(newData.getOpacity());
+            }
+
+            if (newData.getQuantity() != null) {
+                setQuantity(newData.getQuantity());
+            }
+        }
     }
 }

@@ -110,6 +110,7 @@ public class FieldConfigBaseTest {
 
         @Override
         public void createUI() {
+            createFieldPanel();
         }
 
         @Override
@@ -611,5 +612,22 @@ public class FieldConfigBaseTest {
 
         field.createUI();
         field.addUI(new JButton(), 10, 10, 10);
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#showOptionField(boolean)}.
+     */
+    @Test
+    public void testShowOptionField() {
+        FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
+        String expectedLabel = "test label";
+        TestFieldConfigBase field = new TestFieldConfigBase(new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+
+        field.showOptionField(true);
+        field.setOptionFieldValue(true);
+        field.createUI();
+        field.showOptionField(false);
+        field.setOptionFieldValue(false);
+        assertNotNull(field.toString());
     }
 }
