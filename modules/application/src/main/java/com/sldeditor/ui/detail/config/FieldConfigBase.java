@@ -64,7 +64,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * @author Robert Ward (SCISYS)
  */
 public abstract class FieldConfigBase extends FieldConfigPopulate
-        implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
+implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
     /** The Constant X_POS. */
     private static final int X_POS = 0;
@@ -424,6 +424,9 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      * @return the expression
      */
     public Expression getExpression() {
+        if ((getPanel() != null) && !getPanel().isValueReadable()) {
+            return null;
+        }
         if (getExpressionType() == ExpressionTypeEnum.E_VALUE) {
             cachedExpression = generateExpression();
         } else {
@@ -507,7 +510,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      */
     protected FieldPanel createFieldPanel(int xPos, String fieldLabel) {
         if (fieldPanel == null) {
-            fieldPanel = new FieldPanel(xPos, fieldLabel);
+            fieldPanel = new FieldPanel(xPos, fieldLabel, getCommonData().isOptionalField(), this);
         }
 
         return fieldPanel;
@@ -520,7 +523,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      */
     protected FieldPanel createFieldPanel() {
         if (fieldPanel == null) {
-            fieldPanel = new FieldPanel();
+            fieldPanel = new FieldPanel(this);
         }
 
         return fieldPanel;
@@ -535,7 +538,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      * @return the field panel
      */
     protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel) {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, height);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, height, getCommonData().isOptionalField(), this);
 
         return fieldPanel;
     }
@@ -664,6 +667,31 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
             this.fieldState = fieldState;
 
             setValueFieldState();
+        }
+    }
+
+    /**
+     * Show option field.
+     *
+     * @param displayOptionalFields the display optional fields
+     */
+    public void showOptionField(boolean displayOptionalFields) {
+        if(fieldPanel != null)
+        {
+            fieldPanel.showOptionField(displayOptionalFields);
+        }
+    }
+
+    /**
+     * Sets the option field value.
+     *
+     * @param isSelected the new option field value
+     */
+    public void setOptionFieldValue(boolean isSelected)
+    {
+        if(fieldPanel != null)
+        {
+            fieldPanel.setOptionFieldValue(isSelected);
         }
     }
 }

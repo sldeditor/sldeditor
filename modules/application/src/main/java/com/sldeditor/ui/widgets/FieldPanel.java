@@ -19,7 +19,10 @@
 package com.sldeditor.ui.widgets;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -41,11 +44,19 @@ public class FieldPanel extends JPanel {
     /** The x pos. */
     private int xPos = 0;
 
+    /** The optional checkbox. */
+    private JCheckBox optionalCheckbox = null;
+
+    /** The this obj. */
+    private FieldConfigBase thisObj = null;
+
     /**
      * Instantiates a new field panel with no row.
+     *
+     * @param obj the obj
      */
-    public FieldPanel() {
-        this(0, null, 1);
+    public FieldPanel(FieldConfigBase obj) {
+        this(0, null, 1, false, obj);
     }
 
     /**
@@ -53,9 +64,11 @@ public class FieldPanel extends JPanel {
      *
      * @param xPos the x pos
      * @param labelString the label string
+     * @param optionalField the optional field
+     * @param obj the obj
      */
-    public FieldPanel(int xPos, String labelString) {
-        this(xPos, labelString, BasePanel.WIDGET_HEIGHT);
+    public FieldPanel(int xPos, String labelString, boolean optionalField, FieldConfigBase obj) {
+        this(xPos, labelString, BasePanel.WIDGET_HEIGHT, optionalField, obj);
     }
 
     /**
@@ -64,17 +77,24 @@ public class FieldPanel extends JPanel {
      * @param xPos the x pos
      * @param labelString the label string
      * @param height the height
+     * @param optionalField the optional field
+     * @param obj the obj
      */
-    public FieldPanel(int xPos, String labelString, int height) {
+    public FieldPanel(int xPos, String labelString, int height, boolean optionalField,
+            FieldConfigBase obj) {
+        thisObj = obj;
+
         this.xPos = xPos;
-        
+
         setLayout(null);
-        
-        if(labelString != null)
-        {
+
+        if (labelString != null) {
             internalCreateLabel(xPos, labelString);
         }
 
+        if (optionalField) {
+            internalCreateOptionalCheckbox(xPos);
+        }
         Dimension size = new Dimension(BasePanel.FIELD_PANEL_WIDTH, height);
 
         this.setPreferredSize(size);
@@ -88,12 +108,13 @@ public class FieldPanel extends JPanel {
      * @param rasterSymbol the raster symbol
      * @return the attribute selection
      */
-    public AttributeSelection internalCreateAttrButton(Class<?> classType, 
-            FieldConfigBase field,
+    public AttributeSelection internalCreateAttrButton(Class<?> classType, FieldConfigBase field,
             boolean rasterSymbol) {
 
-        AttributeSelection buttonAttrLabel = AttributeSelection.createAttributes(classType, field, rasterSymbol);
-        buttonAttrLabel.setBounds(xPos + BasePanel.ATTRIBUTE_BTN_X, 0, AttributeSelection.getPanelWidth(), BasePanel.WIDGET_HEIGHT);
+        AttributeSelection buttonAttrLabel = AttributeSelection.createAttributes(classType, field,
+                rasterSymbol);
+        buttonAttrLabel.setBounds(xPos + BasePanel.ATTRIBUTE_BTN_X, 0,
+                AttributeSelection.getPanelWidth(), BasePanel.WIDGET_HEIGHT);
         add(buttonAttrLabel);
 
         return buttonAttrLabel;
@@ -111,5 +132,84 @@ public class FieldPanel extends JPanel {
         lblLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 
         add(lblLabel);
+    }
+
+    /**
+     * Internal create optional checkbox.
+     *
+     * @param xPos the x pos
+     */
+    private void internalCreateOptionalCheckbox(int xPos) {
+        optionalCheckbox = new JCheckBox();
+        optionalCheckbox.setBounds(xPos + 5 + BasePanel.LABEL_WIDTH, 0, BasePanel.CHECKBOX_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
+        optionalCheckbox.setVisible(false);
+        optionalCheckbox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleOptionalValue();
+            }
+        });
+        add(optionalCheckbox);
+    }
+
+    /**
+     * Handle optional value.
+     */
+    private void handleOptionalValue() {
+        boolean enabled = true;
+        
+        if (optionalCheckbox != null) {
+            if(optionalCheckbox.isVisible())
+            {
+                enabled = optionalCheckbox.isSelected();
+            }
+        }
+
+        if (thisObj != null) {
+            thisObj.setEnabled(enabled);
+        }
+    }
+
+    /**
+     * Show option field.
+     *
+     * @param displayOptionalFields the display optional fields
+     */
+    public void showOptionField(boolean displayOptionalFields) {
+        if (optionalCheckbox != null) {
+            optionalCheckbox.setVisible(displayOptionalFields);
+            handleOptionalValue();
+        }
+    }
+
+    /**
+     * Sets the option field value.
+     *
+     * @param isSelected the new option field value
+     */
+    public void setOptionFieldValue(boolean isSelected) {
+        if (optionalCheckbox != null) {
+            optionalCheckbox.setSelected(isSelected);
+            handleOptionalValue();
+        }
+    }
+
+    /**
+     * Checks if is value readable.
+     *
+     * @return true, if is value readable
+     */
+    public boolean isValueReadable() {
+        if (optionalCheckbox == null) {
+            return true;
+        }
+        
+        if(optionalCheckbox.isVisible())
+        {
+            return optionalCheckbox.isSelected();
+        }
+        return true;
     }
 }

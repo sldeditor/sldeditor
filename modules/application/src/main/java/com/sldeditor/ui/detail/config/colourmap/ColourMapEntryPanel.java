@@ -21,6 +21,8 @@ package com.sldeditor.ui.detail.config.colourmap;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -28,9 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ColorMapEntry;
-import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -83,14 +83,16 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
     /** The parent obj. */
     private ColourMapEntryUpdateInterface parentObj;
 
+    /** The field list. */
+    List<FieldConfigBase> fieldList = new ArrayList<FieldConfigBase>();
+
     /**
      * Instantiates a new colour map entry panel.
      *
      * @param panelId the panel id
      * @param parent the parent
      */
-    public ColourMapEntryPanel(Class<?> panelId, ColourMapEntryUpdateInterface parent)
-    {
+    public ColourMapEntryPanel(Class<?> panelId, ColourMapEntryUpdateInterface parent) {
         this.parentObj = parent;
         createUI(panelId);
     }
@@ -102,28 +104,47 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
      */
     private void createUI(Class<?> panelId) {
 
-        TitledBorder title = BorderFactory.createTitledBorder(Localisation.getString(FieldConfigBase.class, "ColourMapEntryPanel.title"));
+        TitledBorder title = BorderFactory.createTitledBorder(
+                Localisation.getString(FieldConfigBase.class, "ColourMapEntryPanel.title"));
         setBorder(title);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        label = new FieldConfigString(new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_LABEL, Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.label"), true, true), null);
+        label = new FieldConfigString(
+                new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_LABEL,
+                        Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.label"),
+                        true, true, true),
+                null);
         label.createUI();
         label.addDataChangedListener(this);
+        fieldList.add(label);
         add(label.getPanel());
 
-        colour = new FieldConfigColour(new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_COLOUR, Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.colour"), false, true));
+        colour = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_COLOUR,
+                        Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.colour"),
+                        false, true, true));
         colour.createUI();
         colour.addDataChangedListener(this);
+        fieldList.add(colour);
         add(colour.getPanel());
 
-        opacity = new FieldConfigSlider(new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_OPACITY, Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.opacity"), false, true));
+        opacity = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_OPACITY,
+                        Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.opacity"),
+                        false, true, true));
         opacity.createUI();
         opacity.addDataChangedListener(this);
+        fieldList.add(opacity);
         add(opacity.getPanel());
 
-        quantity = new FieldConfigDouble(new FieldConfigCommonData(panelId, FieldIdEnum.RASTER_COLOURMAP_ENTRY_QUANTITY, Localisation.getField(FieldConfigBase.class, "ColourMapEntryPanel.quantity"), false, true));
+        quantity = new FieldConfigDouble(
+                new FieldConfigCommonData(panelId,
+                        FieldIdEnum.RASTER_COLOURMAP_ENTRY_QUANTITY, Localisation
+                                .getField(FieldConfigBase.class, "ColourMapEntryPanel.quantity"),
+                        false, true, true));
         quantity.createUI();
         quantity.addDataChangedListener(this);
+        fieldList.add(quantity);
         add(quantity.getPanel());
 
         JPanel buttonPanel = new JPanel();
@@ -135,8 +156,7 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     ColourMapData data = new ColourMapData();
                     data.setLabel(label.getStringValue());
                     data.setColour(colour.getColourExpression());
@@ -145,7 +165,8 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
 
                     parentObj.colourMapEntryUpdated(data);
                 }
-            }});
+            }
+        });
         buttonPanel.add(applyButton);
 
         //
@@ -157,7 +178,8 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-            }});
+            }
+        });
         buttonPanel.add(cancelButton);
 
         add(buttonPanel);
@@ -184,36 +206,65 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
     /**
      * Sets the selected entry.
      *
-     * @param entry the new selected entry
+     * @param entries the new selected entry
      */
-    public void setSelectedEntry(ColorMapEntry entry) {
-        if(entry != null)
-        {
+    public void setSelectedEntry(List<ColorMapEntry> entries) {
+        if (entries == null) {
+            setVisible(false);
+
+        } else if (entries.size() == 1) {
             setVisible(true);
+            ColorMapEntry entry = entries.get(0);
             label.populateField(entry.getLabel());
-            Expression opacityExpression = entry.getOpacity();
-            if(opacityExpression instanceof LiteralExpressionImpl)
-            {
-                Object objValue = ((LiteralExpressionImpl) opacityExpression).getValue();
-                opacity.populateExpression(objValue);
-            }
-            colour.populateExpression(entry.getColor());
-            Expression quantityExpression = entry.getQuantity();
-            if(quantityExpression instanceof LiteralExpressionImpl)
-            {
-                Object objValue = ((LiteralExpressionImpl) quantityExpression).getValue();
-                quantity.populateExpression(objValue);
+            opacity.populate(entry.getOpacity());
+            colour.populate(entry.getColor());
+            quantity.populate(entry.getQuantity());
+
+            for (FieldConfigBase field : fieldList) {
+                field.showOptionField(false);
             }
 
             applyButton.setEnabled(false);
-        }
-        else
-        {
+        } else if (entries.size() > 1) {
+            setVisible(true);
+
+            MultipleColourMapEntry multipleValues = new MultipleColourMapEntry();
+            multipleValues.parseList(entries);
+            ColorMapEntry entry = multipleValues.getColourMapEntry();
+
+            // Label
+            String labelValue = "";
+
+            if (entry.getLabel() != null) {
+                labelValue = entry.getLabel();
+            }
+            label.populateField(labelValue);
+            label.setOptionFieldValue(entry.getLabel() != null);
+
+            // Opacity
+            opacity.populate(entry.getOpacity());
+            opacity.setOptionFieldValue(entry.getOpacity() != null);
+
+            // Colour
+            colour.populate(entry.getColor());
+            colour.setOptionFieldValue(entry.getColor() != null);
+
+            // Quantity
+            quantity.populate(entry.getQuantity());
+            quantity.setOptionFieldValue(entry.getQuantity() != null);
+
+            for (FieldConfigBase field : fieldList) {
+                field.showOptionField(true);
+            }
+            applyButton.setEnabled(false);
+        } else {
             setVisible(false);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.FieldIdEnum)
      */
     @Override

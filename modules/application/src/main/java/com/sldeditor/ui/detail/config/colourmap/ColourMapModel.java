@@ -71,7 +71,7 @@ public class ColourMapModel extends AbstractTableModel {
     private List<String> columnList = new ArrayList<String>();
 
     /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** The parent object to inform of any changes. */
     private ColourMapModelUpdateInterface parentObj = null;
@@ -81,8 +81,7 @@ public class ColourMapModel extends AbstractTableModel {
      *
      * @param parent the parent
      */
-    public ColourMapModel(ColourMapModelUpdateInterface parent)
-    {
+    public ColourMapModel(ColourMapModelUpdateInterface parent) {
         this.parentObj = parent;
 
         columnList.add(Localisation.getString(FieldConfigBase.class, "ColourMapModel.number"));
@@ -123,8 +122,7 @@ public class ColourMapModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         ColourMapData colourMapData = colourMapList.get(rowIndex);
 
-        switch(columnIndex)
-        {
+        switch (columnIndex) {
         case COL_NUMBER:
             return (rowIndex + 1);
         case COL_LABEL:
@@ -172,15 +170,13 @@ public class ColourMapModel extends AbstractTableModel {
     public void populate(ColorMap value) {
         colourMapList.clear();
 
-        for(ColorMapEntry colourMapEntry : value.getColorMapEntries())
-        {
+        for (ColorMapEntry colourMapEntry : value.getColorMapEntries()) {
             Expression colourExpression = colourMapEntry.getColor();
             Expression opacityExpression = colourMapEntry.getOpacity();
             Expression quantityExpression = colourMapEntry.getQuantity();
             String label = colourMapEntry.getLabel();
 
             ColourMapData data = new ColourMapData();
-
 
             data.setColour(colourExpression);
             data.setOpacity(opacityExpression);
@@ -197,7 +193,8 @@ public class ColourMapModel extends AbstractTableModel {
      * @param table the new cell renderer
      */
     public void setCellRenderer(JTable table) {
-        table.getColumnModel().getColumn(COL_COLOUR).setCellRenderer(new ColourTableCellRenderer(this));
+        table.getColumnModel().getColumn(COL_COLOUR)
+                .setCellRenderer(new ColourTableCellRenderer(this));
     }
 
     /**
@@ -221,11 +218,9 @@ public class ColourMapModel extends AbstractTableModel {
         Expression quantity = ff.literal(0);
 
         // Get last entry
-        if(!colourMapList.isEmpty())
-        {
+        if (!colourMapList.isEmpty()) {
             ColourMapData lastEntry = colourMapList.get(colourMapList.size() - 1);
-            if(lastEntry != null)
-            {
+            if (lastEntry != null) {
                 quantity = lastEntry.getNextQuantity();
             }
         }
@@ -238,8 +233,7 @@ public class ColourMapModel extends AbstractTableModel {
 
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.colourMapUpdated();
         }
     }
@@ -251,22 +245,20 @@ public class ColourMapModel extends AbstractTableModel {
      * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
-        if((maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= colourMapList.size()))
-        {
+        if ((maxSelectionIndex < minSelectionIndex)
+                || (maxSelectionIndex >= colourMapList.size())) {
             return;
         }
 
         int index = maxSelectionIndex;
 
-        while(index >= minSelectionIndex)
-        {
+        while (index >= minSelectionIndex) {
             colourMapList.remove(index);
-            index --;
+            index--;
         }
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.colourMapUpdated();
         }
     }
@@ -279,8 +271,7 @@ public class ColourMapModel extends AbstractTableModel {
     public ColorMap getColourMap() {
         ColorMap colourMap = new ColorMapImpl();
 
-        for(ColourMapData data : colourMapList)
-        {
+        for (ColourMapData data : colourMapList) {
             ColorMapEntry entry = createColourMapEntry(data);
 
             colourMap.addColorMapEntry(entry);
@@ -309,11 +300,10 @@ public class ColourMapModel extends AbstractTableModel {
      * @param data the data
      */
     public void updateColourRamp(ColourRampData data) {
-        if(data != null)
-        {
-            for(ColourMapData row : colourMapList)
-            {
-                Expression colour = data.getColourRamp().getColour(data, row.getQuantity(), data.reverseColours());
+        if (data != null) {
+            for (ColourMapData row : colourMapList) {
+                Expression colour = data.getColourRamp().getColour(data, row.getQuantity(),
+                        data.reverseColours());
 
                 row.setColour(colour);
             }
@@ -329,8 +319,7 @@ public class ColourMapModel extends AbstractTableModel {
      * @return the colour map entry
      */
     public ColorMapEntry getColourMapEntry(int selectedRow) {
-        if((selectedRow < 0) || (selectedRow >= colourMapList.size()))
-        {
+        if ((selectedRow < 0) || (selectedRow >= colourMapList.size())) {
             return null;
         }
         ColourMapData colourMapData = colourMapList.get(selectedRow);
@@ -339,25 +328,44 @@ public class ColourMapModel extends AbstractTableModel {
     }
 
     /**
+     * Gets the colour map entries.
+     *
+     * @param selectedRows the selected rows
+     * @return the colour map entries
+     */
+    public List<ColorMapEntry> getColourMapEntries(int[] selectedRows) {
+        if (selectedRows == null) {
+            return null;
+        }
+        List<ColorMapEntry> entries = new ArrayList<ColorMapEntry>();
+
+        for (int selectedRow : selectedRows) {
+            ColourMapData colourMapData = colourMapList.get(selectedRow);
+
+            entries.add(createColourMapEntry(colourMapData));
+        }
+
+        return entries;
+    }
+
+    /**
      * Update colour map entry.
      *
      * @param selectedRow the selected row
      * @param newData the new data
      */
-    public void updateColourMapEntry(int selectedRow, ColourMapData newData) {
-        if((selectedRow >= 0) && (selectedRow < colourMapList.size()))
-        {
-            ColourMapData existingColourMapData = colourMapList.get(selectedRow);
-            if(existingColourMapData != null)
-            {
-                existingColourMapData.update(newData);
+    public void updateColourMapEntry(int[] rows, ColourMapData newData) {
+        for (int selectedRow : rows) {
+            if ((selectedRow >= 0) && (selectedRow < colourMapList.size())) {
+                ColourMapData existingColourMapData = colourMapList.get(selectedRow);
+                if (existingColourMapData != null) {
+                    existingColourMapData.update(newData);
+                }
             }
         }
-
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.colourMapUpdated();
         }
     }
