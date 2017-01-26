@@ -331,4 +331,21 @@ public class BatchUpdateFontModel extends AbstractTableModel {
         }
         return false;
     }
+
+    /**
+     * Apply font size data.
+     *
+     * @param selectedRows the selected rows
+     * @param fontSize the font size
+     */
+    public void applyData(int[] selectedRows, int fontSize) {
+        if (fontSize != 0) {
+            for (int row : selectedRows) {
+                BatchUpdateFontData entry = fontList.get(row);
+
+                entry.updateFontSize(fontSize);
+            }
+        }
+        this.fireTableDataChanged();
+    }
 }

@@ -69,7 +69,6 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         });
 
         groupPanel.add(stickyButton);
-        groupPanel.setPreferredSize(new Dimension(60, 62));
     }
 
     /* (non-Javadoc)

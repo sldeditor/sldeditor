@@ -488,4 +488,23 @@ public class BatchUpdateFontData {
         return isFontNameUpdated() || isFontStyleUpdated() || isFontWeightUpdated() || isFontSizeUpdated();
     }
 
+    /**
+     * Update font size.
+     *
+     * @param fontSize the font size
+     */
+    public void updateFontSize(int fontSize) {
+        if (!(String.valueOf(fontSize).equals(font.getSize()))) {
+            int updatedSize = Double.valueOf(font.getSize().toString()).intValue() + fontSize;
+            // Make sure we don't get negative sized fonts!
+            if(updatedSize < 1)
+            {
+                updatedSize = 1;
+            }
+            Expression exp = ff.literal(updatedSize);
+
+            font.setSize(exp);
+        }
+    }
+
 }

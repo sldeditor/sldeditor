@@ -120,7 +120,6 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
      * Update symbol.
      */
     private void updateSymbol() {
-
         //
         // Font
         //
@@ -128,7 +127,6 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
 
         // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
         fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
-
     }
 
     /**

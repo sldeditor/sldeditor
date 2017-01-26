@@ -19,6 +19,7 @@
 package com.sldeditor.tool.batchupdatefont;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -41,11 +42,21 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  * Dialog that displays one or more slds in table showing the fonts User is able to batch update the fonts.
  */
 public class BatchUpdateFontPanel extends JDialog {
+
+    /** The Constant PANEL_FULL_FONT. */
+    private static final String PANEL_FULL_FONT = Localisation.getString(BatchUpdateFontPanel.class,
+            "BatchUpdateFontPanel.full");
+
+    /** The Constant PANEL_FONT_SIZE. */
+    private static final String PANEL_FONT_SIZE = Localisation.getString(BatchUpdateFontPanel.class,
+            "BatchUpdateFontPanel.fontSize");
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -68,6 +79,14 @@ public class BatchUpdateFontPanel extends JDialog {
 
     private JButton btnSave;
 
+    private JPanel panel_1;
+
+    private JComboBox comboBox;
+
+    private JPanel panelSelector;
+
+    private FontSizePanel fontSizePanel;
+
     /**
      * Instantiates a new scale tool panel.
      *
@@ -79,7 +98,7 @@ public class BatchUpdateFontPanel extends JDialog {
 
         setTitle(Localisation.getString(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.title"));
         setModal(true);
-        setSize(800, 500);
+        setSize(800, 537);
 
         createUI();
 
@@ -114,13 +133,13 @@ public class BatchUpdateFontPanel extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dataModel.revertData();
                 fontDetails.populate(null);
+                fontSizePanel.populate(null);
                 btnSave.setEnabled(dataModel.anyChanges());
             }
         });
         buttonPanel.add(btnRevert);
 
-        btnSave = new JButton(
-                Localisation.getString(BatchUpdateFontPanel.class, "common.save"));
+        btnSave = new JButton(Localisation.getString(BatchUpdateFontPanel.class, "common.save"));
         btnSave.setEnabled(false);
         btnSave.addActionListener(new ActionListener() {
             @Override
@@ -141,7 +160,12 @@ public class BatchUpdateFontPanel extends JDialog {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     List<Font> entries = dataModel.getFontEntries(table.getSelectedRows());
-                    fontDetails.populate(entries);
+
+                    if (comboBox.getSelectedItem().equals(PANEL_FULL_FONT)) {
+                        fontDetails.populate(entries);
+                    } else if (comboBox.getSelectedItem().equals(PANEL_FONT_SIZE)) {
+                        fontSizePanel.populate(entries);
+                    }
 
                     btnRevert.setEnabled(true);
                     btnApply.setEnabled(true);
@@ -154,18 +178,47 @@ public class BatchUpdateFontPanel extends JDialog {
         panel.add(scrollPanel);
         scrollPanel.setViewportView(table);
         table.setPreferredSize(new Dimension(800, 300));
+
+        panel_1 = new JPanel();
+        panel.add(panel_1);
+
+        comboBox = new JComboBox();
+        comboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cl = (CardLayout) (panelSelector.getLayout());
+                cl.show(panelSelector, (String) comboBox.getSelectedItem());
+            }
+        });
+        comboBox.setModel(
+                new DefaultComboBoxModel(new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
+        panel_1.add(comboBox);
+
+        panelSelector = new JPanel();
+        panel.add(panelSelector);
+
+        CardLayout cardlayout = new CardLayout();
+        panelSelector.setLayout(cardlayout);
+
         fontDetails = new FontDetails();
         fontDetails.setPreferredSize(new Dimension(800, 500));
-        panel.add(fontDetails);
+        panelSelector.add(PANEL_FULL_FONT, fontDetails);
+
+        // Font size panel
+        fontSizePanel = new FontSizePanel();
+        panelSelector.add(PANEL_FONT_SIZE, fontSizePanel);
     }
 
     /**
      * Apply data.
      */
     private void applyData() {
-        dataModel.applyData(table.getSelectedRows(), fontDetails.getFontData());
+        if (comboBox.getSelectedItem().equals(PANEL_FULL_FONT)) {
+            dataModel.applyData(table.getSelectedRows(), fontDetails.getFontData());
+        } else if (comboBox.getSelectedItem().equals(PANEL_FONT_SIZE)) {
+            dataModel.applyData(table.getSelectedRows(), fontSizePanel.getFontSize());
+        }
         fontDetails.populate(null);
-
+        fontSizePanel.populate(null);
         btnSave.setEnabled(dataModel.anyChanges());
     }
 
