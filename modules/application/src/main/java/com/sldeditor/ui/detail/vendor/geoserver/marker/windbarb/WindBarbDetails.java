@@ -38,7 +38,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.DataSourceFactory;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.attribute.AttributeUtils;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
@@ -75,11 +74,10 @@ UpdateSymbolInterface {
      * Instantiates a new feature type style details.
      *
      * @param parentObj the parent obj
-     * @param functionManager the function manager
      */
-    public WindBarbDetails(WindBarbUpdateInterface parentObj, FunctionNameInterface functionManager)
+    public WindBarbDetails(WindBarbUpdateInterface parentObj)
     {
-        super(WindBarbDetails.class, functionManager);
+        super(WindBarbDetails.class);
 
         this.parentObj = parentObj;
         createUI();

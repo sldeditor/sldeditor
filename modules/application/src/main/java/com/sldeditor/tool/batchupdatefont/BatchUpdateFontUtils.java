@@ -30,7 +30,6 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
@@ -90,28 +89,7 @@ public class BatchUpdateFontUtils {
                                                 fontSLDData.setStyle(style.getName());
                                                 fontSLDData.setRule(rule);
                                                 fontSLDData.setSymbolizer(textSymbol);
-                                                
-                                                List<Expression> fontNameList = font.getFamily();
-                                                
-                                                if(fontNameList.size() > 0)
-                                                {
-                                                    fontSLDData.setFontName(fontNameList.get(0).toString());
-                                                }
-
-                                                if(font.getStyle() != null)
-                                                {
-                                                    fontSLDData.setFontStyle(font.getStyle().toString());
-                                                }
-
-                                                if(font.getWeight() != null)
-                                                {
-                                                    fontSLDData.setFontWeight(font.getWeight().toString());
-                                                }
-
-                                                if(font.getSize() != null)
-                                                {
-                                                    fontSLDData.setFontSize(Double.valueOf(font.getSize().toString()).intValue());
-                                                }
+                                                fontSLDData.setFont(font);
                                                 dataList.add(fontSLDData);
                                             }
                                         }

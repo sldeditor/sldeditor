@@ -54,7 +54,6 @@ import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 
@@ -91,29 +90,27 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     public SymbolizerDetailsPanel(List<RenderSymbolInterface> rendererList,
             SLDTreeUpdatedInterface sldTree) {
 
-        FunctionNameInterface functionManager = null;
-
-        populateMap(EMPTY_PANEL_KEY, new EmptyPanel(functionManager));
+        populateMap(EMPTY_PANEL_KEY, new EmptyPanel());
         populateMap(PointSymbolizerImpl.class.toString(),
-                new PointSymbolizerDetails(functionManager));
+                new PointSymbolizerDetails());
         populateMap(LineSymbolizerImpl.class.toString(),
-                new LineSymbolizerDetails(functionManager));
+                new LineSymbolizerDetails());
         populateMap(TextSymbolizerImpl.class.toString(),
-                new TextSymbolizerDetails(functionManager));
+                new TextSymbolizerDetails());
         populateMap(PolygonSymbolizerImpl.class.toString(),
-                new PolygonSymbolizerDetails(functionManager));
+                new PolygonSymbolizerDetails());
         populateMap(RasterSymbolizerImpl.class.toString(),
-                new RasterSymbolizerDetails(functionManager));
-        populateMap(RuleImpl.class.toString(), new RuleDetails(functionManager));
+                new RasterSymbolizerDetails());
+        populateMap(RuleImpl.class.toString(), new RuleDetails());
         populateMap(FeatureTypeStyleImpl.class.toString(),
-                new FeatureTypeStyleDetails(functionManager));
-        populateMap(StyleImpl.class.toString(), new StyleDetails(functionManager));
-        populateMap(NamedLayerImpl.class.toString(), new NamedLayerDetails(functionManager));
-        populateMap(UserLayerImpl.class.toString(), new UserLayerDetails(functionManager));
-        populateMap(StyledLayerDescriptorImpl.class.toString(), new EmptyPanel(functionManager));
-        populateMap(StrokeImpl.class.toString(), new StrokeDetails(functionManager));
-        populateMap(FillImpl.class.toString(), new PointFillDetails(functionManager));
-        populateMap(FillImpl.class.toString(), new PolygonFillDetails(functionManager));
+                new FeatureTypeStyleDetails());
+        populateMap(StyleImpl.class.toString(), new StyleDetails());
+        populateMap(NamedLayerImpl.class.toString(), new NamedLayerDetails());
+        populateMap(UserLayerImpl.class.toString(), new UserLayerDetails());
+        populateMap(StyledLayerDescriptorImpl.class.toString(), new EmptyPanel());
+        populateMap(StrokeImpl.class.toString(), new StrokeDetails());
+        populateMap(FillImpl.class.toString(), new PointFillDetails());
+        populateMap(FillImpl.class.toString(), new PolygonFillDetails());
 
         fillMap.put(PointSymbolizerImpl.class, PointFillDetails.class);
         fillMap.put(PolygonSymbolizerImpl.class, PolygonFillDetails.class);

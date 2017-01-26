@@ -22,7 +22,6 @@ import java.util.List;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 
 /**
@@ -37,12 +36,10 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
 
     /**
      * Instantiates a new empty panel.
-     *
-     * @param functionManager the function manager
      */
-    public EmptyPanel(FunctionNameInterface functionManager)
+    public EmptyPanel()
     {
-        super(EmptyPanel.class, functionManager);
+        super(EmptyPanel.class);
     }
 
     /**

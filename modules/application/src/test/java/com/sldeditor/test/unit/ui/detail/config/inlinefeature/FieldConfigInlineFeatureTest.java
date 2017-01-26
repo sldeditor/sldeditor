@@ -51,7 +51,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class FieldConfigInlineFeatureTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#isEnabled()}.
      */
     @Test
@@ -60,7 +60,7 @@ public class FieldConfigInlineFeatureTest {
 
         // Field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -69,7 +69,7 @@ public class FieldConfigInlineFeatureTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
     }

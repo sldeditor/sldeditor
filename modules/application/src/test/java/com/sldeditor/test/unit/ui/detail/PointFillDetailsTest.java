@@ -39,7 +39,7 @@ public class PointFillDetailsTest {
      */
     @Test
     public void testFillDetailsPoint() {
-        PointFillDetails panel = new PointFillDetails(null);
+        PointFillDetails panel = new PointFillDetails();
         panel.populate(null);
 
         // Set up test data

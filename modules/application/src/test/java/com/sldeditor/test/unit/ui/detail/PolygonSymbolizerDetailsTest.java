@@ -51,7 +51,7 @@ public class PolygonSymbolizerDetailsTest {
      */
     @Test
     public void testAddRenderer() {
-        PolygonSymbolizerDetails panel = new PolygonSymbolizerDetails(null);
+        PolygonSymbolizerDetails panel = new PolygonSymbolizerDetails();
         panel.addRenderer(null);
     }
 
@@ -65,7 +65,7 @@ public class PolygonSymbolizerDetailsTest {
      */
     @Test
     public void testPolygonSymbolizerDetails() {
-        PolygonSymbolizerDetails panel = new PolygonSymbolizerDetails(null);
+        PolygonSymbolizerDetails panel = new PolygonSymbolizerDetails();
         panel.populate(null);
 
         // Set up test data

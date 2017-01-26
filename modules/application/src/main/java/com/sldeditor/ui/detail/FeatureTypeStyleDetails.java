@@ -28,7 +28,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -45,9 +44,9 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
     /**
      * Constructor.
      */
-    public FeatureTypeStyleDetails(FunctionNameInterface functionManager)
+    public FeatureTypeStyleDetails()
     {
-        super(FeatureTypeStyleDetails.class, functionManager);
+        super(FeatureTypeStyleDetails.class);
 
         createUI();
     }

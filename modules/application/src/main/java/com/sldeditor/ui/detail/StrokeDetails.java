@@ -48,7 +48,6 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.base.CurrentFieldState;
@@ -93,11 +92,9 @@ public class StrokeDetails extends StandardPanel
 
     /**
      * Constructor.
-     *
-     * @param functionManager the function manager
      */
-    public StrokeDetails(FunctionNameInterface functionManager) {
-        super(StrokeDetails.class, functionManager);
+    public StrokeDetails() {
+        super(StrokeDetails.class);
 
         setUpdateSymbolListener(this);
 

@@ -24,6 +24,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 
+import org.geotools.styling.Font;
+
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
@@ -208,30 +210,7 @@ public class BatchUpdateFontModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return ((columnIndex == COL_FONT_NAME) || (columnIndex == COL_FONT_STYLE)
-                || (columnIndex == COL_FONT_WEIGHT) || (columnIndex == COL_FONT_SIZE));
-    }
-
-    /**
-     * Sets the value at.
-     *
-     * @param aValue the a value
-     * @param rowIndex the row index
-     * @param columnIndex the column index
-     */
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        BatchUpdateFontData data = fontList.get(rowIndex);
-
-        if (columnIndex == COL_FONT_NAME) {
-            data.setFontName((String) aValue);
-        } else if (columnIndex == COL_FONT_STYLE) {
-            data.setFontStyle((String) aValue);
-        } else if (columnIndex == COL_FONT_WEIGHT) {
-            data.setFontWeight((String) aValue);
-        } else if (columnIndex == COL_FONT_SIZE) {
-            data.setFontSize(Integer.valueOf((String) aValue).intValue());
-        }
+        return false;
     }
 
     /**
@@ -284,9 +263,10 @@ public class BatchUpdateFontModel extends AbstractTableModel {
      *
      * @param application the application
      */
-    public void applyData(SLDEditorInterface application) {
+    public void saveData(SLDEditorInterface application) {
         for (BatchUpdateFontData data : fontList) {
-            if (data.isFontNameUpdated() || data.isFontStyleUpdated() || data.isFontWeightUpdated() || data.isFontSizeUpdated()) {
+            if (data.isFontNameUpdated() || data.isFontStyleUpdated() || data.isFontWeightUpdated()
+                    || data.isFontSizeUpdated()) {
                 if (sldWriter == null) {
                     sldWriter = SLDWriterFactory.createWriter(null);
                 }
@@ -300,5 +280,55 @@ public class BatchUpdateFontModel extends AbstractTableModel {
         }
 
         this.fireTableDataChanged();
+    }
+
+    /**
+     * Gets the font entries.
+     *
+     * @param selectedRows the selected rows
+     * @return the font entries
+     */
+    public List<Font> getFontEntries(int[] selectedRows) {
+        List<Font> selectedFontList = null;
+        if (selectedRows != null) {
+            selectedFontList = new ArrayList<Font>();
+            for (int row : selectedRows) {
+                BatchUpdateFontData entry = fontList.get(row);
+                selectedFontList.add(entry.getFont());
+            }
+        }
+        return selectedFontList;
+    }
+
+    /**
+     * Apply data.
+     *
+     * @param selectedRows the selected rows
+     * @param fontData the font data
+     */
+    public void applyData(int[] selectedRows, Font fontData) {
+        if (fontData != null) {
+            for (int row : selectedRows) {
+                BatchUpdateFontData entry = fontList.get(row);
+
+                entry.updateFont(fontData);
+            }
+        }
+        this.fireTableDataChanged();
+    }
+
+    /**
+     * Find out if any data changes have been made
+     *
+     * @return true, if changes exists
+     */
+    public boolean anyChanges() {
+        for (BatchUpdateFontData data : fontList) {
+            if(data.anyChanges())
+            {
+               return true; 
+            }
+        }
+        return false;
     }
 }

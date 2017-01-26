@@ -37,9 +37,9 @@ import com.sldeditor.ui.widgets.FieldPanel;
 /**
  * The Class FieldConfigFontPreview wraps a text field GUI component showing a font preview.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -55,20 +55,18 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     private static final double DEFAULT_FONT_SIZE = 12.0;
 
     /** The Constant sampleText. */
-    private static final String sampleText =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n" +
-                    "abcdefghijklmnopqrstuvwxyz\n" +
-                    "0123456789\n" +
-                    "The quick brown fox jumped over the lazy dog";
+    private static final String sampleText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+            + "abcdefghijklmnopqrstuvwxyz\n" + "0123456789\n"
+            + "The quick brown fox jumped over the lazy dog";
 
     /** The Constant sampleTextLines. */
     private static final int sampleTextLines = 4;
 
     /** The Constant styles. */
-    private static final String[] styles = {"Normal", "Italic"};
+    private static final String[] styles = { "Normal", "Italic" };
 
     /** The Constant weights. */
-    private static final String[] weights = {"Normal", "Bold"};
+    private static final String[] weights = { "Normal", "Bold" };
 
     /**
      * Instantiates a new field config string.
@@ -82,7 +80,9 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -110,8 +110,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @param row the row
      * @return the row y
      */
-    private static int getRowY(int row)
-    {
+    private static int getRowY(int row) {
         return BasePanel.WIDGET_HEIGHT * row;
     }
 
@@ -120,12 +119,13 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -134,14 +134,14 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
-    {
-        if(textField != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (textField != null) {
             textField.setEnabled(enabled);
         }
     }
@@ -151,12 +151,13 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         return null;
     }
 
@@ -165,24 +166,26 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return true;
     }
 
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(defaultValue);
     }
 
@@ -191,8 +194,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(String defaultValue)
-    {
+    public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -202,10 +204,8 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(textField != null)
-        {
+    public String getStringValue() {
+        if (textField != null) {
             return textField.getText();
         }
         return null;
@@ -217,8 +217,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
+    public void undoAction(UndoInterface undoRedoObject) {
         // Do nothing
     }
 
@@ -228,8 +227,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
+    public void redoAction(UndoInterface undoRedoObject) {
         // Do nothing
     }
 
@@ -265,61 +263,66 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     public void populateField(Font font) {
-        if((textField != null) && (font != null))
-        {
-            int styleIndex = 0;
-            int weightIndex = 0;
-            String familyName = font.getFamily().get(0).toString();
-            String styleName = ((Literal) font.getStyle()).getValue().toString();
-            for (int index = 0; index < styles.length; index++) {
-                if (styles[index].equalsIgnoreCase(styleName)) {
-                    styleIndex = index;
-                    break;
-                }
-            }
-
-            String weightName = ((Literal) font.getWeight()).getValue().toString();
-            for (int index = 0; index < weights.length; index++) {
-                if (weights[index].equalsIgnoreCase(weightName)) {
-                    weightIndex = index;
-                    break;
-                }
-            }
-
-            StringBuilder sb = new StringBuilder(familyName);
-            if (weightIndex == 0) {
-                if (styleIndex == 0) {
-                    sb.append("-PLAIN-");
-                } else {
-                    sb.append("-ITALIC-");
-                }
+        if ((textField != null) && (font != null)) {
+            if (font.getFamily().isEmpty()) {
+                textField.setText("");
+            } else if (font.getFamily().isEmpty() || (font.getStyle() == null)
+                    || (font.getWeight() == null) || (font.getSize() == null)) {
+                textField.setText("");
             } else {
-                if (styleIndex == 0) {
-                    sb.append("-BOLD-");
-                } else {
-                    sb.append("-BOLDITALIC-");
+                textField.setText(sampleText);
+
+                int styleIndex = 0;
+                int weightIndex = 0;
+                String familyName = font.getFamily().get(0).toString();
+                String styleName = ((Literal) font.getStyle()).getValue().toString();
+                for (int index = 0; index < styles.length; index++) {
+                    if (styles[index].equalsIgnoreCase(styleName)) {
+                        styleIndex = index;
+                        break;
+                    }
                 }
+
+                String weightName = ((Literal) font.getWeight()).getValue().toString();
+                for (int index = 0; index < weights.length; index++) {
+                    if (weights[index].equalsIgnoreCase(weightName)) {
+                        weightIndex = index;
+                        break;
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder(familyName);
+                if (weightIndex == 0) {
+                    if (styleIndex == 0) {
+                        sb.append("-PLAIN-");
+                    } else {
+                        sb.append("-ITALIC-");
+                    }
+                } else {
+                    if (styleIndex == 0) {
+                        sb.append("-BOLD-");
+                    } else {
+                        sb.append("-BOLDITALIC-");
+                    }
+                }
+
+                // Get font size
+                int size = 12;
+                Literal sizeExpression = (Literal) font.getSize();
+                Object obj = sizeExpression.getValue();
+                if (obj instanceof Number) {
+                    Number number = (Number) obj;
+                    size = number.intValue();
+                } else if (obj instanceof String) {
+                    size = Double.valueOf((String) obj).intValue();
+                }
+
+                sb.append(size);
+
+                java.awt.Font sampleFont = java.awt.Font.decode(sb.toString());
+
+                textField.setFont(sampleFont);
             }
-
-            // Get font size
-            int size = 12;
-            Literal sizeExpression = (Literal) font.getSize();
-            Object obj = sizeExpression.getValue();
-            if(obj instanceof Number)
-            {
-                Number number = (Number) obj;
-                size = number.intValue();
-            }
-            else if(obj instanceof String)
-            {
-                size = Double.valueOf((String)obj).intValue();
-            }
-
-            sb.append(size);
-
-            java.awt.Font sampleFont = java.awt.Font.decode(sb.toString());
-
-            textField.setFont(sampleFont);
         }
     }
 
@@ -333,8 +336,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigFontPreview copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigFontPreview(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -347,8 +349,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     public void setVisible(boolean visible) {
-        if(textField != null)
-        {
+        if (textField != null) {
             textField.setVisible(visible);
         }
     }
@@ -358,12 +359,13 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         // Do nothing
     }
 }

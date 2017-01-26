@@ -32,7 +32,6 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -65,9 +64,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param parentObj the parent obj
      */
-    public WKTDetails(WKTUpdateInterface parentObj, FunctionNameInterface functionManager)
+    public WKTDetails(WKTUpdateInterface parentObj)
     {
-        super(WKTDetails.class, functionManager);
+        super(WKTDetails.class);
 
         this.parentObj = parentObj;
         createUI();

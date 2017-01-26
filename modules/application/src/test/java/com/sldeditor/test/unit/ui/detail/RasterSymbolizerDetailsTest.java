@@ -61,7 +61,7 @@ public class RasterSymbolizerDetailsTest {
      */
     @Test
     public void testRasterSymbolizerDetailsGreyChannel() {
-        RasterSymbolizerDetails panel = new RasterSymbolizerDetails(null);
+        RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
         panel.populate(null);
 
         // Set up test data
@@ -125,7 +125,7 @@ public class RasterSymbolizerDetailsTest {
      */
     @Test
     public void testRasterSymbolizerDetailsColourChannel() {
-        RasterSymbolizerDetails panel = new RasterSymbolizerDetails(null);
+        RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
         panel.populate(null);
 
         // Set up test data

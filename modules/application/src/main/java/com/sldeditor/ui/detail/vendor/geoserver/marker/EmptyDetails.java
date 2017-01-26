@@ -40,7 +40,7 @@ public class EmptyDetails extends StandardPanel implements UpdateSymbolInterface
      */
     public EmptyDetails(String resourceFile)
     {
-        super(EmptyDetails.class, null);
+        super(EmptyDetails.class);
 
         readConfigFileNoScrollPane(null, getClass(), this, resourceFile);
     }

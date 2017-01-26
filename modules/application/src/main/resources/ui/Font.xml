@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig panelTitle="text.batchUpdate"
+    localisation="com.sldeditor.ui.detail.TextSymbolizerDetails">
+    <Group id="FONT" showLabel="false" option="false">
+        <FieldConfigFont id="FONT_FAMILY" label="text.font" multipleValues="true" />
+        <FieldConfigEnum id="FONT_STYLE" label="text.font.style" multipleValues="true" >
+            <ValueList>
+                <Value>
+                    <Item id="normal" label="text.font.style.normal" />
+                    <Item id="italic" label="text.font.style.italic" />
+                    <Item id="opaque" label="text.font.style.opaque" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigEnum id="FONT_WEIGHT" label="text.font.weight" multipleValues="true" >
+            <ValueList>
+                <Value>
+                    <Item id="normal" label="text.font.weight.normal" />
+                    <Item id="bold" label="text.font.weight.bold" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigInteger id="FONT_SIZE" label="text.font.size" defaultValue="12" minValue="0" multipleValues="true" />
+        <FieldConfigFontPreview id="FONT_PREVIEW"/>
+    </Group>
+</PanelConfig>

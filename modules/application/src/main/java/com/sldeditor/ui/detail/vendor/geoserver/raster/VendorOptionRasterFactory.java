@@ -29,7 +29,6 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
@@ -68,10 +67,9 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      * Instantiates a new vendor option text factory.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      * @param parentPanel the parent panel
      */
-    public VendorOptionRasterFactory(Class<?> panelId, FunctionNameInterface functionManager, RasterSymbolizerDetails parentPanel)
+    public VendorOptionRasterFactory(Class<?> panelId, RasterSymbolizerDetails parentPanel)
     {
         vendorOptionGeoServerContrastEnhancementNormalizeRed = new VOGeoServerContrastEnhancementNormalizeRed(panelId, parentPanel);
         vendorOptionGeoServerContrastEnhancementNormalizeGreen = new VOGeoServerContrastEnhancementNormalizeGreen(panelId, parentPanel);

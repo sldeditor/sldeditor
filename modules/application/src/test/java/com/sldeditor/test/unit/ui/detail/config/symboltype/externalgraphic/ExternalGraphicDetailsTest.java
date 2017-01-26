@@ -37,7 +37,6 @@ import org.junit.Test;
 
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicUpdateInterface;
@@ -65,11 +64,9 @@ public class ExternalGraphicDetailsTest {
          * Instantiates a new test external graphic details.
          *
          * @param parentObj the parent obj
-         * @param functionManager the function manager
          */
-        public TestExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj,
-                FunctionNameInterface functionManager) {
-            super(parentObj, functionManager);
+        public TestExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj) {
+            super(parentObj);
         }
 
         /**
@@ -118,7 +115,7 @@ public class ExternalGraphicDetailsTest {
      */
     @Test
     public void testSetEnabled() {
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(null, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
 
         panel.setEnabled(true);
 
@@ -133,7 +130,7 @@ public class ExternalGraphicDetailsTest {
      */
     @Test
     public void testPopulate() {
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(null, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
 
         panel.populate(null);
     }
@@ -145,7 +142,7 @@ public class ExternalGraphicDetailsTest {
     public void testPopulateExpression() {
         DummyExternalGraphicUpdate callback = new DummyExternalGraphicUpdate();
 
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(callback, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(callback);
 
         panel.populateExpression(null);
 
@@ -170,7 +167,7 @@ public class ExternalGraphicDetailsTest {
      */
     @Test
     public void testGetFieldDataManager() {
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(null, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
 
         assertNotNull(panel.getFieldDataManager());
     }
@@ -180,7 +177,7 @@ public class ExternalGraphicDetailsTest {
      */
     @Test
     public void testIsDataPresent() {
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(null, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
         assertTrue(panel.isDataPresent());
     }
 
@@ -189,7 +186,7 @@ public class ExternalGraphicDetailsTest {
      */
     @Test
     public void testRevertToDefaultValue() {
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(null, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
         panel.revertToDefaultValue();
     }
 
@@ -204,7 +201,7 @@ public class ExternalGraphicDetailsTest {
         ExternalGraphicImpl externalGraphic = null;
 
         DummyExternalGraphicUpdate callback = new DummyExternalGraphicUpdate();
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(callback, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(callback);
         assertNull(panel.getSymbol());
         panel.setValue(externalGraphic);
 
@@ -248,7 +245,7 @@ public class ExternalGraphicDetailsTest {
     @Test
     public void testSetValueString() {
         DummyExternalGraphicUpdate callback = new DummyExternalGraphicUpdate();
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(callback, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(callback);
 
         String expectedString = null;
         panel.setValue(expectedString);
@@ -272,7 +269,7 @@ public class ExternalGraphicDetailsTest {
     @Test
     public void testButtonPressed() {
         DummyExternalGraphicUpdate callback = new DummyExternalGraphicUpdate();
-        TestExternalGraphicDetails panel = new TestExternalGraphicDetails(callback, null);
+        TestExternalGraphicDetails panel = new TestExternalGraphicDetails(callback);
 
         panel.testUserSelectedFileURL(null);
         String expectedString = "a/b/c/test.png";
@@ -332,7 +329,7 @@ public class ExternalGraphicDetailsTest {
      */
     @Test
     public void testPreLoadSymbol() {
-        ExternalGraphicDetails panel = new ExternalGraphicDetails(null, null);
+        ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
         panel.preLoadSymbol();
     }
 

@@ -56,7 +56,7 @@ public class RuleDetailsTest {
     @Test
     public void testRuleDetails() {
 
-        RuleDetails panel = new RuleDetails(null);
+        RuleDetails panel = new RuleDetails();
         panel.populate(null);
 
         // Set up test data

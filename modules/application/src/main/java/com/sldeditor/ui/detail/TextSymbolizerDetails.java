@@ -40,7 +40,6 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
@@ -65,12 +64,10 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
 
     /**
      * Constructor.
-     *
-     * @param functionManager the function manager
      */
-    public TextSymbolizerDetails(FunctionNameInterface functionManager)
+    public TextSymbolizerDetails()
     {
-        super(TextSymbolizerDetails.class, functionManager);
+        super(TextSymbolizerDetails.class);
 
         createUI();
     }
@@ -92,7 +89,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      */
     private void createVendorOptionPanel() {
 
-        vendorOptionTextFactory = new VendorOptionTextFactory(getClass(), getFunctionManager());
+        vendorOptionTextFactory = new VendorOptionTextFactory(getClass());
 
         List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
         if(veList != null)

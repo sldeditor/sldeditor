@@ -137,7 +137,7 @@ public class FieldConfigMarker extends FieldState {
      * @param enabled the new enabled
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         // Not used
     }
 

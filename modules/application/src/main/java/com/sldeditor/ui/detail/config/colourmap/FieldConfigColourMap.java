@@ -231,7 +231,7 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      * @param enabled the new enabled
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         if (table != null) {
             table.setEnabled(enabled);
         }

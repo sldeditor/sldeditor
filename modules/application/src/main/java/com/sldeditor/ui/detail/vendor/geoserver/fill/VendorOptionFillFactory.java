@@ -30,7 +30,6 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
@@ -56,11 +55,10 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
      * Instantiates a new vendor option label option factory.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      */
-    public VendorOptionFillFactory(Class<?> panelId, FunctionNameInterface functionManager)
+    public VendorOptionFillFactory(Class<?> panelId)
     {
-        vendorOptionGeoServerRandomFill = new VOGeoServerRandomFill(panelId, functionManager);
+        vendorOptionGeoServerRandomFill = new VOGeoServerRandomFill(panelId);
 
         vendorOptionList.add(vendorOptionGeoServerRandomFill);
 

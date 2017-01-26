@@ -36,7 +36,6 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -61,12 +60,10 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
 
     /**
      * Constructor.
-     *
-     * @param functionManager the function manager
      */
-    public RasterSymbolizerDetails(FunctionNameInterface functionManager)
+    public RasterSymbolizerDetails()
     {
-        super(RasterSymbolizerDetails.class, functionManager);
+        super(RasterSymbolizerDetails.class);
 
         createUI();
     }
@@ -88,7 +85,7 @@ public class RasterSymbolizerDetails extends StandardPanel implements PopulateDe
      */
     private void createVendorOptionPanel() {
 
-        vendorOptionRasterFactory = new VendorOptionRasterFactory(getClass(), getFunctionManager(), this);
+        vendorOptionRasterFactory = new VendorOptionRasterFactory(getClass(), this);
 
         List<VendorOptionInterface> voList = vendorOptionRasterFactory.getVendorOptionList();
         if(voList != null)

@@ -36,7 +36,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -123,8 +122,8 @@ public class VOGeoServerLabelling extends StandardPanel
      * @param panelId the panel id
      * @param functionManager the function manager
      */
-    public VOGeoServerLabelling(Class<?> panelId, FunctionNameInterface functionManager) {
-        super(panelId, functionManager);
+    public VOGeoServerLabelling(Class<?> panelId) {
+        super(panelId);
 
         fieldMap.put(FieldIdEnum.LABEL_ALLOW_OVERRUNS, TextSymbolizer2.ALLOW_OVERRUNS_KEY);
         fieldMap.put(FieldIdEnum.LABEL_AUTO_WRAP, TextSymbolizer2.AUTO_WRAP_KEY);

@@ -28,7 +28,6 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -45,9 +44,9 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
     /**
      * Constructor
      */
-    public LineSymbolizerDetails(FunctionNameInterface functionManager)
+    public LineSymbolizerDetails()
     {
-        super(LineSymbolizerDetails.class, functionManager);
+        super(LineSymbolizerDetails.class);
 
         createUI();
     }

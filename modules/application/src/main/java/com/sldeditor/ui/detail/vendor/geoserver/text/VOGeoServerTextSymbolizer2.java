@@ -46,7 +46,6 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.FieldEnableState;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -94,8 +93,8 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
      *
      * @param panelId the panel id
      */
-    public VOGeoServerTextSymbolizer2(Class<?> panelId, FunctionNameInterface functionManager) {
-        super(panelId, functionManager);
+    public VOGeoServerTextSymbolizer2(Class<?> panelId) {
+        super(panelId);
 
         setUpdateSymbolListener(this);
 

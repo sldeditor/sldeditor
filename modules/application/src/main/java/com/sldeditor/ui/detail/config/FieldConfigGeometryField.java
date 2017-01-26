@@ -138,7 +138,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         // Do nothing
     }
 

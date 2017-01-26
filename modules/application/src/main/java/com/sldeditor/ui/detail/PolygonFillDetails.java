@@ -44,7 +44,6 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -91,12 +90,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
 
     /**
      * Constructor.
-     *
-     * @param functionManager the function manager
      */
-    public PolygonFillDetails(FunctionNameInterface functionManager)
+    public PolygonFillDetails()
     {
-        super(PolygonFillDetails.class, functionManager);
+        super(PolygonFillDetails.class);
 
         setUpdateSymbolListener(this);
 
@@ -132,7 +129,7 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
      */
     private void createVendorOptionPanel() {
 
-        vendorOptionFillFactory = new VendorOptionFillFactory(getPanelId(), getFunctionManager());
+        vendorOptionFillFactory = new VendorOptionFillFactory(getPanelId());
 
         List<VendorOptionInterface> voList = vendorOptionFillFactory.getVendorOptionList();
         if(voList != null)

@@ -35,7 +35,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
@@ -56,9 +55,9 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
     /**
      * Constructor
      */
-    public UserLayerDetails(FunctionNameInterface functionManager)
+    public UserLayerDetails()
     {
-        super(UserLayerDetails.class, functionManager);
+        super(UserLayerDetails.class);
 
         createUI();
     }

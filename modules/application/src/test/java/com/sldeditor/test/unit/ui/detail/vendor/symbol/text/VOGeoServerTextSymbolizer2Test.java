@@ -60,10 +60,10 @@ public class VOGeoServerTextSymbolizer2Test {
      */
     @Test
     public void testVOGeoServerTextSymbolizer2() {
-        TextSymbolizerDetails panel = new TextSymbolizerDetails(null);
+        TextSymbolizerDetails panel = new TextSymbolizerDetails();
 
         TextSymbolizer2 textSymbolizer = null;
-        VOGeoServerTextSymbolizer2 testObj = new VOGeoServerTextSymbolizer2(panel.getClass(), null);
+        VOGeoServerTextSymbolizer2 testObj = new VOGeoServerTextSymbolizer2(panel.getClass());
         testObj.setParentPanel(panel);
         testObj.populate(textSymbolizer);
         testObj.updateSymbol(textSymbolizer);

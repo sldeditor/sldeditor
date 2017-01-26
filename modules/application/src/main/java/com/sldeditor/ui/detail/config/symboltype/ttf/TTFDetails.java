@@ -32,7 +32,6 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -65,10 +64,9 @@ public class TTFDetails extends StandardPanel implements PopulateDetailsInterfac
      * Instantiates a new feature type style details.
      *
      * @param parentObj the parent obj
-     * @param functionManager the function manager
      */
-    public TTFDetails(TTFUpdateInterface parentObj, FunctionNameInterface functionManager) {
-        super(TTFDetails.class, functionManager);
+    public TTFDetails(TTFUpdateInterface parentObj) {
+        super(TTFDetails.class);
 
         this.parentObj = parentObj;
         createUI();

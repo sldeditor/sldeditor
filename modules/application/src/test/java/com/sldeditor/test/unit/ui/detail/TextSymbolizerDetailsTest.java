@@ -56,7 +56,7 @@ public class TextSymbolizerDetailsTest {
      */
     @Test
     public void testTextSymbolizerDetails() {
-        TextSymbolizerDetails panel = new TextSymbolizerDetails(null);
+        TextSymbolizerDetails panel = new TextSymbolizerDetails();
         panel.populate(null);
 
         // Set up test data

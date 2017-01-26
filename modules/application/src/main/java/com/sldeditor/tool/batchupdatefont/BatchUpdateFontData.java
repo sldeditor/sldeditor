@@ -18,14 +18,17 @@
  */
 package com.sldeditor.tool.batchupdatefont;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
 import org.geotools.styling.Rule;
+import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.output.SLDWriterInterface;
@@ -35,8 +38,12 @@ import com.sldeditor.common.output.SLDWriterInterface;
  */
 public class BatchUpdateFontData {
 
-    /** The ff. */
+    /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+    /** The style factory. */
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /** The Constant NOT_SET_STRING. */
     private static final String NOT_SET_STRING = "";
@@ -65,47 +72,26 @@ public class BatchUpdateFontData {
     /** The symbolizer. */
     private TextSymbolizer symbolizer;
 
-    /** The font name. */
-    private String fontName = NOT_SET_STRING;
-    
-    /** The font style. */
-    private String fontStyle = NOT_SET_STRING;
-
-    /** The font weight. */
-    private String fontWeight = NOT_SET_STRING;
-
-    /** The font size. */
-    private int fontSize = NOT_SET_VALUE;
-
     /** The original font name. */
-    private String originalFontName = NOT_SET_STRING;
-    
+    private List<Expression> originalFontName = new ArrayList<Expression>();
+
     /** The original font style. */
-    private String originalFontStyle = NOT_SET_STRING;
+    private Expression originalFontStyle = null;
 
     /** The original font weight. */
-    private String originalFontWeight = NOT_SET_STRING;
+    private Expression originalFontWeight = null;
 
     /** The original font size. */
-    private int originalFontSize = NOT_SET_VALUE;
-
-    /** The minimum scale updated flag. */
-    private boolean fontNameUpdated = false;
-
-    /** The font style updated flag. */
-    private boolean fontStyleUpdated = false;
-
-    /** The font weight updated flag. */
-    private boolean fontWeightUpdated = false;
-
-    /** The font size updated flag. */
-    private boolean fontSizeUpdated = false;
+    private Expression originalFontSize = null;
 
     /** The sld data. */
     private SLDDataInterface sldData = null;
 
     /** The sld. */
     private StyledLayerDescriptor sld = null;
+
+    /** The font. */
+    private Font font = null;
 
     /**
      * Constructor.
@@ -180,11 +166,9 @@ public class BatchUpdateFontData {
      *
      * @return the rule
      */
-    public Rule getRule()
-    {
+    public Rule getRule() {
         return rule;
     }
-
 
     /**
      * Gets the sld data.
@@ -201,7 +185,7 @@ public class BatchUpdateFontData {
      * @return true, if is font name set
      */
     public boolean isFontNameSet() {
-        return !fontName.equals(NOT_SET_STRING);
+        return (!font.getFamily().isEmpty());
     }
 
     /**
@@ -210,7 +194,7 @@ public class BatchUpdateFontData {
      * @return true, if is font name set
      */
     public boolean isFontStyleSet() {
-        return !fontStyle.equals(NOT_SET_STRING);
+        return (font.getStyle() != null);
     }
 
     /**
@@ -219,7 +203,7 @@ public class BatchUpdateFontData {
      * @return true, if is font name set
      */
     public boolean isFontWeightSet() {
-        return !fontWeight.equals(NOT_SET_STRING);
+        return (font.getWeight() != null);
     }
 
     /**
@@ -228,7 +212,7 @@ public class BatchUpdateFontData {
      * @return true, if is font name set
      */
     public boolean isFontSizeSet() {
-        return !(fontSize == NOT_SET_VALUE);
+        return (font.getSize() != null);
     }
 
     /**
@@ -268,62 +252,15 @@ public class BatchUpdateFontData {
     }
 
     /**
-     * Sets the font name.
-     *
-     * @param fontName the new font name
-     */
-    public void setFontName(String fontName) {
-        this.fontName = fontName;
-        this.originalFontName = fontName;
-        this.fontNameUpdated = false;
-    }
-
-    /**
-     * Sets the font style.
-     *
-     * @param fontStyle the fontStyle to set
-     */
-    public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
-        this.originalFontStyle = fontStyle;
-        this.fontStyleUpdated = false;
-    }
-
-    /**
-     * Sets the font weight.
-     *
-     * @param fontWeight the fontWeight to set
-     */
-    public void setFontWeight(String fontWeight) {
-        this.fontWeight = fontWeight;
-        this.originalFontWeight = fontWeight;
-        this.fontWeightUpdated = false;
-    }
-
-    /**
-     * Sets the font size.
-     *
-     * @param fontSize the fontSize to set
-     */
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
-        this.originalFontSize = fontSize;
-        this.fontSizeUpdated = false;
-    }
-
-    /**
      * Revert to original.
      */
-    public void revertToOriginal()
-    {
-        this.fontName = this.originalFontName;
-        this.fontStyle = this.originalFontStyle;
-        this.fontWeight = this.originalFontWeight;
-        this.fontSize = this.originalFontSize;
-        this.fontNameUpdated = false;
-        this.fontStyleUpdated = false;
-        this.fontWeightUpdated = false;
-        this.fontSizeUpdated = false;
+    public void revertToOriginal() {
+
+        this.font.getFamily().clear();
+        this.font.getFamily().addAll(originalFontName);
+        this.font.setWeight(originalFontWeight);
+        this.font.setStyle(originalFontStyle);
+        this.font.setSize(originalFontSize);
     }
 
     /**
@@ -332,33 +269,24 @@ public class BatchUpdateFontData {
      * @param sldWriter the sld writer
      */
     public void updateFont(SLDWriterInterface sldWriter) {
-        if(rule != null)
-        {
+        if (rule != null) {
             List<Font> fontList = symbolizer.fonts();
             Font font = fontList.get(0);
-            if(isFontNameUpdated())
-            {
+            if (isFontNameUpdated()) {
                 font.getFamily().clear();
-                font.getFamily().add(ff.literal(fontName));
-                fontNameUpdated = false;
+                font.getFamily().addAll(this.font.getFamily());
             }
 
-            if(isFontStyleUpdated())
-            {
-                font.setStyle(ff.literal(fontStyle));
-                fontStyleUpdated = false;
+            if (isFontStyleUpdated()) {
+                font.setStyle(ff.literal(this.font.getStyle()));
             }
 
-            if(isFontWeightUpdated())
-            {
-                font.setWeight(ff.literal(fontWeight));
-                fontStyleUpdated = false;
+            if (isFontWeightUpdated()) {
+                font.setWeight(ff.literal(this.font.getWeight()));
             }
 
-            if(isFontSizeUpdated())
-            {
-                font.setSize(ff.literal(fontSize));
-                fontSizeUpdated = false;
+            if (isFontSizeUpdated()) {
+                font.setSize(ff.literal(this.font.getSize()));
             }
 
             String sldContents = sldWriter.encodeSLD(null, this.sld);
@@ -373,7 +301,10 @@ public class BatchUpdateFontData {
      * @return the fontName
      */
     public String getFontName() {
-        return fontName;
+        if (isFontNameSet()) {
+            return this.font.getFamily().get(0).toString();
+        }
+        return NOT_SET_STRING;
     }
 
     /**
@@ -382,7 +313,10 @@ public class BatchUpdateFontData {
      * @return the fontStyle
      */
     public String getFontStyle() {
-        return fontStyle;
+        if (isFontStyleSet()) {
+            return this.font.getStyle().toString();
+        }
+        return NOT_SET_STRING;
     }
 
     /**
@@ -391,7 +325,10 @@ public class BatchUpdateFontData {
      * @return the fontWeight
      */
     public String getFontWeight() {
-        return fontWeight;
+        if (isFontWeightSet()) {
+            return this.font.getWeight().toString();
+        }
+        return NOT_SET_STRING;
     }
 
     /**
@@ -400,7 +337,10 @@ public class BatchUpdateFontData {
      * @return the fontSize
      */
     public int getFontSize() {
-        return fontSize;
+        if (isFontSizeSet()) {
+            return Double.valueOf(this.font.getSize().toString()).intValue();
+        }
+        return NOT_SET_VALUE;
     }
 
     /**
@@ -409,16 +349,7 @@ public class BatchUpdateFontData {
      * @return the fontNameUpdated
      */
     public boolean isFontNameUpdated() {
-        return fontNameUpdated;
-    }
-
-    /**
-     * Sets the font name updated.
-     *
-     * @param fontNameUpdated the fontNameUpdated to set
-     */
-    public void setFontNameUpdated(boolean fontNameUpdated) {
-        this.fontNameUpdated = fontNameUpdated;
+        return (!(originalFontName.equals(font.getFamily())));
     }
 
     /**
@@ -427,16 +358,7 @@ public class BatchUpdateFontData {
      * @return the fontStyleUpdated
      */
     public boolean isFontStyleUpdated() {
-        return fontStyleUpdated;
-    }
-
-    /**
-     * Sets the font style updated.
-     *
-     * @param fontStyleUpdated the fontStyleUpdated to set
-     */
-    public void setFontStyleUpdated(boolean fontStyleUpdated) {
-        this.fontStyleUpdated = fontStyleUpdated;
+        return isSame(originalFontStyle, font.getStyle());
     }
 
     /**
@@ -445,16 +367,27 @@ public class BatchUpdateFontData {
      * @return the fontWeightUpdated
      */
     public boolean isFontWeightUpdated() {
-        return fontWeightUpdated;
+        return isSame(originalFontWeight, font.getWeight());
     }
-
+    
     /**
-     * Sets the font weight updated.
+     * Checks if expression has changed from the original
      *
-     * @param fontWeightUpdated the fontWeightUpdated to set
+     * @param original the original
+     * @param exp the exp
+     * @return true, if is same
      */
-    public void setFontWeightUpdated(boolean fontWeightUpdated) {
-        this.fontWeightUpdated = fontWeightUpdated;
+    private boolean isSame(Expression original, Expression exp)
+    {
+        if((original == null) && (exp == null))
+        {
+            return false;
+        }
+        else  if((original != null) && (exp != null))
+        {
+            return (!(original.equals(exp)));
+        }
+        return true;
     }
 
     /**
@@ -463,16 +396,7 @@ public class BatchUpdateFontData {
      * @return the fontSizeUpdated
      */
     public boolean isFontSizeUpdated() {
-        return fontSizeUpdated;
-    }
-
-    /**
-     * Sets the font size updated.
-     *
-     * @param fontSizeUpdated the fontSizeUpdated to set
-     */
-    public void setFontSizeUpdated(boolean fontSizeUpdated) {
-        this.fontSizeUpdated = fontSizeUpdated;
+        return isSame(originalFontSize, font.getSize());
     }
 
     /**
@@ -491,6 +415,77 @@ public class BatchUpdateFontData {
      */
     public void setSymbolizer(TextSymbolizer symbolizer) {
         this.symbolizer = symbolizer;
+    }
+
+    /**
+     * Gets the font.
+     *
+     * @return the font
+     */
+    public Font getFont() {
+        return font;
+    }
+
+    /**
+     * Sets the font.
+     *
+     * @param newFont the new font
+     */
+    public void setFont(Font newFont) {
+        this.font = styleFactory.getDefaultFont();
+
+        font.getFamily().clear();
+        font.getFamily().addAll(newFont.getFamily());
+        font.setStyle(newFont.getStyle());
+        font.setWeight(newFont.getWeight());
+        font.setSize(newFont.getSize());
+
+        this.originalFontName = newFont.getFamily();
+        this.originalFontStyle = newFont.getStyle();
+        this.originalFontWeight = newFont.getWeight();
+        this.originalFontSize = newFont.getSize();
+    }
+
+    /**
+     * Update font.
+     *
+     * @param fontData the font data
+     */
+    public void updateFont(Font fontData) {
+
+        if (!fontData.getFamily().isEmpty()) {
+            if (!(fontData.getFamily().equals(font.getFamily()))) {
+                font.getFamily().clear();
+                font.getFamily().addAll(fontData.getFamily());
+            }
+        }
+
+        if (fontData.getWeight() != null) {
+            if (!(fontData.getWeight().equals(font.getWeight()))) {
+                font.setWeight(fontData.getWeight());
+            }
+        }
+
+        if (fontData.getStyle() != null) {
+            if (!(fontData.getStyle().equals(font.getStyle()))) {
+                font.setStyle(fontData.getStyle());
+            }
+        }
+
+        if (fontData.getSize() != null) {
+            if (!(fontData.getSize().equals(font.getSize()))) {
+                font.setSize(fontData.getSize());
+            }
+        }
+    }
+
+    /**
+     * Find out whether any data has changed
+     *
+     * @return true, if any data has been changed
+     */
+    public boolean anyChanges() {
+        return isFontNameUpdated() || isFontStyleUpdated() || isFontWeightUpdated() || isFontSizeUpdated();
     }
 
 }

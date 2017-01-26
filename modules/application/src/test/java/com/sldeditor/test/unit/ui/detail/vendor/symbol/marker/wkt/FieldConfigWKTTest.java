@@ -61,7 +61,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 public class FieldConfigWKTTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#setEnabled(boolean)}. Test method for
+     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#internal_setEnabled(boolean)}. Test method for
      * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#isEnabled()}.
      */
     @Test
@@ -74,7 +74,7 @@ public class FieldConfigWKTTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -83,7 +83,7 @@ public class FieldConfigWKTTest {
         assertTrue(field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -95,7 +95,7 @@ public class FieldConfigWKTTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -104,7 +104,7 @@ public class FieldConfigWKTTest {
         assertTrue(field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertFalse(field2.isEnabled());
     }

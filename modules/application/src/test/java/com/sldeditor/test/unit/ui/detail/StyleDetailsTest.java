@@ -53,7 +53,7 @@ public class StyleDetailsTest {
      */
     @Test
     public void testStyleDetails() {
-        StyleDetails panel = new StyleDetails(null);
+        StyleDetails panel = new StyleDetails();
         panel.populate(null);
 
         // Set up test data

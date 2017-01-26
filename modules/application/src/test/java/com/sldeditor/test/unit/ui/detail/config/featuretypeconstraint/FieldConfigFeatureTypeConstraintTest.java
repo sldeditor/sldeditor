@@ -52,7 +52,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class FieldConfigFeatureTypeConstraintTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#isEnabled()}.
      */
     @Test
@@ -61,7 +61,7 @@ public class FieldConfigFeatureTypeConstraintTest {
 
         // Field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -70,7 +70,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
     }

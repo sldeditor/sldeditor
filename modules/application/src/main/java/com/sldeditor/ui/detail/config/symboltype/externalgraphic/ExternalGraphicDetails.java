@@ -43,7 +43,6 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -85,12 +84,10 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     /**
      * Instantiates a new feature type style details.
      *
-     * @param parentObj the parent obj
-     * @param functionManager the function manager
+     * @param parentOb the parent ob
      */
-    public ExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj,
-            FunctionNameInterface functionManager) {
-        super(ExternalGraphicDetails.class, functionManager);
+    public ExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj) {
+        super(ExternalGraphicDetails.class);
 
         this.parentObj = parentObj;
         createUI();

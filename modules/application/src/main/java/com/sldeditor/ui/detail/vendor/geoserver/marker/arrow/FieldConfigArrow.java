@@ -44,7 +44,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -104,7 +103,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     public void createUI() {
         FieldPanel fieldPanel = createFieldPanel(0, "");
         fieldPanel.setLayout(new BorderLayout());
-        arrowPanel = new ArrowDetails(this, FunctionManager.getInstance());
+        arrowPanel = new ArrowDetails(this);
 
         fieldPanel.add(arrowPanel, BorderLayout.CENTER);
 
@@ -128,7 +127,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      * @param enabled the new enabled state
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         if (arrowPanel != null) {
             arrowPanel.setEnabled(enabled);
         }

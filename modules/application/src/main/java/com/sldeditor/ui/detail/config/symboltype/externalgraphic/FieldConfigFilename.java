@@ -38,7 +38,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -105,7 +104,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
         FieldPanel fieldPanel = createFieldPanel(0, "");
         fieldPanel.setLayout(new BorderLayout());
-        externalGraphicPanel = new ExternalGraphicDetails(this, FunctionManager.getInstance());
+        externalGraphicPanel = new ExternalGraphicDetails(this);
 
         fieldPanel.add(externalGraphicPanel, BorderLayout.CENTER);
 
@@ -139,7 +138,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         if (externalGraphicPanel != null) {
             externalGraphicPanel.setEnabled(enabled);
         }

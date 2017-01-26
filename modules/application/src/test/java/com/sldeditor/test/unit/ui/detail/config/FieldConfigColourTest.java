@@ -50,7 +50,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class FieldConfigColourTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#isEnabled()}.
      */
     @Test
@@ -61,7 +61,7 @@ public class FieldConfigColourTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -70,7 +70,7 @@ public class FieldConfigColourTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -80,7 +80,7 @@ public class FieldConfigColourTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -89,7 +89,7 @@ public class FieldConfigColourTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

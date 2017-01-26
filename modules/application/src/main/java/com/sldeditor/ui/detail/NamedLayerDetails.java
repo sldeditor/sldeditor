@@ -30,7 +30,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -47,9 +46,9 @@ public class NamedLayerDetails extends StandardPanel implements PopulateDetailsI
     /**
      * Constructor
      */
-    public NamedLayerDetails(FunctionNameInterface functionManager)
+    public NamedLayerDetails()
     {
-        super(NamedLayerDetails.class, functionManager);
+        super(NamedLayerDetails.class);
 
         createUI();
     }
