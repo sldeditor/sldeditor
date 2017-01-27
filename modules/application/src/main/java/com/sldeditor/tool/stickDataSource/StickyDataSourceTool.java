@@ -7,7 +7,7 @@
 
 package com.sldeditor.tool.stickDataSource;
 
-import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -22,7 +22,6 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.tool.ToggleToolButton;
 import com.sldeditor.tool.ToolInterface;
-import java.awt.FlowLayout;
 
 /**
  * The Class StickyDataSourceTool.

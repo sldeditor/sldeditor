@@ -143,4 +143,16 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
 
         return clonedStyleWrapper;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        if(workspace == null)
+        {
+            return style;
+        }
+        return String.format("%s/%s", workspace, style);
+    }
 }

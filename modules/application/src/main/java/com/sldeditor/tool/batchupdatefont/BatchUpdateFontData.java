@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.FunctionExpression;
+import org.geotools.filter.MathExpressionImpl;
 import org.geotools.styling.Font;
 import org.geotools.styling.Rule;
 import org.geotools.styling.StyleFactoryImpl;
@@ -29,6 +31,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
+import org.springframework.expression.common.LiteralExpression;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.output.SLDWriterInterface;
@@ -47,9 +50,6 @@ public class BatchUpdateFontData {
 
     /** The Constant NOT_SET_STRING. */
     private static final String NOT_SET_STRING = "";
-
-    /** The Constant NOT_SET_VALUE. */
-    private static final int NOT_SET_VALUE = Integer.MIN_VALUE;
 
     /** The workspace. */
     private String workspace;
@@ -336,11 +336,11 @@ public class BatchUpdateFontData {
      *
      * @return the fontSize
      */
-    public int getFontSize() {
+    public String getFontSize() {
         if (isFontSizeSet()) {
-            return Double.valueOf(this.font.getSize().toString()).intValue();
+            return (this.font.getSize().toString());
         }
-        return NOT_SET_VALUE;
+        return NOT_SET_STRING;
     }
 
     /**
@@ -369,7 +369,7 @@ public class BatchUpdateFontData {
     public boolean isFontWeightUpdated() {
         return isSame(originalFontWeight, font.getWeight());
     }
-    
+
     /**
      * Checks if expression has changed from the original
      *
@@ -377,14 +377,10 @@ public class BatchUpdateFontData {
      * @param exp the exp
      * @return true, if is same
      */
-    private boolean isSame(Expression original, Expression exp)
-    {
-        if((original == null) && (exp == null))
-        {
+    private boolean isSame(Expression original, Expression exp) {
+        if ((original == null) && (exp == null)) {
             return false;
-        }
-        else  if((original != null) && (exp != null))
-        {
+        } else if ((original != null) && (exp != null)) {
             return (!(original.equals(exp)));
         }
         return true;
@@ -485,7 +481,8 @@ public class BatchUpdateFontData {
      * @return true, if any data has been changed
      */
     public boolean anyChanges() {
-        return isFontNameUpdated() || isFontStyleUpdated() || isFontWeightUpdated() || isFontSizeUpdated();
+        return isFontNameUpdated() || isFontStyleUpdated() || isFontWeightUpdated()
+                || isFontSizeUpdated();
     }
 
     /**
@@ -494,16 +491,23 @@ public class BatchUpdateFontData {
      * @param fontSize the font size
      */
     public void updateFontSize(int fontSize) {
-        if (!(String.valueOf(fontSize).equals(font.getSize()))) {
-            int updatedSize = Double.valueOf(font.getSize().toString()).intValue() + fontSize;
-            // Make sure we don't get negative sized fonts!
-            if(updatedSize < 1)
-            {
-                updatedSize = 1;
-            }
-            Expression exp = ff.literal(updatedSize);
+        if (!(String.valueOf(fontSize).equals(font.getSize().toString()))) {
+            if (font.getSize() instanceof LiteralExpression) {
+                int updatedSize = Double.valueOf(font.getSize().toString()).intValue() + fontSize;
+                // Make sure we don't get negative sized fonts!
+                if (updatedSize < 1) {
+                    updatedSize = 1;
+                }
+                Expression exp = ff.literal(updatedSize);
 
-            font.setSize(exp);
+                font.setSize(exp);
+            }
+            else if ((font.getSize() instanceof FunctionExpression) ||
+                    (font.getSize() instanceof MathExpressionImpl)) 
+            {
+                Expression updatedSize = ff.add(font.getSize(), ff.literal(fontSize));
+                font.setSize(updatedSize);
+            }
         }
     }
 

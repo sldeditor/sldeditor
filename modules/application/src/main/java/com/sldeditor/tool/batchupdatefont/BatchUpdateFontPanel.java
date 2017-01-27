@@ -73,18 +73,25 @@ public class BatchUpdateFontPanel extends JDialog {
     /** The font details. */
     private FontDetails fontDetails = null;
 
+    /** The btn revert. */
     private JButton btnRevert;
 
+    /** The btn apply. */
     private JButton btnApply;
 
+    /** The btn save. */
     private JButton btnSave;
 
-    private JPanel panel_1;
+    /** The edit panel. */
+    private JPanel editPanel;
 
+    /** The combo box. */
     private JComboBox comboBox;
 
+    /** The panel selector. */
     private JPanel panelSelector;
 
+    /** The font size panel. */
     private FontSizePanel fontSizePanel;
 
     /**
@@ -98,7 +105,7 @@ public class BatchUpdateFontPanel extends JDialog {
 
         setTitle(Localisation.getString(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.title"));
         setModal(true);
-        setSize(800, 537);
+        setSize(800, 550);
 
         createUI();
 
@@ -161,11 +168,8 @@ public class BatchUpdateFontPanel extends JDialog {
                 if (!e.getValueIsAdjusting()) {
                     List<Font> entries = dataModel.getFontEntries(table.getSelectedRows());
 
-                    if (comboBox.getSelectedItem().equals(PANEL_FULL_FONT)) {
-                        fontDetails.populate(entries);
-                    } else if (comboBox.getSelectedItem().equals(PANEL_FONT_SIZE)) {
-                        fontSizePanel.populate(entries);
-                    }
+                    fontDetails.populate(entries);
+                    fontSizePanel.populate(entries);
 
                     btnRevert.setEnabled(true);
                     btnApply.setEnabled(true);
@@ -179,8 +183,8 @@ public class BatchUpdateFontPanel extends JDialog {
         scrollPanel.setViewportView(table);
         table.setPreferredSize(new Dimension(800, 300));
 
-        panel_1 = new JPanel();
-        panel.add(panel_1);
+        editPanel = new JPanel();
+        panel.add(editPanel);
 
         comboBox = new JComboBox();
         comboBox.addActionListener(new ActionListener() {
@@ -191,7 +195,7 @@ public class BatchUpdateFontPanel extends JDialog {
         });
         comboBox.setModel(
                 new DefaultComboBoxModel(new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
-        panel_1.add(comboBox);
+        editPanel.add(comboBox);
 
         panelSelector = new JPanel();
         panel.add(panelSelector);
@@ -230,7 +234,7 @@ public class BatchUpdateFontPanel extends JDialog {
     }
 
     /**
-     * Populate the dialog
+     * Populate the dialog.
      *
      * @param sldDataList the sld data list
      */

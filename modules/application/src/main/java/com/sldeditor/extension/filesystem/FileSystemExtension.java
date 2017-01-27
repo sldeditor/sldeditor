@@ -47,6 +47,7 @@ import org.apache.log4j.Logger;
 
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.RecursiveUpdateInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.connection.GeoServerConnectionManager;
@@ -68,7 +69,7 @@ import com.sldeditor.extension.filesystem.file.FileSystemInput;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FileSystemExtension implements ExtensionInterface, FileSelectionInterface {
+public class FileSystemExtension implements ExtensionInterface, FileSelectionInterface, RecursiveUpdateInterface {
     /** The Constant ROOT_NODE. */
     public static final String ROOT_NODE = Localisation.getString(FileSystemExtension.class,
             "FileSystemExtension.root");
@@ -117,6 +118,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         this.toolMgr = toolMgr;
 
         this.parentObj = parent;
+        toolMgr.addRecursiveListener(this);
 
         // Add extensions
         extensionList = FileSystemExtensionFactory.getFileExtensionList(toolMgr);
@@ -555,5 +557,13 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
                 }
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.RecursiveUpdateInterface#recursiveValuesUpdated(boolean)
+     */
+    @Override
+    public void recursiveValuesUpdated(boolean recurse) {
+        treeItemSelected();
     }
 }

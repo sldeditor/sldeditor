@@ -41,6 +41,7 @@ import javax.swing.tree.DefaultTreeModel;
 import org.junit.Test;
 
 import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.RecursiveUpdateInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.ToolSelectionInterface;
@@ -93,6 +94,28 @@ public class FileSystemExtensionTest {
 
         @Override
         public void registerTool(Class<?> nodeType, ToolInterface toolToRegister) {
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.common.ToolSelectionInterface#isRecursiveFlag()
+         */
+        @Override
+        public boolean isRecursiveFlag() {
+            return false;
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.common.ToolSelectionInterface#setRecursiveFlag(boolean)
+         */
+        @Override
+        public void setRecursiveFlag(boolean recursiveFlag) {
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.RecursiveUpdateInterface)
+         */
+        @Override
+        public void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate) {
         }
     }
 

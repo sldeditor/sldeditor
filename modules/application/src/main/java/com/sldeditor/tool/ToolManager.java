@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 
 import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.RecursiveUpdateInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.ToolSelectionInterface;
@@ -37,13 +38,12 @@ import com.sldeditor.common.ToolSelectionInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ToolManager implements ToolSelectionInterface
-{
+public class ToolManager implements ToolSelectionInterface {
     /** The instance. */
     private static ToolManager instance = null;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface> > toolMap = new HashMap<Class<?>, List<ToolInterface> >();
+    private Map<Class<?>, List<ToolInterface>> toolMap = new HashMap<Class<?>, List<ToolInterface>>();
 
     /** The unique tool map. */
     private Map<Class<?>, ToolInterface> uniqueToolMap = new HashMap<Class<?>, ToolInterface>();
@@ -63,11 +63,16 @@ public class ToolManager implements ToolSelectionInterface
     /** The application. */
     private SLDEditorInterface application = null;
 
+    /** The recursive flag. */
+    private boolean recursiveFlag = false;
+
+    /** The recursive update listener. */
+    private List<RecursiveUpdateInterface> recursiveUpdateListenerList = new ArrayList<RecursiveUpdateInterface>();
+    
     /**
-     * Default constructor
+     * Default constructor.
      */
-    private ToolManager()
-    {
+    private ToolManager() {
     }
 
     /**
@@ -77,25 +82,23 @@ public class ToolManager implements ToolSelectionInterface
      * @param toolToRegister the tool to register
      */
     @Override
-    public void registerTool(Class<?> nodeType, ToolInterface toolToRegister)
-    {
+    public void registerTool(Class<?> nodeType, ToolInterface toolToRegister) {
         ToolInterface uniqueTool = uniqueToolMap.get(toolToRegister.getClass());
 
-        if(uniqueTool == null)
-        {
+        if (uniqueTool == null) {
             uniqueToolMap.put(toolToRegister.getClass(), toolToRegister);
             uniqueTool = toolToRegister;
         }
 
         List<ToolInterface> toolList = toolMap.get(nodeType);
 
-        if(toolList == null)
-        {
+        if (toolList == null) {
             toolList = new ArrayList<ToolInterface>();
             toolMap.put(nodeType, toolList);
         }
         toolList.add(uniqueTool);
-        logger.debug("Registered tool : " + uniqueTool.getToolName() + " for " + nodeType.getName());
+        logger.debug(
+                "Registered tool : " + uniqueTool.getToolName() + " for " + nodeType.getName());
     }
 
     /**
@@ -103,10 +106,8 @@ public class ToolManager implements ToolSelectionInterface
      *
      * @return single instance of ToolManager
      */
-    public static ToolManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static ToolManager getInstance() {
+        if (instance == null) {
             instance = new ToolManager();
         }
 
@@ -118,15 +119,15 @@ public class ToolManager implements ToolSelectionInterface
      *
      * @return the panel
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolSelectionInterface#getPanel()
      */
     @Override
-    public JPanel getPanel()
-    {
-        if(toolPanel == null)
-        {
-            toolPanel = new ToolPanel(toolMap);
+    public JPanel getPanel() {
+        if (toolPanel == null) {
+            toolPanel = new ToolPanel(this, toolMap);
         }
 
         return toolPanel;
@@ -138,12 +139,14 @@ public class ToolManager implements ToolSelectionInterface
      * @param nodeTypeList the node type list
      * @param sldDataList the sld data list
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolSelectionInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         lastNodeTypeList = nodeTypeList;
         lastSldDataList = sldDataList;
 
@@ -157,17 +160,12 @@ public class ToolManager implements ToolSelectionInterface
      * @param sldDataList the sld data list
      */
     private void forwardSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList)
-    {
-        if(toolPanel != null)
-        {
+            List<SLDDataInterface> sldDataList) {
+        if (toolPanel != null) {
             List<Class<?>> uniqueNodeTypeList = new ArrayList<Class<?>>();
-            if(nodeTypeList != null)
-            {
-                for(NodeInterface o : nodeTypeList)
-                {
-                    if(!uniqueNodeTypeList.contains(o.getClass()))
-                    {
+            if (nodeTypeList != null) {
+                for (NodeInterface o : nodeTypeList) {
+                    if (!uniqueNodeTypeList.contains(o.getClass())) {
                         uniqueNodeTypeList.add(o.getClass());
                     }
                 }
@@ -179,12 +177,13 @@ public class ToolManager implements ToolSelectionInterface
     /**
      * Refresh selection.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolSelectionInterface#refreshSelection()
      */
     @Override
-    public void refreshSelection()
-    {
+    public void refreshSelection() {
         forwardSelectedItems(lastNodeTypeList, lastSldDataList);
     }
 
@@ -205,5 +204,40 @@ public class ToolManager implements ToolSelectionInterface
     @Override
     public SLDEditorInterface getApplication() {
         return application;
+    }
+
+    /**
+     * Checks if is recursive flag.
+     *
+     * @return the recursiveFlag
+     */
+    @Override
+    public boolean isRecursiveFlag() {
+        return recursiveFlag;
+    }
+
+    /**
+     * Sets the recursive flag.
+     *
+     * @param recursiveFlag the recursiveFlag to set
+     */
+    @Override
+    public void setRecursiveFlag(boolean recursiveFlag) {
+        this.recursiveFlag = recursiveFlag;
+        for(RecursiveUpdateInterface listener : recursiveUpdateListenerList)
+        {
+            listener.recursiveValuesUpdated(this.recursiveFlag);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.RecursiveUpdateInterface)
+     */
+    @Override
+    public void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate) {
+        if(!recursiveUpdateListenerList.contains(recursiveUpdate))
+        {
+            recursiveUpdateListenerList.add(recursiveUpdate);
+        }
     }
 }

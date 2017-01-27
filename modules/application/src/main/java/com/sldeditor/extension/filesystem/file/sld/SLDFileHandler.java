@@ -45,14 +45,14 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.tool.ToolManager;
 
 /**
  * Class that handles reading/writing SLD files to the file system.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDFileHandler implements FileHandlerInterface
-{
+public class SLDFileHandler implements FileHandlerInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3122710411389246976L;
 
@@ -62,48 +62,48 @@ public class SLDFileHandler implements FileHandlerInterface
     /** The tree icon SLD. */
     private Icon treeIcon = null;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
     @Override
-    public List<String> getFileExtensionList()
-    {
+    public List<String> getFileExtensionList() {
         return Arrays.asList("sld");
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node)
-    {
+    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
+            FileTreeNode node) {
         // Do nothing
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public List<SLDDataInterface> getSLDContents(NodeInterface node)
-    {
-        if(node instanceof FileTreeNode)
-        {
-            FileTreeNode fileTreeNode = (FileTreeNode)node;
+    public List<SLDDataInterface> getSLDContents(NodeInterface node) {
+        if (node instanceof FileTreeNode) {
+            FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-            if(fileTreeNode.isDir())
-            {
+            if (fileTreeNode.isDir()) {
                 // Cater for folders
                 return open(fileTreeNode.getFile());
-            }
-            else
-            {
+            } else {
                 // Cater for single file
                 File f = fileTreeNode.getFile();
 
                 String fileExtension = ExternalFilenames.getFileExtension(f.getAbsolutePath());
-                if(getFileExtensionList().contains(fileExtension))
-                {
+                if (getFileExtensionList().contains(fileExtension)) {
                     return open(f);
                 }
             }
@@ -119,8 +119,7 @@ public class SLDFileHandler implements FileHandlerInterface
      * @return the string
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private static String readFile(File file, Charset encoding)  throws IOException 
-    {
+    private static String readFile(File file, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
         return new String(encoded, encoding);
     }
@@ -132,30 +131,19 @@ public class SLDFileHandler implements FileHandlerInterface
      * @return the list
      */
     @Override
-    public List<SLDDataInterface> open(File f)
-    {
-        if(f != null)
-        {
+    public List<SLDDataInterface> open(File f) {
+        if (f != null) {
             List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
 
-            if(f.isDirectory())
-            {
-                File[] listFiles = f.listFiles();
-                if(listFiles != null)
-                {
-                    for(File subFile : listFiles)
-                    {
-                        internalOpenFile(subFile, list);
-                    }
-                }
-            }
-            else
-            {
+            if (f.isDirectory()) {
+                boolean traverseFolders = ToolManager.getInstance().isRecursiveFlag();
+
+                walk(f, list, traverseFolders);
+            } else {
                 internalOpenFile(f, list);
             }
 
-            if(list.isEmpty())
-            {
+            if (list.isEmpty()) {
                 return null;
             }
 
@@ -165,16 +153,36 @@ public class SLDFileHandler implements FileHandlerInterface
     }
 
     /**
+     * Walk the file system tree
+     *
+     * @param root the root
+     * @param list the list
+     * @param recurse the recurse
+     */
+    private void walk(File root, List<SLDDataInterface> list, boolean recurse) {
+        File[] fileList = root.listFiles();
+
+        if (fileList == null)
+            return;
+
+        for (File f : fileList) {
+            if (f.isDirectory() && recurse) {
+                walk(f, list, recurse);
+            } else {
+                internalOpenFile(f, list);
+            }
+        }
+    }
+
+    /**
      * Internal open file.
      *
      * @param f the file
      * @param list the list
      */
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
-        if(f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList()))
-        {
-            try
-            {
+        if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
+            try {
                 String sldContents = readFile(f, Charset.defaultCharset());
 
                 SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
@@ -182,22 +190,20 @@ public class SLDFileHandler implements FileHandlerInterface
                 sldData.setReadOnly(false);
 
                 list.add(sldData);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public boolean save(SLDDataInterface sldData)
-    {
-        if(sldData == null)
-        {
+    public boolean save(SLDDataInterface sldData) {
+        if (sldData == null) {
             return false;
         }
 
@@ -218,15 +224,16 @@ public class SLDFileHandler implements FileHandlerInterface
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public String getSLDName(SLDDataInterface sldData)
-    {
-        if(sldData != null)
-        {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+    public String getSLDName(SLDDataInterface sldData) {
+        if (sldData != null) {
+            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
+                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -242,13 +249,14 @@ public class SLDFileHandler implements FileHandlerInterface
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override
     public Icon getIcon(String path, String filename) {
-        if(treeIcon == null)
-        {
+        if (treeIcon == null) {
             URL url = SLDFileHandler.class.getClassLoader().getResource(RESOURCE_ICON);
 
             treeIcon = new ImageIcon(url);

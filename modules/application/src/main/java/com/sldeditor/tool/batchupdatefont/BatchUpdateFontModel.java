@@ -183,7 +183,7 @@ public class BatchUpdateFontModel extends AbstractTableModel {
             break;
         case COL_FONT_SIZE:
             if (data.isFontSizeSet()) {
-                return String.valueOf(data.getFontSize());
+                return data.getFontSize();
             }
             break;
         }

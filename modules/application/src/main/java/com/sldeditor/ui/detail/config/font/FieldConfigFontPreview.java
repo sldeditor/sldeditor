@@ -308,15 +308,16 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
 
                 // Get font size
                 int size = 12;
-                Literal sizeExpression = (Literal) font.getSize();
-                Object obj = sizeExpression.getValue();
-                if (obj instanceof Number) {
-                    Number number = (Number) obj;
-                    size = number.intValue();
-                } else if (obj instanceof String) {
-                    size = Double.valueOf((String) obj).intValue();
+                if (font.getSize() instanceof Literal) {
+                    Literal sizeExpression = (Literal) font.getSize();
+                    Object obj = sizeExpression.getValue();
+                    if (obj instanceof Number) {
+                        Number number = (Number) obj;
+                        size = number.intValue();
+                    } else if (obj instanceof String) {
+                        size = Double.valueOf((String) obj).intValue();
+                    }
                 }
-
                 sb.append(size);
 
                 java.awt.Font sampleFont = java.awt.Font.decode(sb.toString());
