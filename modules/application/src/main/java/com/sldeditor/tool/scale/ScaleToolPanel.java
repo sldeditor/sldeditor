@@ -40,22 +40,27 @@ import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
 
 /**
- * Dialog that displays one or more slds in table showing the scales at which rules are displayed.
- * User is able to update and save the scales.
+ * Dialog that displays one or more slds in table showing the scales at which rules are displayed. User is able to update and save the scales.
  */
-public class ScaleToolPanel extends JDialog {
+public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
 
-    /**  serialVersionUID. */
+    /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /** The table. */
     private JTable table;
 
     /** The table model. */
-    private ScaleSLDModel dataModel = new ScaleSLDModel();
+    private ScaleSLDModel dataModel = null;
 
     /** The application. */
     private SLDEditorInterface application = null;
+
+    /** The btn save. */
+    private JButton btnSave = null;
+
+    /** The btn revert. */
+    private JButton btnRevert = null;
 
     /**
      * Instantiates a new scale tool panel.
@@ -79,6 +84,8 @@ public class ScaleToolPanel extends JDialog {
      * Creates the ui.
      */
     private void createUI() {
+        dataModel = new ScaleSLDModel(this);
+
         table = new JTable();
         table.setModel(dataModel);
 
@@ -94,52 +101,35 @@ public class ScaleToolPanel extends JDialog {
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnRevert = new JButton(Localisation.getString(ScaleToolPanel.class, "common.revert"));
+        btnRevert = new JButton(
+                Localisation.getString(ScaleToolPanel.class, "common.revert"));
+        btnRevert.setEnabled(false);
         btnRevert.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dataModel.revertData();
             }
         });
+
         buttonPanel.add(btnRevert);
 
-        JButton btnApply = new JButton(Localisation.getString(ScaleToolPanel.class, "common.apply"));
-        btnApply.addActionListener(new ActionListener() {
+        btnSave = new JButton(Localisation.getString(ScaleToolPanel.class, "common.save"));
+        btnSave.setEnabled(false);
+        btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                applyData();
+                saveData();
             }
         });
-        buttonPanel.add(btnApply);
-
-        JButton btnOk = new JButton(Localisation.getString(ScaleToolPanel.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyData();
-                setVisible(false);
-            }
-        });
-        buttonPanel.add(btnOk);
-
-        JButton btnCancel = new JButton(Localisation.getString(ScaleToolPanel.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
-        buttonPanel.add(btnCancel);
+        buttonPanel.add(btnSave);
     }
 
     /**
-     * Apply data.
+     * Save data.
      */
-    private void applyData() {
-        if(dataModel.applyData(application))
-        {
-            if(application != null)
-            {
+    private void saveData() {
+        if (dataModel.applyData(application)) {
+            if (application != null) {
                 application.refreshPanel(FeatureTypeStyleImpl.class, RuleImpl.class);
             }
         }
@@ -157,7 +147,7 @@ public class ScaleToolPanel extends JDialog {
     }
 
     /**
-     * Populate the dialog
+     * Populate the dialog.
      *
      * @param sldDataList the sld data list
      */
@@ -165,15 +155,22 @@ public class ScaleToolPanel extends JDialog {
 
         List<ScaleSLDData> scaleDataList = new ArrayList<ScaleSLDData>();
 
-        for(SLDDataInterface sldData : sldDataList)
-        {
+        for (SLDDataInterface sldData : sldDataList) {
             List<ScaleSLDData> scaleSLDDataList = ScalePanelUtils.containsScales(sldData);
-            if((scaleSLDDataList != null) && !scaleSLDDataList.isEmpty())
-            {
+            if ((scaleSLDDataList != null) && !scaleSLDDataList.isEmpty()) {
                 scaleDataList.addAll(scaleSLDDataList);
             }
         }
-        dataModel.loadData(scaleDataList);   
+        dataModel.loadData(scaleDataList);
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.tool.scale.ScaleToolUpdate#dataUpdated()
+     */
+    @Override
+    public void dataUpdated() {
+        btnRevert.setEnabled(true);
+        btnSave.setEnabled(true);
     }
 
 }

@@ -70,10 +70,15 @@ public class ScaleSLDModel extends AbstractTableModel {
     /** The sld writer. */
     private SLDWriterInterface sldWriter = null;
 
+    /** The listener. */
+    private ScaleToolUpdate listener = null;
+
     /**
      * Constructor.
      */
-    public ScaleSLDModel() {
+    public ScaleSLDModel(ScaleToolUpdate listener) {
+        this.listener = listener;
+
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.workspace"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.source"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.namedLayer"));
@@ -195,6 +200,10 @@ public class ScaleSLDModel extends AbstractTableModel {
         if (columnIndex == COL_MAX_SCALE) {
             data.setMaxScaleString(aValue);
         }
+
+        if (listener != null) {
+            listener.dataUpdated();
+        }
     }
 
     /**
@@ -252,8 +261,7 @@ public class ScaleSLDModel extends AbstractTableModel {
         for (ScaleSLDData data : scaleList) {
             if (data.isMinimumScaleUpdated() || data.isMaximumScaleUpdated()) {
 
-                if(data.updateScales(sldWriter))
-                {
+                if (data.updateScales(sldWriter)) {
                     refreshUI = true;
                 }
 

@@ -20,8 +20,6 @@ package com.sldeditor.tool.scale;
 
 import org.geotools.styling.Rule;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.Symbolizer;
-import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
@@ -353,12 +351,8 @@ public class ScaleSLDData {
                 Rule currentFule = SLDUtils.findRule(sld, rule,
                         SelectedSymbol.getInstance().getSld());
                 if (currentFule != null) {
-                    if (isMinimumScaleUpdated()) {
-                        currentFule.setMinScaleDenominator(minScale);
-                    }
-                    if (isMaximumScaleUpdated()) {
-                        currentFule.setMaxScaleDenominator(maxScale);
-                    }
+                    currentFule.setMinScaleDenominator(minScale);
+                    currentFule.setMaxScaleDenominator(maxScale);
                     refreshUI = true;
                 }
             }
