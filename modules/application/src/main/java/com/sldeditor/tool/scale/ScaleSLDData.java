@@ -20,10 +20,15 @@ package com.sldeditor.tool.scale;
 
 import org.geotools.styling.Rule;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.Symbolizer;
+import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.utils.ScaleUtil;
+import com.sldeditor.datasource.SLDEditorFile;
 
 /**
  * Class that encapsulates information about the scales at which a rule is displayed.
@@ -148,8 +153,7 @@ public class ScaleSLDData {
      *
      * @return the rule
      */
-    public Rule getRule()
-    {
+    public Rule getRule() {
         return rule;
     }
 
@@ -167,8 +171,7 @@ public class ScaleSLDData {
      *
      * @return the minimum scale a string
      */
-    public String getMinScaleString()
-    {
+    public String getMinScaleString() {
         return ScaleUtil.getValue(minScale);
     }
 
@@ -177,8 +180,7 @@ public class ScaleSLDData {
      *
      * @return the maximum scale a string
      */
-    public String getMaxScaleString()
-    {
+    public String getMaxScaleString() {
         return ScaleUtil.getValue(maxScale);
     }
 
@@ -279,8 +281,7 @@ public class ScaleSLDData {
     /**
      * Revert to original.
      */
-    public void revertToOriginal()
-    {
+    public void revertToOriginal() {
         this.minScale = this.originalMinScale;
         this.maxScale = this.originalMaxScale;
         this.minimumScaleUpdated = false;
@@ -330,24 +331,41 @@ public class ScaleSLDData {
      *
      * @param sldWriter the sld writer
      */
-    public void updateScales(SLDWriterInterface sldWriter) {
-        if(rule != null)
-        {
-            if(isMinimumScaleUpdated())
-            {
+    public boolean updateScales(SLDWriterInterface sldWriter) {
+        boolean refreshUI = false;
+        if (rule != null) {
+            if (isMinimumScaleUpdated()) {
                 rule.setMinScaleDenominator(minScale);
                 minimumScaleUpdated = false;
             }
 
-            if(isMaximumScaleUpdated())
-            {
+            if (isMaximumScaleUpdated()) {
                 rule.setMaxScaleDenominator(maxScale);
                 maximumScaleUpdated = false;
             }
 
             String sldContents = sldWriter.encodeSLD(null, this.sld);
 
+            SLDDataInterface current = SLDEditorFile.getInstance().getSLDData();
+
+            if (current.getSLDFile().equals(sldData.getSLDFile())
+                    || current.getSLDURL().equals(sldData.getSLDURL())) {
+                Rule currentFule = SLDUtils.findRule(sld, rule,
+                        SelectedSymbol.getInstance().getSld());
+                if (currentFule != null) {
+                    if (isMinimumScaleUpdated()) {
+                        currentFule.setMinScaleDenominator(minScale);
+                    }
+                    if (isMaximumScaleUpdated()) {
+                        currentFule.setMaxScaleDenominator(maxScale);
+                    }
+                    refreshUI = true;
+                }
+            }
+
             sldData.updateSLDContents(sldContents);
         }
+
+        return refreshUI;
     }
 }

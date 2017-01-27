@@ -286,4 +286,14 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
         return vendorOptionUI;
     }
 
+    /**
+     * Refresh panel.
+     *
+     * @param parent the parent
+     * @param panelClass the panel class
+     */
+    public void refreshPanel(Class<?> parent, Class<?> panelClass) {
+        singleSymbolUI.refreshPanel(parent, panelClass);
+    }
+
 }

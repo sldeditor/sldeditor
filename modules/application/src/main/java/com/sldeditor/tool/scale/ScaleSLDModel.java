@@ -46,19 +46,19 @@ public class ScaleSLDModel extends AbstractTableModel {
     /** The named layer column index. */
     private static final int COL_NAMED_LAYER = 2;
 
-    /**  The style column index. */
+    /** The style column index. */
     private static final int COL_STYLE = 3;
 
-    /**  The feature type style column index. */
+    /** The feature type style column index. */
     private static final int COL_FEATURE_TYPE_STYLE = 4;
 
-    /**  The rule column index. */
+    /** The rule column index. */
     private static final int COL_RULE = 5;
 
-    /**  The minimum scale column index. */
+    /** The minimum scale column index. */
     private static final int COL_MIN_SCALE = 6;
 
-    /**  The maximum scale column index. */
+    /** The maximum scale column index. */
     private static final int COL_MAX_SCALE = 7;
 
     /** The column name list. */
@@ -73,13 +73,13 @@ public class ScaleSLDModel extends AbstractTableModel {
     /**
      * Constructor.
      */
-    public ScaleSLDModel()
-    {
+    public ScaleSLDModel() {
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.workspace"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.source"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.namedLayer"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.style"));
-        columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.featureTypeStyle"));
+        columnNameList
+                .add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.featureTypeStyle"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.rule"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.minScale"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.maxScale"));
@@ -127,8 +127,7 @@ public class ScaleSLDModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         ScaleSLDData data = scaleList.get(rowIndex);
 
-        switch(columnIndex)
-        {
+        switch (columnIndex) {
         case COL_WORKSPACE:
             return data.getWorkspace();
         case COL_SOURCE:
@@ -142,14 +141,12 @@ public class ScaleSLDModel extends AbstractTableModel {
         case COL_RULE:
             return data.getRuleName();
         case COL_MIN_SCALE:
-            if(data.isMinScaleSet())
-            {
+            if (data.isMinScaleSet()) {
                 return data.getMinScaleString();
             }
             break;
         case COL_MAX_SCALE:
-            if(data.isMaxScaleSet())
-            {
+            if (data.isMaxScaleSet()) {
                 return data.getMaxScaleString();
             }
             break;
@@ -162,8 +159,7 @@ public class ScaleSLDModel extends AbstractTableModel {
      *
      * @param dataList the data list
      */
-    public void loadData(List<ScaleSLDData> dataList)
-    {
+    public void loadData(List<ScaleSLDData> dataList) {
         scaleList = dataList;
 
         this.fireTableDataChanged();
@@ -192,13 +188,11 @@ public class ScaleSLDModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         ScaleSLDData data = scaleList.get(rowIndex);
 
-        if(columnIndex == COL_MIN_SCALE)
-        {
+        if (columnIndex == COL_MIN_SCALE) {
             data.setMinScaleString(aValue);
         }
 
-        if(columnIndex == COL_MAX_SCALE)
-        {
+        if (columnIndex == COL_MAX_SCALE) {
             data.setMaxScaleString(aValue);
         }
     }
@@ -206,10 +200,8 @@ public class ScaleSLDModel extends AbstractTableModel {
     /**
      * Revert data to original.
      */
-    public void revertData()
-    {
-        for(ScaleSLDData data : scaleList)
-        {
+    public void revertData() {
+        for (ScaleSLDData data : scaleList) {
             data.revertToOriginal();
         }
 
@@ -226,13 +218,11 @@ public class ScaleSLDModel extends AbstractTableModel {
     public boolean hasValueBeenUpdated(int rowIndex, int columnIndex) {
         ScaleSLDData data = scaleList.get(rowIndex);
 
-        if(columnIndex == COL_MIN_SCALE)
-        {
+        if (columnIndex == COL_MIN_SCALE) {
             return data.isMinimumScaleUpdated();
         }
 
-        if(columnIndex == COL_MAX_SCALE)
-        {
+        if (columnIndex == COL_MAX_SCALE) {
             return data.isMaximumScaleUpdated();
         }
         return false;
@@ -253,25 +243,28 @@ public class ScaleSLDModel extends AbstractTableModel {
      *
      * @param application the application
      */
-    public void applyData(SLDEditorInterface application) {
-        for(ScaleSLDData data : scaleList)
-        {
-            if(data.isMinimumScaleUpdated() || data.isMaximumScaleUpdated())
-            {
-                if(sldWriter == null)
+    public boolean applyData(SLDEditorInterface application) {
+        boolean refreshUI = false;
+        if (sldWriter == null) {
+            sldWriter = SLDWriterFactory.createWriter(null);
+        }
+
+        for (ScaleSLDData data : scaleList) {
+            if (data.isMinimumScaleUpdated() || data.isMaximumScaleUpdated()) {
+
+                if(data.updateScales(sldWriter))
                 {
-                    sldWriter = SLDWriterFactory.createWriter(null);
+                    refreshUI = true;
                 }
 
-                data.updateScales(sldWriter);
-
-                if(application != null)
-                {
+                if (application != null) {
                     application.saveSLDData(data.getSldData());
                 }
             }
         }
 
         this.fireTableDataChanged();
+
+        return refreshUI;
     }
 }

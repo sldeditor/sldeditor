@@ -263,15 +263,20 @@ public class BatchUpdateFontModel extends AbstractTableModel {
      *
      * @param application the application
      */
-    public void saveData(SLDEditorInterface application) {
+    public boolean saveData(SLDEditorInterface application) {
+        boolean refreshUI = false;
+        if (sldWriter == null) {
+            sldWriter = SLDWriterFactory.createWriter(null);
+        }
+
         for (BatchUpdateFontData data : fontList) {
             if (data.isFontNameUpdated() || data.isFontStyleUpdated() || data.isFontWeightUpdated()
                     || data.isFontSizeUpdated()) {
-                if (sldWriter == null) {
-                    sldWriter = SLDWriterFactory.createWriter(null);
-                }
 
-                data.updateFont(sldWriter);
+                if(data.updateFont(sldWriter))
+                {
+                    refreshUI = true;
+                }
 
                 if (application != null) {
                     application.saveSLDData(data.getSldData());
@@ -280,6 +285,8 @@ public class BatchUpdateFontModel extends AbstractTableModel {
         }
 
         this.fireTableDataChanged();
+
+        return refreshUI;
     }
 
     /**
@@ -324,9 +331,8 @@ public class BatchUpdateFontModel extends AbstractTableModel {
      */
     public boolean anyChanges() {
         for (BatchUpdateFontData data : fontList) {
-            if(data.anyChanges())
-            {
-               return true; 
+            if (data.anyChanges()) {
+                return true;
             }
         }
         return false;

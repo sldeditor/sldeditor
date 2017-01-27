@@ -223,4 +223,12 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
             List<VendorOptionPresent> vendorOptionsPresentList) {
         // Does nothing
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class, java.lang.Class)
+     */
+    @Override
+    public void refresh(Class<?> parentClass, Class<?> classSelected) {
+        // Does nothing
+    }
 }

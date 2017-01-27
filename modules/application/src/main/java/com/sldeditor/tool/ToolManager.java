@@ -68,7 +68,7 @@ public class ToolManager implements ToolSelectionInterface {
 
     /** The recursive update listener. */
     private List<RecursiveUpdateInterface> recursiveUpdateListenerList = new ArrayList<RecursiveUpdateInterface>();
-    
+
     /**
      * Default constructor.
      */

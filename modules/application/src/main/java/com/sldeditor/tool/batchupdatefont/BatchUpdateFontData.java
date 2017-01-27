@@ -28,13 +28,17 @@ import org.geotools.styling.Font;
 import org.geotools.styling.Rule;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.springframework.expression.common.LiteralExpression;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.datasource.SLDEditorFile;
 
 /**
  * Class that encapsulates information about the scales at which a rule is displayed.
@@ -267,8 +271,10 @@ public class BatchUpdateFontData {
      * Update scales.
      *
      * @param sldWriter the sld writer
+     * @return true, if successful
      */
-    public void updateFont(SLDWriterInterface sldWriter) {
+    public boolean updateFont(SLDWriterInterface sldWriter) {
+        boolean refreshUI = false;
         if (rule != null) {
             List<Font> fontList = symbolizer.fonts();
             Font font = fontList.get(0);
@@ -291,8 +297,28 @@ public class BatchUpdateFontData {
 
             String sldContents = sldWriter.encodeSLD(null, this.sld);
 
+            SLDDataInterface current = SLDEditorFile.getInstance().getSLDData();
+
+            if(current.getSLDFile().equals(sldData.getSLDFile()) ||
+                    current.getSLDURL().equals(sldData.getSLDURL()))
+            {
+                Symbolizer currentSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer,
+                        SelectedSymbol.getInstance().getSld());
+                if (currentSymbolizer != null) {
+                    if(currentSymbolizer instanceof TextSymbolizer)
+                    {
+                        TextSymbolizer textSymbolizer = (TextSymbolizer) currentSymbolizer;
+                        textSymbolizer.fonts().clear();
+                        textSymbolizer.fonts().add(font);
+                        refreshUI = true;
+                    }
+                }
+            }
             sldData.updateSLDContents(sldContents);
+
+            setOriginalData(font);
         }
+        return refreshUI;
     }
 
     /**
@@ -436,6 +462,15 @@ public class BatchUpdateFontData {
         font.setWeight(newFont.getWeight());
         font.setSize(newFont.getSize());
 
+        setOriginalData(newFont);
+    }
+
+    /**
+     * Sets the original data.
+     *
+     * @param newFont the new original data
+     */
+    private void setOriginalData(Font newFont) {
         this.originalFontName = newFont.getFamily();
         this.originalFontStyle = newFont.getStyle();
         this.originalFontWeight = newFont.getWeight();

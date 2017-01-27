@@ -31,6 +31,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.geotools.styling.FeatureTypeStyleImpl;
+import org.geotools.styling.RuleImpl;
+
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
@@ -133,7 +136,13 @@ public class ScaleToolPanel extends JDialog {
      * Apply data.
      */
     private void applyData() {
-        dataModel.applyData(application);
+        if(dataModel.applyData(application))
+        {
+            if(application != null)
+            {
+                application.refreshPanel(FeatureTypeStyleImpl.class, RuleImpl.class);
+            }
+        }
     }
 
     /**

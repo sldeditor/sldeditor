@@ -118,7 +118,10 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         this.toolMgr = toolMgr;
 
         this.parentObj = parent;
-        toolMgr.addRecursiveListener(this);
+        if(toolMgr != null)
+        {
+            toolMgr.addRecursiveListener(this);
+        }
 
         // Add extensions
         extensionList = FileSystemExtensionFactory.getFileExtensionList(toolMgr);

@@ -826,4 +826,12 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
         ReloadManager.getInstance().reset();
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.SLDEditorInterface#refreshPanel(java.lang.Class, java.lang.Class)
+     */
+    @Override
+    public void refreshPanel(Class<?> parent, Class<?> panelClass) {
+        uiMgr.refreshPanel(parent, panelClass);
+    }
 }

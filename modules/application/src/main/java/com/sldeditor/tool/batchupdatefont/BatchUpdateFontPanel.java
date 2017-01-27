@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -37,13 +39,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.geotools.styling.Font;
+import org.geotools.styling.RuleImpl;
+import org.geotools.styling.TextSymbolizerImpl;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  * Dialog that displays one or more slds in table showing the fonts User is able to batch update the fonts.
@@ -230,7 +232,14 @@ public class BatchUpdateFontPanel extends JDialog {
      * Save data.
      */
     private void saveData() {
-        dataModel.saveData(application);
+        if(dataModel.saveData(application))
+        {
+            if(application != null)
+            {
+                application.refreshPanel(RuleImpl.class, TextSymbolizerImpl.class);
+            }
+        }
+        btnSave.setEnabled(false);
     }
 
     /**

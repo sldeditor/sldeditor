@@ -30,6 +30,7 @@ public interface SymbolizerSelectedInterface {
     /**
      * Gets the panel for the given panel key.
      *
+     * @param parentClass the parent class
      * @param key the key
      * @return the panel
      */
@@ -49,4 +50,12 @@ public interface SymbolizerSelectedInterface {
      * @param classSelected the class selected
      */
     public void show(Class<?> parentClass, Class<?> classSelected);
+
+    /**
+     * Refresh contents of panel if displayed.
+     *
+     * @param parentClass the parent class
+     * @param classSelected the class selected
+     */
+    public void refresh(Class<?> parentClass, Class<?> classSelected);
 }

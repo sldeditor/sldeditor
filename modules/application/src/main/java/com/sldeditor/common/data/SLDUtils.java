@@ -24,20 +24,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.geotools.data.DataUtilities;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.DefaultResourceLocator;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.NamedLayerImpl;
+import org.geotools.styling.Rule;
 import org.geotools.styling.SLDParser;
+import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
+import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.Symbolizer;
+import org.geotools.styling.UserLayerImpl;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 
 /**
- * The Class SLDUtils, contains utility methods to populate StyledLayerDescriptor
- * objects from a string or a file.
+ * The Class SLDUtils, contains utility methods to populate StyledLayerDescriptor objects from a string or a file.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -52,10 +59,8 @@ public class SLDUtils {
      * @param sldData the sld data
      * @return the styled layer descriptor
      */
-    public static StyledLayerDescriptor createSLDFromString(SLDDataInterface sldData)
-    {
-        if((sldData == null) || (sldData.getSld() == null))
-        {
+    public static StyledLayerDescriptor createSLDFromString(SLDDataInterface sldData) {
+        if ((sldData == null) || (sldData.getSld() == null)) {
             return null;
         }
 
@@ -71,13 +76,11 @@ public class SLDUtils {
         setResourcelocator(styleReader, resourceLocator);
         StyledLayerDescriptor sld = null;
 
-        try
-        {
+        try {
             sld = styleReader.parseSLD();
-        }
-        catch(RuntimeException e)
-        {
-            String errorMessage = String.format("SLD Praser error : %s", sldData.getStyle().toString());
+        } catch (RuntimeException e) {
+            String errorMessage = String.format("SLD Praser error : %s",
+                    sldData.getStyle().toString());
             ConsoleManager.getInstance().error(SLDUtils.class, errorMessage);
             ConsoleManager.getInstance().error(SLDUtils.class, e.getMessage());
         }
@@ -96,20 +99,16 @@ public class SLDUtils {
 
         URL resourceLocator = null;
 
-        if(geoServer != null)
-        {
+        if (geoServer != null) {
             try {
                 resourceLocator = DataUtilities.extendURL(geoServer.getUrl(), STYLES_PATH);
             } catch (MalformedURLException e) {
                 ConsoleManager.getInstance().exception(SLDUtils.class, e);
             }
-        }
-        else
-        {
+        } else {
             try {
                 File sldFile = sldData.getSLDFile();
-                if(sldFile != null)
-                {
+                if (sldFile != null) {
                     resourceLocator = sldFile.getParentFile().toURI().toURL();
                 }
             } catch (MalformedURLException e) {
@@ -125,8 +124,7 @@ public class SLDUtils {
      * @param styleReader the new resource locator
      * @param url the url
      */
-    public static void setResourcelocator(SLDParser styleReader, URL url)
-    {
+    public static void setResourcelocator(SLDParser styleReader, URL url) {
         DefaultResourceLocator resourceLocator = new DefaultResourceLocator();
 
         resourceLocator.setSourceUrl(url);
@@ -134,8 +132,7 @@ public class SLDUtils {
     }
 
     /**
-     * Creates a StyledLayerDescriptor object containing a SLD by 
-     * reading the contents of a file
+     * Creates a StyledLayerDescriptor object containing a SLD by reading the contents of a file
      *
      * @param file the file
      * @return the styled layer descriptor
@@ -143,26 +140,232 @@ public class SLDUtils {
     public static StyledLayerDescriptor readSLDFile(File file) {
         StyledLayerDescriptor sld = null;
 
-        if(file != null)
-        {
+        if (file != null) {
             StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
-            try
-            {
+            try {
                 // By using URL here allows external graphics to loaded properly
                 URL url = file.toURI().toURL();
                 SLDParser styleReader = new SLDParser(styleFactory, url);
                 setResourcelocator(styleReader, file.toURI().toURL());
                 sld = styleReader.parseSLD();
-            }
-            catch (MalformedURLException e)
-            {
+            } catch (MalformedURLException e) {
                 ConsoleManager.getInstance().exception(SLDUtils.class, e);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 ConsoleManager.getInstance().exception(SLDUtils.class, e);
             }
         }
         return sld;
+    }
+
+    /**
+     * Find symbolizer.
+     *
+     * @param sld the sld
+     * @param symbolizerToFind the symbolizer to find
+     * @param otherSLD the other SLD
+     * @return the symbolizer
+     */
+    public static Symbolizer findSymbolizer(StyledLayerDescriptor sld, Symbolizer symbolizerToFind,
+            StyledLayerDescriptor otherSLD) {
+
+        List<StyledLayer> styledLayerList = sld.layers();
+
+        if (styledLayerList != null) {
+            int styledLayerIndex = 0;
+            int styleIndex = 0;
+            int ftsIndex = 0;
+            int ruleIndex = 0;
+            int symbolizerIndex = 0;
+            boolean isNamedLayer = true;
+
+            for (StyledLayer styledLayer : styledLayerList) {
+                List<Style> styleList = null;
+
+                if (styledLayer instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+                    styleList = namedLayerImpl.styles();
+                    isNamedLayer = true;
+                } else if (styledLayer instanceof UserLayerImpl) {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
+                    styleList = userLayerImpl.userStyles();
+                    isNamedLayer = false;
+                }
+
+                if (styleList != null) {
+                    styleIndex = 0;
+                    for (Style style : styleList) {
+                        ftsIndex = 0;
+                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                            ruleIndex = 0;
+                            for (Rule rule : fts.rules()) {
+                                symbolizerIndex = 0;
+                                for (org.opengis.style.Symbolizer symbolizer : rule.symbolizers()) {
+                                    if (symbolizer == symbolizerToFind) {
+                                        return findEquivalentSymbolizer(otherSLD, styledLayerIndex,
+                                                isNamedLayer, styleIndex, ftsIndex, ruleIndex,
+                                                symbolizerIndex);
+                                    }
+                                    symbolizerIndex++;
+                                }
+                                ruleIndex++;
+                            }
+                            ftsIndex++;
+                        }
+                        styleIndex++;
+                    }
+                }
+                styledLayerIndex++;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find equivalent symbolizer in another SLD.
+     *
+     * @param otherSLD the other SLD
+     * @param styledLayerIndex the styled layer index
+     * @param isNamedLayer the is named layer
+     * @param styleIndex the style index
+     * @param ftsIndex the fts index
+     * @param ruleIndex the rule index
+     * @param symbolizerIndex the symbolizer index
+     * @return the symbolizer
+     */
+    private static Symbolizer findEquivalentSymbolizer(StyledLayerDescriptor otherSLD,
+            int styledLayerIndex, boolean isNamedLayer, int styleIndex, int ftsIndex, int ruleIndex,
+            int symbolizerIndex) {
+        if (otherSLD != null) {
+            List<StyledLayer> styledLayerList = otherSLD.layers();
+
+            if (styledLayerList != null) {
+
+                try {
+                    StyledLayer styledLayer = styledLayerList.get(styledLayerIndex);
+
+                    List<Style> styleList = null;
+
+                    if (isNamedLayer) {
+                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+                        styleList = namedLayerImpl.styles();
+                    } else {
+                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
+                        styleList = userLayerImpl.userStyles();
+                    }
+
+                    if (styleList != null) {
+                        Style style = styleList.get(styleIndex);
+                        FeatureTypeStyle fts = style.featureTypeStyles().get(ftsIndex);
+                        Rule rule = fts.rules().get(ruleIndex);
+                        return rule.symbolizers().get(symbolizerIndex);
+                    }
+                } catch (IndexOutOfBoundsException exception) {
+                    // Do nothing
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find rule.
+     *
+     * @param sld the sld
+     * @param ruleToFind the rule to find
+     * @param otherSLD the other SLD
+     * @return the rule
+     */
+    public static Rule findRule(StyledLayerDescriptor sld, Rule ruleToFind,
+            StyledLayerDescriptor otherSLD) {
+        if (sld != null) {
+            List<StyledLayer> styledLayerList = sld.layers();
+
+            if (styledLayerList != null) {
+                int styledLayerIndex = 0;
+                int styleIndex = 0;
+                int ftsIndex = 0;
+                int ruleIndex = 0;
+                boolean isNamedLayer = true;
+
+                for (StyledLayer styledLayer : styledLayerList) {
+                    List<Style> styleList = null;
+
+                    if (styledLayer instanceof NamedLayerImpl) {
+                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+                        styleList = namedLayerImpl.styles();
+                        isNamedLayer = true;
+                    } else if (styledLayer instanceof UserLayerImpl) {
+                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
+                        styleList = userLayerImpl.userStyles();
+                        isNamedLayer = false;
+                    }
+
+                    if (styleList != null) {
+                        styleIndex = 0;
+                        for (Style style : styleList) {
+                            ftsIndex = 0;
+                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                                ruleIndex = 0;
+                                for (Rule rule : fts.rules()) {
+                                    if (rule == ruleToFind) {
+                                        return findEquivalentRule(otherSLD, styledLayerIndex,
+                                                isNamedLayer, styleIndex, ftsIndex, ruleIndex);
+                                    }
+                                    ruleIndex++;
+                                }
+                                ftsIndex++;
+                            }
+                            styleIndex++;
+                        }
+                    }
+                    styledLayerIndex++;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find equivalent rule.
+     *
+     * @param otherSLD the other SLD
+     * @param styledLayerIndex the styled layer index
+     * @param isNamedLayer the is named layer
+     * @param styleIndex the style index
+     * @param ftsIndex the fts index
+     * @param ruleIndex the rule index
+     * @return the rule
+     */
+    private static Rule findEquivalentRule(StyledLayerDescriptor otherSLD, int styledLayerIndex,
+            boolean isNamedLayer, int styleIndex, int ftsIndex, int ruleIndex) {
+        if (otherSLD != null) {
+            List<StyledLayer> styledLayerList = otherSLD.layers();
+
+            if (styledLayerList != null) {
+
+                try {
+                    StyledLayer styledLayer = styledLayerList.get(styledLayerIndex);
+
+                    List<Style> styleList = null;
+
+                    if (isNamedLayer) {
+                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+                        styleList = namedLayerImpl.styles();
+                    } else {
+                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
+                        styleList = userLayerImpl.userStyles();
+                    }
+
+                    if (styleList != null) {
+                        Style style = styleList.get(styleIndex);
+                        FeatureTypeStyle fts = style.featureTypeStyles().get(ftsIndex);
+                        return fts.rules().get(ruleIndex);
+                    }
+                } catch (IndexOutOfBoundsException exception) {
+                    // Do nothing
+                }
+            }
+        }
+        return null;
     }
 }
