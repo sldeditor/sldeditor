@@ -77,6 +77,8 @@ public class SLDUtils {
         }
         catch(RuntimeException e)
         {
+            String errorMessage = String.format("SLD Praser error : %s", sldData.getStyle().toString());
+            ConsoleManager.getInstance().error(SLDUtils.class, errorMessage);
             ConsoleManager.getInstance().error(SLDUtils.class, e.getMessage());
         }
 
