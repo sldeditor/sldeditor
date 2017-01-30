@@ -26,7 +26,7 @@
         </Setup>
         <FieldTests>
             <LiteralString value="local-road" field="NAME"/>
-            <Expression expression="[ type = 'local-road' ]" field="FILTER"/>
+            <Expression expression="[ type = local-road ]" field="FILTER"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
