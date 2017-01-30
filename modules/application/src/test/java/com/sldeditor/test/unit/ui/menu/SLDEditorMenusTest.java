@@ -33,6 +33,7 @@ import com.sldeditor.ui.menu.SLDEditorMenus;
  *
  * @author Robert Ward (SCISYS)
  */
+@Ignore
 public class SLDEditorMenusTest {
 
     /**
