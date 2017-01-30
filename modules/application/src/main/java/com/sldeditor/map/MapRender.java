@@ -29,6 +29,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,8 @@ import org.geotools.map.GridReaderLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.referencing.CRS;
+import org.geotools.renderer.label.LabelCacheImpl;
+import org.geotools.renderer.lite.StreamingRenderer;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -277,6 +280,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                 mapContent = new MapContent();
                 mapPane.setMapContent(mapContent);
             }
+
+            Map<Object,Object> hints = new HashMap<Object,Object>();
+
+            // This ensures all the labelling is cleared
+            hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
+            mapPane.getRenderer().setRendererHints(hints);
 
             // Add the layers back with the updated style
             if(sld != null)
