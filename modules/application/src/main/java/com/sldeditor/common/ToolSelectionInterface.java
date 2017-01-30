@@ -29,9 +29,8 @@ import com.sldeditor.tool.ToolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface ToolSelectionInterface
-{
-    
+public interface ToolSelectionInterface {
+
     /**
      * Sets the selected items.
      *
@@ -51,7 +50,7 @@ public interface ToolSelectionInterface
      * Refresh selection.
      */
     void refreshSelection();
-    
+
     /**
      * Gets the application.
      *
@@ -66,4 +65,26 @@ public interface ToolSelectionInterface
      * @param toolToRegister the tool to register
      */
     void registerTool(Class<?> nodeType, ToolInterface toolToRegister);
+
+    /**
+     * Checks if is recursive flag.
+     *
+     * @return the recursiveFlag
+     */
+    boolean isRecursiveFlag();
+
+    /**
+     * Sets the recursive flag.
+     *
+     * @param recursiveFlag the recursiveFlag to set
+     */
+    void setRecursiveFlag(boolean recursiveFlag);
+
+    /**
+     * Adds the recursive listener.
+     *
+     * @param recursiveUpdate the recursive update
+     */
+    void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate);
+
 }

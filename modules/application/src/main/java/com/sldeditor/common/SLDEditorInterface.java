@@ -23,9 +23,6 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.sldeditor.common.LoadSLDInterface;
-import com.sldeditor.common.SLDDataInterface;
-
 /**
  * The Interface SLDEditorInterface.
  * 
@@ -99,5 +96,13 @@ public interface SLDEditorInterface
      * @return the app name
      */
     String getAppName();
+
+    /**
+     * Refresh panel.
+     *
+     * @param parent the parent
+     * @param panelClass the panel class
+     */
+    void refreshPanel(Class<?> parent, Class<?> panelClass);
 
 }

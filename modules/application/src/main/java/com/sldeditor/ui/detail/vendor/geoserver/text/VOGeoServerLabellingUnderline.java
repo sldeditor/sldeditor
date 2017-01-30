@@ -35,7 +35,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -76,8 +75,8 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
      *
      * @param panelId the panel id
      */
-    public VOGeoServerLabellingUnderline(Class<?> panelId, FunctionNameInterface functionManager) {
-        super(panelId, functionManager);
+    public VOGeoServerLabellingUnderline(Class<?> panelId) {
+        super(panelId);
 
         fieldMap.put(FieldIdEnum.LABEL_UNDERLINE, TextSymbolizer2.UNDERLINE_TEXT_KEY);
 

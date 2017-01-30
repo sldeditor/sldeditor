@@ -62,7 +62,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreyTest {
      */
     @Test
     public void testVOGeoServerContrastEnhancementNormalizeGrey() {
-        RasterSymbolizerDetails panel = new RasterSymbolizerDetails(null);
+        RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
 
         VOGeoServerContrastEnhancementNormalizeGrey testObj = new VOGeoServerContrastEnhancementNormalizeGrey(panel.getClass(), panel);
         RasterSymbolizer rasterSymbolizer = null;

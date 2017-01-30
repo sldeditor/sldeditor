@@ -448,7 +448,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
+    public void internal_setEnabled(boolean enabled)
     {
         if(start.datePicker != null)
         {

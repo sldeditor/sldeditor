@@ -58,7 +58,7 @@ public class StrokeDetailsTest {
     @SuppressWarnings("deprecation")
     @Test
     public void testStrokeDetailsLine() {
-        StrokeDetails panel = new StrokeDetails(null);
+        StrokeDetails panel = new StrokeDetails();
         panel.populate(null);
 
         // Set up test data
@@ -153,7 +153,7 @@ public class StrokeDetailsTest {
      */
     @Test
     public void testStrokeDetailsCircle() {
-        StrokeDetails panel = new StrokeDetails(null);
+        StrokeDetails panel = new StrokeDetails();
         panel.populate(null);
 
         // Set up test data
@@ -227,7 +227,7 @@ public class StrokeDetailsTest {
      */
     @Test
     public void testStrokeDetailsPolygon() {
-        StrokeDetails panel = new StrokeDetails(null);
+        StrokeDetails panel = new StrokeDetails();
         panel.populate(null);
 
         // Set up test data

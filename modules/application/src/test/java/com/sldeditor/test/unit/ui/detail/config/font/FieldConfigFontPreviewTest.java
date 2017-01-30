@@ -48,7 +48,7 @@ public class FieldConfigFontPreviewTest {
     private String[] fontFamilies = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#isEnabled()}.
      */
     @Test
@@ -59,7 +59,7 @@ public class FieldConfigFontPreviewTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -68,7 +68,7 @@ public class FieldConfigFontPreviewTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -78,7 +78,7 @@ public class FieldConfigFontPreviewTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -87,7 +87,7 @@ public class FieldConfigFontPreviewTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertTrue(field2.isEnabled());

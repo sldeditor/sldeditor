@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -196,7 +197,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
+    public void internal_setEnabled(boolean enabled)
     {
         if(comboBox != null)
         {
@@ -281,6 +282,12 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
             if(objValue instanceof String)
             {
                 String sValue = (String) objValue;
+
+                populateField(sValue);
+            }
+            else if(objValue instanceof LiteralExpressionImpl)
+            {
+                String sValue = objValue.toString();
 
                 populateField(sValue);
             }

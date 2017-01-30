@@ -39,7 +39,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class FieldConfigColourMapTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#isEnabled()}.
      */
     @Test
@@ -48,7 +48,7 @@ public class FieldConfigColourMapTest {
 
         // Field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -57,7 +57,7 @@ public class FieldConfigColourMapTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
     }

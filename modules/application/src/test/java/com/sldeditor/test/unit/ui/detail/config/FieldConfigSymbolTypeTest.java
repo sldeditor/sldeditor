@@ -51,7 +51,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 public class FieldConfigSymbolTypeTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType#isEnabled()}.
      */
     @Test
@@ -62,7 +62,7 @@ public class FieldConfigSymbolTypeTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -71,7 +71,7 @@ public class FieldConfigSymbolTypeTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -81,7 +81,7 @@ public class FieldConfigSymbolTypeTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -90,7 +90,7 @@ public class FieldConfigSymbolTypeTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

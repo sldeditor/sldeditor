@@ -180,7 +180,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         if (textField != null) {
             textField.setEnabled(enabled);
         }

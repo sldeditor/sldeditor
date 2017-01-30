@@ -26,7 +26,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -55,11 +54,10 @@ UpdateSymbolInterface {
      * Instantiates a new feature type style details.
      *
      * @param parentObj the parent obj
-     * @param functionManager the function manager
      */
-    public ArrowDetails(ArrowUpdateInterface parentObj, FunctionNameInterface functionManager)
+    public ArrowDetails(ArrowUpdateInterface parentObj)
     {
-        super(ArrowDetails.class, functionManager);
+        super(ArrowDetails.class);
 
         this.parentObj = parentObj;
         createUI();

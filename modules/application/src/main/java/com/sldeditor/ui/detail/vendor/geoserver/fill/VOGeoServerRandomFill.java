@@ -34,7 +34,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
@@ -73,10 +72,9 @@ implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterfac
      * Instantiates a new VOGeoServerRandomFill class.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      */
-    public VOGeoServerRandomFill(Class<?> panelId, FunctionNameInterface functionManager) {
-        super(panelId, functionManager);
+    public VOGeoServerRandomFill(Class<?> panelId) {
+        super(panelId);
 
         fieldMap.put(FieldIdEnum.RANDOM_FILL_ACTIVATE, "random");
         fieldMap.put(FieldIdEnum.RANDOM_FILL_TILE_SIZE, "random-tile-size");

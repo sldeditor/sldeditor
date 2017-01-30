@@ -7,7 +7,7 @@
 
 package com.sldeditor.tool.stickDataSource;
 
-import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -50,6 +50,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
      */
     private void createUI() {
         groupPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(StickyDataSourceTool.class, "StickyDataSourceTool.groupTitle")));
 
         // Export to YSLD
@@ -65,7 +68,6 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         });
 
         groupPanel.add(stickyButton);
-        groupPanel.setPreferredSize(new Dimension(60, 62));
     }
 
     /* (non-Javadoc)

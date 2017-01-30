@@ -66,7 +66,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 public class FieldConfigMarkerTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#isEnabled()}.
      */
     @Test
@@ -77,7 +77,7 @@ public class FieldConfigMarkerTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -86,7 +86,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -96,7 +96,7 @@ public class FieldConfigMarkerTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -105,7 +105,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertFalse(field2.isEnabled());
     }

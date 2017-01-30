@@ -320,7 +320,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param enabled the new enabled
      */
     @Override
-    public void setEnabled(boolean enabled)
+    public void internal_setEnabled(boolean enabled)
     {
         if(filterTable != null)
         {

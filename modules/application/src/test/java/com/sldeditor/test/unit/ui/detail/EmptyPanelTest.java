@@ -42,7 +42,7 @@ public class EmptyPanelTest {
      */
     @Test
     public void testEmptyPanel() {
-        EmptyPanel panel = new EmptyPanel(null);
+        EmptyPanel panel = new EmptyPanel();
         panel.populate(null);
         assertNull(panel.getFieldDataManager());
         assertFalse(panel.isDataPresent());

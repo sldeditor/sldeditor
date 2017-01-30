@@ -51,7 +51,7 @@ public class NamedLayerDetailsTest {
      */
     @Test
     public void testNamedLayerDetails() {
-        NamedLayerDetails panel = new NamedLayerDetails(null);
+        NamedLayerDetails panel = new NamedLayerDetails();
         panel.populate(null);
 
         // Set up test data

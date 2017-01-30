@@ -64,7 +64,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * @author Robert Ward (SCISYS)
  */
 public abstract class FieldConfigBase extends FieldConfigPopulate
-implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
+        implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
     /** The Constant X_POS. */
     private static final int X_POS = 0;
@@ -113,11 +113,22 @@ implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
     }
 
     /**
+     * Sets the enabled.
+     *
+     * @param enabled the new enabled
+     */
+    public void setEnabled(boolean enabled) {
+        CurrentFieldState fieldState = getFieldState();
+        fieldState.setFieldEnabled(enabled);
+        setFieldState(fieldState);
+    }
+
+    /**
      * Sets the field enabled state.
      *
      * @param enabled the new enabled
      */
-    public abstract void setEnabled(boolean enabled);
+    protected abstract void internal_setEnabled(boolean enabled);
 
     /**
      * Sets the field visibility state.
@@ -220,7 +231,10 @@ implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
 
         boolean fieldEnabled = fieldState.getFieldEnabledState();
 
-        setEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
+        if (fieldPanel != null) {
+            fieldEnabled &= fieldPanel.isValueReadable();
+        }
+        internal_setEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
 
         if (attributeSelectionPanel != null) {
             attributeSelectionPanel.setEnabled(fieldEnabled);
@@ -538,7 +552,8 @@ implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
      * @return the field panel
      */
     protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel) {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, height, getCommonData().isOptionalField(), this);
+        fieldPanel = new FieldPanel(xPos, fieldLabel, height, getCommonData().isOptionalField(),
+                this);
 
         return fieldPanel;
     }
@@ -676,8 +691,7 @@ implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
      * @param displayOptionalFields the display optional fields
      */
     public void showOptionField(boolean displayOptionalFields) {
-        if(fieldPanel != null)
-        {
+        if (fieldPanel != null) {
             fieldPanel.showOptionField(displayOptionalFields);
         }
     }
@@ -687,10 +701,8 @@ implements AttributeButtonSelectionInterface, ExpressionUpdateInterface {
      *
      * @param isSelected the new option field value
      */
-    public void setOptionFieldValue(boolean isSelected)
-    {
-        if(fieldPanel != null)
-        {
+    public void setOptionFieldValue(boolean isSelected) {
+        if (fieldPanel != null) {
             fieldPanel.setOptionFieldValue(isSelected);
         }
     }

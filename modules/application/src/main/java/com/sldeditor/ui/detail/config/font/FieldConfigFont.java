@@ -172,7 +172,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled)
+    public void internal_setEnabled(boolean enabled)
     {
         if(comboBox != null)
         {

@@ -62,6 +62,7 @@ import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
 import com.sldeditor.tool.ToolManager;
+import com.sldeditor.tool.batchupdatefont.BatchUpdateFontTool;
 import com.sldeditor.tool.legend.LegendTool;
 import com.sldeditor.tool.raster.RasterTool;
 import com.sldeditor.tool.scale.ScaleTool;
@@ -129,6 +130,8 @@ public class FileSystemInput implements FileSystemInterface {
                     new VectorTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class, new StickyDataSourceTool());
+            ToolManager.getInstance().registerTool(FileTreeNode.class,
+                    new BatchUpdateFontTool(toolMgr.getApplication()));
         }
     }
 

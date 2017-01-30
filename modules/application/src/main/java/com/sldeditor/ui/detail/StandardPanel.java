@@ -35,7 +35,6 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
@@ -68,10 +67,9 @@ public class StandardPanel extends BasePanel {
      * Constructor.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      */
-    protected StandardPanel(Class<?> panelId, FunctionNameInterface functionManager) {
-        super(panelId, functionManager);
+    protected StandardPanel(Class<?> panelId) {
+        super(panelId);
     }
 
     /**

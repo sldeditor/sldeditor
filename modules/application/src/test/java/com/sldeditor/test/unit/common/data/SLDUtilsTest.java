@@ -19,6 +19,7 @@
 package com.sldeditor.test.unit.common.data;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -29,22 +30,33 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Font;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
+import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.Symbolizer;
+import org.geotools.styling.TextSymbolizer;
+import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.junit.Test;
+import org.opengis.filter.FilterFactory;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 
 /**
  * The unit test for SLDUtils.
- * <p>{@link com.sldeditor.common.data.SLDUtils}
+ * <p>
+ * {@link com.sldeditor.common.data.SLDUtils}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -70,7 +82,8 @@ public class SLDUtilsTest {
         StyledLayer[] styledLayers = sld.getStyledLayers();
         NamedLayer namedLayer = (NamedLayer) styledLayers[0];
         Style[] actualStyles = namedLayer.getStyles();
-        PointSymbolizer pointSymbolizer = (PointSymbolizer) actualStyles[0].featureTypeStyles().get(0).rules().get(0).symbolizers().get(0);
+        PointSymbolizer pointSymbolizer = (PointSymbolizer) actualStyles[0].featureTypeStyles()
+                .get(0).rules().get(0).symbolizers().get(0);
 
         MarkImpl mark = (MarkImpl) pointSymbolizer.getGraphic().graphicalSymbols().get(0);
         assertEquals("circle", mark.getWellKnownName().toString());
@@ -107,7 +120,8 @@ public class SLDUtilsTest {
         StyledLayer[] styledLayers = sld.getStyledLayers();
         NamedLayer namedLayer = (NamedLayer) styledLayers[0];
         Style[] actualStyles = namedLayer.getStyles();
-        PointSymbolizer pointSymbolizer = (PointSymbolizer) actualStyles[0].featureTypeStyles().get(0).rules().get(0).symbolizers().get(0);
+        PointSymbolizer pointSymbolizer = (PointSymbolizer) actualStyles[0].featureTypeStyles()
+                .get(0).rules().get(0).symbolizers().get(0);
 
         MarkImpl mark = (MarkImpl) pointSymbolizer.getGraphic().graphicalSymbols().get(0);
         assertEquals("circle", mark.getWellKnownName().toString());
@@ -134,7 +148,8 @@ public class SLDUtilsTest {
             StyledLayer[] styledLayers = sld.getStyledLayers();
             NamedLayer namedLayer = (NamedLayer) styledLayers[0];
             Style[] actualStyles = namedLayer.getStyles();
-            PointSymbolizer pointSymbolizer = (PointSymbolizer) actualStyles[0].featureTypeStyles().get(0).rules().get(0).symbolizers().get(0);
+            PointSymbolizer pointSymbolizer = (PointSymbolizer) actualStyles[0].featureTypeStyles()
+                    .get(0).rules().get(0).symbolizers().get(0);
 
             MarkImpl mark = (MarkImpl) pointSymbolizer.getGraphic().graphicalSymbols().get(0);
             assertEquals("circle", mark.getWellKnownName().toString());
@@ -146,4 +161,103 @@ public class SLDUtilsTest {
         }
     }
 
+    @Test
+    public void testFindSymbolizer() {
+        StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
+        NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
+        sld.layers().add(DefaultSymbols.createNewNamedLayer());
+        sld.layers().add(namedLayer);
+        String expectedNamedLayer = "namedLayer";
+        namedLayer.setName(expectedNamedLayer);
+        Style style = DefaultSymbols.createNewStyle();
+        String expectedStyleLayer = "style";
+        style.setName(expectedStyleLayer);
+        namedLayer.addStyle(DefaultSymbols.createNewStyle());
+        namedLayer.addStyle(style);
+        FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
+        String expectedFeatureTypeStyleLayer = "feature type style";
+        fts.setName(expectedFeatureTypeStyleLayer);
+        style.featureTypeStyles().add(DefaultSymbols.createNewFeatureTypeStyle());
+        style.featureTypeStyles().add(fts);
+        Rule rule = DefaultSymbols.createNewRule();
+        fts.rules().add(DefaultSymbols.createNewRule());
+        fts.rules().add(rule);
+        String expectedRule = "rule";
+        rule.setName(expectedRule);
+        String expectedSymbolizer = "text symbolizer";
+        TextSymbolizer symbolizer = DefaultSymbols.createDefaultTextSymbolizer();
+        symbolizer.setName(expectedSymbolizer);
+        rule.symbolizers().add(DefaultSymbols.createDefaultPolygonSymbolizer());
+        rule.symbolizers().add(symbolizer);
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+        Font font = styleFactory.createFont(ff.literal("abc"), ff.literal("normal"),
+                ff.literal("normal"), ff.literal(10));
+        symbolizer.setFont(font);
+
+        DuplicatingStyleVisitor duplicate = new DuplicatingStyleVisitor();
+        duplicate.visit(sld);
+        StyledLayerDescriptor sldCopy = (StyledLayerDescriptor) duplicate.getCopy();
+
+        Symbolizer actualSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer, sldCopy);
+
+        assertNotNull(actualSymbolizer);
+        assertEquals(symbolizer.getLabel().toString(), ((TextSymbolizer) actualSymbolizer).getLabel().toString());
+
+        actualSymbolizer = SLDUtils.findSymbolizer(sld, null, sldCopy);
+        assertNull(actualSymbolizer);
+
+        actualSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer, null);
+        assertNull(actualSymbolizer);
+    }
+
+    @Test
+    public void testFindRule() {
+        StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
+        NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
+        sld.layers().add(DefaultSymbols.createNewNamedLayer());
+        sld.layers().add(namedLayer);
+        String expectedNamedLayer = "namedLayer";
+        namedLayer.setName(expectedNamedLayer);
+        Style style = DefaultSymbols.createNewStyle();
+        String expectedStyleLayer = "style";
+        style.setName(expectedStyleLayer);
+        namedLayer.addStyle(DefaultSymbols.createNewStyle());
+        namedLayer.addStyle(style);
+        FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
+        String expectedFeatureTypeStyleLayer = "feature type style";
+        fts.setName(expectedFeatureTypeStyleLayer);
+        style.featureTypeStyles().add(DefaultSymbols.createNewFeatureTypeStyle());
+        style.featureTypeStyles().add(fts);
+        Rule rule = DefaultSymbols.createNewRule();
+        fts.rules().add(DefaultSymbols.createNewRule());
+        fts.rules().add(rule);
+        String expectedRule = "rule";
+        rule.setName(expectedRule);
+        String expectedSymbolizer = "text symbolizer";
+        TextSymbolizer symbolizer = DefaultSymbols.createDefaultTextSymbolizer();
+        symbolizer.setName(expectedSymbolizer);
+        rule.symbolizers().add(DefaultSymbols.createDefaultPolygonSymbolizer());
+        rule.symbolizers().add(symbolizer);
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+        Font font = styleFactory.createFont(ff.literal("abc"), ff.literal("normal"),
+                ff.literal("normal"), ff.literal(10));
+        symbolizer.setFont(font);
+
+        DuplicatingStyleVisitor duplicate = new DuplicatingStyleVisitor();
+        duplicate.visit(sld);
+        StyledLayerDescriptor sldCopy = (StyledLayerDescriptor) duplicate.getCopy();
+
+        Rule actualRule = SLDUtils.findRule(sld, rule, sldCopy);
+
+        assertNotNull(actualRule);
+        assertEquals(rule.getName(), actualRule.getName());
+
+        actualRule = SLDUtils.findRule(sld, null, sldCopy);
+        assertNull(actualRule);
+
+        actualRule = SLDUtils.findRule(sld, rule, null);
+        assertNull(actualRule);
+    }
 }

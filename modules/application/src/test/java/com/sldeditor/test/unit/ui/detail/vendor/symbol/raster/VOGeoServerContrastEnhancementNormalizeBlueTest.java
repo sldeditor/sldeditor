@@ -62,7 +62,7 @@ public class VOGeoServerContrastEnhancementNormalizeBlueTest {
      */
     @Test
     public void testVOGeoServerContrastEnhancementNormalizeBlue() {
-        RasterSymbolizerDetails panel = new RasterSymbolizerDetails(null);
+        RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
 
         VOGeoServerContrastEnhancementNormalizeBlue testObj = new VOGeoServerContrastEnhancementNormalizeBlue(panel.getClass(), panel);
         RasterSymbolizer rasterSymbolizer = null;

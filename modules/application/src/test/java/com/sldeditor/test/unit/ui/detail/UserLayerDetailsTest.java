@@ -51,7 +51,7 @@ public class UserLayerDetailsTest {
      */
     @Test
     public void testUserLayerDetails() {
-        UserLayerDetails panel = new UserLayerDetails(null);
+        UserLayerDetails panel = new UserLayerDetails();
         panel.populate(null);
 
         // Set up test data

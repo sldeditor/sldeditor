@@ -43,7 +43,7 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 public class FieldConfigStringTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#isEnabled()}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigString#createUI(javax.swing.Box)}.
      */
@@ -55,7 +55,7 @@ public class FieldConfigStringTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -64,7 +64,7 @@ public class FieldConfigStringTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -74,7 +74,7 @@ public class FieldConfigStringTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -83,7 +83,7 @@ public class FieldConfigStringTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

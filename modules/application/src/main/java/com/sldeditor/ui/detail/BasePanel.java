@@ -44,7 +44,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
@@ -155,9 +154,6 @@ public class BasePanel extends JPanel {
     /** The containing panel. */
     private JPanel containingPanel;
 
-    /** The function manager. */
-    private FunctionNameInterface functionManager = null;
-
     /** The padding component. */
     private BasePanelPadding padding = null;
 
@@ -168,24 +164,13 @@ public class BasePanel extends JPanel {
      * Default constructor.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      */
-    protected BasePanel(Class<?> panelId, FunctionNameInterface functionManager) {
+    protected BasePanel(Class<?> panelId) {
         super();
 
         this.panelId = panelId;
-        this.functionManager = functionManager;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         fieldConfigVisitor = new FieldConfigPopulation(fieldConfigManager);
-    }
-
-    /**
-     * Gets the function manager.
-     *
-     * @return the function manager
-     */
-    protected FunctionNameInterface getFunctionManager() {
-        return functionManager;
     }
 
     /**

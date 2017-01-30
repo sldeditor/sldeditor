@@ -51,7 +51,7 @@ import com.vividsolutions.jts.geom.Geometry;
 public class FieldConfigDateTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#isEnabled()}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#createUI(javax.swing.Box)}.
      */
@@ -63,7 +63,7 @@ public class FieldConfigDateTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -72,7 +72,7 @@ public class FieldConfigDateTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -82,7 +82,7 @@ public class FieldConfigDateTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -91,7 +91,7 @@ public class FieldConfigDateTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

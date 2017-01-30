@@ -39,6 +39,7 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import java.awt.FlowLayout;
 
 /**
  * Tool to contain scale related tools.
@@ -81,6 +82,9 @@ public class ScaleTool implements ToolInterface {
      */
     private void createUI() {
         scaleGroupPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) scaleGroupPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         scaleGroupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(ScaleTool.class, "ScaleTool.scale")));
 
         scaleButton = new ToolButton(Localisation.getString(ScaleTool.class, "ScaleTool.scale"),

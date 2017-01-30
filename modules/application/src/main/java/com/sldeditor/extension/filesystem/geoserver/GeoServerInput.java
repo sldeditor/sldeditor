@@ -61,6 +61,7 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 import com.sldeditor.tool.ToolManager;
+import com.sldeditor.tool.batchupdatefont.BatchUpdateFontTool;
 import com.sldeditor.tool.connectionlist.GeoServerConnectionListTool;
 import com.sldeditor.tool.geoserverconnection.GeoServerConnectStateInterface;
 import com.sldeditor.tool.geoserverconnection.GeoServerConnectionTool;
@@ -142,6 +143,14 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                     new GeoServerLayerUpdateTool(this));
             ToolManager.getInstance().registerTool(GeoServerLayerHeadingNode.class,
                     new GeoServerLayerUpdateTool(this));
+            
+            // Batch update font tool
+            ToolManager.getInstance().registerTool(GeoServerStyleHeadingNode.class,
+                    new BatchUpdateFontTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(GeoServerWorkspaceNode.class,
+                    new BatchUpdateFontTool(toolMgr.getApplication()));
+            ToolManager.getInstance().registerTool(GeoServerStyleNode.class,
+                    new BatchUpdateFontTool(toolMgr.getApplication()));
         }
     }
 

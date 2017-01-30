@@ -34,6 +34,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import java.awt.FlowLayout;
 
 /**
  * Tool that manages the GeoServer connections (connect/disconnect).
@@ -78,6 +79,9 @@ public class GeoServerConnectionTool implements ToolInterface
     private void createUI()
     {
         panel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         panel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(GeoServerConnectionTool.class, "GeoServerConnectionTool.title")));
 
         //

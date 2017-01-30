@@ -39,7 +39,7 @@ public class PolygonFillDetailsTest {
      */
     @Test
     public void testFillDetailsPolygon() {
-        PolygonFillDetails panel = new PolygonFillDetails(null);
+        PolygonFillDetails panel = new PolygonFillDetails();
         panel.populate(null);
 
         // Set up test data

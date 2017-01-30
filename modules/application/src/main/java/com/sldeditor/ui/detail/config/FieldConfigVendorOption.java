@@ -154,7 +154,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         // Do nothing
     }
 

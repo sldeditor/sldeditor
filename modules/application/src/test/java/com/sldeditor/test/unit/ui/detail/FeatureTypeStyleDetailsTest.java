@@ -54,7 +54,7 @@ public class FeatureTypeStyleDetailsTest {
      */
     @Test
     public void testFeatureTypeStyleDetails() {
-        FeatureTypeStyleDetails panel = new FeatureTypeStyleDetails(null);
+        FeatureTypeStyleDetails panel = new FeatureTypeStyleDetails();
         panel.populate(null);
 
         // Set up test data

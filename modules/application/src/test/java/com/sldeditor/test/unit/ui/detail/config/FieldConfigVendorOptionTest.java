@@ -48,7 +48,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory
 public class FieldConfigVendorOptionTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigVendorOption#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigVendorOption#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigVendorOption#isEnabled()}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigVendorOption#createUI()}.
      */
@@ -61,7 +61,7 @@ public class FieldConfigVendorOptionTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -70,7 +70,7 @@ public class FieldConfigVendorOptionTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -80,7 +80,7 @@ public class FieldConfigVendorOptionTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -89,7 +89,7 @@ public class FieldConfigVendorOptionTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertTrue(field2.isEnabled());
     }
@@ -187,8 +187,8 @@ public class FieldConfigVendorOptionTest {
      */
     @Test
     public void testVendorOptionsUpdated() {
-        RasterSymbolizerDetails panel = new RasterSymbolizerDetails(null);
-        VendorOptionRasterFactory vendorOptionRasterFactory = new VendorOptionRasterFactory(getClass(), null, panel);
+        RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
+        VendorOptionRasterFactory vendorOptionRasterFactory = new VendorOptionRasterFactory(getClass(), panel);
         List<VendorOptionInterface> veList = vendorOptionRasterFactory.getVendorOptionList("com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeOverall");
         for(VendorOptionInterface extension : veList)
         {

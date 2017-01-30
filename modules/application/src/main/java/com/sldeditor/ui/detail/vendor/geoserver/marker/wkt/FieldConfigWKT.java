@@ -45,7 +45,6 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
@@ -110,7 +109,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     public void createUI() {
         FieldPanel fieldPanel = createFieldPanel(0, "");
         fieldPanel.setLayout(new BorderLayout());
-        wktPanel = new WKTDetails(this, FunctionManager.getInstance());
+        wktPanel = new WKTDetails(this);
 
         fieldPanel.add(wktPanel, BorderLayout.CENTER);
 
@@ -134,7 +133,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
      * @param enabled the new enabled state
      */
     @Override
-    public void setEnabled(boolean enabled) {
+    public void internal_setEnabled(boolean enabled) {
         if (wktPanel != null) {
             wktPanel.setEnabled(enabled);
         }

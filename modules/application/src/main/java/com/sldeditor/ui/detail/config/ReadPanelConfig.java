@@ -271,8 +271,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
         GroupConfig groupConfig = new GroupConfig();
 
         groupConfig.setId(xmlGroupObj.getId());
-        groupConfig
-        .setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
+        groupConfig.setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
         groupConfig.setShowLabel(xmlGroupObj.isShowLabel());
         groupConfig.setOptional(xmlGroupObj.isOption());
 
@@ -347,9 +346,10 @@ public class ReadPanelConfig implements PanelConfigInterface {
         String label = getLocalisedText(localisationClass, xmlFieldConfig.getLabel());
         boolean valueOnly = xmlFieldConfig.isValueOnly();
         String defaultValue = xmlFieldConfig.getDefault();
+        boolean multipleValues = xmlFieldConfig.isMultipleValues();
 
         FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly,
-                isRasterSymbol);
+                isRasterSymbol, multipleValues);
 
         if (xmlFieldConfig instanceof XMLFieldConfigString) {
             XMLFieldConfigString xmlStringFieldConfig = (XMLFieldConfigString) xmlFieldConfig;

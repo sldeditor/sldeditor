@@ -18,6 +18,7 @@
  */
 package com.sldeditor.tool.connectionlist;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -41,8 +42,7 @@ import com.sldeditor.tool.ToolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerConnectionListTool implements ToolInterface
-{
+public class GeoServerConnectionListTool implements ToolInterface {
 
     /** The btn new. */
     private JButton btnNew;
@@ -70,8 +70,7 @@ public class GeoServerConnectionListTool implements ToolInterface
      *
      * @param geoServerConnectUpdate the geo server connect update
      */
-    public GeoServerConnectionListTool(GeoServerConnectUpdateInterface geoServerConnectUpdate)
-    {
+    public GeoServerConnectionListTool(GeoServerConnectUpdateInterface geoServerConnectUpdate) {
         super();
 
         this.geoServerConnectUpdate = geoServerConnectUpdate;
@@ -82,24 +81,26 @@ public class GeoServerConnectionListTool implements ToolInterface
     /**
      * Creates the ui.
      */
-    private void createUI()
-    {
+    private void createUI() {
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(GeoServerConnectionListTool.class, "GeoServerConnectionListTool.title")));
+        panel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(
+                GeoServerConnectionListTool.class, "GeoServerConnectionListTool.title")));
+        FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
 
-        btnNew = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class, "GeoServerConnectionListTool.new"),
-                "tool/newconnection.png");
+        btnNew = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class,
+                "GeoServerConnectionListTool.new"), "tool/newconnection.png");
         btnNew.setEnabled(true);
         btnNew.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(geoServerConnectUpdate != null)
-                {
+                if (geoServerConnectUpdate != null) {
                     GeoServerConnection connectionDetails = new GeoServerConnection();
 
-                    GeoServerConnection newConnectionDetails = ConnectorDetailsPanel.showDialog(null, connectionDetails);
+                    GeoServerConnection newConnectionDetails = ConnectorDetailsPanel
+                            .showDialog(null, connectionDetails);
 
-                    if(newConnectionDetails != null)
-                    {
+                    if (newConnectionDetails != null) {
                         geoServerConnectUpdate.addNewConnection(newConnectionDetails);
                     }
                 }
@@ -108,15 +109,13 @@ public class GeoServerConnectionListTool implements ToolInterface
 
         panel.add(btnNew);
 
-        btnDuplicate = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class, "GeoServerConnectionListTool.duplicate"),
-                "tool/duplicateconnection.png");
+        btnDuplicate = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class,
+                "GeoServerConnectionListTool.duplicate"), "tool/duplicateconnection.png");
         btnDuplicate.setEnabled(false);
         btnDuplicate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(geoServerConnectUpdate != null)
-                {
-                    if(!connectionList.isEmpty())
-                    {
+                if (geoServerConnectUpdate != null) {
+                    if (!connectionList.isEmpty()) {
                         GeoServerConnection selectedConnectionDetails = connectionList.get(0);
 
                         GeoServerConnection duplicateItem = selectedConnectionDetails.duplicate();
@@ -129,21 +128,20 @@ public class GeoServerConnectionListTool implements ToolInterface
 
         panel.add(btnDuplicate);
 
-        btnEdit = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class, "GeoServerConnectionListTool.edit"),
-                "tool/editconnection.png");
+        btnEdit = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class,
+                "GeoServerConnectionListTool.edit"), "tool/editconnection.png");
         btnEdit.setEnabled(false);
         btnEdit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(geoServerConnectUpdate != null)
-                {
-                    if(!connectionList.isEmpty())
-                    {
+                if (geoServerConnectUpdate != null) {
+                    if (!connectionList.isEmpty()) {
                         GeoServerConnection selectedConnectionDetails = connectionList.get(0);
-                        GeoServerConnection newConnectionDetails = ConnectorDetailsPanel.showDialog(null, selectedConnectionDetails);
+                        GeoServerConnection newConnectionDetails = ConnectorDetailsPanel
+                                .showDialog(null, selectedConnectionDetails);
 
-                        if(newConnectionDetails != null)
-                        {
-                            geoServerConnectUpdate.updateConnectionDetails(selectedConnectionDetails, newConnectionDetails);
+                        if (newConnectionDetails != null) {
+                            geoServerConnectUpdate.updateConnectionDetails(
+                                    selectedConnectionDetails, newConnectionDetails);
                         }
                     }
                 }
@@ -152,13 +150,12 @@ public class GeoServerConnectionListTool implements ToolInterface
 
         panel.add(btnEdit);
 
-        btnDelete = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class, "GeoServerConnectionListTool.delete"),
-                "tool/deleteconnection.png");
+        btnDelete = new ToolButton(Localisation.getString(GeoServerConnectionListTool.class,
+                "GeoServerConnectionListTool.delete"), "tool/deleteconnection.png");
         btnDelete.setEnabled(false);
         btnDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(geoServerConnectUpdate != null)
-                {
+                if (geoServerConnectUpdate != null) {
                     geoServerConnectUpdate.deleteConnections(connectionList);
                 }
             }
@@ -167,30 +164,31 @@ public class GeoServerConnectionListTool implements ToolInterface
         panel.add(btnDelete);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
-    public JPanel getPanel()
-    {
+    public JPanel getPanel() {
         return panel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         connectionList.clear();
 
         boolean geoServerNodesSelected = false;
 
-        for(NodeInterface nodeType : nodeTypeList)
-        {
-            if(nodeType instanceof GeoServerNode)
-            {
-                GeoServerNode geoserverNode = (GeoServerNode)nodeType;
+        for (NodeInterface nodeType : nodeTypeList) {
+            if (nodeType instanceof GeoServerNode) {
+                GeoServerNode geoserverNode = (GeoServerNode) nodeType;
 
                 connectionList.add(geoserverNode.getConnection());
                 geoServerNodesSelected = true;
@@ -202,23 +200,25 @@ public class GeoServerConnectionListTool implements ToolInterface
         btnDelete.setEnabled(geoServerNodesSelected);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
-    public String getToolName()
-    {
+    public String getToolName() {
         return getClass().getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
-        if(uniqueNodeTypeList.size() == 1)
-        {
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
+        if (uniqueNodeTypeList.size() == 1) {
             return true;
         }
         return false;

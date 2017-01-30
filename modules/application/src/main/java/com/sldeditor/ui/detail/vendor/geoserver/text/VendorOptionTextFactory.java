@@ -29,7 +29,6 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
@@ -61,17 +60,16 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      * Instantiates a new vendor option text factory.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      */
-    public VendorOptionTextFactory(Class<?> panelId, FunctionNameInterface functionManager)
+    public VendorOptionTextFactory(Class<?> panelId)
     {
-        vendorOptionGeoServerLabelling = new VOGeoServerLabelling(panelId, functionManager);
+        vendorOptionGeoServerLabelling = new VOGeoServerLabelling(panelId);
         vendorOptionList.add(vendorOptionGeoServerLabelling);
 
-        vendorOptionGeoServerLabellingUnderline = new VOGeoServerLabellingUnderline(panelId, functionManager);
+        vendorOptionGeoServerLabellingUnderline = new VOGeoServerLabellingUnderline(panelId);
         vendorOptionList.add(vendorOptionGeoServerLabellingUnderline);
 
-        vendorOptionGeoServerTextSymbolizer2 = new VOGeoServerTextSymbolizer2(panelId, functionManager);
+        vendorOptionGeoServerTextSymbolizer2 = new VOGeoServerTextSymbolizer2(panelId);
         vendorOptionList.add(vendorOptionGeoServerTextSymbolizer2);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);

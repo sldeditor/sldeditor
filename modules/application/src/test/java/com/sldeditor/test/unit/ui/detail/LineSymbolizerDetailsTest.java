@@ -51,7 +51,7 @@ public class LineSymbolizerDetailsTest {
      */
     @Test
     public void testAddRenderer() {
-        LineSymbolizerDetails panel = new LineSymbolizerDetails(null);
+        LineSymbolizerDetails panel = new LineSymbolizerDetails();
         panel.addRenderer(null);
     }
 
@@ -65,7 +65,7 @@ public class LineSymbolizerDetailsTest {
      */
     @Test
     public void testLineSymbolizerDetails() {
-        LineSymbolizerDetails panel = new LineSymbolizerDetails(null);
+        LineSymbolizerDetails panel = new LineSymbolizerDetails();
         panel.populate(null);
 
         // Set up test data

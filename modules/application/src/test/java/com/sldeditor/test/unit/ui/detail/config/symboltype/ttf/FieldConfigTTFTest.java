@@ -57,7 +57,7 @@ import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 public class FieldConfigTTFTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#isEnabled()}.
      */
     @Test
@@ -68,7 +68,7 @@ public class FieldConfigTTFTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -77,7 +77,7 @@ public class FieldConfigTTFTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -87,7 +87,7 @@ public class FieldConfigTTFTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -96,12 +96,12 @@ public class FieldConfigTTFTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertFalse(field2.isEnabled());
     }

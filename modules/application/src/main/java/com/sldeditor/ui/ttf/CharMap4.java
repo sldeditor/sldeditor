@@ -1215,7 +1215,10 @@ public class CharMap4 extends JDialog
      */
     private void putError(String text)
     {
-        JOptionPane.showMessageDialog(this, text); // pop-up dialog for GUI
+        if(isVisible())
+        {
+            JOptionPane.showMessageDialog(this, text); // pop-up dialog for GUI
+        }
     }
 
     /**
@@ -1255,7 +1258,10 @@ public class CharMap4 extends JDialog
             putError("Font name <" + fontName + "> not found; using <" + SYSTEM_FONT
                     + "> instead.");
             fontName = SYSTEM_FONT;     // replace with standard system font
-            nameDialog.setSelectedItem(fontName); // reset dialog
+            if(nameDialog != null)
+            {
+                nameDialog.setSelectedItem(fontName); // reset dialog
+            }
         }
         setDisplayFont();             // redo the layout with the new font or size
     }

@@ -625,6 +625,13 @@
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
+        <xs:attribute type="xs:boolean" name="multipleValues" use="optional" default="false" >
+            <xs:annotation>
+                <xs:documentation>
+                    Flag indicating whether field can has multiple value functionality:
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <!-- Multi-option groups -->

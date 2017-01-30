@@ -201,4 +201,14 @@ public class SingleSymbolUI implements SymbolPanelInterface {
             List<VendorOptionPresent> vendorOptionsPresentList) {
         panelSymbolizerDetails.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
+
+    /**
+     * Refresh panel.
+     *
+     * @param parent the parent
+     * @param panelClass the panel class
+     */
+    public void refreshPanel(Class<?> parent, Class<?> panelClass) {
+        panelSymbolizerDetails.refresh(parent, panelClass);
+    }
 }

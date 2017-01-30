@@ -43,7 +43,6 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.filter.FilterPanelInterface;
 import com.sldeditor.filter.v2.FilterString;
-import com.sldeditor.filter.v2.function.FunctionNameInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -67,8 +66,8 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
     /**
      * Constructor.
      */
-    public RuleDetails(FunctionNameInterface functionManager) {
-        super(RuleDetails.class, functionManager);
+    public RuleDetails() {
+        super(RuleDetails.class);
         createUI();
     }
 

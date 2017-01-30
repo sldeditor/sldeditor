@@ -91,7 +91,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
             FieldIdEnum minValueFieldId,
             FieldIdEnum maxValueFieldId)
     {
-        super(panelId, null);
+        super(panelId);
 
         this.parentPanel = parentPanel;
         this.algorithmFieldId = algorithmFieldId;

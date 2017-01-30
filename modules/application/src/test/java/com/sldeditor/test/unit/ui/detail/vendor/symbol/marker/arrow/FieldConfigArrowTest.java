@@ -60,7 +60,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow;
 public class FieldConfigArrowTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#isEnabled()}.
      */
     @Test
@@ -71,7 +71,7 @@ public class FieldConfigArrowTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -80,7 +80,7 @@ public class FieldConfigArrowTest {
         assertTrue(field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -90,7 +90,7 @@ public class FieldConfigArrowTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -99,7 +99,7 @@ public class FieldConfigArrowTest {
         assertTrue(field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertFalse(field2.isEnabled());
     }

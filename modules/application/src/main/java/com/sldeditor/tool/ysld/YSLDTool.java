@@ -46,6 +46,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import java.awt.FlowLayout;
 
 /**
  * Tool which given a list of SLD objects saves them to SLD files.
@@ -124,6 +125,9 @@ public class YSLDTool implements ToolInterface {
     private void createUI()
     {
         groupPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
         groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(YSLDTool.class, "YSLDTool.groupTitle")));
 
         // Export to YSLD

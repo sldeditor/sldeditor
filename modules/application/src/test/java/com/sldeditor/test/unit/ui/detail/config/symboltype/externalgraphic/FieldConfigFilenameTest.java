@@ -59,7 +59,7 @@ import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFile
 public class FieldConfigFilenameTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setEnabled(boolean)}. Test method for
+     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#internal_setEnabled(boolean)}. Test method for
      * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#isEnabled()}.
      */
     @Test
@@ -72,7 +72,7 @@ public class FieldConfigFilenameTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -81,7 +81,7 @@ public class FieldConfigFilenameTest {
         assertTrue(field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -93,7 +93,7 @@ public class FieldConfigFilenameTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -102,7 +102,7 @@ public class FieldConfigFilenameTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertTrue(field2.isEnabled());
     }

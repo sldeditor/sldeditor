@@ -58,7 +58,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindB
 public class FieldConfigWindBarbsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isEnabled()}.
      */
     @Test
@@ -69,7 +69,7 @@ public class FieldConfigWindBarbsTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -78,7 +78,7 @@ public class FieldConfigWindBarbsTest {
         assertTrue(field.isEnabled());
 
         expectedValue = false;
-        field.setEnabled(expectedValue);
+        field.internal_setEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -88,7 +88,7 @@ public class FieldConfigWindBarbsTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -97,7 +97,7 @@ public class FieldConfigWindBarbsTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.setEnabled(expectedValue);
+        field2.internal_setEnabled(expectedValue);
 
         assertTrue(field2.isEnabled());
     }
