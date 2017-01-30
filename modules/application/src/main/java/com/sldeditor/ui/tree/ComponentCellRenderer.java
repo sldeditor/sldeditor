@@ -18,14 +18,9 @@
  */
 package com.sldeditor.ui.tree;
 
-import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTree;
-import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 
@@ -42,32 +37,15 @@ import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 import com.sldeditor.ui.tree.item.TreeItemMap;
 
 /**
- * A TreeCellRenderer displays each node of a tree. The default renderer displays arbitrary Object nodes by calling their toString() method. The
- * Component.toString() method returns long strings with extraneous information. Therefore, we use this "wrapper" implementation of TreeCellRenderer
- * to convert nodes from Component objects to useful String values before passing those String values on to the default renderer.
- * 
- * @author Robert Ward (SCISYS)
+ * The Class ComponentCellRenderer.
  */
 public class ComponentCellRenderer implements TreeCellRenderer {
 
     /** The renderer we are a wrapper for. */
     private TreeCellRenderer renderer;
 
-    private JCheckBox leafRenderer = new JCheckBox();
-
-    private JLabel label;
-
-    private JCheckBox checkBox;
-
-    private JPanel panel;
-
-    private Color selectionForeground;
-
-    private Color selectionBackground;
-
-    private Color textForeground;
-
-    private Color textBackground;
+    /** The checkbox node panel. */
+    private CheckBoxPanel panel = new CheckBoxPanel();
 
     /**
      * Instantiates a new component cell renderer.
@@ -76,25 +54,6 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      */
     public ComponentCellRenderer(TreeCellRenderer renderer) {
         this.renderer = renderer;
-
-        Boolean booleanValue = (Boolean) UIManager.get("Tree.drawsFocusBorderAroundIcon");
-        leafRenderer.setFocusPainted((booleanValue != null) && (booleanValue.booleanValue()));
-
-        selectionForeground = UIManager.getColor("Tree.selectionForeground");
-        selectionBackground = UIManager.getColor("Tree.selectionBackground");
-        textForeground = UIManager.getColor("Tree.textForeground");
-        textBackground = UIManager.getColor("Tree.textBackground");
-
-        checkBox = new JCheckBox();
-        checkBox.setBackground(UIManager.getColor("Tree.background"));
-        checkBox.setBorder(null);
-        label = new JLabel();
-        label.setBackground(UIManager.getColor("Tree.background"));
-        label.setBorder(null);
-        panel = new JPanel();
-        panel.setOpaque(false);
-        panel.add(checkBox);
-        panel.add(label);
     }
 
     // This is the only TreeCellRenderer method.
@@ -121,7 +80,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
         boolean showCheckbox = showCheckbox(parentUserObject, userObject);
         leaf = isLeaf(parentUserObject, userObject);
 
-        checkBox.setVisible(showCheckbox);
+        panel.setCheckboxVisible(showCheckbox);
         if (showCheckbox) {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
 
@@ -130,16 +89,10 @@ public class ComponentCellRenderer implements TreeCellRenderer {
             boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject,
                     symbolizer);
 
-            if (selected) {
-                leafRenderer.setForeground(selectionForeground);
-                leafRenderer.setBackground(selectionBackground);
-            } else {
-                leafRenderer.setForeground(textForeground);
-                leafRenderer.setBackground(textBackground);
-            }
+            panel.setSelected(selected, hasFocus);
 
-            label.setText(name);
-            checkBox.setSelected(selectedItem);
+            panel.setLabelText(name);
+            panel.setCheckboxSelected(selectedItem);
 
             return panel;
         } else {
@@ -147,15 +100,8 @@ public class ComponentCellRenderer implements TreeCellRenderer {
                 DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
 
                 if (parent != null) {
-                    if (selected) {
-                        leafRenderer.setForeground(selectionForeground);
-                        leafRenderer.setBackground(selectionBackground);
-                    } else {
-                        leafRenderer.setForeground(textForeground);
-                        leafRenderer.setBackground(textBackground);
-                    }
-
-                    label.setText(name);
+                    panel.setLabelText(name);
+                    panel.setSelected(selected, hasFocus);
 
                     return panel;
                 }
@@ -167,8 +113,10 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     }
 
     /**
-     * Checks if tree node is leaf.<p>
-     * Is a leaf if the user object is one of the followinf:<p>
+     * Checks if tree node is leaf.
+     * <p>
+     * Is a leaf if the user object is one of the followinf:
+     * <p>
      * <ul>
      * <li>TextSymbolizer</li>
      * <li>RasterSymbolizer</li>
@@ -182,15 +130,13 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      */
     public static boolean isLeaf(Object parentUserObject, Object userObject) {
         boolean leaf = (userObject instanceof TextSymbolizer)
-                || (userObject instanceof RasterSymbolizer)
-                || (userObject instanceof Stroke)
+                || (userObject instanceof RasterSymbolizer) || (userObject instanceof Stroke)
                 || (userObject instanceof Fill);
         return leaf;
     }
 
     /**
-     * Workout whether to show checkbox in the tree.
-     * Should only appear for PolygonSymbolizer fill and strokes
+     * Workout whether to show checkbox in the tree. Should only appear for PolygonSymbolizer fill and strokes
      *
      * @param parentUserObject the parent user object
      * @param userObject the user object
@@ -228,14 +174,5 @@ public class ComponentCellRenderer implements TreeCellRenderer {
             }
         }
         return name;
-    }
-
-    /**
-     * Gets the leaf renderer.
-     *
-     * @return the leaf renderer
-     */
-    public JCheckBox getLeafRenderer() {
-        return leafRenderer;
     }
 }
