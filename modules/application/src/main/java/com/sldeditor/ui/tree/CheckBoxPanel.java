@@ -28,6 +28,9 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 /**
  * The Class CheckBoxPanel.
@@ -54,14 +57,18 @@ public class CheckBoxPanel extends JPanel {
     /**
      * Instantiates a new check box panel.
      */
-    public CheckBoxPanel()
-    {
+    public CheckBoxPanel() {
         setOpaque(false);
         checkBox = new JCheckBox();
         checkBox.setMargin(new Insets(0, 0, 0, 0));
         label = new TreeLabel();
         setLayout(new BorderLayout());
         add(checkBox, BorderLayout.WEST);
+
+        Border border = label.getBorder();
+        Border margin = new EmptyBorder(0, 3, 0, 0);
+        label.setBorder(new CompoundBorder(border, margin));
+
         add(label, BorderLayout.CENTER);
 
         Boolean booleanValue = (Boolean) UIManager.get("Tree.drawsFocusBorderAroundIcon");
