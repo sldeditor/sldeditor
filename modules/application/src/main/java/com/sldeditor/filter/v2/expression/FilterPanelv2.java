@@ -576,7 +576,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      */
     @Override
     public String getFilterString() {
-        return textArea.getText();
+        return overallFilter.toString();// textArea.getText();
     }
 
     /**

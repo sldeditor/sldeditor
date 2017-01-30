@@ -239,12 +239,12 @@ public class ValidFilterVisitor extends DuplicatingFilterVisitor {
 
                 if(!isStringNumeric(stringValue))
                 {
-                    if(!(stringValue.startsWith(SINGLE_QUOTE) && stringValue.endsWith(SINGLE_QUOTE)))
-                    {
-                        String newValue = SINGLE_QUOTE + stringValue + SINGLE_QUOTE;
-
-                        literal.setValue(newValue);
-                    }
+//                    if(!(stringValue.startsWith(SINGLE_QUOTE) && stringValue.endsWith(SINGLE_QUOTE)))
+//                    {
+//                        String newValue = SINGLE_QUOTE + stringValue + SINGLE_QUOTE;
+//
+//                        literal.setValue(newValue);
+//                    }
                 }
             }
         }
