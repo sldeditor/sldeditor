@@ -8,12 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.EventObject;
 
 import javax.swing.AbstractCellEditor;
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTree;
-import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellEditor;
 import javax.swing.tree.TreePath;
@@ -49,14 +44,8 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
     /** The user object. */
     private Object userObject = null;
 
-    /** The label. */
-    private JLabel label;
-
-    /** The check box. */
-    private JCheckBox checkBox;
-
-    /** The panel. */
-    private JPanel panel;
+    /** The checkbox node panel. */
+    private CheckBoxPanel panel = new CheckBoxPanel();
 
     /**
      * Instantiates a new check box node editor.
@@ -69,30 +58,19 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
         this.tree = tree;
         this.renderer = renderer;
 
-        checkBox = new JCheckBox();
-        checkBox.addActionListener(this);
-        checkBox.setBackground(UIManager.getColor("Tree.background"));
-        checkBox.setBorder(null);
-        checkBox.addMouseListener(new MouseAdapter() {
+        panel.setCheckboxActionListener(this);
+        panel.setCheckboxMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                checkBox.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-            }
-            public void mouseReleased(MouseEvent e) {
-                checkBox.setBorder(null);
-                if(sldTree != null)
-                {
-                    sldTree.leafSelected();
-                    SLDEditorFile.getInstance().renderSymbol();
-                }
-            }
-        });
-        label = new JLabel();
-        label.setBackground(UIManager.getColor("Tree.background"));
-        label.setBorder(null);
-        panel = new JPanel();
-        panel.setOpaque(false);
-        panel.add(checkBox);
-        panel.add(label);
+//              checkBox.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+          }
+          public void mouseReleased(MouseEvent e) {
+              if(sldTree != null)
+              {
+                  sldTree.leafSelected();
+                  SLDEditorFile.getInstance().renderSymbol();
+              }
+          }
+      });
     }
 
     /* (non-Javadoc)
@@ -102,11 +80,11 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
 
         if(userObject instanceof StrokeImpl)
         {
-            return SLDTreeLeafFactory.getInstance().updateStroke(checkBox.isSelected(), symbolizer);
+            return SLDTreeLeafFactory.getInstance().updateStroke(panel.isCheckBoxSelected(), symbolizer);
         }
         else if(userObject instanceof FillImpl)
         {
-            return SLDTreeLeafFactory.getInstance().updateFill(checkBox.isSelected(), symbolizer);
+            return SLDTreeLeafFactory.getInstance().updateFill(panel.isCheckBoxSelected(), symbolizer);
         }
 
         return null;
@@ -164,8 +142,9 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
             Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
             boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject, symbolizer);
 
-            checkBox.setSelected(selectedItem);
-            label.setText(ComponentCellRenderer.getItemText(node, userObject));
+            panel.setCheckboxSelected(selectedItem);
+            panel.setLabelText(ComponentCellRenderer.getItemText(node, userObject));
+            panel.setSelected(true, true);
 
             return panel;
         }
