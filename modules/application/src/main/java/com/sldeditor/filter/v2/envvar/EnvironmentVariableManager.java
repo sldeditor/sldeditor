@@ -451,4 +451,11 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
 
         return envVarDlg.showDialog();
     }
+
+    /**
+     * Destroy instance.
+     */
+    public static void destroyInstance() {
+        instance = null;
+    }
 }

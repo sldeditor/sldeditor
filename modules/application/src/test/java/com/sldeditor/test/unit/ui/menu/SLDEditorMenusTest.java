@@ -25,13 +25,16 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
+import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.extension.ExtensionInterface;
+import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 
 /**
@@ -41,7 +44,6 @@ import com.sldeditor.ui.menu.SLDEditorMenus;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
 public class SLDEditorMenusTest {
 
     /**
@@ -107,6 +109,11 @@ public class SLDEditorMenusTest {
 
         SLDEditorMenus.createMenus(application, new ArrayList<ExtensionInterface>());
         SLDEditorMenus.destroyInstance();
+
+        EnvironmentVariableManager.destroyInstance();
+        SLDEditorFile.destroyInstance();
+        VendorOptionManager.destroyInstance();
+        UndoManager.destroyInstance();
     }
 
 }
