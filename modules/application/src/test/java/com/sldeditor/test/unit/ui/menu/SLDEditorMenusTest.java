@@ -19,22 +19,27 @@
 
 package com.sldeditor.test.unit.ui.menu;
 
+import java.net.URL;
 import java.util.ArrayList;
 
-import org.junit.Ignore;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.junit.Test;
 
-import com.sldeditor.SLDEditor;
+import com.sldeditor.common.LoadSLDInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 
 /**
  * The unit test for SLDEditorMenus.
- * <p>{@link com.sldeditor.ui.menu.SLDEditorMenus}
+ * <p>
+ * {@link com.sldeditor.ui.menu.SLDEditorMenus}
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
 public class SLDEditorMenusTest {
 
     /**
@@ -45,10 +50,59 @@ public class SLDEditorMenusTest {
         SLDEditorMenus.createMenus(null, null);
         SLDEditorMenus.destroyInstance();
 
-        SLDEditor application = new SLDEditor(null, null, null);
+        SLDEditorInterface application = new SLDEditorInterface() {
+
+            @Override
+            public JPanel getAppPanel() {
+                return null;
+            }
+
+            @Override
+            public void updateWindowTitle(boolean dataEditedFlag) {
+            }
+
+            @Override
+            public void chooseNewSLD() {
+            }
+
+            @Override
+            public void exitApplication() {
+            }
+
+            @Override
+            public void saveFile(URL url) {
+            }
+
+            @Override
+            public void saveSLDData(SLDDataInterface sldData) {
+            }
+
+            @Override
+            public LoadSLDInterface getLoadSLDInterface() {
+                return null;
+            }
+
+            @Override
+            public JFrame getApplicationFrame() {
+                return null;
+            }
+
+            @Override
+            public void openFile(URL selectedURL) {
+            }
+
+            @Override
+            public String getAppName() {
+                return null;
+            }
+
+            @Override
+            public void refreshPanel(Class<?> parent, Class<?> panelClass) {
+            }
+        };
         SLDEditorMenus.createMenus(application, null);
         SLDEditorMenus.destroyInstance();
-        
+
         SLDEditorMenus.createMenus(application, new ArrayList<ExtensionInterface>());
         SLDEditorMenus.destroyInstance();
     }
