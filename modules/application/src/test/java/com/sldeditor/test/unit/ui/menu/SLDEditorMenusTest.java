@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.common.LoadSLDInterface;
@@ -40,6 +41,7 @@ import com.sldeditor.ui.menu.SLDEditorMenus;
  *
  * @author Robert Ward (SCISYS)
  */
+@Ignore
 public class SLDEditorMenusTest {
 
     /**
