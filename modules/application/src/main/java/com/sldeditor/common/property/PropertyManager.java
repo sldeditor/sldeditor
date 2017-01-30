@@ -38,8 +38,7 @@ import java.util.Properties;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class PropertyManager implements PropertyManagerInterface
-{
+public class PropertyManager implements PropertyManagerInterface {
     /** The Constant FALSE. */
     private static final String FALSE = "false";
 
@@ -64,8 +63,7 @@ public class PropertyManager implements PropertyManagerInterface
     /**
      * Default constructor.
      */
-    public PropertyManager()
-    {
+    public PropertyManager() {
     }
 
     /**
@@ -74,8 +72,7 @@ public class PropertyManager implements PropertyManagerInterface
      * @param configPropertiesFile the new property file
      */
     @Override
-    public void setPropertyFile(File configPropertiesFile)
-    {
+    public void setPropertyFile(File configPropertiesFile) {
         this.configPropertiesFile = configPropertiesFile;
     }
 
@@ -86,34 +83,26 @@ public class PropertyManager implements PropertyManagerInterface
      * @param value the value
      */
     @Override
-    public void updateValue(String key, String value)
-    {
+    public void updateValue(String key, String value) {
         boolean dataUpdated = false;
 
-        if(fieldValueMap.containsKey(key))
-        {
+        if (fieldValueMap.containsKey(key)) {
             String stringValue = fieldValueMap.get(key);
-            if((stringValue != null) && (value != null))
-            {
-                if(stringValue.compareTo(value) != 0)
-                {
+            if (stringValue != null) {
+                if (value != null) {
+                    if (stringValue.compareTo(value) != 0) {
+                        dataUpdated = true;
+                    }
+                } else if (stringValue.compareTo(value) != 0) {
                     dataUpdated = true;
                 }
             }
-            else if(stringValue.compareTo(value) != 0)
-            {
-                dataUpdated = true;
-            }
-        }
-        else
-        {
+        } else {
             dataUpdated = true;
         }
 
-        if(dataUpdated)
-        {
-            if(key != null)
-            {
+        if (dataUpdated) {
+            if (key != null) {
                 fieldValueMap.put(key, value);
             }
             writeConfigFile();
@@ -127,26 +116,21 @@ public class PropertyManager implements PropertyManagerInterface
      * @param value the value
      */
     @Override
-    public void updateValue(String key, boolean value)
-    {
+    public void updateValue(String key, boolean value) {
         updateValue(key, value ? TRUE : FALSE);
     }
 
     /**
      * Write configuration file.
      */
-    private void writeConfigFile()
-    {
-        if(configPropertiesFile != null)
-        {
+    private void writeConfigFile() {
+        if (configPropertiesFile != null) {
             try {
                 Properties props = new Properties();
 
-                for(String key : fieldValueMap.keySet())
-                {
+                for (String key : fieldValueMap.keySet()) {
                     String value = fieldValueMap.get(key);
-                    if(value != null)
-                    {
+                    if (value != null) {
                         props.setProperty(key, value);
                     }
                 }
@@ -170,10 +154,8 @@ public class PropertyManager implements PropertyManagerInterface
         // to load application's properties, we use this class
         Properties mainProperties = new Properties();
 
-        if(configPropertiesFile != null)
-        {
-            if(configPropertiesFile.exists())
-            {
+        if (configPropertiesFile != null) {
+            if (configPropertiesFile.exists()) {
                 // load the file handle for main.properties
                 try {
                     FileInputStream file = new FileInputStream(configPropertiesFile);
@@ -189,9 +171,8 @@ public class PropertyManager implements PropertyManagerInterface
             }
         }
         fieldValueMap.clear();
-        for(Object key : mainProperties.keySet())
-        {
-            String fieldName = (String)key;
+        for (Object key : mainProperties.keySet()) {
+            String fieldName = (String) key;
             fieldValueMap.put(fieldName, mainProperties.getProperty(fieldName));
         }
     }
@@ -204,21 +185,14 @@ public class PropertyManager implements PropertyManagerInterface
      * @return the double value
      */
     @Override
-    public double getDoubleValue(String field, double defaultValue)
-    {
-        if(fieldValueMap.containsKey(field))
-        {
-            try
-            {
+    public double getDoubleValue(String field, double defaultValue) {
+        if (fieldValueMap.containsKey(field)) {
+            try {
                 return Double.valueOf(fieldValueMap.get(field));
-            }
-            catch(NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 return defaultValue;
             }
-        }
-        else
-        {
+        } else {
             return defaultValue;
         }
     }
@@ -231,14 +205,10 @@ public class PropertyManager implements PropertyManagerInterface
      * @return the string value
      */
     @Override
-    public String getStringValue(String field, String defaultValue)
-    {
-        if(fieldValueMap.containsKey(field))
-        {
+    public String getStringValue(String field, String defaultValue) {
+        if (fieldValueMap.containsKey(field)) {
             return fieldValueMap.get(field);
-        }
-        else
-        {
+        } else {
             return defaultValue;
         }
     }
@@ -251,16 +221,13 @@ public class PropertyManager implements PropertyManagerInterface
      * @return the colour value
      */
     @Override
-    public Color getColourValue(String field, Color defaultValue)
-    {
-        if(fieldValueMap.containsKey(field))
-        {
+    public Color getColourValue(String field, Color defaultValue) {
+        if (fieldValueMap.containsKey(field)) {
             String value = fieldValueMap.get(field);
 
             String[] components = value.split(ESCAPED_DELIMETER);
 
-            if(components.length == 4)
-            {
+            if (components.length == 4) {
                 int red = Integer.valueOf(components[0]);
                 int green = Integer.valueOf(components[1]);
                 int blue = Integer.valueOf(components[2]);
@@ -281,14 +248,11 @@ public class PropertyManager implements PropertyManagerInterface
      * @return the string value
      */
     @Override
-    public boolean getBooleanValue(String field, boolean defaultValue)
-    {
-        if(fieldValueMap.containsKey(field))
-        {
+    public boolean getBooleanValue(String field, boolean defaultValue) {
+        if (fieldValueMap.containsKey(field)) {
             String value = fieldValueMap.get(field);
 
-            if(value != null)
-            {
+            if (value != null) {
                 return (value.compareToIgnoreCase(TRUE) == 0);
             }
         }
@@ -303,16 +267,13 @@ public class PropertyManager implements PropertyManagerInterface
      * @return the string value
      */
     @Override
-    public List<String> getStringListValue(String field)
-    {
+    public List<String> getStringListValue(String field) {
         List<String> valueList = null;
 
-        if(fieldValueMap.containsKey(field))
-        {
+        if (fieldValueMap.containsKey(field)) {
             String value = fieldValueMap.get(field);
 
-            if(value != null)
-            {
+            if (value != null) {
                 String[] components = value.split(LIST_DELIMETER);
 
                 valueList = Arrays.asList(components);
@@ -329,14 +290,11 @@ public class PropertyManager implements PropertyManagerInterface
      * @param stringList the string list
      */
     @Override
-    public void updateValue(String key, List<String> stringList)
-    {
+    public void updateValue(String key, List<String> stringList) {
         StringBuilder sb = new StringBuilder();
 
-        for(String string : stringList)
-        {
-            if(sb.length() > 0)
-            {
+        for (String string : stringList) {
+            if (sb.length() > 0) {
                 sb.append(LIST_DELIMETER);
             }
             sb.append(string);
@@ -353,8 +311,7 @@ public class PropertyManager implements PropertyManagerInterface
      * @param value the value
      */
     @Override
-    public void updateValue(String key, int count, String value)
-    {
+    public void updateValue(String key, int count, String value) {
         String updatedKey = String.format("%s%s%d", key, DELIMETER, count);
 
         updateValue(updatedKey, value);
@@ -367,21 +324,17 @@ public class PropertyManager implements PropertyManagerInterface
      * @return the multiple values
      */
     @Override
-    public List<String> getMultipleValues(String key)
-    {
+    public List<String> getMultipleValues(String key) {
         String updatedKey = key + DELIMETER;
         List<String> valueList = new ArrayList<String>();
 
         List<Integer> indexList = new ArrayList<Integer>();
 
-        for(String storedKey : fieldValueMap.keySet())
-        {
-            if(storedKey.startsWith(updatedKey))
-            {
+        for (String storedKey : fieldValueMap.keySet()) {
+            if (storedKey.startsWith(updatedKey)) {
                 String[] components = storedKey.split(ESCAPED_DELIMETER);
 
-                if(components.length > 1)
-                {
+                if (components.length > 1) {
                     Integer index = Integer.valueOf(components[components.length - 1]);
 
                     indexList.add(index);
@@ -391,8 +344,7 @@ public class PropertyManager implements PropertyManagerInterface
 
         Collections.sort(indexList);
 
-        for(Integer index : indexList)
-        {
+        for (Integer index : indexList) {
             String newKey = updatedKey + index;
             valueList.add(fieldValueMap.get(newKey));
         }
@@ -407,43 +359,36 @@ public class PropertyManager implements PropertyManagerInterface
      */
     @Override
     public void updateValue(String key, Color backgroundColour) {
-        String value = String.format("%03d%s%03d%s%03d%s%03d", 
-                backgroundColour.getRed(),
-                DELIMETER,
-                backgroundColour.getGreen(), 
-                DELIMETER,
-                backgroundColour.getBlue(),
-                DELIMETER,
+        String value = String.format("%03d%s%03d%s%03d%s%03d", backgroundColour.getRed(), DELIMETER,
+                backgroundColour.getGreen(), DELIMETER, backgroundColour.getBlue(), DELIMETER,
                 backgroundColour.getAlpha());
 
         updateValue(key, value);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.property.PropertyManagerInterface#clearValue(java.lang.String)
      */
     @Override
     public void clearValue(String key, boolean useDelimeter) {
         StringBuilder sb = new StringBuilder();
         sb.append(key);
-        if(useDelimeter)
-        {
+        if (useDelimeter) {
             sb.append(DELIMETER);
         }
-        
+
         String prefix = sb.toString();
 
         List<String> keyToRemove = new ArrayList<String>();
-        for(String existingKey : fieldValueMap.keySet())
-        {
-            if(existingKey.startsWith(prefix))
-            {
+        for (String existingKey : fieldValueMap.keySet()) {
+            if (existingKey.startsWith(prefix)) {
                 keyToRemove.add(existingKey);
             }
         }
 
-        for(String existingKey : keyToRemove)
-        {
+        for (String existingKey : keyToRemove) {
             fieldValueMap.remove(existingKey);
         }
     }

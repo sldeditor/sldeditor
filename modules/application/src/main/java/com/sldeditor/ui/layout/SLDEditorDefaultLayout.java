@@ -59,6 +59,10 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
     @Override
     public void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr, List<ExtensionInterface> extensionList) {
 
+        if(application == null)
+        {
+            return;
+        }
         JPanel appPanel = application.getAppPanel();
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);

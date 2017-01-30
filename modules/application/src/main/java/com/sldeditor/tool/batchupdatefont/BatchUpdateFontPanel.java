@@ -88,7 +88,7 @@ public class BatchUpdateFontPanel extends JDialog {
     private JPanel editPanel;
 
     /** The combo box. */
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
 
     /** The panel selector. */
     private JPanel panelSelector;
@@ -188,7 +188,7 @@ public class BatchUpdateFontPanel extends JDialog {
         editPanel = new JPanel();
         panel.add(editPanel);
 
-        comboBox = new JComboBox();
+        comboBox = new JComboBox<String>();
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) (panelSelector.getLayout());
@@ -196,7 +196,7 @@ public class BatchUpdateFontPanel extends JDialog {
             }
         });
         comboBox.setModel(
-                new DefaultComboBoxModel(new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
+                new DefaultComboBoxModel<String>(new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
         editPanel.add(comboBox);
 
         panelSelector = new JPanel();
