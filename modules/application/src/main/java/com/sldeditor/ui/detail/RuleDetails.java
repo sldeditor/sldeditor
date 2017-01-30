@@ -42,7 +42,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.filter.FilterPanelInterface;
-import com.sldeditor.filter.v2.FilterString;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
@@ -148,7 +147,7 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
                 String filterString = "";
                 if(originalFilter != null)
                 {
-                    filterString = FilterString.getValidFilterString(originalFilter);
+                    filterString = originalFilter.toString();
                 }
                 fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);
 
