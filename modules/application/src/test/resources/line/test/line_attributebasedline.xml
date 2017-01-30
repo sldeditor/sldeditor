@@ -53,7 +53,7 @@
         </Setup>
         <FieldTests>
             <LiteralString value="secondary" field="NAME"/>
-            <Expression expression="[ type = 'secondary' ]" field="FILTER"/>
+            <Expression expression="[ type = secondary ]" field="FILTER"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -80,7 +80,7 @@
         </Setup>
         <FieldTests>
             <LiteralString value="highway" field="NAME"/>
-            <Expression expression="[ type = 'highway' ]" field="FILTER"/>
+            <Expression expression="[ type = highway ]" field="FILTER"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
