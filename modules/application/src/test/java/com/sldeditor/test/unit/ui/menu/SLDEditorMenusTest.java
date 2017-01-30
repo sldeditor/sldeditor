@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.ui.menu;
 
 import java.util.ArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.sldeditor.SLDEditor;
