@@ -59,16 +59,18 @@ public class MultipleFont {
      * @param entries the entries
      */
     public void parseList(List<Font> entries) {
-        if((entries == null) || entries.isEmpty())
-        {
+        familyMultipleValue = true;
+        styleMultipleValue = true;
+        weightMultipleValue = true;
+        sizeMultipleValue = true;
+
+        if ((entries == null) || entries.isEmpty()) {
             firstEntry = null;
             familyMultipleValue = false;
             styleMultipleValue = false;
             weightMultipleValue = false;
             sizeMultipleValue = false;
-        }
-        else
-        {
+        } else {
             firstEntry = entries.get(0);
 
             String fontFamilyValue = firstEntry.getFamily().get(0).toString();
@@ -105,8 +107,7 @@ public class MultipleFont {
         Expression weight = null;
         Expression size = null;
 
-        if(firstEntry != null)
-        {
+        if (firstEntry != null) {
             family = (familyMultipleValue ? firstEntry.getFamily() : family);
             style = (styleMultipleValue ? firstEntry.getStyle() : null);
             weight = (weightMultipleValue ? firstEntry.getWeight() : null);

@@ -35,8 +35,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
 
 /**
- * Class given an SLD file will convert it to a list of ScaleSLDData objects describing
- * the scales at which rules are displayed.
+ * Class given an SLD file will convert it to a list of ScaleSLDData objects describing the scales at which rules are displayed.
  */
 public class BatchUpdateFontUtils {
 
@@ -49,48 +48,40 @@ public class BatchUpdateFontUtils {
     public static List<BatchUpdateFontData> containsFonts(SLDDataInterface sldData) {
 
         List<BatchUpdateFontData> dataList = null;
+        if (sldData != null) {
+            StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
-        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+            if (sld != null) {
+                List<StyledLayer> styledLayerList = sld.layers();
 
-        if(sld != null)
-        {
-            List<StyledLayer> styledLayerList = sld.layers();
+                if (sld != null) {
+                    for (StyledLayer styledLayer : styledLayerList) {
+                        if (styledLayer instanceof NamedLayerImpl) {
+                            NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
-            if(sld != null)
-            {
-                for(StyledLayer styledLayer : styledLayerList)
-                {
-                    if(styledLayer instanceof NamedLayerImpl)
-                    {
-                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                            for (Style style : namedLayerImpl.styles()) {
+                                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                                    for (Rule rule : fts.rules()) {
+                                        for (Symbolizer symbolizer : rule.symbolizers()) {
+                                            if (symbolizer instanceof TextSymbolizer) {
+                                                TextSymbolizer textSymbol = (TextSymbolizer) symbolizer;
+                                                Font font = textSymbol.getFont();
+                                                if (font != null) {
+                                                    if (dataList == null) {
+                                                        dataList = new ArrayList<BatchUpdateFontData>();
+                                                    }
+                                                    BatchUpdateFontData fontSLDData = new BatchUpdateFontData(
+                                                            sld, sldData);
 
-                        for(Style style : namedLayerImpl.styles())
-                        {
-                            for(FeatureTypeStyle fts : style.featureTypeStyles())
-                            {
-                                for(Rule rule : fts.rules())
-                                {
-                                    for(Symbolizer symbolizer : rule.symbolizers())
-                                    {
-                                        if(symbolizer instanceof TextSymbolizer)
-                                        {
-                                            TextSymbolizer textSymbol = (TextSymbolizer) symbolizer;
-                                            Font font = textSymbol.getFont();
-                                            if(font != null)
-                                            {
-                                                if(dataList == null)
-                                                {
-                                                    dataList = new ArrayList<BatchUpdateFontData>();
+                                                    fontSLDData.setNamedLayer(
+                                                            namedLayerImpl.getName());
+                                                    fontSLDData.setFeatureTypeStyle(fts.getName());
+                                                    fontSLDData.setStyle(style.getName());
+                                                    fontSLDData.setRule(rule);
+                                                    fontSLDData.setSymbolizer(textSymbol);
+                                                    fontSLDData.setFont(font);
+                                                    dataList.add(fontSLDData);
                                                 }
-                                                BatchUpdateFontData fontSLDData = new BatchUpdateFontData(sld, sldData);
-
-                                                fontSLDData.setNamedLayer(namedLayerImpl.getName());
-                                                fontSLDData.setFeatureTypeStyle(fts.getName());
-                                                fontSLDData.setStyle(style.getName());
-                                                fontSLDData.setRule(rule);
-                                                fontSLDData.setSymbolizer(textSymbol);
-                                                fontSLDData.setFont(font);
-                                                dataList.add(fontSLDData);
                                             }
                                         }
                                     }
