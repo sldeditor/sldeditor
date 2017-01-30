@@ -252,10 +252,12 @@ public class BatchUpdateFontModel extends AbstractTableModel {
      * @param columnModel the new column renderer
      */
     public void setColumnRenderer(TableColumnModel columnModel) {
-        columnModel.getColumn(COL_FONT_NAME).setCellRenderer(new BatchUpdateFontRenderer());
-        columnModel.getColumn(COL_FONT_STYLE).setCellRenderer(new BatchUpdateFontRenderer());
-        columnModel.getColumn(COL_FONT_WEIGHT).setCellRenderer(new BatchUpdateFontRenderer());
-        columnModel.getColumn(COL_FONT_SIZE).setCellRenderer(new BatchUpdateFontRenderer());
+        if (columnModel != null) {
+            columnModel.getColumn(COL_FONT_NAME).setCellRenderer(new BatchUpdateFontRenderer());
+            columnModel.getColumn(COL_FONT_STYLE).setCellRenderer(new BatchUpdateFontRenderer());
+            columnModel.getColumn(COL_FONT_WEIGHT).setCellRenderer(new BatchUpdateFontRenderer());
+            columnModel.getColumn(COL_FONT_SIZE).setCellRenderer(new BatchUpdateFontRenderer());
+        }
     }
 
     /**
@@ -273,8 +275,7 @@ public class BatchUpdateFontModel extends AbstractTableModel {
             if (data.isFontNameUpdated() || data.isFontStyleUpdated() || data.isFontWeightUpdated()
                     || data.isFontSizeUpdated()) {
 
-                if(data.updateFont(sldWriter))
-                {
+                if (data.updateFont(sldWriter)) {
                     refreshUI = true;
                 }
 

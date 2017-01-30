@@ -97,6 +97,7 @@ public class BatchUpdateFontDataTest {
         TextSymbolizer symbolizer = styleFactory.createTextSymbolizer();
         symbolizer.setName(expectedSymbolizer);
         testObj.setSymbolizer(symbolizer);
+        testObj.setFont(symbolizer.getFont());
         assertEquals(testObj.getSymbolizer(), expectedSymbolizer);
 
         // Test with font == null

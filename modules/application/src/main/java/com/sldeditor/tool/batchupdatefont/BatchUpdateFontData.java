@@ -309,9 +309,10 @@ public class BatchUpdateFontData {
 
             SLDDataInterface current = SLDEditorFile.getInstance().getSLDData();
 
-            if (current != null) {
-                if (current.getSLDFile().equals(sldData.getSLDFile())
-                        || current.getSLDURL().equals(sldData.getSLDURL())) {
+            if ((current != null) && (sldData != null)) {
+                if (((current.getSLDFile() == null) && (sldData.getSLDFile() == null)) ||
+                       ((current.getSLDFile() != null) && current.getSLDFile().equals(sldData.getSLDFile()))
+                        || ((current.getSLDURL() != null) && current.getSLDURL().equals(sldData.getSLDURL()))) {
                     Symbolizer currentSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer,
                             SelectedSymbol.getInstance().getSld());
                     if (currentSymbolizer != null) {
