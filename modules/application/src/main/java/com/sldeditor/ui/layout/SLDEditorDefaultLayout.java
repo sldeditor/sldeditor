@@ -22,6 +22,7 @@ import java.awt.BorderLayout;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -137,7 +138,14 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
             extensionTab.addTab(extension.getName(), null, extension.getPanel(), extension.getTooltip());
         }
 
-        application.getApplicationFrame().getContentPane().add(appPanel);
+        if(application != null)
+        {
+            JFrame applicationFrame = application.getApplicationFrame();
+            if(applicationFrame != null)
+            {
+                applicationFrame.getContentPane().add(appPanel);
+            }
+        }
     }
 
     /**

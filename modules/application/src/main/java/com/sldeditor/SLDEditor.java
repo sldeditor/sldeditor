@@ -251,7 +251,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         SLDEditorMenus.createMenus(this, extensionList);
 
-        frame.setBounds(0, 0, APPLICATION_FRAME_WIDTH, APPLICATION_FRAME_HEIGHT);
+        if (frame != null) {
+            frame.setBounds(0, 0, APPLICATION_FRAME_WIDTH, APPLICATION_FRAME_HEIGHT);
+        }
 
         // Set application icon
         setApplicationIcon();
@@ -741,10 +743,12 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      * Sets the application icon.
      */
     private void setApplicationIcon() {
-        List<Image> icons = new ArrayList<Image>();
-        icons.add(getImage(APPLICATION_ICON_SMALL));
-        icons.add(getImage(APPLICATION_ICON_MEDIUM));
-        frame.setIconImages(icons);
+        if (frame != null) {
+            List<Image> icons = new ArrayList<Image>();
+            icons.add(getImage(APPLICATION_ICON_SMALL));
+            icons.add(getImage(APPLICATION_ICON_MEDIUM));
+            frame.setIconImages(icons);
+        }
     }
 
     /**
@@ -827,7 +831,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         ReloadManager.getInstance().reset();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.SLDEditorInterface#refreshPanel(java.lang.Class, java.lang.Class)
      */
     @Override
