@@ -120,7 +120,6 @@ public class VOGeoServerLabelling extends StandardPanel
      * Constructor.
      *
      * @param panelId the panel id
-     * @param functionManager the function manager
      */
     public VOGeoServerLabelling(Class<?> panelId) {
         super(panelId);

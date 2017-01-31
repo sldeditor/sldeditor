@@ -351,7 +351,7 @@ public class ColourMapModel extends AbstractTableModel {
     /**
      * Update colour map entry.
      *
-     * @param selectedRow the selected row
+     * @param rows the rows
      * @param newData the new data
      */
     public void updateColourMapEntry(int[] rows, ColourMapData newData) {

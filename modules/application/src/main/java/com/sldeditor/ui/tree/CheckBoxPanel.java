@@ -106,7 +106,9 @@ public class CheckBoxPanel extends JPanel {
     }
 
     /**
-     * @param name
+     * Sets the label text.
+     *
+     * @param text the new label text
      */
     public void setLabelText(String text) {
         label.setText(text);

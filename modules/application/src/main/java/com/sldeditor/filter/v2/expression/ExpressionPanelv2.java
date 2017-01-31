@@ -267,7 +267,6 @@ public class ExpressionPanelv2 extends JDialog
      *
      * @param type the type
      * @param expression the expression
-     * @return true, if successful
      */
     protected void showExpressionDialog(Class<?> type, Expression expression) {
 

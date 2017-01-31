@@ -74,8 +74,6 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
 
     /**
      * Constructor.
-     *
-     * @param functionManager the function manager
      */
     public PointFillDetails()
     {

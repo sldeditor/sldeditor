@@ -84,7 +84,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     /**
      * Instantiates a new feature type style details.
      *
-     * @param parentOb the parent ob
+     * @param parentObj the parent obj
      */
     public ExternalGraphicDetails(ExternalGraphicUpdateInterface parentObj) {
         super(ExternalGraphicDetails.class);

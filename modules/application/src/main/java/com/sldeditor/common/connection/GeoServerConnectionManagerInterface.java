@@ -41,8 +41,6 @@ public interface GeoServerConnectionManagerInterface {
 
     /**
      * Update connection list.
-     *
-     * @param keySet the key set
      */
     void updateList();
 
