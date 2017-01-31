@@ -159,7 +159,7 @@ public class ColourMapModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return (columnIndex != COL_NUMBER);
+        return false;
     }
 
     /**
