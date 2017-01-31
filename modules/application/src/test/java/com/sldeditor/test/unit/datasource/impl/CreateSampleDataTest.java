@@ -67,6 +67,7 @@ public class CreateSampleDataTest {
         // Build the feature type
         SimpleFeatureType schema = b.buildFeatureType();
 
+        sampleData.create(null, null);
         sampleData.create(schema, null);
 
         DataStore dataStore = sampleData.getDataStore();
@@ -80,14 +81,19 @@ public class CreateSampleDataTest {
      */
     @Test
     public void testGetFieldTypeValue() {
-        String expectedString = "String field";
-        assertEquals(expectedString, CreateSampleData.getFieldTypeValue(0, expectedString, String.class));
-        assertEquals(Long.valueOf(1), CreateSampleData.getFieldTypeValue(1, expectedString, Long.class));
-        assertEquals(Short.valueOf((short)2), CreateSampleData.getFieldTypeValue(2, expectedString, Short.class));
-        assertEquals(Integer.valueOf(3), CreateSampleData.getFieldTypeValue(3, expectedString, Integer.class));
-        assertEquals(Float.valueOf(4), CreateSampleData.getFieldTypeValue(4, expectedString, Float.class));
-        assertEquals(Double.valueOf(5), CreateSampleData.getFieldTypeValue(5, expectedString, Double.class));
-        assertNull(CreateSampleData.getFieldTypeValue(6, expectedString, SimpleFeatureType.class));
+        String expectedFieldName = "String field";
+        assertEquals(expectedFieldName, CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, null));
+        assertEquals(Long.valueOf(1), CreateSampleData.getFieldTypeValue(1, expectedFieldName, Long.class, null));
+        assertEquals(Short.valueOf((short)2), CreateSampleData.getFieldTypeValue(2, expectedFieldName, Short.class, null));
+        assertEquals(Integer.valueOf(3), CreateSampleData.getFieldTypeValue(3, expectedFieldName, Integer.class, null));
+        assertEquals(Float.valueOf(4), CreateSampleData.getFieldTypeValue(4, expectedFieldName, Float.class, null));
+        assertEquals(Double.valueOf(5), CreateSampleData.getFieldTypeValue(5, expectedFieldName, Double.class, null));
+        assertNull(CreateSampleData.getFieldTypeValue(6, expectedFieldName, SimpleFeatureType.class, null));
+
+        String expectedStringValue = "test";
+        assertEquals(expectedStringValue, CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, expectedStringValue));
+        assertEquals(expectedFieldName, CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, ""));
+        assertEquals("empty", CreateSampleData.getFieldTypeValue(0, null, String.class, ""));
     }
 
 }
