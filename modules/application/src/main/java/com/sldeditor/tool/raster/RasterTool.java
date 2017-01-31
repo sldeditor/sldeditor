@@ -48,7 +48,6 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
-import com.sldeditor.tool.vector.VectorTool;
 import java.awt.FlowLayout;
 
 /**
@@ -172,7 +171,7 @@ public class RasterTool implements ToolInterface {
 
                         ConsoleManager.getInstance().information(this, 
                                 String.format("%s : %s", 
-                                        Localisation.getString(VectorTool.class, "RasterTool.setDataSource"),
+                                        Localisation.getString(RasterTool.class, "RasterTool.setDataSource"),
                                         rasterFile.getAbsolutePath()));
 
                         // Raster file
