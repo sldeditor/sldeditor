@@ -77,14 +77,12 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
     /** The label : data type. */
     private JLabel lblDataType;
 
-
     /**
      * Gets the panel name.
      *
      * @return the panel name
      */
-    public static String getPanelName()
-    {
+    public static String getPanelName() {
         return ATTRIBUTE_PANEL;
     }
 
@@ -106,13 +104,12 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         attributeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                if(isAttributeComboBoxPopulated())
-                {
+                if (isAttributeComboBoxPopulated()) {
                     String newValueObj = (String) attributeComboBox.getSelectedItem();
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj, "DataSourceAttribute", oldValueObj, newValueObj));
+                    UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj,
+                            "DataSourceAttribute", oldValueObj, newValueObj));
 
-                    if(parentObj != null)
-                    {
+                    if (parentObj != null) {
                         parentObj.updateSymbol();
                     }
                 }
@@ -125,22 +122,18 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      *
      * @param expectedDataType the new data type
      */
-    public void setDataType(Class<?> expectedDataType)
-    {
+    public void setDataType(Class<?> expectedDataType) {
         boolean different = (this.expectedDataType != expectedDataType);
         this.expectedDataType = expectedDataType;
-        
-        if(different)
-        {
-            if(dataSource != null)
-            {
+
+        if (different) {
+            if (dataSource != null) {
                 attributeNameList = this.dataSource.getAttributes(expectedDataType);
                 populateAttributeComboBox();
             }
         }
 
-        if(expectedDataType != null)
-        {
+        if (expectedDataType != null) {
             lblDataType.setText(expectedDataType.getSimpleName().toLowerCase());
         }
     }
@@ -149,22 +142,20 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      * Populate attribute combo box.
      */
     private void populateAttributeComboBox() {
-        if(attributeComboBox != null)
-        {
+        if (attributeComboBox != null) {
             setPopulatingComboBox(true);
             Object selectedItem = model.getSelectedItem();
             model.removeAllElements();
             model.addElement("");
 
-            if(attributeNameList != null)
-            {
-                for(String attribute : attributeNameList)
-                {
+            if (attributeNameList != null) {
+                for (String attribute : attributeNameList) {
                     model.addElement(attribute);
                 }
             }
             attributeComboBox.setModel(model);
             model.setSelectedItem(selectedItem);
+
             setPopulatingComboBox(false);
         }
     }
@@ -192,8 +183,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      *
      * @return the selected item
      */
-    public String getSelectedItem()
-    {
+    public String getSelectedItem() {
         return (String) attributeComboBox.getSelectedItem();
     }
 
@@ -205,8 +195,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
     public void dataSourceLoaded(DataSourceInterface dataSource) {
         this.dataSource = dataSource;
 
-        if(this.dataSource != null)
-        {
+        if (this.dataSource != null) {
             attributeNameList = this.dataSource.getAttributes(expectedDataType);
         }
 
@@ -218,8 +207,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      *
      * @param enabled the new panel enabled
      */
-    public void setPanelEnabled(boolean enabled)
-    {
+    public void setPanelEnabled(boolean enabled) {
         attributeComboBox.setEnabled(enabled);
     }
 
@@ -231,29 +219,22 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
     public void setAttribute(Expression expression) {
         String propertyName = null;
 
-        if(expression instanceof PropertyExistsFunction)
-        {
-            Expression e = ((PropertyExistsFunction)expression).getParameters().get(0);
-            Object value = ((LiteralExpressionImpl)e).getValue();
-            propertyName = ((AttributeExpressionImpl)value).getPropertyName();
-        }
-        else if(expression instanceof AttributeExpressionImpl)
-        {
-            propertyName = ((AttributeExpressionImpl)expression).getPropertyName();
-        }
-        else if(expression instanceof LiteralExpressionImpl)
-        {
-            propertyName = AttributeUtils.extract((String) ((LiteralExpressionImpl)expression).getValue());
+        if (expression instanceof PropertyExistsFunction) {
+            Expression e = ((PropertyExistsFunction) expression).getParameters().get(0);
+            Object value = ((LiteralExpressionImpl) e).getValue();
+            propertyName = ((AttributeExpressionImpl) value).getPropertyName();
+        } else if (expression instanceof AttributeExpressionImpl) {
+            propertyName = ((AttributeExpressionImpl) expression).getPropertyName();
+        } else if (expression instanceof LiteralExpressionImpl) {
+            propertyName = AttributeUtils
+                    .extract((String) ((LiteralExpressionImpl) expression).getValue());
         }
 
-        if(propertyName != null)
-        {
+        if (propertyName != null) {
             oldValueObj = propertyName;
 
             attributeComboBox.setSelectedItem(propertyName);
-        }
-        else
-        {
+        } else {
             oldValueObj = propertyName;
             attributeComboBox.setSelectedIndex(-1);
         }
@@ -265,9 +246,13 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      * @return the expression
      */
     public Expression getExpression() {
-        String attributeName = (String)attributeComboBox.getSelectedItem();
-        NameImpl name = new NameImpl(attributeName);
-        Expression expression = new AttributeExpressionImpl(name);
+        Expression expression = null;
+        String attributeName = (String) attributeComboBox.getSelectedItem();
+
+        if (attributeName != null) {
+            NameImpl name = new NameImpl(attributeName);
+            expression = new AttributeExpressionImpl(name);
+        }
 
         return expression;
     }
@@ -277,12 +262,14 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String)undoRedoObject.getOldValue();
+        String oldValueObj = (String) undoRedoObject.getOldValue();
 
         attributeComboBox.setSelectedItem(oldValueObj);
     }
@@ -292,12 +279,14 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String)undoRedoObject.getNewValue();
+        String newValueObj = (String) undoRedoObject.getNewValue();
 
         attributeComboBox.setSelectedItem(newValueObj);
     }

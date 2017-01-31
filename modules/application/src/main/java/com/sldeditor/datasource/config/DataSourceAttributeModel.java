@@ -348,7 +348,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         int index = valueMap.size();
         String name = String.format("%s_%d", DEFAULT_NEW_FIELD_NAME, index);
         Class<?> fieldType = DEFAULT_NEW_FIELD_TYPE;
-        Object value = CreateSampleData.getFieldTypeValue(index, name, fieldType);
+        Object value = CreateSampleData.getFieldTypeValue(index, name, fieldType, null);
 
         DataSourceAttributeData newField = new DataSourceAttributeData(name, fieldType, value);
 

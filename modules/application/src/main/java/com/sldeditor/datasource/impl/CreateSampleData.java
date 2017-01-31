@@ -89,8 +89,7 @@ public class CreateSampleData {
 
         // Put fields into map for speed
         Map<String, DataSourceAttributeData> fieldMap = new HashMap<String, DataSourceAttributeData>();
-        if(fieldList != null)
-        {
+        if (fieldList != null) {
             for (DataSourceAttributeData attributeData : fieldList) {
                 fieldMap.put(attributeData.getName(), attributeData);
             }
@@ -121,7 +120,7 @@ public class CreateSampleData {
                 switch (geometryType) {
                 case POLYGON:
                     ExamplePolygonInterface examplePolygon = DataSourceFactory
-                    .createExamplePolygon(null);
+                            .createExamplePolygon(null);
                     value = examplePolygon.getPolygon();
                     break;
                 case LINE:
@@ -143,10 +142,8 @@ public class CreateSampleData {
                     }
                 }
 
-                if (value == null) {
-                    value = getFieldTypeValue(index, attributeType.getName().getLocalPart(),
-                            fieldType);
-                }
+                value = getFieldTypeValue(index, attributeType.getName().getLocalPart(), fieldType,
+                        value);
             }
             builder.add(value);
             index++;
@@ -157,19 +154,35 @@ public class CreateSampleData {
     }
 
     /**
-     * Gets the field type value.
+     * Gets the field type value. If value is set return it, if it is null make up a suitable default
      *
      * @param index the index
-     * @param name the name
+     * @param fieldName the name
      * @param fieldType the field type
+     * @param valueToTest the value to test
      * @return the field type value
      */
-    public static Object getFieldTypeValue(int index, String name, Class<?> fieldType) {
+    public static Object getFieldTypeValue(int index, String fieldName, Class<?> fieldType,
+            Object valueToTest) {
+        if ((valueToTest != null) && (fieldType != String.class)) {
+            return valueToTest;
+        }
+
         Object value = null;
 
         if (fieldType == String.class) {
-            if (name != null) {
-                value = name;
+            if (valueToTest == null) {
+                value = defaultStringValue(fieldName);
+            } else {
+                // Cater for when the string value is empty
+                String s = (String) valueToTest;
+                if (s.trim().isEmpty()) {
+                    value = defaultStringValue(fieldName);
+                }
+                else
+                {
+                    value = valueToTest;
+                }
             }
         } else if (fieldType == Long.class) {
             value = Long.valueOf(index);
@@ -181,6 +194,22 @@ public class CreateSampleData {
             value = Float.valueOf(index);
         } else if (fieldType == Short.class) {
             value = Short.valueOf((short) index);
+        }
+        return value;
+    }
+
+    /**
+     * Default string value.
+     *
+     * @param fieldName the field name
+     * @return the object
+     */
+    private static Object defaultStringValue(String fieldName) {
+        Object value;
+        if (fieldName != null) {
+            value = fieldName;
+        } else {
+            value = "empty";
         }
         return value;
     }

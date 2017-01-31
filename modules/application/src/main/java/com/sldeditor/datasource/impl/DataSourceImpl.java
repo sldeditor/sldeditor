@@ -384,15 +384,20 @@ public class DataSourceImpl implements DataSourceInterface {
                     if (name != null) {
                         String fieldName = name.getLocalPart();
 
-                        Class<?> type = fieldTypeMap.get(i);
+                        Class<?> fieldType = fieldTypeMap.get(i);
 
-                        if (type == Geometry.class) {
+                        if (fieldType == Geometry.class) {
                             Object value = feature.getAttribute(fieldName);
 
-                            type = value.getClass();
+                            fieldType = value.getClass();
                         }
-                        DataSourceAttributeData data = new DataSourceAttributeData(fieldName, type,
-                                attributes.get(i));
+
+                        Object value = CreateSampleData.getFieldTypeValue(i, fieldName,
+                                    fieldType,
+                                    attributes.get(i));
+
+                        DataSourceAttributeData data = new DataSourceAttributeData(fieldName, fieldType,
+                                value);
 
                         valueMap.add(data);
                     }
