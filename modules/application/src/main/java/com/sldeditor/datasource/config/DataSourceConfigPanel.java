@@ -62,8 +62,8 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedInterface, UndoActionInterface
-{
+public class DataSourceConfigPanel extends JPanel
+        implements DataSourceUpdatedInterface, UndoActionInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -119,16 +119,17 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
      *
      * @return the component
      */
-    private Component createDataSourceConnectorPanel()
-    {
+    private Component createDataSourceConnectorPanel() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
         JPanel panel1 = new JPanel();
-        JLabel label = new JLabel(Localisation.getField(DataSourceConfigPanel.class, "DataSourceConfigPanel.field"));
+        JLabel label = new JLabel(
+                Localisation.getField(DataSourceConfigPanel.class, "DataSourceConfigPanel.field"));
         panel1.add(label);
 
-        Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory.getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory
+                .getDataSourceConnectorList();
 
         dscModel = new DataSourceConnectorComboBoxModel(dscMap);
         dataSourceConnectorComboBox = new JComboBox<String>(dscModel);
@@ -138,7 +139,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
             public void actionPerformed(ActionEvent event) {
                 String selectedItem = (String) dataSourceConnectorComboBox.getSelectedItem();
 
-                CardLayout cl = (CardLayout)(dscPanel.getLayout());
+                CardLayout cl = (CardLayout) (dscPanel.getLayout());
                 cl.show(dscPanel, selectedItem);
             }
         });
@@ -152,8 +153,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         dscPanel = new JPanel();
         dscPanel.setLayout(new CardLayout());
 
-        for(Class<?> key : dscMap.keySet())
-        {
+        for (Class<?> key : dscMap.keySet()) {
             DataSourceConnectorInterface dsConnector = dscMap.get(key);
             JPanel panelToAdd = dsConnector.getPanel();
             dscPanel.add(panelToAdd, dsConnector.getDisplayName());
@@ -172,8 +172,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         final UndoActionInterface parentObj = this;
 
         dataModel = new DataSourceAttributeModel();
-        dataModel.addTableModelListener(new TableModelListener()
-        {
+        dataModel.addTableModelListener(new TableModelListener() {
             /**
              * Table changed.
              *
@@ -181,8 +180,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
              */
             @Override
             public void tableChanged(TableModelEvent arg0) {
-                if(!isPopulatingTable())
-                {
+                if (!isPopulatingTable()) {
                     dataChanged = true;
 
                     updateButtonState();
@@ -192,8 +190,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
 
         table = new JTable();
         table.setModel(dataModel);
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-        {
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
@@ -215,35 +212,22 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         flowLayout.setAlignment(FlowLayout.TRAILING);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnAddField = new JButton(Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.add"));
+        JButton btnAddField = new JButton(
+                Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.add"));
         btnAddField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-                dataModel.addNewField();
-
-                dataModel.fireTableDataChanged();
-
-                dataChanged = true;
-
-                updateButtonState();
+                addNewField();
             }
         });
         buttonPanel.add(btnAddField);
 
-        btnRemoveField = new JButton(Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.remove"));
+        btnRemoveField = new JButton(Localisation.getString(DataSourceConfigPanel.class,
+                "DataSourceConfigPanel.remove"));
         btnRemoveField.setEnabled(false);
         btnRemoveField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                dataModel.removeFields(table.getSelectedRows());
-
-                setPopulatingTable(true);
-                dataModel.fireTableDataChanged();
-                setPopulatingTable(false);
-
-                dataChanged = true;
-
-                updateButtonState();
+                removeField();
             }
         });
         buttonPanel.add(btnRemoveField);
@@ -252,36 +236,17 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         btnApply.setEnabled(false);
         btnApply.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-                Object oldValueObj = attributeData;
-                Object newValueObj = dataModel.getAttributeData();
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, "Preferences", oldValueObj, newValueObj));
-
-                attributeData = (DataSourceAttributeListInterface) newValueObj;
-
-                dataSource.updateFields(attributeData);
-
-                dataChanged = false;
-
-                updateButtonState();
+                applyData(parentObj);
             }
         });
         buttonPanel.add(btnApply);
 
-        btnCancel = new JButton(Localisation.getString(DataSourceConfigPanel.class, "common.cancel"));
+        btnCancel = new JButton(
+                Localisation.getString(DataSourceConfigPanel.class, "common.cancel"));
         btnCancel.setEnabled(false);
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dataModel.populate(attributeData.getData());
-
-                setPopulatingTable(true);
-                dataModel.fireTableDataChanged();
-                setPopulatingTable(false);
-
-                dataChanged = false;
-
-                updateButtonState();
+                cancelData();
             }
         });
         buttonPanel.add(btnCancel);
@@ -300,29 +265,29 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         btnCancel.setEnabled(dataChanged);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag)
-    {
-        if(attributeData == null)
-        {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
+        if (attributeData == null) {
             attributeData = new DataSourceAttributeList();
         }
 
         // Populate data source properties panel
-        DataSourcePropertiesInterface dataSourceProperties = dataSource.getDataConnectorProperties();
-        if(dataSourceProperties != null)
-        {
+        DataSourcePropertiesInterface dataSourceProperties = dataSource
+                .getDataConnectorProperties();
+        if (dataSourceProperties != null) {
             dataSourceProperties.populate();
 
             // Set the combo box to display the correct data source connector panel
             DataSourceConnectorInterface dsc = dataSourceProperties.getDataSourceConnector();
 
             String displayName = dsc.getDisplayName();
-            if(dataSourceConnectorComboBox != null)
-            {
+            if (dataSourceConnectorComboBox != null) {
                 dataSourceConnectorComboBox.setSelectedItem(displayName);
             }
         }
@@ -330,8 +295,7 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         // Populate table
         dataSource.readAttributes(attributeData);
 
-        if(dataModel != null)
-        {
+        if (dataModel != null) {
             dataModel.setConnectedToDataSource(isConnectedToDataSourceFlag);
             dataModel.populate(attributeData.getData());
 
@@ -355,52 +319,61 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
      *
      * @return true, if is populating table
      */
-    private boolean isPopulatingTable()
-    {
+    private boolean isPopulatingTable() {
         return tablePopulating;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        attributeData = (DataSourceAttributeListInterface) undoRedoObject.getOldValue();
+        if (undoRedoObject != null) {
+            attributeData = (DataSourceAttributeListInterface) undoRedoObject.getOldValue();
 
-        dataModel.populate(attributeData.getData());
+            dataModel.populate(attributeData.getData());
 
-        setPopulatingTable(true);
-        dataModel.fireTableDataChanged();
-        setPopulatingTable(false);
+            setPopulatingTable(true);
+            dataModel.fireTableDataChanged();
+            setPopulatingTable(false);
 
-        dataSource.updateFields(attributeData);
+            dataSource.updateFields(attributeData);
 
-        dataChanged = false;
+            dataChanged = false;
 
-        updateButtonState();
+            updateButtonState();
+        }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        attributeData = (DataSourceAttributeListInterface) undoRedoObject.getNewValue();
+        if (undoRedoObject != null) {
+            attributeData = (DataSourceAttributeListInterface) undoRedoObject.getNewValue();
 
-        dataModel.populate(attributeData.getData());
+            dataModel.populate(attributeData.getData());
 
-        setPopulatingTable(true);
-        dataModel.fireTableDataChanged();
-        setPopulatingTable(false);
+            setPopulatingTable(true);
+            dataModel.fireTableDataChanged();
+            setPopulatingTable(false);
 
-        dataSource.updateFields(attributeData);
+            dataSource.updateFields(attributeData);
 
-        dataChanged = false;
+            dataChanged = false;
 
-        updateButtonState();
+            updateButtonState();
+        }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -408,7 +381,74 @@ public class DataSourceConfigPanel extends JPanel implements DataSourceUpdatedIn
         // Does nothing
     }
 
+    /**
+     * Reset.
+     */
     public void reset() {
         dscModel.reset();
+    }
+
+    /**
+     * Adds the new field.
+     */
+    protected void addNewField() {
+        dataModel.addNewField();
+
+        dataModel.fireTableDataChanged();
+
+        dataChanged = true;
+
+        updateButtonState();
+    }
+
+    /**
+     * Removes the field.
+     */
+    protected void removeField() {
+        dataModel.removeFields(table.getSelectedRows());
+
+        setPopulatingTable(true);
+        dataModel.fireTableDataChanged();
+        setPopulatingTable(false);
+
+        dataChanged = true;
+
+        updateButtonState();
+    }
+
+    /**
+     * Apply data.
+     *
+     * @param parentObj the parent obj
+     */
+    protected void applyData(final UndoActionInterface parentObj) {
+        Object oldValueObj = attributeData;
+        Object newValueObj = dataModel.getAttributeData();
+
+        UndoManager.getInstance()
+                .addUndoEvent(new UndoEvent(parentObj, "Preferences", oldValueObj, newValueObj));
+
+        attributeData = (DataSourceAttributeListInterface) newValueObj;
+
+        dataSource.updateFields(attributeData);
+
+        dataChanged = false;
+
+        updateButtonState();
+    }
+
+    /**
+     * Cancel data.
+     */
+    protected void cancelData() {
+        dataModel.populate(attributeData.getData());
+
+        setPopulatingTable(true);
+        dataModel.fireTableDataChanged();
+        setPopulatingTable(false);
+
+        dataChanged = false;
+
+        updateButtonState();
     }
 }

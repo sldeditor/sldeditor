@@ -392,12 +392,11 @@ public class DataSourceImpl implements DataSourceInterface {
                             fieldType = value.getClass();
                         }
 
-                        Object value = CreateSampleData.getFieldTypeValue(i, fieldName,
-                                    fieldType,
-                                    attributes.get(i));
+                        Object value = CreateSampleData.getFieldTypeValue(i, fieldName, fieldType,
+                                attributes.get(i));
 
-                        DataSourceAttributeData data = new DataSourceAttributeData(fieldName, fieldType,
-                                value);
+                        DataSourceAttributeData data = new DataSourceAttributeData(fieldName,
+                                fieldType, value);
 
                         valueMap.add(data);
                     }
@@ -558,8 +557,12 @@ public class DataSourceImpl implements DataSourceInterface {
         if (attributeData != null) {
             List<DataSourceAttributeData> attributeDataList = attributeData.getData();
 
-            this.editorFileInterface.getSLDData().setFieldList(attributeDataList);
-
+            if (this.editorFileInterface != null) {
+                SLDDataInterface sldData = this.editorFileInterface.getSLDData();
+                if (sldData != null) {
+                    sldData.setFieldList(attributeDataList);
+                }
+            }
             createInternalDataSource();
 
             notifyDataSourceLoaded();
