@@ -230,7 +230,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
 
         nodeMap.put(new SLDTreeItemWrapper(child), childNode);
-        System.out.println(child.getClass().getName());
+
         if (parent == null) {
             parent = rootNode;
         }
@@ -253,7 +253,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     @Override
     public void populateSLD() {
         reset();
-        System.out.println("-----------------");
+
         SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
 
         if (selectedSymbol != null) {
@@ -423,8 +423,6 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             SLDTreeItemWrapper newKey = new SLDTreeItemWrapper(objectNew);
             nodeMap.put(newKey, node);
             treeModel.nodeChanged(node);
-        } else {
-            System.out.println();
         }
     }
 
