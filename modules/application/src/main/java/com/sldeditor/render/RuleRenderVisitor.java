@@ -198,40 +198,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
         if((rule != null) && (ruleToRender != null))
         {
-            // Compare filters
-            Filter ruleFilter = rule.getFilter();
-            Filter ruleToRenderFilter = ruleToRender.getFilter();
-            boolean filtersSame = false;
-
-            if((ruleFilter == null) && (ruleToRenderFilter == null))
-            {
-                filtersSame = true;
-            }
-            else if((ruleFilter == null) || (ruleToRenderFilter == null))
-            {
-                filtersSame = false;
-            }
-            else
-            {
-                filtersSame = ruleFilter.equals(ruleToRenderFilter);
-            }
-
-            // Compare rule names
-            String ruleName = rule.getName();
-            String ruleToRenderName = ruleToRender.getName();
-
-            if((ruleName != null) && (ruleToRenderName != null))
-            {
-                render = (rule.getName().compareTo(ruleToRender.getName()) == 0) && filtersSame;
-            }
-            else if((ruleName == null) && (ruleToRenderName == null))
-            {
-                render = filtersSame;
-            }
-            else
-            {
-                render = false;
-            }
+            render = (rule == ruleToRender);
         }
         return render;
     }
