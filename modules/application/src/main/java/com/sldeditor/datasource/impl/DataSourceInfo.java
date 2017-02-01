@@ -19,23 +19,35 @@
 package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.FeatureStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.feature.NameImpl;
+import org.geotools.feature.type.FeatureTypeFactoryImpl;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeType;
 import org.opengis.feature.type.FeatureType;
+import org.opengis.feature.type.FeatureTypeFactory;
+import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.feature.type.GeometryType;
 import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
+import org.opengis.filter.Filter;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.util.InternationalString;
 
 import com.sldeditor.common.console.ConsoleManager;
 
@@ -72,6 +84,15 @@ public class DataSourceInfo {
 
     /** The user layer. */
     private UserLayer userLayer = null;
+
+    /** The Constant rasterGeometryField. */
+    private static final String rasterGeometryField = "grid";
+
+    /** The raster geometry descriptor. */
+    private Collection<PropertyDescriptor> rasterPropertyDescriptorList = null;
+
+    /** The feature type factory. */
+    private static FeatureTypeFactory featureTypeFactory = new FeatureTypeFactoryImpl();
 
     /**
      * Default constructor.
@@ -245,6 +266,32 @@ public class DataSourceInfo {
         {
             return schema.getDescriptors();
         }
+        else
+        {
+            if(geometryType == GeometryTypeEnum.RASTER)
+            {
+                if(rasterPropertyDescriptorList == null)
+                {
+                    rasterPropertyDescriptorList = new ArrayList<PropertyDescriptor>();
+
+                    CoordinateReferenceSystem crs = null;
+                    boolean isIdentifiable = false;
+                    boolean isAbstract = false;
+                    List<Filter> restrictions = null;
+                    AttributeType superType = null;
+                    InternationalString description = null;
+                    GeometryType type = featureTypeFactory.createGeometryType(new NameImpl(rasterGeometryField),
+                            GridCoverage2D.class,
+                            crs, isIdentifiable, isAbstract, restrictions, superType, description);
+                    GeometryDescriptor descriptor = featureTypeFactory.createGeometryDescriptor(
+                            type, new NameImpl(rasterGeometryField), 0, 1, false, null);
+
+                    rasterPropertyDescriptorList.add(descriptor);
+                }
+                
+                return rasterPropertyDescriptorList;
+            }
+        }
         return null;
     }
 
@@ -258,7 +305,13 @@ public class DataSourceInfo {
         {
             return schema.getGeometryDescriptor().getLocalName();
         }
-
+        else
+        {
+            if(geometryType == GeometryTypeEnum.RASTER)
+            {
+                return rasterGeometryField;
+            }
+        }
         return null;
     }
 
