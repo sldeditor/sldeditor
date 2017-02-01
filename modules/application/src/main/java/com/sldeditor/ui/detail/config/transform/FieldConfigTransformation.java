@@ -222,17 +222,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     protected Expression generateExpression()
     {
-        Expression expression = null;
-
-        if(this.textField != null)
-        {
-            String text = textField.getText();
-            if((text != null) && !text.isEmpty())
-            {
-                expression = getFilterFactory().literal(text);
-            }
-        }
-        return expression;
+        return processFunction;
     }
 
     /**

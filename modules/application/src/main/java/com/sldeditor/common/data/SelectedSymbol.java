@@ -470,10 +470,12 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
+        Rule oldRule = null;
         for(Rule rule : ruleList)
         {
             if(rule == this.symbolData.getRule())
             {
+                oldRule = rule;
                 indexFound = index;
                 break;
             }
@@ -489,6 +491,11 @@ public class SelectedSymbol {
             ruleList.add(indexFound, newRule);
             setRule(newRule);
         }
+
+        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
+        {
+            listener.updateNode(oldRule, newRule);
+        }
     }
 
     /**
@@ -501,10 +508,12 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
+        FeatureTypeStyle oldFTS = null;
         for(FeatureTypeStyle fts : ftsList)
         {
             if(fts == this.symbolData.getFeatureTypeStyle())
             {
+                oldFTS = fts;
                 indexFound = index;
                 break;
             }
@@ -519,6 +528,11 @@ public class SelectedSymbol {
             ftsList.remove(indexFound);
             ftsList.add(indexFound, newFTS);
             setFeatureTypeStyle(newFTS);
+        }
+
+        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
+        {
+            listener.updateNode(oldFTS, newFTS);
         }
     }
 
@@ -537,10 +551,12 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
+        StyledLayer oldNamedLayer = null;
         for(StyledLayer styledLayer : styledLayerList)
         {
             if(styledLayer == this.symbolData.getStyledLayer())
             {
+                oldNamedLayer = styledLayer;
                 indexFound = index;
                 break;
             }
@@ -555,6 +571,11 @@ public class SelectedSymbol {
             styledLayerList[indexFound] = newNamedLayer;
             this.sld.setStyledLayers(styledLayerList);
             setStyledLayer(newNamedLayer);
+        }
+
+        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
+        {
+            listener.updateNode(oldNamedLayer, newNamedLayer);
         }
     }
 
@@ -573,10 +594,12 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
+        StyledLayer oldUserLayer = null;
         for(StyledLayer styledLayer : styledLayerList)
         {
             if(styledLayer == this.symbolData.getStyledLayer())
             {
+                oldUserLayer = styledLayer;
                 indexFound = index;
                 break;
             }
@@ -591,6 +614,11 @@ public class SelectedSymbol {
             styledLayerList[indexFound] = newUserLayer;
             this.sld.setStyledLayers(styledLayerList);
             setStyledLayer(newUserLayer);
+        }
+
+        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
+        {
+            listener.updateNode(oldUserLayer, newUserLayer);
         }
     }
 
@@ -662,12 +690,14 @@ public class SelectedSymbol {
 
         if(styleList != null)
         {
+            Style oldStyle = null;
             int indexFound = -1;
             int index = 0;
             for(Style style : styleList)
             {
                 if(style == this.symbolData.getStyle())
                 {
+                    oldStyle = style;
                     indexFound = index;
                     break;
                 }
@@ -682,6 +712,11 @@ public class SelectedSymbol {
                 styleList.remove(indexFound);
                 styleList.add(indexFound, newStyle);
                 setStyle(newStyle);
+            }
+
+            for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
+            {
+                listener.updateNode(oldStyle, newStyle);
             }
         }
     }

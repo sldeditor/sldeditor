@@ -153,6 +153,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
                         AbstractGridFormat format = DetermineRasterFormat.choose(rasterFile, panel);
                         AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
+                       Object source = reader.getSource();
                         dsInfo.setGridCoverageReader(reader);
                     }
                 }

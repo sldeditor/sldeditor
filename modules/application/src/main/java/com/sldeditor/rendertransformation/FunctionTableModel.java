@@ -44,11 +44,11 @@ import net.opengis.wps10.ProcessDescriptionType;
  */
 public class FunctionTableModel extends AbstractTableModel {
 
-    /** 
-     * The Constant PARAMETER. 
+    /**
+     * The Constant PARAMETER.
      * 
      * @TODO Should be ParameterFunction.NAME.getName() but ParameterFunction is not publicly accessible
-     * */
+     */
     private static final String PARAMETER = "parameter";
 
     /** The Constant serialVersionUID. */
@@ -81,12 +81,14 @@ public class FunctionTableModel extends AbstractTableModel {
     /**
      * Instantiates a new function table model.
      */
-    public FunctionTableModel()
-    {
-        columnList.add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.parameter"));
+    public FunctionTableModel() {
+        columnList.add(
+                Localisation.getString(FunctionTableModel.class, "FunctionTableModel.parameter"));
         columnList.add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.type"));
-        columnList.add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.optional"));
-        columnList.add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.value"));
+        columnList.add(
+                Localisation.getString(FunctionTableModel.class, "FunctionTableModel.optional"));
+        columnList
+                .add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.value"));
     }
 
     /**
@@ -120,15 +122,13 @@ public class FunctionTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         ProcessFunctionParameterValue value = valueList.get(rowIndex);
 
-        switch(columnIndex)
-        {
+        switch (columnIndex) {
         case COL_PARAMETER:
             return value.name;
         case COL_TYPE:
             return value.dataType;
         case COL_OPTIONAL:
-            if(value.optional)
-            {
+            if (value.optional) {
                 return value.included;
             }
             break;
@@ -143,8 +143,7 @@ public class FunctionTableModel extends AbstractTableModel {
      *
      * @return the value column
      */
-    public static int getValueColumn()
-    {
+    public static int getValueColumn() {
         return COL_VALUE;
     }
 
@@ -170,17 +169,13 @@ public class FunctionTableModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         ProcessFunctionParameterValue value = valueList.get(rowIndex);
 
-        switch(columnIndex)
-        {
+        switch (columnIndex) {
         case COL_OPTIONAL:
             return value.optional;
         case COL_VALUE:
-            if(value.optional)
-            {
+            if (value.optional) {
                 return value.included;
-            }
-            else
-            {
+            } else {
                 return true;
             }
         case COL_PARAMETER:
@@ -201,12 +196,9 @@ public class FunctionTableModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         ProcessFunctionParameterValue value = valueList.get(rowIndex);
 
-        if(columnIndex == COL_OPTIONAL)
-        {
+        if (columnIndex == COL_OPTIONAL) {
             value.included = (Boolean) aValue;
-        }
-        else
-        {
+        } else {
             value.value = aValue;
         }
     }
@@ -218,8 +210,7 @@ public class FunctionTableModel extends AbstractTableModel {
      * @return the value
      */
     public ProcessFunctionParameterValue getValue(int row) {
-        if((row >= 0) && (row < valueList.size()))
-        {
+        if ((row >= 0) && (row < valueList.size())) {
             return valueList.get(row);
         }
 
@@ -243,13 +234,10 @@ public class FunctionTableModel extends AbstractTableModel {
      */
     public int getNoOfOccurences(ProcessFunctionParameterValue value) {
         int count = 0;
-        if(value != null)
-        {
-            for(ProcessFunctionParameterValue v : valueList)
-            {
-                if(v.name.compareTo(value.name) == 0)
-                {
-                    count ++;
+        if (value != null) {
+            for (ProcessFunctionParameterValue v : valueList) {
+                if (v.name.compareTo(value.name) == 0) {
+                    count++;
                 }
             }
         }
@@ -261,12 +249,10 @@ public class FunctionTableModel extends AbstractTableModel {
      *
      * @param row the row
      */
-    public void addNewValue(int row)
-    {
+    public void addNewValue(int row) {
         ProcessFunctionParameterValue value = getValue(row);
 
-        if(value != null)
-        {
+        if (value != null) {
             ProcessFunctionParameterValue newValue = new ProcessFunctionParameterValue(value);
 
             valueList.add(row, newValue);
@@ -294,40 +280,35 @@ public class FunctionTableModel extends AbstractTableModel {
     public ProcessFunction getExpression(FunctionFactory factory) {
         List<Expression> overallParameterList = new ArrayList<Expression>();
 
-        for(ProcessFunctionParameterValue value : valueList)
-        {
+        for (ProcessFunctionParameterValue value : valueList) {
             List<Expression> parameterList = new ArrayList<Expression>();
             parameterList.add(ff.literal(value.name));
 
-            if(value.value != null)
-            {
-                boolean setValue = true;
-                if(value.optional)
-                {
-                    setValue = value.included;
-                }
+            boolean setValue = true;
+            if (value.optional) {
+                setValue = value.included;
+            }
 
-                if(setValue)
-                {
-                    if(value.value instanceof EnvFunction)
-                    {
+            if (value.value != null) {
+
+                if (setValue) {
+                    if (value.value instanceof EnvFunction) {
                         parameterList.add((Expression) value.value);
-                    }
-                    else
-                    {
+                    } else {
                         parameterList.add(ff.literal(value.value));
                     }
                 }
             }
 
-            Function function = factory.function(PARAMETER, parameterList, null);
+            if (setValue) {
+                Function function = factory.function(PARAMETER, parameterList, null);
 
-            overallParameterList.add(function);
+                overallParameterList.add(function);
+            }
         }
 
         Function processFunction = factory.function(this.selectedFunction.getFunctionName(),
-                overallParameterList,
-                null);
+                overallParameterList, null);
 
         return (ProcessFunction) processFunction;
     }
@@ -350,7 +331,7 @@ public class FunctionTableModel extends AbstractTableModel {
      * @param selectedFunction the selected function
      */
     public void populate(ProcessBriefType selectedFunction) {
-        ProcessDescriptionType selectedCustomFunction = (ProcessDescriptionType)selectedFunction;
+        ProcessDescriptionType selectedCustomFunction = (ProcessDescriptionType) selectedFunction;
         this.selectedFunction.setSelectedCustomFunction(selectedCustomFunction);
         valueList = this.selectedFunction.extractParameters();
     }

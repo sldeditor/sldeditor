@@ -21,6 +21,8 @@ package com.sldeditor.datasource.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.geotools.coverage.grid.GridCoverage2D;
+
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPoint;
@@ -49,6 +51,7 @@ public class GeometryTypeMapping {
         geometryMap.put(MultiLineString.class, GeometryTypeEnum.LINE);
         geometryMap.put(Polygon.class, GeometryTypeEnum.POLYGON);
         geometryMap.put(MultiPolygon.class, GeometryTypeEnum.POLYGON);
+        geometryMap.put(GridCoverage2D.class, GeometryTypeEnum.RASTER);
     }
 
     /**

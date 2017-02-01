@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.RangedClassifier;
 
@@ -79,6 +80,7 @@ public class AllowedAttributeTypes {
         List<Class<?> > linearRingList = new ArrayList<Class<?> >(Arrays.asList(LinearRing.class));
         List<Class<?> > rangedClassifierList = new ArrayList<Class<?> >(Arrays.asList(RangedClassifier.class));
         List<Class<?> > classifierList = new ArrayList<Class<?> >(Arrays.asList(Classifier.class));
+        List<Class<?> > rasterGeometryList = new ArrayList<Class<?> >(Arrays.asList(GridCoverage2D.class));
 
         allowedClassTypeMap.put(String.class, stringList);
         allowedClassTypeMap.put(Double.class, doubleList);
@@ -91,6 +93,7 @@ public class AllowedAttributeTypes {
         allowedClassTypeMap.put(LinearRing.class, linearRingList);
         allowedClassTypeMap.put(RangedClassifier.class, rangedClassifierList);
         allowedClassTypeMap.put(Classifier.class, classifierList);
+        allowedClassTypeMap.put(GridCoverage2D.class, rasterGeometryList);
 
         List<Class<?> > objectList = new ArrayList<Class<?>>();
         objectList.addAll(doubleList);
@@ -98,6 +101,7 @@ public class AllowedAttributeTypes {
         objectList.addAll(stringList);
         objectList.addAll(geometryList);
         objectList.addAll(lineStringList);
+        objectList.addAll(rasterGeometryList);
         allowedClassTypeMap.put(Object.class, objectList);
     }
 

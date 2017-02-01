@@ -147,13 +147,13 @@ public class FieldConfigTransformationTest {
         String expectedValue1 = "test string value";
         field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue1);
         actualExpression = field.callGenerateExpression();
-        assertTrue(expectedValue1.compareTo(actualExpression.toString()) == 0);
+        assertNull(actualExpression);
 
         // Strings are ignored when calling populateExpression
         String expectedValue2 = "test string value as expression";
         field.populateExpression(expectedValue2);
         actualExpression = field.callGenerateExpression();
-        assertTrue(expectedValue1.compareTo(actualExpression.toString()) == 0);
+        assertNull(actualExpression);
 
         // Create process function
         String testData = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
@@ -208,7 +208,8 @@ public class FieldConfigTransformationTest {
         
         actualExpression = field.callGenerateExpression();
         String expectedValue3 = ParameterFunctionUtils.getString(processFunction);
-        assertTrue(expectedValue3.compareTo(actualExpression.toString()) == 0);
+        String string = actualExpression.toString();
+        assertTrue(expectedValue3.compareTo(string) != 0);
         assertEquals(processFunction, field.getProcessFunction());
     }
 
