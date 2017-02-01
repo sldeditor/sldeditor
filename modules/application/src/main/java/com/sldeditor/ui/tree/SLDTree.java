@@ -81,7 +81,7 @@ import com.sldeditor.ui.tree.item.TreeItemMap;
  * @author Robert Ward (SCISYS)
  */
 public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpdatedInterface,
-DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
+        DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
 
     private static final int PANEL_HEIGHT = 350;
 
@@ -101,7 +101,7 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
     private SymbolizerSelectedInterface displayPanel = null;
 
     /** The node map. */
-    private Map<Object, DefaultMutableTreeNode> nodeMap = new HashMap<Object, DefaultMutableTreeNode>();
+    private Map<SLDTreeItemWrapper, DefaultMutableTreeNode> nodeMap = new HashMap<SLDTreeItemWrapper, DefaultMutableTreeNode>();
 
     /** The object to render the selected symbol. */
     private List<RenderSymbolInterface> renderList = null;
@@ -216,6 +216,7 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
     private void reset() {
         rootNode.removeAllChildren(); // This removes all nodes
         treeModel.reload(); // This notifies the listeners and changes the GUI
+        nodeMap.clear();
     }
 
     /*
@@ -228,8 +229,8 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
             boolean shouldBeVisible) {
         DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
 
-        nodeMap.put(child, childNode);
-
+        nodeMap.put(new SLDTreeItemWrapper(child), childNode);
+        System.out.println(child.getClass().getName());
         if (parent == null) {
             parent = rootNode;
         }
@@ -252,7 +253,7 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
     @Override
     public void populateSLD() {
         reset();
-
+        System.out.println("-----------------");
         SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
 
         if (selectedSymbol != null) {
@@ -293,8 +294,7 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
                                         DefaultMutableTreeNode ruleTreeNode = addObject(ftsTreeNode,
                                                 rule, true);
 
-                                        for (org.opengis.style.Symbolizer symbolizer : rule
-                                                .symbolizers()) {
+                                        for (Symbolizer symbolizer : rule.symbolizers()) {
                                             DefaultMutableTreeNode symbolizerTreeNode = addObject(
                                                     ruleTreeNode, symbolizer, true);
 
@@ -302,7 +302,7 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
                                                     || (symbolizer instanceof PolygonSymbolizer)) {
                                                 addObject(
                                                         symbolizerTreeNode, SLDTreeLeafFactory
-                                                        .getInstance().getFill(symbolizer),
+                                                                .getInstance().getFill(symbolizer),
                                                         true);
                                             }
 
@@ -326,8 +326,8 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
 
                                                         addObject(symbolizerImageOutlineLineNode,
                                                                 SLDTreeLeafFactory.getInstance()
-                                                                .getStroke(
-                                                                        outlineLineSymbolizer),
+                                                                        .getStroke(
+                                                                                outlineLineSymbolizer),
                                                                 true);
                                                     }
                                                 } else if (outlineSymbolizer instanceof PolygonSymbolizer) {
@@ -340,13 +340,13 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
 
                                                         addObject(symbolizerImageOutlinePolygonNode,
                                                                 SLDTreeLeafFactory.getInstance()
-                                                                .getFill(
-                                                                        outlinePolygonSymbolizer),
+                                                                        .getFill(
+                                                                                outlinePolygonSymbolizer),
                                                                 true);
                                                         addObject(symbolizerImageOutlinePolygonNode,
                                                                 SLDTreeLeafFactory.getInstance()
-                                                                .getStroke(
-                                                                        outlinePolygonSymbolizer),
+                                                                        .getStroke(
+                                                                                outlinePolygonSymbolizer),
                                                                 true);
                                                     }
                                                 }
@@ -413,22 +413,18 @@ DataSourceUpdatedInterface, UndoActionInterface, UpdateTreeStructureInterface {
      */
     @Override
     public void updateNode(Object objectOld, Object objectNew) {
-        DefaultMutableTreeNode node = null;
 
-        for (DefaultMutableTreeNode n : nodeMap.values()) {
-            Object o = n.getUserObject();
-
-            if (o == objectOld) {
-                node = n;
-                break;
-            }
-        }
+        SLDTreeItemWrapper key = new SLDTreeItemWrapper(objectOld);
+        DefaultMutableTreeNode node = nodeMap.get(key);
 
         if (node != null) {
             node.setUserObject(objectNew);
-            nodeMap.remove(objectOld);
-            nodeMap.put(objectNew, node);
+            nodeMap.remove(key);
+            SLDTreeItemWrapper newKey = new SLDTreeItemWrapper(objectNew);
+            nodeMap.put(newKey, node);
             treeModel.nodeChanged(node);
+        } else {
+            System.out.println();
         }
     }
 
