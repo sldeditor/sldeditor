@@ -34,6 +34,7 @@ import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Fill;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
@@ -54,7 +55,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class TextSymbolizerDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
+public class TextSymbolizerDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -65,8 +67,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
     /**
      * Constructor.
      */
-    public TextSymbolizerDetails()
-    {
+    public TextSymbolizerDetails() {
         super(TextSymbolizerDetails.class);
 
         createUI();
@@ -92,10 +93,8 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         vendorOptionTextFactory = new VendorOptionTextFactory(getClass());
 
         List<VendorOptionInterface> veList = vendorOptionTextFactory.getVendorOptionList();
-        if(veList != null)
-        {
-            for(VendorOptionInterface extension : veList)
-            {
+        if (veList != null) {
+            for (VendorOptionInterface extension : veList) {
                 extension.setParentPanel(this);
             }
         }
@@ -106,23 +105,24 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             TextSymbolizer textSymbolizer = (TextSymbolizer) selectedSymbol.getSymbolizer();
-            if(textSymbolizer != null)
-            {
+            if (textSymbolizer != null) {
                 populateStandardData(textSymbolizer);
 
                 //
                 // Geometry
                 //
-                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, textSymbolizer.getGeometry());
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY,
+                        textSymbolizer.getGeometry());
 
                 //
                 // Label
@@ -135,8 +135,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
                 GroupConfigInterface group = getGroup(GroupIdEnum.FONT);
                 group.enable(font != null);
 
-                if(font != null)
-                {
+                if (font != null) {
                     fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_FAMILY, font);
 
                     fieldConfigVisitor.populateField(FieldIdEnum.FONT_WEIGHT, font.getWeight());
@@ -148,8 +147,7 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
                 // Fill
                 Fill fill = (FillImpl) textSymbolizer.getFill();
 
-                if(fill != null)
-                {
+                if (fill != null) {
                     fieldConfigVisitor.populateField(FieldIdEnum.FILL_COLOUR, fill.getColor());
                     fieldConfigVisitor.populateField(FieldIdEnum.TEXT_OPACITY, fill.getOpacity());
                 }
@@ -159,72 +157,72 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
                 group = getGroup(GroupIdEnum.HALO);
                 group.enable(halo != null);
 
-                if(halo != null)
-                {
+                if (halo != null) {
                     Fill haloFill = halo.getFill();
 
                     fieldConfigVisitor.populateField(FieldIdEnum.HALO_COLOUR, haloFill.getColor());
                     fieldConfigVisitor.populateField(FieldIdEnum.HALO_RADIUS, halo.getRadius());
-                }
-                else
-                {
-                    fieldConfigVisitor.populateField(FieldIdEnum.HALO_COLOUR, (Expression)null);
-                    fieldConfigVisitor.populateField(FieldIdEnum.HALO_RADIUS, (Expression)null);
+                } else {
+                    fieldConfigVisitor.populateField(FieldIdEnum.HALO_COLOUR, (Expression) null);
+                    fieldConfigVisitor.populateField(FieldIdEnum.HALO_RADIUS, (Expression) null);
                 }
 
                 group = getGroup(GroupIdEnum.PLACEMENT);
-                if(group != null)
-                {
+                if (group != null) {
                     MultiOptionGroup labelPlacementGroup = (MultiOptionGroup) group;
 
                     LabelPlacement placement = textSymbolizer.getLabelPlacement();
-                    if(placement instanceof PointPlacementImpl)
-                    {
-                        PointPlacementImpl pointPlacement = (PointPlacementImpl)placement;
+                    if (placement instanceof PointPlacementImpl) {
+                        PointPlacementImpl pointPlacement = (PointPlacementImpl) placement;
 
                         labelPlacementGroup.setOption(GroupIdEnum.POINTPLACEMENT);
                         AnchorPointImpl anchorPoint = pointPlacement.getAnchorPoint();
-                        if(anchorPoint == null)
-                        {
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H, (Expression)null);
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V, (Expression)null);
-                        }
-                        else
-                        {
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H, anchorPoint.getAnchorPointX());
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V, anchorPoint.getAnchorPointY());
+                        if (anchorPoint == null) {
+                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
+                                    (Expression) null);
+                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
+                                    (Expression) null);
+                        } else {
+                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
+                                    anchorPoint.getAnchorPointX());
+                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
+                                    anchorPoint.getAnchorPointY());
                         }
 
                         Displacement displacement = pointPlacement.getDisplacement();
-                        if(displacement == null)
-                        {
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X, (Expression)null);
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y, (Expression)null);
-                        }
-                        else
-                        {
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X, displacement.getDisplacementX());
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y, displacement.getDisplacementY());
+                        if (displacement == null) {
+                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X,
+                                    (Expression) null);
+                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y,
+                                    (Expression) null);
+                        } else {
+                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X,
+                                    displacement.getDisplacementX());
+                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y,
+                                    displacement.getDisplacementY());
                         }
 
-                        fieldConfigVisitor.populateField(FieldIdEnum.ANGLE, pointPlacement.getRotation());
-                    }
-                    else if(placement instanceof LinePlacementImpl)
-                    {
-                        LinePlacementImpl linePlacement = (LinePlacementImpl)placement;
+                        fieldConfigVisitor.populateField(FieldIdEnum.ANGLE,
+                                pointPlacement.getRotation());
+                    } else if (placement instanceof LinePlacementImpl) {
+                        LinePlacementImpl linePlacement = (LinePlacementImpl) placement;
 
                         labelPlacementGroup.setOption(GroupIdEnum.LINEPLACEMENT);
                         fieldConfigVisitor.populateField(FieldIdEnum.GAP, linePlacement.getGap());
-                        fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, linePlacement.getInitialGap());
-                        fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET, linePlacement.getPerpendicularOffset());
-                        fieldConfigVisitor.populateBooleanField(FieldIdEnum.GENERALISED_LINE, linePlacement.isGeneralizeLine());
-                        fieldConfigVisitor.populateBooleanField(FieldIdEnum.ALIGN, linePlacement.isAligned());
-                        fieldConfigVisitor.populateBooleanField(FieldIdEnum.REPEATED, linePlacement.isRepeated());
+                        fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP,
+                                linePlacement.getInitialGap());
+                        fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET,
+                                linePlacement.getPerpendicularOffset());
+                        fieldConfigVisitor.populateBooleanField(FieldIdEnum.GENERALISED_LINE,
+                                linePlacement.isGeneralizeLine());
+                        fieldConfigVisitor.populateBooleanField(FieldIdEnum.ALIGN,
+                                linePlacement.isAligned());
+                        fieldConfigVisitor.populateBooleanField(FieldIdEnum.REPEATED,
+                                linePlacement.isRepeated());
                     }
                 }
 
-                if(vendorOptionTextFactory != null)
-                {
+                if (vendorOptionTextFactory != null) {
                     vendorOptionTextFactory.populate(textSymbolizer);
                 }
             }
@@ -235,139 +233,138 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      * Update symbol.
      */
     private void updateSymbol() {
+        if (!Controller.getInstance().isPopulating()) {
 
-        StandardData standardData = getStandardData();
+            StandardData standardData = getStandardData();
 
-        Expression label = fieldConfigVisitor.getExpression(FieldIdEnum.LABEL);
-        Expression haloRadius = fieldConfigVisitor.getExpression(FieldIdEnum.HALO_RADIUS);
+            Expression label = fieldConfigVisitor.getExpression(FieldIdEnum.LABEL);
+            Expression haloRadius = fieldConfigVisitor.getExpression(FieldIdEnum.HALO_RADIUS);
 
-        Expression geometryField = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
+            Expression geometryField = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
 
-        String geometryFieldName = null;
-        Expression defaultGeometryField = getFilterFactory().property(geometryFieldName);
+            String geometryFieldName = null;
+            Expression defaultGeometryField = getFilterFactory().property(geometryFieldName);
 
-        // Label placement
-        LabelPlacement labelPlacement = null;
+            // Label placement
+            LabelPlacement labelPlacement = null;
 
-        MultiOptionGroup labelPlacementPanel = (MultiOptionGroup) getGroup(GroupIdEnum.PLACEMENT);
-        OptionGroup labelPlacementOption = labelPlacementPanel.getSelectedOptionGroup();
+            MultiOptionGroup labelPlacementPanel = (MultiOptionGroup) getGroup(
+                    GroupIdEnum.PLACEMENT);
+            OptionGroup labelPlacementOption = labelPlacementPanel.getSelectedOptionGroup();
 
-        if(labelPlacementOption.getId() == GroupIdEnum.POINTPLACEMENT)
-        {
-            AnchorPoint anchor = null;
-            GroupConfigInterface anchorPointPanel = getGroup(GroupIdEnum.ANCHORPOINT);
+            if (labelPlacementOption.getId() == GroupIdEnum.POINTPLACEMENT) {
+                AnchorPoint anchor = null;
+                GroupConfigInterface anchorPointPanel = getGroup(GroupIdEnum.ANCHORPOINT);
 
-            if(anchorPointPanel == null)
-            {
-                String errorMessage = String.format("%s : %s", Localisation.getString(TextSymbolizerDetails.class, "TextSymbol.error1") , GroupIdEnum.ANCHORPOINT);
-                ConsoleManager.getInstance().error(this, errorMessage);
+                if (anchorPointPanel == null) {
+                    String errorMessage = String.format("%s : %s", Localisation
+                            .getString(TextSymbolizerDetails.class, "TextSymbol.error1"),
+                            GroupIdEnum.ANCHORPOINT);
+                    ConsoleManager.getInstance().error(this, errorMessage);
+                } else if (anchorPointPanel.isPanelEnabled()) {
+                    Expression anchorPointH = fieldConfigVisitor
+                            .getExpression(FieldIdEnum.ANCHOR_POINT_H);
+                    Expression anchorPointV = fieldConfigVisitor
+                            .getExpression(FieldIdEnum.ANCHOR_POINT_V);
+                    anchor = (AnchorPoint) getStyleFactory().anchorPoint(anchorPointH,
+                            anchorPointV);
+                }
+
+                //
+                // Displacement
+                //
+                Displacement displacement = null;
+                GroupConfigInterface displacementPanel = getGroup(GroupIdEnum.DISPLACEMENT);
+
+                if (displacementPanel == null) {
+                    ConsoleManager.getInstance().error(this,
+                            String.format("%s : %s", Localisation
+                                    .getString(TextSymbolizerDetails.class, "TextSymbol.error1"),
+                                    GroupIdEnum.DISPLACEMENT));
+                } else if (displacementPanel.isPanelEnabled()) {
+                    displacement = getStyleFactory().displacement(
+                            fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
+                            fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
+                }
+
+                //
+                // Rotation
+                //
+                Expression rotation = null;
+                GroupConfigInterface rotationPanel = getGroup(GroupIdEnum.ROTATION);
+
+                if (rotationPanel == null) {
+                    ConsoleManager.getInstance().error(this,
+                            String.format("%s : %s", Localisation
+                                    .getString(TextSymbolizerDetails.class, "TextSymbol.error1"),
+                                    GroupIdEnum.ROTATION));
+                } else if (rotationPanel.isPanelEnabled()) {
+                    rotation = fieldConfigVisitor.getExpression(FieldIdEnum.ANGLE);
+                }
+                labelPlacement = getStyleFactory().pointPlacement(anchor, displacement, rotation);
+            } else if (labelPlacementOption.getId() == GroupIdEnum.LINEPLACEMENT) {
+                Expression offset = fieldConfigVisitor
+                        .getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
+                Expression initialGap = fieldConfigVisitor.getExpression(FieldIdEnum.INITIAL_GAP);
+                Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.GAP);
+
+                boolean repeated = fieldConfigVisitor.getBoolean(FieldIdEnum.REPEATED);
+                boolean aligned = fieldConfigVisitor.getBoolean(FieldIdEnum.ALIGN);
+                boolean generalizedLine = fieldConfigVisitor
+                        .getBoolean(FieldIdEnum.GENERALISED_LINE);
+
+                labelPlacement = getStyleFactory().linePlacement(offset, initialGap, gap, repeated,
+                        aligned, generalizedLine);
             }
-            else if(anchorPointPanel.isPanelEnabled())
-            {
-                Expression anchorPointH = fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H);
-                Expression anchorPointV = fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V);
-                anchor = (AnchorPoint) getStyleFactory().anchorPoint(anchorPointH,
-                        anchorPointV);
+
+            FieldConfigColour fdmFillColour = (FieldConfigColour) fieldConfigManager
+                    .get(FieldIdEnum.FILL_COLOUR);
+            Expression fillColour = fdmFillColour.getColourExpression();
+            Expression fillColourOpacity = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.TEXT_OPACITY);
+
+            Fill fill = getStyleFactory().createFill(fillColour, fillColourOpacity);
+
+            FieldConfigColour fdmHaloColour = (FieldConfigColour) fieldConfigManager
+                    .get(FieldIdEnum.HALO_COLOUR);
+            Expression haloFillColour = fdmHaloColour.getColourExpression();
+            Expression haloFillColourOpacity = fdmHaloColour.getColourOpacityExpression();
+            Fill haloFill = getStyleFactory().fill(null, haloFillColour, haloFillColourOpacity);
+
+            //
+            // Halo
+            //
+            Halo halo = null;
+            GroupConfigInterface haloPanel = getGroup(GroupIdEnum.HALO);
+
+            if (haloPanel.isPanelEnabled()) {
+                halo = (Halo) getStyleFactory().halo(haloFill, haloRadius);
             }
 
             //
-            // Displacement
+            // Font
             //
-            Displacement displacement = null;
-            GroupConfigInterface displacementPanel = getGroup(GroupIdEnum.DISPLACEMENT);
+            Font font = extractFont();
 
-            if(displacementPanel == null)
-            {
-                ConsoleManager.getInstance().error(this, String.format("%s : %s", Localisation.getString(TextSymbolizerDetails.class, "TextSymbol.error1") , GroupIdEnum.DISPLACEMENT));
+            // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
+            fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
+
+            TextSymbolizer textSymbolizer = (TextSymbolizer) getStyleFactory().textSymbolizer(
+                    standardData.name, defaultGeometryField, standardData.description,
+                    standardData.unit, label, font, labelPlacement, halo, fill);
+
+            if ((geometryField != null) && !geometryField.toString().isEmpty()) {
+                textSymbolizer.setGeometry(geometryField);
             }
-            else if(displacementPanel.isPanelEnabled())
-            {
-                displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
-                        fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
+
+            if (vendorOptionTextFactory != null) {
+                vendorOptionTextFactory.updateSymbol(textSymbolizer);
             }
 
-            //
-            // Rotation
-            //
-            Expression rotation = null;
-            GroupConfigInterface rotationPanel = getGroup(GroupIdEnum.ROTATION);
+            SelectedSymbol.getInstance().replaceSymbolizer(textSymbolizer);
 
-            if(rotationPanel == null)
-            {
-                ConsoleManager.getInstance().error(this, String.format("%s : %s", Localisation.getString(TextSymbolizerDetails.class, "TextSymbol.error1") , GroupIdEnum.ROTATION));
-            }
-            else if(rotationPanel.isPanelEnabled())
-            {
-                rotation = fieldConfigVisitor.getExpression(FieldIdEnum.ANGLE);
-            }
-            labelPlacement = getStyleFactory().pointPlacement(anchor, displacement, rotation);
+            this.fireUpdateSymbol();
         }
-        else if(labelPlacementOption.getId() == GroupIdEnum.LINEPLACEMENT)
-        {
-            Expression offset = fieldConfigVisitor.getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
-            Expression initialGap = fieldConfigVisitor.getExpression(FieldIdEnum.INITIAL_GAP);
-            Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.GAP);
-
-            boolean repeated = fieldConfigVisitor.getBoolean(FieldIdEnum.REPEATED);
-            boolean aligned = fieldConfigVisitor.getBoolean(FieldIdEnum.ALIGN);
-            boolean generalizedLine = fieldConfigVisitor.getBoolean(FieldIdEnum.GENERALISED_LINE);
-
-            labelPlacement = getStyleFactory().linePlacement(offset, initialGap, gap, repeated, aligned, generalizedLine);
-        }
-
-        FieldConfigColour fdmFillColour = (FieldConfigColour)fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-        Expression fillColour = fdmFillColour.getColourExpression();
-        Expression fillColourOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.TEXT_OPACITY);
-
-        Fill fill = getStyleFactory().createFill(fillColour, fillColourOpacity);
-
-        FieldConfigColour fdmHaloColour = (FieldConfigColour)fieldConfigManager.get(FieldIdEnum.HALO_COLOUR);
-        Expression haloFillColour = fdmHaloColour.getColourExpression();
-        Expression haloFillColourOpacity = fdmHaloColour.getColourOpacityExpression();
-        Fill haloFill = getStyleFactory().fill(null, haloFillColour, haloFillColourOpacity);
-
-        //
-        // Halo
-        //
-        Halo halo = null;
-        GroupConfigInterface haloPanel = getGroup(GroupIdEnum.HALO);
-
-        if(haloPanel.isPanelEnabled())
-        {
-            halo = (Halo) getStyleFactory().halo(haloFill, haloRadius);
-        }
-
-        //
-        // Font
-        //
-        Font font = extractFont();
-
-        // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
-        fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
-
-        TextSymbolizer textSymbolizer = (TextSymbolizer) getStyleFactory().textSymbolizer(standardData.name,
-                defaultGeometryField,
-                standardData.description, 
-                standardData.unit, 
-                label,
-                font,
-                labelPlacement,
-                halo,
-                fill);
-
-        if((geometryField != null) && !geometryField.toString().isEmpty())
-        {
-            textSymbolizer.setGeometry(geometryField);
-        }
-
-        if(vendorOptionTextFactory != null)
-        {
-            vendorOptionTextFactory.updateSymbol(textSymbolizer);
-        }
-
-        SelectedSymbol.getInstance().replaceSymbolizer(textSymbolizer);
-
-        this.fireUpdateSymbol();
     }
 
     /**
@@ -385,12 +382,10 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         List<Expression> fontFamilyList = new ArrayList<Expression>();
         fontFamilyList.add(fontFamily);
 
-        if((fontFamilyList == null) || (fontStyle == null) || (fontWeight == null) || (fontSize == null))
-        {
+        if ((fontFamilyList == null) || (fontStyle == null) || (fontWeight == null)
+                || (fontSize == null)) {
             font = getStyleFactory().getDefaultFont();
-        }
-        else
-        {
+        } else {
             font = (Font) getStyleFactory().font(fontFamilyList, fontStyle, fontWeight, fontSize);
         }
         return font;
@@ -411,14 +406,14 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
-        if(vendorOptionTextFactory != null)
-        {
+    public GraphicPanelFieldManager getFieldDataManager() {
+        if (vendorOptionTextFactory != null) {
             vendorOptionTextFactory.getFieldDataManager(fieldConfigManager);
         }
 
@@ -430,16 +425,19 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -447,7 +445,9 @@ public class TextSymbolizerDetails extends StandardPanel implements PopulateDeta
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

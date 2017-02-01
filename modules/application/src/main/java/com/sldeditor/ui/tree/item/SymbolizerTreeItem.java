@@ -24,7 +24,6 @@ import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.Rule;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 
@@ -166,13 +165,8 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
             if(parent != null)
             {
-                if(parent.getUserObject() instanceof Rule)
-                {
-                    Rule rule = (Rule) parent.getUserObject();
-                    selectedSymbol.setRule(rule);
-                }
+                selectedSymbol.setSymbolizer(symbolizer);
             }
-            selectedSymbol.setSymbolizer(symbolizer);
         }
     }
 }

@@ -329,7 +329,7 @@ public class SelectedSymbol {
                                                 if(symbol == this.symbolData.getSymbolizer())
                                                 {
                                                     this.symbolData.update(localSymbolData);
-                                                    break;
+                                                    return;
                                                 }
                                                 else
                                                 {
