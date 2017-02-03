@@ -22,7 +22,6 @@ package com.sldeditor.test.unit.rendertransformation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.Test;
@@ -51,12 +50,7 @@ public class ProcessFunctionParameterValueTest {
         obj1.maxOccurences = 78;
         obj1.included = true;
         obj1.optional = true;
-        obj1.value = new Date();
-        obj1.enumValueList = new ArrayList<String>();
-        obj1.enumValueList.add("item 1");
-        obj1.enumValueList.add("item 2");
-        obj1.enumValueList.add("item 3");
-        
+
         ProcessFunctionParameterValue obj2 = new ProcessFunctionParameterValue(obj1);
         assertTrue(obj1.name.compareTo(obj2.name) == 0);
         assertTrue(obj1.dataType.compareTo(obj2.dataType) == 0);
@@ -65,8 +59,6 @@ public class ProcessFunctionParameterValueTest {
         assertEquals(obj1.minOccurences, obj2.minOccurences);
         assertEquals(obj1.maxOccurences, obj2.maxOccurences);
         assertEquals(obj1.optional, obj2.optional);
-        assertEquals(obj1.value, obj2.value);
-        assertEquals(obj1.enumValueList, obj2.enumValueList);
     }
 
 }

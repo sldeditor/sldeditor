@@ -300,7 +300,10 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         else if(expression instanceof LiteralExpressionImpl)
         {
             LiteralExpressionImpl literal = (LiteralExpressionImpl)expression;
-            TypeManager.getInstance().setDataType(literal.getValue().getClass());
+            if(literal.getValue() != null)
+            {
+                TypeManager.getInstance().setDataType(literal.getValue().getClass());
+            }
         }
     }
 

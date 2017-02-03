@@ -25,7 +25,6 @@ import javax.swing.table.AbstractTableModel;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.FunctionFactory;
-import org.geotools.filter.function.EnvFunction;
 import org.geotools.process.function.ProcessFunction;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.capability.FunctionName;
@@ -61,7 +60,7 @@ public class FunctionTableModel extends AbstractTableModel {
     private static final int COL_TYPE = 1;
 
     /** The Constant COL_OPTIONAL. */
-    private static final int COL_OPTIONAL = 2;
+    public static final int COL_OPTIONAL = 2;
 
     /** The Constant COL_VALUE. */
     private static final int COL_VALUE = 3;
@@ -133,7 +132,9 @@ public class FunctionTableModel extends AbstractTableModel {
             }
             break;
         case COL_VALUE:
-            return value.value;
+            if (value.objectValue != null) {
+                return value.objectValue.getStringValue();
+            }
         }
         return null;
     }
@@ -173,11 +174,6 @@ public class FunctionTableModel extends AbstractTableModel {
         case COL_OPTIONAL:
             return value.optional;
         case COL_VALUE:
-            if (value.optional) {
-                return value.included;
-            } else {
-                return true;
-            }
         case COL_PARAMETER:
         case COL_TYPE:
         default:
@@ -199,7 +195,10 @@ public class FunctionTableModel extends AbstractTableModel {
         if (columnIndex == COL_OPTIONAL) {
             value.included = (Boolean) aValue;
         } else {
-            value.value = aValue;
+            if(value.objectValue != null)
+            {
+                value.objectValue.setValue(aValue);
+            }
         }
     }
 
@@ -289,13 +288,12 @@ public class FunctionTableModel extends AbstractTableModel {
                 setValue = value.included;
             }
 
-            if (value.value != null) {
-
-                if (setValue) {
-                    if (value.value instanceof EnvFunction) {
-                        parameterList.add((Expression) value.value);
-                    } else {
-                        parameterList.add(ff.literal(value.value));
+            if (setValue) {
+                if (value.objectValue != null) {
+                    Expression expression = value.objectValue.getExpression();
+                    if(expression != null)
+                    {
+                        parameterList.add(expression);
                     }
                 }
             }
@@ -334,5 +332,24 @@ public class FunctionTableModel extends AbstractTableModel {
         ProcessDescriptionType selectedCustomFunction = (ProcessDescriptionType) selectedFunction;
         this.selectedFunction.setSelectedCustomFunction(selectedCustomFunction);
         valueList = this.selectedFunction.extractParameters();
+    }
+
+    /**
+     * Update value, sets optional fields to be included
+     *
+     * @param expression the expression
+     * @param row the row
+     */
+    public void update(Expression expression, int row) {
+        ProcessFunctionParameterValue value = valueList.get(row);
+
+        if (value.optional) {
+            value.included = true;
+        }
+
+        if(value.objectValue != null)
+        {
+            value.objectValue.setValue(expression);
+        }
     }
 }

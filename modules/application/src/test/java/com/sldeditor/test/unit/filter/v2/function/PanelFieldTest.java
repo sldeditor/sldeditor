@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.measure.unit.Unit;
@@ -38,12 +37,11 @@ import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
-import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -62,10 +60,9 @@ public class PanelFieldTest {
     public void testGetField() {
         Class<?> classType = ExpressionPanelv2.class;
         String valueTextLocalisation = "ExpressionSubPanel.value"; 
-        List<String> enumValueList = null;
 
         Map<Class<?>, Class<?>> expectedValueMap = new HashMap<Class<?>, Class<?>>();
-        expectedValueMap.put(Float.class, null);
+        expectedValueMap.put(Float.class, FieldConfigDouble.class);
         expectedValueMap.put(Geometry.class, FieldConfigGeometry.class);
         expectedValueMap.put(Date.class, FieldConfigDate.class);
         expectedValueMap.put(ReferencedEnvelope.class, FieldConfigBoundingBox.class);
@@ -75,11 +72,10 @@ public class PanelFieldTest {
         expectedValueMap.put(Integer.class, FieldConfigInteger.class);
         expectedValueMap.put(Double.class, FieldConfigDouble.class);
         expectedValueMap.put(Unit.class, FieldConfigMapUnits.class);
-        expectedValueMap.put(StringBuilder.class, FieldConfigEnum.class);
 
         for(Class<?> nodeType : expectedValueMap.keySet())
         {
-            FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, nodeType, enumValueList);
+            FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, nodeType);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -88,28 +84,28 @@ public class PanelFieldTest {
 
         // Special case
         // Number.class
-        FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, enumValueList);
+        FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Float.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, enumValueList);
+        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(Number.class.getName() + "/" + Float.class.getName(), expected, actual);
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Double.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, enumValueList);
+        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(Number.class.getName() + "/" + Double.class.getName(), expected, actual);
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(String.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, enumValueList);
+        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
         expected = FieldConfigInteger.class;
         actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);

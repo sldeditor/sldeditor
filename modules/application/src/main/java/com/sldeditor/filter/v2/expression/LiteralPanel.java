@@ -21,7 +21,6 @@ package com.sldeditor.filter.v2.expression;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -59,9 +58,6 @@ public class LiteralPanel extends JPanel {
     /** The btn revert. */
     private JButton btnRevert;
 
-    /** The enum value list. */
-    private List<String> enumValueList = null;
-
     /**
      * Instantiates a new expression panel.
      *
@@ -98,7 +94,7 @@ public class LiteralPanel extends JPanel {
             remove(fieldConfig.getPanel());
         }
 
-        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "LiteralPanel.value", node.getType(), enumValueList);
+        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "LiteralPanel.value", node.getType());
 
         if(fieldConfig != null)
         {
@@ -162,11 +158,9 @@ public class LiteralPanel extends JPanel {
      * Sets the selected node.
      *
      * @param node the new selected node
-     * @param enumValueList 
      */
-    public void setSelectedNode(DefaultMutableTreeNode node, List<String> enumValueList) {
+    public void setSelectedNode(DefaultMutableTreeNode node) {
         selectedNode = (ExpressionNode) node;
-        this.enumValueList = enumValueList;
 
         displayLiteral(selectedNode);
 

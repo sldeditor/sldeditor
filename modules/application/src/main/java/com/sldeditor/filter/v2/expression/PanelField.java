@@ -19,32 +19,12 @@
 
 package com.sldeditor.filter.v2.expression;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.measure.unit.Unit;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
+import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoolean;
-import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigDate;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigEnum;
-import com.sldeditor.ui.detail.config.FieldConfigGeometry;
-import com.sldeditor.ui.detail.config.FieldConfigInteger;
-import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * The Class PanelField.
@@ -59,82 +39,24 @@ public class PanelField {
      * @param classType the class type
      * @param valueTextLocalisation the value text localisation
      * @param nodeType the node type
-     * @param enumValueList the enum value list
+     * @param objectValue the enum value list
      * @return the field
      */
     public static FieldConfigBase getField(Class<?> classType,
             String valueTextLocalisation, 
-            Class<?> nodeType,
-            List<String> enumValueList)
+            Class<?> nodeType)
     {
         FieldConfigBase fieldConfig = null;
 
-        String valueText = Localisation.getString(classType, valueTextLocalisation);
-        FieldIdEnum fieldId = FieldIdEnum.FUNCTION;
-        FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText, true);
-
-        if((nodeType == Geometry.class) || (nodeType == LineString.class) || (nodeType == Point.class) || (nodeType == Polygon.class))
+        RenderTransformValueInterface value = RenderTransformValueFactory.getInstance().getValue(nodeType);
+        
+        if(value != null)
         {
-            fieldConfig = new FieldConfigGeometry(commonData, null);
-        }
-        else if(nodeType == Date.class)
-        {
-            fieldConfig = new FieldConfigDate(commonData);
-        }
-        else if(nodeType == ReferencedEnvelope.class)
-        {
-            fieldConfig = new FieldConfigBoundingBox(commonData);
-        }
-        else if((nodeType == String.class) ||
-                (nodeType == Object.class))
-        {
-            fieldConfig = new FieldConfigString(commonData, null);
-        }
-        else if(nodeType == Boolean.class)
-        {
-            fieldConfig = new FieldConfigBoolean(commonData);
-        }
-        else if(nodeType == Integer.class)
-        {
-            fieldConfig = new FieldConfigInteger(commonData);
-        }
-        else if(nodeType == Double.class)
-        {
-            fieldConfig = new FieldConfigDouble(commonData);
-        }
-        else if(nodeType == Number.class)
-        {
-            Class<?> filterType = TypeManager.getInstance().getDataType();
-            if((filterType == Float.class) || (filterType == Double.class))
-            {
-                fieldConfig = new FieldConfigDouble(commonData);
-            }
-            else
-            {
-                fieldConfig = new FieldConfigInteger(commonData);
-            }
-        }
-        else if(nodeType == Unit.class)
-        {
-            fieldConfig = new FieldConfigMapUnits(commonData);
-        }
-        else if(nodeType == StringBuilder.class)
-        {
-            FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(commonData);
-
-            List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
-            SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);
-
-            if(enumValueList != null)
-            {
-                for(String enumValue : enumValueList)
-                {
-                    symbolTypeConfig.addOption(enumValue, enumValue);
-                }
-            }
-            configList.add(symbolTypeConfig);
-            fieldConfigEnum.addConfig(configList);
-            fieldConfig = fieldConfigEnum;
+            String valueText = Localisation.getString(classType, valueTextLocalisation);
+            FieldIdEnum fieldId = FieldIdEnum.FUNCTION;
+            FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText, true);
+            
+            fieldConfig = value.getField(commonData);
         }
         else
         {

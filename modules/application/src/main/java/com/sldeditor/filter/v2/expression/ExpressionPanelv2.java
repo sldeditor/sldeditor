@@ -124,9 +124,6 @@ public class ExpressionPanelv2 extends JDialog
     /** The expression. */
     private Expression expression = null;
 
-    /** The enum value list. */
-    private List<String> enumValueList = null;
-
     /** The field type. */
     private Class<?> fieldType = null;
 
@@ -535,18 +532,6 @@ public class ExpressionPanelv2 extends JDialog
     public void populate(String expressionString) {
     }
 
-    /**
-     * Populate.
-     *
-     * @param expression the expression
-     * @param enumValueList the enum value list
-     */
-    @Override
-    public void populate(Expression expression, List<String> enumValueList) {
-        this.expression = expression;
-        this.enumValueList = enumValueList;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -579,7 +564,7 @@ public class ExpressionPanelv2 extends JDialog
             ExpressionNode expressionNode = (ExpressionNode) node;
             if (expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL) {
                 cardLayout.show(dataPanel, literalPanel.getClass().getName());
-                literalPanel.setSelectedNode(node, enumValueList);
+                literalPanel.setSelectedNode(node);
             } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY) {
                 cardLayout.show(dataPanel, propertyPanel.getClass().getName());
                 propertyPanel.setSelectedNode(node);
@@ -588,7 +573,7 @@ public class ExpressionPanelv2 extends JDialog
                 envVarPanel.setSelectedNode(node);
             } else {
                 cardLayout.show(dataPanel, expressionPanel.getClass().getName());
-                expressionPanel.setSelectedNode(node, enumValueList);
+                expressionPanel.setSelectedNode(node);
             }
         } else if (node instanceof FilterNode) {
             cardLayout.show(dataPanel, filterPanel.getClass().getName());
@@ -596,5 +581,13 @@ public class ExpressionPanelv2 extends JDialog
         } else {
             cardLayout.show(dataPanel, EMPTY_PANEL);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
+     */
+    @Override
+    public void populate(Expression storedExpression) {
+        this.expression = storedExpression;
     }
 }

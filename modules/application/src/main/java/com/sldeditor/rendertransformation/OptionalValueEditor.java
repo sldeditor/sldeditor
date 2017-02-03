@@ -19,6 +19,8 @@
 package com.sldeditor.rendertransformation;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.EventObject;
 
 import javax.swing.AbstractCellEditor;
@@ -46,6 +48,9 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
     /** The table model. */
     private FunctionTableModel tableModel = null;
 
+    /** The selected index. */
+    private int selectedIndex = -1;
+    
     /**
      * Instantiates a new value editor.
      *
@@ -55,6 +60,12 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
         this.tableModel = tableModel;
 
         checkBox.setHorizontalAlignment(JLabel.CENTER);
+        checkBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tableModel.setValueAt(checkBox.isSelected(), selectedIndex, FunctionTableModel.COL_OPTIONAL);
+            }});
     }
 
     /**
@@ -79,9 +90,6 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
      */
     @Override
     public boolean isCellEditable(EventObject evt) {
-        //        if (evt instanceof MouseEvent) {
-        //            return ((MouseEvent) evt).getClickCount() >= 2;
-        //        }
         return true;
     }
 
@@ -103,12 +111,14 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
 
         if(currentValue.optional)
         {
+            selectedIndex = row;
             currentEditor = checkBox;
             checkBox.setSelected(currentValue.included);
             return checkBox;
         }
         else
         {
+            selectedIndex = -1;
             currentEditor = null;
         }
 

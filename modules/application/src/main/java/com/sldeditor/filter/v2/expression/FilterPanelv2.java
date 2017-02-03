@@ -130,9 +130,6 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
     /** The vendor option list. */
     private List<VersionData> vendorOptionList = null;
 
-    /** The enum value list. */
-    private List<String> enumValueList = null;
-
     /**
      * Instantiates a new expression panel.
      *
@@ -205,7 +202,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
                     if(expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL)
                     {
                         cardLayout.show(dataPanel, literalPanel.getClass().getName());
-                        literalPanel.setSelectedNode(selectedNode, enumValueList);
+                        literalPanel.setSelectedNode(selectedNode);
                     }
                     else if(expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY)
                     {
@@ -220,7 +217,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
                     else
                     {
                         cardLayout.show(dataPanel, expressionPanel.getClass().getName());
-                        expressionPanel.setSelectedNode(selectedNode, enumValueList);
+                        expressionPanel.setSelectedNode(selectedNode);
                     }
                 }
                 else if(selectedNode instanceof FilterNode)

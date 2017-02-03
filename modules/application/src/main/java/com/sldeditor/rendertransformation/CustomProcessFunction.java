@@ -23,13 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.filter.FilterFactory;
 
+import com.sldeditor.rendertransformation.types.EnumValues;
+import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
 import com.vividsolutions.jts.geom.Geometry;
 
-import net.opengis.ows11.impl.ValueTypeImpl;
 import net.opengis.wps10.InputDescriptionType;
 import net.opengis.wps10.LiteralInputType;
 import net.opengis.wps10.ProcessDescriptionType;
@@ -54,9 +53,6 @@ public class CustomProcessFunction {
 
     /** The data type map. */
     private static Map<String, Class<?> > dataTypeMap = new HashMap<String, Class<?> >();
-
-    /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
      * Extract parameters.
@@ -138,50 +134,11 @@ public class CustomProcessFunction {
         LiteralInputType literal = inputDescription.getLiteralData();
         if(literal != null)
         {
-            if(literal.getDataType() != null)
-            {
-                value.dataType = literal.getDataType().getValue();
-                String defaultValue = literal.getDefaultValue();
-                if(defaultValue != null)
-                {
-                    if(value.dataType.compareTo("xs:int") == 0)
-                    {
-                        value.value = ff.literal(Integer.valueOf(defaultValue).intValue());
-                    }
-                    else if(value.dataType.compareTo("xs:boolean") == 0)
-                    {
-                        value.value = ff.literal(Boolean.valueOf(defaultValue).booleanValue());
-                    }
-                    else if(value.dataType.compareTo("xs:double") == 0)
-                    {
-                        value.value = ff.literal(Double.valueOf(defaultValue).doubleValue());
-                    }
-                    else if(value.dataType.compareTo("xs:float") == 0)
-                    {
-                        value.value = ff.literal(Float.valueOf(defaultValue).floatValue());
-                    }
-                    else if(value.dataType.compareTo("xs:long") == 0)
-                    {
-                        value.value = ff.literal(Long.valueOf(defaultValue).longValue());
-                    }
-                    else
-                    {
-                        value.type = String.class;
-                        value.value = ff.literal(defaultValue);
-                    }
-                }
-            }
-            else if(literal.getAllowedValues() != null)
+            RenderTransformValueFactory.getInstance().getValueCustomProcess(value, literal);
+            
+            if(value.objectValue instanceof EnumValues)
             {
                 value.dataType = ENUMERATION_NAME;
-                value.value = ff.literal(literal.getDefaultValue());
-                value.enumValueList = new ArrayList<String>();
-
-                for(Object valueTypeObj : literal.getAllowedValues().getValue())
-                {
-                    ValueTypeImpl valueType = (ValueTypeImpl) valueTypeObj;
-                    value.enumValueList.add(valueType.getValue());
-                }
             }
         }
         else

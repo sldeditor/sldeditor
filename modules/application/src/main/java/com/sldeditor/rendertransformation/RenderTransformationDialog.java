@@ -371,12 +371,12 @@ public class RenderTransformationDialog extends JDialog {
         {
             String title = String.format("%s - %s : %s", value.name, Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.type"), value.dataType);
             expressionPanel.configure(title, value.type, false);
-            expressionPanel.populate((Expression)value.value, value.enumValueList);
+            expressionPanel.populate(value.objectValue.getExpression());
             if(expressionPanel.showDialog())
             {
                 Expression expression = expressionPanel.getExpression();
 
-                functionParameterTableModel.setValueAt(expression, row, column);
+                functionParameterTableModel.update(expression, row);
             }
         }
     }

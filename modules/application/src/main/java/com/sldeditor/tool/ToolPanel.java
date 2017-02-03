@@ -18,6 +18,7 @@
  */
 package com.sldeditor.tool;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,8 @@ import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.localisation.Localisation;
 
 import java.awt.FlowLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
@@ -85,6 +88,7 @@ public class ToolPanel extends JPanel {
         this.toolMap = toolMap;
 
         JPanel optionsPanel = new JPanel();
+        optionsPanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         add(optionsPanel);
 
         JCheckBox chckbxRecursive = new JCheckBox(Localisation.getString(ToolPanel.class, "ToolPanel.recursive"));

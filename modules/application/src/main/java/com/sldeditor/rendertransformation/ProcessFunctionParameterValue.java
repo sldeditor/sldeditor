@@ -18,7 +18,7 @@
  */
 package com.sldeditor.rendertransformation;
 
-import java.util.List;
+import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 
 /**
  * Class that encapsulates process function parameter values.
@@ -27,7 +27,7 @@ public class ProcessFunctionParameterValue
 {
     
     /**
-     * Default constructor
+     * Default constructor.
      */
     public ProcessFunctionParameterValue()
     {
@@ -44,10 +44,9 @@ public class ProcessFunctionParameterValue
         type = valueToCopy.type;
         optional = valueToCopy.optional;
         included = valueToCopy.included;
-        value = valueToCopy.value;
         minOccurences = valueToCopy.minOccurences;
         maxOccurences = valueToCopy.maxOccurences;
-        enumValueList = valueToCopy.enumValueList;
+        objectValue = valueToCopy.objectValue;
     }
 
     /** The name. */
@@ -60,13 +59,10 @@ public class ProcessFunctionParameterValue
     public Class<?> type = null;
 
     /** The optional flag. */
-    public Boolean optional = false;
+    public boolean optional = false;
 
     /** The included flag. */
-    public Boolean included = false;
-
-    /** The value. */
-    public Object value = null;
+    public boolean included = false;
 
     /** The min occurrences. */
     public int minOccurences = 1;
@@ -74,6 +70,6 @@ public class ProcessFunctionParameterValue
     /** The max occurrences. */
     public int maxOccurences = 1;
 
-    /** The enum value list. */
-    public List<String> enumValueList = null;
+    /** The object value. */
+    public RenderTransformValueInterface objectValue = null;
 }

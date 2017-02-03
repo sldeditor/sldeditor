@@ -22,13 +22,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.process.function.ProcessFunction;
-import org.opengis.filter.FilterFactory;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.parameter.Parameter;
 
+import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
 import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 
 /**
@@ -38,8 +37,8 @@ import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
  */
 public class BuiltInProcessFunction {
 
-    /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+    /** The value factory. */
+    private RenderTransformValueFactory valueFactory = RenderTransformValueFactory.getInstance();
 
     /**
      * Extract parameters.
@@ -48,18 +47,16 @@ public class BuiltInProcessFunction {
      * @param selectedProcessFunctionData the selected process function data
      * @return the list
      */
-    public List<ProcessFunctionParameterValue> extractParameters(FunctionName functionName, 
+    public List<ProcessFunctionParameterValue> extractParameters(FunctionName functionName,
             ProcessFunction selectedProcessFunctionData) {
 
         List<ProcessFunctionParameterValue> valueList = new ArrayList<ProcessFunctionParameterValue>();
 
         // Populate the parameter definitions first.
-        // This ensures if there is parameter data missing we 
+        // This ensures if there is parameter data missing we
         // don't miss populating the parameter definition.
-        if(functionName != null)
-        {
-            for(Parameter<?> parameter : functionName.getArguments())
-            {
+        if (functionName != null) {
+            for (Parameter<?> parameter : functionName.getArguments()) {
                 ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
 
                 populateParameterDefinition(parameter, value);
@@ -69,23 +66,25 @@ public class BuiltInProcessFunction {
         }
 
         // Now populate any parameter values we have
-        if(selectedProcessFunctionData != null)
-        {
-            for(Expression parameter : selectedProcessFunctionData.getParameters())
-            {
-                List<Expression> parameterList = ParameterFunctionUtils.getExpressionList(parameter);
+        if (selectedProcessFunctionData != null) {
+            for (Expression parameter : selectedProcessFunctionData.getParameters()) {
+                List<Expression> parameterList = ParameterFunctionUtils
+                        .getExpressionList(parameter);
 
-                if((parameterList != null) && !parameterList.isEmpty())
-                {
+                if ((parameterList != null) && !parameterList.isEmpty()) {
                     Expression paramName = parameterList.get(0);
 
-                    ProcessFunctionParameterValue value = findParameterValue(valueList, paramName.toString());
+                    ProcessFunctionParameterValue value = findParameterValue(valueList,
+                            paramName.toString());
 
-                    if((parameterList.size() > 1) && (value != null))
-                    {
+                    if ((parameterList.size() > 1) && (value != null)) {
                         Expression paramValue = parameterList.get(1);
 
-                        value.value = paramValue;
+                        value.objectValue.setValue(paramValue);
+                        if(value.optional)
+                        {
+                            value.included = true;
+                        }
                     }
                 }
             }
@@ -101,12 +100,10 @@ public class BuiltInProcessFunction {
      * @param parameterName the parameter name
      * @return the process function parameter value
      */
-    private ProcessFunctionParameterValue findParameterValue(List<ProcessFunctionParameterValue> valueList,
-            String parameterName) {
-        for(ProcessFunctionParameterValue paramValue : valueList)
-        {
-            if(paramValue.name.compareTo(parameterName) == 0)
-            {
+    private ProcessFunctionParameterValue findParameterValue(
+            List<ProcessFunctionParameterValue> valueList, String parameterName) {
+        for (ProcessFunctionParameterValue paramValue : valueList) {
+            if (paramValue.name.compareTo(parameterName) == 0) {
                 return paramValue;
             }
         }
@@ -121,34 +118,21 @@ public class BuiltInProcessFunction {
      */
     private void populateParameterDefinition(Parameter<?> parameter,
             ProcessFunctionParameterValue value) {
-        if(parameter != null)
-        {
+        if (parameter != null) {
             value.name = parameter.getName();
-            if(parameter.getType().isEnum())
-            {
-                List<?> enumList = Arrays.asList(parameter.getType().getEnumConstants());
-                value.enumValueList = new ArrayList<String>();
+            value.type = parameter.getType();
+            if (parameter.getType().isEnum()) {
+                value.objectValue = valueFactory.getEnum(parameter.getType(), Arrays.asList(parameter.getType().getEnumConstants()));
 
-                for(Object enumValue : enumList)
-                {
-                    String stringValue = enumValue.toString();
-
-                    value.enumValueList.add(stringValue);
+                if (parameter.getDefaultValue() != null) {
+                    value.objectValue.setDefaultValue(parameter.getDefaultValue().toString());
                 }
-                value.type = StringBuilder.class;
-                if(parameter.getDefaultValue() != null)
-                {
-                    value.value = ff.literal(parameter.getDefaultValue().toString());
-                }
-            }
-            else
-            {
-                value.type = parameter.getType();
+            } else {
 
-                if(parameter.getDefaultValue() != null)
-                {
-                    Object defaultValue = parameter.getDefaultValue();
-                    value.value = ff.literal(defaultValue);
+                value.objectValue = valueFactory.getValue(value.type);
+
+                if (value.objectValue != null) {
+                    value.objectValue.setDefaultValue(parameter.getDefaultValue());
                 }
             }
             value.optional = !parameter.isRequired();
