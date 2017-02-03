@@ -79,7 +79,7 @@ public class ExpressionPanelv2Test {
         testObj.testShowExpressionDialog(null, null);
 
         Expression expectedExpression = ff.add(ff.property("field"), ff.literal(42));
-        testObj.populate(expectedExpression, null);
+        testObj.populate(expectedExpression);
         testObj.testShowExpressionDialog(Integer.class, expectedExpression);
 
         assertEquals(testObj.getExpression().toString(), testObj.getExpressionString());

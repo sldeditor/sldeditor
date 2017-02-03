@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.junit.Test;
-import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.rendertransformation.CustomProcessFunction;
 import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
@@ -64,17 +63,17 @@ public class CustomProcessFunctionTest {
         obj.extractParameters(null);
 
         ProcessFunctionParameterValue value = createProcessDescription("xs:int", "1234", 0, 1);
-        assertEquals("1234", ((Expression)value.value).toString());
+        assertEquals("1234", value.objectValue.getExpression().toString());
         value = createProcessDescription("xs:boolean", "true", 1, 1);
-        assertEquals("true", ((Expression)value.value).toString());
+        assertEquals("true", value.objectValue.getExpression().toString());
         value = createProcessDescription("xs:double", "3.141", 1, 2);
-        assertTrue(Math.abs(Double.valueOf("3.141") - Double.valueOf(((Expression)value.value).toString())) < 0.001);
+        assertTrue(Math.abs(Double.valueOf("3.141") - Double.valueOf(value.objectValue.getExpression().toString())) < 0.001);
         value = createProcessDescription("xs:float", "1.234", 0, 1);
-        assertTrue(Math.abs(Float.valueOf("1.234") - Float.valueOf(((Expression)value.value).toString())) < 0.001);
+        assertTrue(Math.abs(Float.valueOf("1.234") - Float.valueOf(value.objectValue.getExpression().toString())) < 0.001);
         value = createProcessDescription("xs:long", "9876", 1, 1);
-        assertEquals("9876", ((Expression)value.value).toString());
+        assertEquals("9876", value.objectValue.getExpression().toString());
         value = createProcessDescription("xs:xxx", "string", 1, 1);
-        assertEquals("string", ((Expression)value.value).toString());
+        assertEquals("string", value.objectValue.getExpression().toString());
     }
 
     /**
@@ -171,7 +170,6 @@ public class CustomProcessFunctionTest {
         ProcessFunctionParameterValue value = valueList.get(0);
         assertEquals(1, value.minOccurences);
         assertEquals(1, value.maxOccurences);
-        assertEquals(3, value.enumValueList.size());
     }
 
     /**

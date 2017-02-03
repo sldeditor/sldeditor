@@ -333,7 +333,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         switch(geometryType)
         {
         case RASTER:
-            mapContent.addLayer(new GridReaderLayer(gridCoverage, (org.geotools.styling.Style) style));
+        {
+            GridReaderLayer gridLayer = new GridReaderLayer(gridCoverage, (org.geotools.styling.Style) style);
+            mapContent.addLayer(gridLayer);
+            mapContent.getViewport().setBounds(gridLayer.getBounds());
+            mapPane.setDisplayArea(gridCoverage.getOriginalEnvelope());
+        }
             break;
         case POINT:
         case LINE:
@@ -356,6 +361,11 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             if(tmpFeatureList != null)
             {
                 mapContent.addLayer(new FeatureLayer(tmpFeatureList, (org.geotools.styling.Style) style));
+                try {
+                    mapPane.setDisplayArea(tmpFeatureList.getBounds());
+                } catch (IOException e) {
+                    ConsoleManager.getInstance().exception(this, e);
+                }
             }
         }
         break;

@@ -60,6 +60,7 @@ import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -124,9 +125,6 @@ public class ExpressionPanelv2 extends JDialog
     /** The expression. */
     private Expression expression = null;
 
-    /** The enum value list. */
-    private List<String> enumValueList = null;
-
     /** The field type. */
     private Class<?> fieldType = null;
 
@@ -138,6 +136,8 @@ public class ExpressionPanelv2 extends JDialog
 
     /** The vendor option list. */
     private List<VersionData> vendorOptionList = null;
+
+    private JButton btnOk;
 
     /**
      * Instantiates a new expression panel.
@@ -230,7 +230,8 @@ public class ExpressionPanelv2 extends JDialog
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnOk = new JButton("Ok");
+        btnOk = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.ok"));
+        btnOk.setEnabled(false);
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = true;
@@ -240,7 +241,8 @@ public class ExpressionPanelv2 extends JDialog
         });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton("Cancel");
+        JButton btnCancel = new JButton(
+                Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = false;
@@ -279,6 +281,12 @@ public class ExpressionPanelv2 extends JDialog
             if (expression != null) {
                 populateExpression(expressionNode, expression);
             }
+
+            // Auto select the first item
+            if(tree.getRowCount() > 0)
+            {
+                tree.setSelectionRow(0);
+            }
         }
     }
 
@@ -289,12 +297,19 @@ public class ExpressionPanelv2 extends JDialog
      * @param expression the expression
      */
     private void populateExpression(ExpressionNode node, Expression expression) {
+        btnOk.setEnabled(false);
         if (node != null) {
             node.setExpression(expression);
 
             model.reload(); // This notifies the listeners and changes the GUI
 
             displayResult();
+
+            // Auto select the first entry
+            if(tree.getRowCount() > 0)
+            {
+                tree.setSelectionRow(0);
+            }
         }
     }
 
@@ -303,8 +318,9 @@ public class ExpressionPanelv2 extends JDialog
      */
     @Override
     public void dataApplied() {
-        DefaultMutableTreeNode node;
+        btnOk.setEnabled(true);
         if (selectedNode != null) {
+            DefaultMutableTreeNode node = null;
             if (selectedNode.isLeaf()) {
                 node = (DefaultMutableTreeNode) selectedNode.getParent();
                 if (node == null) {
@@ -535,18 +551,6 @@ public class ExpressionPanelv2 extends JDialog
     public void populate(String expressionString) {
     }
 
-    /**
-     * Populate.
-     *
-     * @param expression the expression
-     * @param enumValueList the enum value list
-     */
-    @Override
-    public void populate(Expression expression, List<String> enumValueList) {
-        this.expression = expression;
-        this.enumValueList = enumValueList;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -579,7 +583,7 @@ public class ExpressionPanelv2 extends JDialog
             ExpressionNode expressionNode = (ExpressionNode) node;
             if (expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL) {
                 cardLayout.show(dataPanel, literalPanel.getClass().getName());
-                literalPanel.setSelectedNode(node, enumValueList);
+                literalPanel.setSelectedNode(node);
             } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY) {
                 cardLayout.show(dataPanel, propertyPanel.getClass().getName());
                 propertyPanel.setSelectedNode(node);
@@ -588,7 +592,7 @@ public class ExpressionPanelv2 extends JDialog
                 envVarPanel.setSelectedNode(node);
             } else {
                 cardLayout.show(dataPanel, expressionPanel.getClass().getName());
-                expressionPanel.setSelectedNode(node, enumValueList);
+                expressionPanel.setSelectedNode(node);
             }
         } else if (node instanceof FilterNode) {
             cardLayout.show(dataPanel, filterPanel.getClass().getName());
@@ -596,5 +600,15 @@ public class ExpressionPanelv2 extends JDialog
         } else {
             cardLayout.show(dataPanel, EMPTY_PANEL);
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
+     */
+    @Override
+    public void populate(Expression storedExpression) {
+        this.expression = storedExpression;
     }
 }

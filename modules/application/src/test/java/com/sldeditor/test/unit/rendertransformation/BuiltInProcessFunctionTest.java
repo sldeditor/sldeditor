@@ -20,7 +20,6 @@
 package com.sldeditor.test.unit.rendertransformation;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -47,7 +46,8 @@ import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
 
 /**
  * Unit test for BuiltInProcessFunction class.
- * <p>{@link com.sldeditor.rendertransformation.BuiltInProcessFunction}
+ * <p>
+ * {@link com.sldeditor.rendertransformation.BuiltInProcessFunction}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -55,7 +55,8 @@ import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
 public class BuiltInProcessFunctionTest {
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.BuiltInProcessFunction#extractParameters(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
+     * Test method for
+     * {@link com.sldeditor.rendertransformation.BuiltInProcessFunction#extractParameters(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
      */
     @Test
     public void testExtractParametersFunctionName() {
@@ -68,74 +69,48 @@ public class BuiltInProcessFunctionTest {
         ProcessFunctionFactory processFunctionFactory = new ProcessFunctionFactory();
         List<FunctionName> functionNameList = processFunctionFactory.getFunctionNames();
 
-        for(FunctionName functionName : functionNameList)
-        {
+        for (FunctionName functionName : functionNameList) {
             valueList = obj.extractParameters(functionName, null);
 
             assertEquals(functionName.getArguments().size(), valueList.size());
-            for(int index = 0; index < functionName.getArguments().size(); index ++)
-            {
+            for (int index = 0; index < functionName.getArguments().size(); index++) {
                 Parameter<?> expectedParameter = functionName.getArguments().get(index);
 
                 ProcessFunctionParameterValue actualParameter = valueList.get(index);
 
                 assertTrue(functionName.getName(), expectedParameter.getName().compareTo(actualParameter.name) == 0);
-                if(expectedParameter.getType().isEnum())
-                {
-                    assertEquals(functionName.getName(), StringBuilder.class, actualParameter.type);
-                }
-                else
-                {
-                    assertEquals(functionName.getName(), expectedParameter.getType(), actualParameter.type);
-                    if(expectedParameter.getDefaultValue() != null)
-                    {
-                        assertNotNull(functionName.getName(), actualParameter.value);
-                    }
-                }
+                assertEquals(functionName.getName(), expectedParameter.getType(), actualParameter.type);
                 assertTrue(functionName.getName(), expectedParameter.getType().getSimpleName().compareTo(actualParameter.dataType) == 0);
                 assertEquals(functionName.getName(), !expectedParameter.isRequired(), actualParameter.optional);
                 assertEquals(functionName.getName(), expectedParameter.getMinOccurs(), actualParameter.minOccurences);
                 assertEquals(functionName.getName(), expectedParameter.getMaxOccurs(), actualParameter.maxOccurences);
             }
         }
+        System.out.println(String.format("Tested %d functions", functionNameList.size()));
     }
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.BuiltInProcessFunction#extractParameters(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
+     * Test method for
+     * {@link com.sldeditor.rendertransformation.BuiltInProcessFunction#extractParameters(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
      */
     @Test
     public void testExtractParametersProcessFunction() {
         BuiltInProcessFunction obj = new BuiltInProcessFunction();
-        String testData = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                "<StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
-                "<ogc:Function name=\"vec:PointStacker\">" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>data</ogc:Literal>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>cellSize</ogc:Literal>" +
-                "  <ogc:Literal>30</ogc:Literal>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>outputBBOX</ogc:Literal>" +
-                "  <ogc:Function name=\"env\">" +
-                "        <ogc:Literal>wms_bbox</ogc:Literal>" +
-                "  </ogc:Function>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>outputWidth</ogc:Literal>" +
-                "  <ogc:Function name=\"env\">" +
-                "        <ogc:Literal>wms_width</ogc:Literal>" +
-                "  </ogc:Function>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                " <ogc:Literal>outputHeight</ogc:Literal>" +
-                "  <ogc:Function name=\"env\">" +
-                "        <ogc:Literal>wms_height</ogc:Literal>" +
-                "  </ogc:Function>" +
-                " </ogc:Function>" +
-                "</ogc:Function>" +
-                "</StyledLayerDescriptor>";
+        String testData = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                + "<StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                + "<ogc:Function name=\"vec:PointStacker\">" + "<ogc:Function name=\"parameter\">"
+                + "  <ogc:Literal>data</ogc:Literal>" + "</ogc:Function>"
+                + "<ogc:Function name=\"parameter\">" + "  <ogc:Literal>cellSize</ogc:Literal>"
+                + "  <ogc:Literal>30</ogc:Literal>" + "</ogc:Function>"
+                + "<ogc:Function name=\"parameter\">" + "  <ogc:Literal>outputBBOX</ogc:Literal>"
+                + "  <ogc:Function name=\"env\">" + "        <ogc:Literal>wms_bbox</ogc:Literal>"
+                + "  </ogc:Function>" + "</ogc:Function>" + "<ogc:Function name=\"parameter\">"
+                + "  <ogc:Literal>outputWidth</ogc:Literal>" + "  <ogc:Function name=\"env\">"
+                + "        <ogc:Literal>wms_width</ogc:Literal>" + "  </ogc:Function>"
+                + "</ogc:Function>" + "<ogc:Function name=\"parameter\">"
+                + " <ogc:Literal>outputHeight</ogc:Literal>" + "  <ogc:Function name=\"env\">"
+                + "        <ogc:Literal>wms_height</ogc:Literal>" + "  </ogc:Function>"
+                + " </ogc:Function>" + "</ogc:Function>" + "</StyledLayerDescriptor>";
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
         ProcessFunction tx = null;
@@ -158,10 +133,8 @@ public class BuiltInProcessFunctionTest {
         assertTrue(valueList.isEmpty());
 
         ProcessFunctionFactory processFunctionFactory = new ProcessFunctionFactory();
-        for(FunctionName functionName : processFunctionFactory.getFunctionNames())
-        {
-            if(functionName.getName().compareTo("PointStacker") == 0)
-            {
+        for (FunctionName functionName : processFunctionFactory.getFunctionNames()) {
+            if (functionName.getName().compareTo("PointStacker") == 0) {
                 valueList = obj.extractParameters(functionName, tx);
                 assertEquals(functionName.getArguments().size(), valueList.size());
             }

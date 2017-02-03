@@ -19,11 +19,16 @@
 package com.sldeditor.tool;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
@@ -32,12 +37,6 @@ import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.localisation.Localisation;
-
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * Panel that contains all application tools.

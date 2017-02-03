@@ -79,7 +79,7 @@ public class SLDUtils {
         try {
             sld = styleReader.parseSLD();
         } catch (RuntimeException e) {
-            String errorMessage = String.format("SLD Praser error : %s",
+            String errorMessage = String.format("SLD Parser error : %s",
                     sldData.getStyle().toString());
             ConsoleManager.getInstance().error(SLDUtils.class, errorMessage);
             ConsoleManager.getInstance().error(SLDUtils.class, e.getMessage());

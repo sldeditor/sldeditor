@@ -91,7 +91,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
                         expectedDataType,
                         SelectedSymbol.getInstance().isRasterSymbol());
 
-                expressionPanel.populate(storedExpression, null);
+                expressionPanel.populate(storedExpression);
 
                 if(expressionPanel.showDialog())
                 {

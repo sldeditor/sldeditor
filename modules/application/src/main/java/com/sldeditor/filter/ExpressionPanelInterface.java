@@ -18,8 +18,6 @@
  */
 package com.sldeditor.filter;
 
-import java.util.List;
-
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -46,21 +44,6 @@ public interface ExpressionPanelInterface {
     boolean showDialog();
 
     /**
-     * Populate using string.
-     *
-     * @param expressionString the expression string
-     */
-    public void populate(String expressionString);
-
-    /**
-     * Populate dialog with an expression.
-     *
-     * @param expression the expression
-     * @param enumValueList the enum value list
-     */
-    public void populate(Expression expression, List<String> enumValueList);
-
-    /**
      * Gets the expression string.
      *
      * @return the expression string
@@ -73,4 +56,18 @@ public interface ExpressionPanelInterface {
      * @return the expression
      */
     public Expression getExpression();
+
+    /**
+     * Populate using string.
+     *
+     * @param expressionString the expression string
+     */
+    public void populate(String expressionString);
+
+    /**
+     * Populate using expression
+     *
+     * @param storedExpression the stored expression
+     */
+    public void populate(Expression storedExpression);
 }

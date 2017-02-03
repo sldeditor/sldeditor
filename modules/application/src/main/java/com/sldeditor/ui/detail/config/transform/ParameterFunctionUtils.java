@@ -37,6 +37,9 @@ import com.sldeditor.common.console.ConsoleManager;
  */
 public class ParameterFunctionUtils {
 
+    /** The Constant PARAMETER_NOT_SET. */
+    private static final String PARAMETER_NOT_SET = ":<not set>";
+
     /**
      * Gets the expression list.
      * 
@@ -104,13 +107,21 @@ public class ParameterFunctionUtils {
                     if(subParameterList.size() == 1)
                     {
                         sb.append(subParameterList.get(0).toString());
-                        sb.append(":<not set>");
+                        sb.append(PARAMETER_NOT_SET);
                     }
                     else if(subParameterList.size() == 2)
                     {
                         sb.append(subParameterList.get(0).toString());
                         sb.append(":");
-                        sb.append(subParameterList.get(1).toString());
+                        Expression expression2 = subParameterList.get(1);
+                        if(expression2 != null)
+                        {
+                            sb.append(expression2.toString());
+                        }
+                        else
+                        {
+                            sb.append(PARAMETER_NOT_SET);
+                        }
                     }
                 }
 

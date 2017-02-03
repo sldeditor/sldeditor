@@ -38,9 +38,13 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
     /** The table model. */
     private FunctionTableModel tableModel = null;
 
+    /** The label to show when no checkbox. */
+    private JLabel label = new JLabel();
+
     /**
      * Instantiates a new check box renderer.
-     * @param tableModel 
+     *
+     * @param tableModel the table model
      */
     CheckBoxRenderer(FunctionTableModel tableModel) {
         this.tableModel = tableModel;
@@ -58,24 +62,32 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
      * @param column the column
      * @return the table cell renderer component
      */
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
 
         ProcessFunctionParameterValue valueObj = tableModel.getValue(row);
 
-        if(valueObj.optional)
-        {
+        if (valueObj.optional) {
             if (isSelected) {
                 setForeground(table.getSelectionForeground());
-                //super.setBackground(table.getSelectionBackground());
                 setBackground(table.getSelectionBackground());
             } else {
                 setForeground(table.getForeground());
                 setBackground(table.getBackground());
             }
+
             setSelected((value != null && ((Boolean) value).booleanValue()));
+
             return this;
         }
-        return null;
+
+        if (isSelected) {
+            label.setForeground(table.getSelectionForeground());
+            label.setBackground(table.getSelectionBackground());
+        } else {
+            label.setForeground(table.getForeground());
+            label.setBackground(table.getBackground());
+        }
+        return label;
     }
 }

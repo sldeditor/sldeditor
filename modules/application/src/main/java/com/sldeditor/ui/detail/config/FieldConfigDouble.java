@@ -231,6 +231,10 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
         {
             newValue = (Double) objValue;
         }
+        else if(objValue instanceof Float)
+        {
+            newValue = ((Float) objValue).doubleValue();
+        }
         else if(objValue instanceof String)
         {
             newValue = Double.valueOf((String)objValue);

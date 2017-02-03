@@ -23,7 +23,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -125,9 +124,6 @@ public class ExpressionSubPanel extends JPanel {
 
     /** The environment variable panel. */
     private EnvironmentVariableField envVarField = null;
-
-    /** The enum value list. */
-    private List<String> enumValueList = null;
 
     /**
      * Instantiates a new expression panel.
@@ -307,7 +303,7 @@ public class ExpressionSubPanel extends JPanel {
             return;
         }
 
-        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value", node.getType(), enumValueList);
+        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value", node.getType());
 
         if(fieldConfig != null)
         {
@@ -419,11 +415,9 @@ public class ExpressionSubPanel extends JPanel {
      * Sets the selected node.
      *
      * @param node the new selected node
-     * @param enumValueList 
      */
-    public void setSelectedNode(DefaultMutableTreeNode node, List<String> enumValueList) {
+    public void setSelectedNode(DefaultMutableTreeNode node) {
         selectedNode = (ExpressionNode) node;
-        this.enumValueList = enumValueList;
 
         displayExpression(selectedNode);
 
