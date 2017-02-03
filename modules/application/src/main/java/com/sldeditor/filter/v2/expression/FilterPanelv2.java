@@ -74,7 +74,14 @@ import com.sldeditor.filter.v2.function.FilterManager;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface, DataSourceUpdatedInterface, FilterPanelInterface {
+public class FilterPanelv2 extends JDialog
+        implements ExpressionFilterInterface, DataSourceUpdatedInterface, FilterPanelInterface {
+
+    /**
+     * 
+     */
+    private static final String INVALID_RESULT_STRING = Localisation
+            .getString(ExpressionPanelv2.class, "FilterPanelv2.invalidResult");
 
     /** The Constant EMPTY_PANEL. */
     private static final String EMPTY_PANEL = "EMPTY";
@@ -148,8 +155,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         createUI();
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-        if(dataSource != null)
-        {
+        if (dataSource != null) {
             dataSource.addListener(this);
         }
         this.pack();
@@ -194,41 +200,29 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         tree.addTreeSelectionListener(new TreeSelectionListener() {
 
             public void valueChanged(TreeSelectionEvent e) {
-                selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+                selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
                 CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
 
-                if(selectedNode instanceof ExpressionNode)
-                {
+                if (selectedNode instanceof ExpressionNode) {
                     ExpressionNode expressionNode = (ExpressionNode) selectedNode;
-                    if(expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL)
-                    {
+                    if (expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL) {
                         cardLayout.show(dataPanel, literalPanel.getClass().getName());
                         literalPanel.setSelectedNode(selectedNode);
-                    }
-                    else if(expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY)
-                    {
+                    } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY) {
                         cardLayout.show(dataPanel, propertyPanel.getClass().getName());
                         propertyPanel.setSelectedNode(selectedNode);
-                    }
-                    else if(expressionNode.getExpressionType() == ExpressionTypeEnum.ENVVAR)
-                    {
+                    } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.ENVVAR) {
                         cardLayout.show(dataPanel, envVarPanel.getClass().getName());
                         envVarPanel.setSelectedNode(selectedNode);
-                    }
-                    else
-                    {
+                    } else {
                         cardLayout.show(dataPanel, expressionPanel.getClass().getName());
                         expressionPanel.setSelectedNode(selectedNode);
                     }
-                }
-                else if(selectedNode instanceof FilterNode)
-                {
+                } else if (selectedNode instanceof FilterNode) {
                     cardLayout.show(dataPanel, filterPanel.getClass().getName());
                     filterPanel.setSelectedNode(selectedNode);
-                }
-                else
-                {
+                } else {
                     cardLayout.show(dataPanel, EMPTY_PANEL);
                 }
             }
@@ -264,7 +258,8 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
+        JButton btnCancel = new JButton(
+                Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 closeDialog(false);
@@ -295,15 +290,13 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
 
         btnOk.setEnabled(false);
         rootNode = new FilterNode();
-        if(model != null)
-        {
+        if (model != null) {
             model.setRoot(rootNode);
             FilterNode filterNode = (FilterNode) rootNode;
             filterNode.setType(type);
 
-            if(filter != null)
-            {
-                populateFilter((FilterNode)rootNode, filter);
+            if (filter != null) {
+                populateFilter((FilterNode) rootNode, filter);
             }
         }
 
@@ -320,8 +313,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
     private void populateFilter(FilterNode node, Filter filter) {
         FilterConfigInterface filterConfig = null;
 
-        if(filter != null)
-        {
+        if (filter != null) {
             filterConfig = FilterManager.getInstance().getFilterConfig(filter);
         }
         node.setFilter(filter, filterConfig);
@@ -335,20 +327,15 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      * Data applied.
      */
     @Override
-    public void dataApplied()
-    {
+    public void dataApplied() {
         btnOk.setEnabled(true);
         DefaultMutableTreeNode node;
-        if(selectedNode.isLeaf())
-        {
+        if (selectedNode.isLeaf()) {
             node = (DefaultMutableTreeNode) selectedNode.getParent();
-            if(node == null)
-            {
+            if (node == null) {
                 node = selectedNode;
             }
-        }
-        else
-        {
+        } else {
             node = selectedNode;
         }
         TreeNode[] tmpNode = node.getPath();
@@ -357,28 +344,29 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
 
         tree.expandPath(new TreePath(tmpNode));
 
-        displayResult();
+        boolean valid = displayResult();
+        btnOk.setEnabled(valid);
     }
 
     /**
      * Display result.
+     *
+     * @return true, if filter is valid
      */
-    private void displayResult() {
-        String result = Localisation.getString(ExpressionPanelv2.class, "FilterPanelv2.invalidResult");
-        if(rootNode instanceof FilterNode)
-        {
-            overallFilter = addFilter((FilterNode)rootNode);
+    private boolean displayResult() {
+        String result = INVALID_RESULT_STRING;
+        if (rootNode instanceof FilterNode) {
+            overallFilter = addFilter((FilterNode) rootNode);
 
-            try
-            {
-                result = CQL.toCQL( overallFilter );
-            }
-            catch(Exception e)
-            {
+            try {
+                result = CQL.toCQL(overallFilter);
+            } catch (Exception e) {
             }
         }
 
         textArea.setText(result);
+
+        return (result.compareTo(INVALID_RESULT_STRING) != 0);
     }
 
     /**
@@ -392,8 +380,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
 
         FilterConfigInterface filterConfig = node.getFilterConfig();
 
-        if(filter instanceof LogicFilterImpl)
-        {
+        if (filter instanceof LogicFilterImpl) {
             List<Filter> filterList = new ArrayList<Filter>();
 
             createFilterList(node, filterList);
@@ -403,47 +390,27 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
 
         List<Expression> parameterFilter = new ArrayList<Expression>();
 
-        if(filter instanceof FidFilterImpl)
-        {
+        if (filter instanceof FidFilterImpl) {
             createExpressionParameterList(node, 1, parameterFilter);
-        }
-        else if(filter instanceof BinaryTemporalOperator)
-        {
+        } else if (filter instanceof BinaryTemporalOperator) {
             createExpressionParameterList(node, 2, parameterFilter);
-        }
-        else if(filter instanceof PropertyIsBetween)
-        {
+        } else if (filter instanceof PropertyIsBetween) {
             createExpressionParameterList(node, 3, parameterFilter);
-        }
-        else if(filter instanceof PropertyIsNull)
-        {
+        } else if (filter instanceof PropertyIsNull) {
             createExpressionParameterList(node, 1, parameterFilter);
-        }
-        else if(filter instanceof PropertyIsLike)
-        {
+        } else if (filter instanceof PropertyIsLike) {
             createExpressionParameterList(node, 6, parameterFilter);
-        }
-        else if(filter instanceof BinarySpatialOperator)
-        {
+        } else if (filter instanceof BinarySpatialOperator) {
             createExpressionParameterList(node, 2, parameterFilter);
-        }
-        else if(filter instanceof BinaryComparisonAbstract)
-        {
-            if(filter instanceof Not)
-            {
+        } else if (filter instanceof BinaryComparisonAbstract) {
+            if (filter instanceof Not) {
                 createExpressionParameterList(node, 1, parameterFilter);
-            }
-            else if(filter instanceof PropertyIsGreaterThan)
-            {
+            } else if (filter instanceof PropertyIsGreaterThan) {
                 createExpressionParameterList(node, 2, parameterFilter);
-            }
-            else
-            {
+            } else {
                 createExpressionParameterList(node, 3, parameterFilter);
             }
-        }
-        else
-        {
+        } else {
             return filter;
         }
 
@@ -457,11 +424,10 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      * @param noOfExpressions the no of expressions
      * @param parameterFilter the parameter filter
      */
-    private void createExpressionParameterList(FilterNode node, int noOfExpressions, List<Expression> parameterFilter) {
-        if(noOfExpressions <= node.getChildCount())
-        {
-            for(int index = 0; index < noOfExpressions; index ++)
-            {
+    private void createExpressionParameterList(FilterNode node, int noOfExpressions,
+            List<Expression> parameterFilter) {
+        if (noOfExpressions <= node.getChildCount()) {
+            for (int index = 0; index < noOfExpressions; index++) {
                 ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(index);
 
                 Expression expression = addExpression(expressionNode);
@@ -478,8 +444,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      * @param filterList the filter list
      */
     private void createFilterList(FilterNode node, List<Filter> filterList) {
-        for(int index = 0; index < node.getChildCount(); index ++)
-        {
+        for (int index = 0; index < node.getChildCount(); index++) {
             FilterNode filterNode = (FilterNode) node.getChildAt(index);
 
             Filter filter = addFilter(filterNode);
@@ -497,21 +462,15 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
     private Expression addExpression(ExpressionNode node) {
         Expression expression = node.getExpression();
 
-        if(expression instanceof LiteralExpressionImpl)
-        {
+        if (expression instanceof LiteralExpressionImpl) {
             return expression;
-        }
-        else if(expression instanceof AttributeExpressionImpl)
-        {
+        } else if (expression instanceof AttributeExpressionImpl) {
             return expression;
-        }
-        else if(expression instanceof FunctionExpressionImpl)
-        {
+        } else if (expression instanceof FunctionExpressionImpl) {
             FunctionExpressionImpl functionExpression = (FunctionExpressionImpl) expression;
 
             List<Expression> parameterlist = new ArrayList<Expression>();
-            for(int childIndex = 0; childIndex < node.getChildCount(); childIndex ++)
-            {
+            for (int childIndex = 0; childIndex < node.getChildCount(); childIndex++) {
                 ExpressionNode childNode = (ExpressionNode) node.getChildAt(childIndex);
 
                 parameterlist.add(addExpression(childNode));
@@ -520,9 +479,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
             functionExpression.setParameters(parameterlist);
 
             return functionExpression;
-        }
-        else if(expression instanceof MathExpressionImpl)
-        {
+        } else if (expression instanceof MathExpressionImpl) {
             MathExpressionImpl mathExpression = (MathExpressionImpl) expression;
             ExpressionNode leftChildNode = (ExpressionNode) node.getChildAt(0);
             mathExpression.setExpression1(addExpression(leftChildNode));
@@ -590,8 +547,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         okButtonPressed = okButton;
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-        if(dataSource != null)
-        {
+        if (dataSource != null) {
             dataSource.removeListener(this);
         }
 
@@ -608,7 +564,9 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         return overallFilter;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.filter.v2.expression.ExpressionFilterInterface#getVendorOptionList()
      */
     @Override
@@ -616,7 +574,9 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         return vendorOptionList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
