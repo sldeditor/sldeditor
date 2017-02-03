@@ -47,9 +47,6 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
     /** The value. */
     private String value = null;
 
-    /** The default value. */
-    private String defaultValue = null;
-
     /*
      * (non-Javadoc)
      * 
@@ -67,18 +64,7 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (String) defaultValue;
         this.value = (String) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        return value;
     }
 
     /* (non-Javadoc)
@@ -118,7 +104,11 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
         this.expression = null;
 
         if (aValue instanceof LiteralExpressionImpl) {
-            value = ((Expression) aValue).toString();
+            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+            if(literal.getValue() != null)
+            {
+                value = literal.toString();
+            }
         }
         else if((aValue instanceof AttributeExpressionImpl) ||
                 (aValue instanceof FunctionExpressionImpl) ||
@@ -149,13 +139,5 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
     @Override
     public RenderTransformValueInterface createInstance() {
         return new CoordinateReferenceSystemValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

@@ -43,9 +43,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 @SuppressWarnings("rawtypes")
 public class JAIToolsRangeValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private Range defaultValue = null;
-
     /** The value. */
     private Range value = null;
 
@@ -62,21 +59,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Range) defaultValue;
         this.value = (Range) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -143,13 +126,5 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
     @Override
     public RenderTransformValueInterface createInstance() {
         return new JAIToolsRangeValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

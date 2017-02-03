@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
+import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
@@ -38,9 +39,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  * @author Robert Ward (SCISYS)
  */
 public class FloatValues extends BaseValue implements RenderTransformValueInterface {
-
-    /** The default value. */
-    private Float defaultValue = null;
 
     /** The value. */
     private Float value = null;
@@ -58,21 +56,7 @@ public class FloatValues extends BaseValue implements RenderTransformValueInterf
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Float) defaultValue;
         this.value = (Float) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -114,6 +98,11 @@ public class FloatValues extends BaseValue implements RenderTransformValueInterf
         else if (aValue instanceof Double) {
             this.value = ((Double) aValue).floatValue();
         }
+        else if(aValue instanceof LiteralExpressionImpl)
+        {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+            value = literal.evaluate(value, Float.class);
+        }
         else if((aValue instanceof AttributeExpressionImpl) ||
                 (aValue instanceof FunctionExpressionImpl) ||
                 (aValue instanceof MathExpressionImpl))
@@ -144,13 +133,5 @@ public class FloatValues extends BaseValue implements RenderTransformValueInterf
     @Override
     public RenderTransformValueInterface createInstance() {
         return new FloatValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

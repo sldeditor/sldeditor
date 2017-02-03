@@ -42,9 +42,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  */
 public class ReferencedEnvelopeValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private Envelope defaultValue = null;
-
     /** The value. */
     private Envelope value = null;
 
@@ -61,21 +58,7 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Envelope) defaultValue;
         this.value = (Envelope) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -141,13 +124,5 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
     @Override
     public RenderTransformValueInterface createInstance() {
         return new ReferencedEnvelopeValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

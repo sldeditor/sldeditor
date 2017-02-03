@@ -41,9 +41,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  */
 public class StyleValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private Style defaultValue = null;
-
     /** The value. */
     private Style value = null;
 
@@ -60,21 +57,7 @@ public class StyleValues extends BaseValue implements RenderTransformValueInterf
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Style) defaultValue;
         this.value = (Style) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -141,13 +124,5 @@ public class StyleValues extends BaseValue implements RenderTransformValueInterf
     @Override
     public RenderTransformValueInterface createInstance() {
         return new StyleValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

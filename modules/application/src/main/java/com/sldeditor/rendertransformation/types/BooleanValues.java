@@ -40,9 +40,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  */
 public class BooleanValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private Boolean defaultValue = null;
-
     /** The value. */
     private Boolean value = null;
 
@@ -59,21 +56,7 @@ public class BooleanValues extends BaseValue implements RenderTransformValueInte
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Boolean) defaultValue;
         this.value = (Boolean) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -111,7 +94,8 @@ public class BooleanValues extends BaseValue implements RenderTransformValueInte
         if (aValue instanceof Boolean) {
             this.value = (Boolean) aValue;
         } else if (aValue instanceof LiteralExpressionImpl) {
-            this.value = Boolean.valueOf(((Expression)aValue).toString());
+            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+            value = literal.evaluate(value, Boolean.class);
         }
         else if((aValue instanceof AttributeExpressionImpl) ||
                 (aValue instanceof FunctionExpressionImpl) ||
@@ -149,15 +133,5 @@ public class BooleanValues extends BaseValue implements RenderTransformValueInte
     @Override
     public RenderTransformValueInterface createInstance() {
         return new BooleanValues();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

@@ -48,20 +48,6 @@ public interface RenderTransformValueInterface {
     void setDefaultValue(Object defaultValue);
 
     /**
-     * Gets the default value.
-     *
-     * @return the default value
-     */
-    Object getDefaultValue();
-
-    /**
-     * Gets the string value.
-     *
-     * @return the string value
-     */
-    String getStringValue();
-
-    /**
      * Gets the expression.
      *
      * @return the expression

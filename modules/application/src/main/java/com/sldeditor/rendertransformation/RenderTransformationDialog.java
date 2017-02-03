@@ -386,7 +386,7 @@ public class RenderTransformationDialog extends JDialog {
      *
      * @param selectedValue the selected value
      */
-    private void displayFunction(String selectedValue) {
+    protected void displayFunction(String selectedValue) {
         boolean builtInFunctionFound = displayBuiltInProcessFunction(selectedValue);
 
         if(!builtInFunctionFound)
@@ -576,14 +576,23 @@ public class RenderTransformationDialog extends JDialog {
      */
     public boolean showDialog(ProcessFunction existingProcessFunction)
     {
+        internal_showDialog(existingProcessFunction);
+        setVisible(true);
+
+        return okButtonPressed;
+    }
+
+    /**
+     * Interal show dialog.
+     *
+     * @param existingProcessFunction the existing process function
+     */
+    protected void internal_showDialog(ProcessFunction existingProcessFunction) {
         this.existingProcessFunction = existingProcessFunction;
         if(existingProcessFunction != null)
         {
             displayFunction(existingProcessFunction.getName());
         }
-        setVisible(true);
-
-        return okButtonPressed;
     }
 
     /**

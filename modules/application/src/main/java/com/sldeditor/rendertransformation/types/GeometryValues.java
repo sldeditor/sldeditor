@@ -45,9 +45,6 @@ import com.vividsolutions.jts.geom.Polygon;
  */
 public class GeometryValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private Geometry defaultValue = null;
-
     /** The value. */
     private Geometry value = null;
 
@@ -64,24 +61,7 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Geometry) defaultValue;
         this.value = (Geometry) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value != null) {
-            return value.toText();
-        }
-        if (this.expression != null) {
-            return expression.toString();
-        }
-        return "";
     }
 
     /**
@@ -100,7 +80,13 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
      */
     @Override
     public Expression getExpression() {
-        return expression;
+        if (this.value != null) {
+            return filterFactory.literal(value.toText());
+        }
+        if (this.expression != null) {
+            return expression;
+        }
+        return null;
     }
 
     /*
@@ -147,13 +133,5 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
     @Override
     public RenderTransformValueInterface createInstance() {
         return new GeometryValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

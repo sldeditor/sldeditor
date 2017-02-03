@@ -42,9 +42,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  */
 public class NumberValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private Number defaultValue = null;
-
     /** The value. */
     private Number value = null;
 
@@ -61,21 +58,7 @@ public class NumberValues extends BaseValue implements RenderTransformValueInter
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Number) defaultValue;
         this.value = (Number) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -116,7 +99,8 @@ public class NumberValues extends BaseValue implements RenderTransformValueInter
         }
         else if(aValue instanceof LiteralExpressionImpl)
         {
-            value = Double.valueOf(aValue.toString());
+            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+            value = literal.evaluate(value, Number.class);
         }
         else if((aValue instanceof AttributeExpressionImpl) ||
                 (aValue instanceof FunctionExpressionImpl) ||
@@ -156,13 +140,5 @@ public class NumberValues extends BaseValue implements RenderTransformValueInter
     @Override
     public RenderTransformValueInterface createInstance() {
         return new NumberValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

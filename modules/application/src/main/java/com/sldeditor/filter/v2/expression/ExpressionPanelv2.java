@@ -60,6 +60,7 @@ import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 
 import com.sldeditor.common.Controller;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -135,6 +136,8 @@ public class ExpressionPanelv2 extends JDialog
 
     /** The vendor option list. */
     private List<VersionData> vendorOptionList = null;
+
+    private JButton btnOk;
 
     /**
      * Instantiates a new expression panel.
@@ -227,7 +230,8 @@ public class ExpressionPanelv2 extends JDialog
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnOk = new JButton("Ok");
+        btnOk = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.ok"));
+        btnOk.setEnabled(false);
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = true;
@@ -237,7 +241,7 @@ public class ExpressionPanelv2 extends JDialog
         });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton("Cancel");
+        JButton btnCancel = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = false;
@@ -286,12 +290,16 @@ public class ExpressionPanelv2 extends JDialog
      * @param expression the expression
      */
     private void populateExpression(ExpressionNode node, Expression expression) {
+        btnOk.setEnabled(false);
         if (node != null) {
             node.setExpression(expression);
 
             model.reload(); // This notifies the listeners and changes the GUI
 
             displayResult();
+
+            // Auto select the first entry
+            tree.setSelectionRow(0);
         }
     }
 
@@ -300,8 +308,9 @@ public class ExpressionPanelv2 extends JDialog
      */
     @Override
     public void dataApplied() {
-        DefaultMutableTreeNode node;
+        btnOk.setEnabled(true);
         if (selectedNode != null) {
+            DefaultMutableTreeNode node = null;
             if (selectedNode.isLeaf()) {
                 node = (DefaultMutableTreeNode) selectedNode.getParent();
                 if (node == null) {

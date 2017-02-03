@@ -133,7 +133,11 @@ public class FunctionTableModel extends AbstractTableModel {
             break;
         case COL_VALUE:
             if (value.objectValue != null) {
-                return value.objectValue.getStringValue();
+                Expression expression = value.objectValue.getExpression();
+                if(expression != null)
+                {
+                    return expression.toString();
+                }
             }
         }
         return null;
@@ -305,6 +309,10 @@ public class FunctionTableModel extends AbstractTableModel {
             }
         }
 
+        if(this.selectedFunction.getFunctionName() == null)
+        {
+            return null;
+        }
         Function processFunction = factory.function(this.selectedFunction.getFunctionName(),
                 overallParameterList, null);
 

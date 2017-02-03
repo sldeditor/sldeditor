@@ -46,9 +46,6 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     /** The kernel JAI map. */
     private static Map<KernelJAI, String> kernelJAIMap = null;
 
-    /** The default value. */
-    private KernelJAI defaultValue = null;
-
     /** The value. */
     private KernelJAI value = null;
 
@@ -79,21 +76,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (KernelJAI) defaultValue;
         this.value = (KernelJAI) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return kernelJAIMap.get(this.value.getClass());
     }
 
     /**
@@ -165,15 +148,5 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     @Override
     public RenderTransformValueInterface createInstance() {
         return new KernelJAIValues();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

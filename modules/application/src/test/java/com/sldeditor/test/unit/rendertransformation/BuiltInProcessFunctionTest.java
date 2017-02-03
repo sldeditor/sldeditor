@@ -20,7 +20,6 @@
 package com.sldeditor.test.unit.rendertransformation;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -81,9 +80,6 @@ public class BuiltInProcessFunctionTest {
 
                 assertTrue(functionName.getName(), expectedParameter.getName().compareTo(actualParameter.name) == 0);
                 assertEquals(functionName.getName(), expectedParameter.getType(), actualParameter.type);
-                if (expectedParameter.getDefaultValue() != null) {
-                    assertNotNull(functionName.getName(), actualParameter.objectValue.getDefaultValue());
-                }
                 assertTrue(functionName.getName(), expectedParameter.getType().getSimpleName().compareTo(actualParameter.dataType) == 0);
                 assertEquals(functionName.getName(), !expectedParameter.isRequired(), actualParameter.optional);
                 assertEquals(functionName.getName(), expectedParameter.getMinOccurs(), actualParameter.minOccurences);

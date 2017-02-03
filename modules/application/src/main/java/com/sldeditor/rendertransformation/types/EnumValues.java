@@ -49,9 +49,6 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
     /** The value. */
     private String value = null;
 
-    /** The default value. */
-    private String defaultValue = null;
-
     /**
      * Instantiates a new enum values.
      *
@@ -70,7 +67,6 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
         this.classType = objToCopy.classType;
         this.enumValueList = objToCopy.enumValueList;
         this.value = objToCopy.value;
-        this.defaultValue = objToCopy.defaultValue;
     }
 
     /*
@@ -80,18 +76,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (String) defaultValue;
         this.value = (String) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        return value;
     }
 
     /**
@@ -189,15 +174,4 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
     public RenderTransformValueInterface createInstance() {
         return new EnumValues(this);
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
-    }
-
 }

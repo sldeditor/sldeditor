@@ -52,14 +52,11 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /** The interpolation map. */
     private static Map<Class<? extends Interpolation>, String> interpolationMap = null;
 
-    /** The default value. */
-    private Interpolation defaultValue = null;
-
     /** The value. */
     private Interpolation value = null;
 
     private static final int defaultSampleBits = 8;
-    
+
     /** The interpolation bicubic pattern match. */
     private final Pattern INTERPOLATION_BICUBIC_PATTERN_MATCH = Pattern
             .compile("InterpolationBicubic\\(\\d+\\)");
@@ -71,7 +68,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /** The sample bits. */
     private int sampleBits = defaultSampleBits;
-    
+
     /**
      * Instantiates a new interpolation values.
      */
@@ -99,21 +96,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Interpolation) defaultValue;
         this.value = (Interpolation) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return interpolationMap.get(this.value.getClass());
     }
 
     /**
@@ -134,15 +117,17 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
      */
     @Override
     public Expression getExpression() {
-        if ((value.getClass() == InterpolationBicubic.class) || (value.getClass() == InterpolationBicubic2.class))
-        {
-            String string = String.format("%s(%d)", value.getClass().getSimpleName(), sampleBits);
-            return filterFactory.literal(string);
+        if (value != null) {
+            if ((value.getClass() == InterpolationBicubic.class)
+                    || (value.getClass() == InterpolationBicubic2.class)) {
+                String string = String.format("%s(%d)", value.getClass().getSimpleName(),
+                        sampleBits);
+                return filterFactory.literal(string);
+            } else {
+                return filterFactory.literal(value.getClass().getSimpleName());
+            }
         }
-        else
-        {
-            return filterFactory.literal(value.getClass().getSimpleName());
-        }
+        return null;
     }
 
     /*
@@ -156,27 +141,22 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
         this.expression = null;
 
         if (aValue instanceof LiteralExpressionImpl) {
-            String displayName = ((Expression)aValue).toString();
+            String displayName = ((Expression) aValue).toString();
 
             if (InterpolationNearest.class.getSimpleName().compareTo(displayName) == 0) {
                 value = new InterpolationNearest();
-            }
-            else if (InterpolationBilinear.class.getSimpleName().compareTo(displayName) == 0) {
+            } else if (InterpolationBilinear.class.getSimpleName().compareTo(displayName) == 0) {
                 value = new InterpolationBilinear();
-            }
-            else if (displayName.startsWith(InterpolationBicubic.class.getSimpleName())) {
+            } else if (displayName.startsWith(InterpolationBicubic2.class.getSimpleName())) {
+                sampleBits = extractSampleBits(INTERPOLATION_BICUBIC2_PATTERN_MATCH, displayName);
+                value = new InterpolationBicubic2(sampleBits);
+            } else if (displayName.startsWith(InterpolationBicubic.class.getSimpleName())) {
                 sampleBits = extractSampleBits(INTERPOLATION_BICUBIC_PATTERN_MATCH, displayName);
                 value = new InterpolationBicubic(sampleBits);
             }
-            else if (displayName.startsWith(InterpolationBicubic2.class.getSimpleName())) {
-                sampleBits = extractSampleBits(INTERPOLATION_BICUBIC2_PATTERN_MATCH, displayName);
-                value = new InterpolationBicubic2(sampleBits);
-            }
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
@@ -198,7 +178,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
                 // get the match and parse it
                 final String subsBitsString = matcher.group();
 
-                    return Integer.parseInt(subsBitsString);
+                return Integer.parseInt(subsBitsString);
             }
         }
         // unable to parse
@@ -233,15 +213,5 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     @Override
     public RenderTransformValueInterface createInstance() {
         return new InterpolationValues();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

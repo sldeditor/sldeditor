@@ -43,9 +43,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 @SuppressWarnings("rawtypes")
 public class FeatureCollectionValues extends BaseValue implements RenderTransformValueInterface {
 
-    /** The default value. */
-    private FeatureCollection defaultValue = null;
-
     /** The value. */
     private FeatureCollection value = null;
 
@@ -62,21 +59,7 @@ public class FeatureCollectionValues extends BaseValue implements RenderTransfor
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (FeatureCollection) defaultValue;
         this.value = (FeatureCollection) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -142,13 +125,5 @@ public class FeatureCollectionValues extends BaseValue implements RenderTransfor
     @Override
     public RenderTransformValueInterface createInstance() {
         return new FeatureCollectionValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }

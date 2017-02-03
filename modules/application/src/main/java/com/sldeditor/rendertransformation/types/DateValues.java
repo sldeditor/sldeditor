@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
+import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
@@ -39,9 +40,6 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
  * @author Robert Ward (SCISYS)
  */
 public class DateValues extends BaseValue implements RenderTransformValueInterface {
-
-    /** The default value. */
-    private Date defaultValue = null;
 
     /** The value. */
     private Date value = null;
@@ -59,21 +57,7 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = (Date) defaultValue;
         this.value = (Date) defaultValue;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getStringValue()
-     */
-    @Override
-    public String getStringValue() {
-        if (this.value == null) {
-            return "";
-        }
-        return value.toString();
     }
 
     /**
@@ -113,6 +97,7 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
             this.value = (Date) aValue;
         }
         else if((aValue instanceof AttributeExpressionImpl) ||
+                (aValue instanceof LiteralExpressionImpl) ||
                 (aValue instanceof FunctionExpressionImpl) ||
                 (aValue instanceof MathExpressionImpl))
         {
@@ -142,13 +127,5 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
     @Override
     public RenderTransformValueInterface createInstance() {
         return new DateValues();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getDefaultValue()
-     */
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 }
