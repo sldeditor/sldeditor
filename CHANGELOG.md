@@ -1,31 +1,81 @@
 # Change Log
 
-## [0.6.5](https://github.com/robward-scisys/sldeditor/tree/0.6.5) (2017-01-20)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.4...0.6.5)
-
-**Fixed bugs:**
-
-- Iss221 Fix crash when double value read in when expecting integer values [\#223](https://github.com/robward-scisys/sldeditor/pull/223) ([robward-scisys](https://github.com/robward-scisys))
-
-- Iss225 Added missing maven repository for docking-frames-common library [\#226](https://github.com/robward-scisys/sldeditor/pull/223) ([robward-scisys](https://github.com/robward-scisys))
-
-- Iss231 Fixed crash when data source values set [\#232](https://github.com/robward-scisys/sldeditor/pull/232) ([robward-scisys](https://github.com/robward-scisys))
+## [0.7.0](https://github.com/robward-scisys/sldeditor/tree/0.7.0) (2017-02-03)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.5...0.7.0)
 
 **Implemented enhancements:**
 
-- Iss233 Added ability to upload sld file using right mouse button on file system entries [\#236](https://github.com/robward-scisys/sldeditor/pull/236) ([robward-scisys](https://github.com/robward-scisys))
+- SLDEditorMenus unit test [\#257](https://github.com/robward-scisys/sldeditor/issues/257)
+- Set background of symbolizer labels [\#253](https://github.com/robward-scisys/sldeditor/issues/253)
+- Add tool to batch update font details [\#249](https://github.com/robward-scisys/sldeditor/issues/249)
+- Add ability to batch update colour map entries [\#246](https://github.com/robward-scisys/sldeditor/issues/246)
 
-- Iss222 Added TextSymbolizer2 support [\#237](https://github.com/robward-scisys/sldeditor/pull/237) ([robward-scisys](https://github.com/robward-scisys))
+**Fixed bugs:**
 
-- Iss228 Replaced deprecated DefaultHttpClient class [\#239](https://github.com/robward-scisys/sldeditor/pull/239) ([robward-scisys](https://github.com/robward-scisys))
+- Get RasterAsPointCollection render transformation working [\#264](https://github.com/robward-scisys/sldeditor/issues/264)
+- When adding new colour map entry the colour is not displayed correctly  [\#244](https://github.com/robward-scisys/sldeditor/issues/244)
+- Fixed crash when reading raster symbols [\#242](https://github.com/robward-scisys/sldeditor/issues/242)
+- RasterAsPointCollection render transformation working [\#266](https://github.com/robward-scisys/sldeditor/pull/266) ([robward-scisys](https://github.com/robward-scisys))
+- Fixed new colour map entry colour field [\#245](https://github.com/robward-scisys/sldeditor/pull/245) ([robward-scisys](https://github.com/robward-scisys))
+- Convert value from string to double to integer [\#243](https://github.com/robward-scisys/sldeditor/pull/243) ([robward-scisys](https://github.com/robward-scisys))
 
-## [0.6.4](https://github.com/robward-scisys/sldeditor/tree/0.6.4) (2016-12-21)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.3...0.6.4)
+The following bugs were identified by Ranen Ghosh:
+- Incorrect symbols for rule displayed [\#261](https://github.com/robward-scisys/sldeditor/issues/261)
+- Issue when multiple new text symbols area created [\#260](https://github.com/robward-scisys/sldeditor/issues/260)
+- Correct rule rendered [\#263](https://github.com/robward-scisys/sldeditor/pull/263) ([robward-scisys](https://github.com/robward-scisys))
+- Label cache cleared [\#256](https://github.com/robward-scisys/sldeditor/pull/256) ([robward-scisys](https://github.com/robward-scisys))
+- Quotes wrongly added to literal in Filter Dialog [\#250](https://github.com/robward-scisys/sldeditor/issues/250)
+
+## [v0.6.5](https://github.com/robward-scisys/sldeditor/tree/v0.6.5) (2017-01-20)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.4...v0.6.5)
+
+**Implemented enhancements:**
+
+- Replace deprecated DefaultHttpClient  [\#238](https://github.com/robward-scisys/sldeditor/issues/238)
+- Add ability to upload SLD to GeoServer using popup menu [\#233](https://github.com/robward-scisys/sldeditor/issues/233)
+- TextSymbol missing fields to edit background graphic [\#222](https://github.com/robward-scisys/sldeditor/issues/222)
+- Replaced DefaultHttpClient [\#239](https://github.com/robward-scisys/sldeditor/pull/239) ([robward-scisys](https://github.com/robward-scisys))
+- Iss222 textsymbolizer2 support [\#237](https://github.com/robward-scisys/sldeditor/pull/237) ([robward-scisys](https://github.com/robward-scisys))
+- Iss233 upload to geoserver [\#236](https://github.com/robward-scisys/sldeditor/pull/236) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- SLDTreeToolsTest testAddArrows fails [\#234](https://github.com/robward-scisys/sldeditor/issues/234)
+- Data source values crashing application [\#231](https://github.com/robward-scisys/sldeditor/issues/231)
+- Integration tests occasionally fail [\#229](https://github.com/robward-scisys/sldeditor/issues/229)
+- PointSymbolizerDetailsTest unit test fails [\#227](https://github.com/robward-scisys/sldeditor/issues/227)
+- se-app won't build [\#225](https://github.com/robward-scisys/sldeditor/issues/225)
+- Vendor option float values causing crash [\#221](https://github.com/robward-scisys/sldeditor/issues/221)
+- Fix null pointer exception [\#235](https://github.com/robward-scisys/sldeditor/pull/235) ([robward-scisys](https://github.com/robward-scisys))
+- Data source fields now correctly populate [\#232](https://github.com/robward-scisys/sldeditor/pull/232) ([robward-scisys](https://github.com/robward-scisys))
+- Catch and ignore exceptions [\#230](https://github.com/robward-scisys/sldeditor/pull/230) ([robward-scisys](https://github.com/robward-scisys))
+- Fixed unit tests [\#228](https://github.com/robward-scisys/sldeditor/pull/228) ([robward-scisys](https://github.com/robward-scisys))
+- Added missing repository [\#226](https://github.com/robward-scisys/sldeditor/pull/226) ([robward-scisys](https://github.com/robward-scisys))
+- Convert string-\>double-\>integer [\#223](https://github.com/robward-scisys/sldeditor/pull/223) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Can't build se-app [\#224](https://github.com/robward-scisys/sldeditor/issues/224)
+- Create release 0.6.4 [\#219](https://github.com/robward-scisys/sldeditor/issues/219)
+
+**Merged pull requests:**
+
+- Updated for release 0.6.5 [\#241](https://github.com/robward-scisys/sldeditor/pull/241) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.6.4](https://github.com/robward-scisys/sldeditor/tree/v0.6.4) (2016-12-21)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.3...v0.6.4)
 
 **Implemented enhancements:**
 
 - Add support for GeoTools 16.1 vendor options [\#217](https://github.com/robward-scisys/sldeditor/issues/217)
 
+**Closed issues:**
+
+- Create release 0.6.3 [\#214](https://github.com/robward-scisys/sldeditor/issues/214)
+
+**Merged pull requests:**
+
+- Updated to version 0.6.4 [\#220](https://github.com/robward-scisys/sldeditor/pull/220) ([robward-scisys](https://github.com/robward-scisys))
 - Iss217 geotools 16 1 vendor options [\#218](https://github.com/robward-scisys/sldeditor/pull/218) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.6.3](https://github.com/robward-scisys/sldeditor/tree/v0.6.3) (2016-12-12)
