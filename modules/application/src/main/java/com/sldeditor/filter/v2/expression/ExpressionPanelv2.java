@@ -241,7 +241,8 @@ public class ExpressionPanelv2 extends JDialog
         });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
+        JButton btnCancel = new JButton(
+                Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = false;
@@ -280,6 +281,12 @@ public class ExpressionPanelv2 extends JDialog
             if (expression != null) {
                 populateExpression(expressionNode, expression);
             }
+
+            // Auto select the first item
+            if(tree.getRowCount() > 0)
+            {
+                tree.setSelectionRow(0);
+            }
         }
     }
 
@@ -299,7 +306,10 @@ public class ExpressionPanelv2 extends JDialog
             displayResult();
 
             // Auto select the first entry
-            tree.setSelectionRow(0);
+            if(tree.getRowCount() > 0)
+            {
+                tree.setSelectionRow(0);
+            }
         }
     }
 
@@ -592,7 +602,9 @@ public class ExpressionPanelv2 extends JDialog
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
      */
     @Override

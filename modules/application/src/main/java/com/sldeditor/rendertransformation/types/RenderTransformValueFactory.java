@@ -108,7 +108,7 @@ public class RenderTransformValueFactory {
     public RenderTransformValueInterface getValue(Class<?> classToFind) {
         RenderTransformValueInterface value = valueList.get(classToFind);
         if (value == null) {
-            System.err.println("Failed to find object for :" + classToFind.getName());
+            System.err.println("Failed to find object for :" + ((classToFind != null) ? classToFind.getName() : "null"));
             return null;
         }
         return value.createInstance();
@@ -136,7 +136,6 @@ public class RenderTransformValueFactory {
      *
      * @param value the value
      * @param literal the literal
-     * @return the value custom process
      */
     public void getValueCustomProcess(ProcessFunctionParameterValue value,
             LiteralInputType literal) {

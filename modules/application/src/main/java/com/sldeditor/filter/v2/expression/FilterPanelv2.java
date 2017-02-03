@@ -130,6 +130,8 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
     /** The vendor option list. */
     private List<VersionData> vendorOptionList = null;
 
+    private JButton btnOk;
+
     /**
      * Instantiates a new expression panel.
      *
@@ -253,7 +255,8 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnOk = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.ok"));
+        btnOk = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.ok"));
+        btnOk.setEnabled(false);
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 closeDialog(true);
@@ -290,6 +293,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
      */
     private boolean showFilterDialog(Class<?> type, Filter filter) {
 
+        btnOk.setEnabled(false);
         rootNode = new FilterNode();
         if(model != null)
         {
@@ -333,6 +337,7 @@ public class FilterPanelv2 extends JDialog implements ExpressionFilterInterface,
     @Override
     public void dataApplied()
     {
+        btnOk.setEnabled(true);
         DefaultMutableTreeNode node;
         if(selectedNode.isLeaf())
         {

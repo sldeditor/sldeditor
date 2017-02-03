@@ -39,7 +39,6 @@ public class PanelField {
      * @param classType the class type
      * @param valueTextLocalisation the value text localisation
      * @param nodeType the node type
-     * @param objectValue the enum value list
      * @return the field
      */
     public static FieldConfigBase getField(Class<?> classType,
