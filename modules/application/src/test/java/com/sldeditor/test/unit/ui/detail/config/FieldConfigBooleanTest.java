@@ -120,6 +120,7 @@ public class FieldConfigBooleanTest {
         field.populateExpression(null);
 
         field.createUI();
+        field.createUI();
         field.populateField(Boolean.TRUE);
         assertTrue(field.getBooleanValue());
 

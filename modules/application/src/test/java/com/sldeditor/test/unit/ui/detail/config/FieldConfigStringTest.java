@@ -233,6 +233,7 @@ public class FieldConfigStringTest {
         field.redoAction(null);
 
         field.createUI();
+        field.createUI();
         field.undoAction(null);
         field.redoAction(null);
 

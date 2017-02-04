@@ -177,6 +177,7 @@ public class FieldConfigDoubleTest {
         assertTrue(Math.abs(field.getDoubleValue() - 0.0) < 0.001);
 
         field.createUI();
+        field.createUI();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - expectedDefaultValue) < 0.001);

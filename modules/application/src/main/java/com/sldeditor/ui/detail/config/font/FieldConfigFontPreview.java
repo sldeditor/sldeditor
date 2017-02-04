@@ -87,21 +87,22 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     @Override
     public void createUI() {
+        if (textField == null) {
+            int xPos = getXPos();
+            int height = getRowY(sampleTextLines);
+            int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
+            FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel());
 
-        int xPos = getXPos();
-        int height = getRowY(sampleTextLines);
-        int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
-        FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel());
-
-        textField = new JTextArea();
-        textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
-        textField.setWrapStyleWord(true);
-        textField.setLineWrap(false);
-        textField.setText(sampleText);
-        textField.setRows(sampleTextLines);
-        JScrollPane scrollPane = new JScrollPane(textField);
-        scrollPane.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
-        fieldPanel.add(scrollPane);
+            textField = new JTextArea();
+            textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
+            textField.setWrapStyleWord(true);
+            textField.setLineWrap(false);
+            textField.setText(sampleText);
+            textField.setRows(sampleTextLines);
+            JScrollPane scrollPane = new JScrollPane(textField);
+            scrollPane.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
+            fieldPanel.add(scrollPane);
+        }
     }
 
     /**

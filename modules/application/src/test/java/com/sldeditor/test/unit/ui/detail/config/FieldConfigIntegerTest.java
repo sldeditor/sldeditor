@@ -129,6 +129,7 @@ public class FieldConfigIntegerTest {
         assertEquals(0, field.getIntValue());
 
         field.createUI();
+        field.createUI();
         field.populateField(expectedValue);
         assertEquals(expectedValue, field.getIntValue());
 

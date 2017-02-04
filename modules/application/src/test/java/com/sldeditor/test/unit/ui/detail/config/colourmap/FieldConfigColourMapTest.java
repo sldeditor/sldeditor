@@ -54,6 +54,7 @@ public class FieldConfigColourMapTest {
 
         // Create text field
         field.createUI();
+        field.createUI();
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;

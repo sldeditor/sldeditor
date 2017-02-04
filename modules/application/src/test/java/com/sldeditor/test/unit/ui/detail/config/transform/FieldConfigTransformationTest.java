@@ -93,6 +93,7 @@ public class FieldConfigTransformationTest {
 
         // Create text field
         field2.createUI();
+        field2.createUI();
 
         assertEquals(expectedValue, field2.isEnabled());
 

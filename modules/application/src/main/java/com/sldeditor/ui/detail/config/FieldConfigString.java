@@ -90,67 +90,69 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (textField == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        textField = new TextFieldPropertyChange();
-        textField.setBounds(
-                xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly()
-                        ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
-                BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(textField);
+            textField = new TextFieldPropertyChange();
+            textField.setBounds(
+                    xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly()
+                            ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(textField);
 
-        textField.addPropertyChangeListener(TextFieldPropertyChange.TEXT_PROPERTY,
-                new PropertyChangeListener() {
+            textField.addPropertyChangeListener(TextFieldPropertyChange.TEXT_PROPERTY,
+                    new PropertyChangeListener() {
 
-                    /*
-                     * (non-Javadoc)
-                     * 
-                     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-                     */
-                    @Override
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        String originalValue = (String) evt.getOldValue();
-                        String newValueObj = (String) evt.getNewValue();
+                        /*
+                         * (non-Javadoc)
+                         * 
+                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+                         */
+                        @Override
+                        public void propertyChange(PropertyChangeEvent evt) {
+                            String originalValue = (String) evt.getOldValue();
+                            String newValueObj = (String) evt.getNewValue();
 
-                        if ((originalValue.compareTo(newValueObj) != 0)) {
-                            if (!suppressUpdateOnSet) {
-                                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
-                                        getFieldId(), oldValueObj, newValueObj));
+                            if ((originalValue.compareTo(newValueObj) != 0)) {
+                                if (!suppressUpdateOnSet) {
+                                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
+                                            getFieldId(), oldValueObj, newValueObj));
 
-                                oldValueObj = originalValue;
+                                    oldValueObj = originalValue;
+                                }
+
+                                valueUpdated();
                             }
+                        }
+                    });
 
-                            valueUpdated();
+            if (buttonText != null) {
+                final JButton buttonExternal = new JButton(buttonText);
+                buttonExternal.addActionListener(new ActionListener() {
+
+                    public void actionPerformed(ActionEvent e) {
+                        if (buttonPressedListenerList != null) {
+                            for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
+                                listener.buttonPressed(buttonExternal);
+                            }
                         }
                     }
                 });
 
-        if (buttonText != null) {
-            final JButton buttonExternal = new JButton(buttonText);
-            buttonExternal.addActionListener(new ActionListener() {
+                int buttonWidth = 26;
+                int padding = 3;
+                buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0,
+                        buttonWidth, BasePanel.WIDGET_HEIGHT);
+                fieldPanel.add(buttonExternal);
+            }
 
-                public void actionPerformed(ActionEvent e) {
-                    if (buttonPressedListenerList != null) {
-                        for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
-                            listener.buttonPressed(buttonExternal);
-                        }
-                    }
-                }
-            });
-
-            int buttonWidth = 26;
-            int padding = 3;
-            buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0,
-                    buttonWidth, BasePanel.WIDGET_HEIGHT);
-            fieldPanel.add(buttonExternal);
-        }
-
-        if (!isValueOnly()) {
-            setAttributeSelectionPanel(
-                    fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
+            }
         }
     }
 

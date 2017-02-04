@@ -384,7 +384,10 @@ public class FieldConfigGeometryFieldTest {
         String expectedDefaultValue = testDataSource.getDefaultGeometryField();
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
+        field.createUI();
+        field.revertToDefaultValue();
         assertNull(field.getStringValue());
+        field.createUI();
 
         @SuppressWarnings("unused")
         DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);

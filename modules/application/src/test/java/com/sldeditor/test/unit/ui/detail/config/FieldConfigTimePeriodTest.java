@@ -138,6 +138,7 @@ public class FieldConfigTimePeriodTest {
 
         // Try string values - erroneous
         field.createUI();
+        field.createUI();
         String expectedValue = "test string value";
         field.setTestValue(FieldIdEnum.UNKNOWN, expectedValue);
         actualExpression = field.callGenerateExpression();

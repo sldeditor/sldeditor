@@ -102,14 +102,16 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     @Override
     public void createUI() {
 
-        FieldPanel fieldPanel = createFieldPanel(0, "");
-        fieldPanel.setLayout(new BorderLayout());
-        externalGraphicPanel = new ExternalGraphicDetails(this);
+        if (externalGraphicPanel == null) {
+            FieldPanel fieldPanel = createFieldPanel(0, "");
+            fieldPanel.setLayout(new BorderLayout());
+            externalGraphicPanel = new ExternalGraphicDetails(this);
 
-        fieldPanel.add(externalGraphicPanel, BorderLayout.CENTER);
+            fieldPanel.add(externalGraphicPanel, BorderLayout.CENTER);
 
-        Dimension panelSize = externalGraphicPanel.getPanelSize();
-        fieldPanel.setPreferredSize(panelSize);
+            Dimension panelSize = externalGraphicPanel.getPanelSize();
+            fieldPanel.setPreferredSize(panelSize);
+        }
     }
 
     /**
@@ -494,7 +496,9 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
@@ -503,7 +507,9 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         // Strict SLD
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override

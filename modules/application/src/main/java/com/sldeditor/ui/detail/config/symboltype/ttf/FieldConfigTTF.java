@@ -57,15 +57,15 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigTTF wraps a text field GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigTTF wraps a text field GUI component and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
  * A button when clicked on displays a dialog ({@link com.sldeditor.ui.ttf.CharMap4}) that allows the user to select a character from a TrueType font.
  * When the character is selected the encoded string is written to the text field.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -91,11 +91,10 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigTTF(FieldConfigCommonData commonData,
-            ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig,
-            FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+    public FieldConfigTTF(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+                symbolSelectionField);
     }
 
     /**
@@ -103,15 +102,16 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      */
     @Override
     public void createUI() {
+        if (ttfPanel == null) {
+            FieldPanel fieldPanel = createFieldPanel(0, "");
+            fieldPanel.setLayout(new BorderLayout());
+            ttfPanel = new TTFDetails(this);
 
-        FieldPanel fieldPanel = createFieldPanel(0, "");
-        fieldPanel.setLayout(new BorderLayout());
-        ttfPanel = new TTFDetails(this);
+            fieldPanel.add(ttfPanel, BorderLayout.CENTER);
 
-        fieldPanel.add(ttfPanel, BorderLayout.CENTER);
-
-        Dimension panelSize = ttfPanel.getPanelSize();
-        fieldPanel.setPreferredSize(panelSize);
+            Dimension panelSize = ttfPanel.getPanelSize();
+            fieldPanel.setPreferredSize(panelSize);
+        }
     }
 
     /**
@@ -120,8 +120,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param field the field
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -131,10 +130,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param enabled the new enabled state
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(ttfPanel != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (ttfPanel != null) {
             ttfPanel.setEnabled(enabled);
         }
     }
@@ -145,10 +142,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the expression
      */
     @Override
-    protected Expression generateExpression()
-    {
-        if(ttfPanel == null)
-        {
+    protected Expression generateExpression() {
+        if (ttfPanel == null) {
             return null;
         }
         return ttfPanel.getExpression();
@@ -160,10 +155,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return true, if is enabled
      */
     @Override
-    public boolean isEnabled()
-    {
-        if(ttfPanel != null)
-        {
+    public boolean isEnabled() {
+        if (ttfPanel != null) {
             return ttfPanel.isEnabled();
         }
 
@@ -174,10 +167,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * Revert to default value.
      */
     @Override
-    public void revertToDefaultValue()
-    {
-        if(ttfPanel != null)
-        {
+    public void revertToDefaultValue() {
+        if (ttfPanel != null) {
             ttfPanel.revertToDefaultValue();
         }
     }
@@ -187,16 +178,15 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(ttfPanel != null)
-        {
-            if(objValue instanceof String)
-            {
+    public void populateExpression(Object objValue) {
+        if (ttfPanel != null) {
+            if (objValue instanceof String) {
                 ttfPanel.populateExpression((String) objValue);
             }
         }
@@ -208,8 +198,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the vendor option
      */
     @Override
-    public VendorOptionVersion getVendorOption()
-    {
+    public VendorOptionVersion getVendorOption() {
         return VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
     }
 
@@ -219,8 +208,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the symbol class
      */
     @Override
-    public Class<?> getSymbolClass()
-    {
+    public Class<?> getSymbolClass() {
         return ExternalGraphicImpl.class;
     }
 
@@ -234,17 +222,13 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, 
-            GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol)
-    {
-        if(symbol == null)
-        {
+    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+        if (symbol == null) {
             return;
         }
 
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
 
@@ -255,58 +239,49 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         Expression expFillColour = null;
         Expression expFillOpacity = null;
 
-        if(fill != null)
-        {
+        if (fill != null) {
             expFillColour = fill.getColor();
-            if(!isOverallOpacity(symbolizerType))
-            {
+            if (!isOverallOpacity(symbolizerType)) {
                 expFillOpacity = fill.getOpacity();
             }
         }
 
         FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
-        if(field != null)
-        {
+        if (field != null) {
             field.populate(expFillColour);
         }
 
         // Opacity
-        if(isOverallOpacity(symbolizerType))
-        {
+        if (isOverallOpacity(symbolizerType)) {
             FieldConfigBase opacity = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
-            if(opacity != null)
-            {
+            if (opacity != null) {
                 opacity.populate(graphic.getOpacity());
             }
         }
 
         field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-        if(field != null)
-        {
+        if (field != null) {
             field.populate(expFillOpacity);
         }
 
         Class<?> panelId = getCommonData().getPanelId();
-        GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId, fillFieldConfig.getGroup());
+        GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId,
+                fillFieldConfig.getGroup());
 
-        if(fillGroup != null)
-        {
+        if (fillGroup != null) {
             fillGroup.enable(expFillColour != null);
         }
 
-        if(ttfPanel != null)
-        {
+        if (ttfPanel != null) {
             Expression wellKnownNameExpression = markerSymbol.getWellKnownName();
             String wellKnownName = null;
-            if(wellKnownNameExpression != null)
-            {
+            if (wellKnownNameExpression != null) {
                 wellKnownName = wellKnownNameExpression.toString();
             }
             ttfPanel.populateExpression(wellKnownName);
         }
 
-        if(multiOptionPanel != null)
-        {
+        if (multiOptionPanel != null) {
             multiOptionPanel.setSelectedItem(TTF_SYMBOL_KEY);
         }
     }
@@ -322,35 +297,29 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      */
     @Override
     public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled)
-    {
+            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Expression wellKnownName = null;
-        if((getConfigField() != null) && (fieldConfigManager != null))
-        {
+        if ((getConfigField() != null) && (fieldConfigManager != null)) {
             wellKnownName = getConfigField().getExpression();
-            if(wellKnownName != null)
-            {
+            if (wellKnownName != null) {
                 Stroke stroke = null;
                 Fill fill = null;
 
-                if(fillEnabled)
-                {
+                if (fillEnabled) {
                     Expression expFillColour = null;
                     Expression expFillColourOpacity = null;
 
                     FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
-                    if(field != null)
-                    {
-                        FieldConfigColour colourField = (FieldConfigColour)field;
+                    if (field != null) {
+                        FieldConfigColour colourField = (FieldConfigColour) field;
 
                         expFillColour = colourField.getColourExpression();
                     }
 
                     field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-                    if(field != null)
-                    {
+                    if (field != null) {
                         expFillColourOpacity = field.getExpression();
                     }
                     fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
@@ -362,7 +331,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 // Rotation
                 Expression expRotation = null;
 
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, expSize, expRotation);
+                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, expSize,
+                        expRotation);
 
                 symbolList.add(mark);
             }
@@ -378,11 +348,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the fill
      */
     @Override
-    public Fill getFill(GraphicFill graphicFill,
-            GraphicPanelFieldManager fieldConfigManager)
-    {
-        if(fieldConfigManager == null)
-        {
+    public Fill getFill(GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager) {
+        if (fieldConfigManager == null) {
             return null;
         }
 
@@ -399,8 +366,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the base panel
      */
     @Override
-    public BasePanel getBasePanel()
-    {
+    public BasePanel getBasePanel() {
         return null;
     }
 
@@ -411,8 +377,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the field map
      */
     @Override
-    public Map<FieldIdEnum, FieldConfigBase> getFieldList(GraphicPanelFieldManager fieldConfigManager)
-    {
+    public Map<FieldIdEnum, FieldConfigBase> getFieldList(
+            GraphicPanelFieldManager fieldConfigManager) {
         Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
 
         map.put(FieldIdEnum.TTF_SYMBOL, this);
@@ -427,27 +393,21 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return true, if successful
      */
     @Override
-    public boolean accept(GraphicalSymbol symbol)
-    {
-        if(symbol != null)
-        {
-            if(symbol instanceof MarkImpl)
-            {
+    public boolean accept(GraphicalSymbol symbol) {
+        if (symbol != null) {
+            if (symbol instanceof MarkImpl) {
                 MarkImpl marker = (MarkImpl) symbol;
 
                 Expression expression = marker.getWellKnownName();
 
-                if(expression instanceof LiteralExpressionImpl)
-                {
+                if (expression instanceof LiteralExpressionImpl) {
                     LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
 
                     Object value = lExpression.getValue();
-                    if(value instanceof String)
-                    {
+                    if (value instanceof String) {
                         String valueString = (String) value;
 
-                        if(valueString.startsWith(TTF_PREFIX))
-                        {
+                        if (valueString.startsWith(TTF_PREFIX)) {
                             return true;
                         }
                     }
@@ -463,8 +423,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the field
      */
     @Override
-    public FieldConfigBase getConfigField()
-    {
+    public FieldConfigBase getConfigField() {
         return this;
     }
 
@@ -474,23 +433,19 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(ttfPanel == null)
-        {
+    public String getStringValue() {
+        if (ttfPanel == null) {
             return null;
         }
 
-        if(ttfPanel.getExpression() == null)
-        {
+        if (ttfPanel.getExpression() == null) {
             return null;
         }
         return ttfPanel.getExpression().toString();
     }
 
     /**
-     * Method called when the field has been selected from a combo box
-     * and may need to be initialised.
+     * Method called when the field has been selected from a combo box and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -506,8 +461,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         // Mark symbol as valid/invalid
         boolean valid = false;
         Expression expression = getExpression();
-        if(expression != null)
-        {
+        if (expression != null) {
             valid = !expression.toString().isEmpty();
         }
         SelectedSymbol.getInstance().setValidSymbolMarker(valid);
@@ -523,8 +477,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         checkSymbolIsValid();
 
         FieldConfigBase parent = getParent();
-        if(parent != null)
-        {
+        if (parent != null) {
             parent.valueUpdated();
         }
     }
@@ -547,8 +500,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      */
     @Override
     public void populateField(String value) {
-        if(ttfPanel != null)
-        {
+        if (ttfPanel != null) {
             ttfPanel.populateExpression(value);
         }
     }
@@ -563,9 +515,9 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigTTF copy = null;
 
-        if(fieldConfigBase != null)
-        {
-            copy = new FieldConfigTTF(fieldConfigBase.getCommonData(), fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        if (fieldConfigBase != null) {
+            copy = new FieldConfigTTF(fieldConfigBase.getCommonData(), fillFieldConfig,
+                    strokeFieldConfig, symbolSelectionField);
         }
         return copy;
     }
@@ -577,21 +529,25 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      */
     @Override
     public void setVisible(boolean visible) {
-        if(ttfPanel != null)
-        {
+        if (ttfPanel != null) {
             ttfPanel.setVisible(visible);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
      */
     @Override
-    protected void populateVendorOptionFieldMap(Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+    protected void populateVendorOptionFieldMap(
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
         // No vendor options
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override
@@ -599,7 +555,9 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         return (symbolizerType == LineSymbolizerImpl.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
@@ -608,7 +566,9 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         // Strict SLD
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override

@@ -41,12 +41,12 @@ import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
- * The Class FieldConfigEnum wraps a drop down GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigEnum wraps a drop down GUI component and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -62,7 +62,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     private Map<String, ValueComboBoxData> comboDataMap = new HashMap<String, ValueComboBoxData>();
 
     /** The field map. */
-    private Map<Class<?>, Map<FieldIdEnum, Boolean> > fieldMap = new HashMap<Class<?>, Map<FieldIdEnum, Boolean> >();
+    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap = new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
 
     /** The default value. */
     private String defaultValue = "";
@@ -92,83 +92,81 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @param value the value
      */
     private void addValue(String key, String value) {
-        if((key == null) || key.isEmpty())
-        {
+        if ((key == null) || key.isEmpty()) {
             keyList.add("");
-            valueMap.put("",  value);
-        }
-        else
-        {
+            valueMap.put("", value);
+        } else {
             keyList.add(key);
-            valueMap.put(key,  value);
+            valueMap.put(key, value);
         }
     }
 
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (comboBox == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+            List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
-        for(String key : keyList)
-        {
-            dataList.add(new ValueComboBoxData(key, valueMap.get(key), getPanelId()));
-        }
-
-        if(!dataList.isEmpty())
-        {
-            defaultValue = dataList.get(0).getKey();
-        }
-
-        comboBox = new ValueComboBox();
-        comboBox.initialiseSingle(dataList);
-        comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
-                isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
-                        BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(comboBox);
-
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
-        }
-
-        if(dataList != null)
-        {
-            for(ValueComboBoxData data : dataList)
-            {
-                this.comboDataMap.put(data.getKey(), data);
+            for (String key : keyList) {
+                dataList.add(new ValueComboBoxData(key, valueMap.get(key), getPanelId()));
             }
-        }
 
-        comboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                if (comboBox.getSelectedItem() != null) {
+            if (!dataList.isEmpty()) {
+                defaultValue = dataList.get(0).getKey();
+            }
 
-                    Object newValueObj = comboBox.getSelectedValue().getKey();
+            comboBox = new ValueComboBox();
+            comboBox.initialiseSingle(dataList);
+            comboBox.setBounds(
+                    xPos + BasePanel.WIDGET_X_START, 0, isValueOnly()
+                            ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(comboBox);
 
-                    if((oldValueObj == null) && comboBox.getItemCount() > 0)
-                    {
-                        oldValueObj = comboBox.getFirstItem().getKey();
-                    }
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
+            }
 
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                    oldValueObj = newValueObj;
-
-                    valueUpdated();
+            if (dataList != null) {
+                for (ValueComboBoxData data : dataList) {
+                    this.comboDataMap.put(data.getKey(), data);
                 }
             }
-        });
+
+            comboBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ValueComboBox comboBox = (ValueComboBox) e.getSource();
+                    if (comboBox.getSelectedItem() != null) {
+
+                        Object newValueObj = comboBox.getSelectedValue().getKey();
+
+                        if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
+                            oldValueObj = comboBox.getFirstItem().getKey();
+                        }
+
+                        UndoManager.getInstance().addUndoEvent(
+                                new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+
+                        oldValueObj = newValueObj;
+
+                        valueUpdated();
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -176,14 +174,14 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
-        if(this.comboBox != null)
-        {
+    public void attributeSelection(String field) {
+        if (this.comboBox != null) {
             this.comboBox.setEnabled(field == null);
         }
     }
@@ -193,14 +191,14 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(comboBox != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (comboBox != null) {
             comboBox.setEnabled(enabled);
         }
     }
@@ -210,18 +208,17 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             ValueComboBoxData value = comboBox.getSelectedValue();
-            if(value != null)
-            {
+            if (value != null) {
                 expression = getFilterFactory().literal(value.getKey());
             }
         }
@@ -234,20 +231,17 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(comboBox != null)
-            {
+        } else {
+            if (comboBox != null) {
                 return comboBox.isEnabled();
             }
         }
@@ -257,12 +251,13 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(defaultValue);
     }
 
@@ -271,22 +266,19 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(comboBox != null)
-        {
-            if(objValue instanceof String)
-            {
+    public void populateExpression(Object objValue) {
+        if (comboBox != null) {
+            if (objValue instanceof String) {
                 String sValue = (String) objValue;
 
                 populateField(sValue);
-            }
-            else if(objValue instanceof LiteralExpressionImpl)
-            {
+            } else if (objValue instanceof LiteralExpressionImpl) {
                 String sValue = objValue.toString();
 
                 populateField(sValue);
@@ -300,10 +292,8 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @return the value
      */
     @Override
-    public ValueComboBoxData getEnumValue()
-    {
-        if(comboBox == null)
-        {
+    public ValueComboBoxData getEnumValue() {
+        if (comboBox == null) {
             return null;
         }
         ValueComboBoxData selectedItem = (ValueComboBoxData) comboBox.getSelectedItem();
@@ -317,11 +307,9 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
+    public String getStringValue() {
         ValueComboBoxData enumValue = getEnumValue();
-        if(enumValue != null)
-        {
+        if (enumValue != null) {
             return enumValue.getKey();
         }
 
@@ -333,20 +321,15 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param configList the config list
      */
-    public void addConfig(List<SymbolTypeConfig> configList)
-    {
-        if(configList != null)
-        {
-            for(SymbolTypeConfig config : configList)
-            {
-                if(config != null)
-                {
+    public void addConfig(List<SymbolTypeConfig> configList) {
+        if (configList != null) {
+            for (SymbolTypeConfig config : configList) {
+                if (config != null) {
                     fieldMap.putAll(config.getFieldMap());
 
                     Map<String, String> optionMap = config.getOptionMap();
 
-                    for(String key : optionMap.keySet())
-                    {
+                    for (String key : optionMap.keySet()) {
                         addValue(key, optionMap.get(key));
                     }
                 }
@@ -359,11 +342,9 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @return the field enable state
      */
-    public Map<FieldIdEnum, Boolean> getFieldEnableState()
-    {
+    public Map<FieldIdEnum, Boolean> getFieldEnableState() {
         ValueComboBoxData value = getEnumValue();
-        if(value == null)
-        {
+        if (value == null) {
             return null;
         }
         Class<?> panelId = value.getPanelId();
@@ -376,21 +357,19 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((comboBox != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof String)
-            {
-                String oldValue = (String)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((comboBox != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof String) {
+                String oldValue = (String) undoRedoObject.getOldValue();
 
                 ValueComboBoxData valueComboBoxData = comboDataMap.get(oldValue);
-                if(valueComboBoxData != null)
-                {
+                if (valueComboBoxData != null) {
                     comboBox.setSelectedItem(valueComboBoxData);
                 }
             }
@@ -402,21 +381,19 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((comboBox != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof String)
-            {
-                String oldValue = (String)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((comboBox != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof String) {
+                String oldValue = (String) undoRedoObject.getNewValue();
 
                 ValueComboBoxData valueComboBoxData = comboDataMap.get(oldValue);
-                if(valueComboBoxData != null)
-                {
+                if (valueComboBoxData != null) {
                     comboBox.setSelectedItem(valueComboBoxData);
                 }
             }
@@ -443,15 +420,11 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void populateField(String value) {
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             ValueComboBoxData valueComboBoxData = comboDataMap.get(value);
-            if(valueComboBoxData != null)
-            {
+            if (valueComboBoxData != null) {
                 comboBox.setSelectedItem(valueComboBoxData);
-            }
-            else
-            {
+            } else {
                 logger.error("Unknown ValueComboBoxData value : " + value);
             }
         }
@@ -462,8 +435,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(String defaultValue)
-    {
+    public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -477,8 +449,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigEnum copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigEnum(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -491,8 +462,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void setVisible(boolean visible) {
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             comboBox.setVisible(visible);
         }
     }

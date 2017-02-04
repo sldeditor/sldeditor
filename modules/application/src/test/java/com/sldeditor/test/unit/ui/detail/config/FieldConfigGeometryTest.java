@@ -155,6 +155,7 @@ public class FieldConfigGeometryTest {
         assertNull(field.getStringValue());
 
         field.createUI();
+        field.createUI();
         field.revertToDefaultValue();
         assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
         field.setDefaultValue(expectedDefaultValue);

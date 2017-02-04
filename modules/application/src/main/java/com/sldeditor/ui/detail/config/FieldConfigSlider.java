@@ -33,14 +33,14 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigSlider wraps a slider GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigSlider wraps a slider GUI component and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
  * Values between 0.0 and 1.0.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -70,41 +70,44 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (slider == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
+            int xPos = getXPos();
 
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        slider = new JSlider();
-        slider.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(slider);
+            slider = new JSlider();
+            slider.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(slider);
 
-        slider.addChangeListener(new ChangeListener() {
+            slider.addChangeListener(new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e)
-            {
-                JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting()) {
-                    Integer newValueObj = (int)source.getValue();
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    JSlider source = (JSlider) e.getSource();
+                    Integer newValueObj = (int) source.getValue();
 
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                    UndoManager.getInstance().addUndoEvent(
+                            new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
                     oldValueObj = newValueObj;
                     valueUpdated();
                 }
-            }
-        });
+            });
 
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
+            }
         }
     }
 
@@ -113,12 +116,13 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -127,14 +131,14 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(slider != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (slider != null) {
             slider.setEnabled(enabled);
         }
     }
@@ -144,16 +148,16 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(slider != null)
-        {
+        if (slider != null) {
             expression = getFilterFactory().literal(getDoubleValue());
         }
         return expression;
@@ -164,20 +168,17 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(slider != null)
-            {
+        } else {
+            if (slider != null) {
                 return slider.isEnabled();
             }
         }
@@ -187,12 +188,13 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(this.defaultValue);
     }
 
@@ -201,25 +203,21 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         Double value = defaultValue;
 
-        if(objValue instanceof Integer)
-        {
+        if (objValue instanceof Integer) {
             int i = ((Integer) objValue).intValue();
-            value = Double.valueOf((double)i);
-        }
-        else if(objValue instanceof Double)
-        {
+            value = Double.valueOf((double) i);
+        } else if (objValue instanceof Double) {
             value = (Double) objValue;
-        }
-        else if(objValue instanceof String)
-        {
+        } else if (objValue instanceof String) {
             value = Double.valueOf((String) objValue);
         }
 
@@ -232,14 +230,12 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @return the slider value
      */
     @Override
-    public double getDoubleValue()
-    {
+    public double getDoubleValue() {
         double dValue = defaultValue;
-        if(slider != null)
-        {
+        if (slider != null) {
             int iValue = slider.getValue();
 
-            double ratio = (double)iValue / slider.getMaximum();
+            double ratio = (double) iValue / slider.getMaximum();
             dValue = ratio * this.maxValue;
         }
 
@@ -252,8 +248,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
+    public String getStringValue() {
         return String.valueOf(getDoubleValue());
     }
 
@@ -263,13 +258,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((slider != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof Integer)
-            {
-                Integer oldValue = (Integer)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((slider != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof Integer) {
+                Integer oldValue = (Integer) undoRedoObject.getOldValue();
 
                 slider.setValue(oldValue.intValue());
             }
@@ -282,13 +274,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((slider != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof Integer)
-            {
-                Integer newValue = (Integer)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((slider != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof Integer) {
+                Integer newValue = (Integer) undoRedoObject.getNewValue();
 
                 slider.setValue(newValue.intValue());
             }
@@ -315,8 +304,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void populateField(Double value) {
-        if(slider != null)
-        {
+        if (slider != null) {
             double ratio = value / this.maxValue;
             int sliderRatio = (int) (ratio * slider.getMaximum());
             slider.setValue(sliderRatio);
@@ -330,8 +318,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(double defaultValue)
-    {
+    public void setDefaultValue(double defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -345,8 +332,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigSlider copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigSlider(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -359,8 +345,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void setVisible(boolean visible) {
-        if(slider != null)
-        {
+        if (slider != null) {
             slider.setVisible(visible);
         }
     }

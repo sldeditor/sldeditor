@@ -36,7 +36,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigVendorOption extends FieldConfigBase implements VendorOptionUpdateInterface {
+public class FieldConfigVendorOption extends FieldConfigBase
+        implements VendorOptionUpdateInterface {
 
     /** The vendor option versions list. */
     private List<VersionData> vendorOptionVersionsList = null;
@@ -57,8 +58,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
      * @param veList the ve list
      */
     public FieldConfigVendorOption(FieldConfigCommonData commonData,
-            List<VendorOptionInterface> veList)
-    {
+            List<VendorOptionInterface> veList) {
         super(commonData);
 
         this.veList = veList;
@@ -69,13 +69,17 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI() {
-        createFieldPanel();
-        initialised = true;
+        if (!initialised) {
+            createFieldPanel();
+            initialised = true;
+        }
     }
 
     /**
@@ -83,13 +87,14 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
      *
      * @param optionBox the option box
      */
-    public void addToOptionBox(Box optionBox)
-    {
+    public void addToOptionBox(Box optionBox) {
         this.optionBox = optionBox;
         updateVendorOptionPanels(vendorOptionVersionsList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
@@ -97,8 +102,7 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
 
         this.vendorOptionVersionsList = vendorOptionVersionsList;
 
-        if(initialised)
-        {
+        if (initialised) {
             updateVendorOptionPanels(vendorOptionVersionsList);
         }
     }
@@ -108,24 +112,19 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
      *
      * @param vendorOptionVersionsList the vendor option versions list
      */
-    private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList)
-    {
-        if(veList != null)
-        {
-            for(VendorOptionInterface vendorOption : veList)
-            {
-                boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+    private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList) {
+        if (veList != null) {
+            for (VendorOptionInterface vendorOption : veList) {
+                boolean displayVendorOption = VendorOptionManager.getInstance()
+                        .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
 
                 BasePanel extensionPanel = vendorOption.getPanel();
-                if(extensionPanel != null)
-                {
+                if (extensionPanel != null) {
                     BasePanel parentPanel = (BasePanel) vendorOption.getParentPanel();
-                    if(parentPanel != null)
-                    {
+                    if (parentPanel != null) {
                         parentPanel.removePanel(extensionPanel);
 
-                        if(displayVendorOption)
-                        {
+                        if (displayVendorOption) {
                             parentPanel.insertPanel(this, extensionPanel, this.optionBox);
                         }
                     }
@@ -134,7 +133,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -142,7 +143,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigValuePopulateInterface#getStringValue()
      */
     @Override
@@ -150,7 +153,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -158,7 +163,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setVisible(boolean)
      */
     @Override
@@ -166,7 +173,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -174,7 +183,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -182,7 +193,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -190,7 +203,9 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -198,15 +213,16 @@ public class FieldConfigVendorOption extends FieldConfigBase implements VendorOp
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)
      */
     @Override
     public FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigVendorOption copy = null;
 
-        if((fieldConfigBase != null) && (fieldConfigBase instanceof FieldConfigVendorOption))
-        {
+        if ((fieldConfigBase != null) && (fieldConfigBase instanceof FieldConfigVendorOption)) {
             FieldConfigVendorOption existing = (FieldConfigVendorOption) fieldConfigBase;
             copy = new FieldConfigVendorOption(existing.getCommonData(), existing.veList);
         }

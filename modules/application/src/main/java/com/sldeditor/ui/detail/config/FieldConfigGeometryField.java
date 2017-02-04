@@ -58,7 +58,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
         implements UndoActionInterface, DataSourceUpdatedInterface {
 
     /** The attribute combo box. */
-    private JComboBox<String> attributeComboBox = new JComboBox<String>();
+    private JComboBox<String> attributeComboBox = null;
 
     /** The attribute name list. */
     private List<String> attributeNameList = null;
@@ -97,34 +97,36 @@ public class FieldConfigGeometryField extends FieldConfigBase
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (attributeComboBox == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        attributeComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
-                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+            attributeComboBox = new JComboBox<String>();
+            attributeComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
+                    BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
 
-        fieldPanel.add(attributeComboBox);
-        populateAttributeComboBox();
+            fieldPanel.add(attributeComboBox);
+            populateAttributeComboBox();
 
-        if (!isValueOnly()) {
-            setAttributeSelectionPanel(
-                    fieldPanel.internalCreateAttrButton(Geometry.class, this, true));
-        }
-
-        attributeComboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (isAttributeComboBoxPopulated()) {
-                    String newValueObj = (String) attributeComboBox.getSelectedItem();
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
-                            "DataSourceAttribute", oldValueObj, newValueObj));
-
-                    valueUpdated();
-                }
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(Geometry.class, this, true));
             }
-        });
 
+            attributeComboBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (isAttributeComboBoxPopulated()) {
+                        String newValueObj = (String) attributeComboBox.getSelectedItem();
+                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
+                                "DataSourceAttribute", oldValueObj, newValueObj));
+
+                        valueUpdated();
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -300,13 +302,15 @@ public class FieldConfigGeometryField extends FieldConfigBase
      */
     @Override
     public void populateField(String value) {
-        if (value != null) {
-            oldValueObj = value;
+        if (attributeComboBox != null) {
+            if (value != null) {
+                oldValueObj = value;
 
-            attributeComboBox.setSelectedItem(value);
-        } else {
-            oldValueObj = value;
-            attributeComboBox.setSelectedIndex(-1);
+                attributeComboBox.setSelectedItem(value);
+            } else {
+                oldValueObj = value;
+                attributeComboBox.setSelectedIndex(-1);
+            }
         }
     }
 

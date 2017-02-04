@@ -79,35 +79,37 @@ public class FieldConfigColour extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (colourButton == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        colourButton = new ColourButton();
-        colourButton.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
-                BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(colourButton);
+            colourButton = new ColourButton();
+            colourButton.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
+                    BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(colourButton);
 
-        if (!isValueOnly()) {
-            setAttributeSelectionPanel(
-                    fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
-        }
-
-        colourButton.registerObserver(new ColourNotifyInterface() {
-            @Override
-            public void notify(String colourString, double opacity) {
-
-                Color newValueObj = colourButton.getColour();
-
-                UndoManager.getInstance().addUndoEvent(
-                        new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                oldValueObj = newValueObj;
-
-                valueUpdated();
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
             }
-        });
+
+            colourButton.registerObserver(new ColourNotifyInterface() {
+                @Override
+                public void notify(String colourString, double opacity) {
+
+                    Color newValueObj = colourButton.getColour();
+
+                    UndoManager.getInstance().addUndoEvent(
+                            new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+
+                    oldValueObj = newValueObj;
+
+                    valueUpdated();
+                }
+            });
+        }
     }
 
     /**

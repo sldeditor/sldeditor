@@ -108,89 +108,91 @@ public class FieldConfigColourMap extends FieldConfigBase implements UndoActionI
      */
     @Override
     public void createUI() {
+        if (colourRampConfig == null) {
+            int xPos = getXPos();
+            int maxNoOfConfigRows = 7;
+            int maxNoOfTableRows = 12;
+            int totalRows = maxNoOfConfigRows + maxNoOfTableRows
+                    + ColourMapEntryPanel.getNoOfRows();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel());
 
-        int xPos = getXPos();
-        int maxNoOfConfigRows = 7;
-        int maxNoOfTableRows = 12;
-        int totalRows = maxNoOfConfigRows + maxNoOfTableRows + ColourMapEntryPanel.getNoOfRows();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getRowY(totalRows), getLabel());
+            colourRampConfig = new ColourRampConfigPanel(this, model);
+            colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH,
+                    getRowY(maxNoOfConfigRows));
+            fieldPanel.add(colourRampConfig);
 
-        colourRampConfig = new ColourRampConfigPanel(this, model);
-        colourRampConfig.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH,
-                getRowY(maxNoOfConfigRows));
-        fieldPanel.add(colourRampConfig);
+            table = new JTable(model);
+            table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        table = new JTable(model);
-        table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            table.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH,
+                    getRowY(totalRows - 2));
+            table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-        table.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH,
-                getRowY(totalRows - 2));
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()) {
+                        removeButton.setEnabled(true);
 
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    removeButton.setEnabled(true);
-
-                    List<ColorMapEntry> entries;
-                    if (table.getSelectedRowCount() == 1) {
-                        ColorMapEntry entry = model.getColourMapEntry(table.getSelectedRow());
-                        entries = new ArrayList<ColorMapEntry>();
-                        entries.add(entry);
+                        List<ColorMapEntry> entries;
+                        if (table.getSelectedRowCount() == 1) {
+                            ColorMapEntry entry = model.getColourMapEntry(table.getSelectedRow());
+                            entries = new ArrayList<ColorMapEntry>();
+                            entries.add(entry);
+                        } else {
+                            entries = model.getColourMapEntries(table.getSelectedRows());
+                        }
+                        colourMapEntryPanel.setSelectedEntry(entries);
                     }
-                    else {
-                        entries = model.getColourMapEntries(table.getSelectedRows());
-                    }
-                    colourMapEntryPanel.setSelectedEntry(entries);
                 }
-            }
-        });
-        model.setCellRenderer(table);
+            });
+            model.setCellRenderer(table);
 
-        JScrollPane scrollPanel = new JScrollPane(table);
-        int endOfTableRow = maxNoOfConfigRows + maxNoOfTableRows - 2;
-        scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH,
-                getRowY(endOfTableRow) - getRowY(maxNoOfConfigRows));
-        fieldPanel.add(scrollPanel);
+            JScrollPane scrollPanel = new JScrollPane(table);
+            int endOfTableRow = maxNoOfConfigRows + maxNoOfTableRows - 2;
+            scrollPanel.setBounds(xPos, getRowY(maxNoOfConfigRows), BasePanel.FIELD_PANEL_WIDTH,
+                    getRowY(endOfTableRow) - getRowY(maxNoOfConfigRows));
+            fieldPanel.add(scrollPanel);
 
-        int buttonY = getRowY(endOfTableRow);
-        //
-        // Add button
-        //
-        addButton = new JButton(
-                Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.add"));
-        addButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH,
-                BasePanel.WIDGET_HEIGHT);
-        addButton.addActionListener(new ActionListener() {
+            int buttonY = getRowY(endOfTableRow);
+            //
+            // Add button
+            //
+            addButton = new JButton(
+                    Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.add"));
+            addButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY,
+                    BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+            addButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addEntry();
-            }
-        });
-        fieldPanel.add(addButton);
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addEntry();
+                }
+            });
+            fieldPanel.add(addButton);
 
-        //
-        // Remove button
-        //
-        removeButton = new JButton(
-                Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.remove"));
-        removeButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10,
-                buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        removeButton.setEnabled(false);
-        removeButton.addActionListener(new ActionListener() {
+            //
+            // Remove button
+            //
+            removeButton = new JButton(
+                    Localisation.getString(FieldConfigBase.class, "FieldConfigColourMap.remove"));
+            removeButton.setBounds(
+                    xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY,
+                    BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+            removeButton.setEnabled(false);
+            removeButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removeEntry();
-            }
-        });
-        fieldPanel.add(removeButton);
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeEntry();
+                }
+            });
+            fieldPanel.add(removeButton);
 
-        colourMapEntryPanel = new ColourMapEntryPanel(getPanelId(), this);
-        colourMapEntryPanel.setBounds(xPos, getRowY(maxNoOfConfigRows + maxNoOfTableRows - 1),
-                BasePanel.FIELD_PANEL_WIDTH, colourMapEntryPanel.getPanelHeight());
-        fieldPanel.add(colourMapEntryPanel);
+            colourMapEntryPanel = new ColourMapEntryPanel(getPanelId(), this);
+            colourMapEntryPanel.setBounds(xPos, getRowY(maxNoOfConfigRows + maxNoOfTableRows - 1),
+                    BasePanel.FIELD_PANEL_WIDTH, colourMapEntryPanel.getPanelHeight());
+            fieldPanel.add(colourMapEntryPanel);
+        }
     }
 
     /**

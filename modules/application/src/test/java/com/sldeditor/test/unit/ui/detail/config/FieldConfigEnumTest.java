@@ -156,6 +156,7 @@ public class FieldConfigEnumTest {
 
         // Now create the ui
         field.createUI();
+        field.createUI();
         String expectedValue1 = "key2";
         field.populateField(expectedValue1);
         String actualValueString = field.getStringValue();

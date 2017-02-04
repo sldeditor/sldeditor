@@ -78,6 +78,7 @@ public class FieldConfigFilenameTest {
 
         // Create text field
         field.createUI();
+        field.createUI();
         assertTrue(field.isEnabled());
 
         expectedValue = false;
