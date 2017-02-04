@@ -109,7 +109,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     public void createUI() {
         if (xMinTextField == null) {
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            FieldPanel fieldPanel = createFieldPanel(xPos, "");
 
             int row = 0;
             xMinTextField = createRow(
