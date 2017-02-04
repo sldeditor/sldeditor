@@ -182,6 +182,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         colourField.createUI();
+        colourField.createUI();
         fieldConfigManager.add(fieldId, colourField);
 
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);

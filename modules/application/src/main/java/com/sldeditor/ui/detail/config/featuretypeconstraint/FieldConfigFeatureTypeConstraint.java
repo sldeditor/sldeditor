@@ -47,16 +47,16 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigFeatureTypeConstraint wraps a table GUI component and 
- * allows feature type constraints to be configured
+ * The Class FieldConfigFeatureTypeConstraint wraps a table GUI component and allows feature type constraints to be configured
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements UndoActionInterface, FeatureTypeConstraintModelUpdateInterface {
+public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
+        implements UndoActionInterface, FeatureTypeConstraintModelUpdateInterface {
 
     /** The filter table. */
     private JTable filterTable;
@@ -103,8 +103,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param row the row
      * @return the row y
      */
-    private static int getRowY(int row)
-    {
+    private static int getRowY(int row) {
         return BasePanel.WIDGET_HEIGHT * row;
     }
 
@@ -114,14 +113,16 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     @Override
     public void createUI() {
 
-        int xPos = getXPos();
-        int maxNoOfFilterRows = 6;
-        int maxNoOfExtentRows = 6;
-        int maxY = getRowY(maxNoOfFilterRows + maxNoOfExtentRows);
-        FieldPanel fieldPanel = createFieldPanel(xPos, maxY, getLabel());
+        if (extentTable == null) {
+            int xPos = getXPos();
+            int maxNoOfFilterRows = 6;
+            int maxNoOfExtentRows = 6;
+            int maxY = getRowY(maxNoOfFilterRows + maxNoOfExtentRows);
+            FieldPanel fieldPanel = createFieldPanel(xPos, maxY, getLabel());
 
-        createFilterTable(xPos, maxNoOfFilterRows, fieldPanel);
-        createExtentTable(xPos, maxNoOfFilterRows, maxNoOfExtentRows, fieldPanel);
+            createFilterTable(xPos, maxNoOfFilterRows, fieldPanel);
+            createExtentTable(xPos, maxNoOfFilterRows, maxNoOfExtentRows, fieldPanel);
+        }
     }
 
     /**
@@ -136,45 +137,55 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         extentTable = new JTable(extentModel);
         extentTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        extentTable.setBounds(xPos, getRowY(startRows + 1), BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
+        extentTable.setBounds(xPos, getRowY(startRows + 1), BasePanel.FIELD_PANEL_WIDTH,
+                getRowY(noOfRows - 2));
         extentTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 removeExtentButton.setEnabled(true);
-            }});
+            }
+        });
 
         JScrollPane scrollPanel = new JScrollPane(extentTable);
-        scrollPanel.setBounds(xPos, getRowY(startRows), BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT * (noOfRows - 2));
+        scrollPanel.setBounds(xPos, getRowY(startRows), BasePanel.FIELD_PANEL_WIDTH,
+                BasePanel.WIDGET_HEIGHT * (noOfRows - 2));
         fieldPanel.add(scrollPanel);
 
         int buttonY = getRowY(maxNoOfRows - 2);
         //
         // Add button
         //
-        addExtentButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.add"));
-        addExtentButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        addExtentButton = new JButton(Localisation.getString(FieldConfigBase.class,
+                "FieldConfigFeatureTypeConstraint.add"));
+        addExtentButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY,
+                BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         addExtentButton.setEnabled(false);
-        addExtentButton.addActionListener(new ActionListener(){
+        addExtentButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 addExtentEntry();
-            }});
+            }
+        });
         fieldPanel.add(addExtentButton);
 
         //
         // Remove button
         //
-        removeExtentButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.remove"));
-        removeExtentButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        removeExtentButton = new JButton(Localisation.getString(FieldConfigBase.class,
+                "FieldConfigFeatureTypeConstraint.remove"));
+        removeExtentButton.setBounds(
+                xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY,
+                BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         removeExtentButton.setEnabled(false);
-        removeExtentButton.addActionListener(new ActionListener(){
+        removeExtentButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeExtentEntry();
-            }});
+            }
+        });
         fieldPanel.add(removeExtentButton);
     }
 
@@ -194,30 +205,28 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting())
-                {
-                    FeatureTypeConstraint ftc = filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
-                    if(ftc != null)
-                    {
+                if (!e.getValueIsAdjusting()) {
+                    FeatureTypeConstraint ftc = filterModel
+                            .getFeatureTypeConstraint(filterTable.getSelectedRow());
+                    if (ftc != null) {
                         extentModel.populate(ftc.getExtents());
                         addExtentButton.setEnabled(true);
                         removeFTCButton.setEnabled(true);
 
                         int[] selectedColumns = filterTable.getSelectedColumns();
 
-                        if(filterModel.isFilterColumn(selectedColumns))
-                        {
-                            FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
+                        if (filterModel.isFilterColumn(selectedColumns)) {
+                            FilterPanelInterface filterPanel = ExpressionPanelFactory
+                                    .getFilterPanel(null);
 
-                            String panelTitle = Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.filterPanel");
-                            filterPanel.configure(panelTitle,
-                                    Object.class,
+                            String panelTitle = Localisation.getString(FieldConfigBase.class,
+                                    "FieldConfigFeatureTypeConstraint.filterPanel");
+                            filterPanel.configure(panelTitle, Object.class,
                                     SelectedSymbol.getInstance().isRasterSymbol());
 
                             filterPanel.populate(ftc.getFilter());
 
-                            if(filterPanel.showDialog())
-                            {
+                            if (filterPanel.showDialog()) {
                                 ftc.setFilter(filterPanel.getFilter());
 
                                 filterModel.fireTableDataChanged();
@@ -227,38 +236,47 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
                         }
                     }
                 }
-            }});
+            }
+        });
 
         JScrollPane scrollPanel = new JScrollPane(filterTable);
-        scrollPanel.setBounds(xPos, BasePanel.WIDGET_HEIGHT, BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT * (maxNoOfRows - 2));
+        scrollPanel.setBounds(xPos, BasePanel.WIDGET_HEIGHT, BasePanel.FIELD_PANEL_WIDTH,
+                BasePanel.WIDGET_HEIGHT * (maxNoOfRows - 2));
         fieldPanel.add(scrollPanel);
 
         int buttonY = getRowY(maxNoOfRows - 1);
         //
         // Add button
         //
-        addFTCButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.add"));
-        addFTCButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
-        addFTCButton.addActionListener(new ActionListener(){
+        addFTCButton = new JButton(Localisation.getString(FieldConfigBase.class,
+                "FieldConfigFeatureTypeConstraint.add"));
+        addFTCButton.setBounds(xPos + BasePanel.WIDGET_X_START, buttonY,
+                BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        addFTCButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 addEntry();
-            }});
+            }
+        });
         fieldPanel.add(addFTCButton);
 
         //
         // Remove button
         //
-        removeFTCButton = new JButton(Localisation.getString(FieldConfigBase.class, "FieldConfigFeatureTypeConstraint.remove"));
-        removeFTCButton.setBounds(xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY, BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
+        removeFTCButton = new JButton(Localisation.getString(FieldConfigBase.class,
+                "FieldConfigFeatureTypeConstraint.remove"));
+        removeFTCButton.setBounds(
+                xPos + BasePanel.WIDGET_BUTTON_WIDTH + BasePanel.WIDGET_X_START + 10, buttonY,
+                BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT);
         removeFTCButton.setEnabled(false);
-        removeFTCButton.addActionListener(new ActionListener(){
+        removeFTCButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeEntry();
-            }});
+            }
+        });
         fieldPanel.add(removeFTCButton);
     }
 
@@ -277,7 +295,8 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * Removes the selected feature type constraint entries.
      */
     private void removeEntry() {
-        filterModel.removeEntries(filterTable.getSelectionModel().getMinSelectionIndex(), filterTable.getSelectionModel().getMaxSelectionIndex());
+        filterModel.removeEntries(filterTable.getSelectionModel().getMinSelectionIndex(),
+                filterTable.getSelectionModel().getMaxSelectionIndex());
         extentModel.populate(null);
         removeFTCButton.setEnabled(false);
         addExtentButton.setEnabled(false);
@@ -296,7 +315,8 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * Removes the selected extent entries.
      */
     private void removeExtentEntry() {
-        extentModel.removeEntries(extentTable.getSelectionModel().getMinSelectionIndex(), extentTable.getSelectionModel().getMaxSelectionIndex());
+        extentModel.removeEntries(extentTable.getSelectionModel().getMinSelectionIndex(),
+                extentTable.getSelectionModel().getMaxSelectionIndex());
         removeExtentButton.setEnabled(false);
     }
 
@@ -305,12 +325,13 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -320,10 +341,8 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param enabled the new enabled
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(filterTable != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (filterTable != null) {
             filterTable.setEnabled(enabled);
         }
     }
@@ -333,12 +352,13 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
         return expression;
@@ -349,14 +369,14 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if(filterTable != null)
-        {
+    public boolean isEnabled() {
+        if (filterTable != null) {
             return filterTable.isEnabled();
         }
         return false;
@@ -365,12 +385,13 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         // Do nothing
     }
 
@@ -379,12 +400,13 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         // Do nothing
     }
 
@@ -394,19 +416,15 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((filterTable != null) && (undoRedoObject != null))
-        {
-            try
-            {
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((filterTable != null) && (undoRedoObject != null)) {
+            try {
                 @SuppressWarnings("unchecked")
-                List<FeatureTypeConstraint> oldValue = (List<FeatureTypeConstraint>)undoRedoObject.getOldValue();
+                List<FeatureTypeConstraint> oldValue = (List<FeatureTypeConstraint>) undoRedoObject
+                        .getOldValue();
 
                 populateField(oldValue);
-            }
-            catch(ClassCastException e)
-            {
+            } catch (ClassCastException e) {
                 // Ignore
             }
         }
@@ -418,19 +436,15 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((filterTable != null) && (undoRedoObject != null))
-        {
-            try
-            {
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((filterTable != null) && (undoRedoObject != null)) {
+            try {
                 @SuppressWarnings("unchecked")
-                List<FeatureTypeConstraint> newValue = (List<FeatureTypeConstraint>)undoRedoObject.getNewValue();
+                List<FeatureTypeConstraint> newValue = (List<FeatureTypeConstraint>) undoRedoObject
+                        .getNewValue();
 
                 populateField(newValue);
-            }
-            catch(ClassCastException e)
-            {
+            } catch (ClassCastException e) {
                 // Ignore
             }
         }
@@ -442,8 +456,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      * @return the feature type constraint
      */
     @Override
-    public List<FeatureTypeConstraint> getFeatureTypeConstraint()
-    {
+    public List<FeatureTypeConstraint> getFeatureTypeConstraint() {
         return filterModel.getFeatureTypeConstraint();
     }
 
@@ -465,13 +478,12 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      */
     @Override
     public void populateField(List<FeatureTypeConstraint> valueList) {
-        if(filterModel != null)
-        {
-            if(valueList != null)
-            {
+        if (filterModel != null) {
+            if (valueList != null) {
                 filterModel.populate(valueList);
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, valueList));
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, valueList));
 
                 oldValueObj = valueList;
 
@@ -490,8 +502,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigFeatureTypeConstraint copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigFeatureTypeConstraint(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -504,8 +515,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
      */
     @Override
     public void setVisible(boolean visible) {
-        if(filterTable != null)
-        {
+        if (filterTable != null) {
             filterTable.setVisible(visible);
         }
     }
@@ -520,7 +530,9 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModelUpdateInterface#featureTypeConstraintUpdated()
      */
     @Override
@@ -536,11 +548,10 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase implements
 
     @Override
     public void extentUpdated() {
-        if(filterTable != null)
-        {
-            FeatureTypeConstraint ftc = filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
-            if(ftc != null)
-            {
+        if (filterTable != null) {
+            FeatureTypeConstraint ftc = filterModel
+                    .getFeatureTypeConstraint(filterTable.getSelectedRow());
+            if (ftc != null) {
                 extentModel.updateExtent(ftc);
             }
 

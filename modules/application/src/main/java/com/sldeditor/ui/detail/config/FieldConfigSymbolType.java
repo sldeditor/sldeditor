@@ -47,8 +47,8 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * The Class FieldConfigSymbolType allows a user to select a symbol from a list. Depending on the symbol
- * selected further field data can be configured in the {@link #containingPanel}.
+ * The Class FieldConfigSymbolType allows a user to select a symbol from a list. Depending on the symbol selected further field data can be configured
+ * in the {@link #containingPanel}.
  * <p>
  * The field wraps:
  * <ul>
@@ -56,20 +56,21 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
  * <li>an optional value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
  * </ul>
  * <p>
- * The {@link #containingPanel} is a CardLayout.  Fields are added to the class using the {@link #addField} method.
- * A field provides symbol types to be added to the MenuComboBox and a panel to be displayed if the symbol type is selected.
+ * The {@link #containingPanel} is a CardLayout. Fields are added to the class using the {@link #addField} method. A field provides symbol types to be
+ * added to the MenuComboBox and a panel to be displayed if the symbol type is selected.
  * <p>
  * The symbols present in the list depend on the symbolizer being edited and the vendor options allowed by the user.
  * <p>
- * Supports undo/redo functionality. 
- * <p> 
+ * Supports undo/redo functionality.
+ * <p>
  * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * <p>
  * <img src="./doc-files/symboltypefield.png" />
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigSymbolType extends FieldConfigBase implements UndoActionInterface, ValueComboBoxDataSelectedInterface {
+public class FieldConfigSymbolType extends FieldConfigBase
+        implements UndoActionInterface, ValueComboBoxDataSelectedInterface {
 
     /** The containing panel, contains the panels to be displayed when a symbol type is selected. */
     private JPanel containingPanel = null;
@@ -110,28 +111,31 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     @Override
     public void createUI() {
+        if (comboBox == null) {
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            comboBox = new MenuComboBox(this);
+            comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
 
-        comboBox = new MenuComboBox(this);
-        comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+            // Register for changes in vendor option selections
+            VendorOptionManager.getInstance().addVendorOptionListener(comboBox);
+            fieldPanel.add(comboBox);
 
-        // Register for changes in vendor option selections
-        VendorOptionManager.getInstance().addVendorOptionListener(comboBox);
-        fieldPanel.add(comboBox);
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
+            }
 
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
+            // Create
+            containingPanel = new JPanel();
+            containingPanel.setLayout(new CardLayout());
+            containingPanel.setBounds(0, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT * 3);
+
+            addCustomPanel(containingPanel);
         }
-
-        // Create 
-        containingPanel = new JPanel();
-        containingPanel.setLayout(new CardLayout());
-        containingPanel.setBounds(0, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT * 3);
-
-        addCustomPanel(containingPanel);
     }
 
     /**
@@ -139,20 +143,16 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param symbolType the symbol type
      */
-    public void addField(FieldState symbolType)
-    {
-        if(symbolType != null)
-        {
+    public void addField(FieldState symbolType) {
+        if (symbolType != null) {
             FieldConfigBase fieldConfig = symbolType.getConfigField();
             Class<?> panelId = symbolType.getClass();
             VendorOptionVersion vendorOption = symbolType.getVendorOption();
 
-            if(fieldConfig == null)
-            {
-                ConsoleManager.getInstance().error(this, "FieldConfigSymbolType.addPanel passed a field config as null");
-            }
-            else
-            {
+            if (fieldConfig == null) {
+                ConsoleManager.getInstance().error(this,
+                        "FieldConfigSymbolType.addPanel passed a field config as null");
+            } else {
                 // Add to card layout
                 containingPanel.add(fieldConfig.getPanel(), panelId.getName());
 
@@ -171,12 +171,11 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * @param symbolSelectedListener the symbol selected listener
      * @param dataSelectionList the data selection list
      */
-    public void populate(MultiOptionSelectedInterface symbolSelectedListener, List<ValueComboBoxDataGroup> dataSelectionList)
-    {
+    public void populate(MultiOptionSelectedInterface symbolSelectedListener,
+            List<ValueComboBoxDataGroup> dataSelectionList) {
         this.symbolSelectedListener = symbolSelectedListener;
 
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             comboBox.initialiseMenu(dataSelectionList);
         }
     }
@@ -188,8 +187,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     public Class<?> getSelectedValue() {
         ValueComboBoxData selectedValueObj = getSelectedValueObj();
-        if(selectedValueObj == null)
-        {
+        if (selectedValueObj == null) {
             return null;
         }
         return selectedValueObj.getPanelId();
@@ -200,10 +198,8 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @return the selected value obj
      */
-    public ValueComboBoxData getSelectedValueObj()
-    {
-        if(comboBox == null)
-        {
+    public ValueComboBoxData getSelectedValueObj() {
+        if (comboBox == null) {
             return null;
         }
         return comboBox.getSelectedData();
@@ -223,12 +219,13 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Do nothing
     }
 
@@ -237,14 +234,14 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(comboBox != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (comboBox != null) {
             comboBox.setEnabled(enabled);
         }
     }
@@ -254,35 +251,30 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             ValueComboBoxData data = comboBox.getSelectedData();
 
-            if(data != null)
-            {
+            if (data != null) {
                 FieldConfigBase fieldConfig = fieldConfigMap.get(data.getPanelId());
 
-                if(fieldConfig == null)
-                {
-                    ConsoleManager.getInstance().error(this, "Failed to find field for :" + data.getPanelId().getName());
-                }
-                else
-                {
+                if (fieldConfig == null) {
+                    ConsoleManager.getInstance().error(this,
+                            "Failed to find field for :" + data.getPanelId().getName());
+                } else {
                     expression = fieldConfig.getExpression();
 
-                    if((expression == null) && fieldConfig.isASingleValue())
-                    {
+                    if ((expression == null) && fieldConfig.isASingleValue()) {
                         ValueComboBoxData value = getEnumValue();
-                        if(value != null)
-                        {
+                        if (value != null) {
                             expression = getFilterFactory().literal(value.getKey());
                         }
                     }
@@ -297,20 +289,17 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(comboBox != null)
-            {
+        } else {
+            if (comboBox != null) {
                 return comboBox.isEnabled();
             }
         }
@@ -320,12 +309,13 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         // Empty
     }
 
@@ -334,15 +324,15 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(objValue instanceof String)
-        {
-            populateField((String)objValue);
+    public void populateExpression(Object objValue) {
+        if (objValue instanceof String) {
+            populateField((String) objValue);
         }
     }
 
@@ -352,10 +342,8 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      * @return the value
      */
     @Override
-    public ValueComboBoxData getEnumValue()
-    {
-        if(comboBox == null)
-        {
+    public ValueComboBoxData getEnumValue() {
+        if (comboBox == null) {
             return null;
         }
         return comboBox.getSelectedData();
@@ -366,15 +354,15 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @return the string value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#getStringValue()
      */
     @Override
-    public String getStringValue()
-    {
+    public String getStringValue() {
         ValueComboBoxData enumValue = getEnumValue();
-        if(enumValue == null)
-        {
+        if (enumValue == null) {
             return null;
         }
         return enumValue.getKey();
@@ -385,17 +373,16 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getOldValue() instanceof String)
-            {
-                String oldValue = (String)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getOldValue() instanceof String) {
+                String oldValue = (String) undoRedoObject.getOldValue();
 
                 populateField(oldValue);
             }
@@ -407,17 +394,16 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getNewValue() instanceof String)
-            {
-                String newValue = (String)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getNewValue() instanceof String) {
+                String newValue = (String) undoRedoObject.getNewValue();
 
                 populateField(newValue);
             }
@@ -429,62 +415,58 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      *
      * @param selectedData the selected data
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.menucombobox.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor.ui.ValueComboBoxData)
      */
     @Override
     public void optionSelected(ValueComboBoxData selectedData) {
 
-        if(selectedData != null)
-        {
+        if (selectedData != null) {
             String newValueObj = selectedData.getKey();
 
             // Show the correct panel in the card layout for the selected symbol type
-            CardLayout cl = (CardLayout)(containingPanel.getLayout());
+            CardLayout cl = (CardLayout) (containingPanel.getLayout());
 
             String name = selectedData.getPanelId().getName();
             cl.show(containingPanel, name);
 
             FieldConfigBase fieldConfig = fieldConfigMap.get(selectedData.getPanelId());
 
-            if(fieldConfig == null)
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find field config for panel id :" + selectedData.getPanelId());
-            }
-            else
-            {
+            if (fieldConfig == null) {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find field config for panel id :" + selectedData.getPanelId());
+            } else {
                 fieldConfig.justSelected();
 
                 JPanel p = fieldConfig.getPanel();
 
                 Dimension preferredSize = null;
-                if(p.isPreferredSizeSet())
-                {
+                if (p.isPreferredSizeSet()) {
                     preferredSize = p.getPreferredSize();
-                }
-                else
-                {
-                    preferredSize = new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
+                } else {
+                    preferredSize = new Dimension(BasePanel.FIELD_PANEL_WIDTH,
+                            BasePanel.WIDGET_HEIGHT);
                 }
                 containingPanel.setPreferredSize(preferredSize);
 
-                if(oldValueObj == null)
-                {
+                if (oldValueObj == null) {
                     oldValueObj = comboBox.getDefaultValue();
                 }
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
 
                 oldValueObj = new String(newValueObj);
 
-                if(symbolSelectedListener != null)
-                {
-                    logger.debug(String.format("Field %s selected %s", getFieldId(), selectedData.getKey()));
+                if (symbolSelectedListener != null) {
+                    logger.debug(String.format("Field %s selected %s", getFieldId(),
+                            selectedData.getKey()));
 
-                    symbolSelectedListener.optionSelected(selectedData.getPanelId(), selectedData.getKey());
-                }
-                else
-                {
+                    symbolSelectedListener.optionSelected(selectedData.getPanelId(),
+                            selectedData.getKey());
+                } else {
                     valueUpdated();
                 }
             }
@@ -511,8 +493,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     @Override
     public void populateField(String key) {
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             comboBox.setSelectedDataKey(key);
         }
     }
@@ -527,8 +508,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigSymbolType copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigSymbolType(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -541,8 +521,7 @@ public class FieldConfigSymbolType extends FieldConfigBase implements UndoAction
      */
     @Override
     public void setVisible(boolean visible) {
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             comboBox.setVisible(visible);
         }
     }

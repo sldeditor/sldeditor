@@ -42,9 +42,9 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * The Class FieldConfigGeometry wraps a text field that allows the entry of geometry.
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -80,70 +80,74 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (textField == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        textField = new JTextField();
-        textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(textField);
+            textField = new JTextField();
+            textField.setBounds(
+                    xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly()
+                            ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(textField);
 
-        textField.addFocusListener(new FocusListener() {
-            private String originalValue = "";
+            textField.addFocusListener(new FocusListener() {
+                private String originalValue = "";
 
-            @Override
-            public void focusGained(FocusEvent e)
-            {
-                originalValue = textField.getText();
-            }
-
-            @Override
-            public void focusLost(FocusEvent e)
-            {
-                String newValueObj = textField.getText();
-
-                if(originalValue.compareTo(newValueObj) != 0)
-                {
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                    oldValueObj = originalValue;
-
-                    valueUpdated();
+                @Override
+                public void focusGained(FocusEvent e) {
+                    originalValue = textField.getText();
                 }
 
-            }});
+                @Override
+                public void focusLost(FocusEvent e) {
+                    String newValueObj = textField.getText();
 
-        if(buttonText != null)
-        {
-            final JButton buttonExternal = new JButton(buttonText);
-            buttonExternal.addActionListener(new ActionListener() {
+                    if (originalValue.compareTo(newValueObj) != 0) {
+                        UndoManager.getInstance().addUndoEvent(
+                                new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
-                public void actionPerformed(ActionEvent e) {
-                    if(buttonPressedListenerList != null)
-                    {
-                        for(FieldConfigStringButtonInterface listener : buttonPressedListenerList)
-                        {
-                            listener.buttonPressed(buttonExternal);
-                        }
+                        oldValueObj = originalValue;
+
+                        valueUpdated();
                     }
+
                 }
             });
 
-            int buttonWidth = 26;
-            int padding = 3;
-            buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0, buttonWidth, BasePanel.WIDGET_HEIGHT);
-            fieldPanel.add(buttonExternal);
-        }
+            if (buttonText != null) {
+                final JButton buttonExternal = new JButton(buttonText);
+                buttonExternal.addActionListener(new ActionListener() {
 
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this, isRasterSymbol()));
+                    public void actionPerformed(ActionEvent e) {
+                        if (buttonPressedListenerList != null) {
+                            for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
+                                listener.buttonPressed(buttonExternal);
+                            }
+                        }
+                    }
+                });
+
+                int buttonWidth = 26;
+                int padding = 3;
+                buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0,
+                        buttonWidth, BasePanel.WIDGET_HEIGHT);
+                fieldPanel.add(buttonExternal);
+            }
+
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Geometry.class, this,
+                        isRasterSymbol()));
+            }
         }
     }
 
@@ -152,12 +156,13 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -166,14 +171,14 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(textField != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (textField != null) {
             textField.setEnabled(enabled);
         }
     }
@@ -183,16 +188,16 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(this.textField != null)
-        {
+        if (this.textField != null) {
             expression = getFilterFactory().literal(textField.getText());
         }
 
@@ -204,20 +209,17 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(textField != null)
-            {
+        } else {
+            if (textField != null) {
                 return textField.isEnabled();
             }
         }
@@ -228,12 +230,13 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(defaultValue);
     }
 
@@ -242,14 +245,14 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(objValue instanceof String)
-        {
+    public void populateExpression(Object objValue) {
+        if (objValue instanceof String) {
             String sValue = (String) objValue;
 
             populateField(sValue);
@@ -261,8 +264,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(String defaultValue)
-    {
+    public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -272,10 +274,8 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(textField != null)
-        {
+    public String getStringValue() {
+        if (textField != null) {
             return textField.getText();
         }
         return null;
@@ -287,13 +287,10 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((textField != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof String)
-            {
-                String oldValue = (String)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((textField != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof String) {
+                String oldValue = (String) undoRedoObject.getOldValue();
 
                 textField.setText(oldValue);
             }
@@ -306,13 +303,10 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((textField != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof String)
-            {
-                String newValue = (String)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((textField != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof String) {
+                String newValue = (String) undoRedoObject.getNewValue();
 
                 textField.setText(newValue);
             }
@@ -326,8 +320,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      */
     public void addButtonPressedListener(FieldConfigStringButtonInterface listener) {
 
-        if(buttonPressedListenerList == null)
-        {
+        if (buttonPressedListenerList == null) {
             buttonPressedListenerList = new ArrayList<FieldConfigStringButtonInterface>();
         }
 
@@ -352,11 +345,11 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      */
     @Override
     public void populateField(String value) {
-        if(textField != null)
-        {
+        if (textField != null) {
             textField.setText(value);
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
             oldValueObj = value;
 
@@ -373,10 +366,8 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigGeometry copy = null;
-        if(fieldConfigBase != null)
-        {
-            copy = new FieldConfigGeometry(fieldConfigBase.getCommonData(),
-                    this.buttonText);
+        if (fieldConfigBase != null) {
+            copy = new FieldConfigGeometry(fieldConfigBase.getCommonData(), this.buttonText);
         }
         return copy;
     }
@@ -388,8 +379,7 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
      */
     @Override
     public void setVisible(boolean visible) {
-        if(textField != null)
-        {
+        if (textField != null) {
             textField.setVisible(visible);
         }
     }

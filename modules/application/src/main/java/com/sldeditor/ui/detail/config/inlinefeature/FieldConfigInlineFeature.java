@@ -37,16 +37,16 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigInlineFeature wraps a text field GUI
- * component allowing the configuration of inline features
+ * The Class FieldConfigInlineFeature wraps a text field GUI component allowing the configuration of inline features
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigInlineFeature extends FieldConfigBase implements UndoActionInterface, InlineFeatureUpdateInterface {
+public class FieldConfigInlineFeature extends FieldConfigBase
+        implements UndoActionInterface, InlineFeatureUpdateInterface {
 
     /** The default value. */
     private String defaultValue = "";
@@ -78,26 +78,35 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI() {
+        if (inlineGML == null) {
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
+                    getLabel());
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS , getLabel());
+            inlineGML = new InlineGMLPreviewPanel(this, NO_OF_ROWS);
+            inlineFeature = new InlineFeaturePanel(this, NO_OF_ROWS);
 
-        inlineGML = new InlineGMLPreviewPanel(this, NO_OF_ROWS);
-        inlineFeature = new InlineFeaturePanel(this, NO_OF_ROWS);
+            tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+            tabbedPane.addTab(
+                    Localisation.getString(FieldConfigBase.class,
+                            "FieldConfigInlineFeature.feature"),
+                    null, inlineFeature, Localisation.getString(FieldConfigBase.class,
+                            "FieldConfigInlineFeature.feature.tooltip"));
+            tabbedPane.addTab(
+                    Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml"),
+                    null, inlineGML, Localisation.getString(FieldConfigBase.class,
+                            "FieldConfigInlineFeature.gml.tooltip"));
+            tabbedPane.setBounds(0, 0, inlineGML.getWidth(), inlineGML.getHeight());
 
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.feature"), null, inlineFeature,
-                Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.feature.tooltip"));
-        tabbedPane.addTab(Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml"), null, inlineGML,
-                Localisation.getString(FieldConfigBase.class, "FieldConfigInlineFeature.gml.tooltip"));
-        tabbedPane.setBounds(0, 0, inlineGML.getWidth(), inlineGML.getHeight());
-
-        fieldPanel.add(tabbedPane);
+            fieldPanel.add(tabbedPane);
+        }
     }
 
     /**
@@ -105,12 +114,13 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
+    public void attributeSelection(String field) {
         // Not used
     }
 
@@ -119,14 +129,14 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(inlineGML != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (inlineGML != null) {
             inlineGML.setEnabled(enabled);
         }
     }
@@ -136,19 +146,18 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
 
-        if(inlineGML != null)
-        {
+        if (inlineGML != null) {
             String text = inlineGML.getInlineFeatures();
-            if((text != null) && !text.isEmpty())
-            {
+            if ((text != null) && !text.isEmpty()) {
                 expression = getFilterFactory().literal(text);
             }
         }
@@ -160,14 +169,14 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if(inlineGML != null)
-        {
+    public boolean isEnabled() {
+        if (inlineGML != null) {
             return inlineGML.isEnabled();
         }
 
@@ -177,12 +186,13 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         populateField(defaultValue);
     }
 
@@ -191,15 +201,15 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
-        if(objValue instanceof String)
-        {
-            populateField((String)objValue);
+    public void populateExpression(Object objValue) {
+        if (objValue instanceof String) {
+            populateField((String) objValue);
         }
     }
 
@@ -208,8 +218,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(String defaultValue)
-    {
+    public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -219,10 +228,8 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
-        if(inlineGML != null)
-        {
+    public String getStringValue() {
+        if (inlineGML != null) {
             return inlineGML.getInlineFeatures();
         }
         return null;
@@ -234,24 +241,19 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getOldValue() instanceof String)
-            {
-                String oldValue = (String)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getOldValue() instanceof String) {
+                String oldValue = (String) undoRedoObject.getOldValue();
 
                 UserLayer userLayer = DefaultSymbols.createNewUserLayer();
 
                 InlineFeatureUtils.setInlineFeatures(userLayer, oldValue);
-                if(inlineGML != null)
-                {
+                if (inlineGML != null) {
                     inlineGML.setInlineFeatures(oldValue);
                 }
 
-                if(inlineFeature != null)
-                {
+                if (inlineFeature != null) {
                     inlineFeature.setInlineFeatures(userLayer);
                 }
             }
@@ -264,25 +266,20 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if(undoRedoObject != null)
-        {
-            if(undoRedoObject.getNewValue() instanceof String)
-            {
-                String newValue = (String)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getNewValue() instanceof String) {
+                String newValue = (String) undoRedoObject.getNewValue();
 
                 UserLayer userLayer = DefaultSymbols.createNewUserLayer();
 
                 InlineFeatureUtils.setInlineFeatures(userLayer, newValue);
 
-                if(inlineGML != null)
-                {
+                if (inlineGML != null) {
                     inlineGML.setInlineFeatures(newValue);
                 }
 
-                if(inlineFeature != null)
-                {
+                if (inlineFeature != null) {
                     inlineFeature.setInlineFeatures(userLayer);
                 }
             }
@@ -311,17 +308,16 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     public void populateField(UserLayer value) {
         String inlineFeaturesText = InlineFeatureUtils.getInlineFeaturesText(value);
-        if(inlineGML != null)
-        {
+        if (inlineGML != null) {
             inlineGML.setInlineFeatures(inlineFeaturesText);
         }
 
-        if(inlineFeature != null)
-        {
+        if (inlineFeature != null) {
             inlineFeature.setInlineFeatures(value);
         }
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, new String(inlineFeaturesText)));
+        UndoManager.getInstance().addUndoEvent(
+                new UndoEvent(this, getFieldId(), oldValueObj, new String(inlineFeaturesText)));
 
         oldValueObj = new String(inlineFeaturesText);
 
@@ -337,8 +333,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigInlineFeature copy = null;
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigInlineFeature(fieldConfigBase.getCommonData());
         }
         return copy;
@@ -351,29 +346,28 @@ public class FieldConfigInlineFeature extends FieldConfigBase implements UndoAct
      */
     @Override
     public void setVisible(boolean visible) {
-        if(tabbedPane != null)
-        {
+        if (tabbedPane != null) {
             tabbedPane.setVisible(visible);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUpdateInterface#inlineFeatureUpdated()
      */
     @Override
     public void inlineFeatureUpdated() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             String value = "";
-            if(inlineFeature != null)
-            {
+            if (inlineFeature != null) {
                 value = inlineFeature.getInlineFeatures();
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, new String(value)));
+                UndoManager.getInstance().addUndoEvent(
+                        new UndoEvent(this, getFieldId(), oldValueObj, new String(value)));
 
                 oldValueObj = new String(value);
 
-                if(inlineGML != null)
-                {
+                if (inlineGML != null) {
                     inlineGML.setInlineFeatures(value);
                 }
 

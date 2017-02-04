@@ -213,6 +213,7 @@ public class FieldConfigVendorOptionTest {
         field.attributeSelection(null);
 
         field.createUI();
+        field.createUI();
         assertTrue(field.isEnabled());
         field.attributeSelection("test");
         assertTrue(field.isEnabled());

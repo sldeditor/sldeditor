@@ -24,6 +24,7 @@ import java.util.List;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.AnchorPointImpl;
 import org.geotools.styling.Displacement;
+import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.FillImpl;
 import org.geotools.styling.Font;
 import org.geotools.styling.Halo;
@@ -176,31 +177,23 @@ public class TextSymbolizerDetails extends StandardPanel
                         PointPlacementImpl pointPlacement = (PointPlacementImpl) placement;
 
                         labelPlacementGroup.setOption(GroupIdEnum.POINTPLACEMENT);
-                        AnchorPointImpl anchorPoint = pointPlacement.getAnchorPoint();
+                        AnchorPoint anchorPoint = pointPlacement.getAnchorPoint();
                         if (anchorPoint == null) {
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
-                                    (Expression) null);
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
-                                    (Expression) null);
-                        } else {
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
-                                    anchorPoint.getAnchorPointX());
-                            fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
-                                    anchorPoint.getAnchorPointY());
+                            anchorPoint = AnchorPointImpl.DEFAULT;
                         }
+                        fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
+                                anchorPoint.getAnchorPointX());
+                        fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
+                                anchorPoint.getAnchorPointY());
 
                         Displacement displacement = pointPlacement.getDisplacement();
                         if (displacement == null) {
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X,
-                                    (Expression) null);
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y,
-                                    (Expression) null);
-                        } else {
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X,
-                                    displacement.getDisplacementX());
-                            fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y,
-                                    displacement.getDisplacementY());
+                            displacement = DisplacementImpl.DEFAULT;
                         }
+                        fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_X,
+                                displacement.getDisplacementX());
+                        fieldConfigVisitor.populateField(FieldIdEnum.DISPLACEMENT_Y,
+                                displacement.getDisplacementY());
 
                         fieldConfigVisitor.populateField(FieldIdEnum.ANGLE,
                                 pointPlacement.getRotation());

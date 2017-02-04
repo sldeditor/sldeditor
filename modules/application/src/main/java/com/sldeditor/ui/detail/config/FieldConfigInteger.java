@@ -31,12 +31,12 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.IntegerSpinner;
 
 /**
- * The Class FieldConfigInteger wraps a spinner GUI component and an optional
- * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * The Class FieldConfigInteger wraps a spinner GUI component and an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})
  * <p>
- * Supports undo/redo functionality. 
+ * Supports undo/redo functionality.
  * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig} 
+ * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -69,37 +69,43 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /**
      * Creates the ui.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
     public void createUI() {
-        final UndoActionInterface parentObj = this;
+        if (spinner == null) {
+            final UndoActionInterface parentObj = this;
 
-        int xPos = getXPos();
-        FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-        spinner = new IntegerSpinner(minValue, maxValue, stepSize);
-        spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(spinner);
+            spinner = new IntegerSpinner(minValue, maxValue, stepSize);
+            spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(spinner);
 
-        if(!isValueOnly())
-        {
-            setAttributeSelectionPanel(fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
-        }
-
-        spinner.registerObserver(new SpinnerNotifyInterface() {
-            @Override
-            public void notify(double oldValue, double newValue) {
-
-                Integer oldValueObj = Double.valueOf(oldValue).intValue();
-                Integer newValueObj = Double.valueOf(newValue).intValue();
-
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                valueUpdated();
+            if (!isValueOnly()) {
+                setAttributeSelectionPanel(
+                        fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
             }
-        });
+
+            spinner.registerObserver(new SpinnerNotifyInterface() {
+                @Override
+                public void notify(double oldValue, double newValue) {
+
+                    Integer oldValueObj = Double.valueOf(oldValue).intValue();
+                    Integer newValueObj = Double.valueOf(newValue).intValue();
+
+                    UndoManager.getInstance().addUndoEvent(
+                            new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+
+                    valueUpdated();
+                }
+            });
+        }
     }
 
     /**
@@ -107,14 +113,14 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      *
      * @param field the field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
-    public void attributeSelection(String field)
-    {
-        if(this.spinner != null)
-        {
+    public void attributeSelection(String field) {
+        if (this.spinner != null) {
             this.spinner.setEnabled(field == null);
         }
     }
@@ -124,14 +130,14 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled)
-    {
-        if(spinner != null)
-        {
+    public void internal_setEnabled(boolean enabled) {
+        if (spinner != null) {
             spinner.setEnabled(enabled);
         }
     }
@@ -141,15 +147,15 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      *
      * @return the expression
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
-    protected Expression generateExpression()
-    {
+    protected Expression generateExpression() {
         Expression expression = null;
-        if(spinner != null)
-        {
+        if (spinner != null) {
             expression = getFilterFactory().literal(getIntValue());
         }
         return expression;
@@ -160,20 +166,17 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      *
      * @return true, if is enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
-    public boolean isEnabled()
-    {
-        if((attributeSelectionPanel != null) && !isValueOnly())
-        {
+    public boolean isEnabled() {
+        if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
-        }
-        else
-        {
-            if(spinner != null)
-            {
+        } else {
+            if (spinner != null) {
                 return spinner.isEnabled();
             }
         }
@@ -183,12 +186,13 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /**
      * Revert to default value.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
-    public void revertToDefaultValue()
-    {
+    public void revertToDefaultValue() {
         internalSetValue(this.defaultValue);
     }
 
@@ -197,35 +201,26 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      *
      * @param objValue the obj value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
-    public void populateExpression(Object objValue)
-    {
+    public void populateExpression(Object objValue) {
         Integer newValue = 0;
 
-        if(objValue instanceof Integer)
-        {
+        if (objValue instanceof Integer) {
             newValue = ((Integer) objValue).intValue();
-        }
-        else if(objValue instanceof Long)
-        {
+        } else if (objValue instanceof Long) {
             newValue = ((Long) objValue).intValue();
-        }
-        else if(objValue instanceof Double)
-        {
-            Double d = (Double)objValue;
+        } else if (objValue instanceof Double) {
+            Double d = (Double) objValue;
             newValue = d.intValue();
-        }
-        else if(objValue instanceof String)
-        {
-            newValue = Double.valueOf((String)objValue).intValue();
-        }
-        else
-        {
-            if(objValue != null)
-            {
+        } else if (objValue instanceof String) {
+            newValue = Double.valueOf((String) objValue).intValue();
+        } else {
+            if (objValue != null) {
                 newValue = Double.valueOf(objValue.toString()).intValue();
             }
         }
@@ -238,8 +233,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      *
      * @param defaultValue the new default value
      */
-    public void setDefaultValue(int defaultValue)
-    {
+    public void setDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -249,10 +243,8 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @return the value
      */
     @Override
-    public int getIntValue()
-    {
-        if(spinner != null)
-        {
+    public int getIntValue() {
+        if (spinner != null) {
             return spinner.getDoubleValue().intValue();
         }
 
@@ -265,8 +257,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @return the string value
      */
     @Override
-    public String getStringValue()
-    {
+    public String getStringValue() {
         return String.valueOf(getIntValue());
     }
 
@@ -276,13 +267,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if((spinner != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getOldValue() instanceof Integer)
-            {
-                Integer oldValue = (Integer)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if ((spinner != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof Integer) {
+                Integer oldValue = (Integer) undoRedoObject.getOldValue();
 
                 internalSetValue(oldValue);
             }
@@ -295,13 +283,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if((spinner != null) && (undoRedoObject != null))
-        {
-            if(undoRedoObject.getNewValue() instanceof Integer)
-            {
-                Integer newValue = (Integer)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if ((spinner != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof Integer) {
+                Integer newValue = (Integer) undoRedoObject.getNewValue();
 
                 internalSetValue(newValue);
             }
@@ -335,18 +320,12 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @param value the value
      */
     private void internalSetValue(Integer value) {
-        if(spinner != null)
-        {
-            if(value.intValue() < minValue)
-            {
+        if (spinner != null) {
+            if (value.intValue() < minValue) {
                 spinner.setValue(minValue);
-            }
-            else if(value.intValue() > maxValue)
-            {
+            } else if (value.intValue() > maxValue) {
                 spinner.setValue(maxValue);
-            }
-            else
-            {
+            } else {
                 spinner.setValue(value);
             }
         }
@@ -362,13 +341,11 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigInteger copy = null;
 
-        if(fieldConfigBase != null)
-        {
+        if (fieldConfigBase != null) {
             copy = new FieldConfigInteger(fieldConfigBase.getCommonData());
 
-            FieldConfigInteger intFieldConfig = (FieldConfigInteger)fieldConfigBase;
-            copy.setConfig(intFieldConfig.minValue, 
-                    intFieldConfig.maxValue, 
+            FieldConfigInteger intFieldConfig = (FieldConfigInteger) fieldConfigBase;
+            copy.setConfig(intFieldConfig.minValue, intFieldConfig.maxValue,
                     intFieldConfig.stepSize);
             copy.setDefaultValue(intFieldConfig.defaultValue);
         }
@@ -382,8 +359,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     @Override
     public void setVisible(boolean visible) {
-        if(spinner != null)
-        {
+        if (spinner != null) {
             spinner.setVisible(visible);
         }
     }
@@ -395,10 +371,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      * @param maxValue the maximum value
      * @param stepSize the step size
      */
-    public void setConfig(int minValue, 
-            int maxValue,
-            int stepSize)
-    {
+    public void setConfig(int minValue, int maxValue, int stepSize) {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.stepSize = stepSize;

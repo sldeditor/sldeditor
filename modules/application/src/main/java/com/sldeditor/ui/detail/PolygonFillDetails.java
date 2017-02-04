@@ -80,10 +80,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     private VendorOptionFillFactory vendorOptionFillFactory = null;
 
     /** The default anchor point. */
-    private static AnchorPoint defaultAnchorPoint = new AnchorPointImpl();
+    private static AnchorPoint defaultAnchorPoint = AnchorPointImpl.DEFAULT;
 
     /** The default displacement. */
-    private static Displacement defaultDisplacement = new DisplacementImpl();
+    private static Displacement defaultDisplacement = DisplacementImpl.DEFAULT;
 
     /** The symbolizer. */
     private Symbolizer symbolizer = null;

@@ -224,6 +224,7 @@ public class FieldConfigBoundingBoxTest {
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
+        field.createUI();
 
         CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
         ReferencedEnvelope envelope1 = new ReferencedEnvelope(0.0, 1.0, 51.0, 51.1, crs);

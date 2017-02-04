@@ -259,6 +259,7 @@ public class FieldConfigSymbolTypeTest {
         field.redoAction(null);
 
         field.createUI();
+        field.createUI();
 
         FieldConfigMarker marker = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.ANGLE, "label", valueOnly), null, null, null);
         marker.createUI();
