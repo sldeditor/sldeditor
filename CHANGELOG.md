@@ -1,5 +1,17 @@
 # Change Log
 
+## [0.7.1](https://github.com/robward-scisys/sldeditor/tree/0.7.1) (2017-02-04)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.0...0.7.1)
+
+**Implemented enhancements:**
+
+- Sliders now update continuously [\#266](https://github.com/robward-scisys/sldeditor/pull/271 ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+The following bugs were identified by Ranen Ghosh:
+- Text symbolizers anchor points, displacements, rotation values updated correctly [\#261](https://github.com/robward-scisys/sldeditor/issues/270)
+
 ## [0.7.0](https://github.com/robward-scisys/sldeditor/tree/0.7.0) (2017-02-03)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.5...0.7.0)
 
