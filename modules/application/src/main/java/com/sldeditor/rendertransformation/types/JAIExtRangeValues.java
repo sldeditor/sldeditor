@@ -116,7 +116,7 @@ public class JAIExtRangeValues extends BaseValue implements RenderTransformValue
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
         // TODO
-        return new FieldConfigRange(commonData);
+        return new FieldConfigRange(commonData, it.geosolutions.jaiext.range.Range.class);
     }
 
     /* (non-Javadoc)

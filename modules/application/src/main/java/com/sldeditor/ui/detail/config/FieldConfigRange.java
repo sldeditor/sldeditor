@@ -49,6 +49,8 @@ import com.sldeditor.ui.widgets.FieldPanel;
  */
 public class FieldConfigRange extends FieldConfigBase implements UndoActionInterface {
 
+    Class<?> rangeClass;
+
     /**
      * The Class RangeData.
      */
@@ -94,9 +96,11 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      * Instantiates a new field config double.
      *
      * @param commonData the common data
+     * @param rangeClass the range class
      */
-    public FieldConfigRange(FieldConfigCommonData commonData) {
+    public FieldConfigRange(FieldConfigCommonData commonData, Class<?> rangeClass) {
         super(commonData);
+        this.rangeClass = rangeClass;
     }
 
     /**
@@ -159,7 +163,8 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         rangeConfig.includedCheckBox = new JCheckBox(
                 Localisation.getString(FieldConfigBase.class, "FieldConfigRange.included"));
 
-        rangeConfig.includedCheckBox.setBounds(rangeConfig.spinner.getX() + rangeConfig.spinner.getWidth() + 5, y,
+        rangeConfig.includedCheckBox.setBounds(
+                rangeConfig.spinner.getX() + rangeConfig.spinner.getWidth() + 5, y,
                 BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(rangeConfig.includedCheckBox);
 
@@ -223,6 +228,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      *
      * @return the expression
      */
+    @SuppressWarnings("rawtypes")
     /*
      * (non-Javadoc)
      * 
@@ -230,7 +236,18 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     @Override
     protected Expression generateExpression() {
-        Expression expression = getFilterFactory().literal(getRange());
+        Expression expression = null;
+        Range range = getRange();
+
+        if (this.rangeClass == Range.class) {
+            expression = getFilterFactory().literal(range);
+        }
+        else if (this.rangeClass == it.geosolutions.jaiext.range.Range.class) {
+            it.geosolutions.jaiext.range.Range r = it.geosolutions.jaiext.range.RangeFactory.create(
+                    range.getMin().doubleValue(), range.isMinIncluded(),
+                    range.getMax().doubleValue(), range.isMaxIncluded(), false);
+            expression = getFilterFactory().literal(r);
+        }
 
         return expression;
     }
@@ -287,6 +304,11 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
 
         if (objValue instanceof Range) {
             newValue = (Range) objValue;
+        } else if (objValue instanceof it.geosolutions.jaiext.range.Range) {
+            it.geosolutions.jaiext.range.Range tmp = (it.geosolutions.jaiext.range.Range) objValue;
+
+            newValue = Range.create(tmp.getMin().doubleValue(), tmp.isMinIncluded(),
+                    tmp.getMax().doubleValue(), tmp.isMaxIncluded());
         }
 
         populateField(newValue);
@@ -383,8 +405,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
             }
         }
 
-        if(startRange.includedCheckBox != null)
-        {
+        if (startRange.includedCheckBox != null) {
             startRange.includedCheckBox.setSelected(value.isMinIncluded());
         }
 
@@ -398,8 +419,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
             }
         }
 
-        if(endRange.includedCheckBox != null)
-        {
+        if (endRange.includedCheckBox != null) {
             endRange.includedCheckBox.setSelected(value.isMaxIncluded());
         }
         setPopulating(false);
@@ -425,7 +445,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         FieldConfigRange copy = null;
 
         if (fieldConfigBase != null) {
-            copy = new FieldConfigRange(fieldConfigBase.getCommonData());
+            copy = new FieldConfigRange(fieldConfigBase.getCommonData(), this.rangeClass);
 
             FieldConfigRange doubleFieldConfig = (FieldConfigRange) fieldConfigBase;
             copy.setConfig(doubleFieldConfig.startRange.minValue,
@@ -490,7 +510,8 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         Range range = previousValue;
         if (!isPopulating()) {
             boolean minIncluded = startRange.includedCheckBox.isSelected();
-            boolean maxIncluded = endRange.includedCheckBox.isSelected();;
+            boolean maxIncluded = endRange.includedCheckBox.isSelected();
+            ;
             Double minValue = startRange.spinner.getDoubleValue();
             Double maxValue = endRange.spinner.getDoubleValue();
             range = Range.create(minValue, minIncluded, maxValue, maxIncluded);

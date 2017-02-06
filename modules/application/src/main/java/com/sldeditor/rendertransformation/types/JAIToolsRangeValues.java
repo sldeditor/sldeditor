@@ -116,7 +116,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
         // TODO
-        return new FieldConfigRange(commonData);
+        return new FieldConfigRange(commonData, org.jaitools.numeric.Range.class);
     }
 
     /* (non-Javadoc)
