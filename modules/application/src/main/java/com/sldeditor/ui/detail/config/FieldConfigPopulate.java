@@ -27,6 +27,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.geotools.styling.UserLayer;
+import org.jaitools.numeric.Range;
 import org.opengis.filter.Id;
 import org.opengis.filter.expression.Expression;
 
@@ -79,6 +80,17 @@ public abstract class FieldConfigPopulate extends FieldConfigCommonData implemen
      */
     @Override
     public void populateField(Double value) {
+        // Do nothing
+    }
+
+    /**
+     * Populate range field, overridden if necessary.
+     *
+     * @param value the value
+     */
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void populateField(Range value) {
         // Do nothing
     }
 
@@ -322,6 +334,18 @@ public abstract class FieldConfigPopulate extends FieldConfigCommonData implemen
      */
     @Override
     public Font getFont() {
+        // Do nothing
+        return null;
+    }
+
+    /**
+     * Gets the range value, overridden if necessary.
+     *
+     * @return the font
+     */
+    @SuppressWarnings("rawtypes")
+    @Override
+    public Range getRange() {
         // Do nothing
         return null;
     }

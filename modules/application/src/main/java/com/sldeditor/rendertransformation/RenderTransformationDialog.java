@@ -137,20 +137,20 @@ public class RenderTransformationDialog extends JDialog {
      *
      * @param geoServerConnectionManager the geo server connection manager
      */
-    public RenderTransformationDialog(GeoServerConnectionManagerInterface geoServerConnectionManager)
-    {
-        super(Controller.getInstance().getFrame(), Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.title"), true);
+    public RenderTransformationDialog(
+            GeoServerConnectionManagerInterface geoServerConnectionManager) {
+        super(Controller.getInstance().getFrame(), Localisation.getString(
+                RenderTransformationDialog.class, "RenderTransformationDialog.title"), true);
 
         this.geoServerConnectionManager = geoServerConnectionManager;
 
-        if(expressionPanel == null)
-        {
+        if (expressionPanel == null) {
             expressionPanel = ExpressionPanelFactory.getExpressionPanel("v2");
         }
 
         createUI();
 
-        Dimension preferredSize = new Dimension(600,400);
+        Dimension preferredSize = new Dimension(600, 400);
         setSize(preferredSize);
 
         Controller.getInstance().centreDialog(this);
@@ -201,10 +201,12 @@ public class RenderTransformationDialog extends JDialog {
             }
         });
 
-        TableColumn col = functionParameterTable.getColumnModel().getColumn(FunctionTableModel.getValueColumn());
-        //    col.setCellEditor(new ExpressionEditor(functionParameterTableModel));
+        TableColumn col = functionParameterTable.getColumnModel()
+                .getColumn(FunctionTableModel.getValueColumn());
+        // col.setCellEditor(new ExpressionEditor(functionParameterTableModel));
 
-        col = functionParameterTable.getColumnModel().getColumn(FunctionTableModel.getOptionalColumn());
+        col = functionParameterTable.getColumnModel()
+                .getColumn(FunctionTableModel.getOptionalColumn());
         CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer(functionParameterTableModel);
         col.setCellRenderer(checkBoxRenderer);
         col.setCellEditor(new OptionalValueEditor(functionParameterTableModel));
@@ -217,7 +219,8 @@ public class RenderTransformationDialog extends JDialog {
         //
         // Add value button
         //
-        btnAdd = new JButton(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.add"));
+        btnAdd = new JButton(Localisation.getString(RenderTransformationDialog.class,
+                "RenderTransformationDialog.add"));
         btnAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int row = functionParameterTable.getSelectedRow();
@@ -231,7 +234,8 @@ public class RenderTransformationDialog extends JDialog {
         //
         // Remove value button
         //
-        btnRemove = new JButton(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.remove"));
+        btnRemove = new JButton(Localisation.getString(RenderTransformationDialog.class,
+                "RenderTransformationDialog.remove"));
         btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int row = functionParameterTable.getSelectedRow();
@@ -251,7 +255,8 @@ public class RenderTransformationDialog extends JDialog {
         panel_2.setLayout(new BorderLayout(0, 0));
         getContentPane().add(panel_2, BorderLayout.NORTH);
 
-        btnEditConnection = new JButton(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.editConnection"));
+        btnEditConnection = new JButton(Localisation.getString(RenderTransformationDialog.class,
+                "RenderTransformationDialog.editConnection"));
         panel_2.add(btnEditConnection, BorderLayout.EAST);
         btnEditConnection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -261,13 +266,14 @@ public class RenderTransformationDialog extends JDialog {
         //
         // Connect button
         //
-        btnConnect = new JButton(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.connect"));
+        btnConnect = new JButton(Localisation.getString(RenderTransformationDialog.class,
+                "RenderTransformationDialog.connect"));
         btnConnect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 updateButtonState(false);
 
-                populateFunctionList((String)connectionComboBox.getSelectedItem());
+                populateFunctionList((String) connectionComboBox.getSelectedItem());
             }
         });
         panel_2.add(btnConnect, BorderLayout.WEST);
@@ -291,7 +297,8 @@ public class RenderTransformationDialog extends JDialog {
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnOk = new JButton(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.ok"));
+        JButton btnOk = new JButton(Localisation.getString(RenderTransformationDialog.class,
+                "RenderTransformationDialog.ok"));
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = true;
@@ -300,10 +307,11 @@ public class RenderTransformationDialog extends JDialog {
         });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.cancel"));
+        JButton btnCancel = new JButton(Localisation.getString(RenderTransformationDialog.class,
+                "RenderTransformationDialog.cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                okButtonPressed  = false;
+                okButtonPressed = false;
                 setVisible(false);
             }
         });
@@ -314,8 +322,7 @@ public class RenderTransformationDialog extends JDialog {
      * Populate built in process functions.
      */
     private void populateBuiltInProcessFunctions() {
-        for(FunctionName functionName : factory.getFunctionNames())
-        {
+        for (FunctionName functionName : factory.getFunctionNames()) {
             functionListModel.addElement(functionName.getName());
         }
     }
@@ -325,58 +332,56 @@ public class RenderTransformationDialog extends JDialog {
      *
      * @param enabled the enabled
      */
-    private void updateButtonState(boolean enabled)
-    {
+    private void updateButtonState(boolean enabled) {
         btnConnect.setEnabled(enabled);
         connectionComboBox.setEnabled(enabled);
         btnEditConnection.setEnabled(enabled);
     }
 
     /**
-     * Show message, set text colour according to whether message is
-     * informational (black) or an error (red).
+     * Show message, set text colour according to whether message is informational (black) or an error (red).
      *
      * @param message the message
      * @param error the error
      */
-    private void showMessage(String message, boolean error)
-    {
+    private void showMessage(String message, boolean error) {
         lblError.setForeground(error ? Color.RED : Color.BLACK);
         lblError.setText(message);
     }
+
     /**
      * Handle table selection event.
      *
      * @param e the list selection event
      */
     private void handleTableSelectionEvent(ListSelectionEvent e) {
-        int row = functionParameterTable.getSelectedRow();
-        int column = functionParameterTable.getSelectedColumn();
+        if (!e.getValueIsAdjusting()) {
+            int row = functionParameterTable.getSelectedRow();
+            int column = functionParameterTable.getSelectedColumn();
 
-        ProcessFunctionParameterValue value = functionParameterTableModel.getValue(row);
+            ProcessFunctionParameterValue value = functionParameterTableModel.getValue(row);
 
-        if(value != null)
-        {
-            int count = functionParameterTableModel.getNoOfOccurences(value);
-            btnAdd.setEnabled(count < value.maxOccurences);
-            btnRemove.setEnabled((count > value.minOccurences) && (count > 1));
-        }
-        else
-        {
-            btnAdd.setEnabled(false);
-            btnRemove.setEnabled(false);
-        }
+            if (value != null) {
+                int count = functionParameterTableModel.getNoOfOccurences(value);
+                btnAdd.setEnabled(count < value.maxOccurences);
+                btnRemove.setEnabled((count > value.minOccurences) && (count > 1));
+            } else {
+                btnAdd.setEnabled(false);
+                btnRemove.setEnabled(false);
+            }
 
-        if(column == 3)
-        {
-            String title = String.format("%s - %s : %s", value.name, Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.type"), value.dataType);
-            expressionPanel.configure(title, value.type, false);
-            expressionPanel.populate(value.objectValue.getExpression());
-            if(expressionPanel.showDialog())
-            {
-                Expression expression = expressionPanel.getExpression();
+            if (column == 3) {
+                String title = String.format("%s - %s : %s", value.name,
+                        Localisation.getString(RenderTransformationDialog.class,
+                                "RenderTransformationDialog.type"),
+                        value.dataType);
+                expressionPanel.configure(title, value.type, false);
+                expressionPanel.populate(value.objectValue.getExpression());
+                if (expressionPanel.showDialog()) {
+                    Expression expression = expressionPanel.getExpression();
 
-                functionParameterTableModel.update(expression, row);
+                    functionParameterTableModel.update(expression, row);
+                }
             }
         }
     }
@@ -389,8 +394,7 @@ public class RenderTransformationDialog extends JDialog {
     protected void displayFunction(String selectedValue) {
         boolean builtInFunctionFound = displayBuiltInProcessFunction(selectedValue);
 
-        if(!builtInFunctionFound)
-        {
+        if (!builtInFunctionFound) {
             displayCustomProcessFunction(selectedValue);
         }
         functionParameterTableModel.fireTableDataChanged();
@@ -408,10 +412,8 @@ public class RenderTransformationDialog extends JDialog {
         // Strip off the prefix
         functionNameString = SelectedProcessFunction.extractLocalFunctionName(selectedValue);
 
-        for(FunctionName name : factory.getFunctionNames())
-        {
-            if(name.getName().compareToIgnoreCase(functionNameString) == 0)
-            {
+        for (FunctionName name : factory.getFunctionNames()) {
+            if (name.getName().compareToIgnoreCase(functionNameString) == 0) {
                 functionList.setSelectedValue(functionNameString, true);
                 functionParameterTableModel.populate(name, existingProcessFunction);
                 return true;
@@ -427,10 +429,8 @@ public class RenderTransformationDialog extends JDialog {
      */
     private void displayCustomProcessFunction(String selectedValue) {
         ProcessBriefType selectedFunction = null;
-        for(ProcessBriefType function : availableFunctionList)
-        {
-            if(function.getIdentifier().getValue().compareTo(selectedValue) == 0)
-            {
+        for (ProcessBriefType function : availableFunctionList) {
+            if (function.getIdentifier().getValue().compareTo(selectedValue) == 0) {
                 selectedFunction = function;
                 break;
             }
@@ -449,7 +449,8 @@ public class RenderTransformationDialog extends JDialog {
         GeoServerConnection connection = connectionMap.get(selectedItem);
 
         String message = String.format("%s : %s",
-                Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.tryingToConnect"),
+                Localisation.getString(RenderTransformationDialog.class,
+                        "RenderTransformationDialog.tryingToConnect"),
                 connection.getUrl().toString());
         showMessage(message, false);
 
@@ -458,25 +459,22 @@ public class RenderTransformationDialog extends JDialog {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 client = new GeoServerWPSClient(connection);
-                if(client.getCapabilities())
-                {
+                if (client.getCapabilities()) {
                     availableFunctionList = client.getRenderTransformations(DataTypeEnum.E_VECTOR);
 
                     functionListModel.removeAllElements();
 
                     populateBuiltInProcessFunctions();
-                    for(ProcessBriefType function : availableFunctionList)
-                    {
+                    for (ProcessBriefType function : availableFunctionList) {
                         functionListModel.addElement(function.getIdentifier().getValue());
                     }
 
                     // Clear info field
                     showMessage("", false);
-                }
-                else
-                {
+                } else {
                     // Show error message
-                    showMessage(Localisation.getString(RenderTransformationDialog.class, "RenderTransformationDialog.errorFailedToConnect"), true);
+                    showMessage(Localisation.getString(RenderTransformationDialog.class,
+                            "RenderTransformationDialog.errorFailedToConnect"), true);
                 }
 
                 // Make ui available again
@@ -491,12 +489,11 @@ public class RenderTransformationDialog extends JDialog {
     private void populateConnectionComboBox() {
         connectionComboBox.removeAllItems();
 
-        if(geoServerConnectionManager != null)
-        {
-            List<GeoServerConnection> connectionList = geoServerConnectionManager.getConnectionList();
+        if (geoServerConnectionManager != null) {
+            List<GeoServerConnection> connectionList = geoServerConnectionManager
+                    .getConnectionList();
 
-            for(GeoServerConnection connection : connectionList)
-            {
+            for (GeoServerConnection connection : connectionList) {
                 connectionComboBox.addItem(connection.getConnectionName());
                 connectionMap.put(connection.getConnectionName(), connection);
             }
@@ -509,8 +506,7 @@ public class RenderTransformationDialog extends JDialog {
      * @param args the arguments
      */
     public static void main(String[] args) {
-        GeoServerConnectionManagerInterface dummyInterface = new GeoServerConnectionManagerInterface()
-        {
+        GeoServerConnectionManagerInterface dummyInterface = new GeoServerConnectionManagerInterface() {
 
             @Override
             public List<GeoServerConnection> getConnectionList() {
@@ -524,8 +520,7 @@ public class RenderTransformationDialog extends JDialog {
                     connection.setPassword("geoserver");
 
                     list.add(connection);
-                }
-                catch (MalformedURLException e) {
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
                 return list;
@@ -574,8 +569,7 @@ public class RenderTransformationDialog extends JDialog {
      * @param existingProcessFunction the existing process function
      * @return true, if successful
      */
-    public boolean showDialog(ProcessFunction existingProcessFunction)
-    {
+    public boolean showDialog(ProcessFunction existingProcessFunction) {
         internal_showDialog(existingProcessFunction);
         setVisible(true);
 
@@ -589,8 +583,7 @@ public class RenderTransformationDialog extends JDialog {
      */
     protected void internal_showDialog(ProcessFunction existingProcessFunction) {
         this.existingProcessFunction = existingProcessFunction;
-        if(existingProcessFunction != null)
-        {
+        if (existingProcessFunction != null) {
             displayFunction(existingProcessFunction.getName());
         }
     }
@@ -600,8 +593,7 @@ public class RenderTransformationDialog extends JDialog {
      *
      * @return the transformation expression
      */
-    public ProcessFunction getTransformationProcessFunction()
-    {
+    public ProcessFunction getTransformationProcessFunction() {
         return functionParameterTableModel.getExpression(factory);
     }
 }

@@ -27,12 +27,11 @@ import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.jaitools.numeric.Range;
-
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.config.FieldConfigRange;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
@@ -117,7 +116,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
         // TODO
-        return new FieldConfigDouble(commonData);
+        return new FieldConfigRange(commonData);
     }
 
     /* (non-Javadoc)

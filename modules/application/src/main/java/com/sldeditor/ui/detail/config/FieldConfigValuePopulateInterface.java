@@ -27,6 +27,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.Font;
 import org.geotools.styling.UserLayer;
+import org.jaitools.numeric.Range;
 import org.opengis.filter.Id;
 
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
@@ -192,4 +193,20 @@ public interface FieldConfigValuePopulateInterface {
      * @return the feature type constraint
      */
     public List<FeatureTypeConstraint> getFeatureTypeConstraint();
+
+    /**
+     * Gets the range.
+     *
+     * @return the range
+     */
+    @SuppressWarnings("rawtypes")
+    Range getRange();
+
+    /**
+     * Populate range.
+     *
+     * @param value the value
+     */
+    @SuppressWarnings("rawtypes")
+    void populateField(Range value);
 }
