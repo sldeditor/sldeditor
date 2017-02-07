@@ -25,6 +25,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -60,13 +62,13 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    
+
     /** The format list component. */
     private JList<String> formatListComponent;
 
     /** The format map. */
     private Map<String, AbstractGridFormat> formatMap = new HashMap<String, AbstractGridFormat>();
-    
+
     /** The description text area. */
     private JTextArea descriptionTextArea;
 
@@ -75,25 +77,36 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
      *
      * @param frame the frame
      */
-    public ChooseRasterFormatPanel(JFrame frame)
-    {
-        super(frame, Localisation.getString(ChooseRasterFormatPanel.class, "ChooseRasterFormatPanel.title"), true);
+    public ChooseRasterFormatPanel(JFrame frame) {
+        super(frame, Localisation.getString(ChooseRasterFormatPanel.class,
+                "ChooseRasterFormatPanel.title"), true);
 
         setLayout(new BorderLayout());
 
         JPanel p = new JPanel();
-        p.setLayout(new GridLayout(1,2));
+        p.setLayout(new GridLayout(1, 2));
         formatListComponent = new JList<String>();
         formatListComponent.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         formatListComponent.setPreferredSize(new Dimension(100, 300));
-        formatListComponent.addListSelectionListener(new ListSelectionListener(){
+        formatListComponent.addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                String selectedFormat = formatListComponent.getSelectedValue();
+                if(!e.getValueIsAdjusting())
+                {
+                    selectFormat();
+                }
+            }
+        });
 
-                descriptionTextArea.setText(formatMap.get(selectedFormat).getDescription());
-            }});
+        formatListComponent.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    selectFormat();
+                    setVisible(false);
+                }
+            }
+        });
         JScrollPane listScroller = new JScrollPane(formatListComponent);
         p.add(listScroller);
 
@@ -113,13 +126,15 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         //
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
-        JButton okButton = new JButton(Localisation.getString(ChooseRasterFormatPanel.class, "common.ok"));
+        JButton okButton = new JButton(
+                Localisation.getString(ChooseRasterFormatPanel.class, "common.ok"));
         okButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-            }});
+            }
+        });
 
         buttonPanel.add(okButton);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -128,21 +143,20 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         Controller.getInstance().centreDialog(this);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.impl.chooseraster.ChooseRasterFormatInterface#showPanel(java.util.Set)
      */
     @Override
-    public AbstractGridFormat showPanel(Set<AbstractGridFormat> formatList)
-    {
+    public AbstractGridFormat showPanel(Set<AbstractGridFormat> formatList) {
         WorldImageFormat wif = new WorldImageFormat();
 
         DefaultListModel<String> listModel = new DefaultListModel<String>();
 
         List<AbstractGridFormat> sortedFormatList = new ArrayList<AbstractGridFormat>();
-        for(AbstractGridFormat format : formatList)
-        {
-            if(format.getName().compareTo(wif.getName()) != 0)
-            {
+        for (AbstractGridFormat format : formatList) {
+            if (format.getName().compareTo(wif.getName()) != 0) {
                 sortedFormatList.add(format);
             }
         }
@@ -159,8 +173,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         sortedFormatList.add(0, wif);
 
         // Add format names to list component
-        for(AbstractGridFormat format : sortedFormatList)
-        {
+        for (AbstractGridFormat format : sortedFormatList) {
             formatMap.put(format.getName(), format);
             listModel.addElement(format.getName());
         }
@@ -175,5 +188,14 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         AbstractGridFormat selectedFormat = formatMap.get(selectedFormatName);
 
         return selectedFormat;
+    }
+
+    /**
+     * 
+     */
+    protected void selectFormat() {
+        String selectedFormat = formatListComponent.getSelectedValue();
+
+        descriptionTextArea.setText(formatMap.get(selectedFormat).getDescription());
     }
 }

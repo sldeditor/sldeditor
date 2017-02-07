@@ -246,4 +246,17 @@ public class SLDMapPane extends AbstractMapPane {
         }
     }
 
+    /**
+     * Reset renderer.
+     */
+    public void resetRenderer()
+    {
+        if (renderingExecutor != null) {
+            renderingExecutor.shutdown();
+        }
+        renderingExecutor = null;
+        mapContent.dispose();
+        doSetRenderer(null);
+        setMapContent(null);
+    }
 }
