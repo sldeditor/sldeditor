@@ -30,7 +30,7 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.config.FieldConfigRange;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 import it.geosolutions.jaiext.range.Range;
@@ -116,7 +116,7 @@ public class JAIExtRangeValues extends BaseValue implements RenderTransformValue
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
         // TODO
-        return new FieldConfigDouble(commonData);
+        return new FieldConfigRange(commonData, it.geosolutions.jaiext.range.Range.class);
     }
 
     /* (non-Javadoc)

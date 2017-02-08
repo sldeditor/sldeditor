@@ -97,7 +97,11 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
      */
     @Override
     public Expression getExpression() {
-        return filterFactory.literal(value.getClass().getSimpleName());
+        if(value != null)
+        {
+            return filterFactory.literal(value.getClass().getSimpleName());
+        }
+        return null;
     }
 
     /*
