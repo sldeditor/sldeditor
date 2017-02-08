@@ -27,6 +27,7 @@ import org.geotools.filter.BinaryComparisonAbstract;
 import org.geotools.filter.LogicFilterImpl;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
+import org.opengis.filter.Not;
 import org.opengis.filter.PropertyIsBetween;
 import org.opengis.filter.PropertyIsLike;
 import org.opengis.filter.PropertyIsNull;
@@ -166,7 +167,21 @@ public class FilterNode extends DefaultMutableTreeNode {
         {
             FilterName filterName = filterConfig.getFilterConfiguration();
 
-            if(filter instanceof LogicFilterImpl)
+            if(filter instanceof Not)
+            {
+                List<Filter> childFilterList = ((LogicFilterImpl)filter).getChildren();
+
+                if(childFilterList.isEmpty())
+                {
+                    // No child filter so add a minimum 1 to work with.
+                    setFilterParameter(null, filterName.getParameter(0));
+                }
+                else
+                {
+                    setFilterParameter(childFilterList.get(0), filterName.getParameter(0));
+                }
+            }
+            else if(filter instanceof LogicFilterImpl)
             {
                 List<Filter> childFilterList = ((LogicFilterImpl)filter).getChildren();
 
