@@ -22,67 +22,29 @@ package com.sldeditor.ui.tree;
 import org.apache.commons.lang.ObjectUtils;
 
 /**
- * The Class SLDTreeItemWrapper, a wrapper for any class.  The hash code method 
- * allows the differentation of object instances even if the object contents are the same.
- * Need to find the difference between 2 default text symbolizers for example.
+ * The Class SLDTreeItemWrapper, a wrapper for any class. The return string allows the differentation of
+ * object instances even if the object contents are the same. Need to find the difference between
+ * 2 default text symbolizers for example.
  *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeItemWrapper {
-    
-    /** The sld item. */
-    private Object sldItem = null;
+
+    /** The Constant NULL_VALUE. */
+    private static final String NULL_VALUE = "<null>";
 
     /**
-     * Instantiates a new SLD tree item wrapper.
+     * Generate a unique key.
      *
      * @param sldItem the sld item
+     * @return the string
      */
-    public SLDTreeItemWrapper(Object sldItem) {
-        super();
-        this.sldItem = sldItem;
-    }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((sldItem == null) ? 0 : sldItem.hashCode());
-        if(sldItem != null)
+    public static String generateKey(Object sldItem) {
+        if(sldItem == null)
         {
-            String string = ObjectUtils.identityToString(sldItem);
-            result = prime * result + string.hashCode();
+            return NULL_VALUE;
         }
-        return result;
+        return ObjectUtils.identityToString(sldItem);
     }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        SLDTreeItemWrapper other = (SLDTreeItemWrapper) obj;
-        if (sldItem == null) {
-            if (other.sldItem != null) {
-                return false;
-            }
-        } else if (!sldItem.equals(other.sldItem)) {
-            return false;
-        }
-        return true;
-    }
-    
 
 }

@@ -101,7 +101,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     private SymbolizerSelectedInterface displayPanel = null;
 
     /** The node map. */
-    private Map<SLDTreeItemWrapper, DefaultMutableTreeNode> nodeMap = new HashMap<SLDTreeItemWrapper, DefaultMutableTreeNode>();
+    private Map<String, DefaultMutableTreeNode> nodeMap = new HashMap<String, DefaultMutableTreeNode>();
 
     /** The object to render the selected symbol. */
     private List<RenderSymbolInterface> renderList = null;
@@ -229,7 +229,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
             boolean shouldBeVisible) {
         DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
 
-        nodeMap.put(new SLDTreeItemWrapper(child), childNode);
+        nodeMap.put(SLDTreeItemWrapper.generateKey(child), childNode);
 
         if (parent == null) {
             parent = rootNode;
@@ -414,13 +414,13 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     @Override
     public void updateNode(Object objectOld, Object objectNew) {
 
-        SLDTreeItemWrapper key = new SLDTreeItemWrapper(objectOld);
+        String key = SLDTreeItemWrapper.generateKey(objectOld);
         DefaultMutableTreeNode node = nodeMap.get(key);
 
         if (node != null) {
             node.setUserObject(objectNew);
-            nodeMap.remove(key);
-            SLDTreeItemWrapper newKey = new SLDTreeItemWrapper(objectNew);
+            nodeMap.remove(key.toString());
+            String newKey = SLDTreeItemWrapper.generateKey(objectNew);
             nodeMap.put(newKey, node);
             treeModel.nodeChanged(node);
         }

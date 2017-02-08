@@ -43,40 +43,27 @@ public class SLDTreeItemWrapperTest {
     @Test
     public void testSLDTreeItemWrapper() {
         // Try with null objects first
-        SLDTreeItemWrapper testObj1 = new SLDTreeItemWrapper(null);
-        SLDTreeItemWrapper testObj2 = new SLDTreeItemWrapper(null);
+        String testObj1 = SLDTreeItemWrapper.generateKey(null);
+        String testObj2 = SLDTreeItemWrapper.generateKey(null);
 
         assertTrue(testObj1.equals(testObj1));
         assertTrue(testObj1.equals(testObj2));
 
-        assertTrue(testObj1.hashCode() == testObj2.hashCode());
-
         // Try with 2 different text symbolizers instances but the same contents, hash codes should be different
-        SLDTreeItemWrapper testObj3 = new SLDTreeItemWrapper(DefaultSymbols.createDefaultTextSymbolizer());
-        SLDTreeItemWrapper testObj4 = new SLDTreeItemWrapper(DefaultSymbols.createDefaultTextSymbolizer());
+        String testObj3 = SLDTreeItemWrapper.generateKey(DefaultSymbols.createDefaultTextSymbolizer());
+        String testObj4 = SLDTreeItemWrapper.generateKey(DefaultSymbols.createDefaultTextSymbolizer());
 
         assertTrue(testObj3.equals(testObj3));
-        assertTrue(testObj3.equals(testObj4));
-
-        assertFalse(testObj3.hashCode() == testObj4.hashCode());
+        assertFalse(testObj3.equals(testObj4));
 
         // Try with one text symbolizer instances the same contents, hash codes should be the same
         TextSymbolizer textSymbolizer = DefaultSymbols.createDefaultTextSymbolizer();
         textSymbolizer.setHalo(new HaloImpl());
-        SLDTreeItemWrapper testObj5 = new SLDTreeItemWrapper(textSymbolizer);
-        SLDTreeItemWrapper testObj6 = new SLDTreeItemWrapper(textSymbolizer);
+        String testObj5 = SLDTreeItemWrapper.generateKey(textSymbolizer);
+        String testObj6 = SLDTreeItemWrapper.generateKey(textSymbolizer);
 
         assertTrue(testObj5.equals(testObj5));
         assertTrue(testObj5.equals(testObj6));
-
-        assertTrue(testObj5.hashCode() == testObj6.hashCode());
-
-        // Complete code coverage
-        assertFalse(testObj1.equals(testObj6));
-        assertFalse(testObj3.equals(null));
-        assertFalse(testObj3.equals(new String()));
-        assertFalse(testObj3.equals(testObj2));
-        assertFalse(testObj3.equals(testObj6));
     }
 
 }
