@@ -1,19 +1,41 @@
 # Change Log
 
-## [0.7.1](https://github.com/robward-scisys/sldeditor/tree/0.7.1) (2017-02-04)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.0...0.7.1)
+## [0.7.2](https://github.com/robward-scisys/sldeditor/tree/0.7.2) (2017-02-08)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.1...0.7.2)
 
 **Implemented enhancements:**
 
-- Sliders now update continuously [\#266](https://github.com/robward-scisys/sldeditor/pull/271 ([robward-scisys](https://github.com/robward-scisys))
+- Add ability to configure range values for render transformations [\#273](https://github.com/robward-scisys/sldeditor/issues/273)
 
 **Fixed bugs:**
 
-The following bugs were identified by Ranen Ghosh:
-- Text symbolizers anchor points, displacements, rotation values updated correctly [\#261](https://github.com/robward-scisys/sldeditor/issues/270)
+- Changed key generation for unique sld tree items [\#278](https://github.com/robward-scisys/sldeditor/pull/278) ([robward-scisys](https://github.com/robward-scisys))
 
-## [0.7.0](https://github.com/robward-scisys/sldeditor/tree/0.7.0) (2017-02-03)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.5...0.7.0)
+**Closed issues:**
+
+- Eclipse configuration [\#274](https://github.com/robward-scisys/sldeditor/issues/274)
+
+## [0.7.1](https://github.com/robward-scisys/sldeditor/tree/0.7.1) (2017-02-04)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.1...0.7.1)
+
+## [v0.7.1](https://github.com/robward-scisys/sldeditor/tree/v0.7.1) (2017-02-04)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.0...v0.7.1)
+
+**Fixed bugs:**
+
+- zombie labels [\#255](https://github.com/robward-scisys/sldeditor/issues/255)
+- Iss270 text symbolizers [\#271](https://github.com/robward-scisys/sldeditor/pull/271) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Unrecoverable errors [\#267](https://github.com/robward-scisys/sldeditor/issues/267)
+
+**Merged pull requests:**
+
+- Release 0.7.1 [\#272](https://github.com/robward-scisys/sldeditor/pull/272) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.0](https://github.com/robward-scisys/sldeditor/tree/v0.7.0) (2017-02-03)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.5...v0.7.0)
 
 **Implemented enhancements:**
 
@@ -21,22 +43,36 @@ The following bugs were identified by Ranen Ghosh:
 - Set background of symbolizer labels [\#253](https://github.com/robward-scisys/sldeditor/issues/253)
 - Add tool to batch update font details [\#249](https://github.com/robward-scisys/sldeditor/issues/249)
 - Add ability to batch update colour map entries [\#246](https://github.com/robward-scisys/sldeditor/issues/246)
+- SLEditorMenus unit test updated [\#258](https://github.com/robward-scisys/sldeditor/pull/258) ([robward-scisys](https://github.com/robward-scisys))
+- Iss253 symbolizer tree items [\#254](https://github.com/robward-scisys/sldeditor/pull/254) ([robward-scisys](https://github.com/robward-scisys))
+- Iss249 batch update font [\#251](https://github.com/robward-scisys/sldeditor/pull/251) ([robward-scisys](https://github.com/robward-scisys))
+- Iss246 multiple colourmapentry update [\#248](https://github.com/robward-scisys/sldeditor/pull/248) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
 - Get RasterAsPointCollection render transformation working [\#264](https://github.com/robward-scisys/sldeditor/issues/264)
+- Incorrect symbols for rule displayed [\#261](https://github.com/robward-scisys/sldeditor/issues/261)
+- Issue when multiple new text symbols area created [\#260](https://github.com/robward-scisys/sldeditor/issues/260)
 - When adding new colour map entry the colour is not displayed correctly  [\#244](https://github.com/robward-scisys/sldeditor/issues/244)
 - Fixed crash when reading raster symbols [\#242](https://github.com/robward-scisys/sldeditor/issues/242)
+- Iss264 rasteraspointcollection [\#268](https://github.com/robward-scisys/sldeditor/pull/268) ([robward-scisys](https://github.com/robward-scisys))
 - RasterAsPointCollection render transformation working [\#266](https://github.com/robward-scisys/sldeditor/pull/266) ([robward-scisys](https://github.com/robward-scisys))
+- Correct rule rendered [\#263](https://github.com/robward-scisys/sldeditor/pull/263) ([robward-scisys](https://github.com/robward-scisys))
+- Iss260 multiple text symbols [\#262](https://github.com/robward-scisys/sldeditor/pull/262) ([robward-scisys](https://github.com/robward-scisys))
+- Iss255 empty attributes [\#259](https://github.com/robward-scisys/sldeditor/pull/259) ([robward-scisys](https://github.com/robward-scisys))
+- Label cache cleared [\#256](https://github.com/robward-scisys/sldeditor/pull/256) ([robward-scisys](https://github.com/robward-scisys))
+- Iss250 filter strings invalid [\#252](https://github.com/robward-scisys/sldeditor/pull/252) ([robward-scisys](https://github.com/robward-scisys))
 - Fixed new colour map entry colour field [\#245](https://github.com/robward-scisys/sldeditor/pull/245) ([robward-scisys](https://github.com/robward-scisys))
 - Convert value from string to double to integer [\#243](https://github.com/robward-scisys/sldeditor/pull/243) ([robward-scisys](https://github.com/robward-scisys))
 
-The following bugs were identified by Ranen Ghosh:
-- Incorrect symbols for rule displayed [\#261](https://github.com/robward-scisys/sldeditor/issues/261)
-- Issue when multiple new text symbols area created [\#260](https://github.com/robward-scisys/sldeditor/issues/260)
-- Correct rule rendered [\#263](https://github.com/robward-scisys/sldeditor/pull/263) ([robward-scisys](https://github.com/robward-scisys))
-- Label cache cleared [\#256](https://github.com/robward-scisys/sldeditor/pull/256) ([robward-scisys](https://github.com/robward-scisys))
+**Closed issues:**
+
 - Quotes wrongly added to literal in Filter Dialog [\#250](https://github.com/robward-scisys/sldeditor/issues/250)
+- Create release v0.6.5 [\#240](https://github.com/robward-scisys/sldeditor/issues/240)
+
+**Merged pull requests:**
+
+- Release 0.7.0 [\#269](https://github.com/robward-scisys/sldeditor/pull/269) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.6.5](https://github.com/robward-scisys/sldeditor/tree/v0.6.5) (2017-01-20)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.6.4...v0.6.5)
