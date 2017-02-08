@@ -19,6 +19,8 @@
 package com.sldeditor.ui.detail.config;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -162,7 +164,12 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
 
         rangeConfig.includedCheckBox = new JCheckBox(
                 Localisation.getString(FieldConfigBase.class, "FieldConfigRange.included"));
+        rangeConfig.includedCheckBox.addActionListener(new ActionListener(){
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                uiInteraction(parentObj);
+            }});
         rangeConfig.includedCheckBox.setBounds(
                 rangeConfig.spinner.getX() + rangeConfig.spinner.getWidth() + 5, y,
                 BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -171,13 +178,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         rangeConfig.spinner.registerObserver(new SpinnerNotifyInterface() {
             @Override
             public void notify(double oldValue, double newValue) {
-                Double oldValueObj = Double.valueOf(oldValue);
-                Double newValueObj = Double.valueOf(newValue);
-
-                UndoManager.getInstance().addUndoEvent(
-                        new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                valueUpdated();
+                uiInteraction(parentObj);
             }
         });
     }
@@ -241,8 +242,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
 
         if (this.rangeClass == Range.class) {
             expression = getFilterFactory().literal(range);
-        }
-        else if (this.rangeClass == it.geosolutions.jaiext.range.Range.class) {
+        } else if (this.rangeClass == it.geosolutions.jaiext.range.Range.class) {
             it.geosolutions.jaiext.range.Range r = it.geosolutions.jaiext.range.RangeFactory.create(
                     range.getMin().doubleValue(), range.isMinIncluded(),
                     range.getMax().doubleValue(), range.isMaxIncluded(), false);
@@ -382,6 +382,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
     @Override
     public void populateField(Range value) {
         internalSetValue(value);
+        uiInteraction(this);
     }
 
     /**
@@ -508,10 +509,10 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
     @SuppressWarnings("rawtypes")
     private Range getRangeValues() {
         Range range = previousValue;
-        if (!isPopulating()) {
+        if (!isPopulating() && (startRange != null) && (startRange.includedCheckBox != null)) {
             boolean minIncluded = startRange.includedCheckBox.isSelected();
             boolean maxIncluded = endRange.includedCheckBox.isSelected();
-            ;
+
             Double minValue = startRange.spinner.getDoubleValue();
             Double maxValue = endRange.spinner.getDoubleValue();
             range = Range.create(minValue, minIncluded, maxValue, maxIncluded);
@@ -538,5 +539,22 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     public boolean isPopulating() {
         return isPopulating;
+    }
+
+    /**
+     * Ui interaction.
+     *
+     * @param parentObj the parent obj
+     */
+    @SuppressWarnings("rawtypes")
+    protected void uiInteraction(final UndoActionInterface parentObj) {
+        Range oldValueObj = previousValue;
+        Range newValueObj = getRangeValues();
+
+        if (oldValueObj != previousValue) {
+            UndoManager.getInstance().addUndoEvent(
+                    new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+        }
+        valueUpdated();
     }
 }
