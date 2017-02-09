@@ -67,8 +67,7 @@ public class FilterField extends JPanel implements UndoActionInterface {
      *
      * @return the panel name
      */
-    public static String getPanelName()
-    {
+    public static String getPanelName() {
         return FILTER_PANEL;
     }
 
@@ -78,9 +77,7 @@ public class FilterField extends JPanel implements UndoActionInterface {
      * @param parentObj the parent obj
      * @param functionNameMgr the function name mgr
      */
-    public FilterField(SubPanelUpdatedInterface parentObj, 
-            FilterNameInterface functionNameMgr)
-    {
+    public FilterField(SubPanelUpdatedInterface parentObj, FilterNameInterface functionNameMgr) {
         final UndoActionInterface thisObj = this;
         this.filterNameMgr = functionNameMgr;
 
@@ -93,18 +90,17 @@ public class FilterField extends JPanel implements UndoActionInterface {
 
                 String newValueObj = (String) filterComboBox.getSelectedItem();
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj, "Function", oldValueObj, newValueObj));
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(thisObj, "Function", oldValueObj, newValueObj));
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.updateSymbol();
                 }
             }
         });
 
         List<FilterConfigInterface> filterConfigList = filterNameMgr.getFilterConfigList();
-        for(FilterConfigInterface filterConfig : filterConfigList)
-        {
+        for (FilterConfigInterface filterConfig : filterConfigList) {
             String filterNameString = filterConfig.getFilterConfiguration().getFilterName();
 
             filterNameMap.put(filterNameString, filterConfig);
@@ -117,14 +113,12 @@ public class FilterField extends JPanel implements UndoActionInterface {
      * Populate function combo box.
      */
     private void populateFunctionComboBox() {
-        if(filterComboBox != null)
-        {
+        if (filterComboBox != null) {
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
             model.addElement("");
 
-            for(String name : filterNameMap.keySet())
-            {
+            for (String name : filterNameMap.keySet()) {
                 FilterConfigInterface filterConfig = filterNameMap.get(name);
                 model.addElement(filterConfig.getFilterConfiguration().getFilterName());
             }
@@ -137,8 +131,7 @@ public class FilterField extends JPanel implements UndoActionInterface {
      *
      * @return the selected item
      */
-    public String getSelectedItem()
-    {
+    public String getSelectedItem() {
         return (String) filterComboBox.getSelectedItem();
     }
 
@@ -147,8 +140,7 @@ public class FilterField extends JPanel implements UndoActionInterface {
      *
      * @param enabled the new panel enabled
      */
-    public void setPanelEnabled(boolean enabled)
-    {
+    public void setPanelEnabled(boolean enabled) {
         filterComboBox.setEnabled(enabled);
     }
 
@@ -162,12 +154,9 @@ public class FilterField extends JPanel implements UndoActionInterface {
 
         oldValueObj = filterConfig;
 
-        if(filterConfig == null)
-        {
+        if (filterConfig == null) {
             filterComboBox.setSelectedItem(null);
-        }
-        else
-        {
+        } else {
             filterComboBox.setSelectedItem(filterConfig.getFilterConfiguration().getFilterName());
         }
     }
@@ -177,12 +166,14 @@ public class FilterField extends JPanel implements UndoActionInterface {
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String)undoRedoObject.getOldValue();
+        String oldValueObj = (String) undoRedoObject.getOldValue();
 
         filterComboBox.setSelectedItem(oldValueObj);
     }
@@ -192,12 +183,14 @@ public class FilterField extends JPanel implements UndoActionInterface {
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String)undoRedoObject.getNewValue();
+        String newValueObj = (String) undoRedoObject.getNewValue();
 
         filterComboBox.setSelectedItem(newValueObj);
     }
@@ -209,8 +202,11 @@ public class FilterField extends JPanel implements UndoActionInterface {
      */
     public Filter getFilter() {
         FilterConfigInterface filterConfig = getFilterConfig();
-        Filter newFilter = filterConfig.createFilter();
+        Filter newFilter = null;
 
+        if (filterConfig != null) {
+            newFilter = filterConfig.createFilter();
+        }
         return newFilter;
     }
 
@@ -220,7 +216,7 @@ public class FilterField extends JPanel implements UndoActionInterface {
      * @return the function name
      */
     public FilterConfigInterface getFilterConfig() {
-        String filterNameString = (String)filterComboBox.getSelectedItem();
+        String filterNameString = (String) filterComboBox.getSelectedItem();
 
         FilterConfigInterface filterConfig = filterNameMap.get(filterNameString);
         return filterConfig;

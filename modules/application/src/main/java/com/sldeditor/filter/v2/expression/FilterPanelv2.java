@@ -358,9 +358,13 @@ public class FilterPanelv2 extends JDialog
         if (rootNode instanceof FilterNode) {
             overallFilter = addFilter((FilterNode) rootNode);
 
-            try {
-                result = CQL.toCQL(overallFilter);
-            } catch (Exception e) {
+            if (overallFilter == null) {
+                result = "";
+            } else {
+                try {
+                    result = CQL.toCQL(overallFilter);
+                } catch (Exception e) {
+                }
             }
         }
 
@@ -535,7 +539,10 @@ public class FilterPanelv2 extends JDialog
      */
     @Override
     public String getFilterString() {
-        return overallFilter.toString();
+        if (overallFilter != null) {
+            return overallFilter.toString();
+        }
+        return null;
     }
 
     /**
