@@ -141,7 +141,7 @@ public class And implements FilterConfigInterface {
     public Filter createLogicFilter(List<Filter> filterList) {
         AndImpl filter = null;
 
-        if((filterList == null) || (filterList.size() != 2))
+        if((filterList == null) || (filterList.size() < 2))
         {
             filter = new AndExtended();
         }

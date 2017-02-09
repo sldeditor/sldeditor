@@ -539,10 +539,14 @@ public class FilterPanelv2 extends JDialog
      */
     @Override
     public String getFilterString() {
+        String filterString = null;
         if (overallFilter != null) {
-            return overallFilter.toString();
+            try {
+                filterString = CQL.toCQL(overallFilter);
+            } catch (Exception e) {
+            }
         }
-        return null;
+        return filterString;
     }
 
     /**
