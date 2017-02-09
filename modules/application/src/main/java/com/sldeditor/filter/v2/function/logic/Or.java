@@ -141,7 +141,7 @@ public class Or implements FilterConfigInterface {
     public Filter createLogicFilter(List<Filter> filterList) {
         OrImpl filter = null;
 
-        if((filterList == null) || (filterList.size() != 2))
+        if((filterList == null) || (filterList.size() < 2))
         {
             filter = new OrExtended();
         }

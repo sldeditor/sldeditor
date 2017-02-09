@@ -140,7 +140,10 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
                 String filterString = "";
                 if(originalFilter != null)
                 {
-                    filterString = originalFilter.toString();
+                    try {
+                        filterString = CQL.toCQL(originalFilter);
+                    } catch (Exception e) {
+                    }
                 }
                 fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);
 
