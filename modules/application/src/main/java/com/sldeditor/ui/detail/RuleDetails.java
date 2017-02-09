@@ -94,29 +94,22 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
             JButton btnEditFilter = new JButton(Localisation.getString(RuleDetails.class, "RuleDetails.edit"));
             btnEditFilter.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
-
-                    String panelTitle = Localisation.getString(RuleDetails.class, "RuleDetails.panelTitle");
-                    filterPanel.configure(panelTitle, Object.class,
-                            SelectedSymbol.getInstance().isRasterSymbol());
-
-                    Rule rule = SelectedSymbol.getInstance().getRule();
-                    if(rule != null)
-                    {
-                        filterPanel.populate(rule.getFilter());
-                    }
-
-                    if(filterPanel.showDialog())
-                    {
-                        originalFilter = filterPanel.getFilter();
-                        fieldConfigVisitor.populateTextField(filterFieldId, filterPanel.getFilterString());
-
-                        updateSymbol();
-                    }
+                    editFilter(filterFieldId);
                 }
             });
             btnEditFilter.setBounds(WIDGET_X_START + WIDGET_EXTENDED_WIDTH, 0, WIDGET_BUTTON_WIDTH, WIDGET_HEIGHT);
             fieldPanel.add(btnEditFilter);
+
+            JButton btnClearFilter = new JButton(Localisation.getString(RuleDetails.class, "RuleDetails.clear"));
+            btnClearFilter.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    clearFilter(filterFieldId);
+                }
+            });
+            
+            int x = btnEditFilter.getX() + btnEditFilter.getWidth() + 5;
+            btnClearFilter.setBounds(x, 0, WIDGET_BUTTON_WIDTH, WIDGET_HEIGHT);
+            fieldPanel.add(btnClearFilter);
         }
     }
 
@@ -353,5 +346,42 @@ public class RuleDetails extends StandardPanel implements PopulateDetailsInterfa
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
+    }
+
+    /**
+     * Edits the filter.
+     *
+     * @param filterFieldId the filter field id
+     */
+    protected void editFilter(FieldIdEnum filterFieldId) {
+        FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
+
+        String panelTitle = Localisation.getString(RuleDetails.class, "RuleDetails.panelTitle");
+        filterPanel.configure(panelTitle, Object.class,
+                SelectedSymbol.getInstance().isRasterSymbol());
+
+        Rule rule = SelectedSymbol.getInstance().getRule();
+        if(rule != null)
+        {
+            filterPanel.populate(rule.getFilter());
+        }
+
+        if(filterPanel.showDialog())
+        {
+            originalFilter = filterPanel.getFilter();
+            fieldConfigVisitor.populateTextField(filterFieldId, filterPanel.getFilterString());
+
+            updateSymbol();
+        }
+    }
+
+    /**
+     * Clear filter.
+     */
+    protected void clearFilter(FieldIdEnum filterFieldId) {
+        originalFilter = null;
+        fieldConfigVisitor.populateTextField(filterFieldId, "");
+
+        updateSymbol();
     }
 }
