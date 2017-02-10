@@ -165,6 +165,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The error. */
     private boolean error = false;
 
+    /** The label cache. */
+    private LabelCacheImpl labelCache = new LabelCacheImpl();
+
     /**
      * Default constructor.
      */
@@ -295,8 +298,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
             Map<Object, Object> hints = new HashMap<Object, Object>();
 
-            // This ensures all the labelling is cleared
-            hints.put(StreamingRenderer.LABEL_CACHE_KEY, new LabelCacheImpl());
+            labelCache.clear();
+            hints.put(StreamingRenderer.LABEL_CACHE_KEY, labelCache);
             mapPane.getRenderer().setRendererHints(hints);
 
             // Add the layers back with the updated style
@@ -555,6 +558,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         }
 
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
+
+        labelCache.clear();
 
         mapPane.repaint();
     }
