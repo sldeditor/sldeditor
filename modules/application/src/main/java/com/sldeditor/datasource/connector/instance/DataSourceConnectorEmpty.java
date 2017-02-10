@@ -30,39 +30,47 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
  *
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
-{
+public class DataSourceConnectorEmpty implements DataSourceConnectorInterface {
+
+    /** The Constant KEY. */
+    public static final String KEY = "No data source";
+
     /** The panel. */
     private JPanel panel = new JPanel();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDisplayName()
      */
     @Override
-    public String getDisplayName()
-    {
-        return "No data source";
+    public String getDisplayName() {
+        return KEY;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getPanel()
      */
     @Override
-    public JPanel getPanel()
-    {
+    public JPanel getPanel() {
         return panel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#accept(java.util.Map)
      */
     @Override
-    public boolean accept(Map<String, Object> propertyMap)
-    {
+    public boolean accept(Map<String, Object> propertyMap) {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.DataSourceConnectorInterface#accept(java.lang.String)
      */
     @Override
@@ -70,47 +78,54 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDataSourceProperties(java.util.Map)
      */
     @Override
-    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, Object> propertyMap)
-    {
+    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, Object> propertyMap) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#populate(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
-    public void populate(DataSourcePropertiesInterface dataSourceProperties)
-    {
+    public void populate(DataSourcePropertiesInterface dataSourceProperties) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#isEmpty()
      */
     @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
-    public Map<String, Object> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties)
-    {
-        if(dataSourceProperties != null)
-        {
+    public Map<String, Object> getConnectionProperties(
+            DataSourcePropertiesInterface dataSourceProperties) {
+        if (dataSourceProperties != null) {
             return dataSourceProperties.getAllConnectionProperties();
         }
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
      */
     @Override

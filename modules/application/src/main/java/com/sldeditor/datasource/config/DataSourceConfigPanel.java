@@ -52,8 +52,8 @@ import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
-import com.sldeditor.datasource.connector.DataSourceConnectorComboBoxModel;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
@@ -81,12 +81,6 @@ public class DataSourceConfigPanel extends JPanel
 
     /** The btn remove field. */
     private JButton btnRemoveField;
-
-    /** The dsc model. */
-    private DataSourceConnectorComboBoxModel dscModel = null;
-
-    /** The data source connector combo box. */
-    private JComboBox<String> dataSourceConnectorComboBox;
 
     /** The data source connector panel. */
     private JPanel dscPanel;
@@ -124,26 +118,19 @@ public class DataSourceConfigPanel extends JPanel
         mainPanel.setLayout(new BorderLayout());
 
         JPanel panel1 = new JPanel();
-        JLabel label = new JLabel(
-                Localisation.getField(DataSourceConfigPanel.class, "DataSourceConfigPanel.field"));
-        panel1.add(label);
 
         Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory
                 .getDataSourceConnectorList();
 
-        dscModel = new DataSourceConnectorComboBoxModel(dscMap);
-        dataSourceConnectorComboBox = new JComboBox<String>(dscModel);
-        dataSourceConnectorComboBox.addActionListener(new ActionListener() {
+        JButton clearButton = new JButton(Localisation.getField(DataSourceConfigPanel.class, "DataSourceConfigPanel.clear"));
+
+        clearButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent event) {
-                String selectedItem = (String) dataSourceConnectorComboBox.getSelectedItem();
-
-                CardLayout cl = (CardLayout) (dscPanel.getLayout());
-                cl.show(dscPanel, selectedItem);
-            }
-        });
-        panel1.add(dataSourceConnectorComboBox);
+            public void actionPerformed(ActionEvent e) {
+                showPanel(DataSourceConnectorEmpty.KEY);
+            }});
+        panel1.add(clearButton);
 
         mainPanel.add(panel1, BorderLayout.NORTH);
 
@@ -161,6 +148,17 @@ public class DataSourceConfigPanel extends JPanel
         mainPanel.add(dscPanel, BorderLayout.CENTER);
 
         return mainPanel;
+    }
+
+    /**
+     * Show panel.
+     *
+     * @param selectedItem the selected item
+     */
+    protected void showPanel(String selectedItem) {
+        CardLayout cl = (CardLayout) (dscPanel.getLayout());
+        cl.show(dscPanel, selectedItem);
+
     }
 
     /**
@@ -283,13 +281,10 @@ public class DataSourceConfigPanel extends JPanel
         if (dataSourceProperties != null) {
             dataSourceProperties.populate();
 
-            // Set the combo box to display the correct data source connector panel
+            // Display the correct data source connector panel
             DataSourceConnectorInterface dsc = dataSourceProperties.getDataSourceConnector();
 
-            String displayName = dsc.getDisplayName();
-            if (dataSourceConnectorComboBox != null) {
-                dataSourceConnectorComboBox.setSelectedItem(displayName);
-            }
+            showPanel(dsc.getDisplayName());
         }
 
         // Populate table
@@ -385,7 +380,6 @@ public class DataSourceConfigPanel extends JPanel
      * Reset.
      */
     public void reset() {
-        dscModel.reset();
     }
 
     /**

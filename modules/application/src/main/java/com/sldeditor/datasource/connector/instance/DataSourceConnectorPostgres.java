@@ -108,8 +108,6 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
                 "DataSourceConnectorPostgres.schema"));
         createField(FIELD_USER, Localisation.getField(DataSourceConnectorPostgres.class,
                 "DataSourceConnectorPostgres.username"));
-        createField(FIELD_PASSWORD, Localisation.getField(DataSourceConnectorPostgres.class,
-                "DataSourceConnectorPostgres.password"));
         createField(FIELD_FEATURECLASS, Localisation.getField(DataSourceConnectorPostgres.class,
                 "DataSourceConnectorPostgres.featureClass"));
 
@@ -133,6 +131,7 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
 
         JTextField textField = new JTextField();
         textField.setBounds(FIELD_X, y, FIELD_WIDTH, FIELD_HEIGHT);
+        textField.setEditable(false);
         textFieldMap.put(key, textField);
         panel.add(textField);
     }
@@ -249,6 +248,11 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
                     text = properties.get(fieldName).toString();
                 }
                 textField.setText(text);
+            }
+
+            JTextField textField = textFieldMap.get(FIELD_FEATURECLASS);
+            if (textField != null) {
+                textField.setText(dataSourceProperties.getFilename());
             }
         }
     }
