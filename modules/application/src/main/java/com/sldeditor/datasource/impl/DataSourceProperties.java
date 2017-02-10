@@ -44,7 +44,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     private static final String PASSWORD_KEY = "password";
 
     /** The property map. */
-    private Map<String, String> propertyMap = new LinkedHashMap<String, String>();
+    private Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
 
     /**  The data source connector. */
     private DataSourceConnectorInterface dsc = null;
@@ -65,7 +65,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return the connection properties
      */
     @Override
-    public Map<String, String> getConnectionProperties()
+    public Map<String, Object> getConnectionProperties()
     {
         if(this.dsc != null)
         {
@@ -80,7 +80,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return all the connection properties
      */
     @Override
-    public Map<String, String> getAllConnectionProperties()
+    public Map<String, Object> getAllConnectionProperties()
     {
         return propertyMap;
     }
@@ -91,7 +91,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param propertyMap the property map
      */
     @Override
-    public void setPropertyMap(Map<String, String> propertyMap)
+    public void setPropertyMap(Map<String, Object> propertyMap)
     {
         this.propertyMap = propertyMap;
     }
@@ -138,7 +138,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     @Override
     public String getFilename()
     {
-        return propertyMap.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+        return (String)propertyMap.get(DataSourceConnectorInterface.FILE_MAP_KEY);
     }
 
     /**
@@ -161,7 +161,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
         for(String key : propertyMap.keySet())
         {
             Element element = doc.createElement(key);
-            element.appendChild(doc.createTextNode(propertyMap.get(key)));
+            element.appendChild(doc.createTextNode((String)propertyMap.get(key)));
 
             dataSourceElement.appendChild(element);
         }
@@ -183,7 +183,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
             return null;
         }
 
-        Map<String, String> map = new LinkedHashMap<String, String>();
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
 
         NodeList nodeList = document.getElementsByTagName(elementName);
         if(nodeList.getLength() > 0)
@@ -232,9 +232,9 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param filename the filename
      * @return the map
      */
-    public static Map<String, String> encodeFilename(String filename)
+    public static Map<String, Object> encodeFilename(String filename)
     {
-        Map<String, String> propertyMap = new LinkedHashMap<String, String>();
+        Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
 
         propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
 
@@ -247,11 +247,11 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param map the property map
      * @return the string
      */
-    public static String decodeFilename(Map<String, String> map)
+    public static String decodeFilename(Map<String, Object> map)
     {
         if(map != null)
         {
-            return map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+            return (String)map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
         }
         
         return null;
@@ -276,7 +276,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     @Override
     public String getPassword()
     {
-        return propertyMap.get(PASSWORD_KEY);
+        return (String)propertyMap.get(PASSWORD_KEY);
     }
 
     /**
@@ -298,7 +298,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
     @Override
     public String getDebugConnectionString()
     {
-        Map<String, String> properties = getConnectionProperties();
+        Map<String, Object> properties = getConnectionProperties();
 
         properties.remove(PASSWORD_KEY);
 

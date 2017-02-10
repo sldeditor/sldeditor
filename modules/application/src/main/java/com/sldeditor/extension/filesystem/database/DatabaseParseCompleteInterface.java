@@ -16,34 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.vector;
+package com.sldeditor.extension.filesystem.database;
 
-import java.io.File;
+import java.util.List;
 
-import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.DatabaseConnection;
 
 /**
- * The Interface VectorReaderInterface.
- *
+ * The Interface DatabaseParseCompleteInterface.
+ * 
  * @author Robert Ward (SCISYS)
  */
-public interface VectorReaderInterface {
+public interface DatabaseParseCompleteInterface
+{
 
     /**
-     * Creates the vector sld from a file
+     * Populate complete.
      *
-     * @param vectorFile the vector file
-     * @return the styled layer descriptor
+     * @param connection the connection
+     * @param featureClassList the feature class list
      */
-    SLDDataInterface createVectorSLDData(File vectorFile);
+    void populateComplete(DatabaseConnection connection,
+        List<String> featureClassList);
 
-    /**
-     * Creates the vector SLD data from a database feature class
-     *
-     * @param databaseConnection the database connection
-     * @param featureClass the feature class
-     * @return the SLD data interface
-     */
-    SLDDataInterface createVectorSLDData(DatabaseConnection databaseConnection, String featureClass);
 }

@@ -181,7 +181,7 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#accept(java.util.Map)
      */
     @Override
-    public boolean accept(Map<String, String> propertyMap)
+    public boolean accept(Map<String, Object> propertyMap)
     {
         if(propertyMap != null)
         {
@@ -207,7 +207,7 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
      * @see com.sldeditor.common.DataSourceConnectorInterface#accept(java.lang.String)
      */
     @Override
-    public Map<String, String> accept(String filename) {
+    public Map<String, Object> accept(String filename) {
         if(filename == null)
         {
             return null;
@@ -222,7 +222,7 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
 
         if(supportedFileTypeList.contains(fileExtension))
         {
-            Map<String, String> propertyMap = new HashMap<String,String>();
+            Map<String, Object> propertyMap = new HashMap<String, Object>();
 
             propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
 
@@ -244,7 +244,7 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDataSourceProperties(java.util.Map)
      */
     @Override
-    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, String> propertyMap)
+    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, Object> propertyMap)
     {
         DataSourcePropertiesInterface properties = new DataSourceProperties(this);
 
@@ -270,9 +270,9 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
             {
                 JTextField textField = textFieldMap.get(fieldName);
 
-                Map<String,String> properties = dataSourceProperties.getAllConnectionProperties();
+                Map<String,Object> properties = dataSourceProperties.getAllConnectionProperties();
 
-                textField.setText(properties.get(fieldName));
+                textField.setText((String)properties.get(fieldName));
             }
         }
     }
@@ -295,24 +295,24 @@ public class DataSourceConnectorArcSDE implements DataSourceConnectorInterface
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
-    public Map<String, String> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties)
+    public Map<String, Object> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties)
     {
         if(dataSourceProperties == null)
         {
             return null;
         }
 
-        Map<String, String> connectPropertyMap = new LinkedHashMap<String, String>();
+        Map<String, Object> connectPropertyMap = new LinkedHashMap<String, Object>();
 
-        Map<String, String> sourceMap = dataSourceProperties.getAllConnectionProperties();
+        Map<String, Object> sourceMap = dataSourceProperties.getAllConnectionProperties();
         for(String key : sourceMap.keySet())
         {
             if(key.compareTo(DataSourceConnectorArcSDE.FIELD_VERSION) == 0)
             {
-                String version = sourceMap.get(DataSourceConnectorArcSDE.FIELD_VERSION);
+                Object version = sourceMap.get(DataSourceConnectorArcSDE.FIELD_VERSION);
 
                 // Only use the version string if it is not the default
-                if(version.compareToIgnoreCase(SDE_DEFAULT_VERSION) != 0)
+                if(((String)version).compareToIgnoreCase(SDE_DEFAULT_VERSION) != 0)
                 {
                     connectPropertyMap.put(key, sourceMap.get(key));
                 }

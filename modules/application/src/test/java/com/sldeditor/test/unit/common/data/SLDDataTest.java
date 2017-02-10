@@ -41,17 +41,17 @@ public class SLDDataTest {
     {
 
         @Override
-        public Map<String, String> getConnectionProperties() {
+        public Map<String, Object> getConnectionProperties() {
             return null;
         }
 
         @Override
-        public Map<String, String> getAllConnectionProperties() {
+        public Map<String, Object> getAllConnectionProperties() {
             return null;
         }
 
         @Override
-        public void setPropertyMap(Map<String, String> propertyMap) {
+        public void setPropertyMap(Map<String, Object> propertyMap) {
         }
 
         @Override

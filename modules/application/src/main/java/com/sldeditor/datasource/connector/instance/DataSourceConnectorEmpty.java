@@ -57,7 +57,7 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#accept(java.util.Map)
      */
     @Override
-    public boolean accept(Map<String, String> propertyMap)
+    public boolean accept(Map<String, Object> propertyMap)
     {
         return false;
     }
@@ -66,7 +66,7 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
      * @see com.sldeditor.common.DataSourceConnectorInterface#accept(java.lang.String)
      */
     @Override
-    public Map<String, String> accept(String filename) {
+    public Map<String, Object> accept(String filename) {
         return null;
     }
 
@@ -74,7 +74,7 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDataSourceProperties(java.util.Map)
      */
     @Override
-    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, String> propertyMap)
+    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, Object> propertyMap)
     {
         return null;
     }
@@ -101,7 +101,7 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
-    public Map<String, String> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties)
+    public Map<String, Object> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties)
     {
         if(dataSourceProperties != null)
         {

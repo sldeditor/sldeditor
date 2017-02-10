@@ -31,16 +31,16 @@ import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.impl.DataSourceProperties;
+import com.sldeditor.ui.detail.BasePanel;
 
 /**
  * Data source connector for Postgres data sources.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
-{
+public class DataSourceConnectorPostgres implements DataSourceConnectorInterface {
     /** The Constant FIELD_PASSWORD. */
-    public static final String FIELD_PASSWORD = "password";
+    public static final String FIELD_PASSWORD = "passwd";
 
     /** The Constant FIELD_USER. */
     public static final String FIELD_USER = "user";
@@ -52,7 +52,13 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
     public static final String FIELD_PORT = "port";
 
     /** The Constant FIELD_SERVER. */
-    public static final String FIELD_SERVER = "server";
+    public static final String FIELD_SERVER = "host";
+
+    /** The Constant FIELD_SCHEMA. */
+    public static final String FIELD_SCHEMA = "schema";
+
+    /** The Constant FIELD_FEATURECLASS. */
+    public static final String FIELD_FEATURECLASS = "featureClass";
 
     /** The text field map. */
     private Map<String, JTextField> textFieldMap = new HashMap<String, JTextField>();
@@ -67,10 +73,10 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
     private static final int LABEL_WIDTH = 90;
 
     /** The field height. */
-    private static final int FIELD_HEIGHT = 16;
+    private static final int FIELD_HEIGHT = BasePanel.WIDGET_HEIGHT;
 
     /** The row height. */
-    private static final int ROW_HEIGHT = 18;
+    private static final int ROW_HEIGHT = FIELD_HEIGHT + 2;
 
     /** The field x. */
     private static final int FIELD_X = 100;
@@ -81,26 +87,34 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
     /**
      * Default constructor
      */
-    public DataSourceConnectorPostgres()
-    {
+    public DataSourceConnectorPostgres() {
         createUI();
     }
 
     /**
      * Creates the ui.
      */
-    private void createUI()
-    {
+    private void createUI() {
         panel = new JPanel();
         panel.setLayout(null);
 
-        createField(FIELD_SERVER, Localisation.getField(DataSourceConnectorPostgres.class, "DataSourceConnectorPostgres.server"));
-        createField(FIELD_PORT, Localisation.getField(DataSourceConnectorPostgres.class, "DataSourceConnectorPostgres.port"));
-        createField(FIELD_DATABASE, Localisation.getField(DataSourceConnectorPostgres.class, "DataSourceConnectorPostgres.database"));
-        createField(FIELD_USER, Localisation.getField(DataSourceConnectorPostgres.class, "DataSourceConnectorPostgres.username"));
-        createField(FIELD_PASSWORD, Localisation.getField(DataSourceConnectorPostgres.class, "DataSourceConnectorPostgres.password"));
+        createField(FIELD_SERVER, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.server"));
+        createField(FIELD_PORT, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.port"));
+        createField(FIELD_DATABASE, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.database"));
+        createField(FIELD_SCHEMA, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.schema"));
+        createField(FIELD_USER, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.username"));
+        createField(FIELD_PASSWORD, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.password"));
+        createField(FIELD_FEATURECLASS, Localisation.getField(DataSourceConnectorPostgres.class,
+                "DataSourceConnectorPostgres.featureClass"));
 
-        panel.setPreferredSize(new Dimension(FIELD_X + FIELD_WIDTH, textFieldMap.size() * ROW_HEIGHT));
+        panel.setPreferredSize(
+                new Dimension(FIELD_X + FIELD_WIDTH, textFieldMap.size() * ROW_HEIGHT));
     }
 
     /**
@@ -109,8 +123,7 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      * @param key the key
      * @param labelString the label string
      */
-    private void createField(String key, String labelString)
-    {
+    private void createField(String key, String labelString) {
         int row = textFieldMap.size();
         int y = row * ROW_HEIGHT;
 
@@ -129,12 +142,13 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      *
      * @return the display name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDisplayName()
      */
     @Override
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return "Postgres";
     }
 
@@ -143,12 +157,13 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      *
      * @return the panel
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getPanel()
      */
     @Override
-    public JPanel getPanel()
-    {
+    public JPanel getPanel() {
         return panel;
     }
 
@@ -158,22 +173,19 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      * @param propertyMap the property map
      * @return true, if successful
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#accept(java.util.Map)
      */
     @Override
-    public boolean accept(Map<String, String> propertyMap)
-    {
-        if(propertyMap != null)
-        {
+    public boolean accept(Map<String, Object> propertyMap) {
+        if (propertyMap != null) {
             int count = 0;
-            for(String fieldName : textFieldMap.keySet())
-            {
-                for(String key : propertyMap.keySet())
-                {
-                    if(key.compareToIgnoreCase(fieldName) == 0)
-                    {
-                        count ++;
+            for (String fieldName : textFieldMap.keySet()) {
+                for (String key : propertyMap.keySet()) {
+                    if (key.compareToIgnoreCase(fieldName) == 0) {
+                        count++;
                         break;
                     }
                 }
@@ -184,11 +196,13 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.DataSourceConnectorInterface#accept(java.lang.String)
      */
     @Override
-    public Map<String, String> accept(String filename) {
+    public Map<String, Object> accept(String filename) {
         return null;
     }
 
@@ -198,12 +212,13 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      * @param propertyMap the property map
      * @return the data source properties
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDataSourceProperties(java.util.Map)
      */
     @Override
-    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, String> propertyMap)
-    {
+    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, Object> propertyMap) {
         DataSourcePropertiesInterface properties = new DataSourceProperties(this);
 
         properties.setPropertyMap(propertyMap);
@@ -216,21 +231,24 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      *
      * @param dataSourceProperties the data source properties
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#populate(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
-    public void populate(DataSourcePropertiesInterface dataSourceProperties)
-    {
-        if(dataSourceProperties != null)
-        {
-            for(String fieldName : textFieldMap.keySet())
-            {
+    public void populate(DataSourcePropertiesInterface dataSourceProperties) {
+        if (dataSourceProperties != null) {
+            Map<String, Object> properties = dataSourceProperties.getAllConnectionProperties();
+
+            for (String fieldName : textFieldMap.keySet()) {
                 JTextField textField = textFieldMap.get(fieldName);
 
-                Map<String,String> properties = dataSourceProperties.getAllConnectionProperties();
-
-                textField.setText(properties.get(fieldName));
+                String text = null;
+                if (properties.get(fieldName) != null) {
+                    text = properties.get(fieldName).toString();
+                }
+                textField.setText(text);
             }
         }
     }
@@ -240,43 +258,46 @@ public class DataSourceConnectorPostgres implements DataSourceConnectorInterface
      *
      * @return true, if is empty
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#isEmpty()
      */
     @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
-    public Map<String, String> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties)
-    {
-        if(dataSourceProperties == null)
-        {
+    public Map<String, Object> getConnectionProperties(
+            DataSourcePropertiesInterface dataSourceProperties) {
+        if (dataSourceProperties == null) {
             return null;
         }
 
-        Map<String, String> connectPropertyMap = new LinkedHashMap<String, String>();
+        Map<String, Object> connectPropertyMap = new LinkedHashMap<String, Object>();
 
-        Map<String, String> sourceMap = dataSourceProperties.getAllConnectionProperties();
-        for(String key : sourceMap.keySet())
-        {
+        Map<String, Object> sourceMap = dataSourceProperties.getAllConnectionProperties();
+        for (String key : sourceMap.keySet()) {
             connectPropertyMap.put(key, sourceMap.get(key));
         }
         return connectPropertyMap;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
      */
     @Override
     public void reset() {
-        for(JTextField field : textFieldMap.values())
-        {
+        for (JTextField field : textFieldMap.values()) {
             field.setText("");
         }
     }

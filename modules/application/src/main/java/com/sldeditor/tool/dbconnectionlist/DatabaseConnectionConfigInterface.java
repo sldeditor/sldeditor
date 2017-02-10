@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2017, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,34 +16,54 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.tool.vector;
 
-import java.io.File;
+package com.sldeditor.tool.dbconnectionlist;
 
-import com.sldeditor.common.SLDDataInterface;
+import javax.swing.JPanel;
+
 import com.sldeditor.common.data.DatabaseConnection;
 
 /**
- * The Interface VectorReaderInterface.
+ * The Interface DatabaseConnectionConfigInterface.
  *
  * @author Robert Ward (SCISYS)
  */
-public interface VectorReaderInterface {
+public interface DatabaseConnectionConfigInterface {
 
     /**
-     * Creates the vector sld from a file
+     * Gets the name.
      *
-     * @param vectorFile the vector file
-     * @return the styled layer descriptor
+     * @return the name
      */
-    SLDDataInterface createVectorSLDData(File vectorFile);
+    public String getName();
 
     /**
-     * Creates the vector SLD data from a database feature class
+     * Sets the connection.
      *
-     * @param databaseConnection the database connection
-     * @param featureClass the feature class
-     * @return the SLD data interface
+     * @param connection the new connection
      */
-    SLDDataInterface createVectorSLDData(DatabaseConnection databaseConnection, String featureClass);
+    public void setConnection(DatabaseConnection connection);
+
+    /**
+     * Gets the connection.
+     *
+     * @return the connection
+     */
+    public DatabaseConnection getConnection();
+
+    /**
+     * Gets the panel.
+     *
+     * @return the panel
+     */
+    public JPanel getPanel();
+
+    /**
+     * Accept.
+     *
+     * @param connection the connection
+     * @return true, if successful
+     */
+    public boolean accept(DatabaseConnection connection);
+
 }

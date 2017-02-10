@@ -69,9 +69,9 @@ public class DataSourceConnectorArcSDETest {
         DataSourceConnectorArcSDE dsc = new DataSourceConnectorArcSDE();
 
         assertNull(dsc.accept((String)null));
-        assertFalse(dsc.accept((Map<String,String>)null));
+        assertFalse(dsc.accept((Map<String,Object>)null));
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("test", "filename");
         assertFalse(dsc.accept(propertyMap));
@@ -107,7 +107,7 @@ public class DataSourceConnectorArcSDETest {
     public void testGetDataSourceProperties() {
         DataSourceConnectorArcSDE dsc = new DataSourceConnectorArcSDE();
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         assertTrue(dsc.getDataSourceProperties(propertyMap) != null);
         assertTrue(dsc.getDataSourceProperties(null) != null);
@@ -145,7 +145,7 @@ public class DataSourceConnectorArcSDETest {
 
         DataSourcePropertiesInterface dataSource = new DataSourceProperties(dsc);
 
-        Map<String, String> expectedPropertyMap = new HashMap<String, String>();
+        Map<String, Object> expectedPropertyMap = new HashMap<String, Object>();
         expectedPropertyMap.put("server", "localhost");
         expectedPropertyMap.put("port", "5432");
         expectedPropertyMap.put("instance", "testdb");
@@ -153,7 +153,7 @@ public class DataSourceConnectorArcSDETest {
         expectedPropertyMap.put("user", "testuser");
         expectedPropertyMap.put("dbtype", "ORACLE");
         expectedPropertyMap.put("password", "pasword123");
-        
+
         dataSource.setPropertyMap(expectedPropertyMap);
         assertEquals(expectedPropertyMap, dsc.getConnectionProperties(dataSource));
     }

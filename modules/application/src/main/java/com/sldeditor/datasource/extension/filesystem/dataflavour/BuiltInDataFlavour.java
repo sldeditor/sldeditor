@@ -21,6 +21,8 @@ package com.sldeditor.datasource.extension.filesystem.dataflavour;
 import java.awt.datatransfer.DataFlavor;
 import java.util.List;
 
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
@@ -48,6 +50,12 @@ public class BuiltInDataFlavour implements DataFlavourInterface {
 
     /** The Constant DEFAULT_MUTABLE_DATAITEM_FLAVOR. */
     final public static SLDDataFlavour FILE_DATAITEM_FLAVOR = new SLDDataFlavour(FileTreeNode.class, "File");
+
+    /** The Constant DATABASE_OVERALL_DATAITEM_FLAVOUR. */
+    final public static SLDDataFlavour DATABASE_OVERALL_DATAITEM_FLAVOUR = new SLDDataFlavour(DatabaseOverallNode.class, DatabaseOverallNode.class.getName());
+
+    /** The Constant DATABASE_DATAITEM_FLAVOUR. */
+    final public static SLDDataFlavour DATABASE_DATAITEM_FLAVOUR = new SLDDataFlavour(DatabaseNode.class, DatabaseNode.class.getName());
 
     /**
      * Instantiates a new built in data flavour.

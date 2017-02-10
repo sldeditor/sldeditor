@@ -34,7 +34,8 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
  * Unit test for DataSourceConnectorPostgres class.
- * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres}
+ * <p>
+ * {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -68,23 +69,25 @@ public class DataSourceConnectorPostgresTest {
     public void testAccept() {
         DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
 
-        assertNull(dsc.accept((String)null));
-        assertFalse(dsc.accept((Map<String,String>)null));
+        assertNull(dsc.accept((String) null));
+        assertFalse(dsc.accept((Map<String, Object>) null));
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("test", "filename");
         assertFalse(dsc.accept(propertyMap));
 
         // Valid file
-        propertyMap.put("server", "localhost");
+        propertyMap.put("host", "localhost");
         propertyMap.put("port", "5432");
         propertyMap.put("database", "testdb");
         propertyMap.put("user", "testuser");
-        propertyMap.put("password", "pasword123");
+        propertyMap.put("schema", "public");
+        propertyMap.put("passwd", "pasword123");
+        propertyMap.put("featureClass", "testfc");
         assertTrue(dsc.accept(propertyMap));
         propertyMap.clear();
-        
+
         // Invalid file
         propertyMap.put("server", "localhost");
         propertyMap.put("database", "testdb");
@@ -100,14 +103,15 @@ public class DataSourceConnectorPostgresTest {
     public void testGetDataSourceProperties() {
         DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         assertTrue(dsc.getDataSourceProperties(propertyMap) != null);
         assertTrue(dsc.getDataSourceProperties(null) != null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#populate(com.sldeditor.DataSourcePropertiesInterface)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#populate(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testPopulate() {
@@ -128,7 +132,8 @@ public class DataSourceConnectorPostgresTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testGetConnectionProperties() {
@@ -138,13 +143,13 @@ public class DataSourceConnectorPostgresTest {
 
         DataSourcePropertiesInterface dataSource = new DataSourceProperties(dsc);
 
-        Map<String, String> expectedPropertyMap = new HashMap<String, String>();
+        Map<String, Object> expectedPropertyMap = new HashMap<String, Object>();
         expectedPropertyMap.put("server", "localhost");
         expectedPropertyMap.put("port", "5432");
         expectedPropertyMap.put("database", "testdb");
         expectedPropertyMap.put("user", "testuser");
         expectedPropertyMap.put("password", "pasword123");
-        
+
         dataSource.setPropertyMap(expectedPropertyMap);
         assertEquals(expectedPropertyMap, dsc.getConnectionProperties(dataSource));
     }

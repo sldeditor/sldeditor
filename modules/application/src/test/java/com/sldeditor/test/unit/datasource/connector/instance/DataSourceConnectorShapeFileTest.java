@@ -69,9 +69,9 @@ public class DataSourceConnectorShapeFileTest {
         DataSourceConnectorShapeFile dsc = new DataSourceConnectorShapeFile();
 
         assertNull(dsc.accept((String)null));
-        assertFalse(dsc.accept((Map<String,String>)null));
+        assertFalse(dsc.accept((Map<String,Object>)null));
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("test", "filename");
         assertFalse(dsc.accept(propertyMap));
@@ -92,7 +92,7 @@ public class DataSourceConnectorShapeFileTest {
     public void testGetDataSourceProperties() {
         DataSourceConnectorShapeFile dsc = new DataSourceConnectorShapeFile();
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         assertTrue(dsc.getDataSourceProperties(propertyMap) != null);
         assertTrue(dsc.getDataSourceProperties(null) != null);

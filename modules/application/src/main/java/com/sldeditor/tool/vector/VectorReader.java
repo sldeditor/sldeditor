@@ -31,7 +31,9 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryType;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
@@ -59,55 +61,104 @@ public class VectorReader implements VectorReaderInterface {
      * @return the styled layer descriptor
      */
     @Override
-    public SLDDataInterface createVectorSLDData(File vectorFile)
-    {
-        if(vectorFile == null)
-        {
+    public SLDDataInterface createVectorSLDData(File vectorFile) {
+        if (vectorFile == null) {
             return null;
         }
 
-        StyledLayerDescriptor sld = null;
-
-        Map<String, String> map = null;
+        Map<String, Object> map = null;
         try {
             map = DataSourceProperties.encodeFilename(vectorFile.toURI().toURL().toString());
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
             return null;
         }
+
+        StyledLayerDescriptor sld = createSLDData(map, null);
+        SLDData sldData = null;
+        if (sld != null) {
+            File sldFilename = ExternalFilenames.createSLDFilename(vectorFile);
+
+            StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
+            String sldContents = sldWriter.encodeSLD(null, sld);
+            sldData = new SLDData(styleWrapper, sldContents);
+            sldData.setSLDFile(sldFilename);
+            sldData.setReadOnly(false);
+        }
+
+        return sldData;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.tool.vector.VectorReaderInterface#createVectorSLDData(com.sldeditor.common.data.DatabaseConnection, java.lang.String)
+     */
+    @Override
+    public SLDDataInterface createVectorSLDData(DatabaseConnection databaseConnection,
+            String featureClass) {
+        if ((databaseConnection == null) || (featureClass == null)) {
+            return null;
+        }
+
+        Map<String, Object> map = DatabaseConnectionManager.getInstance()
+                .getDBConnectionParams(databaseConnection);
+
+        StyledLayerDescriptor sld = createSLDData(map, featureClass);
+        SLDData sldData = null;
+        if (sld != null) {
+            File sldFilename = null;
+
+            StyleWrapper styleWrapper = new StyleWrapper(featureClass);
+            String sldContents = sldWriter.encodeSLD(null, sld);
+            sldData = new SLDData(styleWrapper, sldContents);
+            sldData.setSLDFile(sldFilename);
+            sldData.setReadOnly(false);
+        }
+
+        return sldData;
+    }
+
+    /**
+     * Creates the SLD data.
+     *
+     * @param map the map
+     * @return the styled layer descriptor
+     */
+    private StyledLayerDescriptor createSLDData(Map<String, Object> map, String featureClass) {
+        StyledLayerDescriptor sld = null;
 
         DataStore dataStore = null;
         try {
-            dataStore = DataStoreFinder.getDataStore( map );
-        }
-        catch (IOException e) {
+            dataStore = DataStoreFinder.getDataStore(map);
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
             return null;
         }
 
-        if(dataStore != null)
-        {
+        if (dataStore != null) {
             // Try connecting to a vector data source
             String typeName;
             GeometryTypeEnum geometryTypeEnum = GeometryTypeEnum.UNKNOWN;
 
             try {
-                typeName = dataStore.getTypeNames()[0];
+                if (featureClass == null) {
+                    typeName = dataStore.getTypeNames()[0];
+                } else {
+                    typeName = featureClass;
+                }
                 SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
                 SimpleFeatureType schema = source.getSchema();
 
                 GeometryType geometryType = schema.getGeometryDescriptor().getType();
                 Class<?> bindingType = geometryType.getBinding();
                 geometryTypeEnum = GeometryTypeMapping.getGeometryType(bindingType);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
                 return null;
             }
 
-            switch(geometryTypeEnum)
-            {
+            switch (geometryTypeEnum) {
             case POINT:
                 sld = DefaultSymbols.createNewPoint();
                 break;
@@ -121,15 +172,6 @@ public class VectorReader implements VectorReaderInterface {
                 break;
             }
         }
-
-        File sldFilename = ExternalFilenames.createSLDFilename(vectorFile);
-
-        StyleWrapper styleWrapper = new StyleWrapper(sldFilename.getName());
-        String sldContents = sldWriter.encodeSLD(null, sld);
-        SLDData sldData = new SLDData(styleWrapper, sldContents);
-        sldData.setSLDFile(sldFilename);
-        sldData.setReadOnly(false);
-
-        return sldData;
+        return sld;
     }
 }

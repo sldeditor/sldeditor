@@ -85,7 +85,7 @@ public class DataSourceConnectorFactoryTest {
      */
     @Test
     public void testGetDataSourcePropertiesMapOfStringString() {
-        Map<String, String> propertyMap = new HashMap<String,String>();
+        Map<String, Object> propertyMap = new HashMap<String,Object>();
 
         propertyMap.put("url", "filename.shp");
         DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
@@ -93,11 +93,13 @@ public class DataSourceConnectorFactoryTest {
         assertEquals(DataSourceConnectorShapeFile.class, dsp.getDataSourceConnector().getClass());
 
         propertyMap.clear();
-        propertyMap.put("server", "localhost");
+        propertyMap.put("host", "localhost");
         propertyMap.put("port", "5432");
         propertyMap.put("database", "testdb");
         propertyMap.put("user", "testuser");
-        propertyMap.put("password", "pasword123");
+        propertyMap.put("passwd", "pasword123");
+        propertyMap.put("schema", "public");
+        propertyMap.put("featureClass", "testfc");
 
         dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
 

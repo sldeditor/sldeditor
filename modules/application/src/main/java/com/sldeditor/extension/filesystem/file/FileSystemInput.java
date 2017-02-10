@@ -54,6 +54,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
@@ -126,12 +127,15 @@ public class FileSystemInput implements FileSystemInterface {
                     new ScaleTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class,
                     new RasterTool(toolMgr.getApplication()));
-            ToolManager.getInstance().registerTool(FileTreeNode.class,
-                    new VectorTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class, new StickyDataSourceTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class,
                     new BatchUpdateFontTool(toolMgr.getApplication()));
+            VectorTool vectorTool = new VectorTool(toolMgr.getApplication());
+            ToolManager.getInstance().registerTool(FileTreeNode.class,
+                    vectorTool);
+            ToolManager.getInstance().registerTool(DatabaseFeatureClassNode.class,
+                    vectorTool);
         }
     }
 

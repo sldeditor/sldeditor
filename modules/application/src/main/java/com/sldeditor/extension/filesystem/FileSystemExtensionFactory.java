@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
+import com.sldeditor.extension.filesystem.database.DatabaseInput;
 import com.sldeditor.extension.filesystem.file.FileSystemInput;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerInput;
 
@@ -39,6 +40,9 @@ public class FileSystemExtensionFactory {
     /** The geo server input. */
     private static GeoServerInput geoServerInput;
 
+    /** The database input. */
+    private static DatabaseInput databaseInput;
+
     /** The file system input. */
     private static FileSystemInput fileSystemInput;
 
@@ -51,6 +55,9 @@ public class FileSystemExtensionFactory {
         geoServerInput = new GeoServerInput(toolMgr);
         geoServerInput.readPropertyFile();
         extensionList.add(geoServerInput);
+        databaseInput = new DatabaseInput(toolMgr);
+        databaseInput.readPropertyFile();
+        extensionList.add(databaseInput);
         fileSystemInput = new FileSystemInput(toolMgr);
         extensionList.add(fileSystemInput);
     }

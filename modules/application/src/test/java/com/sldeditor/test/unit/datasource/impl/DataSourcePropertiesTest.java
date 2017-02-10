@@ -58,7 +58,7 @@ public class DataSourcePropertiesTest {
      */
     @Test
     public void testDataSourcePropertiesNoConnector() {
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("field1", "value1");
         propertyMap.put("field2", "value2");
@@ -68,7 +68,7 @@ public class DataSourcePropertiesTest {
 
         dsp.setPropertyMap(propertyMap);
 
-        Map<String, String> actualPropertyMap = dsp.getConnectionProperties();
+        Map<String, Object> actualPropertyMap = dsp.getConnectionProperties();
         assertEquals(propertyMap, actualPropertyMap);
         assertEquals(propertyMap, dsp.getAllConnectionProperties());
 
@@ -93,7 +93,7 @@ public class DataSourcePropertiesTest {
      */
     @Test
     public void testDataSourcePropertiesWithConnector() {
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("field1", "value1");
         propertyMap.put("field2", "value2");
@@ -104,7 +104,7 @@ public class DataSourcePropertiesTest {
 
         dsp.setPropertyMap(propertyMap);
 
-        Map<String, String> actualPropertyMap = dsp.getConnectionProperties();
+        Map<String, Object> actualPropertyMap = dsp.getConnectionProperties();
         assertEquals(propertyMap, actualPropertyMap);
         assertEquals(propertyMap, dsp.getAllConnectionProperties());
 
@@ -132,7 +132,7 @@ public class DataSourcePropertiesTest {
      */
     @Test
     public void testEncodeDecodeXML() {
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("field1", "value1");
         propertyMap.put("field2", "value2");
@@ -178,7 +178,7 @@ public class DataSourcePropertiesTest {
     public void testEncodeFilename() {
         String expectedFilename = "A file";
 
-        Map<String, String> propertyMap = DataSourceProperties.encodeFilename(expectedFilename);
+        Map<String, Object> propertyMap = DataSourceProperties.encodeFilename(expectedFilename);
         assertEquals(1, propertyMap.size());
 
         String actualFilename = DataSourceProperties.decodeFilename(propertyMap);
