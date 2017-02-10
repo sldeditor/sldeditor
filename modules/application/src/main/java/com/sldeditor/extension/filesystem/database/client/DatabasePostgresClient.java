@@ -95,17 +95,21 @@ public class DatabasePostgresClient implements DatabaseClientInterface {
             DataStore dataStore = DataStoreFinder.getDataStore(params);
 
             if (dataStore != null) {
-                List<Name> nameList = dataStore.getNames();
+                try {
+                    List<Name> nameList = dataStore.getNames();
 
-                if (nameList != null) {
-                    for (Name name : nameList) {
-                        featureClassList.add(name.getLocalPart());
+                    if (nameList != null) {
+                        for (Name name : nameList) {
+                            featureClassList.add(name.getLocalPart());
+                        }
                     }
-                }
 
-                dataStore.dispose();
-                dataStore = null;
-                connected = true;
+                    dataStore.dispose();
+                    dataStore = null;
+                    connected = true;
+                } catch (Exception e) {
+                    ConsoleManager.getInstance().exception(this, e);
+                }
             }
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
@@ -168,7 +172,9 @@ public class DatabasePostgresClient implements DatabaseClientInterface {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getDBConnectionParams()
      */
     @Override

@@ -29,7 +29,6 @@ import java.util.Map;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -122,7 +121,7 @@ public class DataSourceConfigPanel extends JPanel
         Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory
                 .getDataSourceConnectorList();
 
-        JButton clearButton = new JButton(Localisation.getField(DataSourceConfigPanel.class, "DataSourceConfigPanel.clear"));
+        JButton clearButton = new JButton(Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.clear"));
 
         clearButton.addActionListener(new ActionListener() {
 
