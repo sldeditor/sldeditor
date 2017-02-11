@@ -78,6 +78,8 @@ import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
+import junit.runner.BaseTestRunner;
+
 /**
  * The Class SLDTestRunner.
  * 
@@ -122,6 +124,8 @@ public class SLDTestRunner {
      * Instantiates a new SLD test runner.
      */
     public SLDTestRunner() {
+    	BaseTestRunner.setPreference("maxmessage","-1");
+
         System.out.println("Operating system is : " + OSValidator.getOS());
         // Populate the list of fields that are colours
         colourFieldsList.add(FieldIdEnum.FILL_COLOUR);
@@ -133,7 +137,14 @@ public class SLDTestRunner {
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
 
-        sldEditor = SLDEditor.createAndShowGUI(null, null, true, null);
+        try
+        {
+        	sldEditor = SLDEditor.createAndShowGUI(null, null, true, null);
+        }
+        catch(Exception e)
+        {
+        	e.printStackTrace();
+        }
     }
 
     /**

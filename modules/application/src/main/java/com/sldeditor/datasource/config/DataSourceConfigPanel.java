@@ -155,9 +155,11 @@ public class DataSourceConfigPanel extends JPanel
      * @param selectedItem the selected item
      */
     protected void showPanel(String selectedItem) {
-        CardLayout cl = (CardLayout) (dscPanel.getLayout());
-        cl.show(dscPanel, selectedItem);
-
+    	if(dscPanel != null)
+    	{
+    		CardLayout cl = (CardLayout) (dscPanel.getLayout());
+    		cl.show(dscPanel, selectedItem);
+    	}
     }
 
     /**
