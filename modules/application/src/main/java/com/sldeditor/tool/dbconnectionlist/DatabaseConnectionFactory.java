@@ -264,9 +264,9 @@ public class DatabaseConnectionFactory {
 
         list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.HOST));
         list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.PORT));
+        list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.SCHEMA));
         list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.DATABASE));
         list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.USER));
-        list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.SCHEMA));
         list.add(new DatabaseConnectionField(OracleNGDataStoreFactory.PASSWD));
 
         OracleNGDataStoreFactory factory = new OracleNGDataStoreFactory();
@@ -304,8 +304,9 @@ public class DatabaseConnectionFactory {
 
         list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.HOST));
         list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.PORT));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.DATABASE));
+        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.INSTANCE));
         list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.SCHEMA));
+        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.DATABASE));
         list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.USER));
         list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.PASSWD));
 
@@ -319,7 +320,7 @@ public class DatabaseConnectionFactory {
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
                         String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get(SQLServerDataStoreFactory.SCHEMA.key),
+                                properties.get(SQLServerDataStoreFactory.INSTANCE.key),
                                 properties.get(SQLServerDataStoreFactory.DATABASE.key),
                                 properties.get(SQLServerDataStoreFactory.HOST.key),
                                 properties.get(SQLServerDataStoreFactory.PORT.key));
