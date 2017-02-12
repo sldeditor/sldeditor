@@ -20,9 +20,12 @@ package com.sldeditor.common.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.common.property.EncryptedProperties;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 
 /**
  * The Class DatabaseConnection encapsulates database connection details, including connection name, url, user name and password.
@@ -56,37 +59,110 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     /** The password. */
     private String password;
 
+    /** The database type label. */
+    private String databaseTypeLabel;
+
     /** The use encryption flag. */
     private static boolean useEncrpytion = true;
 
+    /** The detail list. */
+    private List<DatabaseConnectionField> detailList = null;
+
+    /** The database type. */
+    private String databaseType;
+
+    /** The initial values. */
+    private Map<String, String> initialValues = new HashMap<String, String>();
+
+    /** The database connection name. */
+    private DatabaseConnectionName databaseConnectionName = null;
+
+    /** The no of times duplicated. */
+    private int noOfTimesDuplicated = 0;
+
+    /** The supports duplication flag. */
+    private boolean supportsDuplication = false;
+
     /**
-     * Default constructor.
+     * Constructor.
+     *
+     * @param databaseType the database type
+     * @param databaseTypeLabel the database type label
+     * @param detailList the detail list
+     * @param databaseConnectionName the database connection name
      */
-    public DatabaseConnection() {
+    public DatabaseConnection(String databaseType, String databaseTypeLabel,
+            boolean supportsDuplication, List<DatabaseConnectionField> detailList,
+            DatabaseConnectionName databaseConnectionName) {
+        this.databaseType = databaseType;
+        this.databaseTypeLabel = databaseTypeLabel;
+        this.detailList = detailList;
+        this.databaseConnectionName = databaseConnectionName;
+        this.supportsDuplication = supportsDuplication;
+
+        createInitialValues();
+
+        this.connectionDataMap = this.initialValues;
     }
 
     /**
-     * Decode an encoded GeoServerConnection string.
+     * Creates the initial values.
+     */
+    private void createInitialValues() {
+        initialValues.put(DatabaseConnectionFactory.DATABASE_TYPE_KEY, databaseType);
+        for (DatabaseConnectionField detail : detailList) {
+            initialValues.put(detail.getKey(), detail.getDefaultValue());
+        }
+    }
+
+    /**
+     * Instantiates a duplicate database connection.
+     *
+     * @param databaseConnection the database connection to duplicate
+     */
+    public DatabaseConnection(DatabaseConnection databaseConnection) {
+        this.databaseType = databaseConnection.databaseType;
+        this.databaseTypeLabel = databaseConnection.databaseTypeLabel;
+        this.detailList = databaseConnection.detailList;
+        this.noOfTimesDuplicated = databaseConnection.noOfTimesDuplicated + 1;
+        this.userName = databaseConnection.userName;
+        this.password = databaseConnection.password;
+        this.databaseConnectionName = databaseConnection.databaseConnectionName;
+        this.supportsDuplication = databaseConnection.supportsDuplication;
+        this.setConnectionDataMap(databaseConnection.getConnectionDataMap());
+
+        createInitialValues();
+    }
+
+    /**
+     * Decode an encoded DatabaseConnection string.
      *
      * @param connectionString the connection string
-     * @return the geo server connection
+     * @return the database connection
      */
     public static DatabaseConnection decodeString(String connectionString) {
         DatabaseConnection connectionData = null;
         if (connectionString != null) {
             String[] components = connectionString.split(DELIMETER);
             if (components.length >= 3) {
-                connectionData = new DatabaseConnection();
 
-                connectionData.connectionName = components[0];
-                connectionData.userName = components[1];
-                connectionData.password = components[2];
+                Map<String, String> localConnectionDataMap = new HashMap<String, String>();
 
                 for (int index = 3; index < components.length; index++) {
                     String[] property = components[index].split(PROPERTY_DELIMETER);
                     if (property.length == 2) {
-                        connectionData.connectionDataMap.put(property[0], property[1]);
+                        localConnectionDataMap.put(property[0], (property[1].equals("null")) ? null : property[1]);
                     }
+                }
+
+                connectionData = DatabaseConnectionFactory.decodeString(localConnectionDataMap);
+
+                if (connectionData != null) {
+                    connectionData.connectionName = components[0];
+                    connectionData.userName = (components[1].equals("null")) ? null : components[1];
+                    connectionData.password = (components[2].equals("null")) ? null : components[2];
+
+                    connectionData.setConnectionDataMap(localConnectionDataMap);
                 }
             }
         }
@@ -213,7 +289,14 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @param connectionDataMap the connectionDataMap to set
      */
     public void setConnectionDataMap(Map<String, String> connectionDataMap) {
-        this.connectionDataMap = connectionDataMap;
+        for (String key : connectionDataMap.keySet()) {
+            this.connectionDataMap.put(key, connectionDataMap.get(key));
+        }
+
+        if (this.databaseConnectionName != null) {
+            this.connectionName = this.databaseConnectionName.getConnectionName(DUPLICATE_PREFIX,
+                    noOfTimesDuplicated, connectionDataMap);
+        }
     }
 
     /**
@@ -222,21 +305,53 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @return the database connection
      */
     public DatabaseConnection duplicate() {
-        DatabaseConnection newItem = new DatabaseConnection();
-        newItem.connectionName = DUPLICATE_PREFIX + this.connectionName;
-        newItem.connectionDataMap = this.connectionDataMap;
-        newItem.userName = this.userName;
-        newItem.password = this.password;
+        DatabaseConnection newItem = new DatabaseConnection(this);
 
         return newItem;
     }
 
     /**
-     * Sets the connection name.
+     * Gets the detail list.
      *
-     * @param connectionName the connectionName to set
+     * @return the detailList
      */
-    public void setConnectionName(String connectionName) {
-        this.connectionName = connectionName;
+    public List<DatabaseConnectionField> getDetailList() {
+        return detailList;
+    }
+
+    /**
+     * Gets the database connection name.
+     *
+     * @return the databaseConnectionName
+     */
+    public DatabaseConnectionName getDatabaseConnectionName() {
+        return databaseConnectionName;
+    }
+
+    /**
+     * Gets the database type.
+     *
+     * @return the databaseType
+     */
+    public String getDatabaseType() {
+        return databaseType;
+    }
+
+    /**
+     * Gets the database type label.
+     *
+     * @return the databaseTypeLabel
+     */
+    public String getDatabaseTypeLabel() {
+        return databaseTypeLabel;
+    }
+
+    /**
+     * Checks if is supports duplication.
+     *
+     * @return the supportsDuplication
+     */
+    public boolean isSupportsDuplication() {
+        return supportsDuplication;
     }
 }

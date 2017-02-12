@@ -30,10 +30,8 @@ import org.junit.Test;
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorFileGDB;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 
 /**
  * Unit test for DataSourceConnectorFactory class.
@@ -63,11 +61,7 @@ public class DataSourceConnectorFactoryTest {
 
         DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties("filename.shp");
 
-        assertEquals(DataSourceConnectorShapeFile.class, dsp.getDataSourceConnector().getClass());
-
-        dsp = DataSourceConnectorFactory.getDataSourceProperties("file.gdb");
-
-        assertEquals(DataSourceConnectorFileGDB.class, dsp.getDataSourceConnector().getClass());
+        assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
     }
 
     /**
@@ -90,7 +84,7 @@ public class DataSourceConnectorFactoryTest {
         propertyMap.put("url", "filename.shp");
         DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
 
-        assertEquals(DataSourceConnectorShapeFile.class, dsp.getDataSourceConnector().getClass());
+        assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
 
         propertyMap.clear();
         propertyMap.put("host", "localhost");
@@ -103,7 +97,7 @@ public class DataSourceConnectorFactoryTest {
 
         dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
 
-        assertEquals(DataSourceConnectorPostgres.class, dsp.getDataSourceConnector().getClass());
+        assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
     }
 
     /**

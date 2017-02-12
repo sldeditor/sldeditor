@@ -34,6 +34,7 @@ import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 
@@ -65,6 +66,9 @@ public class DatabaseConnectionListTool implements ToolInterface {
     /** The connection list. */
     private List<DatabaseConnection> connectionList = new ArrayList<DatabaseConnection>();
 
+    /** The selected database type. */
+    private String selectedDatabaseType = null;
+
     /**
      * Instantiates a new database connection list tool.
      *
@@ -83,8 +87,8 @@ public class DatabaseConnectionListTool implements ToolInterface {
      */
     private void createUI() {
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(
-                DatabaseConnectionListTool.class, "DatabaseConnectionListTool.title")));
+        panel.setBorder(BorderFactory.createTitledBorder(Localisation
+                .getString(DatabaseConnectionListTool.class, "DatabaseConnectionListTool.title")));
         FlowLayout flowLayout = (FlowLayout) panel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
@@ -95,7 +99,8 @@ public class DatabaseConnectionListTool implements ToolInterface {
         btnNew.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (databaseConnectUpdate != null) {
-                    DatabaseConnection connectionDetails = null;
+                    DatabaseConnection connectionDetails = DatabaseConnectionFactory
+                            .getNewConnection(selectedDatabaseType);
 
                     DatabaseConnection newConnectionDetails = DBConnectorDetailsPanel
                             .showDialog(null, connectionDetails);
@@ -140,8 +145,8 @@ public class DatabaseConnectionListTool implements ToolInterface {
                                 .showDialog(null, selectedConnectionDetails);
 
                         if (newConnectionDetails != null) {
-                            databaseConnectUpdate.updateConnectionDetails(
-                                    selectedConnectionDetails, newConnectionDetails);
+                            databaseConnectUpdate.updateConnectionDetails(selectedConnectionDetails,
+                                    newConnectionDetails);
                         }
                     }
                 }
@@ -183,19 +188,31 @@ public class DatabaseConnectionListTool implements ToolInterface {
     public void setSelectedItems(List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         connectionList.clear();
+        selectedDatabaseType = null;
 
         boolean databaseNodesSelected = false;
+        boolean canDuplicate = true;
 
         for (NodeInterface nodeType : nodeTypeList) {
             if (nodeType instanceof DatabaseNode) {
                 DatabaseNode databaseNode = (DatabaseNode) nodeType;
 
-                connectionList.add(databaseNode.getConnection());
+                DatabaseConnection connection = databaseNode.getConnection();
+                connectionList.add(connection);
                 databaseNodesSelected = true;
+
+                if (!connection.isSupportsDuplication()) {
+                    canDuplicate = false;
+                }
+            } else if (nodeType instanceof DatabaseOverallNode) {
+                DatabaseOverallNode databaseOverallNode = (DatabaseOverallNode) nodeType;
+                selectedDatabaseType = databaseOverallNode.toString();
+                canDuplicate = false;
             }
         }
 
-        btnDuplicate.setEnabled(databaseNodesSelected && (connectionList.size() == 1));
+        btnDuplicate
+                .setEnabled(canDuplicate && databaseNodesSelected && (connectionList.size() == 1));
         btnEdit.setEnabled(databaseNodesSelected && (connectionList.size() == 1));
         btnDelete.setEnabled(databaseNodesSelected);
     }

@@ -24,13 +24,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,14 +50,13 @@ public class DBConnectorDetailsPanel extends JPanel {
     /** The ok. */
     private boolean ok = false;
 
-    /** The database connector combo box. */
-    private JComboBox<String> databaseConnectorComboBox = null;
-
     /** The database connection map. */
     private Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap = new LinkedHashMap<String, DatabaseConnectionConfigInterface>();
 
     /** The connection panel. */
     private JPanel connectionPanel = null;
+
+    private DatabaseConnectionConfigInterface selectedPanel;
 
     /**
      * Instantiates a new database connector panel.
@@ -108,20 +105,6 @@ public class DBConnectorDetailsPanel extends JPanel {
         for (String name : databaseConnectionMap.keySet()) {
             nameList.add(name);
         }
-        ComboBoxModel<String> model = new DefaultComboBoxModel<String>(nameList);
-        databaseConnectorComboBox = new JComboBox<String>(model);
-        databaseConnectorComboBox.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                String selectedItem = (String) databaseConnectorComboBox.getSelectedItem();
-
-                CardLayout cl = (CardLayout) (connectionPanel.getLayout());
-                cl.show(connectionPanel, selectedItem);
-            }
-        });
-        panelSelection.add(databaseConnectorComboBox);
-        add(panelSelection, BorderLayout.NORTH);
 
         connectionPanel = new JPanel();
         add(connectionPanel, BorderLayout.CENTER);
@@ -138,9 +121,12 @@ public class DBConnectorDetailsPanel extends JPanel {
      * Populate database connections.
      */
     private void populateDatabaseConnections() {
-        DatabaseConnectorPostgres postgres = new DatabaseConnectorPostgres();
+        List<String> dbConnectorNameList = DatabaseConnectionFactory.getNames();
 
-        databaseConnectionMap.put(postgres.getName(), postgres);
+        for (String name : dbConnectorNameList) {
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            databaseConnectionMap.put(name, dbConnector);
+        }
     }
 
     /**
@@ -179,14 +165,11 @@ public class DBConnectorDetailsPanel extends JPanel {
      * @return the connection details
      */
     private DatabaseConnection getConnectionDetails() {
-        String selectedItem = (String) databaseConnectorComboBox.getSelectedItem();
-
-        DatabaseConnectionConfigInterface panel = databaseConnectionMap.get(selectedItem);
 
         DatabaseConnection connectionDetails = null;
 
-        if (panel != null) {
-            connectionDetails = panel.getConnection();
+        if (selectedPanel != null) {
+            connectionDetails = selectedPanel.getConnection();
         }
 
         return connectionDetails;
@@ -209,22 +192,15 @@ public class DBConnectorDetailsPanel extends JPanel {
     private void populate(DatabaseConnection connectionDetails) {
         if (connectionDetails != null) {
             for (String name : databaseConnectionMap.keySet()) {
-                DatabaseConnectionConfigInterface panel = databaseConnectionMap.get(name);
+                selectedPanel = databaseConnectionMap.get(name);
 
-                if (panel != null) {
-                    if (panel.accept(connectionDetails)) {
-                        databaseConnectorComboBox.setSelectedItem(name);
-                        panel.setConnection(connectionDetails);
+                if (selectedPanel != null) {
+                    if (selectedPanel.accept(connectionDetails)) {
+                        CardLayout cl = (CardLayout) (connectionPanel.getLayout());
+                        cl.show(connectionPanel, name);
+                        selectedPanel.setConnection(connectionDetails);
                     }
                 }
-            }
-        } else {
-            String selectedItem = (String) databaseConnectorComboBox.getSelectedItem();
-
-            DatabaseConnectionConfigInterface panel = databaseConnectionMap.get(selectedItem);
-
-            if (panel != null) {
-                panel.setConnection(connectionDetails);
             }
         }
     }

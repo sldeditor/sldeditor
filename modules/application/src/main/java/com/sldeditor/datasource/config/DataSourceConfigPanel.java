@@ -121,18 +121,6 @@ public class DataSourceConfigPanel extends JPanel
         Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory
                 .getDataSourceConnectorList();
 
-        JButton clearButton = new JButton(Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.clear"));
-
-        clearButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showPanel(DataSourceConnectorEmpty.KEY);
-            }});
-        panel1.add(clearButton);
-
-        mainPanel.add(panel1, BorderLayout.NORTH);
-
         //
         // Set up the card layout from the available data source connectors
         //
@@ -146,6 +134,19 @@ public class DataSourceConfigPanel extends JPanel
         }
         mainPanel.add(dscPanel, BorderLayout.CENTER);
 
+        // Add clear button
+        JButton clearButton = new JButton(Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.clear"));
+
+        clearButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPanel(DataSourceConnectorEmpty.KEY);
+            }});
+        panel1.add(clearButton);
+
+        mainPanel.add(panel1, BorderLayout.NORTH);
+
         return mainPanel;
     }
 
@@ -155,11 +156,10 @@ public class DataSourceConfigPanel extends JPanel
      * @param selectedItem the selected item
      */
     protected void showPanel(String selectedItem) {
-    	if(dscPanel != null)
-    	{
-    		CardLayout cl = (CardLayout) (dscPanel.getLayout());
-    		cl.show(dscPanel, selectedItem);
-    	}
+        if (dscPanel != null) {
+            CardLayout cl = (CardLayout) (dscPanel.getLayout());
+            cl.show(dscPanel, selectedItem);
+        }
     }
 
     /**

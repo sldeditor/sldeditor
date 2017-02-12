@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,6 @@ import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.connection.DatabaseConnectionManager;
-import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
@@ -47,7 +47,6 @@ import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
-import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.databaseconnection.DatabaseConnectStateInterface;
 import com.sldeditor.tool.databaseconnection.DatabaseConnectionTool;
@@ -59,7 +58,8 @@ import com.sldeditor.tool.geoserverconnection.GeoServerConnectionTool;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdateInterface, DatabaseParseCompleteInterface, DatabaseConnectStateInterface {
+public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdateInterface,
+        DatabaseParseCompleteInterface, DatabaseConnectStateInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2014826409816444581L;
@@ -76,8 +76,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     /** The logger. */
     private transient static Logger logger = Logger.getLogger(DatabaseInput.class.getName());
 
-    /** The database root node. */
-    private transient List<DatabaseOverallNode> databaseRootNodeList = null;
+    /** The database root node map. */
+    private transient Map<String, DatabaseOverallNode> databaseRootNodeMap = null;
 
     /** The tool mgr. */
     private transient ToolSelectionInterface toolMgr = null;
@@ -126,9 +126,10 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         progress.setTreeModel(tree, model);
 
         if (rootNode != null) {
-            List<DatabaseOverallNode> nodeList = getRootDatabaseNodes();
 
-            for (DatabaseOverallNode node : nodeList) {
+            for (String key : getRootDatabaseNodes().keySet()) {
+                DatabaseOverallNode node = getRootDatabaseNodes().get(key);
+
                 rootNode.add(node);
             }
         }
@@ -144,14 +145,21 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      *
      * @return the list of root database nodes
      */
-    private List<DatabaseOverallNode> getRootDatabaseNodes() {
-        if (databaseRootNodeList == null) {
-            databaseRootNodeList = new ArrayList<DatabaseOverallNode>();
-            databaseRootNodeList.add(
-                    new DatabaseOverallNode(this, "Postgres", "ui/filesystemicons/postgresql.png"));
-        }
+    private Map<String, DatabaseOverallNode> getRootDatabaseNodes() {
+        if (databaseRootNodeMap == null) {
+            databaseRootNodeMap = new LinkedHashMap<String, DatabaseOverallNode>();
 
-        return databaseRootNodeList;
+            DatabaseOverallNode postgresNode = new DatabaseOverallNode(this, "Postgres",
+                    "ui/filesystemicons/postgresql.png");
+
+            databaseRootNodeMap.put(postgresNode.toString(), postgresNode);
+
+            DatabaseOverallNode geopackageNode = new DatabaseOverallNode(this, "GeoPackage",
+                    "ui/filesystemicons/geopackage.png");
+
+            databaseRootNodeMap.put(geopackageNode.toString(), geopackageNode);
+        }
+        return databaseRootNodeMap;
     }
 
     /**
@@ -161,7 +169,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     private void addConnectionNode(DatabaseConnection connection) {
         DatabaseNode node = new DatabaseNode(this, connection);
-        getRootDatabaseNodes().get(0).add(node);
+        getRootDatabaseNode(connection).add(node);
 
         progress.addNewConnectionNode(connection, node);
     }
@@ -183,46 +191,46 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     @Override
     public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
-//        if (selectedItem instanceof GeoServerNode) {
-//            GeoServerNode geoServerNode = (GeoServerNode) selectedItem;
-//
-//            GeoServerConnection connection = geoServerNode.getConnection();
-//
-//            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-//                    .getConnectionMap().get(connection);
-//            if (client != null) {
-//                if (client.isConnected()) {
-//                    JMenuItem connectMenuItem = new JMenuItem(Localisation
-//                            .getString(DatabaseInput.class, "GeoServerInput.disconnect"));
-//                    connectMenuItem.addActionListener(new ActionListener() {
-//                        public void actionPerformed(ActionEvent event) {
-//                            disconnectFromGeoServer(client);
-//                        }
-//                    });
-//                    popupMenu.add(connectMenuItem);
-//                } else {
-//                    JMenuItem connectMenuItem = new JMenuItem(
-//                            Localisation.getString(DatabaseInput.class, "GeoServerInput.connect"));
-//                    connectMenuItem.addActionListener(new ActionListener() {
-//                        public void actionPerformed(ActionEvent event) {
-//                            GeoServerNode geoserver = (GeoServerNode) selectedItem;
-//                            GeoServerConnection connection = geoserver.getConnection();
-//                            connectToGeoServer(connection);
-//                        }
-//                    });
-//                    popupMenu.add(connectMenuItem);
-//                }
-//            }
-//        } else if (selectedItem instanceof FileTreeNode) {
-//            FileTreeNode fileNode = (FileTreeNode) selectedItem;
-//            if (ExternalFilenames.getFileExtension(fileNode.getFile().getAbsolutePath())
-//                    .compareToIgnoreCase(SLD_FILE_EXTENSION) == 0) {
-//                JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(DatabaseInput.class,
-//                        "GeoServerInput.uploadToGeoServer"));
-//                populateGeoServerConnections(uploadToGeoServerMenu);
-//                popupMenu.add(uploadToGeoServerMenu);
-//            }
-//        }
+        // if (selectedItem instanceof GeoServerNode) {
+        // GeoServerNode geoServerNode = (GeoServerNode) selectedItem;
+        //
+        // GeoServerConnection connection = geoServerNode.getConnection();
+        //
+        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+        // .getConnectionMap().get(connection);
+        // if (client != null) {
+        // if (client.isConnected()) {
+        // JMenuItem connectMenuItem = new JMenuItem(Localisation
+        // .getString(DatabaseInput.class, "GeoServerInput.disconnect"));
+        // connectMenuItem.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent event) {
+        // disconnectFromGeoServer(client);
+        // }
+        // });
+        // popupMenu.add(connectMenuItem);
+        // } else {
+        // JMenuItem connectMenuItem = new JMenuItem(
+        // Localisation.getString(DatabaseInput.class, "GeoServerInput.connect"));
+        // connectMenuItem.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent event) {
+        // GeoServerNode geoserver = (GeoServerNode) selectedItem;
+        // GeoServerConnection connection = geoserver.getConnection();
+        // connectToGeoServer(connection);
+        // }
+        // });
+        // popupMenu.add(connectMenuItem);
+        // }
+        // }
+        // } else if (selectedItem instanceof FileTreeNode) {
+        // FileTreeNode fileNode = (FileTreeNode) selectedItem;
+        // if (ExternalFilenames.getFileExtension(fileNode.getFile().getAbsolutePath())
+        // .compareToIgnoreCase(SLD_FILE_EXTENSION) == 0) {
+        // JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(DatabaseInput.class,
+        // "GeoServerInput.uploadToGeoServer"));
+        // populateGeoServerConnections(uploadToGeoServerMenu);
+        // popupMenu.add(uploadToGeoServerMenu);
+        // }
+        // }
     }
 
     /**
@@ -231,40 +239,40 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      * @param uploadToGeoServerMenu the upload to geo server menu
      */
     private void populateGeoServerConnections(JMenu uploadToGeoServerMenu) {
-//        if (uploadToGeoServerMenu != null) {
-//            Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
-//                    .getInstance().getConnectionMap();
-//
-//            if (connectionMap.isEmpty()) {
-//                JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation
-//                        .getString(DatabaseInput.class, "GeoServerInput.noGeoServerConnections"));
-//
-//                uploadToGeoServerMenu.add(noGeoServerMenuItem);
-//            } else {
-//                for (GeoServerConnection connection : connectionMap.keySet()) {
-//                    JMenu geoServer = new JMenu(connection.getConnectionName());
-//
-//                    uploadToGeoServerMenu.add(geoServer);
-//
-//                    DatabaseClientInterface client = connectionMap.get(connection);
-//                    if (client.isConnected()) {
-//                        populateWorkspaceList(client, geoServer);
-//                    } else {
-//                        JMenuItem connectMenuItem = new JMenuItem(Localisation
-//                                .getString(DatabaseInput.class, "GeoServerInput.connect"));
-//                        connectMenuItem.addActionListener(new ActionListener() {
-//                            public void actionPerformed(ActionEvent event) {
-//                                connectMenuItem.setEnabled(false);
-//                                connectToDatabase(connection);
-//                                connectMenuItem.setEnabled(true);
-//                            }
-//                        });
-//
-//                        geoServer.add(connectMenuItem);
-//                    }
-//                }
-//            }
-//        }
+        // if (uploadToGeoServerMenu != null) {
+        // Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
+        // .getInstance().getConnectionMap();
+        //
+        // if (connectionMap.isEmpty()) {
+        // JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation
+        // .getString(DatabaseInput.class, "GeoServerInput.noGeoServerConnections"));
+        //
+        // uploadToGeoServerMenu.add(noGeoServerMenuItem);
+        // } else {
+        // for (GeoServerConnection connection : connectionMap.keySet()) {
+        // JMenu geoServer = new JMenu(connection.getConnectionName());
+        //
+        // uploadToGeoServerMenu.add(geoServer);
+        //
+        // DatabaseClientInterface client = connectionMap.get(connection);
+        // if (client.isConnected()) {
+        // populateWorkspaceList(client, geoServer);
+        // } else {
+        // JMenuItem connectMenuItem = new JMenuItem(Localisation
+        // .getString(DatabaseInput.class, "GeoServerInput.connect"));
+        // connectMenuItem.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent event) {
+        // connectMenuItem.setEnabled(false);
+        // connectToDatabase(connection);
+        // connectMenuItem.setEnabled(true);
+        // }
+        // });
+        //
+        // geoServer.add(connectMenuItem);
+        // }
+        // }
+        // }
+        // }
     }
 
     /**
@@ -294,8 +302,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     private boolean connectToDatabase(DatabaseConnection connection) {
         boolean isConnected = false;
 
-        DatabaseClientInterface client = DatabaseConnectionManager.getInstance()
-                .getConnectionMap().get(connection);
+        DatabaseClientInterface client = DatabaseConnectionManager.getInstance().getConnectionMap()
+                .get(connection);
 
         if (client != null) {
             client.connect();
@@ -327,104 +335,104 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     @Override
     public SelectedFiles getSLDContents(NodeInterface node) {
-//        if (node instanceof GeoServerStyleNode) {
-//            GeoServerStyleNode styleNode = (GeoServerStyleNode) node;
-//
-//            GeoServerConnection connectionData = styleNode.getConnectionData();
-//            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-//                    .getConnectionMap().get(connectionData);
-//
-//            if (client != null) {
-//                String sldContent = client.getStyle(styleNode.getStyle());
-//
-//                SLDDataInterface sldData = new SLDData(styleNode.getStyle(), sldContent);
-//                sldData.setConnectionData(connectionData);
-//                sldData.setReadOnly(false);
-//
-//                List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-//
-//                sldDataList.add(sldData);
-//
-//                SelectedFiles selectedFiles = new SelectedFiles();
-//                selectedFiles.setSldData(sldDataList);
-//                selectedFiles.setDataSource(false);
-//                selectedFiles.setConnectionData(connectionData);
-//
-//                return selectedFiles;
-//            }
-//        } else if (node instanceof GeoServerWorkspaceNode) {
-//            GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
-//
-//            GeoServerConnection connectionData = workspaceNode.getConnection();
-//            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-//                    .getConnectionMap().get(connectionData);
-//
-//            List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-//
-//            if (workspaceNode.isStyle()) {
-//                Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
-//
-//                if ((client != null) && (styleMap != null)) {
-//                    for (StyleWrapper style : styleMap.get(workspaceNode.getWorkspaceName())) {
-//                        String sldContent = client.getStyle(style);
-//
-//                        SLDDataInterface sldData = new SLDData(style, sldContent);
-//                        sldData.setConnectionData(connectionData);
-//                        sldData.setReadOnly(false);
-//
-//                        sldDataList.add(sldData);
-//                    }
-//                }
-//            }
-//
-//            SelectedFiles selectedFiles = new SelectedFiles();
-//            selectedFiles.setSldData(sldDataList);
-//            selectedFiles.setDataSource(false);
-//            selectedFiles.setConnectionData(connectionData);
-//
-//            return selectedFiles;
-//        } else if (node instanceof GeoServerStyleHeadingNode) {
-//            GeoServerStyleHeadingNode styleHeadingNode = (GeoServerStyleHeadingNode) node;
-//
-//            GeoServerConnection connectionData = styleHeadingNode.getConnection();
-//            GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-//                    .getConnectionMap().get(connectionData);
-//
-//            List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-//
-//            Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
-//
-//            if ((client != null) && (styleMap != null)) {
-//                for (String workspaceName : styleMap.keySet()) {
-//                    for (StyleWrapper style : styleMap.get(workspaceName)) {
-//                        String sldContent = client.getStyle(style);
-//
-//                        SLDDataInterface sldData = new SLDData(style, sldContent);
-//                        sldData.setConnectionData(connectionData);
-//                        sldData.setReadOnly(false);
-//
-//                        sldDataList.add(sldData);
-//                    }
-//                }
-//            }
-//
-//            SelectedFiles selectedFiles = new SelectedFiles();
-//            selectedFiles.setSldData(sldDataList);
-//            selectedFiles.setDataSource(false);
-//            selectedFiles.setConnectionData(connectionData);
-//
-//            return selectedFiles;
-//        } else if (node instanceof GeoServerNode) {
-//            GeoServerNode geoServerNode = (GeoServerNode) node;
-//
-//            GeoServerConnection connectionData = geoServerNode.getConnection();
-//
-//            SelectedFiles selectedFiles = new SelectedFiles();
-//            selectedFiles.setDataSource(false);
-//            selectedFiles.setConnectionData(connectionData);
-//
-//            return selectedFiles;
-//        }
+        // if (node instanceof GeoServerStyleNode) {
+        // GeoServerStyleNode styleNode = (GeoServerStyleNode) node;
+        //
+        // GeoServerConnection connectionData = styleNode.getConnectionData();
+        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+        // .getConnectionMap().get(connectionData);
+        //
+        // if (client != null) {
+        // String sldContent = client.getStyle(styleNode.getStyle());
+        //
+        // SLDDataInterface sldData = new SLDData(styleNode.getStyle(), sldContent);
+        // sldData.setConnectionData(connectionData);
+        // sldData.setReadOnly(false);
+        //
+        // List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
+        //
+        // sldDataList.add(sldData);
+        //
+        // SelectedFiles selectedFiles = new SelectedFiles();
+        // selectedFiles.setSldData(sldDataList);
+        // selectedFiles.setDataSource(false);
+        // selectedFiles.setConnectionData(connectionData);
+        //
+        // return selectedFiles;
+        // }
+        // } else if (node instanceof GeoServerWorkspaceNode) {
+        // GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
+        //
+        // GeoServerConnection connectionData = workspaceNode.getConnection();
+        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+        // .getConnectionMap().get(connectionData);
+        //
+        // List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
+        //
+        // if (workspaceNode.isStyle()) {
+        // Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
+        //
+        // if ((client != null) && (styleMap != null)) {
+        // for (StyleWrapper style : styleMap.get(workspaceNode.getWorkspaceName())) {
+        // String sldContent = client.getStyle(style);
+        //
+        // SLDDataInterface sldData = new SLDData(style, sldContent);
+        // sldData.setConnectionData(connectionData);
+        // sldData.setReadOnly(false);
+        //
+        // sldDataList.add(sldData);
+        // }
+        // }
+        // }
+        //
+        // SelectedFiles selectedFiles = new SelectedFiles();
+        // selectedFiles.setSldData(sldDataList);
+        // selectedFiles.setDataSource(false);
+        // selectedFiles.setConnectionData(connectionData);
+        //
+        // return selectedFiles;
+        // } else if (node instanceof GeoServerStyleHeadingNode) {
+        // GeoServerStyleHeadingNode styleHeadingNode = (GeoServerStyleHeadingNode) node;
+        //
+        // GeoServerConnection connectionData = styleHeadingNode.getConnection();
+        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
+        // .getConnectionMap().get(connectionData);
+        //
+        // List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
+        //
+        // Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
+        //
+        // if ((client != null) && (styleMap != null)) {
+        // for (String workspaceName : styleMap.keySet()) {
+        // for (StyleWrapper style : styleMap.get(workspaceName)) {
+        // String sldContent = client.getStyle(style);
+        //
+        // SLDDataInterface sldData = new SLDData(style, sldContent);
+        // sldData.setConnectionData(connectionData);
+        // sldData.setReadOnly(false);
+        //
+        // sldDataList.add(sldData);
+        // }
+        // }
+        // }
+        //
+        // SelectedFiles selectedFiles = new SelectedFiles();
+        // selectedFiles.setSldData(sldDataList);
+        // selectedFiles.setDataSource(false);
+        // selectedFiles.setConnectionData(connectionData);
+        //
+        // return selectedFiles;
+        // } else if (node instanceof GeoServerNode) {
+        // GeoServerNode geoServerNode = (GeoServerNode) node;
+        //
+        // GeoServerConnection connectionData = geoServerNode.getConnection();
+        //
+        // SelectedFiles selectedFiles = new SelectedFiles();
+        // selectedFiles.setDataSource(false);
+        // selectedFiles.setConnectionData(connectionData);
+        //
+        // return selectedFiles;
+        // }
 
         return null;
     }
@@ -483,8 +491,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     @Override
     public boolean isConnected(DatabaseConnection connection) {
-        GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-                .getConnectionMap().get(connection);
+        DatabaseClientInterface client = DatabaseConnectionManager.getInstance().getConnectionMap()
+                .get(connection);
         if (client != null) {
             return client.isConnected();
         }
@@ -559,11 +567,21 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
 
             addConnectionNode(newConnectionDetails);
 
-            progress.refreshNode(getRootDatabaseNodes().get(0));
-            progress.setFolder(newConnectionDetails, false);
+            progress.refreshNode(getRootDatabaseNode(newConnectionDetails));
+            progress.setFolder(newConnectionDetails.getDatabaseTypeLabel(), newConnectionDetails, false);
 
             updatePropertyFile();
         }
+    }
+
+    /**
+     * Gets the root database node.
+     *
+     * @param newConnectionDetails the new connection details
+     * @return the root database node
+     */
+    private DefaultMutableTreeNode getRootDatabaseNode(DatabaseConnection newConnectionDetails) {
+        return getRootDatabaseNodes().get(newConnectionDetails.getDatabaseTypeLabel());
     }
 
     /*
@@ -581,8 +599,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
 
         logger.debug("Updating connection : " + newConnectionDetails.getConnectionName());
 
-        DatabaseClientInterface client = DatabaseConnectionManager.getInstance()
-                .getConnectionMap().get(originalConnectionDetails);
+        DatabaseClientInterface client = DatabaseConnectionManager.getInstance().getConnectionMap()
+                .get(originalConnectionDetails);
         if (client != null) {
             disconnectFromDatabase(client);
         }
@@ -607,6 +625,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
             return;
         }
 
+        List<DefaultMutableTreeNode> overallNodesToRefresh = new ArrayList<DefaultMutableTreeNode>();
+        String overallNodeName = null;
         for (DatabaseConnection connection : connectionList) {
             logger.debug("Deleting connection : " + connection.getConnectionName());
 
@@ -619,11 +639,19 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
                 DatabaseConnectionManager.getInstance().removeConnection(connection);
 
                 progress.deleteConnection(connection);
+                DefaultMutableTreeNode overallNode = getRootDatabaseNode(connection);
+                if (!overallNodesToRefresh.contains(overallNode)) {
+                    overallNodesToRefresh.add(overallNode);
+                }
+
+                overallNodeName = connection.getDatabaseTypeLabel();
             }
         }
         updatePropertyFile();
-        progress.refreshNode(getRootDatabaseNodes().get(0));
-        progress.setFolder(null, false);
+        for (DefaultMutableTreeNode overallNode : overallNodesToRefresh) {
+            progress.refreshNode(overallNode);
+        }
+        progress.setFolder(overallNodeName, null, false);
     }
 
     /*
@@ -666,7 +694,12 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      * @param disableTreeSelection the disable tree selection
      */
     public void setFolder(DatabaseConnection connectionData, boolean disableTreeSelection) {
-        progress.setFolder(connectionData, disableTreeSelection);
+        String overallNodeName = getRootDatabaseNodes().keySet().iterator().next();
+
+        if (connectionData != null) {
+            overallNodeName = connectionData.getDatabaseTypeLabel();
+        }
+        progress.setFolder(overallNodeName, connectionData, disableTreeSelection);
     }
 
 }

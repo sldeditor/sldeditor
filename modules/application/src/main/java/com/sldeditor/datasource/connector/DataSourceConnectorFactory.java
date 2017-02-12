@@ -23,14 +23,9 @@ import java.util.Map;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorArcSDE;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorFileGDB;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorRasterFile;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 import com.sldeditor.datasource.impl.DataSourceProperties;
-import com.sldeditor.extension.filesystem.database.client.DatabasePostgresClient;
 
 /**
  * A factory for creating DataSourceConnector objects.
@@ -42,7 +37,10 @@ public class DataSourceConnectorFactory {
     private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap = new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
 
     /** The no data source. */
-    private static DataSourceConnectorEmpty noDataSource;
+    private static DataSourceConnectorEmpty noDataSource = null;
+
+    /** The data source. */
+    private static DataSourceConnector dataSource = null;
 
     /**
      * Gets the data source connector list.
@@ -62,14 +60,10 @@ public class DataSourceConnectorFactory {
      */
     private static void populate() {
         noDataSource = new DataSourceConnectorEmpty();
-        populate_internal(noDataSource);
-        populate_internal(new DataSourceConnectorShapeFile());
-        populate_internal(new DataSourceConnectorRasterFile());
-        populate_internal(new DataSourceConnectorArcSDE());
-        populate_internal(new DataSourceConnectorFileGDB());
-        populate_internal(new DataSourceConnectorPostgres());
+        dataSource = new DataSourceConnector();
 
-        dataConnectorMap.put(DatabasePostgresClient.class, new DataSourceConnectorPostgres());
+        populate_internal(noDataSource);
+        populate_internal(dataSource);
     }
 
     /**
@@ -160,6 +154,6 @@ public class DataSourceConnectorFactory {
             populate();
         }
 
-        return dataConnectorMap.get(classType);
+        return dataSource;
     }
 }

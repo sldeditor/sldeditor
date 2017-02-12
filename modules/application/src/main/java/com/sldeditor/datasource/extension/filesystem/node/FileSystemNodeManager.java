@@ -31,6 +31,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
@@ -275,6 +276,16 @@ public class FileSystemNodeManager {
     }
 
     /**
+     * Show node in tree.
+     *
+     * @param overallNodeName the overall node name
+     * @param connectionData the connection data
+     */
+    public static void showNodeInTree(String overallNodeName, DatabaseConnection connectionData) {
+        getTreePath(overallNodeName, connectionData, true);
+    }
+
+    /**
      * Gets the tree path.
      *
      * @param connectionData the connection data
@@ -290,6 +301,57 @@ public class FileSystemNodeManager {
         List<String> folderList = new ArrayList<String>();
         folderList.add(FileSystemExtension.ROOT_NODE);
         folderList.add(GeoServerOverallNode.GEOSERVER_NODE);
+        if (connectionData != null) {
+            folderList.add(connectionData.getConnectionName());
+        }
+
+        DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
+
+        boolean isRoot = true;
+
+        for (String subFolder : folderList) {
+            node = searchNode(isRoot, node, subFolder);
+
+            if (node == null) {
+                break;
+            }
+            isRoot = false;
+        }
+
+        if (node != null) {
+            TreeNode[] nodes = treeModel.getPathToRoot(node);
+            TreePath path = new TreePath(nodes);
+
+            if (showInTree) {
+                fileSystemTreeComponent.scrollPathToVisible(path);
+                fileSystemTreeComponent.expandPath(path);
+                fileSystemTreeComponent.setSelectionPath(path);
+            }
+
+            return node;
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the tree path.
+     *
+     * @param overallNodeName the overall node name
+     * @param connectionData the connection data
+     * @param showInTree the show in tree
+     * @return the tree path
+     */
+    private static DefaultMutableTreeNode getTreePath(String overallNodeName,
+            DatabaseConnection connectionData,
+            boolean showInTree) {
+        if (treeModel == null) {
+            return null;
+        }
+
+        List<String> folderList = new ArrayList<String>();
+        folderList.add(FileSystemExtension.ROOT_NODE);
+        folderList.add(overallNodeName);
         if (connectionData != null) {
             folderList.add(connectionData.getConnectionName());
         }

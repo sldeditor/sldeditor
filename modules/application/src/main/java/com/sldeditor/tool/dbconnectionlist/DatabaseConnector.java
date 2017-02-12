@@ -19,50 +19,34 @@
 package com.sldeditor.tool.dbconnectionlist;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.data.DatabaseConnectionField;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.ui.detail.BasePanel;
 
 /**
- * Database connector for Postgres data sources.
+ * Database connector for database data sources.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterface {
-
-    /** The Constant DEFAULT_SCHEMA. */
-    private static final String DEFAULT_SCHEMA = "public";
-
-    /** The Constant DEFAULT_PORT. */
-    private static final String DEFAULT_PORT = "5432";
-
-    /** The Constant FIELD_PASSWORD. */
-    public static final String FIELD_PASSWORD = "passwd";
-
-    /** The Constant FIELD_USER. */
-    public static final String FIELD_USER = "user";
-
-    /** The Constant FIELD_DATABASE. */
-    public static final String FIELD_DATABASE = "database";
-
-    /** The Constant FIELD_PORT. */
-    public static final String FIELD_PORT = "port";
-
-    /** The Constant FIELD_SERVER. */
-    public static final String FIELD_SERVER = "host";
-
-    /** The Constant FIELD_SCHEMA. */
-    public static final String FIELD_SCHEMA = "schema";
+public class DatabaseConnector implements DatabaseConnectionConfigInterface {
 
     /** The text field map. */
     private Map<String, JTextField> textFieldMap = new HashMap<String, JTextField>();
@@ -73,8 +57,14 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
     /** The panel. */
     private JPanel panel = null;
 
-    /** The default data. */
-    private static Map<String, String> DEFAULT_DATA = null;
+    /** The database connection. */
+    private DatabaseConnection databaseConnection = null;
+
+    /** The user key. */
+    private String userKey = null;
+
+    /** The password key. */
+    private String passwordKey = null;
 
     /** The label x. */
     private static final int LABEL_X = 5;
@@ -95,14 +85,9 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
     private static final int FIELD_WIDTH = 300;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public DatabaseConnectorPostgres() {
-        if (DEFAULT_DATA == null) {
-            DEFAULT_DATA = new HashMap<String, String>();
-            DEFAULT_DATA.put(FIELD_PORT, DEFAULT_PORT);
-            DEFAULT_DATA.put(FIELD_SCHEMA, DEFAULT_SCHEMA);
-        }
+    public DatabaseConnector() {
         createUI();
     }
 
@@ -112,19 +97,6 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
     private void createUI() {
         panel = new JPanel();
         panel.setLayout(null);
-
-        createField(FIELD_SERVER, Localisation.getField(DatabaseConnectorPostgres.class,
-                "DatabaseConnectorPostgres.server"), true, false);
-        createField(FIELD_PORT, Localisation.getField(DatabaseConnectorPostgres.class,
-                "DatabaseConnectorPostgres.port"), true, false);
-        createField(FIELD_DATABASE, Localisation.getField(DatabaseConnectorPostgres.class,
-                "DatabaseConnectorPostgres.database"), true, false);
-        createField(FIELD_SCHEMA, Localisation.getField(DatabaseConnectorPostgres.class,
-                "DatabaseConnectorPostgres.schema"), true, false);
-        createField(FIELD_USER, Localisation.getField(DatabaseConnectorPostgres.class,
-                "DatabaseConnectorPostgres.username"), false, false);
-        createField(FIELD_PASSWORD, Localisation.getField(DatabaseConnectorPostgres.class,
-                "DatabaseConnectorPostgres.password"), false, true);
 
         panel.setPreferredSize(
                 new Dimension(FIELD_X + FIELD_WIDTH, (textFieldMap.size() + 1) * ROW_HEIGHT));
@@ -137,30 +109,58 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
      * @param labelString the label string
      * @param addToAcceptList the add to accept list
      * @param encrypted the encrypted
+     * @param isFilename the is filename
      */
-    private void createField(String key, String labelString, boolean addToAcceptList,
-            boolean encrypted) {
+    private void createField(DatabaseConnectionField field)
+    {
         int row = textFieldMap.size();
         int y = row * ROW_HEIGHT;
 
-        JLabel label = new JLabel(labelString);
+        JLabel label = new JLabel(Localisation.getField(DatabaseConnector.class, field.getFieldName()));
         label.setBounds(LABEL_X, y, LABEL_WIDTH, FIELD_HEIGHT);
         panel.add(label);
 
         JTextField textField = null;
 
-        if (!encrypted) {
+        if (!field.isPassword()) {
             textField = new JTextField();
         } else {
             textField = new JPasswordField();
         }
 
         textField.setBounds(FIELD_X, y, FIELD_WIDTH, FIELD_HEIGHT);
-        textFieldMap.put(key, textField);
+        textFieldMap.put(field.getKey(), textField);
         panel.add(textField);
 
-        if (addToAcceptList) {
-            acceptFieldList.add(key);
+        if (!(field.isPassword() || field.isUsername())) {
+            acceptFieldList.add(field.getKey());
+        }
+
+        if(field.isFilename())
+        {
+            JButton button = new JButton("File");
+            button.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    FileNameExtensionFilter fileExtensionFilter = field.getFileExtensionFilter();
+
+                    fileChooser.setFileFilter(fileExtensionFilter);
+
+                    File f = SLDEditorFile.getInstance().getSldEditorFile();
+                    if ((f != null) && f.exists()) {
+                        fileChooser.setSelectedFile(f);
+                    }
+
+                    int result = fileChooser.showOpenDialog(panel);
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        textFieldMap.get(field.getKey()).setText(selectedFile.getAbsolutePath());
+                    }
+                }});
+            button.setBounds(textField.getX() + textField.getWidth() + 5, y, BasePanel.WIDGET_BUTTON_WIDTH, FIELD_HEIGHT);
+            panel.add(button);
         }
     }
 
@@ -181,13 +181,19 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
      */
     @Override
     public void setConnection(DatabaseConnection connection) {
-        Map<String, String> properties = null;
-        if (connection == null) {
-            properties = DEFAULT_DATA;
+        this.databaseConnection = connection;
 
-        } else {
-            properties = connection.getConnectionDataMap();
+        for (DatabaseConnectionField field : databaseConnection.getDetailList()) {
+            createField(field);
+
+            if (field.isUsername()) {
+                userKey = field.getKey();
+            } else if (field.isPassword()) {
+                passwordKey = field.getKey();
+            }
         }
+
+        Map<String, String> properties = connection.getConnectionDataMap();
 
         for (String fieldName : textFieldMap.keySet()) {
             JTextField textField = textFieldMap.get(fieldName);
@@ -195,10 +201,15 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
         }
 
         if (connection != null) {
-            JTextField textField = textFieldMap.get(FIELD_USER);
-            textField.setText(connection.getUserName());
-            textField = textFieldMap.get(FIELD_PASSWORD);
-            textField.setText(connection.getPassword());
+            if (userKey != null) {
+                JTextField textField = textFieldMap.get(userKey);
+                textField.setText(connection.getUserName());
+            }
+
+            if (passwordKey != null) {
+                JTextField textField = textFieldMap.get(passwordKey);
+                textField.setText(connection.getPassword());
+            }
         }
     }
 
@@ -209,26 +220,33 @@ public class DatabaseConnectorPostgres implements DatabaseConnectionConfigInterf
      */
     @Override
     public DatabaseConnection getConnection() {
-        DatabaseConnection connectionData = new DatabaseConnection();
+        DatabaseConnection connectionData = DatabaseConnectionFactory.getNewConnection(databaseConnection);
 
         Map<String, String> sourceMap = new HashMap<String, String>();
         for (String fieldName : textFieldMap.keySet()) {
-            if (!(fieldName.equals(FIELD_USER) || fieldName.equals(FIELD_PASSWORD))) {
+            boolean isUserName = false;
+            if (userKey != null) {
+                isUserName = fieldName.equals(userKey);
+            }
+            boolean isPassword = false;
+            if (passwordKey != null) {
+                isPassword = fieldName.equals(passwordKey);
+            }
+            if (!(isUserName || isPassword)) {
                 JTextField textField = textFieldMap.get(fieldName);
                 sourceMap.put(fieldName, textField.getText());
             }
         }
 
-        JTextField textField = textFieldMap.get(FIELD_USER);
-        connectionData.setUserName(textField.getText());
-        textField = textFieldMap.get(FIELD_PASSWORD);
-        connectionData.setPassword(textField.getText());
+        if (userKey != null) {
+            JTextField textField = textFieldMap.get(userKey);
+            connectionData.setUserName(textField.getText());
+        }
+        if (passwordKey != null) {
+            JTextField textField = textFieldMap.get(passwordKey);
+            connectionData.setPassword(textField.getText());
+        }
 
-        String connectionName = String.format("%s/%s@%s:%s", sourceMap.get(FIELD_SCHEMA),
-                sourceMap.get(FIELD_DATABASE), sourceMap.get(FIELD_SERVER),
-                sourceMap.get(FIELD_PORT));
-
-        connectionData.setConnectionName(connectionName);
         connectionData.setConnectionDataMap(sourceMap);
         return connectionData;
     }

@@ -44,7 +44,9 @@ import com.sldeditor.common.localisation.Localisation;
  * @author Robert Ward (SCISYS)
  */
 public class ToolPanel extends JPanel {
-    private static final int EMPTY_TOOL_PANEL_HEIGHT = 58;
+    
+    /** The Constant EMPTY_TOOL_PANEL_HEIGHT. */
+    private static final int EMPTY_TOOL_PANEL_HEIGHT = 85;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -67,6 +69,7 @@ public class ToolPanel extends JPanel {
     /**
      * Instantiates a new tool panel.
      *
+     * @param parentObj the parent obj
      * @param toolMap the tool map
      */
     public ToolPanel(ToolSelectionInterface parentObj, Map<Class<?>, List<ToolInterface>> toolMap) {
@@ -93,6 +96,7 @@ public class ToolPanel extends JPanel {
             }
         });
         optionsPanel.add(chckbxRecursive);
+        this.setPreferredSize(new Dimension(50, EMPTY_TOOL_PANEL_HEIGHT));
     }
 
     /**

@@ -29,45 +29,45 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
- * Unit test for DataSourceConnectorPostgres class.
+ * Unit test for DataSourceConnector class.
  * <p>
- * {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres}
+ * {@link com.sldeditor.datasource.connector.instance.DataSourceConnector}
  * 
  * @author Robert Ward (SCISYS)
  *
  */
-public class DataSourceConnectorPostgresTest {
+public class DataSourceConnectorTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#getDisplayName()}.
+     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getDisplayName()}.
      */
     @Test
     public void testGetDisplayName() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
 
         assertEquals("Postgres", dsc.getDisplayName());
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#getPanel()}.
+     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getPanel()}.
      */
     @Test
     public void testGetPanel() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
 
         assertTrue(dsc.getPanel() != null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#accept(java.util.Map)}.
+     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#accept(java.util.Map)}.
      */
     @Test
     public void testAccept() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
 
         assertNull(dsc.accept((String) null));
         assertFalse(dsc.accept((Map<String, Object>) null));
@@ -97,11 +97,11 @@ public class DataSourceConnectorPostgresTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#getDataSourceProperties(java.util.Map)}.
+     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getDataSourceProperties(java.util.Map)}.
      */
     @Test
     public void testGetDataSourceProperties() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
 
         Map<String, Object> propertyMap = new HashMap<String, Object>();
 
@@ -111,33 +111,33 @@ public class DataSourceConnectorPostgresTest {
 
     /**
      * Test method for
-     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#populate(com.sldeditor.DataSourcePropertiesInterface)}.
+     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#populate(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testPopulate() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
         dsc.populate(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#isEmpty()}.
+     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#isEmpty()}.
      */
     @Test
     public void testIsEmpty() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
 
         assertFalse(dsc.isEmpty());
     }
 
     /**
      * Test method for
-     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
+     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testGetConnectionProperties() {
-        DataSourceConnectorPostgres dsc = new DataSourceConnectorPostgres();
+        DataSourceConnector dsc = new DataSourceConnector();
 
         assertNull(dsc.getConnectionProperties(null));
 

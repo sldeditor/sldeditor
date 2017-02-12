@@ -28,6 +28,7 @@ import javax.swing.tree.DefaultTreeModel;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
 
@@ -370,7 +371,7 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
 
                 refreshNode(geoserverNode);
 
-                setFolder(newConnectionDetails, false);
+                setFolder(newConnectionDetails.getDatabaseTypeLabel(), newConnectionDetails, false);
             }
         }
     }
@@ -378,25 +379,26 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
     /**
      * Sets the folder.
      *
+     * @param overallNodeName the overall node name
      * @param connectionData the connection data
      * @param disableTreeSelection the disable tree selection
      */
-    public void setFolder(DatabaseConnection connectionData, boolean disableTreeSelection) {
-//        if(tree != null)
-//        {
-//            if(disableTreeSelection)
-//            {
-//                // Disable the tree selection
-//                tree.setIgnoreSelection(true);
-//            }
-//            tree.clearSelection();
-//
-//            FileSystemNodeManager.showNodeInTree(connectionData);
-//            if(disableTreeSelection)
-//            {
-//                // Enable the tree selection
-//                tree.setIgnoreSelection(false);
-//            }
-//        }
+    public void setFolder(String overallNodeName, DatabaseConnection connectionData, boolean disableTreeSelection) {
+        if(tree != null)
+        {
+            if(disableTreeSelection)
+            {
+                // Disable the tree selection
+                tree.setIgnoreSelection(true);
+            }
+            tree.clearSelection();
+
+            FileSystemNodeManager.showNodeInTree(overallNodeName, connectionData);
+            if(disableTreeSelection)
+            {
+                // Enable the tree selection
+                tree.setIgnoreSelection(false);
+            }
+        }
     }
 }

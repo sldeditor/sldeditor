@@ -18,6 +18,7 @@
  */
 package com.sldeditor.tool.vector;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -42,7 +43,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
@@ -51,7 +52,6 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
-import java.awt.FlowLayout;
 
 /**
  * The Class VectorTool.
@@ -249,7 +249,7 @@ public class VectorTool implements ToolInterface {
                     .getDataSource();
 
             DataSourceConnectorInterface dsc = DataSourceConnectorFactory
-                    .getDataSource(DataSourceConnectorShapeFile.class);
+                    .getDataSource(DataSourceConnector.class);
 
             try {
                 dsProperties = dsc.getDataSourceProperties(
@@ -351,7 +351,7 @@ public class VectorTool implements ToolInterface {
 
         // Vector file
         DataSourceConnectorInterface dsc = DataSourceConnectorFactory
-                .getDataSource(DataSourceConnectorShapeFile.class);
+                .getDataSource(DataSourceConnector.class);
 
         DataSourcePropertiesInterface dsProperties = null;
         try {

@@ -35,11 +35,11 @@ import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 
 /**
- * The Class DatabasePostgresClient.
+ * The Class DatabaseGeoPkgClient.
  *
  * @author Robert Ward (SCISYS)
  */
-public class DatabasePostgresClient implements DatabaseClientInterface {
+public class DatabaseGeoPkgClient implements DatabaseClientInterface {
 
     /** The parent object. */
     private transient DatabaseReadProgressInterface parentObj = null;
@@ -54,7 +54,7 @@ public class DatabasePostgresClient implements DatabaseClientInterface {
     private List<String> featureClassList = new ArrayList<String>();
 
     /** The expected keys. */
-    private static List<String> expectedKeys = Arrays.asList("host", "port", "schema", "database");
+    private static List<String> expectedKeys = Arrays.asList("database");
 
     /*
      * (non-Javadoc)
@@ -183,14 +183,10 @@ public class DatabasePostgresClient implements DatabaseClientInterface {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("dbtype", connection.getDatabaseType());
-        params.put("host", connectionDataMap.get("host"));
-        Integer port = Integer.valueOf(connectionDataMap.get("port"));
-        params.put("port", port);
-        params.put("schema", connectionDataMap.get("schema"));
         params.put("database", connectionDataMap.get("database"));
-        params.put("user", connection.getUserName());
-        params.put("passwd", connection.getPassword());
-
+        if ((connection.getUserName() != null) && !connection.getUserName().trim().isEmpty()) {
+            params.put("user", connection.getUserName());
+        }
         return params;
     }
 
