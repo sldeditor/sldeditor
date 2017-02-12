@@ -18,10 +18,15 @@
  */
 package com.sldeditor.common.data;
 
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.geotools.data.DataAccessFactory.Param;
+import org.geotools.jdbc.JDBCDataStoreFactory;
 
 import com.sldeditor.common.property.EncryptedProperties;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
@@ -83,18 +88,23 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     /** The supports duplication flag. */
     private boolean supportsDuplication = false;
 
+    /** The expected keys. */
+    private List<String> expectedKeys = new ArrayList<String>();
+
     /**
      * Constructor.
      *
      * @param databaseType the database type
      * @param databaseTypeLabel the database type label
+     * @param supportsDuplication the supports duplication
      * @param detailList the detail list
      * @param databaseConnectionName the database connection name
+     * @param databaseClientConnector the database client connector
      */
-    public DatabaseConnection(String databaseType, String databaseTypeLabel,
+    public DatabaseConnection(Param databaseType, String databaseTypeLabel,
             boolean supportsDuplication, List<DatabaseConnectionField> detailList,
             DatabaseConnectionName databaseConnectionName) {
-        this.databaseType = databaseType;
+        this.databaseType = (String) databaseType.sample;
         this.databaseTypeLabel = databaseTypeLabel;
         this.detailList = detailList;
         this.databaseConnectionName = databaseConnectionName;
@@ -103,6 +113,12 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         createInitialValues();
 
         this.connectionDataMap = this.initialValues;
+
+        for (DatabaseConnectionField param : detailList) {
+            if (!param.isOptional() && (param.isPassword() || param.isUsername())) {
+                expectedKeys.add(param.getKey());
+            }
+        }
     }
 
     /**
@@ -111,7 +127,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private void createInitialValues() {
         initialValues.put(DatabaseConnectionFactory.DATABASE_TYPE_KEY, databaseType);
         for (DatabaseConnectionField detail : detailList) {
-            initialValues.put(detail.getKey(), detail.getDefaultValue());
+            initialValues.put(detail.getKey(), detail.getFieldName());
         }
     }
 
@@ -151,7 +167,8 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
                 for (int index = 3; index < components.length; index++) {
                     String[] property = components[index].split(PROPERTY_DELIMETER);
                     if (property.length == 2) {
-                        localConnectionDataMap.put(property[0], (property[1].equals("null")) ? null : property[1]);
+                        localConnectionDataMap.put(property[0],
+                                (property[1].equals("null")) ? null : property[1]);
                     }
                 }
 
@@ -353,5 +370,65 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      */
     public boolean isSupportsDuplication() {
         return supportsDuplication;
+    }
+
+    /**
+     * Gets the expected keys.
+     *
+     * @return the expected keys
+     */
+    public List<String> getExpectedKeys() {
+        return expectedKeys;
+    }
+
+    public Map<String, Object> getDBConnectionParams() {
+        Map<String, String> connectionDataMap = getConnectionDataMap();
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(JDBCDataStoreFactory.DBTYPE.key, getDatabaseType());
+        for (DatabaseConnectionField field : detailList) {
+            if (field.isUsername()) {
+                if ((getUserName() != null) && !getUserName().trim().isEmpty()) {
+                    params.put(field.getKey(), getUserName());
+                }
+            } else if (field.isPassword()) {
+                if ((getPassword() != null) && !getPassword().trim().isEmpty()) {
+                    params.put(field.getKey(), getPassword());
+                }
+            } else if (field.isOptional()) {
+                String value = connectionDataMap.get(field.getKey());
+                if ((value != null) && !value.trim().isEmpty()) {
+                    params.put(field.getKey(), getValue(value, field.getType()));
+                }
+            }
+            else
+            {
+                String value = connectionDataMap.get(field.getKey());
+                params.put(field.getKey(), getValue(value, field.getType()));
+            }
+        }
+
+        return params;
+    }
+
+    private Object getValue(String value, Class<?> type) {
+        if(type == String.class)
+        {
+            return value;
+        }
+        else if(type == Integer.class)
+        {
+            return Integer.valueOf(value);
+        }
+        else if(type == Long.class)
+        {
+            return Long.valueOf(value);
+        }
+        else if(type == File.class)
+        {
+            return value;
+        }
+
+        return null;
     }
 }

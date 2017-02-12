@@ -21,8 +21,6 @@ package com.sldeditor.extension.filesystem.database.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +30,15 @@ import org.opengis.feature.type.Name;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 
 /**
- * The Class DatabaseGeoPkgClient.
+ * The Class DatabaseClient.
  *
  * @author Robert Ward (SCISYS)
  */
-public class DatabaseGeoPkgClient implements DatabaseClientInterface {
+public class DatabaseClient implements DatabaseClientInterface {
 
     /** The parent object. */
     private transient DatabaseReadProgressInterface parentObj = null;
@@ -52,9 +51,6 @@ public class DatabaseGeoPkgClient implements DatabaseClientInterface {
 
     /** The feature class list. */
     private List<String> featureClassList = new ArrayList<String>();
-
-    /** The expected keys. */
-    private static List<String> expectedKeys = Arrays.asList("database");
 
     /*
      * (non-Javadoc)
@@ -110,6 +106,11 @@ public class DatabaseGeoPkgClient implements DatabaseClientInterface {
                 } catch (Exception e) {
                     ConsoleManager.getInstance().exception(this, e);
                 }
+            } else {
+                String message = String.format("%s : %s",
+                        Localisation.getString(DatabaseClient.class, "DatabaseClient.noDriver"),
+                        connection.getConnectionName());
+                ConsoleManager.getInstance().error(this, message);
             }
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
@@ -167,7 +168,8 @@ public class DatabaseGeoPkgClient implements DatabaseClientInterface {
     @Override
     public boolean accept(DatabaseConnection connection) {
         if (connection != null) {
-            return connection.getConnectionDataMap().keySet().containsAll(expectedKeys);
+                return connection.getConnectionDataMap().keySet()
+                        .containsAll(connection.getExpectedKeys());
         }
         return false;
     }
@@ -179,15 +181,7 @@ public class DatabaseGeoPkgClient implements DatabaseClientInterface {
      */
     @Override
     public Map<String, Object> getDBConnectionParams() {
-        Map<String, String> connectionDataMap = connection.getConnectionDataMap();
-
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("dbtype", connection.getDatabaseType());
-        params.put("database", connectionDataMap.get("database"));
-        if ((connection.getUserName() != null) && !connection.getUserName().trim().isEmpty()) {
-            params.put("user", connection.getUserName());
-        }
-        return params;
+        return connection.getDBConnectionParams();
     }
 
 }

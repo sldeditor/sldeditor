@@ -111,12 +111,12 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
      * @param encrypted the encrypted
      * @param isFilename the is filename
      */
-    private void createField(DatabaseConnectionField field)
-    {
+    private void createField(DatabaseConnectionField field) {
         int row = textFieldMap.size();
         int y = row * ROW_HEIGHT;
 
-        JLabel label = new JLabel(Localisation.getField(DatabaseConnector.class, field.getFieldName()));
+        JLabel label = new JLabel(
+                Localisation.getField(DatabaseConnector.class, field.getFieldName()));
         label.setBounds(LABEL_X, y, LABEL_WIDTH, FIELD_HEIGHT);
         panel.add(label);
 
@@ -136,8 +136,7 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
             acceptFieldList.add(field.getKey());
         }
 
-        if(field.isFilename())
-        {
+        if (field.isFilename()) {
             JButton button = new JButton("File");
             button.addActionListener(new ActionListener() {
 
@@ -158,8 +157,10 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
                         File selectedFile = fileChooser.getSelectedFile();
                         textFieldMap.get(field.getKey()).setText(selectedFile.getAbsolutePath());
                     }
-                }});
-            button.setBounds(textField.getX() + textField.getWidth() + 5, y, BasePanel.WIDGET_BUTTON_WIDTH, FIELD_HEIGHT);
+                }
+            });
+            button.setBounds(textField.getX() + textField.getWidth() + 5, y,
+                    BasePanel.WIDGET_BUTTON_WIDTH, FIELD_HEIGHT);
             panel.add(button);
         }
     }
@@ -220,34 +221,37 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
      */
     @Override
     public DatabaseConnection getConnection() {
-        DatabaseConnection connectionData = DatabaseConnectionFactory.getNewConnection(databaseConnection);
+        DatabaseConnection connectionData = DatabaseConnectionFactory
+                .getNewConnection(databaseConnection);
 
-        Map<String, String> sourceMap = new HashMap<String, String>();
-        for (String fieldName : textFieldMap.keySet()) {
-            boolean isUserName = false;
+        if (connectionData != null) {
+            Map<String, String> sourceMap = new HashMap<String, String>();
+            for (String fieldName : textFieldMap.keySet()) {
+                boolean isUserName = false;
+                if (userKey != null) {
+                    isUserName = fieldName.equals(userKey);
+                }
+                boolean isPassword = false;
+                if (passwordKey != null) {
+                    isPassword = fieldName.equals(passwordKey);
+                }
+                if (!(isUserName || isPassword)) {
+                    JTextField textField = textFieldMap.get(fieldName);
+                    sourceMap.put(fieldName, textField.getText());
+                }
+            }
+
             if (userKey != null) {
-                isUserName = fieldName.equals(userKey);
+                JTextField textField = textFieldMap.get(userKey);
+                connectionData.setUserName(textField.getText());
             }
-            boolean isPassword = false;
             if (passwordKey != null) {
-                isPassword = fieldName.equals(passwordKey);
+                JTextField textField = textFieldMap.get(passwordKey);
+                connectionData.setPassword(textField.getText());
             }
-            if (!(isUserName || isPassword)) {
-                JTextField textField = textFieldMap.get(fieldName);
-                sourceMap.put(fieldName, textField.getText());
-            }
-        }
 
-        if (userKey != null) {
-            JTextField textField = textFieldMap.get(userKey);
-            connectionData.setUserName(textField.getText());
+            connectionData.setConnectionDataMap(sourceMap);
         }
-        if (passwordKey != null) {
-            JTextField textField = textFieldMap.get(passwordKey);
-            connectionData.setPassword(textField.getText());
-        }
-
-        connectionData.setConnectionDataMap(sourceMap);
         return connectionData;
     }
 

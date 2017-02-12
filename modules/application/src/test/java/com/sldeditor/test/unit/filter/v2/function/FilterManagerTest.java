@@ -85,6 +85,7 @@ public class FilterManagerTest {
         typeMap.put(Object.class, FieldConfigString.class);
         typeMap.put(Boolean.class, FieldConfigBoolean.class);
         typeMap.put(Geometry.class, FieldConfigGeometry.class);
+        typeMap.put(org.opengis.geometry.Geometry.class, FieldConfigGeometry.class);
         typeMap.put(LineString.class, FieldConfigGeometry.class);
         typeMap.put(Date.class, FieldConfigDate.class);
         typeMap.put(Class.class, FieldConfigString.class);

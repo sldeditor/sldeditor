@@ -49,7 +49,7 @@ public class DataSourceConnectorTest {
     public void testGetDisplayName() {
         DataSourceConnector dsc = new DataSourceConnector();
 
-        assertEquals("Postgres", dsc.getDisplayName());
+        assertEquals("Database", dsc.getDisplayName());
     }
 
     /**
@@ -75,7 +75,7 @@ public class DataSourceConnectorTest {
         Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("test", "filename");
-        assertFalse(dsc.accept(propertyMap));
+        assertTrue(dsc.accept(propertyMap));
 
         // Valid file
         propertyMap.put("host", "localhost");
@@ -87,13 +87,6 @@ public class DataSourceConnectorTest {
         propertyMap.put("featureClass", "testfc");
         assertTrue(dsc.accept(propertyMap));
         propertyMap.clear();
-
-        // Invalid file
-        propertyMap.put("server", "localhost");
-        propertyMap.put("database", "testdb");
-        propertyMap.put("user", "testuser");
-        propertyMap.put("password", "pasword123");
-        assertFalse(dsc.accept(propertyMap));
     }
 
     /**

@@ -26,7 +26,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -149,15 +148,39 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         if (databaseRootNodeMap == null) {
             databaseRootNodeMap = new LinkedHashMap<String, DatabaseOverallNode>();
 
-            DatabaseOverallNode postgresNode = new DatabaseOverallNode(this, "Postgres",
-                    "ui/filesystemicons/postgresql.png");
+            List<DatabaseOverallNode> list = new ArrayList<DatabaseOverallNode>();
 
-            databaseRootNodeMap.put(postgresNode.toString(), postgresNode);
+            list.add(new DatabaseOverallNode(this, "PostGIS",
+                    "ui/filesystemicons/postgresql.png"));
 
-            DatabaseOverallNode geopackageNode = new DatabaseOverallNode(this, "GeoPackage",
-                    "ui/filesystemicons/geopackage.png");
+            list.add(new DatabaseOverallNode(this, "GeoPackage",
+                    "ui/filesystemicons/geopackage.png"));
 
-            databaseRootNodeMap.put(geopackageNode.toString(), geopackageNode);
+            list.add(new DatabaseOverallNode(this, "SpatiaLite",
+                    "ui/filesystemicons/spatialite.png"));
+
+            list.add(new DatabaseOverallNode(this, "DB2",
+                    "ui/filesystemicons/db2.png"));
+
+            list.add(new DatabaseOverallNode(this, "H2",
+                    "ui/filesystemicons/h2.png"));
+
+            list.add(new DatabaseOverallNode(this, "MySQL",
+                    "ui/filesystemicons/mysql.png"));
+
+            list.add(new DatabaseOverallNode(this, "Oracle",
+                    "ui/filesystemicons/oracle.png"));
+
+            list.add(new DatabaseOverallNode(this, "SQL Server",
+                    "ui/filesystemicons/sqlserver.png"));
+
+            list.add(new DatabaseOverallNode(this, "Teradata",
+                    "ui/filesystemicons/teradata.png"));
+
+            for(DatabaseOverallNode node : list)
+            {
+                databaseRootNodeMap.put(node.toString(), node);
+            }
         }
         return databaseRootNodeMap;
     }
@@ -191,88 +214,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     @Override
     public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
-        // if (selectedItem instanceof GeoServerNode) {
-        // GeoServerNode geoServerNode = (GeoServerNode) selectedItem;
-        //
-        // GeoServerConnection connection = geoServerNode.getConnection();
-        //
-        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-        // .getConnectionMap().get(connection);
-        // if (client != null) {
-        // if (client.isConnected()) {
-        // JMenuItem connectMenuItem = new JMenuItem(Localisation
-        // .getString(DatabaseInput.class, "GeoServerInput.disconnect"));
-        // connectMenuItem.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent event) {
-        // disconnectFromGeoServer(client);
-        // }
-        // });
-        // popupMenu.add(connectMenuItem);
-        // } else {
-        // JMenuItem connectMenuItem = new JMenuItem(
-        // Localisation.getString(DatabaseInput.class, "GeoServerInput.connect"));
-        // connectMenuItem.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent event) {
-        // GeoServerNode geoserver = (GeoServerNode) selectedItem;
-        // GeoServerConnection connection = geoserver.getConnection();
-        // connectToGeoServer(connection);
-        // }
-        // });
-        // popupMenu.add(connectMenuItem);
-        // }
-        // }
-        // } else if (selectedItem instanceof FileTreeNode) {
-        // FileTreeNode fileNode = (FileTreeNode) selectedItem;
-        // if (ExternalFilenames.getFileExtension(fileNode.getFile().getAbsolutePath())
-        // .compareToIgnoreCase(SLD_FILE_EXTENSION) == 0) {
-        // JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(DatabaseInput.class,
-        // "GeoServerInput.uploadToGeoServer"));
-        // populateGeoServerConnections(uploadToGeoServerMenu);
-        // popupMenu.add(uploadToGeoServerMenu);
-        // }
-        // }
-    }
-
-    /**
-     * Populate geo server connections.
-     *
-     * @param uploadToGeoServerMenu the upload to geo server menu
-     */
-    private void populateGeoServerConnections(JMenu uploadToGeoServerMenu) {
-        // if (uploadToGeoServerMenu != null) {
-        // Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
-        // .getInstance().getConnectionMap();
-        //
-        // if (connectionMap.isEmpty()) {
-        // JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation
-        // .getString(DatabaseInput.class, "GeoServerInput.noGeoServerConnections"));
-        //
-        // uploadToGeoServerMenu.add(noGeoServerMenuItem);
-        // } else {
-        // for (GeoServerConnection connection : connectionMap.keySet()) {
-        // JMenu geoServer = new JMenu(connection.getConnectionName());
-        //
-        // uploadToGeoServerMenu.add(geoServer);
-        //
-        // DatabaseClientInterface client = connectionMap.get(connection);
-        // if (client.isConnected()) {
-        // populateWorkspaceList(client, geoServer);
-        // } else {
-        // JMenuItem connectMenuItem = new JMenuItem(Localisation
-        // .getString(DatabaseInput.class, "GeoServerInput.connect"));
-        // connectMenuItem.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent event) {
-        // connectMenuItem.setEnabled(false);
-        // connectToDatabase(connection);
-        // connectMenuItem.setEnabled(true);
-        // }
-        // });
-        //
-        // geoServer.add(connectMenuItem);
-        // }
-        // }
-        // }
-        // }
+        // Do nothings
     }
 
     /**

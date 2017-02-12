@@ -27,10 +27,7 @@ import javax.swing.JTextArea;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.common.utils.ExternalFilenames;
-import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
@@ -45,8 +42,6 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
     /** The data source field panel. */
     private JPanel dataSourceFieldPanel;
 
-    /** The data source. */
-    private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
     /** The property map. */
     private Map<String, Object> propertyMap = new HashMap<String, Object>();
@@ -65,7 +60,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
      */
     @Override
     public String getDisplayName() {
-        return "Raster File";
+        return "Database";
     }
 
     /*

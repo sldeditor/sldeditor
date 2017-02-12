@@ -29,9 +29,8 @@ import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.extension.filesystem.database.DatabaseInput;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
+import com.sldeditor.extension.filesystem.database.client.DatabaseClient;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
-import com.sldeditor.extension.filesystem.database.client.DatabaseGeoPkgClient;
-import com.sldeditor.extension.filesystem.database.client.DatabasePostgresClient;
 
 /**
  * The Class DatabaseConnectionManager.
@@ -73,8 +72,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
      * Instantiates a new database connection manager.
      */
     public DatabaseConnectionManager() {
-        databaseClientClassList.add(new DatabasePostgresClient());
-        databaseClientClassList.add(new DatabaseGeoPkgClient());
+        databaseClientClassList.add(new DatabaseClient());
     }
 
     /**
