@@ -52,8 +52,8 @@ import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.referencing.CRS;
 import org.geotools.renderer.RenderListener;
-import org.geotools.renderer.label.LabelCacheImpl;
 import org.geotools.renderer.lite.StreamingRenderer;
+import org.geotools.renderer.lite.SynchronizedLabelCache;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -166,7 +166,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     private boolean error = false;
 
     /** The label cache. */
-    private LabelCacheImpl labelCache = new LabelCacheImpl();
+    private SynchronizedLabelCache labelCache = new SynchronizedLabelCache();
 
     /**
      * Default constructor.
@@ -298,7 +298,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
             Map<Object, Object> hints = new HashMap<Object, Object>();
 
-            labelCache.clear();
+            clearLabelCache();
             hints.put(StreamingRenderer.LABEL_CACHE_KEY, labelCache);
             mapPane.getRenderer().setRendererHints(hints);
 
@@ -327,6 +327,13 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                 }
             }
         }
+    }
+
+    /**
+     * Clear label cache.
+     */
+    private void clearLabelCache() {
+        labelCache.clear();
     }
 
     /**
@@ -559,7 +566,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
 
-        labelCache.clear();
+        clearLabelCache();
 
         mapPane.repaint();
     }
