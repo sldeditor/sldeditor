@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,7 +116,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         this.connectionDataMap = this.initialValues;
 
         for (DatabaseConnectionField param : detailList) {
-            if (!param.isOptional() && (param.isPassword() || param.isUsername())) {
+            if (!param.isOptional() && !(param.isPassword() || param.isUsername())) {
                 expectedKeys.add(param.getKey());
             }
         }
@@ -127,7 +128,13 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private void createInitialValues() {
         initialValues.put(DatabaseConnectionFactory.DATABASE_TYPE_KEY, databaseType);
         for (DatabaseConnectionField detail : detailList) {
-            initialValues.put(detail.getKey(), detail.getFieldName());
+            String defaultValue = "";
+
+            if(detail.getDefaultValue() != null)
+            {
+                defaultValue = detail.getDefaultValue().toString();
+            }
+            initialValues.put(detail.getKey(), defaultValue);
         }
     }
 
@@ -381,10 +388,15 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         return expectedKeys;
     }
 
+    /**
+     * Gets the DB connection params.
+     *
+     * @return the DB connection params
+     */
     public Map<String, Object> getDBConnectionParams() {
         Map<String, String> connectionDataMap = getConnectionDataMap();
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put(JDBCDataStoreFactory.DBTYPE.key, getDatabaseType());
         for (DatabaseConnectionField field : detailList) {
             if (field.isUsername()) {
@@ -411,6 +423,13 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         return params;
     }
 
+    /**
+     * Gets the value.
+     *
+     * @param value the value
+     * @param type the type
+     * @return the value
+     */
     private Object getValue(String value, Class<?> type) {
         if(type == String.class)
         {

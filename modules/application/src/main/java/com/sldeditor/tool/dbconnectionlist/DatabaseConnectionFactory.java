@@ -386,8 +386,8 @@ public class DatabaseConnectionFactory {
         list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.HOST));
         list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.PORT));
         list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.DATABASE));
-        list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.USER));
         list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.SCHEMA));
+        list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.USER));
         list.add(new DatabaseConnectionField(PostgisNGDataStoreFactory.PASSWD));
 
         PostgisNGDataStoreFactory factory = new PostgisNGDataStoreFactory();
@@ -469,6 +469,7 @@ public class DatabaseConnectionFactory {
         if (nameMap.isEmpty()) {
             populateNameMap();
         }
+
         for (String key : nameMap.keySet()) {
             list.add(key);
         }
@@ -492,7 +493,7 @@ public class DatabaseConnectionFactory {
                 }
             }
             if (dbType != null) {
-                nameMap.put(dSPI.getDisplayName(), dbType.key);
+                nameMap.put(dSPI.getDisplayName(), (String) dbType.sample);
             }
         }
     }

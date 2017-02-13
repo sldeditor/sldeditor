@@ -18,12 +18,15 @@
  */
 package com.sldeditor.datasource.connector.instance;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import org.geotools.jdbc.JDBCDataStoreFactory;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
@@ -41,7 +44,6 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /** The data source field panel. */
     private JPanel dataSourceFieldPanel;
-
 
     /** The property map. */
     private Map<String, Object> propertyMap = new HashMap<String, Object>();
@@ -78,12 +80,14 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
      */
     private void createUI() {
         dataSourceFieldPanel = new JPanel();
-        FlowLayout flowLayout = new FlowLayout();
-        dataSourceFieldPanel.setLayout(flowLayout);
+        dataSourceFieldPanel.setLayout(new BorderLayout(0, 0));
+
+        JScrollPane scrollPane = new JScrollPane();
+        dataSourceFieldPanel.add(scrollPane);
 
         dataSourceTextField = new JTextArea();
+        scrollPane.setViewportView(dataSourceTextField);
         dataSourceTextField.setEditable(false);
-        dataSourceFieldPanel.add(dataSourceTextField);
     }
 
     /*
@@ -111,8 +115,10 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
     private void displayPropertyMap(Map<String, Object> propertyMap) {
         StringBuilder sb = new StringBuilder();
         for (String key : propertyMap.keySet()) {
-            String line = String.format("%s\t%s\n", key, propertyMap.get(key));
-            sb.append(line);
+            if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
+                String line = String.format("%s\t\t%s\n", key, propertyMap.get(key));
+                sb.append(line);
+            }
         }
         dataSourceTextField.setText(sb.toString());
     }
@@ -163,7 +169,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
     @Override
     public void populate(DataSourcePropertiesInterface dataSourceProperties) {
         if (dataSourceProperties != null) {
-            
+
             this.propertyMap = dataSourceProperties.getAllConnectionProperties();
 
             displayPropertyMap(propertyMap);

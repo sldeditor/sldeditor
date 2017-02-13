@@ -26,7 +26,6 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -101,11 +100,6 @@ public class DBConnectorDetailsPanel extends JPanel {
                 "DBConnectorDetailsPanel.field"));
         panelSelection.add(label);
 
-        Vector<String> nameList = new Vector<String>();
-        for (String name : databaseConnectionMap.keySet()) {
-            nameList.add(name);
-        }
-
         connectionPanel = new JPanel();
         add(connectionPanel, BorderLayout.CENTER);
         connectionPanel.setLayout(new CardLayout());
@@ -113,7 +107,7 @@ public class DBConnectorDetailsPanel extends JPanel {
         for (String key : databaseConnectionMap.keySet()) {
             DatabaseConnectionConfigInterface dsConnector = databaseConnectionMap.get(key);
             JPanel panelToAdd = dsConnector.getPanel();
-            connectionPanel.add(panelToAdd, dsConnector.getName());
+            connectionPanel.add(panelToAdd, key);
         }
     }
 
@@ -138,8 +132,7 @@ public class DBConnectorDetailsPanel extends JPanel {
      */
     public static DatabaseConnection showDialog(JDialog parentPanel,
             DatabaseConnection connectionDetails) {
-        JDialog dialog = new JDialog(parentPanel, Localisation
-                .getString(DBConnectorDetailsPanel.class, "DBConnectorDetailsPanel.title"), true);
+        JDialog dialog = new JDialog(parentPanel, connectionDetails.getDatabaseTypeLabel(), true);
         dialog.setResizable(false);
 
         DBConnectorDetailsPanel panel = new DBConnectorDetailsPanel(dialog);
@@ -195,11 +188,9 @@ public class DBConnectorDetailsPanel extends JPanel {
                 selectedPanel = databaseConnectionMap.get(name);
 
                 if (selectedPanel != null) {
-                    if (selectedPanel.accept(connectionDetails)) {
-                        CardLayout cl = (CardLayout) (connectionPanel.getLayout());
-                        cl.show(connectionPanel, name);
-                        selectedPanel.setConnection(connectionDetails);
-                    }
+                    CardLayout cl = (CardLayout) (connectionPanel.getLayout());
+                    cl.show(connectionPanel, name);
+                    selectedPanel.setConnection(connectionDetails);
                 }
             }
         }

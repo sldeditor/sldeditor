@@ -168,16 +168,6 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#getName()
-     */
-    @Override
-    public String getName() {
-        return "Postgres";
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#setConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -263,31 +253,5 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
     @Override
     public JPanel getPanel() {
         return panel;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#accept(com.sldeditor.common.data.DatabaseConnection)
-     */
-    @Override
-    public boolean accept(DatabaseConnection connection) {
-        if (connection != null) {
-            Map<String, String> propertyMap = connection.getConnectionDataMap();
-            if (propertyMap != null) {
-                int count = 0;
-                for (String fieldName : acceptFieldList) {
-                    for (String key : propertyMap.keySet()) {
-                        if (key.compareToIgnoreCase(fieldName) == 0) {
-                            count++;
-                            break;
-                        }
-                    }
-                }
-
-                return (count == acceptFieldList.size());
-            }
-        }
-        return false;
     }
 }

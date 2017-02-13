@@ -41,10 +41,11 @@ public class DatabaseConnectionField {
     public DatabaseConnectionField(Param param) {
         super();
         this.param = param;
-        if(param.key.equals(JDBCDataStoreFactory.USER.key))
-        {
+        if (param.key.equals(JDBCDataStoreFactory.USER.key)) {
             username = true;
         }
+
+        password = param.isPassword();
     }
 
     /**
@@ -66,7 +67,7 @@ public class DatabaseConnectionField {
      * @return the fieldName
      */
     public String getFieldName() {
-        return param.getName();
+        return param.getDescription().toString();
     }
 
     /**
@@ -114,8 +115,8 @@ public class DatabaseConnectionField {
      *
      * @return the defaultValue
      */
-    public String getDefaultValue() {
-        return (String) param.sample;
+    public Object getDefaultValue() {
+        return param.getDefaultValue();
     }
 
     /**

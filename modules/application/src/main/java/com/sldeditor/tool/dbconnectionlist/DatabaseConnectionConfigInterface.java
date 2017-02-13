@@ -31,13 +31,6 @@ import com.sldeditor.common.data.DatabaseConnection;
 public interface DatabaseConnectionConfigInterface {
 
     /**
-     * Gets the name.
-     *
-     * @return the name
-     */
-    public String getName();
-
-    /**
      * Sets the connection.
      *
      * @param connection the new connection
@@ -57,13 +50,4 @@ public interface DatabaseConnectionConfigInterface {
      * @return the panel
      */
     public JPanel getPanel();
-
-    /**
-     * Accept.
-     *
-     * @param connection the connection
-     * @return true, if successful
-     */
-    public boolean accept(DatabaseConnection connection);
-
 }
