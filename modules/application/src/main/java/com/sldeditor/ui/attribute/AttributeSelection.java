@@ -300,6 +300,10 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
 
         String panelName;
 
+        // Clear out any old values
+        expressionPanel.populateExpression(null);
+        dataSourceAttributePanel.setAttribute(null);
+
         if(expression == null)
         {
             panelName = ValueSubPanel.getPanelName();
