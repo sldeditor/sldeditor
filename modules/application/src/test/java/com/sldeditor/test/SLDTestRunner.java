@@ -124,7 +124,7 @@ public class SLDTestRunner {
      * Instantiates a new SLD test runner.
      */
     public SLDTestRunner() {
-    	BaseTestRunner.setPreference("maxmessage","-1");
+        BaseTestRunner.setPreference("maxmessage", "-1");
 
         System.out.println("Operating system is : " + OSValidator.getOS());
         // Populate the list of fields that are colours
@@ -137,13 +137,10 @@ public class SLDTestRunner {
         filenameList.add(FieldIdEnum.EXTERNAL_GRAPHIC);
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
 
-        try
-        {
-        	sldEditor = SLDEditor.createAndShowGUI(null, null, true, null);
-        }
-        catch(Exception e)
-        {
-        	e.printStackTrace();
+        try {
+            sldEditor = SLDEditor.createAndShowGUI(null, null, true, null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

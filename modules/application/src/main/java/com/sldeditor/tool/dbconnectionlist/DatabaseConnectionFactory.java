@@ -25,7 +25,8 @@ import org.geotools.data.mysql.MySQLDataStoreFactory;
 import org.geotools.data.oracle.OracleNGDataStoreFactory;
 import org.geotools.data.postgis.PostgisNGDataStoreFactory;
 import org.geotools.data.spatialite.SpatiaLiteDataStoreFactory;
-import org.geotools.data.sqlserver.SQLServerDataStoreFactory;
+import org.geotools.data.sqlserver.jtds.JDTSSQLServerJNDIDataStoreFactory;
+import org.geotools.data.sqlserver.jtds.JTDSSqlServerDataStoreFactory;
 import org.geotools.data.teradata.TeradataDataStoreFactory;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.geotools.jdbc.JDBCDataStoreFactory;
@@ -302,28 +303,28 @@ public class DatabaseConnectionFactory {
     public static DatabaseConnection createSQLServer() {
         List<DatabaseConnectionField> list = new ArrayList<DatabaseConnectionField>();
 
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.HOST));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.PORT));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.INSTANCE));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.SCHEMA));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.DATABASE));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.USER));
-        list.add(new DatabaseConnectionField(SQLServerDataStoreFactory.PASSWD));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.HOST));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.PORT));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.INSTANCE));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.SCHEMA));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.DATABASE));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.USER));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.PASSWD));
 
-        SQLServerDataStoreFactory factory = new SQLServerDataStoreFactory();
+        JDTSSQLServerJNDIDataStoreFactory factory = new JDTSSQLServerJNDIDataStoreFactory();
 
         DatabaseConnection databaseConnection = new DatabaseConnection(
-                SQLServerDataStoreFactory.DBTYPE, factory.getDisplayName(), true, list,
+                JTDSSqlServerDataStoreFactory.DBTYPE, factory.getDisplayName(), true, list,
                 new DatabaseConnectionName() {
 
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
                         String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get(SQLServerDataStoreFactory.INSTANCE.key),
-                                properties.get(SQLServerDataStoreFactory.DATABASE.key),
-                                properties.get(SQLServerDataStoreFactory.HOST.key),
-                                properties.get(SQLServerDataStoreFactory.PORT.key));
+                                properties.get(JTDSSqlServerDataStoreFactory.INSTANCE.key),
+                                properties.get(JTDSSqlServerDataStoreFactory.DATABASE.key),
+                                properties.get(JTDSSqlServerDataStoreFactory.HOST.key),
+                                properties.get(JTDSSqlServerDataStoreFactory.PORT.key));
 
                         for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
                             connectionName = duplicatePrefix + connectionName;
@@ -443,7 +444,7 @@ public class DatabaseConnectionFactory {
                 return createSpatiaLite();
             } else if (type.equals(TeradataDataStoreFactory.DBTYPE.sample)) {
                 return createTeradata();
-            } else if (type.equals(SQLServerDataStoreFactory.DBTYPE.sample)) {
+            } else if (type.equals(JTDSSqlServerDataStoreFactory.DBTYPE.sample)) {
                 return createSQLServer();
             } else if (type.equals(OracleNGDataStoreFactory.DBTYPE.sample)) {
                 return createOracle();

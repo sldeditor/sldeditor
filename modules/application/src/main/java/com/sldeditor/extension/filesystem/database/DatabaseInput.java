@@ -171,7 +171,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
             list.add(new DatabaseOverallNode(this, "Oracle",
                     "ui/filesystemicons/oracle.png"));
 
-            list.add(new DatabaseOverallNode(this, "SQL Server",
+            list.add(new DatabaseOverallNode(this, "Microsoft SQL Server (JTDS Driver) (JNDI)",
                     "ui/filesystemicons/sqlserver.png"));
 
             list.add(new DatabaseOverallNode(this, "Teradata",
