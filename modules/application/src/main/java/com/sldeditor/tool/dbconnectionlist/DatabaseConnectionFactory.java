@@ -9,6 +9,7 @@ package com.sldeditor.tool.dbconnectionlist;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +35,8 @@ import org.geotools.jdbc.JDBCDataStoreFactory;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.DatabaseConnectionField;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
+import com.sldeditor.extension.filesystem.file.database.DatabaseFileHandler;
 
 /**
  * A factory for creating DatabaseConnection objects.
@@ -53,6 +56,12 @@ public class DatabaseConnectionFactory {
 
     /** The name map. */
     private static Map<String, String> nameMap = new HashMap<String, String>();
+
+    /** The file handler list. */
+    private static List<FileHandlerInterface> fileHandlerList = new ArrayList<FileHandlerInterface>();
+
+    /** The file handler map. */
+    private static Map<DatabaseFileHandler, String> fileHandlerMap = new HashMap<DatabaseFileHandler, String>();
 
     /**
      * Creates a new DatabaseConnection object for a GeoPackage.
@@ -94,6 +103,11 @@ public class DatabaseConnectionFactory {
                 });
 
         return databaseConnection;
+    }
+
+    private static void addFileDatabase(DatabaseFileHandler databaseFileHandler, Param param) {
+        fileHandlerList.add(databaseFileHandler);
+        fileHandlerMap.put(databaseFileHandler, (String) param.sample);
     }
 
     /**
@@ -523,4 +537,51 @@ public class DatabaseConnectionFactory {
         return createDefault(databaseConnection.getDatabaseType());
     }
 
+    /**
+     * Gets the database connection.
+     *
+     * @param filename the filename
+     * @return the new connection
+     */
+    public static DatabaseConnection getConnection(String filename) {
+        List<FileHandlerInterface> list = getFileHandlers();
+
+        for (FileHandlerInterface handler : list) {
+            for (String fileExtension : handler.getFileExtensionList()) {
+                if (filename.endsWith(fileExtension)) {
+                    String dbConnectionType = fileHandlerMap.get(handler);
+
+                    DatabaseConnection dbConnection = createDefault(dbConnectionType);
+
+                    Map<String, String> connectionDataMap = new HashMap<String, String>();
+
+                    connectionDataMap.put(JDBCDataStoreFactory.DATABASE.key, filename);
+                    dbConnection.setConnectionDataMap(connectionDataMap);
+
+                    return dbConnection;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the file handlers.
+     *
+     * @return the file handlers
+     */
+    public static List<FileHandlerInterface> getFileHandlers() {
+        if (fileHandlerList.isEmpty()) {
+            addFileDatabase(
+                    new DatabaseFileHandler("ui/filesystemicons/spatialite.png",
+                            Arrays.asList(SPATIALITE_FILE_EXTENSION)),
+                    SpatiaLiteDataStoreFactory.DBTYPE);
+
+            addFileDatabase(
+                    new DatabaseFileHandler("ui/filesystemicons/geopackage.png",
+                            Arrays.asList(GEOPACKAGE_FILE_EXTENSION)),
+                    GeoPkgDataStoreFactory.DBTYPE);
+        }
+        return fileHandlerList;
+    }
 }

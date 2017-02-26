@@ -88,4 +88,12 @@ public interface DatabaseConnectionManagerInterface {
      * @return the DB connection params
      */
     Map<String, Object> getDBConnectionParams(DatabaseConnection databaseConnection);
+
+    /**
+     * Gets the matching connection, if it already exists.
+     *
+     * @param connection the connection
+     * @return the matching connection
+     */
+    DatabaseConnection getMatchingConnection(DatabaseConnection connection);
 }

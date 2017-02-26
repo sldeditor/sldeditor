@@ -16,24 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.datasource.extension.filesystem.node.file;
-
 /**
- * The Enum FileTreeNodeTypeEnum.
- *
+ * Allows vector files to be data sources.
+ * 
  * @author Robert Ward (SCISYS)
+ *
  */
-public enum FileTreeNodeTypeEnum {
-
-    /** The sld. */
-    SLD,
-    
-    /** The raster. */
-    RASTER,
-    
-    /** The vector. */
-    VECTOR,
-    
-    /** The database. */
-    DATABASE
-}
+package com.sldeditor.extension.filesystem.file.database;

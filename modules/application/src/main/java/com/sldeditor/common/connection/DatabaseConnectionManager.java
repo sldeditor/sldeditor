@@ -229,4 +229,16 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         return null;
     }
 
+    @Override
+    public DatabaseConnection getMatchingConnection(DatabaseConnection connection) {
+        for(DatabaseConnection dbConnection : connectionMap.keySet())
+        {
+            if(dbConnection.equals(connection))
+            {
+                return dbConnection;
+            }
+        }
+        return null;
+    }
+
 }

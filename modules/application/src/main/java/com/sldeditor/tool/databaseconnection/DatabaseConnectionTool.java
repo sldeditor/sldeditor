@@ -33,8 +33,11 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 
 /**
  * Tool that manages the database connections (connect/disconnect).
@@ -62,13 +65,13 @@ public class DatabaseConnectionTool implements ToolInterface
     /**
      * Instantiates a new database connection state tool.
      *
-     * @param geoServerConnectState the geo server connect state
+     * @param databaseConnectState the database connection state
      */
-    public DatabaseConnectionTool(DatabaseConnectStateInterface geoServerConnectState)
+    public DatabaseConnectionTool(DatabaseConnectStateInterface databaseConnectState)
     {
         super();
 
-        this.databaseConnectState = geoServerConnectState;
+        this.databaseConnectState = databaseConnectState;
 
         createUI();
     }
@@ -97,6 +100,7 @@ public class DatabaseConnectionTool implements ToolInterface
                 {
                     connectButton.setEnabled(false);
                     disconnectButton.setEnabled(false);
+
                     databaseConnectState.connect(connectionList);
 
                     for(DatabaseConnection connection : connectionList)
@@ -154,9 +158,19 @@ public class DatabaseConnectionTool implements ToolInterface
         {
             if(node instanceof DatabaseNode)
             {
-                DatabaseNode geoserverNode = (DatabaseNode)node;
+                DatabaseNode databaseNode = (DatabaseNode)node;
 
-                connectionList.add(geoserverNode.getConnection());
+                connectionList.add(databaseNode.getConnection());
+            }
+            else if(node instanceof FileTreeNode)
+            {
+                FileTreeNode fileNode = (FileTreeNode)node;
+
+                if (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE)
+                {
+                    DatabaseConnection databaseConnection = DatabaseConnectionFactory.getConnection(fileNode.getFile().getAbsolutePath());
+                    connectionList.add(databaseConnection);
+                }
             }
         }
 
@@ -222,6 +236,13 @@ public class DatabaseConnectionTool implements ToolInterface
     {
         if(uniqueNodeTypeList.size() == 1)
         {
+            NodeInterface node = nodeTypeList.get(0);
+            if(node instanceof FileTreeNode)
+            {
+                FileTreeNode fileNode = (FileTreeNode) node;
+                
+                return (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE);
+            }
             return true;
         }
         return false;

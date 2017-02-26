@@ -450,4 +450,59 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
 
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((connectionDataMap == null) ? 0 : connectionDataMap.hashCode());
+        result = prime * result + ((connectionName == null) ? 0 : connectionName.hashCode());
+        result = prime * result + ((databaseType == null) ? 0 : databaseType.hashCode());
+        result = prime * result + ((databaseTypeLabel == null) ? 0 : databaseTypeLabel.hashCode());
+        result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        DatabaseConnection other = (DatabaseConnection) obj;
+        if (connectionDataMap == null) {
+            if (other.connectionDataMap != null)
+                return false;
+        } else if (!connectionDataMap.equals(other.connectionDataMap))
+            return false;
+        if (connectionName == null) {
+            if (other.connectionName != null)
+                return false;
+        } else if (!connectionName.equals(other.connectionName))
+            return false;
+        if (databaseType == null) {
+            if (other.databaseType != null)
+                return false;
+        } else if (!databaseType.equals(other.databaseType))
+            return false;
+        if (databaseTypeLabel == null) {
+            if (other.databaseTypeLabel != null)
+                return false;
+        } else if (!databaseTypeLabel.equals(other.databaseTypeLabel))
+            return false;
+        if (userName == null) {
+            if (other.userName != null)
+                return false;
+        } else if (!userName.equals(other.userName))
+            return false;
+        return true;
+    }
 }

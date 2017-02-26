@@ -45,6 +45,7 @@ import com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterf
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
 import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.databaseconnection.DatabaseConnectStateInterface;
@@ -94,6 +95,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         if (toolMgr != null) {
             databaseConnectionTool = new DatabaseConnectionTool(this);
             ToolManager.getInstance().registerTool(DatabaseNode.class, databaseConnectionTool);
+            ToolManager.getInstance().registerTool(FileTreeNode.class, databaseConnectionTool);
             DatabaseConnectionListTool connectionListTool = new DatabaseConnectionListTool(this);
             ToolManager.getInstance().registerTool(DatabaseOverallNode.class, connectionListTool);
             ToolManager.getInstance().registerTool(DatabaseNode.class, connectionListTool);
@@ -244,8 +246,15 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     private boolean connectToDatabase(DatabaseConnection connection) {
         boolean isConnected = false;
 
+        DatabaseConnection dbConnection = DatabaseConnectionManager.getInstance().getMatchingConnection(connection);
+        if(dbConnection == null)
+        {
+            addNewConnection(connection);
+            dbConnection = connection;
+        }
+
         DatabaseClientInterface client = DatabaseConnectionManager.getInstance().getConnectionMap()
-                .get(connection);
+                .get(dbConnection);
 
         if (client != null) {
             client.connect();
@@ -254,7 +263,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
                 String message = String.format("%s : %s",
                         Localisation.getString(GeoServerConnectionTool.class,
                                 "GeoServerConnectionTool.connected"),
-                        connection.getConnectionName());
+                        dbConnection.getConnectionName());
                 ConsoleManager.getInstance().information(GeoServerConnectionTool.class, message);
                 client.retrieveData();
                 isConnected = true;
@@ -262,7 +271,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
                 String errorMessage = String.format("%s : %s",
                         Localisation.getString(GeoServerConnectionTool.class,
                                 "GeoServerConnectionTool.failedToConnect"),
-                        connection.getConnectionName());
+                        dbConnection.getConnectionName());
                 ConsoleManager.getInstance().error(GeoServerConnectionTool.class, errorMessage);
             }
         }
@@ -277,104 +286,6 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     @Override
     public SelectedFiles getSLDContents(NodeInterface node) {
-        // if (node instanceof GeoServerStyleNode) {
-        // GeoServerStyleNode styleNode = (GeoServerStyleNode) node;
-        //
-        // GeoServerConnection connectionData = styleNode.getConnectionData();
-        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-        // .getConnectionMap().get(connectionData);
-        //
-        // if (client != null) {
-        // String sldContent = client.getStyle(styleNode.getStyle());
-        //
-        // SLDDataInterface sldData = new SLDData(styleNode.getStyle(), sldContent);
-        // sldData.setConnectionData(connectionData);
-        // sldData.setReadOnly(false);
-        //
-        // List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-        //
-        // sldDataList.add(sldData);
-        //
-        // SelectedFiles selectedFiles = new SelectedFiles();
-        // selectedFiles.setSldData(sldDataList);
-        // selectedFiles.setDataSource(false);
-        // selectedFiles.setConnectionData(connectionData);
-        //
-        // return selectedFiles;
-        // }
-        // } else if (node instanceof GeoServerWorkspaceNode) {
-        // GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
-        //
-        // GeoServerConnection connectionData = workspaceNode.getConnection();
-        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-        // .getConnectionMap().get(connectionData);
-        //
-        // List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-        //
-        // if (workspaceNode.isStyle()) {
-        // Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
-        //
-        // if ((client != null) && (styleMap != null)) {
-        // for (StyleWrapper style : styleMap.get(workspaceNode.getWorkspaceName())) {
-        // String sldContent = client.getStyle(style);
-        //
-        // SLDDataInterface sldData = new SLDData(style, sldContent);
-        // sldData.setConnectionData(connectionData);
-        // sldData.setReadOnly(false);
-        //
-        // sldDataList.add(sldData);
-        // }
-        // }
-        // }
-        //
-        // SelectedFiles selectedFiles = new SelectedFiles();
-        // selectedFiles.setSldData(sldDataList);
-        // selectedFiles.setDataSource(false);
-        // selectedFiles.setConnectionData(connectionData);
-        //
-        // return selectedFiles;
-        // } else if (node instanceof GeoServerStyleHeadingNode) {
-        // GeoServerStyleHeadingNode styleHeadingNode = (GeoServerStyleHeadingNode) node;
-        //
-        // GeoServerConnection connectionData = styleHeadingNode.getConnection();
-        // GeoServerClientInterface client = GeoServerConnectionManager.getInstance()
-        // .getConnectionMap().get(connectionData);
-        //
-        // List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-        //
-        // Map<String, List<StyleWrapper>> styleMap = getStyleMap(connectionData);
-        //
-        // if ((client != null) && (styleMap != null)) {
-        // for (String workspaceName : styleMap.keySet()) {
-        // for (StyleWrapper style : styleMap.get(workspaceName)) {
-        // String sldContent = client.getStyle(style);
-        //
-        // SLDDataInterface sldData = new SLDData(style, sldContent);
-        // sldData.setConnectionData(connectionData);
-        // sldData.setReadOnly(false);
-        //
-        // sldDataList.add(sldData);
-        // }
-        // }
-        // }
-        //
-        // SelectedFiles selectedFiles = new SelectedFiles();
-        // selectedFiles.setSldData(sldDataList);
-        // selectedFiles.setDataSource(false);
-        // selectedFiles.setConnectionData(connectionData);
-        //
-        // return selectedFiles;
-        // } else if (node instanceof GeoServerNode) {
-        // GeoServerNode geoServerNode = (GeoServerNode) node;
-        //
-        // GeoServerConnection connectionData = geoServerNode.getConnection();
-        //
-        // SelectedFiles selectedFiles = new SelectedFiles();
-        // selectedFiles.setDataSource(false);
-        // selectedFiles.setConnectionData(connectionData);
-        //
-        // return selectedFiles;
-        // }
 
         return null;
     }
