@@ -57,6 +57,7 @@ import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.watcher.ReloadManager;
@@ -658,7 +659,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             SLDEditorFile.getInstance().setDataSource(previousDataSource);
         }
 
-        dataSource.connect(SLDEditorFile.getInstance());
+        dataSource.connect(ExternalFilenames.removeSuffix(layerName), SLDEditorFile.getInstance());
 
         VendorOptionManager.getInstance().loadSLDFile(uiMgr, sld, sldData);
 

@@ -44,7 +44,7 @@ public class CreateExternalDataSourceTest {
     public void testConnect() {
         CreateExternalDataSource ds = new CreateExternalDataSource();
 
-        List<DataSourceInfo> dataSourceInfoList = ds.connect(null, null);
+        List<DataSourceInfo> dataSourceInfoList = ds.connect(null, null, null);
 
         DataSourceInfo dsInfo = dataSourceInfoList.get(0);
 
@@ -52,8 +52,9 @@ public class CreateExternalDataSourceTest {
         assertNull(dsInfo.getDataStore());
         assertNull(dsInfo.getTypeName());
 
-        SLDEditorFileInterface sldEditor = new DummyExternalSLDFile(); 
-        dataSourceInfoList = ds.connect(null, sldEditor);
+        DummyExternalSLDFile dummyExternalSLDFile = new DummyExternalSLDFile();
+        SLDEditorFileInterface sldEditor = dummyExternalSLDFile; 
+        dataSourceInfoList = ds.connect(dummyExternalSLDFile.getTypeName(), null, sldEditor);
         dsInfo = dataSourceInfoList.get(0);
 
         assertTrue(dsInfo != null);

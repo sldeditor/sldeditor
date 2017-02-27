@@ -110,7 +110,7 @@ public class DataSourceImplTest {
         CreateDataSourceInterface inlineDataSource = new DummyCreateDataSource();
 
         ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
-        ds.connect(editorFile);
+        ds.connect("typeName", editorFile);
 
         assertEquals(GeometryTypeEnum.POINT, dataSourceUpdateListener.geometryType);
         assertFalse(dataSourceUpdateListener.isConnectedToDataSourceFlag);
@@ -211,7 +211,7 @@ public class DataSourceImplTest {
         CreateDataSourceInterface inlineDataSource = new DummyCreateDataSource();
 
         ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
-        ds.connect(editorFile);
+        ds.connect(editorFile.getTypeName(), editorFile);
 
         assertEquals(GeometryTypeEnum.POINT, dataSourceUpdateListener.geometryType);
         assertTrue(dataSourceUpdateListener.isConnectedToDataSourceFlag);
@@ -293,7 +293,7 @@ public class DataSourceImplTest {
         CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
 
         ds.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
-        ds.connect(editorFile);
+        ds.connect("typeName", editorFile);
         assertTrue(dataSourceUpdateListener.hasBeenCalled());
 
         assertEquals(GeometryTypeEnum.UNKNOWN, dataSourceUpdateListener.geometryType);

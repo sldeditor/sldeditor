@@ -297,4 +297,21 @@ public class ExternalFilenames {
         }
         return newFile;
     }
+
+    /**
+     * Removes the suffix.
+     *
+     * @param inputString the layer name
+     * @return the string
+     */
+    public static String removeSuffix(String inputString) {
+        String updatedString = inputString;
+        int index = updatedString.lastIndexOf('.');
+
+        if((index >= 0) && (index < inputString.length()))
+        {
+            updatedString = updatedString.substring(0, index);
+        }
+        return updatedString;
+    }
 }

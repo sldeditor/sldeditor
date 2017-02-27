@@ -67,7 +67,7 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void connect(SLDEditorFileInterface editorFile) {
+        public void connect(String typeName, SLDEditorFileInterface editorFile) {
         }
 
         @Override

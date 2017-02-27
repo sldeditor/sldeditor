@@ -72,12 +72,13 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
     /**
      * Connect.
      *
+     * @param typeName the type name
      * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
@@ -113,7 +114,6 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                 if(dataStore != null)
                 {
                     // Try connecting to a vector data source
-                    String typeName = dataStore.getTypeNames()[0];
                     dsInfo.setTypeName(typeName);
 
                     SimpleFeatureSource source = dataStore.getFeatureSource(typeName);

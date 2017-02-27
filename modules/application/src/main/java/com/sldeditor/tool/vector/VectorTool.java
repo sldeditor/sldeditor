@@ -40,6 +40,7 @@ import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
@@ -252,14 +253,15 @@ public class VectorTool implements ToolInterface {
                     .getDataSource(DataSourceConnector.class);
 
             try {
+                String vectorFilename = vectorFile.toURI().toURL().toString();
                 dsProperties = dsc.getDataSourceProperties(
-                        DataSourceProperties.encodeFilename(vectorFile.toURI().toURL().toString()));
+                        DataSourceProperties.encodeFilename(vectorFilename));
             } catch (MalformedURLException exceptionObj) {
                 ConsoleManager.getInstance().exception(VectorTool.class, exceptionObj);
                 return false;
             }
 
-            loadSymbol(dsProperties, sldData, vectorFile.getParent());
+            loadSymbol(dsProperties, sldData, vectorFile);
         }
         return true;
     }
@@ -272,7 +274,21 @@ public class VectorTool implements ToolInterface {
      * @param folderName the folder name
      */
     private void loadSymbol(DataSourcePropertiesInterface dsProperties, SLDDataInterface sldData,
-            String folderName) {
+            File vectorFile) {
+        loadSymbol(dsProperties, sldData, ExternalFilenames.removeSuffix(vectorFile.getName()),
+                vectorFile.getParent());
+    }
+
+    /**
+     * Load symbol.
+     *
+     * @param dsProperties the ds properties
+     * @param sldData the sld data
+     * @param vectorFilename the vector filename
+     * @param folder the folder
+     */
+    private void loadSymbol(DataSourcePropertiesInterface dsProperties, SLDDataInterface sldData,
+            String vectorFilename, String folder) {
         LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
 
         // Vector file
@@ -282,7 +298,7 @@ public class VectorTool implements ToolInterface {
         DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
         if (dataSource != null) {
-            dataSource.connect(SLDEditorFile.getInstance());
+            dataSource.connect(vectorFilename, SLDEditorFile.getInstance());
         }
 
         // Clear the data change flag
@@ -294,7 +310,7 @@ public class VectorTool implements ToolInterface {
 
         SelectedFiles selectedFiles = new SelectedFiles();
         selectedFiles.setSldData(sldFilesToLoad);
-        selectedFiles.setFolderName(folderName);
+        selectedFiles.setFolderName(folder);
 
         loadSLD.loadSLDString(selectedFiles);
     }
@@ -329,7 +345,7 @@ public class VectorTool implements ToolInterface {
 
                 dsProperties.setFilename(featureClassNode.toString());
 
-                loadSymbol(dsProperties, sldData,
+                loadSymbol(dsProperties, sldData, featureClassNode.toString(),
                         featureClassNode.getConnectionData().getConnectionName());
             }
         }
@@ -367,7 +383,7 @@ public class VectorTool implements ToolInterface {
         DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
         if (dataSource != null) {
-            dataSource.connect(SLDEditorFile.getInstance());
+            dataSource.connect(ExternalFilenames.removeSuffix(vectorFile.getName()), SLDEditorFile.getInstance());
         }
     }
 
@@ -402,7 +418,7 @@ public class VectorTool implements ToolInterface {
             DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
             if (dataSource != null) {
-                dataSource.connect(SLDEditorFile.getInstance());
+                dataSource.connect(featureClassNode.toString(), SLDEditorFile.getInstance());
             }
         }
     }

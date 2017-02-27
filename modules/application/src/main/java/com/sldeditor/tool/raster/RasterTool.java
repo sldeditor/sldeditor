@@ -177,14 +177,15 @@ public class RasterTool implements ToolInterface {
                         // Raster file
                         DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
 
-                        DataSourcePropertiesInterface dsProperties = null;
+                        String rasterFilename = null;
                         try {
-                            dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFile.toURI().toURL().toString()));
+                            rasterFilename = rasterFile.toURI().toURL().toString();
                         }
                         catch (MalformedURLException exceptionObj) {
                             ConsoleManager.getInstance().exception(RasterTool.class, exceptionObj);
                             return;
                         }
+                        DataSourcePropertiesInterface dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFilename));
 
                         SLDEditorFile.getInstance().setDataSource(dsProperties);
 
@@ -192,7 +193,7 @@ public class RasterTool implements ToolInterface {
 
                         if(dataSource != null)
                         {
-                            dataSource.connect(SLDEditorFile.getInstance());
+                            dataSource.connect(rasterFilename, SLDEditorFile.getInstance());
                         }
                     }
                 }

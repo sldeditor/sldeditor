@@ -59,9 +59,10 @@ public interface DataSourceInterface {
     /**
      * Connect to data source.
      *
+     * @param typeName the type name
      * @param editorFile the editor file
      */
-    void connect(SLDEditorFileInterface editorFile);
+    void connect(String typeName, SLDEditorFileInterface editorFile);
 
     /**
      * Reset.

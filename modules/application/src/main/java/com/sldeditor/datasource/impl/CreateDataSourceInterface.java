@@ -32,10 +32,11 @@ public interface CreateDataSourceInterface {
     /**
      * Connect to the data source.
      *
+     * @param typeName the type name
      * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list
      */
-    List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile);
+    List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile);
 
 }
