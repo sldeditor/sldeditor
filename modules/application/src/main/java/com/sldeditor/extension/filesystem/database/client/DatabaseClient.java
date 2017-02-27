@@ -26,6 +26,8 @@ import java.util.Map;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -96,7 +98,9 @@ public class DatabaseClient implements DatabaseClientInterface {
 
                     if (nameList != null) {
                         for (Name name : nameList) {
-                            featureClassList.add(name.getLocalPart());
+                            if (hasGeometryField(dataStore, name)) {
+                                featureClassList.add(name.getLocalPart());
+                            }
                         }
                     }
 
@@ -117,6 +121,27 @@ public class DatabaseClient implements DatabaseClientInterface {
         }
 
         return connected;
+    }
+
+    /**
+     * Checks for the presence of a geometry field.
+     *
+     * @param dataStore the data store
+     * @param name the name
+     * @return true, if geometry field present
+     */
+    private boolean hasGeometryField(DataStore dataStore, Name name) {
+        try {
+            SimpleFeatureSource featureSource = dataStore.getFeatureSource(name);
+            GeometryDescriptor geometryDescriptor = featureSource.getSchema()
+                    .getGeometryDescriptor();
+
+            return (geometryDescriptor != null);
+
+        } catch (IOException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        }
+        return false;
     }
 
     /*
@@ -168,8 +193,8 @@ public class DatabaseClient implements DatabaseClientInterface {
     @Override
     public boolean accept(DatabaseConnection connection) {
         if (connection != null) {
-                return connection.getConnectionDataMap().keySet()
-                        .containsAll(connection.getExpectedKeys());
+            return connection.getConnectionDataMap().keySet()
+                    .containsAll(connection.getExpectedKeys());
         }
         return false;
     }
