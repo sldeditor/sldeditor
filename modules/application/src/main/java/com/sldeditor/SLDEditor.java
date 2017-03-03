@@ -496,17 +496,16 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
         sldData.updateSLDContents(sldContents);
 
-        StyleWrapper style = null;
-
         if (RelativePath.isLocalFile(urlToSave)) {
+            StyleWrapper style = null;
             try {
                 File f = new File(urlToSave.toURI());
                 style = new StyleWrapper(f.getName());
             } catch (URISyntaxException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
+            sldData.updateStyleWrapper(style);
         }
-        sldData.updateStyleWrapper(style);
 
         ReloadManager.getInstance().setFileSaved();
         saveSLDData(sldData);
