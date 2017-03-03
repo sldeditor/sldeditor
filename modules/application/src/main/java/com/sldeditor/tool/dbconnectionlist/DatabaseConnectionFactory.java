@@ -189,7 +189,7 @@ public class DatabaseConnectionFactory {
                                 properties.get(JDBCDataStoreFactory.HOST.key),
                                 properties.get(JDBCDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
+                        for (int i = 0; i < noOfTimesDuplicated; i++) {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;
@@ -265,7 +265,7 @@ public class DatabaseConnectionFactory {
                                 properties.get(MySQLDataStoreFactory.HOST.key),
                                 properties.get(MySQLDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
+                        for (int i = 0; i < noOfTimesDuplicated; i++) {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;
@@ -305,7 +305,7 @@ public class DatabaseConnectionFactory {
                                 properties.get(OracleNGDataStoreFactory.HOST.key),
                                 properties.get(OracleNGDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
+                        for (int i = 0; i < noOfTimesDuplicated; i++) {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;
@@ -347,7 +347,7 @@ public class DatabaseConnectionFactory {
                                 properties.get(JTDSSqlServerDataStoreFactory.HOST.key),
                                 properties.get(JTDSSqlServerDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
+                        for (int i = 0; i < noOfTimesDuplicated; i++) {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;
@@ -387,7 +387,7 @@ public class DatabaseConnectionFactory {
                                 properties.get(TeradataDataStoreFactory.HOST.key),
                                 properties.get(TeradataDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
+                        for (int i = 0; i < noOfTimesDuplicated; i++) {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;
@@ -427,7 +427,7 @@ public class DatabaseConnectionFactory {
                                 properties.get(PostgisNGDataStoreFactory.HOST.key),
                                 properties.get(PostgisNGDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; noOfTimesDuplicated++) {
+                        for (int i = 0; i < noOfTimesDuplicated; i++) {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;

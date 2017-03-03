@@ -319,10 +319,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#getConnectionDetails()
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#getConnectionDetails()
      */
     @Override
     public List<DatabaseConnection> getConnectionDetails() {
@@ -346,10 +344,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return nodeTypeList;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.tool.GeoServerConnectStateInterface#isConnected(com.sldeditor.extension.input.geoserver.GeoServerConnection)
+    /* (non-Javadoc)
+     * @see com.sldeditor.tool.databaseconnection.DatabaseConnectStateInterface#isConnected(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public boolean isConnected(DatabaseConnection connection) {
@@ -361,10 +357,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.tool.GeoServerConnectStateInterface#connect(java.util.List)
+    /* (non-Javadoc)
+     * @see com.sldeditor.tool.databaseconnection.DatabaseConnectStateInterface#connect(java.util.List)
      */
     @Override
     public void connect(List<DatabaseConnection> connectionList) {
@@ -398,11 +392,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.extension.input.geoserver.GeoServerParseCompleteInterface#populateComplete(com.sldeditor.extension.input.geoserver.
-     * GeoServerConnection, java.util.Map, java.util.Map)
+    /* (non-Javadoc)
+     * @see com.sldeditor.extension.filesystem.database.DatabaseParseCompleteInterface#populateComplete(com.sldeditor.common.data.DatabaseConnection, java.util.List)
      */
     @Override
     public void populateComplete(DatabaseConnection connection, List<String> featureClassList) {
@@ -413,11 +404,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#addNewConnection(com.sldeditor.extension.input.geoserver.
-     * GeoServerConnection)
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#addNewConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void addNewConnection(DatabaseConnection newConnectionDetails) {
@@ -446,11 +434,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return getRootDatabaseNodes().get(newConnectionDetails.getDatabaseTypeLabel());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#updateConnectionDetails(com.sldeditor.extension.input.geoserver.
-     * GeoServerConnection, com.sldeditor.extension.input.geoserver.GeoServerConnection)
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#updateConnectionDetails(com.sldeditor.common.data.DatabaseConnection, com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void updateConnectionDetails(DatabaseConnection originalConnectionDetails,
@@ -462,13 +447,15 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         logger.debug("Updating connection : " + newConnectionDetails.getConnectionName());
 
         DatabaseClientInterface client = DatabaseConnectionManager.getInstance().getConnectionMap()
-                .get(originalConnectionDetails);
+                .remove(originalConnectionDetails);
         if (client != null) {
             disconnectFromDatabase(client);
         }
 
         progress.updateConnection(originalConnectionDetails, newConnectionDetails);
 
+        DatabaseConnectionManager.getInstance().addNewConnection(progress,
+                newConnectionDetails);
         if (toolMgr != null) {
             toolMgr.refreshSelection();
         }
@@ -476,10 +463,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         updatePropertyFile();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.extension.input.geoserver.GeoServerConnectUpdateInterface#deleteConnections(java.util.List)
+    /* (non-Javadoc)
+     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#deleteConnections(java.util.List)
      */
     @Override
     public void deleteConnections(List<DatabaseConnection> connectionList) {

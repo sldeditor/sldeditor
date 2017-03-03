@@ -130,11 +130,8 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.common.connection.DatabaseReadProgressInterface#readPropertyFile(com.sldeditor.extension.filesystem.geoserver.
-     * GeoServerReadProgress)
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface)
      */
     public void readPropertyFile(DatabaseReadProgressInterface progress) {
         List<DatabaseConnection> connectionList = getConnectionList();
@@ -195,11 +192,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         connectionMap.remove(connection);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.common.connection.DatabaseReadProgressInterface#addNewConnection(com.sldeditor.extension.filesystem.geoserver.
-     * GeoServerReadProgress, com.sldeditor.common.data.DatabaseConnection)
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#addNewConnection(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void addNewConnection(DatabaseReadProgressInterface progress,
@@ -229,6 +224,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         return null;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getMatchingConnection(com.sldeditor.common.data.DatabaseConnection)
+     */
     @Override
     public DatabaseConnection getMatchingConnection(DatabaseConnection connection) {
         for(DatabaseConnection dbConnection : connectionMap.keySet())

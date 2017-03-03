@@ -123,8 +123,7 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
      * Read feature classes complete.
      *
      * @param connection the connection
-     * @param styleMap the style map
-     * @param partialRefresh the partial refresh
+     * @param featureClassList the feature class list
      */
     public void readFeatureClassesComplete(DatabaseConnection connection, List<String> featureClassList)
     {
@@ -179,10 +178,10 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
     }
 
     /**
-     * Populate styles.
+     * Populate feature classes.
      *
      * @param connection the connection
-     * @param geoServerNode the geo server node
+     * @param databaseNode the database node
      */
     private void populateFeatureClasses(DatabaseConnection connection, DatabaseNode databaseNode)
     {
@@ -215,22 +214,22 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
     /**
      * Removes the node.
      *
-     * @param geoServerNode the geo server node
+     * @param databaseNode the database node
      * @param nodeTitleToRemove the node title to remove
      */
-    public static void removeNode(DatabaseNode geoServerNode, String nodeTitleToRemove)
+    public static void removeNode(DatabaseNode databaseNode, String nodeTitleToRemove)
     {
-        if((geoServerNode != null) && (nodeTitleToRemove != null))
+        if((databaseNode != null) && (nodeTitleToRemove != null))
         {
-            for(int index = 0; index < geoServerNode.getChildCount(); index ++)
+            for(int index = 0; index < databaseNode.getChildCount(); index ++)
             {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)geoServerNode.getChildAt(index);
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)databaseNode.getChildAt(index);
                 String nodeName = (String)node.getUserObject();
                 if(nodeName != null)
                 {
                     if(nodeName.startsWith(nodeTitleToRemove))
                     {
-                        geoServerNode.remove(index);
+                        databaseNode.remove(index);
                         break;
                     }
                 }
@@ -267,7 +266,7 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
     }
 
     /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.geoserver.GeoServerInputInterface#startPopulating()
+     * @see com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface#startPopulating(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void startPopulating(DatabaseConnection connection)
@@ -361,15 +360,15 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
     {
         if(newConnectionDetails != null)
         {
-            DatabaseNode geoserverNode = nodeMap.get(originalConnectionDetails);
+            DatabaseNode databaseNode = nodeMap.get(originalConnectionDetails);
 
             originalConnectionDetails.update(newConnectionDetails);
 
-            if(geoserverNode != null)
+            if(databaseNode != null)
             {
-                geoserverNode.setUserObject(newConnectionDetails.getConnectionName());
+                databaseNode.setUserObject(newConnectionDetails.getConnectionName());
 
-                refreshNode(geoserverNode);
+                refreshNode(databaseNode);
 
                 setFolder(newConnectionDetails.getDatabaseTypeLabel(), newConnectionDetails, false);
             }
