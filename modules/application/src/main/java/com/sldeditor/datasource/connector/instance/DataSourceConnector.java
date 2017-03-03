@@ -24,7 +24,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import org.geotools.jdbc.JDBCDataStoreFactory;
 
@@ -39,14 +40,18 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceConnector implements DataSourceConnectorInterface {
-    /** The data source text field. */
-    private JTextArea dataSourceTextField;
 
     /** The data source field panel. */
     private JPanel dataSourceFieldPanel;
 
     /** The property map. */
     private Map<String, Object> propertyMap = new HashMap<String, Object>();
+
+    /** The table. */
+    private JTable table;
+
+    /** The model. */
+    private DefaultTableModel model = new DefaultTableModel();
 
     /**
      * Default constructor
@@ -82,12 +87,15 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         dataSourceFieldPanel = new JPanel();
         dataSourceFieldPanel.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane scrollPane = new JScrollPane();
+        model.addColumn("Field");
+        model.addColumn("Value");
+
+        table = new JTable(model);
+
+        JScrollPane scrollPane = new JScrollPane(table);
         dataSourceFieldPanel.add(scrollPane);
 
-        dataSourceTextField = new JTextArea();
-        scrollPane.setViewportView(dataSourceTextField);
-        dataSourceTextField.setEditable(false);
+        dataSourceFieldPanel.add(table, BorderLayout.NORTH);
     }
 
     /*
@@ -113,14 +121,13 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
      * @param propertyMap the property map
      */
     private void displayPropertyMap(Map<String, Object> propertyMap) {
-        StringBuilder sb = new StringBuilder();
+        reset();
         for (String key : propertyMap.keySet()) {
             if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
-                String line = String.format("%s\t\t%s\n", key, propertyMap.get(key));
-                sb.append(line);
+                model.addRow(new String[]{key, propertyMap.get(key).toString()});
             }
         }
-        dataSourceTextField.setText(sb.toString());
+        model.fireTableDataChanged();
     }
 
     /*
@@ -208,6 +215,11 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
      */
     @Override
     public void reset() {
-        dataSourceTextField.setText("");
+        while(model.getRowCount() > 0)
+        {
+            model.removeRow(0);
+        }
+
+        model.fireTableDataChanged();
     }
 }
