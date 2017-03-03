@@ -295,12 +295,6 @@ public class VectorTool implements ToolInterface {
         SLDEditorFile.getInstance().setSLDData(sldData);
         SLDEditorFile.getInstance().setDataSource(dsProperties);
 
-        DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
-
-        if (dataSource != null) {
-            dataSource.connect(vectorFilename, SLDEditorFile.getInstance());
-        }
-
         // Clear the data change flag
         SLDEditorFile.getInstance().fileOpenedSaved();
 
