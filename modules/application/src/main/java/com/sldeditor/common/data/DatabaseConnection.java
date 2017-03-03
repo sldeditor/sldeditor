@@ -262,6 +262,10 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      */
     @Override
     public int compareTo(DatabaseConnection o) {
+        if(connectionName == null)
+        {
+            return (o.connectionName == null) ? 0 : 1;
+        }
         return connectionName.compareTo(o.connectionName);
     }
 
