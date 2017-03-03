@@ -105,6 +105,12 @@ public class DatabaseConnectionFactory {
         return databaseConnection;
     }
 
+    /**
+     * Adds the file database.
+     *
+     * @param databaseFileHandler the database file handler
+     * @param param the param
+     */
     private static void addFileDatabase(DatabaseFileHandler databaseFileHandler, Param param) {
         fileHandlerList.add(databaseFileHandler);
         fileHandlerMap.put(databaseFileHandler, (String) param.sample);
@@ -324,6 +330,7 @@ public class DatabaseConnectionFactory {
         list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.DATABASE));
         list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.USER));
         list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.PASSWD));
+        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.GEOMETRY_METADATA_TABLE));
 
         JDTSSQLServerJNDIDataStoreFactory factory = new JDTSSQLServerJNDIDataStoreFactory();
 

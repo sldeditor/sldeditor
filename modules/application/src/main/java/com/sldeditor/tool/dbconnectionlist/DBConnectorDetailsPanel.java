@@ -140,7 +140,7 @@ public class DBConnectorDetailsPanel extends JPanel {
         dialog.getContentPane().add(panel);
 
         panel.populate(connectionDetails);
-        dialog.setSize(500, 250);
+        dialog.setSize(500, 300);
 
         Controller.getInstance().centreDialog(dialog);
 

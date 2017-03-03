@@ -43,6 +43,7 @@ import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
@@ -287,7 +288,15 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     @Override
     public SelectedFiles getSLDContents(NodeInterface node) {
 
-        return null;
+        SelectedFiles selectedFiles = new SelectedFiles();
+        if (node instanceof DatabaseFeatureClassNode) {
+            List<SLDDataInterface> sldContentList = new ArrayList<SLDDataInterface>();
+
+            selectedFiles.setSldData(sldContentList);
+            selectedFiles.setDataSource(true);
+        }
+
+        return selectedFiles;
     }
 
     /*
