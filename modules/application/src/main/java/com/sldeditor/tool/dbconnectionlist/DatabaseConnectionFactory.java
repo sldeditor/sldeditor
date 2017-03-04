@@ -26,6 +26,7 @@ import org.geotools.data.mysql.MySQLDataStoreFactory;
 import org.geotools.data.oracle.OracleNGDataStoreFactory;
 import org.geotools.data.postgis.PostgisNGDataStoreFactory;
 import org.geotools.data.spatialite.SpatiaLiteDataStoreFactory;
+import org.geotools.data.sqlserver.SQLServerDataStoreFactory;
 import org.geotools.data.sqlserver.jtds.JDTSSQLServerJNDIDataStoreFactory;
 import org.geotools.data.sqlserver.jtds.JTDSSqlServerDataStoreFactory;
 import org.geotools.data.teradata.TeradataDataStoreFactory;
@@ -330,7 +331,8 @@ public class DatabaseConnectionFactory {
         list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.DATABASE));
         list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.USER));
         list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.PASSWD));
-        list.add(new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.GEOMETRY_METADATA_TABLE));
+        list.add(
+                new DatabaseConnectionField(JTDSSqlServerDataStoreFactory.GEOMETRY_METADATA_TABLE));
 
         JDTSSQLServerJNDIDataStoreFactory factory = new JDTSSQLServerJNDIDataStoreFactory();
 
@@ -444,6 +446,10 @@ public class DatabaseConnectionFactory {
      * @return the database connection
      */
     public static DatabaseConnection decodeString(Map<String, String> localConnectionDataMap) {
+        if (localConnectionDataMap == null) {
+            return null;
+        }
+
         String type = localConnectionDataMap.get(DATABASE_TYPE_KEY);
 
         return createDefault(type);
@@ -466,6 +472,8 @@ public class DatabaseConnectionFactory {
             } else if (type.equals(TeradataDataStoreFactory.DBTYPE.sample)) {
                 return createTeradata();
             } else if (type.equals(JTDSSqlServerDataStoreFactory.DBTYPE.sample)) {
+                return createSQLServer();
+            } else if (type.equals(SQLServerDataStoreFactory.DBTYPE.sample)) {
                 return createSQLServer();
             } else if (type.equals(OracleNGDataStoreFactory.DBTYPE.sample)) {
                 return createOracle();
@@ -553,19 +561,21 @@ public class DatabaseConnectionFactory {
     public static DatabaseConnection getConnection(String filename) {
         List<FileHandlerInterface> list = getFileHandlers();
 
-        for (FileHandlerInterface handler : list) {
-            for (String fileExtension : handler.getFileExtensionList()) {
-                if (filename.endsWith(fileExtension)) {
-                    String dbConnectionType = fileHandlerMap.get(handler);
+        if (filename != null) {
+            for (FileHandlerInterface handler : list) {
+                for (String fileExtension : handler.getFileExtensionList()) {
+                    if (filename.endsWith(fileExtension)) {
+                        String dbConnectionType = fileHandlerMap.get(handler);
 
-                    DatabaseConnection dbConnection = createDefault(dbConnectionType);
+                        DatabaseConnection dbConnection = createDefault(dbConnectionType);
 
-                    Map<String, String> connectionDataMap = new HashMap<String, String>();
+                        Map<String, String> connectionDataMap = new HashMap<String, String>();
 
-                    connectionDataMap.put(JDBCDataStoreFactory.DATABASE.key, filename);
-                    dbConnection.setConnectionDataMap(connectionDataMap);
+                        connectionDataMap.put(JDBCDataStoreFactory.DATABASE.key, filename);
+                        dbConnection.setConnectionDataMap(connectionDataMap);
 
-                    return dbConnection;
+                        return dbConnection;
+                    }
                 }
             }
         }
