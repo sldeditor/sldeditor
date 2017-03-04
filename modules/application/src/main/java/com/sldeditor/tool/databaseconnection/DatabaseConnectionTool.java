@@ -44,8 +44,7 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DatabaseConnectionTool implements ToolInterface
-{
+public class DatabaseConnectionTool implements ToolInterface {
 
     /** The connect button. */
     private JButton connectButton;
@@ -67,8 +66,7 @@ public class DatabaseConnectionTool implements ToolInterface
      *
      * @param databaseConnectState the database connection state
      */
-    public DatabaseConnectionTool(DatabaseConnectStateInterface databaseConnectState)
-    {
+    public DatabaseConnectionTool(DatabaseConnectStateInterface databaseConnectState) {
         super();
 
         this.databaseConnectState = databaseConnectState;
@@ -79,38 +77,24 @@ public class DatabaseConnectionTool implements ToolInterface
     /**
      * Creates the ui.
      */
-    private void createUI()
-    {
+    private void createUI() {
         panel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        panel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(DatabaseConnectionTool.class, "DatabaseConnectionTool.title")));
+        panel.setBorder(BorderFactory.createTitledBorder(Localisation
+                .getString(DatabaseConnectionTool.class, "DatabaseConnectionTool.title")));
 
         //
         // Connect button
         //
-        connectButton = new ToolButton(Localisation.getString(DatabaseConnectionTool.class, "DatabaseConnectionTool.connect"),
-                "tool/connect.png");
+        connectButton = new ToolButton(Localisation.getString(DatabaseConnectionTool.class,
+                "DatabaseConnectionTool.connect"), "tool/connect.png");
         connectButton.setEnabled(true);
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(databaseConnectState != null)
-                {
-                    connectButton.setEnabled(false);
-                    disconnectButton.setEnabled(false);
-
-                    databaseConnectState.connect(connectionList);
-
-                    for(DatabaseConnection connection : connectionList)
-                    {
-                        if(!databaseConnectState.isConnected(connection))
-                        {
-                            connectButton.setEnabled(true);
-                        }
-                    }
-                }
+                connect();
             }
         });
 
@@ -119,83 +103,72 @@ public class DatabaseConnectionTool implements ToolInterface
         //
         // Disconnect button
         //
-        disconnectButton = new ToolButton(Localisation.getString(DatabaseConnectionTool.class, "DatabaseConnectionTool.disconnect"),
-                "tool/disconnect.png");
+        disconnectButton = new ToolButton(Localisation.getString(DatabaseConnectionTool.class,
+                "DatabaseConnectionTool.disconnect"), "tool/disconnect.png");
         disconnectButton.setEnabled(false);
         disconnectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(databaseConnectState != null)
-                {
-                    connectButton.setEnabled(false);
-                    disconnectButton.setEnabled(false);
-                    databaseConnectState.disconnect(connectionList);
-                }
+                disconnect();
             }
         });
 
         panel.add(disconnectButton);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
-    public JPanel getPanel()
-    {
+    public JPanel getPanel() {
         return panel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         connectionList.clear();
 
-        for(NodeInterface node : nodeTypeList)
-        {
-            if(node instanceof DatabaseNode)
-            {
-                DatabaseNode databaseNode = (DatabaseNode)node;
+        if (nodeTypeList != null) {
+            for (NodeInterface node : nodeTypeList) {
+                if (node instanceof DatabaseNode) {
+                    DatabaseNode databaseNode = (DatabaseNode) node;
 
-                connectionList.add(databaseNode.getConnection());
-            }
-            else if(node instanceof FileTreeNode)
-            {
-                FileTreeNode fileNode = (FileTreeNode)node;
+                    connectionList.add(databaseNode.getConnection());
+                } else if (node instanceof FileTreeNode) {
+                    FileTreeNode fileNode = (FileTreeNode) node;
 
-                if (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE)
-                {
-                    DatabaseConnection databaseConnection = DatabaseConnectionFactory.getConnection(fileNode.getFile().getAbsolutePath());
-                    connectionList.add(databaseConnection);
+                    if (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE) {
+                        DatabaseConnection databaseConnection = DatabaseConnectionFactory
+                                .getConnection(fileNode.getFile().getAbsolutePath());
+                        connectionList.add(databaseConnection);
+                    }
                 }
             }
         }
-
         updateButtonState();
     }
 
     /**
      * Update button state.
      */
-    private void updateButtonState()
-    {
+    private void updateButtonState() {
         int connected = 0;
         int disconnected = 0;
 
-        if(databaseConnectState != null)
-        {
-            for(DatabaseConnection connection : connectionList)
-            {
-                if(databaseConnectState.isConnected(connection))
-                {
-                    connected ++;
-                }
-                else
-                {
-                    disconnected ++;
+        if (databaseConnectState != null) {
+            for (DatabaseConnection connection : connectionList) {
+                if (databaseConnectState.isConnected(connection)) {
+                    connected++;
+                } else {
+                    disconnected++;
                 }
             }
         }
@@ -203,14 +176,10 @@ public class DatabaseConnectionTool implements ToolInterface
         boolean connectedEnabled = false;
         boolean disconnectedEnabled = false;
 
-        if((connected == 0) || (disconnected == 0))
-        {
-            if(connected > 0)
-            {
+        if ((connected == 0) || (disconnected == 0)) {
+            if (connected > 0) {
                 disconnectedEnabled = true;
-            }
-            else if(disconnected > 0)
-            {
+            } else if (disconnected > 0) {
                 connectedEnabled = true;
             }
         }
@@ -219,28 +188,29 @@ public class DatabaseConnectionTool implements ToolInterface
         disconnectButton.setEnabled(disconnectedEnabled);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
-    public String getToolName()
-    {
+    public String getToolName() {
         return getClass().getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
-        if(uniqueNodeTypeList.size() == 1)
-        {
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
+        if (uniqueNodeTypeList.size() == 1) {
             NodeInterface node = nodeTypeList.get(0);
-            if(node instanceof FileTreeNode)
-            {
+            if (node instanceof FileTreeNode) {
                 FileTreeNode fileNode = (FileTreeNode) node;
-                
+
                 return (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE);
             }
             return true;
@@ -253,8 +223,36 @@ public class DatabaseConnectionTool implements ToolInterface
      *
      * @param connection the connection
      */
-    public void populateComplete(DatabaseConnection connection)
-    {
+    public void populateComplete(DatabaseConnection connection) {
         updateButtonState();
+    }
+
+    /**
+     * Connect.
+     */
+    protected void connect() {
+        if (databaseConnectState != null) {
+            connectButton.setEnabled(false);
+            disconnectButton.setEnabled(false);
+
+            databaseConnectState.connect(connectionList);
+
+            for (DatabaseConnection connection : connectionList) {
+                if (!databaseConnectState.isConnected(connection)) {
+                    connectButton.setEnabled(true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Disconnect.
+     */
+    protected void disconnect() {
+        if (databaseConnectState != null) {
+            connectButton.setEnabled(false);
+            disconnectButton.setEnabled(false);
+            databaseConnectState.disconnect(connectionList);
+        }
     }
 }
