@@ -530,7 +530,6 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
      */
     @Override
     public String getDestinationText(NodeInterface destinationTreeNode) {
-
         return "Unknown";
     }
 
