@@ -47,12 +47,13 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
     /**
      * Creates the data source.
      *
+     * @param typeName the type name
      * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of data stores
      */
     @Override
-    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         for(DataSourceInfo dsInfo : dataSourceInfoList)
         {
@@ -80,7 +81,6 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
 
                 try {
                     // Set the type name
-                    String typeName = dataStore.getTypeNames()[0];
                     dsInfo.setTypeName(typeName);
 
                     List<DataSourceAttributeData> fieldList = sldData.getFieldList();

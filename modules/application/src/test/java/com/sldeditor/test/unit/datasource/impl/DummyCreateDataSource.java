@@ -32,10 +32,10 @@ import com.sldeditor.datasource.impl.DataSourceInfo;
 public class DummyCreateDataSource implements CreateDataSourceInterface {
 
     /* (non-Javadoc)
-     * @see com.sldeditor.datasource.impl.CreateDataSourceInterface#connect(java.lang.String, com.sldeditor.datasource.SLDEditorFileInterface)
+     * @see com.sldeditor.datasource.impl.CreateDataSourceInterface#connect(java.lang.String, java.lang.String, com.sldeditor.datasource.SLDEditorFileInterface)
      */
     @Override
-    public List<DataSourceInfo> connect(String geometryFieldName,
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
             SLDEditorFileInterface editorFile) {
         return null;
     }

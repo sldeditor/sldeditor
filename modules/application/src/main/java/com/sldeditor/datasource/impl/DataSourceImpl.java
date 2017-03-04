@@ -157,10 +157,11 @@ public class DataSourceImpl implements DataSourceInterface {
     /**
      * Connect to data source.
      *
+     * @param typeName the type name
      * @param editorFile the editor file
      */
     @Override
-    public void connect(SLDEditorFileInterface editorFile) {
+    public void connect(String typeName, SLDEditorFileInterface editorFile) {
         reset();
 
         this.editorFileInterface = editorFile;
@@ -172,7 +173,7 @@ public class DataSourceImpl implements DataSourceInterface {
                 if (this.dataSourceProperties.isEmpty()) {
                     openWithoutDataSource();
                 } else {
-                    openExternalDataSource();
+                    openExternalDataSource(typeName);
                 }
 
                 // Create the example data to show in the render panel
@@ -192,7 +193,7 @@ public class DataSourceImpl implements DataSourceInterface {
         if (inlineDataSource == null) {
             ConsoleManager.getInstance().error(this, "No inline data source creation object set");
         } else {
-            userLayerDataSourceInfo = inlineDataSource.connect(null, this.editorFileInterface);
+            userLayerDataSourceInfo = inlineDataSource.connect(null, null, this.editorFileInterface);
 
             if (userLayerDataSourceInfo != null) {
                 for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
@@ -206,12 +207,14 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /**
      * Open external data source.
+     *
+     * @param typeName the type name
      */
-    private void openExternalDataSource() {
+    private void openExternalDataSource(String typeName) {
         if (externalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No external data source creation object set");
         } else {
-            List<DataSourceInfo> dataSourceInfoList = externalDataSource.connect(null,
+            List<DataSourceInfo> dataSourceInfoList = externalDataSource.connect(typeName, null,
                     this.editorFileInterface);
             if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                 dataSourceInfo = dataSourceInfoList.get(0);
@@ -455,7 +458,7 @@ public class DataSourceImpl implements DataSourceInterface {
             boolean retry = true;
             while (retry && (attempt < MAX_RETRIES)) {
                 List<DataSourceInfo> dataSourceInfoList = internalDataSource
-                        .connect(dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+                        .connect(null, dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
                 if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                     dataSourceInfo = dataSourceInfoList.get(0);
                 }
@@ -480,7 +483,7 @@ public class DataSourceImpl implements DataSourceInterface {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
         } else {
             List<DataSourceInfo> dataSourceInfoList = internalDataSource
-                    .connect(dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+                    .connect(dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
 
             if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                 exampleDataSourceInfo = dataSourceInfoList.get(0);

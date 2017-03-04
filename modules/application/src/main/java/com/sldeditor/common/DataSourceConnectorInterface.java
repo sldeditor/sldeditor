@@ -53,7 +53,7 @@ public interface DataSourceConnectorInterface
      * @param filename the filename
      * @return true, if successful
      */
-    public Map<String, String> accept(String filename);
+    public Map<String, Object> accept(String filename);
 
     /**
      * Accept if data source connector supports filename type.
@@ -61,7 +61,7 @@ public interface DataSourceConnectorInterface
      * @param propertyMap the property map
      * @return true, if successful
      */
-    public boolean accept(Map<String, String> propertyMap);
+    public boolean accept(Map<String, Object> propertyMap);
 
     /**
      * Gets the data source properties.
@@ -69,7 +69,7 @@ public interface DataSourceConnectorInterface
      * @param propertyMap the property map
      * @return the data source properties
      */
-    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, String> propertyMap);
+    public DataSourcePropertiesInterface getDataSourceProperties(Map<String, Object> propertyMap);
 
     /**
      * Populate.
@@ -91,7 +91,7 @@ public interface DataSourceConnectorInterface
      * @param dataSourceProperties the data source properties
      * @return the connection properties
      */
-    public Map<String, String> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties);
+    public Map<String, Object> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties);
 
     /**
      * Reset ui.

@@ -69,9 +69,9 @@ public class DataSourceConnectorEmptyTest {
         DataSourceConnectorEmpty dsc = new DataSourceConnectorEmpty();
 
         assertNull(dsc.accept((String)null));
-        assertFalse(dsc.accept((Map<String, String>)null));
+        assertFalse(dsc.accept((Map<String, Object>)null));
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
         assertFalse(dsc.accept(propertyMap));
     }
 
@@ -82,7 +82,7 @@ public class DataSourceConnectorEmptyTest {
     public void testGetDataSourceProperties() {
         DataSourceConnectorEmpty dsc = new DataSourceConnectorEmpty();
 
-        Map<String, String> propertyMap = new HashMap<String, String>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         assertNull(dsc.getDataSourceProperties(propertyMap));
         assertNull(dsc.getDataSourceProperties(null));

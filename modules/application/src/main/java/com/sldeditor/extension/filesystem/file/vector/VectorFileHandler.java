@@ -32,6 +32,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
@@ -106,6 +107,10 @@ public class VectorFileHandler implements FileHandlerInterface
             {
                 return open(f);
             }
+        }
+        else if(node instanceof DatabaseFeatureClassNode)
+        {
+            return open(null);
         }
         return null;
     }

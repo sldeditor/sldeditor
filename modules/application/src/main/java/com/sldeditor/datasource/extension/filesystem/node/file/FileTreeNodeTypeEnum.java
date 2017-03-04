@@ -32,5 +32,8 @@ public enum FileTreeNodeTypeEnum {
     RASTER,
     
     /** The vector. */
-    VECTOR
+    VECTOR,
+    
+    /** The database. */
+    DATABASE
 }

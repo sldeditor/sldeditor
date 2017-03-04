@@ -23,12 +23,8 @@ import java.util.Map;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorArcSDE;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorFileGDB;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorRasterFile;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
@@ -36,23 +32,23 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceConnectorFactory
-{
+public class DataSourceConnectorFactory {
     /** The data connector map. */
     private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap = new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
 
     /** The no data source. */
-    private static DataSourceConnectorEmpty noDataSource;
+    private static DataSourceConnectorEmpty noDataSource = null;
+
+    /** The data source. */
+    private static DataSourceConnector dataSource = null;
 
     /**
      * Gets the data source connector list.
      *
      * @return the data source connector list
      */
-    public static Map<Class<?>, DataSourceConnectorInterface> getDataSourceConnectorList()
-    {
-        if(dataConnectorMap.isEmpty())
-        {
+    public static Map<Class<?>, DataSourceConnectorInterface> getDataSourceConnectorList() {
+        if (dataConnectorMap.isEmpty()) {
             populate();
         }
 
@@ -62,15 +58,12 @@ public class DataSourceConnectorFactory
     /**
      * Populate.
      */
-    private static void populate()
-    {
+    private static void populate() {
         noDataSource = new DataSourceConnectorEmpty();
+        dataSource = new DataSourceConnector();
+
         populate_internal(noDataSource);
-        populate_internal(new DataSourceConnectorShapeFile());
-        populate_internal(new DataSourceConnectorRasterFile());
-        populate_internal(new DataSourceConnectorArcSDE());
-        populate_internal(new DataSourceConnectorFileGDB());
-        populate_internal(new DataSourceConnectorPostgres());
+        populate_internal(dataSource);
     }
 
     /**
@@ -78,8 +71,7 @@ public class DataSourceConnectorFactory
      *
      * @param dataConnector the data connector
      */
-    private static void populate_internal(DataSourceConnectorInterface dataConnector)
-    {
+    private static void populate_internal(DataSourceConnectorInterface dataConnector) {
         dataConnectorMap.put(dataConnector.getClass(), dataConnector);
     }
 
@@ -89,18 +81,14 @@ public class DataSourceConnectorFactory
      * @param filename the filename
      * @return the data source properties
      */
-    public static DataSourcePropertiesInterface getDataSourceProperties(String filename)
-    {
-        if(dataConnectorMap.isEmpty())
-        {
+    public static DataSourcePropertiesInterface getDataSourceProperties(String filename) {
+        if (dataConnectorMap.isEmpty()) {
             populate();
         }
 
-        for(DataSourceConnectorInterface dc : dataConnectorMap.values())
-        {
-            Map<String,String> propertyMap = dc.accept(filename);
-            if(propertyMap != null)
-            {
+        for (DataSourceConnectorInterface dc : dataConnectorMap.values()) {
+            Map<String, Object> propertyMap = dc.accept(filename);
+            if (propertyMap != null) {
                 return getDataSourceProperties(propertyMap);
             }
         }
@@ -113,8 +101,7 @@ public class DataSourceConnectorFactory
      *
      * @return the no data source
      */
-    public static DataSourcePropertiesInterface getNoDataSource()
-    {
+    public static DataSourcePropertiesInterface getNoDataSource() {
         return new DataSourceProperties(noDataSource);
     }
 
@@ -124,17 +111,14 @@ public class DataSourceConnectorFactory
      * @param propertyMap the property map
      * @return the data source properties
      */
-    public static DataSourcePropertiesInterface getDataSourceProperties(Map<String, String> propertyMap)
-    {
-        if(dataConnectorMap.isEmpty())
-        {
+    public static DataSourcePropertiesInterface getDataSourceProperties(
+            Map<String, Object> propertyMap) {
+        if (dataConnectorMap.isEmpty()) {
             populate();
         }
 
-        for(DataSourceConnectorInterface dc : dataConnectorMap.values())
-        {
-            if(dc.accept(propertyMap))
-            {
+        for (DataSourceConnectorInterface dc : dataConnectorMap.values()) {
+            if (dc.accept(propertyMap)) {
                 return dc.getDataSourceProperties(propertyMap);
             }
         }
@@ -147,15 +131,13 @@ public class DataSourceConnectorFactory
      * @param filename the filename
      * @return the file extension
      */
-    public static String getFileExtension(String filename)
-    {
+    public static String getFileExtension(String filename) {
         String fileExtension = null;
 
-        if(filename != null)
-        {
+        if (filename != null) {
             int i = filename.lastIndexOf('.');
             if (i > 0) {
-                fileExtension = filename.substring(i+1);
+                fileExtension = filename.substring(i + 1);
             }
         }
         return fileExtension;
@@ -168,11 +150,10 @@ public class DataSourceConnectorFactory
      * @return the data source
      */
     public static DataSourceConnectorInterface getDataSource(Class<?> classType) {
-        if(dataConnectorMap.isEmpty())
-        {
+        if (dataConnectorMap.isEmpty()) {
             populate();
         }
 
-        return dataConnectorMap.get(classType);
+        return dataSource;
     }
 }

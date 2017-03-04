@@ -18,6 +18,7 @@
  */
 package com.sldeditor.tool.raster;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -41,14 +42,13 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorRasterFile;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
-import java.awt.FlowLayout;
 
 /**
  * The Class RasterTool.
@@ -126,7 +126,7 @@ public class RasterTool implements ToolInterface {
                         // Raster file
                         DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance().getDataSource();
 
-                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorRasterFile.class);
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
 
                         dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFile.getAbsolutePath()));
 
@@ -175,16 +175,17 @@ public class RasterTool implements ToolInterface {
                                         rasterFile.getAbsolutePath()));
 
                         // Raster file
-                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnectorRasterFile.class);
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
 
-                        DataSourcePropertiesInterface dsProperties = null;
+                        String rasterFilename = null;
                         try {
-                            dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFile.toURI().toURL().toString()));
+                            rasterFilename = rasterFile.toURI().toURL().toString();
                         }
                         catch (MalformedURLException exceptionObj) {
                             ConsoleManager.getInstance().exception(RasterTool.class, exceptionObj);
                             return;
                         }
+                        DataSourcePropertiesInterface dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFilename));
 
                         SLDEditorFile.getInstance().setDataSource(dsProperties);
 
@@ -192,7 +193,7 @@ public class RasterTool implements ToolInterface {
 
                         if(dataSource != null)
                         {
-                            dataSource.connect(SLDEditorFile.getInstance());
+                            dataSource.connect(rasterFilename, SLDEditorFile.getInstance());
                         }
                     }
                 }

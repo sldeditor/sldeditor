@@ -35,21 +35,21 @@ public interface DataSourcePropertiesInterface {
      *
      * @return the connection properties
      */
-    Map<String, String> getConnectionProperties();
+    Map<String, Object> getConnectionProperties();
 
     /**
      * Gets all the connection properties.
      *
      * @return all the connection properties
      */
-    Map<String, String> getAllConnectionProperties();
+    Map<String, Object> getAllConnectionProperties();
 
     /**
      * Sets the property map.
      *
      * @param propertyMap the property map
      */
-    void setPropertyMap(Map<String, String> propertyMap);
+    void setPropertyMap(Map<String, Object> propertyMap);
 
     /**
      * Sets the filename.

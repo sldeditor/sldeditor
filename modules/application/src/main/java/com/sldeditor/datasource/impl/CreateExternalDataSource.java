@@ -72,12 +72,13 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
     /**
      * Connect.
      *
+     * @param typeName the type name
      * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
@@ -90,7 +91,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
             DataSourcePropertiesInterface dataSourceProperties = sldData.getDataSourceProperties();
 
-            Map<String, String> map = dataSourceProperties.getConnectionProperties();
+            Map<String, Object> map = dataSourceProperties.getConnectionProperties();
 
             if(dataSourceProperties.hasPassword())
             {
@@ -113,7 +114,6 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                 if(dataStore != null)
                 {
                     // Try connecting to a vector data source
-                    String typeName = dataStore.getTypeNames()[0];
                     dsInfo.setTypeName(typeName);
 
                     SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
@@ -144,10 +144,10 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                 else
                 {
                     // Try connecting to a raster data source
-                    String rasterFilename = map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+                    Object rasterFilename = map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
                     if(rasterFilename != null)
                     {
-                        File rasterFile = new File(ExternalFilenames.convertURLToFile(rasterFilename));
+                        File rasterFile = new File(ExternalFilenames.convertURLToFile((String)rasterFilename));
 
                         ChooseRasterFormatInterface panel = new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
 

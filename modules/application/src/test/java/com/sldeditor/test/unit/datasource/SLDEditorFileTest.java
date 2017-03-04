@@ -40,7 +40,7 @@ import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
@@ -150,7 +150,7 @@ public class SLDEditorFileTest {
         assertEquals(noDataSource.getDebugConnectionString(), SLDEditorFile.getInstance().getDataSource().getDebugConnectionString());
         assertFalse(dataUpdateListener.dataEditedFlag);
 
-        DataSourcePropertiesInterface fileDSProperties = new DataSourceProperties(new DataSourceConnectorShapeFile());
+        DataSourcePropertiesInterface fileDSProperties = new DataSourceProperties(new DataSourceConnector());
         assertEquals(fileDSProperties.getDebugConnectionString(), SLDEditorFile.getInstance().getDataSource().getDebugConnectionString());
         assertFalse(dataUpdateListener.dataEditedFlag);
 

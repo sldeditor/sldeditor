@@ -208,6 +208,7 @@ public class FilterManager implements FilterNameInterface {
         populateAllowedTypes(Boolean.class, allowedBooleanTypes);
         populateAllowedTypes(String.class, allowedStringTypes);
         populateAllowedTypes(Geometry.class, allowedGeometryTypes);
+        populateAllowedTypes(org.opengis.geometry.Geometry.class, allowedGeometryTypes);
         populateAllowedTypes(Date.class, allowedDateTypes);
         populateAllowedTypes(Classifier.class, allowedClassifierTypes);
         populateAllowedTypes(Unit.class, allowedUnitTypes);
@@ -375,6 +376,10 @@ public class FilterManager implements FilterNameInterface {
                     fieldConfig = new FieldConfigBoolean(commonData);
                 }
                 else if(type == Geometry.class)
+                {
+                    fieldConfig = new FieldConfigGeometry(commonData, null);
+                }
+                else if(type == org.opengis.geometry.Geometry.class)
                 {
                     fieldConfig = new FieldConfigGeometry(commonData, null);
                 }

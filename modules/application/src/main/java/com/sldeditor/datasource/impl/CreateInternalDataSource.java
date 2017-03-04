@@ -71,12 +71,13 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     /**
      * Creates the.
      *
+     * @param typeName the type name
      * @param geometryFieldName the geometry field name
      * @param editorFile the editor file
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String geometryFieldName, SLDEditorFileInterface editorFile)
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
     {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
@@ -93,7 +94,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
 
             //set the name
-            String typeName = INTERNAL_SCHEMA_NAME;
+            typeName = INTERNAL_SCHEMA_NAME;
             dsInfo.setTypeName(typeName);
             b.setName( typeName );
 

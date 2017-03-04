@@ -184,7 +184,7 @@ public class FileSystemExtensionFactoryTest {
 
         // Should return the default
         List<FileSystemInterface> fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
-        assertEquals(2, fileExtensionList.size());
+        assertEquals(3, fileExtensionList.size());
 
         List<FileSystemInterface> extList = new ArrayList<FileSystemInterface>();
         extList.add(new DummyExtension());
@@ -199,7 +199,7 @@ public class FileSystemExtensionFactoryTest {
 
         // Should return the defaults
         fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
-        assertEquals(2, fileExtensionList.size());
+        assertEquals(3, fileExtensionList.size());
     }
 
 }

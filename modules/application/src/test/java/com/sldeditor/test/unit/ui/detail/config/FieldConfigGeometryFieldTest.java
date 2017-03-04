@@ -71,10 +71,11 @@ public class FieldConfigGeometryFieldTest {
         /**
          * Connect.
          *
+         * @param typeName the type name
          * @param editorFile the editor file
          */
         @Override
-        public void connect(SLDEditorFileInterface editorFile) {
+        public void connect(String typeName, SLDEditorFileInterface editorFile) {
         }
 
         /**

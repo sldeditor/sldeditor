@@ -27,6 +27,7 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
+import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
@@ -319,13 +320,7 @@ public class SLDData implements SLDDataInterface
     {
         String layerName = getLayerName();
 
-        int index = layerName.lastIndexOf('.');
-
-        if((index >= 0) && (index < layerName.length()))
-        {
-            layerName = layerName.substring(0, index);
-        }
-        return layerName;
+        return ExternalFilenames.removeSuffix(layerName);
     }
 
     /**

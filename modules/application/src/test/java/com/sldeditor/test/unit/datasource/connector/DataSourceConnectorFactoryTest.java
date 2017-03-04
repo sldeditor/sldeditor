@@ -30,10 +30,8 @@ import org.junit.Test;
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorFileGDB;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorPostgres;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorShapeFile;
 
 /**
  * Unit test for DataSourceConnectorFactory class.
@@ -63,11 +61,7 @@ public class DataSourceConnectorFactoryTest {
 
         DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties("filename.shp");
 
-        assertEquals(DataSourceConnectorShapeFile.class, dsp.getDataSourceConnector().getClass());
-
-        dsp = DataSourceConnectorFactory.getDataSourceProperties("file.gdb");
-
-        assertEquals(DataSourceConnectorFileGDB.class, dsp.getDataSourceConnector().getClass());
+        assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
     }
 
     /**
@@ -85,23 +79,25 @@ public class DataSourceConnectorFactoryTest {
      */
     @Test
     public void testGetDataSourcePropertiesMapOfStringString() {
-        Map<String, String> propertyMap = new HashMap<String,String>();
+        Map<String, Object> propertyMap = new HashMap<String,Object>();
 
         propertyMap.put("url", "filename.shp");
         DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
 
-        assertEquals(DataSourceConnectorShapeFile.class, dsp.getDataSourceConnector().getClass());
+        assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
 
         propertyMap.clear();
-        propertyMap.put("server", "localhost");
+        propertyMap.put("host", "localhost");
         propertyMap.put("port", "5432");
         propertyMap.put("database", "testdb");
         propertyMap.put("user", "testuser");
-        propertyMap.put("password", "pasword123");
+        propertyMap.put("passwd", "pasword123");
+        propertyMap.put("schema", "public");
+        propertyMap.put("featureClass", "testfc");
 
         dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
 
-        assertEquals(DataSourceConnectorPostgres.class, dsp.getDataSourceConnector().getClass());
+        assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
     }
 
     /**
