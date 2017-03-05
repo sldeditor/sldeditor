@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.geotools.data.memory.MemoryDataStore;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
@@ -37,6 +36,7 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayerImpl;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -64,9 +64,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
     /** The list of class considered geometry types. */
     private static List<Class<?>> geometryTypeList = Arrays.asList(Geometry.class,
-            MultiPolygon.class,
-            LineString.class, 
-            Point.class);
+            MultiPolygon.class, LineString.class, Point.class);
 
     /**
      * Creates the.
@@ -77,60 +75,58 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
-    {
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
+            SLDEditorFileInterface editorFile) {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
 
         dsInfo.reset();
 
-        if(editorFile != null)
-        {
+        if (editorFile != null) {
             StyledLayerDescriptor sld = editorFile.getSLD();
             SLDDataInterface sldData = editorFile.getSLDData();
 
             determineGeometryType(sld);
 
-            SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
+            ExtendedSimpleFeatureTypeBuilder b = new ExtendedSimpleFeatureTypeBuilder();
 
-            //set the name
+            // set the name
             typeName = INTERNAL_SCHEMA_NAME;
             dsInfo.setTypeName(typeName);
-            b.setName( typeName );
+            b.setName(typeName);
 
             String namespace = null;
             b.setNamespaceURI(namespace);
 
-            //add a geometry property
-            b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
+            // add a geometry property
+            b.setCRS(DefaultGeographicCRS.WGS84); // set crs first
 
             List<DataSourceAttributeData> fieldList = sldData.getFieldList();
 
             // Set the geometry field by default
             geometryField.reset();
-            if(geometryFieldName != null)
-            {
+            if (geometryFieldName != null) {
                 geometryField.setGeometryFieldName(geometryFieldName);
             }
 
-            if((fieldList == null) || fieldList.isEmpty())
-            {
+            List<AttributeDescriptor> attrDescList = new ArrayList<AttributeDescriptor>();
+
+            if ((fieldList == null) || fieldList.isEmpty()) {
                 ExtractAttributes extract = new ExtractAttributes();
                 extract.extractDefaultFields(b, sld);
                 fieldList = extract.getFields();
 
                 List<String> geometryFields = extract.getGeometryFields();
-                for(String localGeometryFieldName : geometryFields)
-                {
+                for (String localGeometryFieldName : geometryFields) {
                     geometryField.setGeometryFieldName(localGeometryFieldName);
                 }
-            }
-            else
-            {
-                addFields(b, fieldList);
+                attrDescList.add(addGeometryField(b, geometryField.getGeometryFieldName()));
+
+            } else {
+                addFields(attrDescList, b, fieldList);
             }
 
-            setGeometryField(b, geometryField.getGeometryFieldName());
+            b.addAll(attrDescList);
 
             // Store the fields
             sldData.setFieldList(fieldList);
@@ -144,7 +140,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             MemoryDataStore dataStore = sampleData.getDataStore();
 
             dsInfo.setDataStore(dataStore);
-            
+
             dsInfo.populateFieldMap();
         }
 
@@ -152,49 +148,55 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     }
 
     /**
-     * Sets the geometry field.
-     *
-     * @param b the feature type builder
-     * @param geometryFieldName the geometry field name
-     */
-    private void setGeometryField(SimpleFeatureTypeBuilder b, String geometryFieldName)
-    {
-        switch(dsInfo.getGeometryType())
-        {
-        case POLYGON:
-            b.add(geometryFieldName, MultiPolygon.class);
-            break;
-        case LINE:
-            b.add(geometryFieldName, LineString.class);
-            break;
-        case POINT:
-        default:
-            b.add(geometryFieldName, Point.class);
-            break;
-        }
-        b.setDefaultGeometry(geometryFieldName);
-    }
-
-    /**
      * Adds the fields.
      *
+     * @param attrDescList the attribute descriptor list
      * @param b the feature type builder
      * @param fieldList the field list
      */
-    private void addFields(SimpleFeatureTypeBuilder b,
+    private void addFields(List<AttributeDescriptor> attrDescList, 
+            ExtendedSimpleFeatureTypeBuilder b,
             List<DataSourceAttributeData> fieldList) {
 
-        for(DataSourceAttributeData field : fieldList)
-        {
-            if(isGeometryField(field.getType()))
-            {
-                geometryField.setGeometryFieldName(field.getName());
-            }
-            else
-            {
-                b.add(field.getName(), field.getType());
+        for (DataSourceAttributeData field : fieldList) {
+            Class<?> fieldType = field.getType();
+            if (isGeometryField(field.getType())) {
+                attrDescList.add(addGeometryField(b, field.getName()));
+            } else {
+                AttributeDescriptor attributeDescriptor = b
+                        .createAttributeDescriptor(field.getName(), fieldType);
+                attrDescList.add(attributeDescriptor);
             }
         }
+    }
+
+    /**
+     * Adds the geometry field.
+     *
+     * @param b the b
+     * @param fieldName the field name
+     * @return the attribute descriptor
+     */
+    private AttributeDescriptor addGeometryField(ExtendedSimpleFeatureTypeBuilder b,
+            String fieldName) {
+        geometryField.setGeometryFieldName(fieldName);
+        Class<?> fieldType;
+        switch (dsInfo.getGeometryType()) {
+        case POLYGON:
+            fieldType = MultiPolygon.class;
+            break;
+        case LINE:
+            fieldType = LineString.class;
+            break;
+        case POINT:
+        default:
+            fieldType = Point.class;
+            break;
+        }
+        b.setDefaultGeometry(fieldName);
+        AttributeDescriptor attributeDescriptor = b.createAttributeDescriptor(fieldName,
+                fieldType);
+        return attributeDescriptor;
     }
 
     /**
@@ -212,8 +214,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      *
      * @param sld the sld
      */
-    private void determineGeometryType(StyledLayerDescriptor sld)
-    {
+    private void determineGeometryType(StyledLayerDescriptor sld) {
         GeometryTypeEnum geometryType = internal_determineGeometryType(sld);
 
         dsInfo.setGeometryType(geometryType);
@@ -225,60 +226,42 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param sld the sld
      * @return the geometry type enum
      */
-    protected GeometryTypeEnum internal_determineGeometryType(StyledLayerDescriptor sld)
-    {
+    protected GeometryTypeEnum internal_determineGeometryType(StyledLayerDescriptor sld) {
         GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
-        if(sld != null)
-        {
+        if (sld != null) {
             List<StyledLayer> styledLayerList = sld.layers();
             int pointCount = 0;
             int lineCount = 0;
             int polygonCount = 0;
             int rasterCount = 0;
 
-            for(StyledLayer styledLayer : styledLayerList)
-            {
+            for (StyledLayer styledLayer : styledLayerList) {
                 List<Style> styleList = null;
 
-                if(styledLayer instanceof NamedLayerImpl)
-                {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                if (styledLayer instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
                     styleList = namedLayerImpl.styles();
-                }
-                else if(styledLayer instanceof UserLayerImpl)
-                {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                } else if (styledLayer instanceof UserLayerImpl) {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
 
                     styleList = userLayerImpl.userStyles();
                 }
 
-                if(styleList != null)
-                {
-                    for(Style style : styleList)
-                    {
-                        for(FeatureTypeStyle fts : style.featureTypeStyles())
-                        {
-                            for(Rule rule : fts.rules())
-                            {
-                                for(org.opengis.style.Symbolizer symbolizer : rule.symbolizers())
-                                {
-                                    if(symbolizer instanceof PointSymbolizer)
-                                    {
-                                        pointCount ++;
-                                    }
-                                    else if(symbolizer instanceof LineSymbolizer)
-                                    {
-                                        lineCount ++;
-                                    }
-                                    else if(symbolizer instanceof PolygonSymbolizer)
-                                    {
-                                        polygonCount ++;
-                                    }
-                                    else if(symbolizer instanceof RasterSymbolizer)
-                                    {
-                                        rasterCount ++;
+                if (styleList != null) {
+                    for (Style style : styleList) {
+                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                            for (Rule rule : fts.rules()) {
+                                for (org.opengis.style.Symbolizer symbolizer : rule.symbolizers()) {
+                                    if (symbolizer instanceof PointSymbolizer) {
+                                        pointCount++;
+                                    } else if (symbolizer instanceof LineSymbolizer) {
+                                        lineCount++;
+                                    } else if (symbolizer instanceof PolygonSymbolizer) {
+                                        polygonCount++;
+                                    } else if (symbolizer instanceof RasterSymbolizer) {
+                                        rasterCount++;
                                     }
                                 }
                             }
@@ -287,20 +270,13 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
                 }
             }
 
-            if(polygonCount > 0)
-            {
+            if (polygonCount > 0) {
                 geometryType = GeometryTypeEnum.POLYGON;
-            }
-            else if(lineCount > 0)
-            {
+            } else if (lineCount > 0) {
                 geometryType = GeometryTypeEnum.LINE;
-            }
-            else if(pointCount > 0)
-            {
+            } else if (pointCount > 0) {
                 geometryType = GeometryTypeEnum.POINT;
-            }
-            else if(rasterCount > 0)
-            {
+            } else if (rasterCount > 0) {
                 geometryType = GeometryTypeEnum.RASTER;
             }
         }
