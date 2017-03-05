@@ -108,13 +108,13 @@ public class SLDWriterImpl implements SLDWriterInterface {
     {
         if(cachedHeader == null)
         {
-            if(OSValidator.isMac())
-            {
-                cachedHeader = header + "\n";
-            }
-            else if(OSValidator.isWindows())
+            if(OSValidator.isWindows())
             {
                 cachedHeader = "\n" + header;
+            }
+            else
+            {
+                cachedHeader = header + "\n";
             }
         }
         return cachedHeader;

@@ -124,8 +124,10 @@
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE_GROUP" />
 
             <xs:enumeration value="REMOTE_OWS" />
+            <xs:enumeration value="REMOTE_OWS_OPTION" />
             <xs:enumeration value="FEATURE_TYPE_CONSTRAINTS" />
             <xs:enumeration value="INLINE_FEATURE" />
+            <xs:enumeration value="INLINE_FEATURE_OPTION" />
             <xs:enumeration value="USER_LAYER_SOURCE" />
 
             <xs:enumeration value="VO_TEXT_LABEL" />

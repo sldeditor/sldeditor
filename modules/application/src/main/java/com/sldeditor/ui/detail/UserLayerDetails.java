@@ -97,7 +97,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
 
                     if(userLayer.getInlineFeatureDatastore() == null)
                     {
-                        userLayerSourceGroup.setOption(GroupIdEnum.REMOTE_OWS);
+                        userLayerSourceGroup.setOption(GroupIdEnum.REMOTE_OWS_OPTION);
 
                         // Remote OWS
                         String service = "";
@@ -114,7 +114,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                     }
                     else
                     {
-                        userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE);
+                        userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE_OPTION);
 
                         // Inline features
                         fieldConfigVisitor.populateUserLayer(FieldIdEnum.INLINE_FEATURE, userLayer);
@@ -161,7 +161,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                 OptionGroup selectedOption = userLayerSourceGroup.getSelectedOptionGroup();
                 switch(selectedOption.getId())
                 {
-                case REMOTE_OWS:
+                case REMOTE_OWS_OPTION:
                 {
                     RemoteOWS remoteOWS = new RemoteOWSImpl();
 
@@ -174,7 +174,7 @@ public class UserLayerDetails extends StandardPanel implements PopulateDetailsIn
                     userLayer.setRemoteOWS(remoteOWS);
                 }
                 break;
-                case INLINE_FEATURE:
+                case INLINE_FEATURE_OPTION:
                 {
                     String inlineFeatures = fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
 
