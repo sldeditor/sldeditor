@@ -130,17 +130,7 @@ public class DataSourceImplTest {
         // Check fields extracted ok
         List<String> expectedFieldList = editorFile.getExpectedFieldList();
         assertTrue(expectedFieldList.size() == actualFieldnameList.size());
-
-        // Not assuming fields are in the same order
-        int count = 0;
-        for(String fieldName : actualFieldnameList)
-        {
-            if(expectedFieldList.contains(fieldName))
-            {
-                count ++;
-            }
-        }
-        assertTrue(expectedFieldList.size() == count);
+        assertEquals(expectedFieldList, actualFieldnameList);
 
         // Check for fields of certain types
         assertFalse(ds.getAttributes(Integer.class).isEmpty());
