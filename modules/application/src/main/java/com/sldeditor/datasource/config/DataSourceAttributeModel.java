@@ -47,10 +47,15 @@ import com.vividsolutions.jts.geom.Polygon;
 public class DataSourceAttributeModel extends AbstractTableModel {
 
     /** The array of geometry names. */
-    private final static String[] GEOMETRY_NAME = { "Geometry (Point)", "Geometry (Multi-Point)", "Geometry (Line)", "Geometry (Multi-Line)", "Geometry (Polygon)", "Geometry (Multi-Polygon)", "String", "Integer", "Long", "Double", "Float", "Short", "DateTime" };
+    private final static String[] GEOMETRY_NAME = { "Geometry (Point)", "Geometry (Multi-Point)",
+            "Geometry (Line)", "Geometry (Multi-Line)", "Geometry (Polygon)",
+            "Geometry (Multi-Polygon)", "String", "Integer", "Long", "Double", "Float", "Short",
+            "DateTime" };
 
     /** The class type array. */
-    private final static Class<?>[] CLASSTYPE = { Point.class, MultiPoint.class, LineString.class, MultiLineString.class, Polygon.class, MultiPolygon.class, String.class, Integer.class, Long.class, Double.class, Float.class, Short.class, Date.class };
+    private final static Class<?>[] CLASSTYPE = { Point.class, MultiPoint.class, LineString.class,
+            MultiLineString.class, Polygon.class, MultiPolygon.class, String.class, Integer.class,
+            Long.class, Double.class, Float.class, Short.class, Date.class };
 
     /** The type map. */
     private Map<Class<?>, String> typeMap = new HashMap<Class<?>, String>();
@@ -89,15 +94,17 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * Instantiates a new render attribute model.
      */
     public DataSourceAttributeModel() {
-        columnList.add(Localisation.getString(DataSourceAttributeModel.class, "DataSourceAttributeModel.name"));
-        columnList.add(Localisation.getString(DataSourceAttributeModel.class, "DataSourceAttributeModel.type"));
-        columnList.add(Localisation.getString(DataSourceAttributeModel.class, "DataSourceAttributeModel.value"));
+        columnList.add(Localisation.getString(DataSourceAttributeModel.class,
+                "DataSourceAttributeModel.name"));
+        columnList.add(Localisation.getString(DataSourceAttributeModel.class,
+                "DataSourceAttributeModel.type"));
+        columnList.add(Localisation.getString(DataSourceAttributeModel.class,
+                "DataSourceAttributeModel.value"));
 
         int index = 0;
-        while(index < GEOMETRY_NAME.length)
-        {
+        while (index < GEOMETRY_NAME.length) {
             typeMap.put(CLASSTYPE[index], GEOMETRY_NAME[index]);
-            index ++;
+            index++;
         }
     }
 
@@ -111,10 +118,8 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         valueList.clear();
         valueMap.clear();
 
-        if(attributeList != null)
-        {
-            for(DataSourceAttributeData data : attributeList)
-            {
+        if (attributeList != null) {
+            for (DataSourceAttributeData data : attributeList) {
                 valueList.add(data);
                 valueMap.put(data.getName(), data);
             }
@@ -127,7 +132,9 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param col the col
      * @return the column name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     @Override
@@ -143,16 +150,15 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     public List<DataSourceAttributeData> retrieveData() {
         List<DataSourceAttributeData> attributeList = new ArrayList<DataSourceAttributeData>();
 
-        for(int row = 0; row < this.getRowCount(); row++)
-        {
+        for (int row = 0; row < this.getRowCount(); row++) {
             String name = (String) this.getValueAt(row, FIELD_COLUMN_ID);
             Object objValue = this.getValueAt(row, VALUE_COLUMN_ID);
 
             DataSourceAttributeData existingData = valueMap.get(name);
 
-            if(existingData != null)
-            {
-                DataSourceAttributeData data = new DataSourceAttributeData(name, existingData.getType(), objValue);
+            if (existingData != null) {
+                DataSourceAttributeData data = new DataSourceAttributeData(name,
+                        existingData.getType(), objValue);
 
                 attributeList.add(data);
             }
@@ -168,23 +174,22 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param col the col
      * @return true, if is cell editable
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        //Note that the data/cell address is constant,
-        //no matter where the cell appears onscreen.
-        if(isConnectedToDataSource)
-        {
+        // Note that the data/cell address is constant,
+        // no matter where the cell appears onscreen.
+        if (isConnectedToDataSource) {
             if (col != FIELD_COLUMN_ID) {
                 return true;
             } else {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
@@ -194,7 +199,9 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      *
      * @return the row count
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -207,7 +214,9 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      *
      * @return the column count
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -222,17 +231,17 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param columnIndex the column index
      * @return the value at
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if((rowIndex >= 0) && (rowIndex < valueList.size()))
-        {
+        if ((rowIndex >= 0) && (rowIndex < valueList.size())) {
             DataSourceAttributeData data = valueList.get(rowIndex);
 
-            switch(columnIndex)
-            {
+            switch (columnIndex) {
             case FIELD_COLUMN_ID:
                 return data.getName();
             case TYPE_COLUMN_ID:
@@ -252,19 +261,16 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param fieldType the field type
      * @return the type string
      */
-    private String getTypeString(Class<?> fieldType)
-    {
+    private String getTypeString(Class<?> fieldType) {
         String key = typeMap.get(fieldType);
 
-        if(key == null)
-        {
-            if(fieldType == null)
-            {
-                ConsoleManager.getInstance().error(DataSourceAttributeModel.class, "Unknown field type class");
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(DataSourceAttributeModel.class, "Unknown field type class : " + fieldType.getName());
+        if (key == null) {
+            if (fieldType == null) {
+                ConsoleManager.getInstance().error(DataSourceAttributeModel.class,
+                        "Unknown field type class");
+            } else {
+                ConsoleManager.getInstance().error(DataSourceAttributeModel.class,
+                        "Unknown field type class : " + fieldType.getName());
             }
         }
 
@@ -278,27 +284,33 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param row the row
      * @param col the col
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if((row >= 0) && (row < valueList.size()))
-        {
+        if ((row >= 0) && (row < valueList.size())) {
             DataSourceAttributeData data = valueList.get(row);
-            switch(col)
-            {
-            case FIELD_COLUMN_ID:
-            {
+            switch (col) {
+            case FIELD_COLUMN_ID: {
                 valueMap.remove(data.getName());
-                data.setName((String)value);
+                data.setName((String) value);
                 valueMap.put(data.getName(), data);
                 valueList.remove(row);
                 valueList.add(row, data);
             }
-            break;
-            case TYPE_COLUMN_ID:
-                data.setType(getTypeClass((String)value));
+                break;
+            case TYPE_COLUMN_ID: {
+                Class<?> typeClass = getTypeClass((String) value);
+                data.setType(typeClass);
+
+                Object samppleValue = CreateSampleData.getFieldTypeValue(row, data.getName(),
+                        typeClass, null);
+
+                data.setValue(samppleValue);
+            }
                 break;
             case VALUE_COLUMN_ID:
                 data.setValue(value);
@@ -316,14 +328,11 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param displayName the display name
      * @return the type class
      */
-    private Class<?> getTypeClass(String displayName)
-    {
-        for(Class<?> key : typeMap.keySet())
-        {
+    private Class<?> getTypeClass(String displayName) {
+        for (Class<?> key : typeMap.keySet()) {
             String value = typeMap.get(key);
 
-            if(value.compareTo(displayName) == 0)
-            {
+            if (value.compareTo(displayName) == 0) {
                 return key;
             }
         }
@@ -335,16 +344,14 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      *
      * @return the type data
      */
-    public String[] getTypeData()
-    {
+    public String[] getTypeData() {
         return GEOMETRY_NAME;
     }
 
     /**
      * Adds the new field.
      */
-    public void addNewField()
-    {
+    public void addNewField() {
         int index = valueMap.size();
         String name = String.format("%s_%d", DEFAULT_NEW_FIELD_NAME, index);
         Class<?> fieldType = DEFAULT_NEW_FIELD_TYPE;
@@ -353,7 +360,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         DataSourceAttributeData newField = new DataSourceAttributeData(name, fieldType, value);
 
         valueList.add(newField);
-        valueMap.put(newField.getName(), newField);         
+        valueMap.put(newField.getName(), newField);
     }
 
     /**
@@ -361,8 +368,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      *
      * @param isConnectedToDataSourceFlag the new connected to data source
      */
-    public void setConnectedToDataSource(boolean isConnectedToDataSourceFlag)
-    {
+    public void setConnectedToDataSource(boolean isConnectedToDataSourceFlag) {
         this.isConnectedToDataSource = isConnectedToDataSourceFlag;
     }
 
@@ -376,8 +382,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
 
         List<DataSourceAttributeData> attributeList = new ArrayList<DataSourceAttributeData>();
 
-        for(DataSourceAttributeData attributeData : valueList)
-        {
+        for (DataSourceAttributeData attributeData : valueList) {
             attributeList.add(attributeData.clone());
         }
         attributeDataImpl.setData(attributeList);
@@ -391,21 +396,17 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @param selectedRowIndexes the selected row indexes
      */
     public void removeFields(int[] selectedRowIndexes) {
-        if(selectedRowIndexes != null)
-        {
+        if (selectedRowIndexes != null) {
             int index = selectedRowIndexes.length - 1;
-            while(index >= 0)
-            {
+            while (index >= 0) {
                 int rowIndex = selectedRowIndexes[index];
-                if((rowIndex >= 0) && (rowIndex < valueList.size()))
-                {
+                if ((rowIndex >= 0) && (rowIndex < valueList.size())) {
                     DataSourceAttributeData data = valueList.remove(rowIndex);
-                    if(data != null)
-                    {
+                    if (data != null) {
                         valueMap.remove(data.getName());
                     }
                 }
-                index --;
+                index--;
             }
         }
     }
