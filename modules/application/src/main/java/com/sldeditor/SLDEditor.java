@@ -45,6 +45,7 @@ import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.data.StyleWrapper;
@@ -326,6 +327,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
         frame = new JFrame(generateApplicationTitleString());
 
+        CoordManager.getInstance().populateCRSList();
         Controller.getInstance().setFrame(frame);
 
         MapRender.setUnderTest(underTest);
