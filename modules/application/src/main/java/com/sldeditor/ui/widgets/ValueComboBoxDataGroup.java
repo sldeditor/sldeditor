@@ -20,6 +20,8 @@ package com.sldeditor.ui.widgets;
 
 import java.util.List;
 
+import com.sldeditor.common.localisation.Localisation;
+
 /**
  * Class that encapsulates the a list or group of ValueComboBoxData items.
  * 
@@ -43,7 +45,7 @@ public class ValueComboBoxDataGroup {
      */
     public ValueComboBoxDataGroup(List<ValueComboBoxData> dataList) {
         super();
-        this.groupName = "Not Set";
+        this.groupName = Localisation.getString(ValueComboBoxDataGroup.class, "common.notSet");
         this.dataList = dataList;
         this.isSubMenu = false;
     }

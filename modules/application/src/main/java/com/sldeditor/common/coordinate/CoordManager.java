@@ -36,6 +36,7 @@ import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -47,6 +48,10 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class CoordManager {
 
+    /** The Constant NOT_SET_CRS. */
+    private static final String NOT_SET_CRS = "";
+
+    /** The Constant WGS84. */
     private static final String WGS84 = "EPSG:4326";
 
     /** The singleton instance. */
@@ -99,10 +104,18 @@ public class CoordManager {
 
         if (isPopulated()) {
             Runnable runnable = () -> {
+                VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance()
+                        .getDefaultVendorOptionVersion();
+
+                ValueComboBoxData notSetValue = new ValueComboBoxData(NOT_SET_CRS,
+                        Localisation.getString(CoordManager.class, "common.notSet"),
+                        vendorOptionVersion);
+                crsDataList.add(notSetValue);
+
                 Hints hints = null;
                 for (AuthorityFactory factory : ReferencingFactoryFinder
                         .getCRSAuthorityFactories(hints)) {
-                    String authorityCode = "";
+                    String authorityCode = NOT_SET_CRS;
 
                     Citation citation = factory.getAuthority();
                     if (citation != null) {
@@ -115,8 +128,6 @@ public class CoordManager {
                     try {
                         codeList = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
 
-                        VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance()
-                                .getDefaultVendorOptionVersion();
                         for (String code : codeList) {
                             String fullCode = String.format("%s:%s", authorityCode, code);
                             String descriptionText = factory.getDescriptionText(code).toString();
@@ -156,7 +167,7 @@ public class CoordManager {
             }
         }
 
-        String code = "";
+        String code = NOT_SET_CRS;
 
         if (identifier != null) {
             ValueComboBoxData data = crsMap.get(identifier.toString());

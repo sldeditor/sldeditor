@@ -36,6 +36,7 @@ import org.junit.Test;
 
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.DatabaseConnectionField;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 
 /**
@@ -66,7 +67,7 @@ public class DatabaseConnectionTest {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfDuplicates,
                             Map<String, String> properties) {
-                        String connectionName = "Not set";
+                        String connectionName = Localisation.getString(DatabaseConnectionTest.class, "common.notSet");
                         String databaseName = properties.get(GeoPkgDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);
