@@ -27,6 +27,7 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.Name;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -53,33 +54,34 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
      * @return the list of data stores
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
-    {
-        for(DataSourceInfo dsInfo : dataSourceInfoList)
-        {
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
+            SLDEditorFileInterface editorFile) {
+        for (DataSourceInfo dsInfo : dataSourceInfoList) {
             dsInfo.reset();
         }
         dataSourceInfoList.clear();
 
-        if(editorFile != null)
-        {
+        if (editorFile != null) {
             StyledLayerDescriptor sld = editorFile.getSLD();
             SLDDataInterface sldData = editorFile.getSLDData();
 
             List<UserLayer> userLayerList = InlineFeatureUtils.extractUserLayers(sld);
 
-            for(UserLayer userLayer : userLayerList)
-            {
+            for (UserLayer userLayer : userLayerList) {
                 DataSourceInfo dsInfo = new DataSourceInfo();
                 dsInfo.setUserLayer(userLayer);
                 dataSourceInfoList.add(dsInfo);
                 DataStore dataStore = userLayer.getInlineFeatureDatastore();
-                if(dataStore == null)
-                {
+                if (dataStore == null) {
                     continue;
                 }
 
                 try {
+                    List<Name> nameList = dataStore.getNames();
+                    if (!nameList.isEmpty()) {
+                        typeName = nameList.get(0).getLocalPart();
+                    }
+
                     // Set the type name
                     dsInfo.setTypeName(typeName);
 
@@ -94,8 +96,8 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
 
                     dsInfo.setDataStore(dataStore);
 
-                    GeometryTypeEnum geometryType = InlineFeatureUtils.determineGeometryType(schema.getGeometryDescriptor(),
-                            source.getFeatures());
+                    GeometryTypeEnum geometryType = InlineFeatureUtils.determineGeometryType(
+                            schema.getGeometryDescriptor(), source.getFeatures());
 
                     dsInfo.setGeometryType(geometryType);
                 } catch (IOException e) {
