@@ -120,11 +120,10 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
                 for (String localGeometryFieldName : geometryFields) {
                     geometryField.setGeometryFieldName(localGeometryFieldName);
                 }
-                attrDescList.add(addGeometryField(b, geometryField.getGeometryFieldName()));
-
             } else {
                 addFields(attrDescList, b, fieldList);
             }
+            attrDescList.add(addGeometryField(b, geometryField.getGeometryFieldName()));
 
             b.addAll(attrDescList);
 
@@ -160,9 +159,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
         for (DataSourceAttributeData field : fieldList) {
             Class<?> fieldType = field.getType();
-            if (isGeometryField(field.getType())) {
-                attrDescList.add(addGeometryField(b, field.getName()));
-            } else {
+            if (!isGeometryField(field.getType())) {
                 AttributeDescriptor attributeDescriptor = b
                         .createAttributeDescriptor(field.getName(), fieldType);
                 attrDescList.add(attributeDescriptor);
