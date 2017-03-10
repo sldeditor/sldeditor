@@ -37,7 +37,6 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionTypeInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
-import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
  * Unit test for VendorOptionTableModel.

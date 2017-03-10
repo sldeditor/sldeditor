@@ -29,10 +29,8 @@ import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
 
-import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 
 /**
@@ -63,7 +61,6 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
 
         if (editorFile != null) {
             StyledLayerDescriptor sld = editorFile.getSLD();
-            SLDDataInterface sldData = editorFile.getSLDData();
 
             List<UserLayer> userLayerList = InlineFeatureUtils.extractUserLayers(sld);
 
@@ -84,11 +81,6 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
 
                     // Set the type name
                     dsInfo.setTypeName(typeName);
-
-                    List<DataSourceAttributeData> fieldList = sldData.getFieldList();
-
-                    // Store the fields
-                    sldData.setFieldList(fieldList);
 
                     SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
                     SimpleFeatureType schema = source.getSchema();
