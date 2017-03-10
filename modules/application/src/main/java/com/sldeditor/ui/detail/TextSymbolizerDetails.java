@@ -30,7 +30,9 @@ import org.geotools.styling.Font;
 import org.geotools.styling.Halo;
 import org.geotools.styling.LabelPlacement;
 import org.geotools.styling.LinePlacementImpl;
+import org.geotools.styling.PointPlacement;
 import org.geotools.styling.PointPlacementImpl;
+import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Fill;
@@ -65,11 +67,23 @@ public class TextSymbolizerDetails extends StandardPanel
     /** The vendor option text factory. */
     private VendorOptionTextFactory vendorOptionTextFactory = null;
 
+    /** The default point placement anchor point X. */
+    private Expression defaultPointPlacementAnchorPointX = null;
+
+    /** The default point placement anchor point Y. */
+    private Expression defaultPointPlacementAnchorPointY = null;
+
     /**
      * Constructor.
      */
     public TextSymbolizerDetails() {
         super(TextSymbolizerDetails.class);
+
+        // Cache the default point placement anchor point values
+        StyleBuilder styleBuilder = new StyleBuilder();
+        PointPlacement defaultPointPlacement = styleBuilder.createPointPlacement();
+        defaultPointPlacementAnchorPointX = defaultPointPlacement.getAnchorPoint().getAnchorPointX();
+        defaultPointPlacementAnchorPointY = defaultPointPlacement.getAnchorPoint().getAnchorPointY();
 
         createUI();
     }
@@ -177,14 +191,23 @@ public class TextSymbolizerDetails extends StandardPanel
                         PointPlacementImpl pointPlacement = (PointPlacementImpl) placement;
 
                         labelPlacementGroup.setOption(GroupIdEnum.POINTPLACEMENT);
+                        Expression anchorPointX = null;
+                        Expression anchorPointY = null;
                         AnchorPoint anchorPoint = pointPlacement.getAnchorPoint();
-                        if (anchorPoint == null) {
-                            anchorPoint = AnchorPointImpl.DEFAULT;
+                        if (anchorPoint != null) {
+                            anchorPointX = anchorPoint.getAnchorPointX();
+                            anchorPointY = anchorPoint.getAnchorPointY();
+                        }
+                        else
+                        {
+                            // Use the defaults as non specified
+                            anchorPointX = defaultPointPlacementAnchorPointX;
+                            anchorPointY = defaultPointPlacementAnchorPointY;
                         }
                         fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
-                                anchorPoint.getAnchorPointX());
+                                anchorPointX);
                         fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
-                                anchorPoint.getAnchorPointY());
+                                anchorPointY);
 
                         Displacement displacement = pointPlacement.getDisplacement();
                         if (displacement == null) {
