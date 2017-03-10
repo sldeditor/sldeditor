@@ -8,15 +8,15 @@
         <FieldConfigFeatureTypeConstraint id="LAYER_FEATURE_CONSTRAINTS" label="userlayer.featuretypeconstraint" valueOnly="true" />
     </Group>
     <MultiOptionGroup id="USER_LAYER_SOURCE" label="userlayer.source" showLabel="true">
-        <OptionGroup id="REMOTE_OWS" label="userlayer.remoteows" showLabel="true">
+        <OptionGroup id="INLINE_FEATURE_OPTION" label="userlayer.inlinefeature" showLabel="true">
+            <Group id="INLINE_FEATURE" showLabel="false">
+                <FieldConfigInlineFeature id="INLINE_FEATURE" valueOnly="true" />
+            </Group>
+        </OptionGroup>
+        <OptionGroup id="REMOTE_OWS_OPTION" label="userlayer.remoteows" showLabel="true">
             <Group id="REMOTE_OWS" showLabel="false">
                 <FieldConfigString id="REMOTE_OWS_SERVICE" label="userlayer.service" valueOnly="true" />
                 <FieldConfigString id="REMOTE_OWS_ONLINERESOURCE" label="userlayer.onlineresource" valueOnly="true" />
-            </Group>
-        </OptionGroup>
-        <OptionGroup id="INLINE_FEATURE" label="userlayer.inlinefeature" showLabel="true">
-            <Group id="INLINE_FEATURE" showLabel="false">
-                <FieldConfigInlineFeature id="INLINE_FEATURE" valueOnly="true" />
             </Group>
         </OptionGroup>
     </MultiOptionGroup>

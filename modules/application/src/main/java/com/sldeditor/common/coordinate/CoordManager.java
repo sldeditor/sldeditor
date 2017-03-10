@@ -36,6 +36,7 @@ import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
@@ -47,6 +48,10 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  */
 public class CoordManager {
 
+    /** The Constant NOT_SET_CRS. */
+    private static final String NOT_SET_CRS = "";
+
+    /** The Constant WGS84. */
     private static final String WGS84 = "EPSG:4326";
 
     /** The singleton instance. */
@@ -66,10 +71,8 @@ public class CoordManager {
      *
      * @return single instance of CoordManager
      */
-    public static CoordManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static CoordManager getInstance() {
+        if (instance == null) {
             instance = new CoordManager();
         }
 
@@ -82,52 +85,67 @@ public class CoordManager {
      * @return the CRS list
      */
     public List<ValueComboBoxData> getCRSList() {
-        populateCRSList();
-
         return crsDataList;
+    }
+
+    /**
+     * Checks if is populated.
+     *
+     * @return true, if is populated
+     */
+    private boolean isPopulated() {
+        return crsDataList.isEmpty();
     }
 
     /**
      * Populate crs list.
      */
-    private void populateCRSList() {
+    public void populateCRSList() {
 
-        if(crsDataList.isEmpty())
-        {
-            Hints hints = null;
-            for (AuthorityFactory factory : ReferencingFactoryFinder.getCRSAuthorityFactories(hints)) 
-            {
-                String authorityCode = "";
+        if (isPopulated()) {
+            Runnable runnable = () -> {
+                VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance()
+                        .getDefaultVendorOptionVersion();
 
-                Citation citation = factory.getAuthority();
-                if(citation != null)
-                {
-                    @SuppressWarnings("unchecked")
-                    Collection<Identifier> identifierList = (Collection<Identifier>) citation.getIdentifiers();
-                    authorityCode = identifierList.iterator().next().getCode();
-                }
-                Set<String> codeList;
-                try {
-                    codeList = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
+                ValueComboBoxData notSetValue = new ValueComboBoxData(NOT_SET_CRS,
+                        Localisation.getString(CoordManager.class, "common.notSet"),
+                        vendorOptionVersion);
+                crsDataList.add(notSetValue);
 
-                    VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
-                    for(String code : codeList)
-                    {
-                        String fullCode = String.format("%s:%s", authorityCode, code);
-                        String descriptionText = factory.getDescriptionText(code).toString();
-                        String text = String.format("%s - %s", fullCode, descriptionText);
-                        ValueComboBoxData value = new ValueComboBoxData(fullCode, text, vendorOptionVersion);
-                        crsDataList.add(value);
-                        crsMap.put(fullCode, value);
+                Hints hints = null;
+                for (AuthorityFactory factory : ReferencingFactoryFinder
+                        .getCRSAuthorityFactories(hints)) {
+                    String authorityCode = NOT_SET_CRS;
+
+                    Citation citation = factory.getAuthority();
+                    if (citation != null) {
+                        @SuppressWarnings("unchecked")
+                        Collection<Identifier> identifierList = (Collection<Identifier>) citation
+                                .getIdentifiers();
+                        authorityCode = identifierList.iterator().next().getCode();
+                    }
+                    Set<String> codeList;
+                    try {
+                        codeList = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
+
+                        for (String code : codeList) {
+                            String fullCode = String.format("%s:%s", authorityCode, code);
+                            String descriptionText = factory.getDescriptionText(code).toString();
+                            String text = String.format("%s - %s", fullCode, descriptionText);
+                            ValueComboBoxData value = new ValueComboBoxData(fullCode, text,
+                                    vendorOptionVersion);
+                            crsDataList.add(value);
+                            crsMap.put(fullCode, value);
+                        }
+                    } catch (NoSuchAuthorityCodeException e) {
+                        // ConsoleManager.getInstance().exception(this, e);
+                    } catch (FactoryException e) {
+                        ConsoleManager.getInstance().exception(this, e);
                     }
                 }
-                catch (NoSuchAuthorityCodeException e) {
-                    //       ConsoleManager.getInstance().exception(this, e);
-                }
-                catch (FactoryException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-            }
+            };
+            Thread thread = new Thread(runnable);
+            thread.start();
         }
     }
 
@@ -139,26 +157,21 @@ public class CoordManager {
      */
     public String getCRSCode(CoordinateReferenceSystem coordinateReferenceSystem) {
         ReferenceIdentifier identifier = null;
-        if(coordinateReferenceSystem != null)
-        {
+        if (coordinateReferenceSystem != null) {
             Set<ReferenceIdentifier> indentifierList = coordinateReferenceSystem.getIdentifiers();
 
-            if(indentifierList != null)
-            {
-                if(indentifierList.iterator().hasNext())
-                {
+            if (indentifierList != null) {
+                if (indentifierList.iterator().hasNext()) {
                     identifier = indentifierList.iterator().next();
                 }
             }
         }
 
-        String code = "";
+        String code = NOT_SET_CRS;
 
-        if(identifier != null)
-        {
+        if (identifier != null) {
             ValueComboBoxData data = crsMap.get(identifier.toString());
-            if(data != null)
-            {
+            if (data != null) {
                 code = data.getKey();
             }
         }
@@ -171,8 +184,7 @@ public class CoordManager {
      * @return the WGS84 coordinate reference system
      */
     public CoordinateReferenceSystem getWGS84() {
-        if(defaultCRS == null)
-        {
+        if (defaultCRS == null) {
             defaultCRS = getCRS(WGS84);
         }
         return defaultCRS;
@@ -187,15 +199,12 @@ public class CoordManager {
     public CoordinateReferenceSystem getCRS(String crsCode) {
         CoordinateReferenceSystem crs = null;
 
-        if(crsCode != null)
-        {
+        if (crsCode != null) {
             try {
                 crs = CRS.decode(crsCode);
-            }
-            catch (NoSuchAuthorityCodeException e) {
+            } catch (NoSuchAuthorityCodeException e) {
                 ConsoleManager.getInstance().exception(this, e);
-            }
-            catch (FactoryException e) {
+            } catch (FactoryException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }

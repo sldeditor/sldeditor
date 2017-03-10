@@ -160,7 +160,7 @@ public class VendorOptionTableModelTest {
         // Valid call to getVendorOption
         List<VersionData> actualList = model.getVendorOption(0);
         assertEquals(vendorOption.getVersionList().size(), actualList.size());
-        assertEquals("Not Set", actualList.get(0).getVersionString());
+        assertEquals(Localisation.getString(VendorOptionTableModel.class, "common.notSet"), actualList.get(0).getVersionString());
 
         model.setSelectedVendorOptionVersions(null);
 
