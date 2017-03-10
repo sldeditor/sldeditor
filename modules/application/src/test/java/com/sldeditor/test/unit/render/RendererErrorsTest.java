@@ -25,6 +25,7 @@ import org.geotools.renderer.RenderListener;
 import org.junit.Test;
 
 import com.sldeditor.render.RendererErrors;
+import com.sldeditor.test.unit.common.console.ConsoleManagerTest;
 
 /**
  * Unit test for RendererErrors class.
@@ -42,7 +43,7 @@ public class RendererErrorsTest {
     public void testRendererErrors() {
         RenderListener instance1 = RendererErrors.getInstance();
         RenderListener instance2 = RendererErrors.getInstance();
-        String exceptionMessage1 = "file not found 1";
+        String exceptionMessage1 = "test exception";
 
         Exception e = new FileNotFoundException(exceptionMessage1);
         
@@ -51,5 +52,7 @@ public class RendererErrorsTest {
         instance2.errorOccurred(e);
         instance1.featureRenderer(null);
         instance2.featureRenderer(null);
+        
+        ConsoleManagerTest.endOfTest();
     }
 }
