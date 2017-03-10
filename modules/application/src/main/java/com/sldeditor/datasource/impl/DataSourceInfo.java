@@ -303,10 +303,7 @@ public class DataSourceInfo {
     public String getGeometryFieldName() {
         if(schema != null)
         {
-            if(schema.getGeometryDescriptor() != null)
-            {
-                return schema.getGeometryDescriptor().getLocalName();
-            }
+            return schema.getGeometryDescriptor().getLocalName();
         }
         else
         {

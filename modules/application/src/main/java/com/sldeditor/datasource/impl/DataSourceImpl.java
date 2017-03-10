@@ -198,6 +198,7 @@ public class DataSourceImpl implements DataSourceInterface {
             if (userLayerDataSourceInfo != null) {
                 for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
                     if (dsInfo.hasData()) {
+                        logger.debug("User layer data sources:");
                         dsInfo.populateFieldMap();
                     }
                 }
@@ -220,6 +221,7 @@ public class DataSourceImpl implements DataSourceInterface {
                 dataSourceInfo = dataSourceInfoList.get(0);
 
                 if (dataSourceInfo.hasData()) {
+                    logger.debug("External data sources:");
                     dataSourceInfo.populateFieldMap();
 
                     connectedToDataSourceFlag = true;
@@ -454,6 +456,7 @@ public class DataSourceImpl implements DataSourceInterface {
         if (internalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
         } else {
+            logger.debug("Internal data sources:");
             int attempt = 0;
             boolean retry = true;
             while (retry && (attempt < MAX_RETRIES)) {
@@ -482,6 +485,7 @@ public class DataSourceImpl implements DataSourceInterface {
         if (internalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
         } else {
+            logger.debug("Example data source:");
             List<DataSourceInfo> dataSourceInfoList = internalDataSource
                     .connect(dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
 
