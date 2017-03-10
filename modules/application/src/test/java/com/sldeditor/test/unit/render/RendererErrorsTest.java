@@ -25,7 +25,6 @@ import org.geotools.renderer.RenderListener;
 import org.junit.Test;
 
 import com.sldeditor.render.RendererErrors;
-import com.sldeditor.test.unit.common.console.ConsoleManagerTest;
 
 /**
  * Unit test for RendererErrors class.
@@ -52,7 +51,5 @@ public class RendererErrorsTest {
         instance2.errorOccurred(e);
         instance1.featureRenderer(null);
         instance2.featureRenderer(null);
-        
-        ConsoleManagerTest.endOfTest();
     }
 }
