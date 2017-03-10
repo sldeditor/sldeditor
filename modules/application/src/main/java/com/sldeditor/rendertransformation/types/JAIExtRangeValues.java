@@ -43,6 +43,7 @@ import it.geosolutions.jaiext.range.Range;
 public class JAIExtRangeValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
+    @SuppressWarnings("unused")
     private Range value = null;
 
     /**

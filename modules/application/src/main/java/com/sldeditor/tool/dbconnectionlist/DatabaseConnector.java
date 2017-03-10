@@ -174,24 +174,24 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
     public void setConnection(DatabaseConnection connection) {
         this.databaseConnection = connection;
 
-        for (DatabaseConnectionField field : databaseConnection.getDetailList()) {
-            createField(field);
-
-            if (field.isUsername()) {
-                userKey = field.getKey();
-            } else if (field.isPassword()) {
-                passwordKey = field.getKey();
-            }
-        }
-
-        Map<String, String> properties = connection.getConnectionDataMap();
-
-        for (String fieldName : textFieldMap.keySet()) {
-            JTextField textField = textFieldMap.get(fieldName);
-            textField.setText(properties.get(fieldName));
-        }
-
         if (connection != null) {
+            for (DatabaseConnectionField field : databaseConnection.getDetailList()) {
+                createField(field);
+
+                if (field.isUsername()) {
+                    userKey = field.getKey();
+                } else if (field.isPassword()) {
+                    passwordKey = field.getKey();
+                }
+            }
+
+            Map<String, String> properties = connection.getConnectionDataMap();
+
+            for (String fieldName : textFieldMap.keySet()) {
+                JTextField textField = textFieldMap.get(fieldName);
+                textField.setText(properties.get(fieldName));
+            }
+
             if (userKey != null) {
                 JTextField textField = textFieldMap.get(userKey);
                 textField.setText(connection.getUserName());

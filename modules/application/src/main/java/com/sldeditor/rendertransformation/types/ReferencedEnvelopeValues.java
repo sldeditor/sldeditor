@@ -43,6 +43,7 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 public class ReferencedEnvelopeValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
+    @SuppressWarnings("unused")
     private Envelope value = null;
 
     /**

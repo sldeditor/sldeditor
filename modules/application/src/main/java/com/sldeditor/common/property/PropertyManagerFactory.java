@@ -46,7 +46,7 @@ public class PropertyManagerFactory {
      *
      * @return singleton instance of PropertyManagerInterface
      */
-    public static PropertyManagerInterface getInstance()
+    public synchronized static PropertyManagerInterface getInstance()
     {
         if(instance == null)
         {

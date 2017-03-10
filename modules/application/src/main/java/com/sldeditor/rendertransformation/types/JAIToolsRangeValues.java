@@ -43,6 +43,7 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 public class JAIToolsRangeValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
+    @SuppressWarnings("unused")
     private Range value = null;
 
     /**

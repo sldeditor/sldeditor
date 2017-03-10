@@ -79,7 +79,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /**
      * Populate interpolation map.
      */
-    private static void populateInterpolation() {
+    private static synchronized void populateInterpolation() {
         if (interpolationMap == null) {
             interpolationMap = new LinkedHashMap<Class<? extends Interpolation>, String>();
             interpolationMap.put(InterpolationNearest.class, "Nearest Neighbour");
