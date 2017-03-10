@@ -169,7 +169,7 @@ public class DataSourceImpl implements DataSourceInterface {
         this.editorFileInterface = editorFile;
 
         if (editorFileInterface != null) {
-            this.dataSourceProperties = editorFile.getDataSource();
+            this.dataSourceProperties = editorFileInterface.getDataSource();
 
             if (this.dataSourceProperties != null) {
                 if (this.dataSourceProperties.isEmpty()) {
@@ -204,13 +204,13 @@ public class DataSourceImpl implements DataSourceInterface {
 
         List<DataSourceAttributeData> dataSourceList = editorFile.getSLDData().getFieldList();
 
-        for(DataSourceAttributeData sldField : sldFieldList)
-        {
-            if(!dataSourceList.contains(sldField))
-            {
-                ConsoleManager.getInstance().error(this,
-                        Localisation.getField(DataSourceImpl.class, "DataSourceImpl.missingAttribute")
-                        + " " + sldField.getName());
+        for (DataSourceAttributeData sldField : sldFieldList) {
+            if (!dataSourceList.contains(sldField)) {
+                ConsoleManager.getInstance()
+                        .error(this,
+                                Localisation.getField(DataSourceImpl.class,
+                                        "DataSourceImpl.missingAttribute") + " "
+                                        + sldField.getName());
             }
         }
     }
@@ -222,7 +222,8 @@ public class DataSourceImpl implements DataSourceInterface {
         if (inlineDataSource == null) {
             ConsoleManager.getInstance().error(this, "No inline data source creation object set");
         } else {
-            userLayerDataSourceInfo = inlineDataSource.connect(null, null, this.editorFileInterface);
+            userLayerDataSourceInfo = inlineDataSource.connect(null, null,
+                    this.editorFileInterface);
 
             if (userLayerDataSourceInfo != null) {
                 for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
@@ -489,8 +490,8 @@ public class DataSourceImpl implements DataSourceInterface {
             int attempt = 0;
             boolean retry = true;
             while (retry && (attempt < MAX_RETRIES)) {
-                List<DataSourceInfo> dataSourceInfoList = internalDataSource
-                        .connect(null, dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+                List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(null,
+                        dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
                 if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                     dataSourceInfo = dataSourceInfoList.get(0);
                 }
@@ -515,8 +516,9 @@ public class DataSourceImpl implements DataSourceInterface {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
         } else {
             logger.debug("Example data source:");
-            List<DataSourceInfo> dataSourceInfoList = internalDataSource
-                    .connect(dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(
+                    dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(),
+                    this.editorFileInterface);
 
             if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                 exampleDataSourceInfo = dataSourceInfoList.get(0);
@@ -595,11 +597,14 @@ public class DataSourceImpl implements DataSourceInterface {
             List<DataSourceAttributeData> attributeDataList = attributeData.getData();
 
             if (this.editorFileInterface != null) {
+                this.dataSourceProperties = editorFileInterface.getDataSource();
                 SLDDataInterface sldData = this.editorFileInterface.getSLDData();
                 if (sldData != null) {
                     sldData.setFieldList(attributeDataList);
                 }
             }
+            this.connectedToDataSourceFlag = false;
+
             createInternalDataSource();
 
             notifyDataSourceLoaded();

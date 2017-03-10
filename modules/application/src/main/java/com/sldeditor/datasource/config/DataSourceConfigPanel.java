@@ -29,6 +29,7 @@ import java.util.Map;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -49,10 +50,10 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
+import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
@@ -78,11 +79,17 @@ public class DataSourceConfigPanel extends JPanel
     /** The data source. */
     private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
-    /** The btn remove field. */
-    private JButton btnRemoveField;
-
     /** The data source connector panel. */
     private JPanel dscPanel;
+
+    /** The btn disconnect. */
+    private JButton btnDisconnect;
+
+    /** The btn add field. */
+    private JButton btnAddField;
+
+    /** The btn remove field. */
+    private JButton btnRemoveField;
 
     /** The btn ok. */
     private JButton btnApply;
@@ -95,6 +102,9 @@ public class DataSourceConfigPanel extends JPanel
 
     /** The data changed. */
     private boolean dataChanged = false;
+
+    /** The is connected to data source flag. */
+    private boolean isConnectedToDataSourceFlag = false;
 
     /**
      * Instantiates a new data source config.
@@ -116,8 +126,6 @@ public class DataSourceConfigPanel extends JPanel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        JPanel panel1 = new JPanel();
-
         Map<Class<?>, DataSourceConnectorInterface> dscMap = DataSourceConnectorFactory
                 .getDataSourceConnectorList();
 
@@ -134,16 +142,12 @@ public class DataSourceConfigPanel extends JPanel
         }
         mainPanel.add(dscPanel, BorderLayout.CENTER);
 
-        // Add clear button
-        JButton clearButton = new JButton(Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.clear"));
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new FlowLayout(FlowLayout.LEADING));
+        JLabel label = new JLabel(
+                Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.dataSource"));
 
-        clearButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showPanel(DataSourceConnectorEmpty.KEY);
-            }});
-        panel1.add(clearButton);
+        panel1.add(label);
 
         mainPanel.add(panel1, BorderLayout.NORTH);
 
@@ -211,8 +215,21 @@ public class DataSourceConfigPanel extends JPanel
         flowLayout.setAlignment(FlowLayout.TRAILING);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnAddField = new JButton(
+        btnDisconnect = new JButton(Localisation.getString(DataSourceConfigPanel.class,
+                "DataSourceConfigPanel.disconnect"));
+        btnDisconnect.setEnabled(false);
+        btnDisconnect.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SLDEditorFile.getInstance().getSLDData().setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
+
+                applyData(parentObj);
+            }
+        });
+        buttonPanel.add(btnDisconnect);
+
+        btnAddField = new JButton(
                 Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.add"));
+        btnAddField.setEnabled(false);
         btnAddField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addNewField();
@@ -259,7 +276,10 @@ public class DataSourceConfigPanel extends JPanel
      * Update button state.
      */
     private void updateButtonState() {
-        btnRemoveField.setEnabled(table.getSelectedRowCount() > 0);
+        btnDisconnect.setEnabled(isConnectedToDataSourceFlag);
+        btnAddField.setEnabled(!isConnectedToDataSourceFlag);
+        btnRemoveField
+                .setEnabled(!isConnectedToDataSourceFlag && (table.getSelectedRowCount() > 0));
         btnApply.setEnabled(dataChanged);
         btnCancel.setEnabled(dataChanged);
     }
@@ -272,6 +292,7 @@ public class DataSourceConfigPanel extends JPanel
     @Override
     public void dataSourceLoaded(GeometryTypeEnum geometryType,
             boolean isConnectedToDataSourceFlag) {
+        this.isConnectedToDataSourceFlag = isConnectedToDataSourceFlag;
         if (attributeData == null) {
             attributeData = new DataSourceAttributeList();
         }
@@ -299,6 +320,8 @@ public class DataSourceConfigPanel extends JPanel
             dataModel.fireTableDataChanged();
             setPopulatingTable(false);
         }
+
+        updateButtonState();
     }
 
     /**
