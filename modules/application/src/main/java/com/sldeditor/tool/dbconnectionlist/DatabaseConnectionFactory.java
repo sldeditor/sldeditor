@@ -87,7 +87,7 @@ public class DatabaseConnectionFactory {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionFactory.class, "common.notSet");
+                        String connectionName = "Not set";
                         String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);
@@ -141,7 +141,7 @@ public class DatabaseConnectionFactory {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionFactory.class, "common.notSet");
+                        String connectionName = "Not set";
                         String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);
@@ -219,7 +219,7 @@ public class DatabaseConnectionFactory {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionFactory.class, "common.notSet");
+                        String connectionName = "Not set";
                         String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);

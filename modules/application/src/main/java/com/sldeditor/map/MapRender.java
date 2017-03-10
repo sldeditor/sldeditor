@@ -354,10 +354,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                     (org.geotools.styling.Style) style);
             mapContent.addLayer(gridLayer);
             mapContent.getViewport().setBounds(gridLayer.getBounds());
-            if(gridCoverage != null)
-            {
-                mapPane.setDisplayArea(gridCoverage.getOriginalEnvelope());
-            }
+            mapPane.setDisplayArea(gridCoverage.getOriginalEnvelope());
         }
             break;
         case POINT:

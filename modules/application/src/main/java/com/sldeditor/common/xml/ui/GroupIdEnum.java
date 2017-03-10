@@ -104,10 +104,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE"/&gt;
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE_GROUP"/&gt;
  *     &lt;enumeration value="REMOTE_OWS"/&gt;
- *     &lt;enumeration value="REMOTE_OWS_OPTION"/&gt;
  *     &lt;enumeration value="FEATURE_TYPE_CONSTRAINTS"/&gt;
  *     &lt;enumeration value="INLINE_FEATURE"/&gt;
- *     &lt;enumeration value="INLINE_FEATURE_OPTION"/&gt;
  *     &lt;enumeration value="USER_LAYER_SOURCE"/&gt;
  *     &lt;enumeration value="VO_TEXT_LABEL"/&gt;
  *     &lt;enumeration value="VO_TEXT_LABEL_UNDERLINE"/&gt;
@@ -207,10 +205,8 @@ public enum GroupIdEnum {
     RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE,
     RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD_NORMALIZE_GROUP,
     REMOTE_OWS,
-    REMOTE_OWS_OPTION,
     FEATURE_TYPE_CONSTRAINTS,
     INLINE_FEATURE,
-    INLINE_FEATURE_OPTION,
     USER_LAYER_SOURCE,
     VO_TEXT_LABEL,
     VO_TEXT_LABEL_UNDERLINE,

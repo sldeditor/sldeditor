@@ -19,7 +19,6 @@
 package com.sldeditor.common.vendoroption;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * Class that represents the vendor option versions supported.
@@ -43,7 +42,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable
     private static final String DELIMETER = "@";
 
     /** The version string. */
-    private String versionString = Localisation.getString(VersionData.class, "common.notSet");
+    private String versionString = "Not Set";
 
     /** The is not set. */
     private boolean isNotSet = true;

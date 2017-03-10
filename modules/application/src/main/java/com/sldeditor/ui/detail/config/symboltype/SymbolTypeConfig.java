@@ -24,10 +24,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.ui.detail.FieldEnableState;
 
 /**
@@ -46,7 +44,7 @@ import com.sldeditor.ui.detail.FieldEnableState;
 public class SymbolTypeConfig {
 
     /** The group name. */
-    private String groupName = Localisation.getString(SymbolTypeConfig.class, "common.notSet");
+    private String groupName = "Not set";
 
     /** Flag indicating whether this set of symbol types appears as a separate menu group in the symbol type drop down. */
     private boolean isSeparateGroup = false;
