@@ -24,8 +24,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -37,8 +35,6 @@ import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.ExtractAttributes;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 
 /**
@@ -61,23 +57,8 @@ public class ExtractAttributesTest {
 
         DummyInternalSLDFile dummy = new DummyInternalSLDFile();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        String typeName = "test type name";
-        b.setName( typeName );
-
-        String namespace = null;
-        b.setNamespaceURI(namespace);
-
-        //add a geometry property
-        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
-
-        b.add( "geom", Point.class );
-
-        b.setDefaultGeometry( "geom" );
-
         ExtractAttributes extract = new ExtractAttributes();
-        extract.extractDefaultFields(b, SLDUtils.createSLDFromString(dummy.getSLDData()));
+        extract.extractDefaultFields(SLDUtils.createSLDFromString(dummy.getSLDData()));
 
         // Check fields extracted ok
         List<String> expectedFieldList = dummy.getExpectedFieldList();
@@ -110,24 +91,10 @@ public class ExtractAttributesTest {
 
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        String typeName = "test type name";
-        b.setName( typeName );
-
-        String namespace = null;
-        b.setNamespaceURI(namespace);
-
         String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
-        //add a geometry property
-        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
-
-        b.add( expectedGeometryFieldName, Polygon.class );
-
-        b.setDefaultGeometry( expectedGeometryFieldName );
 
         ExtractAttributes extract = new ExtractAttributes();
-        extract.extractDefaultFields(b, SLDUtils.createSLDFromString(dummy.getSLDData()));
+        extract.extractDefaultFields(SLDUtils.createSLDFromString(dummy.getSLDData()));
 
         // Check fields extracted ok - should be none
         List<String> expectedFieldList = dummy.getExpectedFieldList();
@@ -151,24 +118,10 @@ public class ExtractAttributesTest {
 
         DummyInternalSLDFile3 dummy = new DummyInternalSLDFile3();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        String typeName = "test type name";
-        b.setName( typeName );
-
-        String namespace = null;
-        b.setNamespaceURI(namespace);
-
         String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
-        //add a geometry property
-        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
-
-        b.add( expectedGeometryFieldName, Point.class );
-
-        b.setDefaultGeometry( expectedGeometryFieldName );
 
         ExtractAttributes extract = new ExtractAttributes();
-        extract.extractDefaultFields(b, SLDUtils.createSLDFromString(dummy.getSLDData()));
+        extract.extractDefaultFields(SLDUtils.createSLDFromString(dummy.getSLDData()));
 
         // Check fields extracted ok - should be none
         List<String> expectedFieldList = dummy.getExpectedFieldList();
@@ -200,9 +153,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
         ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
@@ -211,7 +162,7 @@ public class ExtractAttributesTest {
         Filter filter = ff.greater(ff.property("width"), ff.literal(42.1));
         rule.setFilter(filter);
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -227,7 +178,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         actualFieldnameList = extract.getFields();
@@ -241,9 +192,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -254,7 +203,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -268,9 +217,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -281,7 +228,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -295,9 +242,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -308,7 +253,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -322,9 +267,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -335,7 +278,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -349,9 +292,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -362,7 +303,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -376,9 +317,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -389,7 +328,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
@@ -403,9 +342,7 @@ public class ExtractAttributesTest {
     {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
-        SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
-
-        StyledLayerDescriptor sld = createTestSLD(dummy, b);
+        StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
         ExtractAttributes extract = new ExtractAttributes();
@@ -417,7 +354,7 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
-        extract.extractDefaultFields(b, sld);
+        extract.extractDefaultFields(sld);
 
         // Check fields extracted ok 
         List<String> actualGeometryFields = extract.getGeometryFields();
@@ -443,24 +380,9 @@ public class ExtractAttributesTest {
      * Creates the test SLD.
      *
      * @param dummy the dummy
-     * @param b the b
      * @return the styled layer descriptor
      */
-    protected StyledLayerDescriptor createTestSLD(DummyInternalSLDFile2 dummy,
-            SimpleFeatureTypeBuilder b) {
-        String typeName = "test type name";
-        b.setName( typeName );
-
-        String namespace = null;
-        b.setNamespaceURI(namespace);
-
-        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
-        //add a geometry property
-        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
-
-        b.add( expectedGeometryFieldName, Point.class );
-
-        b.setDefaultGeometry( expectedGeometryFieldName );
+    protected StyledLayerDescriptor createTestSLD(DummyInternalSLDFile2 dummy) {
 
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(dummy.getSLDData());
         return sld;

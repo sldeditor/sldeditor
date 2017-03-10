@@ -372,12 +372,14 @@ public class VectorTool implements ToolInterface {
             return;
         }
 
-        SLDEditorFile.getInstance().setDataSource(dsProperties);
+        SLDEditorFile sldEditorFile = SLDEditorFile.getInstance();
+        sldEditorFile.setDataSource(dsProperties);
 
         DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
         if (dataSource != null) {
-            dataSource.connect(ExternalFilenames.removeSuffix(vectorFile.getName()), SLDEditorFile.getInstance());
+            String dataSourceName = ExternalFilenames.removeSuffix(vectorFile.getName());
+            dataSource.connect(dataSourceName, sldEditorFile);
         }
     }
 

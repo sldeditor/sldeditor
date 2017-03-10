@@ -112,9 +112,17 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             List<AttributeDescriptor> attrDescList = new ArrayList<AttributeDescriptor>();
 
             if ((fieldList == null) || fieldList.isEmpty()) {
+                // Read the fields from the SLD
                 ExtractAttributes extract = new ExtractAttributes();
-                extract.extractDefaultFields(b, sld);
+                extract.extractDefaultFields(sld);
                 fieldList = extract.getFields();
+
+                // Add non-geometry fields to the feature type builder
+                for (DataSourceAttributeData dsAttribute : fieldList) {
+                    if (dsAttribute.getName() != null) {
+                        b.add(dsAttribute.getName(), dsAttribute.getType());
+                    }
+                }
 
                 List<String> geometryFields = extract.getGeometryFields();
                 for (String localGeometryFieldName : geometryFields) {

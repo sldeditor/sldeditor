@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.styling.AnchorPoint;
-import org.geotools.styling.AnchorPointImpl;
 import org.geotools.styling.Displacement;
 import org.geotools.styling.DisplacementImpl;
 import org.geotools.styling.FillImpl;
