@@ -52,12 +52,6 @@ public class CoordManagerTest {
      */
     @Test
     public void testGetInstance() throws NoSuchAuthorityCodeException, FactoryException {
-        CoordManager.getInstance().populateCRSList();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         List<ValueComboBoxData> crsList = CoordManager.getInstance().getCRSList();
         assertTrue(crsList.size() > 0);
 

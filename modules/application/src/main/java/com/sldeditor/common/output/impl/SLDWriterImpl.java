@@ -24,11 +24,11 @@ import javax.xml.transform.TransformerException;
 
 import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDExternalImages;
 import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.utils.OSValidator;
 import com.sldeditor.generated.Version;
 
 /**
@@ -45,11 +45,8 @@ public class SLDWriterImpl implements SLDWriterInterface {
     private static final String END_OF_XML_HEADER = "?>";
 
     /** The header. */
-    private static final String header = String.format("<!-- Created by %s %s -->",
+    private static final String header = String.format("\n<!-- Created by %s %s -->",
             Version.getAppName(), Version.getVersionNumber());
-
-    /** The cached header. */
-    private static String cachedHeader = null;
 
     /**
      * Default constructor.
@@ -69,7 +66,7 @@ public class SLDWriterImpl implements SLDWriterInterface {
         String xml = "";
 
         if (sld != null) {
-            InlineDatastoreVisitor duplicator = new InlineDatastoreVisitor();
+            DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
             sld.accept(duplicator);
             StyledLayerDescriptor sldCopy = (StyledLayerDescriptor) duplicator.getCopy();
 
@@ -88,7 +85,7 @@ public class SLDWriterImpl implements SLDWriterInterface {
                         String xmlHeader = xml.substring(0, pos);
                         String sldBody = xml.substring(pos);
 
-                        xml = xmlHeader + getHeader() + sldBody;
+                        xml = xmlHeader + header + sldBody;
                     }
                 }
             } catch (TransformerException e) {
@@ -99,24 +96,4 @@ public class SLDWriterImpl implements SLDWriterInterface {
         return xml;
     }
 
-    /**
-     * Gets the header.
-     *
-     * @return the header
-     */
-    private static String getHeader()
-    {
-        if(cachedHeader == null)
-        {
-            if(OSValidator.isWindows())
-            {
-                cachedHeader = "\n" + header;
-            }
-            else
-            {
-                cachedHeader = header + "\n";
-            }
-        }
-        return cachedHeader;
-    }
 }

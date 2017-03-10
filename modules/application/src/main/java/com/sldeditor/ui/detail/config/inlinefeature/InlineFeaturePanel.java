@@ -328,7 +328,14 @@ public class InlineFeaturePanel extends JPanel {
             }
 
             setPopulating(true);
-            crsComboBox.setSelectValueKey(crsCode);
+            if(crsCode.isEmpty())
+            {
+                crsComboBox.setSelectedIndex(-1);
+            }
+            else
+            {
+                crsComboBox.setSelectValueKey(crsCode);
+            }
             setPopulating(false);
             model.populate(userLayer);
         }
