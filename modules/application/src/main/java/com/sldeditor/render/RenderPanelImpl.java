@@ -177,6 +177,8 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
 
         PrefManager.getInstance().addListener(this);
         VendorOptionManager.getInstance().addVendorOptionListener(this);
+        
+        renderer.addRenderListener(RendererErrors.getInstance());
     }
 
     /**

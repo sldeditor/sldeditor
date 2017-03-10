@@ -19,6 +19,7 @@
 package com.sldeditor.test.unit.datasource.attribute;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -135,4 +136,33 @@ public class DataSourceAttributeDataTest {
         assertEquals(expectedValue2, dsa.getValue());
     }
 
+    @Test
+    public void testEquals() {
+        String expectedName1 = "test name";
+        Class<?> expectedType1 = Integer.class;
+        Object expectedValue1 = Integer.valueOf(42);
+
+        DataSourceAttributeData dsa1 = new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
+        DataSourceAttributeData dsa3 = new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
+
+        String expectedName2 = "test name2";
+        Class<?> expectedType2 = Double.class;
+        Object expectedValue2 = Integer.valueOf(24);
+
+        DataSourceAttributeData dsa2 = new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
+
+        assertEquals(dsa1, dsa1);
+        assertEquals(dsa1, dsa3);
+        assertEquals(dsa1.hashCode(), dsa1.hashCode());
+        assertFalse(dsa1.equals(null));
+        assertFalse(dsa1.equals(dsa2));
+        assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType2, expectedValue1)));
+        assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, null, expectedValue1)));
+        assertFalse(dsa1.equals(new DataSourceAttributeData(null, expectedType1, expectedValue1)));
+        assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType1, expectedValue2)));
+        assertFalse(new DataSourceAttributeData(null, expectedType1, expectedValue1).equals(dsa1));
+        assertFalse(new DataSourceAttributeData(expectedName1, null, expectedValue1).equals(dsa1));
+        assertFalse(new DataSourceAttributeData(expectedName1, expectedType1, null).equals(dsa1));
+        assertFalse(new DataSourceAttributeData(null, expectedType1, expectedValue1).equals("wrong class"));
+    }
 }
