@@ -380,8 +380,11 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
 
         char docDirtyChar = dataEditedFlag ? '*' : ' ';
-        frame.setTitle(String.format("%s - %s%c", generateApplicationTitleString(), docName,
+        if(frame != null)
+        {
+            frame.setTitle(String.format("%s - %s%c", generateApplicationTitleString(), docName,
                 docDirtyChar));
+        }
     }
 
     /**
