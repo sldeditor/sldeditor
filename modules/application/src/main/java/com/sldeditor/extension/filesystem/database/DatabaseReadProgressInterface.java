@@ -40,8 +40,7 @@ public interface DatabaseReadProgressInterface {
      * Read feature classes complete.
      *
      * @param connection the connection
-     * @param styleMap the style map
-     * @param partialRefresh the partial refresh
+     * @param featureClassList the feature class list
      */
     void readFeatureClassesComplete(DatabaseConnection connection, List<String> featureClassList);
 
