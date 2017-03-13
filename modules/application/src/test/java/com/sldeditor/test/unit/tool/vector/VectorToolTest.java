@@ -44,6 +44,8 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javax.swing.JFrame;
+
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.AfterClass;
@@ -57,11 +59,13 @@ import org.opengis.feature.type.PropertyDescriptor;
 import com.google.common.io.Files;
 import com.sldeditor.SLDEditor;
 import com.sldeditor.SLDEditorDlgInterface;
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.connection.GeoServerConnectionManager;
+import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.preferences.PrefManager;
@@ -69,6 +73,7 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.common.utils.OSValidator;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.watcher.ReloadManager;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -82,6 +87,7 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
+import com.sldeditor.map.MapRender;
 import com.sldeditor.render.RenderPanelImpl;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.vector.VectorTool;
@@ -214,11 +220,14 @@ public class VectorToolTest {
     /**
      * The Class TestSLDEditor.
      */
-    class TestSLDEditor extends SLDEditor {
+    static class TestSLDEditor extends SLDEditor {
 
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /** The frame. */
+        private static JFrame frame = null;
+        
         /**
          * Instantiates a new test SLD editor.
          *
@@ -241,6 +250,29 @@ public class VectorToolTest {
             super.populate(sldData);
         }
 
+        public static TestSLDEditor createAndShowGUI2(String filename, List<String> extensionArgList,
+                boolean underTest, SLDEditorDlgInterface overrideSLDEditorDlg) {
+            frame = new JFrame("test");
+
+            CoordManager.getInstance().populateCRSList();
+            Controller.getInstance().setFrame(frame);
+
+            MapRender.setUnderTest(underTest);
+            RenderPanelImpl.setUnderTest(underTest);
+            ReloadManager.setUnderTest(underTest);
+
+            frame.setDefaultCloseOperation(underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
+
+            // Add contents to the window.
+            TestSLDEditor sldEditor = new TestSLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
+
+            // Display the window.
+            frame.pack();
+            frame.setVisible(true);
+
+            return sldEditor;
+        }
+
     }
 
     /**
@@ -254,7 +286,13 @@ public class VectorToolTest {
         CheckAttributeFactory.setOverideCheckList(checkList);
 
         String testsldfile = "/polygon/sld/polygon_polygonwithdefaultlabel.sld";
-        TestSLDEditor testSLDEditor = new TestSLDEditor(null, null, null);
+        TestSLDEditor testSLDEditor = null;
+        try {
+            testSLDEditor = TestSLDEditor.createAndShowGUI2(null, null, true, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         RenderPanelImpl.setUnderTest(true);
         InputStream inputStream = VectorToolTest.class.getResourceAsStream(testsldfile);
 
@@ -389,7 +427,6 @@ public class VectorToolTest {
         purgeDirectory(tempFolder);
     }
 
-    @Ignore
     @Test
     public void testVectorToolDBDataSource() {
         TestMissingSLDAttributes testAttribute = new TestMissingSLDAttributes();
