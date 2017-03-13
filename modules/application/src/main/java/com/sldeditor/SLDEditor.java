@@ -65,6 +65,7 @@ import com.sldeditor.common.watcher.ReloadManager;
 import com.sldeditor.create.NewSLDPanel;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.checks.CheckAttributeFactory;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.ExtensionInterface;
@@ -380,10 +381,9 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         }
 
         char docDirtyChar = dataEditedFlag ? '*' : ' ';
-        if(frame != null)
-        {
+        if (frame != null) {
             frame.setTitle(String.format("%s - %s%c", generateApplicationTitleString(), docName,
-                docDirtyChar));
+                    docDirtyChar));
         }
     }
 
@@ -663,7 +663,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             SLDEditorFile.getInstance().setDataSource(previousDataSource);
         }
 
-        dataSource.connect(ExternalFilenames.removeSuffix(layerName), SLDEditorFile.getInstance());
+        dataSource.connect(ExternalFilenames.removeSuffix(layerName), SLDEditorFile.getInstance(),
+                CheckAttributeFactory.getCheckList());
 
         VendorOptionManager.getInstance().loadSLDFile(uiMgr, sld, sldData);
 

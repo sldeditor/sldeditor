@@ -193,7 +193,7 @@ public class RasterTool implements ToolInterface {
 
                         if(dataSource != null)
                         {
-                            dataSource.connect(rasterFilename, SLDEditorFile.getInstance());
+                            dataSource.connect(rasterFilename, SLDEditorFile.getInstance(), null);
                         }
                     }
                 }

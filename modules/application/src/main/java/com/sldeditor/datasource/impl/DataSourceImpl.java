@@ -34,7 +34,6 @@ import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -44,7 +43,6 @@ import org.opengis.feature.type.PropertyDescriptor;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -52,6 +50,7 @@ import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -161,9 +160,11 @@ public class DataSourceImpl implements DataSourceInterface {
      *
      * @param typeName the type name
      * @param editorFile the editor file
+     * @param checkList the check list
      */
     @Override
-    public void connect(String typeName, SLDEditorFileInterface editorFile) {
+    public void connect(String typeName, SLDEditorFileInterface editorFile,
+            List<CheckAttributeInterface> checkList) {
         reset();
 
         this.editorFileInterface = editorFile;
@@ -184,33 +185,15 @@ public class DataSourceImpl implements DataSourceInterface {
                 createUserLayerDataSources();
 
                 // Report any attributes used in SLD but not in data source
-                checkAttributes(editorFile);
+                if(checkList != null)
+                {
+                    for(CheckAttributeInterface check : checkList)
+                    {
+                        check.checkAttributes(editorFile);
+                    }
+                }
 
                 notifyDataSourceLoaded();
-            }
-        }
-    }
-
-    /**
-     * Check attributes, Report any attributes used in SLD but not in data source
-     *
-     * @param editorFile the editor file
-     */
-    private void checkAttributes(SLDEditorFileInterface editorFile) {
-        ExtractAttributes extract = new ExtractAttributes();
-        StyledLayerDescriptor sld = editorFile.getSLD();
-        extract.extractDefaultFields(sld);
-        List<DataSourceAttributeData> sldFieldList = extract.getFields();
-
-        List<DataSourceAttributeData> dataSourceList = editorFile.getSLDData().getFieldList();
-
-        for (DataSourceAttributeData sldField : sldFieldList) {
-            if (!dataSourceList.contains(sldField)) {
-                ConsoleManager.getInstance()
-                        .error(this,
-                                Localisation.getField(DataSourceImpl.class,
-                                        "DataSourceImpl.missingAttribute") + " "
-                                        + sldField.getName());
             }
         }
     }

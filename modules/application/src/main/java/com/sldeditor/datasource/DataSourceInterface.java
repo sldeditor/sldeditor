@@ -32,6 +32,7 @@ import org.opengis.feature.type.PropertyDescriptor;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
@@ -61,8 +62,9 @@ public interface DataSourceInterface {
      *
      * @param typeName the type name
      * @param editorFile the editor file
+     * @param checkList the check list
      */
-    void connect(String typeName, SLDEditorFileInterface editorFile);
+    void connect(String typeName, SLDEditorFileInterface editorFile, List<CheckAttributeInterface> checkList);
 
     /**
      * Reset.
