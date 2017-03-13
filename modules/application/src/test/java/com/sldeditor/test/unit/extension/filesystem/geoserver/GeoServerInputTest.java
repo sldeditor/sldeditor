@@ -37,6 +37,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -114,6 +115,8 @@ public class GeoServerInputTest {
     public void afterEachTest()
     {
         configPropertiesFile.delete();
+        GeoServerConnectionManager.destroyInstance();
+        PropertyManagerFactory.destroyInstance();
     }
 
     /**

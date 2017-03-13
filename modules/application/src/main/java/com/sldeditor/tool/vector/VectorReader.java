@@ -156,6 +156,8 @@ public class VectorReader implements VectorReaderInterface {
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
                 return null;
+            } finally {
+                dataStore.dispose();
             }
 
             switch (geometryTypeEnum) {

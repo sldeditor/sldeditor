@@ -36,8 +36,7 @@ public class PropertyManagerFactory {
     /**
      * Private default constructor
      */
-    private PropertyManagerFactory()
-    {
+    private PropertyManagerFactory() {
         // Does nothing
     }
 
@@ -46,14 +45,19 @@ public class PropertyManagerFactory {
      *
      * @return singleton instance of PropertyManagerInterface
      */
-    public synchronized static PropertyManagerInterface getInstance()
-    {
-        if(instance == null)
-        {
+    public synchronized static PropertyManagerInterface getInstance() {
+        if (instance == null) {
             instance = new PropertyManager();
             instance.setPropertyFile(new File(CONFIG_PROPERTIES));
         }
 
         return instance;
+    }
+
+    /**
+     * Destroy instance.
+     */
+    public synchronized static void destroyInstance() {
+        instance = null;
     }
 }

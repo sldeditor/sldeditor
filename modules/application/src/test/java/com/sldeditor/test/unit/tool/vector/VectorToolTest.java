@@ -61,6 +61,7 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.connection.GeoServerConnectionManager;
+import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.undo.UndoManager;
@@ -81,6 +82,7 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.render.RenderPanelImpl;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 
@@ -244,7 +246,7 @@ public class VectorToolTest {
      * Test method for {@link com.sldeditor.tool.vector.VectorTool#VectorTool(com.sldeditor.common.SLDEditorInterface)}.
      */
     @Test
-    public void testVectorTool() {
+    public void testVectorToolFileDataSource() {
         TestMissingSLDAttributes testAttribute = new TestMissingSLDAttributes();
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
         checkList.add(testAttribute);
@@ -386,6 +388,128 @@ public class VectorToolTest {
         purgeDirectory(tempFolder);
     }
 
+    @Test
+    public void testVectorToolDBDataSource() {
+        TestMissingSLDAttributes testAttribute = new TestMissingSLDAttributes();
+        List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
+        checkList.add(testAttribute);
+        CheckAttributeFactory.setOverideCheckList(checkList);
+
+        String testsldfile = "/polygon/sld/polygon_polygonwithdefaultlabel.sld";
+        TestSLDEditor testSLDEditor = new TestSLDEditor(null, null, null);
+        RenderPanelImpl.setUnderTest(true);
+        InputStream inputStream = VectorToolTest.class.getResourceAsStream(testsldfile);
+
+        if (inputStream == null) {
+            Assert.assertNotNull("Failed to find sld test file : " + testsldfile, inputStream);
+        } else {
+            File f = null;
+            try {
+                f = stream2file(inputStream);
+                try {
+                    testSLDEditor.openFile(f.toURI().toURL());
+                } catch (NullPointerException nullException) {
+                    nullException.printStackTrace();
+                    StackTraceElement[] stackTraceElements = nullException.getStackTrace();
+
+                    System.out.println(stackTraceElements[0].getMethodName());
+                }
+
+                f.delete();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        // Fields extracted from the SLD file
+        DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
+        Collection<PropertyDescriptor> propertyList = dataSource.getPropertyDescriptorList();
+
+        assertEquals(2, propertyList.size());
+        Map<String, PropertyDescriptor> map = new HashMap<String, PropertyDescriptor>();
+
+        for (PropertyDescriptor property : propertyList) {
+            map.put(property.getName().getLocalPart(), property);
+        }
+        AttributeDescriptor name = (AttributeDescriptor) map.get("name");
+        assertNotNull(name);
+        GeometryDescriptor geometry = (GeometryDescriptor) map.get("geom");
+        assertNotNull(geometry);
+
+        File tempFolder = Files.createTempDir();
+        TestVectorTool vectorTool = new TestVectorTool(testSLDEditor);
+        try {
+            InputStream gpkgInputStream = VectorToolTest.class.getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
+
+            final File gpkgFile = new File(tempFolder, "sld_cookbook_polygon.gpkg");
+            try (FileOutputStream out = new FileOutputStream(gpkgFile)) {
+                IOUtils.copy(gpkgInputStream, out);
+            }
+
+            DatabaseConnection databaseConnection = DatabaseConnectionFactory.getConnection(gpkgFile.getAbsolutePath());
+            DatabaseFeatureClassNode dbFCTreeNode = new DatabaseFeatureClassNode(null,
+                    databaseConnection,
+                    "sld_cookbook_polygon");
+
+            DatabaseConnectionManager.getInstance().addNewConnection(null, databaseConnection);
+            vectorTool.testSetDataSource(dbFCTreeNode);
+
+            dataSource = DataSourceFactory.createDataSource(null);
+            propertyList = dataSource.getPropertyDescriptorList();
+
+            assertEquals(3, propertyList.size());
+            map.clear();
+
+            for (PropertyDescriptor property : propertyList) {
+                map.put(property.getName().getLocalPart(), property);
+            }
+            name = (AttributeDescriptor) map.get("name");
+            assertNotNull(name);
+            geometry = (GeometryDescriptor) map.get("geometry");
+            assertNotNull(geometry);
+            AttributeDescriptor pop = (AttributeDescriptor) map.get("pop");
+            assertNotNull(pop);
+
+            // Create SLD from geopackage layer
+            vectorTool.testImportFeatureClass(dbFCTreeNode);
+            dataSource = DataSourceFactory.createDataSource(null);
+            propertyList = dataSource.getPropertyDescriptorList();
+
+            assertEquals(3, propertyList.size());
+            map.clear();
+
+            for (PropertyDescriptor property : propertyList) {
+                map.put(property.getName().getLocalPart(), property);
+            }
+            name = (AttributeDescriptor) map.get("name");
+            assertNotNull(name);
+            geometry = (GeometryDescriptor) map.get("geometry");
+            assertNotNull(geometry);
+            pop = (AttributeDescriptor) map.get("pop");
+            assertNotNull(pop);
+
+            // Release locks
+            dataSource.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        // Tidy up so the remaining unit tests are ok
+        testSLDEditor = null;
+        SelectedSymbol.destroyInstance();
+        SLDEditorFile.destroyInstance();
+        SLDEditorMenus.destroyInstance();
+        DatabaseConnectionManager.destroyInstance();
+        GeoServerConnectionManager.destroyInstance();
+        PrefManager.destroyInstance();
+        VendorOptionManager.destroyInstance();
+        EnvironmentVariableManager.destroyInstance();
+        UndoManager.destroyInstance();
+
+        // Delete the shape files we extracted
+        purgeDirectory(tempFolder);
+    }
     /**
      * Purge directory.
      *

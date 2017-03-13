@@ -144,8 +144,8 @@ public class DataSourceConfigPanel extends JPanel
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout(FlowLayout.LEADING));
-        JLabel label = new JLabel(
-                Localisation.getString(DataSourceConfigPanel.class, "DataSourceConfigPanel.dataSource"));
+        JLabel label = new JLabel(Localisation.getString(DataSourceConfigPanel.class,
+                "DataSourceConfigPanel.dataSource"));
 
         panel1.add(label);
 
@@ -220,7 +220,8 @@ public class DataSourceConfigPanel extends JPanel
         btnDisconnect.setEnabled(false);
         btnDisconnect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SLDEditorFile.getInstance().getSLDData().setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
+                SLDEditorFile.getInstance().getSLDData()
+                        .setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
 
                 applyData(parentObj);
             }
@@ -276,12 +277,14 @@ public class DataSourceConfigPanel extends JPanel
      * Update button state.
      */
     private void updateButtonState() {
-        btnDisconnect.setEnabled(isConnectedToDataSourceFlag);
-        btnAddField.setEnabled(!isConnectedToDataSourceFlag);
-        btnRemoveField
-                .setEnabled(!isConnectedToDataSourceFlag && (table.getSelectedRowCount() > 0));
-        btnApply.setEnabled(dataChanged);
-        btnCancel.setEnabled(dataChanged);
+        if (btnDisconnect != null) {
+            btnDisconnect.setEnabled(isConnectedToDataSourceFlag);
+            btnAddField.setEnabled(!isConnectedToDataSourceFlag);
+            btnRemoveField
+                    .setEnabled(!isConnectedToDataSourceFlag && (table.getSelectedRowCount() > 0));
+            btnApply.setEnabled(dataChanged);
+            btnCancel.setEnabled(dataChanged);
+        }
     }
 
     /*
