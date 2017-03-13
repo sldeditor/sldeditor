@@ -224,9 +224,6 @@ public class VectorToolTest {
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
-        /** The frame. */
-        private static JFrame frame = null;
-        
         /**
          * Instantiates a new test SLD editor.
          *
@@ -251,6 +248,8 @@ public class VectorToolTest {
 
         public static TestSLDEditor createAndShowGUI2(String filename, List<String> extensionArgList,
                 boolean underTest, SLDEditorDlgInterface overrideSLDEditorDlg) {
+            SLDEditor.underTestFlag = underTest;
+
             frame = new JFrame("test");
 
             CoordManager.getInstance().populateCRSList();
@@ -292,7 +291,6 @@ public class VectorToolTest {
             e.printStackTrace();
         }
 
-        RenderPanelImpl.setUnderTest(true);
         InputStream inputStream = VectorToolTest.class.getResourceAsStream(testsldfile);
 
         if (inputStream == null) {

@@ -111,7 +111,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     private static final String APPLICATION_ICON_MEDIUM = "/icon/AppImage.png";
 
     /** The frame. */
-    private static JFrame frame = null;
+    protected static JFrame frame = null;
 
     /** The data source. */
     private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
@@ -129,7 +129,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     private boolean dataEditedFlag = false;
 
     /** The under test flag. */
-    private static boolean underTestFlag = false;
+    protected static boolean underTestFlag = false;
 
     /** The sld editor dlg. */
     private SLDEditorDlgInterface sldEditorDlg = null;
