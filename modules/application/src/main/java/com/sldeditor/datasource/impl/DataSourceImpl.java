@@ -465,9 +465,13 @@ public class DataSourceImpl implements DataSourceInterface {
         connectedToDataSourceFlag = false;
 
         if (this.editorFileInterface.getSLD() == null)
-            return;
-
-        createInternalDataSource();
+        {
+            logger.debug("Missing StyledLayerDescriptor");
+        }
+        else
+        {
+            createInternalDataSource();
+        }
     }
 
     /**
