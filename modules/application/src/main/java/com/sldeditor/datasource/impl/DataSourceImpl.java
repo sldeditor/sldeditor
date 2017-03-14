@@ -165,6 +165,7 @@ public class DataSourceImpl implements DataSourceInterface {
     @Override
     public void connect(String typeName, SLDEditorFileInterface editorFile,
             List<CheckAttributeInterface> checkList) {
+        logger.debug("connect : " + typeName);
         reset();
 
         this.editorFileInterface = editorFile;
@@ -195,6 +196,10 @@ public class DataSourceImpl implements DataSourceInterface {
 
                 notifyDataSourceLoaded();
             }
+            else
+            {
+                logger.error("dataSourceProperties is empty");
+            }
         }
     }
 
@@ -202,6 +207,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * Create inline data sources
      */
     private void createUserLayerDataSources() {
+        logger.debug("createUserLayerDataSources");
         if (inlineDataSource == null) {
             ConsoleManager.getInstance().error(this, "No inline data source creation object set");
         } else {
@@ -225,6 +231,8 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param typeName the type name
      */
     private void openExternalDataSource(String typeName) {
+        logger.debug("openExternalDataSource : " + typeName);
+
         if (externalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No external data source creation object set");
         } else {
@@ -452,6 +460,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * Open without data source.
      */
     private void openWithoutDataSource() {
+        logger.debug("openWithoutDataSource");
 
         connectedToDataSourceFlag = false;
 
@@ -465,6 +474,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * Creates the internal data source.
      */
     private void createInternalDataSource() {
+        logger.debug("createInternalDataSource");
 
         if (internalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
