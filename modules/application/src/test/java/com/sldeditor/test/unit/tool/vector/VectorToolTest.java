@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.awt.event.WindowEvent;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,6 +51,7 @@ import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -114,6 +116,12 @@ public class VectorToolTest {
     /** The Constant SUFFIX. */
     private static final String SUFFIX = ".sld";
 
+    @BeforeClass
+    public static void startUp()
+    {
+    	clearDown();
+    }
+    
     @AfterClass
     public static void cleanUp() {
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
@@ -266,7 +274,6 @@ public class VectorToolTest {
 
             // Display the window.
             frame.pack();
-            frame.setVisible(true);
 
             return sldEditor;
         }
@@ -409,8 +416,17 @@ public class VectorToolTest {
         }
 
         // Tidy up so the remaining unit tests are ok
+        JFrame frame = testSLDEditor.getApplicationFrame();
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         testSLDEditor = null;
-        SelectedSymbol.destroyInstance();
+        clearDown();
+
+        // Delete the shape files we extracted
+        purgeDirectory(tempFolder);
+    }
+
+	private static void clearDown() {
+		SelectedSymbol.destroyInstance();
         SLDEditorFile.destroyInstance();
         SLDEditorMenus.destroyInstance();
         DatabaseConnectionManager.destroyInstance();
@@ -419,10 +435,7 @@ public class VectorToolTest {
         VendorOptionManager.destroyInstance();
         EnvironmentVariableManager.destroyInstance();
         UndoManager.destroyInstance();
-
-        // Delete the shape files we extracted
-        purgeDirectory(tempFolder);
-    }
+	}
 
     @Test
     public void testVectorToolDBDataSource() {
@@ -432,7 +445,12 @@ public class VectorToolTest {
         CheckAttributeFactory.setOverideCheckList(checkList);
 
         String testsldfile = "/polygon/sld/polygon_polygonwithdefaultlabel.sld";
-        TestSLDEditor testSLDEditor = new TestSLDEditor(null, null, null);
+        TestSLDEditor testSLDEditor = null;
+        try {
+            testSLDEditor = TestSLDEditor.createAndShowGUI2(null, null, true, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         RenderPanelImpl.setUnderTest(true);
         InputStream inputStream = VectorToolTest.class.getResourceAsStream(testsldfile);
 
@@ -532,16 +550,10 @@ public class VectorToolTest {
         }
 
         // Tidy up so the remaining unit tests are ok
+        JFrame frame = testSLDEditor.getApplicationFrame();
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         testSLDEditor = null;
-        SelectedSymbol.destroyInstance();
-        SLDEditorFile.destroyInstance();
-        SLDEditorMenus.destroyInstance();
-        DatabaseConnectionManager.destroyInstance();
-        GeoServerConnectionManager.destroyInstance();
-        PrefManager.destroyInstance();
-        VendorOptionManager.destroyInstance();
-        EnvironmentVariableManager.destroyInstance();
-        UndoManager.destroyInstance();
+        clearDown();
 
         // Delete the shape files we extracted
         purgeDirectory(tempFolder);
