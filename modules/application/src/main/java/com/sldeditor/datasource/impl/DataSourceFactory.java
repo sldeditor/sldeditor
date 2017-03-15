@@ -60,7 +60,7 @@ public class DataSourceFactory {
      * @param override the data source to override in the factory
      * @return the data source interface
      */
-    public static synchronized DataSourceInterface createDataSource(DataSourceInterface override)
+    public static DataSourceInterface createDataSource(DataSourceInterface override)
     {
         if(override != null)
         {
