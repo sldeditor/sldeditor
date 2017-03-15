@@ -114,7 +114,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     protected static JFrame frame = null;
 
     /** The data source. */
-    private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
+    private DataSourceInterface dataSource = null;
 
     /** The batch import list. */
     private List<ExtensionInterface> extensionList = new ArrayList<ExtensionInterface>();
@@ -228,6 +228,8 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     public SLDEditor(String filename, List<String> extensionArgList,
             SLDEditorDlgInterface overrideSLDEditorDlg) {
+
+        dataSource = DataSourceFactory.createDataSource(null);
 
         if (overrideSLDEditorDlg == null) {
             sldEditorDlg = new SLDEditorDlg();

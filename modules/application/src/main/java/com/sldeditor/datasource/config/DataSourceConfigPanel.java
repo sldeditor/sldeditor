@@ -77,7 +77,7 @@ public class DataSourceConfigPanel extends JPanel
     private DataSourceAttributeListInterface attributeData = null;
 
     /** The data source. */
-    private DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
+    private DataSourceInterface dataSource = null;
 
     /** The data source connector panel. */
     private JPanel dscPanel;
@@ -110,6 +110,8 @@ public class DataSourceConfigPanel extends JPanel
      * Instantiates a new data source config.
      */
     public DataSourceConfigPanel() {
+        dataSource = DataSourceFactory.createDataSource(null);
+
         dataSource.addListener(this);
         setLayout(new BorderLayout());
 
