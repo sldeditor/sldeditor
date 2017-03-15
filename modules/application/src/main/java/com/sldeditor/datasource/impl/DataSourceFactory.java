@@ -18,6 +18,8 @@
  */
 package com.sldeditor.datasource.impl;
 
+import org.apache.log4j.Logger;
+
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.example.ExampleLineInterface;
 import com.sldeditor.datasource.example.ExamplePointInterface;
@@ -54,6 +56,9 @@ public class DataSourceFactory {
     /** The inline data source. */
     private static CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
 
+    /** The logger. */
+    private static Logger logger = Logger.getLogger(DataSourceFactory.class);
+
     /**
      * Creates a new DataSource object.
      *
@@ -62,8 +67,11 @@ public class DataSourceFactory {
      */
     public static DataSourceInterface createDataSource(DataSourceInterface override)
     {
+        logger.debug("createDataSource()");
+
         if(override != null)
         {
+            logger.debug("override");
             if((dataSource == null) || override.getClass() != dataSource.getClass())
             {
                 dataSource = override;
@@ -72,8 +80,10 @@ public class DataSourceFactory {
         }
         else
         {
+            logger.debug("default()");
             if(dataSource == null)
             {
+                logger.debug("create");
                 dataSource = new DataSourceImpl();
                 dataSource.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
             }
