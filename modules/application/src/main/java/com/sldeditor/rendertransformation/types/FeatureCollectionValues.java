@@ -44,6 +44,7 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 public class FeatureCollectionValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
+    @SuppressWarnings("unused")
     private FeatureCollection value = null;
 
     /**

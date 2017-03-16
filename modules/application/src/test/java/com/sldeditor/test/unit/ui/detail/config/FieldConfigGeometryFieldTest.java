@@ -32,6 +32,7 @@ import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
@@ -43,7 +44,8 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigGeometryField.
- * <p>{@link com.sldeditor.ui.detail.config.FieldConfigGeometryField}
+ * <p>
+ * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -55,6 +57,7 @@ public class FieldConfigGeometryFieldTest {
     public class TestDataSource implements DataSourceInterface {
 
         private static final String GEOMETRY_FIELD = "Geometry_1";
+
         /** The listener list. */
         private List<DataSourceUpdatedInterface> listenerList = new ArrayList<DataSourceUpdatedInterface>();
 
@@ -75,7 +78,8 @@ public class FieldConfigGeometryFieldTest {
          * @param editorFile the editor file
          */
         @Override
-        public void connect(String typeName, SLDEditorFileInterface editorFile) {
+        public void connect(String typeName, SLDEditorFileInterface editorFile,
+                List<CheckAttributeInterface> checkList) {
         }
 
         /**
@@ -105,28 +109,19 @@ public class FieldConfigGeometryFieldTest {
         public List<String> getAttributes(Class<?> expectedDataType) {
             List<String> attributeList = new ArrayList<String>();
 
-            if(expectedDataType == Date.class)
-            {
+            if (expectedDataType == Date.class) {
                 attributeList.add("Date_1");
                 attributeList.add("Date_2");
-            }
-            else if(expectedDataType == Number.class)
-            {
+            } else if (expectedDataType == Number.class) {
                 attributeList.add("Integer_1");
                 attributeList.add("Double_2");
-            }
-            else if(expectedDataType == Geometry.class)
-            {
+            } else if (expectedDataType == Geometry.class) {
                 attributeList.add(GEOMETRY_FIELD);
-            }
-            else if(expectedDataType == String.class)
-            {
+            } else if (expectedDataType == String.class) {
                 attributeList.add("String_1");
                 attributeList.add("String_2");
                 attributeList.add("String_3");
-            }
-            else
-            {
+            } else {
                 attributeList.add("Date_1");
                 attributeList.add("Date_2");
                 attributeList.add("Integer_1");
@@ -222,10 +217,8 @@ public class FieldConfigGeometryFieldTest {
         /**
          * Notify data source loaded.
          */
-        public void notifyDataSourceLoaded()
-        {
-            for(DataSourceUpdatedInterface listener : listenerList)
-            {
+        public void notifyDataSourceLoaded() {
+            for (DataSourceUpdatedInterface listener : listenerList) {
                 listener.dataSourceLoaded(getGeometryType(), false);
             }
         }
@@ -262,14 +255,18 @@ public class FieldConfigGeometryFieldTest {
         public void updateUserLayers() {
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
          */
         @Override
         public void updateFieldType(String fieldName, Class<?> dataType) {
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.datasource.DataSourceInterface#getGeometryFieldName()
          */
         @Override
@@ -279,12 +276,13 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#isEnabled()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#internal_setEnabled(boolean)}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", true));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -307,7 +305,8 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testSetVisible() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -317,28 +316,27 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateExpression(java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateField(java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#getStringValue()}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#generateExpression()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateExpression(java.lang.Object)}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateField(java.lang.String)}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}. Test
+     * method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
-        class TestFieldConfigGeometryField extends FieldConfigGeometryField
-        {
+        class TestFieldConfigGeometryField extends FieldConfigGeometryField {
 
             public TestFieldConfigGeometryField(FieldConfigCommonData commonData) {
                 super(commonData);
             }
 
-            public Expression callGenerateExpression()
-            {
+            public Expression callGenerateExpression() {
                 return generateExpression();
             }
         }
 
-        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", false));
+        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -367,19 +365,19 @@ public class FieldConfigGeometryFieldTest {
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedExpression.toString().compareTo(actualExpression.toString()) == 0);
 
-        
-        field.populateField((String)null);
+        field.populateField((String) null);
         String stringValue = field.getStringValue();
         assertNull(stringValue);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#revertToDefaultValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setDefaultValue(java.lang.String)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#revertToDefaultValue()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setDefaultValue(java.lang.String)}.
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", true));
 
         TestDataSource testDataSource = new TestDataSource();
         String expectedDefaultValue = testDataSource.getDefaultGeometryField();
@@ -405,20 +403,19 @@ public class FieldConfigGeometryFieldTest {
     @Test
     public void testCreateCopy() {
 
-        class TestFieldConfigGeometryField extends FieldConfigGeometryField
-        {
+        class TestFieldConfigGeometryField extends FieldConfigGeometryField {
 
             public TestFieldConfigGeometryField(FieldConfigCommonData commonData) {
                 super(commonData);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
+        TestFieldConfigGeometryField field = new TestFieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", true));
 
         FieldConfigGeometryField copy = (FieldConfigGeometryField) field.callCreateCopy(null);
         assertNull(copy);
@@ -430,13 +427,14 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#redoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#undoAction(com.sldeditor.common.undo.UndoInterface)}. Test
+     * method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#redoAction(com.sldeditor.common.undo.UndoInterface)}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", true));
 
         field.undoAction(null);
         field.redoAction(null);
@@ -458,7 +456,8 @@ public class FieldConfigGeometryFieldTest {
         String expectedUndoTestValue = "";
         String expectedRedoTestValue = testDataSource.getDefaultGeometryField();
 
-        UndoEvent undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, expectedUndoTestValue, expectedRedoTestValue);
+        UndoEvent undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, expectedUndoTestValue,
+                expectedRedoTestValue);
         field.undoAction(undoEvent);
         assertTrue(expectedUndoTestValue.compareTo(field.getStringValue()) == 0);
 
@@ -471,7 +470,8 @@ public class FieldConfigGeometryFieldTest {
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigGeometryField field = new FieldConfigGeometryField(new FieldConfigCommonData(String.class,FieldIdEnum.NAME, "test label", true));
+        FieldConfigGeometryField field = new FieldConfigGeometryField(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", true));
 
         field.attributeSelection("field");
         // Does nothing

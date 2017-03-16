@@ -18,12 +18,15 @@
  */
 package com.sldeditor.datasource.connector.instance;
 
+import java.awt.Font;
 import java.util.Map;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
+import com.sldeditor.common.localisation.Localisation;
 
 /**
  * Data source connector for a no connection.
@@ -37,6 +40,25 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface {
 
     /** The panel. */
     private JPanel panel = new JPanel();
+
+    /**
+     * Instantiates a new data source connector empty.
+     */
+    public DataSourceConnectorEmpty()
+    {
+        createUI();
+    }
+
+    /**
+     * Creates the UI.
+     */
+    private void createUI() {
+        JLabel label = new JLabel(Localisation.getString(DataSourceConnectorEmpty.class, "DataSourceConnectorEmpty.internalDataSource"));
+        Font font = label.getFont();
+        Font f = new Font(font.getName(), font.getStyle(), 24);
+        label.setFont(f);
+        panel.add(label);
+    }
 
     /*
      * (non-Javadoc)

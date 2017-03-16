@@ -159,10 +159,10 @@ public class DataSourceAttributeDataTest {
         assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType2, expectedValue1)));
         assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, null, expectedValue1)));
         assertFalse(dsa1.equals(new DataSourceAttributeData(null, expectedType1, expectedValue1)));
-        assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType1, expectedValue2)));
+        assertTrue(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType1, expectedValue2)));
         assertFalse(new DataSourceAttributeData(null, expectedType1, expectedValue1).equals(dsa1));
         assertFalse(new DataSourceAttributeData(expectedName1, null, expectedValue1).equals(dsa1));
-        assertFalse(new DataSourceAttributeData(expectedName1, expectedType1, null).equals(dsa1));
+        assertTrue(new DataSourceAttributeData(expectedName1, expectedType1, null).equals(dsa1));
         assertFalse(new DataSourceAttributeData(null, expectedType1, expectedValue1).equals("wrong class"));
     }
 }

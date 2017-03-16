@@ -184,7 +184,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         // Note that the data/cell address is constant,
         // no matter where the cell appears onscreen.
         if (isConnectedToDataSource) {
-            if (col != FIELD_COLUMN_ID) {
+            if (col == VALUE_COLUMN_ID) {
                 return true;
             } else {
                 return false;

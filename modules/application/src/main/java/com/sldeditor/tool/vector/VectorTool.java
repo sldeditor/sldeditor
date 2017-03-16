@@ -43,6 +43,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.checks.CheckAttributeFactory;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
@@ -216,19 +217,26 @@ public class VectorTool implements ToolInterface {
     @Override
     public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        for (NodeInterface node : nodeTypeList) {
-            if (node instanceof FileTreeNode) {
-                FileTreeNode fileTreeNode = (FileTreeNode) node;
+        if ((nodeTypeList != null) && !nodeTypeList.isEmpty()) {
+            for (NodeInterface node : nodeTypeList) {
+                if (node instanceof FileTreeNode) {
+                    FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-                if (fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.VECTOR) {
+                    if (fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.VECTOR) {
+                        return false;
+                    }
+                } else if (node instanceof DatabaseFeatureClassNode) {
+                    return true;
+                } else {
                     return false;
                 }
-            } else if (node instanceof DatabaseFeatureClassNode) {
-                return true;
-            } else {
-                return false;
             }
         }
+        else
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -379,7 +387,7 @@ public class VectorTool implements ToolInterface {
 
         if (dataSource != null) {
             String dataSourceName = ExternalFilenames.removeSuffix(vectorFile.getName());
-            dataSource.connect(dataSourceName, sldEditorFile);
+            dataSource.connect(dataSourceName, sldEditorFile, CheckAttributeFactory.getCheckList());
         }
     }
 
@@ -414,7 +422,8 @@ public class VectorTool implements ToolInterface {
             DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
             if (dataSource != null) {
-                dataSource.connect(featureClassNode.toString(), SLDEditorFile.getInstance());
+                dataSource.connect(featureClassNode.toString(), SLDEditorFile.getInstance(),
+                        CheckAttributeFactory.getCheckList());
             }
         }
     }

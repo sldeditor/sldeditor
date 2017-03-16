@@ -197,21 +197,6 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
     }
 
     /**
-     * Refresh database.
-     *
-     * @param connection the connection
-     * @param databaseNode the database node
-     */
-    private void refreshDatabase(DatabaseConnection connection, DatabaseNode databaseNode)
-    {
-        databaseNode.removeAllChildren();
-
-        populateFeatureClasses(connection, databaseNode);
-
-        treeModel.reload(databaseNode);
-    }
-
-    /**
      * Removes the node.
      *
      * @param databaseNode the database node
@@ -235,34 +220,6 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface
                 }
             }
         }
-    }
-
-    /**
-     * Get the child node of a parent.
-     *
-     * @param parentNode the parent node
-     * @param nodeTitlePrefix the node title prefix
-     * @return the node
-     */
-    private DefaultMutableTreeNode getNode(DefaultMutableTreeNode parentNode, String nodeTitlePrefix)
-    {
-        if(parentNode != null)
-        {
-            for(int index = 0; index < parentNode.getChildCount(); index ++)
-            {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)parentNode.getChildAt(index);
-                String nodeName = (String)node.getUserObject();
-                if(nodeName != null)
-                {
-                    if(nodeName.startsWith(nodeTitlePrefix))
-                    {
-                        return node;
-                    }
-                }
-            }
-        }
-
-        return null;
     }
 
     /* (non-Javadoc)

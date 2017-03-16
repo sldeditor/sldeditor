@@ -34,7 +34,6 @@ import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -44,7 +43,6 @@ import org.opengis.feature.type.PropertyDescriptor;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -52,6 +50,7 @@ import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -161,15 +160,18 @@ public class DataSourceImpl implements DataSourceInterface {
      *
      * @param typeName the type name
      * @param editorFile the editor file
+     * @param checkList the check list
      */
     @Override
-    public void connect(String typeName, SLDEditorFileInterface editorFile) {
+    public void connect(String typeName, SLDEditorFileInterface editorFile,
+            List<CheckAttributeInterface> checkList) {
+        logger.debug("connect : " + typeName);
         reset();
 
         this.editorFileInterface = editorFile;
 
         if (editorFileInterface != null) {
-            this.dataSourceProperties = editorFile.getDataSource();
+            this.dataSourceProperties = editorFileInterface.getDataSource();
 
             if (this.dataSourceProperties != null) {
                 if (this.dataSourceProperties.isEmpty()) {
@@ -184,33 +186,19 @@ public class DataSourceImpl implements DataSourceInterface {
                 createUserLayerDataSources();
 
                 // Report any attributes used in SLD but not in data source
-                checkAttributes(editorFile);
+                if(checkList != null)
+                {
+                    for(CheckAttributeInterface check : checkList)
+                    {
+                        check.checkAttributes(editorFile);
+                    }
+                }
 
                 notifyDataSourceLoaded();
             }
-        }
-    }
-
-    /**
-     * Check attributes, Report any attributes used in SLD but not in data source
-     *
-     * @param editorFile the editor file
-     */
-    private void checkAttributes(SLDEditorFileInterface editorFile) {
-        ExtractAttributes extract = new ExtractAttributes();
-        StyledLayerDescriptor sld = editorFile.getSLD();
-        extract.extractDefaultFields(sld);
-        List<DataSourceAttributeData> sldFieldList = extract.getFields();
-
-        List<DataSourceAttributeData> dataSourceList = editorFile.getSLDData().getFieldList();
-
-        for(DataSourceAttributeData sldField : sldFieldList)
-        {
-            if(!dataSourceList.contains(sldField))
+            else
             {
-                ConsoleManager.getInstance().error(this,
-                        Localisation.getField(DataSourceImpl.class, "DataSourceImpl.missingAttribute")
-                        + " " + sldField.getName());
+                logger.error("dataSourceProperties is empty");
             }
         }
     }
@@ -219,10 +207,12 @@ public class DataSourceImpl implements DataSourceInterface {
      * Create inline data sources
      */
     private void createUserLayerDataSources() {
+        logger.debug("createUserLayerDataSources");
         if (inlineDataSource == null) {
             ConsoleManager.getInstance().error(this, "No inline data source creation object set");
         } else {
-            userLayerDataSourceInfo = inlineDataSource.connect(null, null, this.editorFileInterface);
+            userLayerDataSourceInfo = inlineDataSource.connect(null, null,
+                    this.editorFileInterface);
 
             if (userLayerDataSourceInfo != null) {
                 for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
@@ -241,6 +231,8 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param typeName the type name
      */
     private void openExternalDataSource(String typeName) {
+        logger.debug("openExternalDataSource : " + typeName);
+
         if (externalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No external data source creation object set");
         } else {
@@ -272,7 +264,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * Populates the list of available data stores that can be connected to.
      */
     private void populateAvailableDataStores() {
-        DataAccessFactory fac;
+        DataAccessFactory fac = null;
 
         logger.debug("Available data store factories:");
 
@@ -468,19 +460,25 @@ public class DataSourceImpl implements DataSourceInterface {
      * Open without data source.
      */
     private void openWithoutDataSource() {
+        logger.debug("openWithoutDataSource");
 
         connectedToDataSourceFlag = false;
 
         if (this.editorFileInterface.getSLD() == null)
-            return;
-
-        createInternalDataSource();
+        {
+            logger.debug("Missing StyledLayerDescriptor");
+        }
+        else
+        {
+            createInternalDataSource();
+        }
     }
 
     /**
      * Creates the internal data source.
      */
     private void createInternalDataSource() {
+        logger.debug("createInternalDataSource");
 
         if (internalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
@@ -489,8 +487,8 @@ public class DataSourceImpl implements DataSourceInterface {
             int attempt = 0;
             boolean retry = true;
             while (retry && (attempt < MAX_RETRIES)) {
-                List<DataSourceInfo> dataSourceInfoList = internalDataSource
-                        .connect(null, dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+                List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(null,
+                        dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
                 if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                     dataSourceInfo = dataSourceInfoList.get(0);
                 }
@@ -515,8 +513,9 @@ public class DataSourceImpl implements DataSourceInterface {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
         } else {
             logger.debug("Example data source:");
-            List<DataSourceInfo> dataSourceInfoList = internalDataSource
-                    .connect(dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(
+                    dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(),
+                    this.editorFileInterface);
 
             if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                 exampleDataSourceInfo = dataSourceInfoList.get(0);
@@ -595,11 +594,14 @@ public class DataSourceImpl implements DataSourceInterface {
             List<DataSourceAttributeData> attributeDataList = attributeData.getData();
 
             if (this.editorFileInterface != null) {
+                this.dataSourceProperties = editorFileInterface.getDataSource();
                 SLDDataInterface sldData = this.editorFileInterface.getSLDData();
                 if (sldData != null) {
                     sldData.setFieldList(attributeDataList);
                 }
             }
+            this.connectedToDataSourceFlag = false;
+
             createInternalDataSource();
 
             notifyDataSourceLoaded();

@@ -39,6 +39,7 @@ import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.sldeditor.datasource.example.ExampleLineInterface;
 import com.sldeditor.datasource.example.ExamplePointInterface;
 import com.sldeditor.datasource.example.ExamplePolygonInterface;
@@ -67,7 +68,7 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void connect(String typeName, SLDEditorFileInterface editorFile) {
+        public void connect(String typeName, SLDEditorFileInterface editorFile, List<CheckAttributeInterface> checkList) {
         }
 
         @Override

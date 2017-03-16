@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2017, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,32 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.sldeditor.extension.filesystem.database;
-
-import java.util.List;
-
-import com.sldeditor.common.data.DatabaseConnection;
 
 /**
- * The Interface GeoServerReadProgressInterface.
- * 
  * @author Robert Ward (SCISYS)
+ *
  */
-public interface DatabaseReadProgressInterface {
-
-    /**
-     * Start populating.
-     *
-     * @param connection the connection
-     */
-    void startPopulating(DatabaseConnection connection);
-
-    /**
-     * Read feature classes complete.
-     *
-     * @param connection the connection
-     * @param featureClassList the feature class list
-     */
-    void readFeatureClassesComplete(DatabaseConnection connection, List<String> featureClassList);
-
-}
+package com.sldeditor.datasource.checks;

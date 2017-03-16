@@ -23,8 +23,7 @@ package com.sldeditor.datasource.attribute;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceAttributeData implements Cloneable
-{
+public class DataSourceAttributeData implements Cloneable {
     /** The name. */
     private String name;
 
@@ -48,7 +47,9 @@ public class DataSourceAttributeData implements Cloneable
         this.value = value;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#clone()
      */
     @Override
@@ -63,8 +64,7 @@ public class DataSourceAttributeData implements Cloneable
      *
      * @param objectToCopy the object to copy
      */
-    public DataSourceAttributeData(DataSourceAttributeData objectToCopy)
-    {
+    public DataSourceAttributeData(DataSourceAttributeData objectToCopy) {
         super();
         this.name = objectToCopy.name;
         this.type = objectToCopy.type;
@@ -125,7 +125,9 @@ public class DataSourceAttributeData implements Cloneable
         this.value = value;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -138,7 +140,9 @@ public class DataSourceAttributeData implements Cloneable
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -167,13 +171,9 @@ public class DataSourceAttributeData implements Cloneable
         } else if (!type.equals(other.type)) {
             return false;
         }
-        if (value == null) {
-            if (other.value != null) {
-                return false;
-            }
-        } else if (!value.equals(other.value)) {
-            return false;
-        }
+
+        // Ignore value
+
         return true;
     }
 }

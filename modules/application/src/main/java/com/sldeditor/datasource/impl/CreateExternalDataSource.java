@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.data.DataStore;
@@ -61,6 +62,8 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
     /** The default crs. */
     private CoordinateReferenceSystem defaultCRS;
 
+    /** The logger. */
+    private static Logger logger = Logger.getLogger(CreateExternalDataSource.class);
     /**
      * Default constructor
      */
@@ -155,6 +158,10 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                         AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
 
                         dsInfo.setGridCoverageReader(reader);
+                    }
+                    else
+                    {
+                        logger.error("No matching datastore");
                     }
                 }
             } catch (IOException e) {

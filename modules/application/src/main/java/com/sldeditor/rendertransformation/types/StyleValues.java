@@ -42,6 +42,7 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 public class StyleValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
+    @SuppressWarnings("unused")
     private Style value = null;
 
     /**

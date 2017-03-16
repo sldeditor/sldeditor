@@ -100,7 +100,6 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @param supportsDuplication the supports duplication
      * @param detailList the detail list
      * @param databaseConnectionName the database connection name
-     * @param databaseClientConnector the database client connector
      */
     public DatabaseConnection(Param databaseType, String databaseTypeLabel,
             boolean supportsDuplication, List<DatabaseConnectionField> detailList,
