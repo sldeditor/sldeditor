@@ -90,6 +90,10 @@ public class DataSourceFactory {
      * @return the data source
      */
     public static DataSourceInterface getDataSource() {
+        if(dataSource == null)
+        {
+            createDataSource(null);
+        }
         return dataSource;
     }
 
