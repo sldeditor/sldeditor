@@ -117,17 +117,17 @@ public class VectorToolTest {
     private static final String SUFFIX = ".sld";
 
     @BeforeClass
-    public static void startUp()
-    {
-    	clearDown();
+    public static void startUp() {
+        clearDown();
     }
-    
+
     @AfterClass
     public static void cleanUp() {
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
         CheckAttributeFactory.setOverideCheckList(checkList);
 
         RenderPanelImpl.setUnderTest(false);
+        clearDown();
     }
 
     /**
@@ -254,8 +254,9 @@ public class VectorToolTest {
             super.populate(sldData);
         }
 
-        public static TestSLDEditor createAndShowGUI2(String filename, List<String> extensionArgList,
-                boolean underTest, SLDEditorDlgInterface overrideSLDEditorDlg) {
+        public static TestSLDEditor createAndShowGUI2(String filename,
+                List<String> extensionArgList, boolean underTest,
+                SLDEditorDlgInterface overrideSLDEditorDlg) {
             SLDEditor.underTestFlag = underTest;
 
             frame = new JFrame("test");
@@ -267,10 +268,12 @@ public class VectorToolTest {
             RenderPanelImpl.setUnderTest(underTest);
             ReloadManager.setUnderTest(underTest);
 
-            frame.setDefaultCloseOperation(underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(
+                    underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
 
             // Add contents to the window.
-            TestSLDEditor sldEditor = new TestSLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
+            TestSLDEditor sldEditor = new TestSLDEditor(filename, extensionArgList,
+                    overrideSLDEditorDlg);
 
             // Display the window.
             frame.pack();
@@ -425,8 +428,12 @@ public class VectorToolTest {
         purgeDirectory(tempFolder);
     }
 
-	private static void clearDown() {
-		SelectedSymbol.destroyInstance();
+    /**
+     * Clear down.
+     */
+    private static void clearDown() {
+        DataSourceFactory.reset();
+        SelectedSymbol.destroyInstance();
         SLDEditorFile.destroyInstance();
         SLDEditorMenus.destroyInstance();
         DatabaseConnectionManager.destroyInstance();
@@ -435,7 +442,7 @@ public class VectorToolTest {
         VendorOptionManager.destroyInstance();
         EnvironmentVariableManager.destroyInstance();
         UndoManager.destroyInstance();
-	}
+    }
 
     @Test
     public void testVectorToolDBDataSource() {
@@ -493,17 +500,18 @@ public class VectorToolTest {
         File tempFolder = Files.createTempDir();
         TestVectorTool vectorTool = new TestVectorTool(testSLDEditor);
         try {
-            InputStream gpkgInputStream = VectorToolTest.class.getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
+            InputStream gpkgInputStream = VectorToolTest.class
+                    .getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
 
             final File gpkgFile = new File(tempFolder, "sld_cookbook_polygon.gpkg");
             try (FileOutputStream out = new FileOutputStream(gpkgFile)) {
                 IOUtils.copy(gpkgInputStream, out);
             }
 
-            DatabaseConnection databaseConnection = DatabaseConnectionFactory.getConnection(gpkgFile.getAbsolutePath());
+            DatabaseConnection databaseConnection = DatabaseConnectionFactory
+                    .getConnection(gpkgFile.getAbsolutePath());
             DatabaseFeatureClassNode dbFCTreeNode = new DatabaseFeatureClassNode(null,
-                    databaseConnection,
-                    "sld_cookbook_polygon");
+                    databaseConnection, "sld_cookbook_polygon");
 
             DatabaseConnectionManager.getInstance().addNewConnection(null, databaseConnection);
             vectorTool.testSetDataSource(dbFCTreeNode);
@@ -558,6 +566,7 @@ public class VectorToolTest {
         // Delete the shape files we extracted
         purgeDirectory(tempFolder);
     }
+
     /**
      * Purge directory.
      *
@@ -719,11 +728,14 @@ public class VectorToolTest {
 
         try {
             VectorTool vectorTool = new VectorTool(null);
-            FileTreeNode vectorTreeNode = new FileTreeNode(new File("/test"), "sld_cookbook_polygon.shp");
+            FileTreeNode vectorTreeNode = new FileTreeNode(new File("/test"),
+                    "sld_cookbook_polygon.shp");
             vectorTreeNode.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
-            FileTreeNode rasterTreeNode = new FileTreeNode(new File("/test"), "sld_cookbook_polygon.tif");
+            FileTreeNode rasterTreeNode = new FileTreeNode(new File("/test"),
+                    "sld_cookbook_polygon.tif");
             rasterTreeNode.setFileCategory(FileTreeNodeTypeEnum.RASTER);
-            DatabaseFeatureClassNode databaseFeatureClassNode = new DatabaseFeatureClassNode(null, null, "db fc");
+            DatabaseFeatureClassNode databaseFeatureClassNode = new DatabaseFeatureClassNode(null,
+                    null, "db fc");
             List<Class<?>> uniqueNodeTypeList = new ArrayList<Class<?>>();
             List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
             List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();

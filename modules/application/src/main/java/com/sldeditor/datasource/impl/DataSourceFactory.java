@@ -60,6 +60,15 @@ public class DataSourceFactory {
     private static Logger logger = Logger.getLogger(DataSourceFactory.class);
 
     /**
+     * Reset.
+     */
+    public static void reset()
+    {
+        dataSource = null;
+        logger.debug("reset");
+    }
+    
+    /**
      * Creates a new DataSource object.
      *
      * @param override the data source to override in the factory
