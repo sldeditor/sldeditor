@@ -229,7 +229,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public SLDEditor(String filename, List<String> extensionArgList,
             SLDEditorDlgInterface overrideSLDEditorDlg) {
 
-        System.out.println("SLDEditor::SLDEditor");
         dataSource = DataSourceFactory.createDataSource(null);
 
         if (overrideSLDEditorDlg == null) {

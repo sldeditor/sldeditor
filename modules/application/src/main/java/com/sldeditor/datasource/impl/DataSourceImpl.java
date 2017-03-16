@@ -264,7 +264,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * Populates the list of available data stores that can be connected to.
      */
     private void populateAvailableDataStores() {
-        DataAccessFactory fac;
+        DataAccessFactory fac = null;
 
         logger.debug("Available data store factories:");
 

@@ -18,8 +18,6 @@
  */
 package com.sldeditor.datasource.impl;
 
-import org.apache.log4j.Logger;
-
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.example.ExampleLineInterface;
 import com.sldeditor.datasource.example.ExamplePointInterface;
@@ -56,45 +54,31 @@ public class DataSourceFactory {
     /** The inline data source. */
     private static CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
 
-    /** The logger. */
-    private static Logger logger = Logger.getLogger(DataSourceFactory.class);
-
     /**
      * Reset.
      */
-    public static void reset()
-    {
+    public static void reset() {
         dataSource = null;
-        logger.debug("reset");
     }
-    
+
     /**
      * Creates a new DataSource object.
      *
      * @param override the data source to override in the factory
      * @return the data source interface
      */
-    public static DataSourceInterface createDataSource(DataSourceInterface override)
-    {
-        logger.debug("createDataSource()");
-
-        if(override != null)
-        {
-            logger.debug("override");
-            if((dataSource == null) || override.getClass() != dataSource.getClass())
-            {
+    public static DataSourceInterface createDataSource(DataSourceInterface override) {
+        if (override != null) {
+            if ((dataSource == null) || override.getClass() != dataSource.getClass()) {
                 dataSource = override;
-                dataSource.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
+                dataSource.setDataSourceCreation(internalDataSource, externalDataSource,
+                        inlineDataSource);
             }
-        }
-        else
-        {
-            logger.debug("default()");
-            if(dataSource == null)
-            {
-                logger.debug("create");
+        } else {
+            if (dataSource == null) {
                 dataSource = new DataSourceImpl();
-                dataSource.setDataSourceCreation(internalDataSource, externalDataSource, inlineDataSource);
+                dataSource.setDataSourceCreation(internalDataSource, externalDataSource,
+                        inlineDataSource);
             }
         }
         return dataSource;
@@ -105,8 +89,7 @@ public class DataSourceFactory {
      *
      * @return the data source
      */
-    public static DataSourceInterface getDataSource()
-    {
+    public static DataSourceInterface getDataSource() {
         return dataSource;
     }
 
@@ -116,10 +99,8 @@ public class DataSourceFactory {
      * @param hint the hint
      * @return the example polygon interface
      */
-    public static synchronized ExamplePolygonInterface createExamplePolygon(String hint)
-    {
-        if(examplePolygonImpl == null)
-        {
+    public static synchronized ExamplePolygonInterface createExamplePolygon(String hint) {
+        if (examplePolygonImpl == null) {
             examplePolygonImpl = new ExamplePolygonImplIOM();
         }
         return examplePolygonImpl;
@@ -132,8 +113,7 @@ public class DataSourceFactory {
      * @return the example line interface
      */
     public static synchronized ExampleLineInterface createExampleLine(Object object) {
-        if(exampleLineImpl == null)
-        {
+        if (exampleLineImpl == null) {
             exampleLineImpl = new ExampleLineImpl();
         }
         return exampleLineImpl;
@@ -146,8 +126,7 @@ public class DataSourceFactory {
      * @return the example point interface
      */
     public static synchronized ExamplePointInterface createExamplePoint(Object object) {
-        if(examplePointImpl == null)
-        {
+        if (examplePointImpl == null) {
             examplePointImpl = new ExamplePointImpl();
         }
         return examplePointImpl;
