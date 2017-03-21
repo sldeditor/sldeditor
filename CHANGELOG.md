@@ -1,11 +1,57 @@
 # Change Log
 
-## [0.7.2](https://github.com/robward-scisys/sldeditor/tree/0.7.2) (2017-02-08)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.1...0.7.2)
+## [0.7.3](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2017-03-21)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.2...0.7.3)
+
+**Implemented enhancements:**
+
+- Add button to make external data source and internal data source [\#311](https://github.com/robward-scisys/sldeditor/issues/311)
+- Preserve field order after new data source field added [\#300](https://github.com/robward-scisys/sldeditor/issues/300)
+- Data source field value not set when data type changes [\#299](https://github.com/robward-scisys/sldeditor/issues/299)
+- Add Postgres/PostGIS support as datasources [\#287](https://github.com/robward-scisys/sldeditor/issues/287)
+- Add ability to clear rule filter [\#284](https://github.com/robward-scisys/sldeditor/issues/284)
+- Iss311 convert external data source [\#312](https://github.com/robward-scisys/sldeditor/pull/312) ([robward-scisys](https://github.com/robward-scisys))
+- Iss270 revert anchorpoint to null [\#308](https://github.com/robward-scisys/sldeditor/pull/308) ([robward-scisys](https://github.com/robward-scisys))
+- Iss287 add postgres datasource [\#298](https://github.com/robward-scisys/sldeditor/pull/298) ([robward-scisys](https://github.com/robward-scisys))
+- Added code to clear rule filter [\#285](https://github.com/robward-scisys/sldeditor/pull/285) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Setting data source for an existing SLD causes crash [\#309](https://github.com/robward-scisys/sldeditor/issues/309)
+- Reinstate inline features [\#303](https://github.com/robward-scisys/sldeditor/issues/303)
+- Enable Save SLD to GeoServer [\#295](https://github.com/robward-scisys/sldeditor/issues/295)
+- Expression/attribute values not cleared [\#292](https://github.com/robward-scisys/sldeditor/issues/292)
+- Iss303 reinstate inline features [\#306](https://github.com/robward-scisys/sldeditor/pull/306) ([robward-scisys](https://github.com/robward-scisys))
+- Save SLD menu option now enabled for GeoServer [\#297](https://github.com/robward-scisys/sldeditor/pull/297) ([robward-scisys](https://github.com/robward-scisys))
+- Expression/property values are cleared when value set [\#294](https://github.com/robward-scisys/sldeditor/pull/294) ([robward-scisys](https://github.com/robward-scisys))
+- Changed LabelCacheImpl to SynchronizedLabelCache [\#291](https://github.com/robward-scisys/sldeditor/pull/291) ([robward-scisys](https://github.com/robward-scisys))
+- Killed off the zombie labels again [\#288](https://github.com/robward-scisys/sldeditor/pull/288) ([robward-scisys](https://github.com/robward-scisys))
+- Iss282 long rule does not reload [\#286](https://github.com/robward-scisys/sldeditor/pull/286) ([robward-scisys](https://github.com/robward-scisys))
+- Not filter now only uses one input [\#283](https://github.com/robward-scisys/sldeditor/pull/283) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Long rule filter doesn't reload [\#282](https://github.com/robward-scisys/sldeditor/issues/282)
+- Not unary operator [\#281](https://github.com/robward-scisys/sldeditor/issues/281)
+- rule scale forgotten [\#276](https://github.com/robward-scisys/sldeditor/issues/276)
+- occasional rendering problem [\#275](https://github.com/robward-scisys/sldeditor/issues/275)
+- text symbolizer properties [\#270](https://github.com/robward-scisys/sldeditor/issues/270)
+
+**Merged pull requests:**
+
+- Iss309 set data source crash [\#310](https://github.com/robward-scisys/sldeditor/pull/310) ([robward-scisys](https://github.com/robward-scisys))
+- Add missing file from last pull request [\#307](https://github.com/robward-scisys/sldeditor/pull/307) ([robward-scisys](https://github.com/robward-scisys))
+- Revert "Iss303 reinstate inline features" [\#305](https://github.com/robward-scisys/sldeditor/pull/305) ([robward-scisys](https://github.com/robward-scisys))
+- Datasource field order preserved after adding new field [\#302](https://github.com/robward-scisys/sldeditor/pull/302) ([robward-scisys](https://github.com/robward-scisys))
+- Value updated when data source type changes [\#301](https://github.com/robward-scisys/sldeditor/pull/301) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.2](https://github.com/robward-scisys/sldeditor/tree/v0.7.2) (2017-02-08)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.1...v0.7.2)
 
 **Implemented enhancements:**
 
 - Add ability to configure range values for render transformations [\#273](https://github.com/robward-scisys/sldeditor/issues/273)
+- Iss273 configure ranges [\#277](https://github.com/robward-scisys/sldeditor/pull/277) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
@@ -15,6 +61,10 @@
 
 - Eclipse configuration [\#274](https://github.com/robward-scisys/sldeditor/issues/274)
 
+**Merged pull requests:**
+
+- Release 0.7.2 [\#279](https://github.com/robward-scisys/sldeditor/pull/279) ([robward-scisys](https://github.com/robward-scisys))
+
 ## [0.7.1](https://github.com/robward-scisys/sldeditor/tree/0.7.1) (2017-02-04)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.1...0.7.1)
 
@@ -23,7 +73,6 @@
 
 **Fixed bugs:**
 
-- zombie labels [\#255](https://github.com/robward-scisys/sldeditor/issues/255)
 - Iss270 text symbolizers [\#271](https://github.com/robward-scisys/sldeditor/pull/271) ([robward-scisys](https://github.com/robward-scisys))
 
 **Closed issues:**
