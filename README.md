@@ -1,5 +1,4 @@
-<img src="https://github.com/robward-scisys/sldeditor/blob/master/doc/img/sldeditor-logo.png" height="92">
-<a href="http://gis.scisys.co.uk"><img src="http://www.scisys.co.uk/storage/template/img/logo-scisys.jpg" hspace="100"></a>
+<img src="https://github.com/robward-scisys/sldeditor/blob/master/doc/img/sldeditor-logo.png" height="92"><a href="http://gis.scisys.co.uk"><img src="http://www.scisys.co.uk/storage/template/img/logo-scisys.jpg" hspace="100"></a>
 
 [![Build Status](https://img.shields.io/travis/robward-scisys/sldeditor/master.svg)](https://travis-ci.org/robward-scisys/sldeditor)
 [![Coverage Status](https://img.shields.io/coveralls/robward-scisys/sldeditor/master.svg)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
