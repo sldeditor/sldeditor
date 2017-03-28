@@ -37,8 +37,8 @@
     <!-- =========================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>16.1</geotools.version>
-        <geoserver.version>2.10.1</geoserver.version>
+        <geotools.version>16.2</geotools.version>
+        <geoserver.version>2.10.2</geoserver.version>
         <slf4j.version>1.5.11</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <junit.version>4.12</junit.version>
