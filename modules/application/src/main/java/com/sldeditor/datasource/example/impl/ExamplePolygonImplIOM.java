@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.example.impl;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
@@ -42,71 +43,44 @@ public class ExamplePolygonImplIOM implements ExamplePolygonInterface {
     public ExamplePolygonImplIOM() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.impl.ExamplePolygonInterface#getPolygon()
      */
     @Override
-    public Polygon getPolygon()
-    {
-        if(polygon == null)
-        {
-            double [][] rawLocations = new double[][]{
-                {-4.652710,54.069059},
-                {-4.634857,54.075506},
-                {-4.629364,54.059388},
-                {-4.600525,54.087590},
-                {-4.574432,54.102892},
-                {-4.548340,54.103697},
-                {-4.522247,54.124626},
-                {-4.476929,54.143132},
-                {-4.470062,54.162434},
-                {-4.428864,54.169670},
-                {-4.383545,54.194583},
-                {-4.398651,54.209846},
-                {-4.397278,54.223496},
-                {-4.373932,54.229919},
-                {-4.364319,54.249180},
-                {-4.301147,54.303704},
-                {-4.372559,54.315722},
-                {-4.380798,54.344550},
-                {-4.365692,54.389354},
-                {-4.364319,54.420528},
-                {-4.459076,54.402946},
-                {-4.534607,54.373359},
-                {-4.578552,54.322931},
-                {-4.601898,54.285270},
-                {-4.636230,54.258807},
-                {-4.671936,54.237143},
-                {-4.703522,54.229919},
-                {-4.728241,54.187352},
-                {-4.743347,54.173689},
-                {-4.735107,54.143132},
-                {-4.755707,54.110138},
-                {-4.783173,54.101281},
-                {-4.777679,54.086784},
-                {-4.822998,54.049714},
-                {-4.737854,54.066642},
-                {-4.709015,54.082757},
-                {-4.682922,54.062612},
-                {-4.652710,54.069059},
-            };
+    public Polygon getPolygon() {
+        if (polygon == null) {
+            double[][] rawLocations = new double[][] { { -4.652710, 54.069059 },
+                    { -4.634857, 54.075506 }, { -4.629364, 54.059388 }, { -4.600525, 54.087590 },
+                    { -4.574432, 54.102892 }, { -4.548340, 54.103697 }, { -4.522247, 54.124626 },
+                    { -4.476929, 54.143132 }, { -4.470062, 54.162434 }, { -4.428864, 54.169670 },
+                    { -4.383545, 54.194583 }, { -4.398651, 54.209846 }, { -4.397278, 54.223496 },
+                    { -4.373932, 54.229919 }, { -4.364319, 54.249180 }, { -4.301147, 54.303704 },
+                    { -4.372559, 54.315722 }, { -4.380798, 54.344550 }, { -4.365692, 54.389354 },
+                    { -4.364319, 54.420528 }, { -4.459076, 54.402946 }, { -4.534607, 54.373359 },
+                    { -4.578552, 54.322931 }, { -4.601898, 54.285270 }, { -4.636230, 54.258807 },
+                    { -4.671936, 54.237143 }, { -4.703522, 54.229919 }, { -4.728241, 54.187352 },
+                    { -4.743347, 54.173689 }, { -4.735107, 54.143132 }, { -4.755707, 54.110138 },
+                    { -4.783173, 54.101281 }, { -4.777679, 54.086784 }, { -4.822998, 54.049714 },
+                    { -4.737854, 54.066642 }, { -4.709015, 54.082757 }, { -4.682922, 54.062612 },
+                    { -4.652710, 54.069059 }, };
 
             GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 
-            Coordinate[] coords  = new Coordinate[rawLocations.length];
+            Coordinate[] coords = new Coordinate[rawLocations.length];
             int index = 0;
-            for(double[] point : rawLocations)
-            {
+            for (double[] point : rawLocations) {
                 Coordinate c = new Coordinate(point[0], point[1]);
 
                 coords[index] = c;
 
-                index ++;
+                index++;
             }
 
-            LinearRing ring = geometryFactory.createLinearRing( coords );
+            LinearRing ring = geometryFactory.createLinearRing(coords);
             LinearRing holes[] = null; // use LinearRing[] to represent holes
-            polygon = geometryFactory.createPolygon(ring, holes );
+            polygon = geometryFactory.createPolygon(ring, holes);
         }
         return polygon;
     }

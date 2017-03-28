@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common;
 
 import java.net.URL;
@@ -28,8 +29,7 @@ import javax.swing.JPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface SLDEditorInterface
-{
+public interface SLDEditorInterface {
 
     /**
      * Gets the app panel.
@@ -68,7 +68,7 @@ public interface SLDEditorInterface
      * @param sldData the sld data
      */
     void saveSLDData(SLDDataInterface sldData);
-    
+
     /**
      * Gets the load sld interface.
      *

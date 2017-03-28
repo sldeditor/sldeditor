@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar.dialog;
 
 import java.awt.Component;
@@ -52,7 +53,8 @@ public class TypeComboBoxEditor extends DefaultCellEditor {
      * @return the table cell editor component
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+            int row, int column) {
         return super.getTableCellEditorComponent(table, value, isSelected, row, column);
-    } 
+    }
 }

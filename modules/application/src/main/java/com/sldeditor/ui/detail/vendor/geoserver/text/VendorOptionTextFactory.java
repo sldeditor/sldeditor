@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionTextFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
+public class VendorOptionTextFactory
+        implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option geo server labelling. */
     private VOGeoServerLabelling vendorOptionGeoServerLabelling = null;
@@ -47,7 +49,7 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
     /** The vendor option geo server labelling underline. */
     private VOGeoServerLabellingUnderline vendorOptionGeoServerLabellingUnderline = null;
 
-    /** The vendor option geo server text symbolizer 2 */
+    /** The vendor option geo server text symbolizer 2. */
     private VOGeoServerTextSymbolizer2 vendorOptionGeoServerTextSymbolizer2 = null;
 
     /** The vendor option list. */
@@ -61,8 +63,7 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      *
      * @param panelId the panel id
      */
-    public VendorOptionTextFactory(Class<?> panelId)
-    {
+    public VendorOptionTextFactory(Class<?> panelId) {
         vendorOptionGeoServerLabelling = new VOGeoServerLabelling(panelId);
         vendorOptionList.add(vendorOptionGeoServerLabelling);
 
@@ -82,8 +83,7 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      * @return the vendor option list
      */
     @Override
-    public List<VendorOptionInterface> getVendorOptionList()
-    {
+    public List<VendorOptionInterface> getVendorOptionList() {
         return vendorOptionList;
     }
 
@@ -92,10 +92,8 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      *
      * @param textSymbolizer the text symbolizer
      */
-    public void populate(TextSymbolizer textSymbolizer)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
+    public void populate(TextSymbolizer textSymbolizer) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
             vendorOption.populate(textSymbolizer);
         }
     }
@@ -105,25 +103,24 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      *
      * @param textSymbolizer the text symbolizer
      */
-    public void updateSymbol(TextSymbolizer textSymbolizer)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+    public void updateSymbol(TextSymbolizer textSymbolizer) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            boolean displayVendorOption = VendorOptionManager.getInstance()
+                    .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
 
-            if(displayVendorOption)
-            {
+            if (displayVendorOption) {
                 vendorOption.updateSymbol(textSymbolizer);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
         this.vendorOptionVersionsList = vendorOptionVersionsList;
     }
 
@@ -132,47 +129,45 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      *
      * @param fieldConfigManager the field config manager
      */
-    public void getFieldDataManager(GraphicPanelFieldManager fieldConfigManager)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            if(vendorOption != null)
-            {
-                PopulateDetailsInterface populateInterface = (PopulateDetailsInterface)vendorOption;
+    public void getFieldDataManager(GraphicPanelFieldManager fieldConfigManager) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption != null) {
+                PopulateDetailsInterface populateInterface =
+                        (PopulateDetailsInterface) vendorOption;
                 fieldConfigManager.add(populateInterface.getFieldDataManager());
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
         List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
 
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            if(vendorOption.getClass().getName().compareTo(className) == 0)
-            {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption.getClass().getName().compareTo(className) == 0) {
                 matchingList.add(vendorOption);
             }
         }
         return matchingList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
         List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
 
-        for(VendorOptionInterface vo : vendorOptionList)
-        {
+        for (VendorOptionInterface vo : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vo.getVendorOptionInfo();
-            if(vendorOptionInfo != null)
-            {
+            if (vendorOptionInfo != null) {
                 vendorOptionInfoList.add(vendorOptionInfo);
             }
         }
@@ -187,8 +182,7 @@ public class VendorOptionTextFactory implements VendorOptionFactoryInterface, Ve
      */
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        for(VendorOptionInterface vo : vendorOptionList)
-        {
+        for (VendorOptionInterface vo : vendorOptionList) {
             vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }
     }

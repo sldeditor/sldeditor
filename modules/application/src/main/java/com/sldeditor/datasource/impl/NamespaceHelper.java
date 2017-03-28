@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.util.List;
@@ -27,17 +28,13 @@ public class NamespaceHelper {
      * @param node the node
      */
     public NamespaceHelper(Node node) {
-        if(node != null)
-        {
+        if (node != null) {
             String[] component = node.getNodeName().split(":");
 
-            if(component.length == 2)
-            {
+            if (component.length == 2) {
                 prefix = component[0];
                 elementName = component[1];
-            }
-            else if(component.length == 1)
-            {
+            } else if (component.length == 1) {
                 prefix = "";
                 elementName = component[0];
             }
@@ -52,12 +49,9 @@ public class NamespaceHelper {
      * @return true, if is element matches
      */
     public boolean isElement(List<String> requestPrefixList, String requestedElementName) {
-        if((requestPrefixList != null) && (requestedElementName != null))
-        {
-            for(String requestPrefix : requestPrefixList)
-            {
-                if(isElement(requestPrefix, requestedElementName))
-                {
+        if ((requestPrefixList != null) && (requestedElementName != null)) {
+            for (String requestPrefix : requestPrefixList) {
+                if (isElement(requestPrefix, requestedElementName)) {
                     return true;
                 }
             }
@@ -72,12 +66,9 @@ public class NamespaceHelper {
      * @return true, if is element matches
      */
     public boolean isElement(List<String> requestPrefixList) {
-        if(requestPrefixList != null)
-        {
-            for(String requestPrefix : requestPrefixList)
-            {
-                if(isElement(requestPrefix))
-                {
+        if (requestPrefixList != null) {
+            for (String requestPrefix : requestPrefixList) {
+                if (isElement(requestPrefix)) {
                     return true;
                 }
             }
@@ -93,11 +84,9 @@ public class NamespaceHelper {
      * @return true, if is element matches
      */
     public boolean isElement(String requestPrefix, String requestedElementName) {
-        if((requestPrefix != null) && (requestedElementName != null))
-        {
-            if((requestPrefix.compareToIgnoreCase(prefix) == 0) &&
-                    (requestedElementName.compareToIgnoreCase(elementName) == 0))
-            {
+        if ((requestPrefix != null) && (requestedElementName != null)) {
+            if ((requestPrefix.compareToIgnoreCase(prefix) == 0)
+                    && (requestedElementName.compareToIgnoreCase(elementName) == 0)) {
                 return true;
             }
         }
@@ -111,10 +100,8 @@ public class NamespaceHelper {
      * @return true, if is element
      */
     public boolean isElement(String requestPrefix) {
-        if(requestPrefix != null)
-        {
-            if(requestPrefix.compareToIgnoreCase(prefix) == 0)
-            {
+        if (requestPrefix != null) {
+            if (requestPrefix.compareToIgnoreCase(prefix) == 0) {
                 return true;
             }
         }
@@ -129,12 +116,9 @@ public class NamespaceHelper {
      * @return the string
      */
     public static String encode(String namespacePrefix, String element) {
-        if((namespacePrefix != null) && !namespacePrefix.isEmpty())
-        {
+        if ((namespacePrefix != null) && !namespacePrefix.isEmpty()) {
             return String.format("%s:%s", namespacePrefix, element);
-        }
-        else
-        {
+        } else {
             return element;
         }
     }

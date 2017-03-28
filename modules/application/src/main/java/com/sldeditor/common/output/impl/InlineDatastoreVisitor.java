@@ -25,11 +25,13 @@ public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
     public InlineDatastoreVisitor() {
     }
 
+    /** (non-Javadoc)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.UserLayer)
+     */
     public void visit(UserLayer layer) {
-        UserLayer copy = null;
 
         Style[] style = layer.getUserStyles();
-         int length=style.length;
+        int length = style.length;
         Style[] styleCopy = new Style[length];
         for (int i = 0; i < length; i++) {
             if (style[i] != null) {
@@ -41,7 +43,7 @@ public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
         FeatureTypeConstraint[] lfc = layer.getLayerFeatureConstraints();
         FeatureTypeConstraint[] lfcCopy = new FeatureTypeConstraint[lfc.length];
 
-        length=lfc.length;
+        length = lfc.length;
         for (int i = 0; i < length; i++) {
             if (lfc[i] != null) {
                 lfc[i].accept(this);
@@ -49,7 +51,7 @@ public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
             }
         }
 
-        copy = sf.createUserLayer();
+        UserLayer copy = sf.createUserLayer();
         copy.setName(layer.getName());
         copy.setUserStyles(styleCopy);
         copy.setLayerFeatureConstraints(lfcCopy);
@@ -58,8 +60,8 @@ public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
         copy.setInlineFeatureDatastore(layer.getInlineFeatureDatastore());
         copy.setInlineFeatureType(layer.getInlineFeatureType());
 
-        if( STRICT && !copy.equals( layer )){
-            throw new IllegalStateException("Was unable to duplicate provided UserLayer:"+layer );
+        if (STRICT && !copy.equals(layer)) {
+            throw new IllegalStateException("Was unable to duplicate provided UserLayer:" + layer);
         }
         pages.push(copy);
     }

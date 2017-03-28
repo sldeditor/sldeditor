@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.logic;
 
 import java.util.ArrayList;
@@ -41,14 +42,12 @@ public class Or implements FilterConfigInterface {
     /**
      * The Class OrExtended.
      */
-    public class OrExtended extends OrImpl implements FilterExtendedInterface
-    {
-        
+    public class OrExtended extends OrImpl implements FilterExtendedInterface {
+
         /**
          * Instantiates a new or extended.
          */
-        public OrExtended()
-        {
+        public OrExtended() {
             super(new ArrayList<Filter>());
         }
 
@@ -57,19 +56,22 @@ public class Or implements FilterConfigInterface {
          *
          * @param children the children
          */
-        public OrExtended(List<Filter> children)
-        {
+        public OrExtended(List<Filter> children) {
             super(children);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.geotools.filter.LogicFilterImpl#toString()
          */
         public String toString() {
             return "[ " + this.getChildren() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -81,8 +83,7 @@ public class Or implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Or()
-    {
+    public Or() {
     }
 
     /**
@@ -93,20 +94,12 @@ public class Or implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("Or", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("filter", ExpressionTypeEnum.FILTER, Filter.class));
-        filterName.addParameter(new FilterNameParameter("filter", ExpressionTypeEnum.FILTER, Filter.class));
+        filterName.addParameter(
+                new FilterNameParameter("filter", ExpressionTypeEnum.FILTER, Filter.class));
+        filterName.addParameter(
+                new FilterNameParameter("filter", ExpressionTypeEnum.FILTER, Filter.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new OrExtended();
     }
 
     /**
@@ -117,6 +110,16 @@ public class Or implements FilterConfigInterface {
     @Override
     public Class<?> getFilterClass() {
         return OrImpl.class;
+    }
+
+    /**
+     * Creates the filter.
+     *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new OrExtended();
     }
 
     /**
@@ -141,12 +144,9 @@ public class Or implements FilterConfigInterface {
     public Filter createLogicFilter(List<Filter> filterList) {
         OrImpl filter = null;
 
-        if((filterList == null) || (filterList.size() < 2))
-        {
+        if ((filterList == null) || (filterList.size() < 2)) {
             filter = new OrExtended();
-        }
-        else
-        {
+        } else {
             filter = new OrExtended(filterList);
         }
 

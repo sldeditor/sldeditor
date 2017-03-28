@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.connector.instance;
 
 import java.awt.Font;
@@ -44,8 +45,7 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface {
     /**
      * Instantiates a new data source connector empty.
      */
-    public DataSourceConnectorEmpty()
-    {
+    public DataSourceConnectorEmpty() {
         createUI();
     }
 
@@ -53,7 +53,8 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface {
      * Creates the UI.
      */
     private void createUI() {
-        JLabel label = new JLabel(Localisation.getString(DataSourceConnectorEmpty.class, "DataSourceConnectorEmpty.internalDataSource"));
+        JLabel label = new JLabel(Localisation.getString(DataSourceConnectorEmpty.class,
+                "DataSourceConnectorEmpty.internalDataSource"));
         Font font = label.getFont();
         Font f = new Font(font.getName(), font.getStyle(), 24);
         label.setFont(f);

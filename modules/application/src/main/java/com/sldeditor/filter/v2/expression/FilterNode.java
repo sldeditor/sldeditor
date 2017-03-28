@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class FilterNode extends DefaultMutableTreeNode {
     /** The filter. */
     private Filter filter = null;
 
-    /**  The filter configuration. */
+    /** The filter configuration. */
     private FilterConfigInterface filterConfig = null;
 
     /** The type. */
@@ -67,13 +68,12 @@ public class FilterNode extends DefaultMutableTreeNode {
     private static final long serialVersionUID = 1L;
 
     /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /**
      * Instantiates a new expression node.
      */
-    public FilterNode()
-    {
+    public FilterNode() {
         setDisplayString();
     }
 
@@ -90,29 +90,22 @@ public class FilterNode extends DefaultMutableTreeNode {
     /**
      * Sets the display string.
      */
-    private void setDisplayString()
-    {
+    private void setDisplayString() {
         StringBuilder sb = new StringBuilder();
 
-        if(name != null)
-        {
+        if (name != null) {
             sb.append(name);
             sb.append(" : ");
         }
 
-        if(filter == null)
-        {
+        if (filter == null) {
             sb.append(Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet"));
-        }
-        else
-        {
+        } else {
             sb.append(Localisation.getField(ExpressionPanelv2.class, "FilterNode.filter") + " ");
-            if(filterConfig == null)
-            {
-                sb.append(Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet"));
-            }
-            else
-            {
+            if (filterConfig == null) {
+                sb.append(
+                        Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet"));
+            } else {
                 sb.append(filterConfig.getFilterConfiguration().getFilterName());
             }
         }
@@ -163,79 +156,74 @@ public class FilterNode extends DefaultMutableTreeNode {
 
         TypeManager.getInstance().reset();
 
-        if(filterConfig != null)
-        {
+        if (filterConfig != null) {
             FilterName filterName = filterConfig.getFilterConfiguration();
 
-            if(filter instanceof Not)
-            {
-                List<Filter> childFilterList = ((LogicFilterImpl)filter).getChildren();
+            if (filter instanceof Not) {
+                List<Filter> childFilterList = ((LogicFilterImpl) filter).getChildren();
 
-                if(childFilterList.isEmpty())
-                {
+                if (childFilterList.isEmpty()) {
                     // No child filter so add a minimum 1 to work with.
                     setFilterParameter(null, filterName.getParameter(0));
-                }
-                else
-                {
+                } else {
                     setFilterParameter(childFilterList.get(0), filterName.getParameter(0));
                 }
-            }
-            else if(filter instanceof LogicFilterImpl)
-            {
-                List<Filter> childFilterList = ((LogicFilterImpl)filter).getChildren();
+            } else if (filter instanceof LogicFilterImpl) {
+                List<Filter> childFilterList = ((LogicFilterImpl) filter).getChildren();
 
-                if(childFilterList.isEmpty())
-                {
+                if (childFilterList.isEmpty()) {
                     // No child filter so add a minimum 2 to work with.
                     setFilterParameter(null, filterName.getParameter(0));
                     setFilterParameter(null, filterName.getParameter(0));
-                }
-                else
-                {
-                    for(Filter childFilter : childFilterList)
-                    {
+                } else {
+                    for (Filter childFilter : childFilterList) {
                         setFilterParameter(childFilter, filterName.getParameter(0));
                     }
                 }
-            }
-            else if(filter instanceof BinaryTemporalOperator)
-            {
-                setExpressionParameter(((BinaryTemporalOperator) filter).getExpression1(), filterName.getParameter(0));
-                setExpressionParameter(((BinaryTemporalOperator) filter).getExpression2(), filterName.getParameter(1));
-            }
-            else if(filter instanceof PropertyIsNull)
-            {
-                setExpressionParameter(((PropertyIsNull) filter).getExpression(), filterName.getParameter(0));
-            }
-            else if(filter instanceof PropertyIsBetween)
-            {
-                setExpressionParameter(((PropertyIsBetween) filter).getLowerBoundary(), filterName.getParameter(0));
-                setExpressionParameter(((PropertyIsBetween) filter).getExpression(), filterName.getParameter(1));
-                setExpressionParameter(((PropertyIsBetween) filter).getUpperBoundary(), filterName.getParameter(2));
-            }
-            else if(filter instanceof PropertyIsLike)
-            {
-                setExpressionParameter(((PropertyIsLike) filter).getExpression(), filterName.getParameter(0));
-                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getLiteral()), filterName.getParameter(1));
-                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getWildCard()), filterName.getParameter(2));
-                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getSingleChar()), filterName.getParameter(3));
-                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getEscape()), filterName.getParameter(4));
-                setExpressionParameter(ff.literal(((PropertyIsLike) filter).isMatchingCase()), filterName.getParameter(5));
-            }
-            else if(filter instanceof BinarySpatialOperator)
-            {
-                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression1(), filterName.getParameter(0));
-                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression2(), filterName.getParameter(1));
-            }
-            else if(filter instanceof BinaryComparisonAbstract)
-            {
-                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression1(), filterName.getParameter(0));
-                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression2(), filterName.getParameter(1));
+            } else if (filter instanceof BinaryTemporalOperator) {
+                setExpressionParameter(((BinaryTemporalOperator) filter).getExpression1(),
+                        filterName.getParameter(0));
+                setExpressionParameter(((BinaryTemporalOperator) filter).getExpression2(),
+                        filterName.getParameter(1));
+            } else if (filter instanceof PropertyIsNull) {
+                setExpressionParameter(((PropertyIsNull) filter).getExpression(),
+                        filterName.getParameter(0));
+            } else if (filter instanceof PropertyIsBetween) {
+                setExpressionParameter(((PropertyIsBetween) filter).getLowerBoundary(),
+                        filterName.getParameter(0));
+                setExpressionParameter(((PropertyIsBetween) filter).getExpression(),
+                        filterName.getParameter(1));
+                setExpressionParameter(((PropertyIsBetween) filter).getUpperBoundary(),
+                        filterName.getParameter(2));
+            } else if (filter instanceof PropertyIsLike) {
+                setExpressionParameter(((PropertyIsLike) filter).getExpression(),
+                        filterName.getParameter(0));
+                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getLiteral()),
+                        filterName.getParameter(1));
+                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getWildCard()),
+                        filterName.getParameter(2));
+                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getSingleChar()),
+                        filterName.getParameter(3));
+                setExpressionParameter(ff.literal(((PropertyIsLike) filter).getEscape()),
+                        filterName.getParameter(4));
+                setExpressionParameter(ff.literal(((PropertyIsLike) filter).isMatchingCase()),
+                        filterName.getParameter(5));
+            } else if (filter instanceof BinarySpatialOperator) {
+                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression1(),
+                        filterName.getParameter(0));
+                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression2(),
+                        filterName.getParameter(1));
+            } else if (filter instanceof BinaryComparisonAbstract) {
+                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression1(),
+                        filterName.getParameter(0));
+                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression2(),
+                        filterName.getParameter(1));
 
-                if(filterName.getParameterList().size() > 2) // Gets round the problem with PropertyIsGreaterThan which has no matchCase parameter
-                {
-                    setExpressionParameter(ff.literal(((BinaryComparisonAbstract) filter).isMatchingCase()), filterName.getParameter(2));
+                // Gets round the problem with PropertyIsGreaterThan which has no matchCase parameter
+                if (filterName.getParameterList().size() > 2) {
+                    setExpressionParameter(
+                            ff.literal(((BinaryComparisonAbstract) filter).isMatchingCase()),
+                            filterName.getParameter(2));
                 }
             }
         }
@@ -250,7 +238,8 @@ public class FilterNode extends DefaultMutableTreeNode {
     private void setFilterParameter(Filter childFilter, FilterNameParameter parameter) {
         FilterNode childNode = new FilterNode();
         childNode.setType(parameter.getDataType());
-        FilterConfigInterface filterConfig = FilterManager.getInstance().getFilterConfig(childFilter);
+        FilterConfigInterface filterConfig = FilterManager.getInstance()
+                .getFilterConfig(childFilter);
 
         childNode.setFilter(childFilter, filterConfig);
         this.insert(childNode, this.getChildCount());
@@ -297,8 +286,7 @@ public class FilterNode extends DefaultMutableTreeNode {
      * Adds the filter.
      */
     public void addFilter() {
-        if(filterConfig != null)
-        {
+        if (filterConfig != null) {
             FilterName filterName = filterConfig.getFilterConfiguration();
             setFilterParameter(null, filterName.getParameter(0));
         }

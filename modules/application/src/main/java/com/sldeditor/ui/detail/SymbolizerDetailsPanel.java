@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.awt.BorderLayout;
@@ -58,9 +59,11 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 
 /**
- * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on the SLD tree structure.
- * <p>
- * Implemented as panel with a card layout, all possible panels are added to the layout and displayed accordingly.
+ * The Class SymbolizerDetailsPanel handles the display of the correct
+ *  panel when the user clicks on the SLD tree structure.
+ *  
+ * <p>Implemented as panel with a card layout, all possible panels
+ *  are added to the layout and displayed accordingly.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -73,7 +76,8 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     private static final long serialVersionUID = 1L;
 
     /** The panel map. */
-    private Map<String, List<PopulateDetailsInterface>> panelMap = new HashMap<String, List<PopulateDetailsInterface>>();
+    private Map<String, List<PopulateDetailsInterface>> panelMap = 
+            new HashMap<String, List<PopulateDetailsInterface>>();
 
     /** The details panel. */
     private JPanel detailsPanel = null;
@@ -380,8 +384,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
         }
 
         PopulateDetailsInterface panel = getPanel(parentClass, key);
-        if ((panel != null) && (currentDisplayedPanel != null))
-        {
+        if ((panel != null) && (currentDisplayedPanel != null)) {
             if (currentDisplayedPanel.equals(encodePanelKey(key, panel))) {
                 SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
                 panel.populate(selectedSymbol);

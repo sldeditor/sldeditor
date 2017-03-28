@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.undo;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -25,8 +26,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class UndoEvent implements UndoInterface
-{
+public class UndoEvent implements UndoInterface {
 
     /** The parent object. */
     private UndoActionInterface parentObj = null;
@@ -54,14 +54,15 @@ public class UndoEvent implements UndoInterface
      * @param oldValue the old value
      * @param newValue the new value
      */
-    public UndoEvent(UndoActionInterface parentObj, FieldIdEnum fieldId, Object oldValue, Object newValue)
-    {
+    public UndoEvent(UndoActionInterface parentObj, FieldIdEnum fieldId, Object oldValue,
+            Object newValue) {
         this.parentObj = parentObj;
         this.fieldId = fieldId;
         this.oldValue = oldValue;
         this.newValue = newValue;
 
-        representation = String.format("Storing value : %s Old : %s New : %s", fieldId.toString(), oldValue, newValue);
+        representation = String.format("Storing value : %s Old : %s New : %s", fieldId.toString(),
+                oldValue, newValue);
     }
 
     /**
@@ -72,38 +73,41 @@ public class UndoEvent implements UndoInterface
      * @param oldValue the old value
      * @param newValue the new value
      */
-    public UndoEvent(UndoActionInterface parentObj, String text, Object oldValue, Object newValue)
-    {
+    public UndoEvent(UndoActionInterface parentObj, String text, Object oldValue, Object newValue) {
         this.parentObj = parentObj;
         this.oldValue = oldValue;
         this.newValue = newValue;
         this.customText = text;
 
-        representation = String.format("Storing value : %s Old : %s New : %s", text, oldValue, newValue);
+        representation = String.format("Storing value : %s Old : %s New : %s", text, oldValue,
+                newValue);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#undo()
      */
     @Override
-    public void undo()
-    {
+    public void undo() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#redo()
      */
     @Override
-    public void redo()
-    {
+    public void redo() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#getStringRepresentation()
      */
     @Override
-    public String getStringRepresentation()
-    {
+    public String getStringRepresentation() {
         return representation;
     }
 
@@ -113,8 +117,7 @@ public class UndoEvent implements UndoInterface
      * @return the field id
      */
     @Override
-    public FieldIdEnum getFieldId()
-    {
+    public FieldIdEnum getFieldId() {
         return fieldId;
     }
 
@@ -124,8 +127,7 @@ public class UndoEvent implements UndoInterface
      * @return the old value
      */
     @Override
-    public Object getOldValue()
-    {
+    public Object getOldValue() {
         return oldValue;
     }
 
@@ -135,52 +137,53 @@ public class UndoEvent implements UndoInterface
      * @return the new value
      */
     @Override
-    public Object getNewValue()
-    {
+    public Object getNewValue() {
         return newValue;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#doUndo()
      */
     @Override
-    public void doUndo()
-    {
-        if(parentObj != null)
-        {
+    public void doUndo() {
+        if (parentObj != null) {
             parentObj.undoAction(this);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#doRedo()
      */
     @Override
-    public void doRedo()
-    {
-        if(parentObj != null)
-        {
+    public void doRedo() {
+        if (parentObj != null) {
             parentObj.redoAction(this);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#getUndoString()
      */
     @Override
-    public String getUndoString()
-    {
+    public String getUndoString() {
         String text = (customText != null) ? customText : fieldId.toString();
         String undoString = String.format("Undoing value : %s Value : %s", text, oldValue);
         return undoString;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoInterface#getRedoString()
      */
     @Override
-    public String getRedoString()
-    {
+    public String getRedoString() {
         String text = (customText != null) ? customText : fieldId.toString();
         String redoString = String.format("Redoing value : %s Value : %s", text, newValue);
         return redoString;

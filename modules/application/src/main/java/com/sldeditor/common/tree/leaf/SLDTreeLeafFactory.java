@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.tree.leaf;
 
 import java.util.HashMap;
@@ -34,8 +36,7 @@ import org.opengis.style.Symbolizer;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTreeLeafFactory
-{
+public class SLDTreeLeafFactory {
 
     /** The singleton instance. */
     private static SLDTreeLeafFactory instance = null;
@@ -44,7 +45,8 @@ public class SLDTreeLeafFactory
     private Map<Class<?>, SLDTreeLeafInterface> map = new HashMap<Class<?>, SLDTreeLeafInterface>();
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(SLDTreeLeafFactory.class.getName());
@@ -52,8 +54,7 @@ public class SLDTreeLeafFactory
     /**
      * Instantiates a new SLD tree leaf factory.
      */
-    private SLDTreeLeafFactory()
-    {
+    private SLDTreeLeafFactory() {
         populate();
     }
 
@@ -62,10 +63,8 @@ public class SLDTreeLeafFactory
      *
      * @return singleton instance of SLDTreeLeafFactory
      */
-    public static SLDTreeLeafFactory getInstance()
-    {
-        if(instance == null)
-        {
+    public static SLDTreeLeafFactory getInstance() {
+        if (instance == null) {
             instance = new SLDTreeLeafFactory();
         }
         return instance;
@@ -74,8 +73,7 @@ public class SLDTreeLeafFactory
     /**
      * Populate factory.
      */
-    private void populate()
-    {
+    private void populate() {
         add(new SLDTreeLeafPolygon());
         add(new SLDTreeLeafPoint());
         add(new SLDTreeLeafLine());
@@ -88,8 +86,7 @@ public class SLDTreeLeafFactory
      *
      * @param obj the obj
      */
-    private void add(SLDTreeLeafInterface obj)
-    {
+    private void add(SLDTreeLeafInterface obj) {
         map.put(obj.getSymbolizer(), obj);
     }
 
@@ -99,14 +96,11 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return true, if successful
      */
-    public boolean hasFill(Symbolizer symbolizer)
-    {
+    public boolean hasFill(Symbolizer symbolizer) {
         boolean result = false;
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
+            if (obj != null) {
                 result = obj.hasFill(symbolizer);
             }
         }
@@ -119,14 +113,11 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return true, if successful
      */
-    public boolean hasStroke(Symbolizer symbolizer)
-    {
+    public boolean hasStroke(Symbolizer symbolizer) {
         boolean result = false;
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
+            if (obj != null) {
                 result = obj.hasStroke(symbolizer);
             }
         }
@@ -139,19 +130,15 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return the fill
      */
-    public Fill getFill(Symbolizer symbolizer)
-    {
+    public Fill getFill(Symbolizer symbolizer) {
         Fill fill = null;
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
+            if (obj != null) {
                 fill = obj.getFill(symbolizer);
             }
 
-            if(fill == null)
-            {
+            if (fill == null) {
                 fill = styleFactory.getDefaultFill();
             }
         }
@@ -164,19 +151,15 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return the stroke
      */
-    public Stroke getStroke(Symbolizer symbolizer)
-    {
+    public Stroke getStroke(Symbolizer symbolizer) {
         Stroke stroke = null;
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
+            if (obj != null) {
                 stroke = obj.getStroke(symbolizer);
             }
 
-            if(stroke == null)
-            {
+            if (stroke == null) {
                 stroke = styleFactory.getDefaultStroke();
             }
         }
@@ -190,27 +173,20 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return the stroke
      */
-    public Stroke updateStroke(boolean selected, Symbolizer symbolizer)
-    {
-        if(symbolizer == null)
-        {
+    public Stroke updateStroke(boolean selected, Symbolizer symbolizer) {
+        if (symbolizer == null) {
             return null;
         }
 
         boolean currentValue = hasStroke(symbolizer);
 
-        if(currentValue != selected)
-        {
+        if (currentValue != selected) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
-                if(selected)
-                {
+            if (obj != null) {
+                if (selected) {
                     logger.debug("Set stroke");
                     obj.createStroke(symbolizer);
-                }
-                else
-                {
+                } else {
                     logger.debug("Clear stroke");
                     obj.removeStroke(symbolizer);
                 }
@@ -226,27 +202,20 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return the fill
      */
-    public Fill updateFill(boolean selected, Symbolizer symbolizer)
-    {
-        if(symbolizer == null)
-        {
+    public Fill updateFill(boolean selected, Symbolizer symbolizer) {
+        if (symbolizer == null) {
             return null;
         }
 
         boolean currentValue = hasFill(symbolizer);
 
-        if(currentValue != selected)
-        {
+        if (currentValue != selected) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
-                if(selected)
-                {
+            if (obj != null) {
+                if (selected) {
                     logger.debug("Set fill");
                     obj.createFill(symbolizer);
-                }
-                else
-                {
+                } else {
                     logger.debug("Clear fill");
                     obj.removeFill(symbolizer);
                 }
@@ -262,16 +231,12 @@ public class SLDTreeLeafFactory
      * @param parentSymbolizer the parent symbolizer
      * @return true, if is item selected
      */
-    public boolean isItemSelected(Object userObject, Symbolizer parentSymbolizer)
-    {
+    public boolean isItemSelected(Object userObject, Symbolizer parentSymbolizer) {
         boolean selectedItem = false;
 
-        if(userObject instanceof Fill)
-        {
+        if (userObject instanceof Fill) {
             selectedItem = hasFill(parentSymbolizer);
-        }
-        else if(userObject instanceof Stroke)
-        {
+        } else if (userObject instanceof Stroke) {
             selectedItem = hasStroke(parentSymbolizer);
         }
 
@@ -284,19 +249,15 @@ public class SLDTreeLeafFactory
      * @param symbolizer the symbolizer
      * @return the raster
      */
-    public RasterSymbolizer getRaster(Symbolizer symbolizer)
-    {
+    public RasterSymbolizer getRaster(Symbolizer symbolizer) {
         RasterSymbolizer raster = null;
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             SLDTreeLeafInterface obj = map.get(symbolizer.getClass());
-            if(obj != null)
-            {
+            if (obj != null) {
                 raster = obj.getRaster(symbolizer);
             }
 
-            if(raster == null)
-            {
+            if (raster == null) {
                 raster = styleFactory.getDefaultRasterSymbolizer();
             }
         }

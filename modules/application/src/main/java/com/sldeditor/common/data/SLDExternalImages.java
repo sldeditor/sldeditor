@@ -79,7 +79,7 @@ public class SLDExternalImages {
     }
 
     /**
-     * Find the SLD graphical symbols
+     * Find the SLD graphical symbols.
      *
      * @param resourceLocator the resource locator
      * @param sld the sld
@@ -155,7 +155,8 @@ public class SLDExternalImages {
             ProcessGraphicSymbolInterface process) {
         if (fill != null) {
             if (fill.getGraphicFill() != null) {
-                process.processGraphicalSymbol(resourceLocator, fill.getGraphicFill().graphicalSymbols(),
+                process.processGraphicalSymbol(resourceLocator, 
+                        fill.getGraphicFill().graphicalSymbols(),
                         externalImageList);
             }
         }
@@ -173,12 +174,14 @@ public class SLDExternalImages {
             ProcessGraphicSymbolInterface process) {
         if (stroke != null) {
             if (stroke.getGraphicFill() != null) {
-                process.processGraphicalSymbol(resourceLocator, stroke.getGraphicFill().graphicalSymbols(),
+                process.processGraphicalSymbol(resourceLocator,
+                        stroke.getGraphicFill().graphicalSymbols(),
                         externalImageList);
             }
 
             if (stroke.getGraphicStroke() != null) {
-                process.processGraphicalSymbol(resourceLocator, stroke.getGraphicStroke().graphicalSymbols(),
+                process.processGraphicalSymbol(resourceLocator, 
+                        stroke.getGraphicStroke().graphicalSymbols(),
                         externalImageList);
             }
         }

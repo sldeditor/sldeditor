@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.tree;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -23,7 +24,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import com.sldeditor.common.undo.UndoActionInterface;
 
 /**
- * Interface that allows the tree structure to be updated
+ * Interface that allows the tree structure to be updated.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -41,7 +42,7 @@ public interface UpdateTreeStructureInterface {
             boolean shouldBeVisible);
 
     /**
-     * Populate the tree with the SLD structure
+     * Populate the tree with the SLD structure.
      */
     void populateSLD();
 

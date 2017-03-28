@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.layout;
 
 import java.awt.GridLayout;
@@ -46,8 +47,7 @@ import bibliothek.gui.dock.common.SingleCDockable;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorDockableLayout implements UILayoutInterface
-{
+public class SLDEditorDockableLayout implements UILayoutInterface {
 
     /** The Constant LAYOUT_FILENAME. */
     private static final String LAYOUT_FILENAME = "layout.data";
@@ -55,14 +55,14 @@ public class SLDEditorDockableLayout implements UILayoutInterface
     /** The control. */
     private CControl control;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.UILayoutInterface#createUI(com.sldeditor.SLDEditorInterface, com.sldeditor.SLDEditorUIPanels, java.util.List)
      */
     @Override
-    public void createUI(SLDEditorInterface application, 
-            SLDEditorUIPanels uiMgr,
-            List<ExtensionInterface> extensionList)
-    {
+    public void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr,
+            List<ExtensionInterface> extensionList) {
         JFrame frame = application.getApplicationFrame();
 
         control = new CControl(frame);
@@ -71,14 +71,28 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         frame.add(control.getContentArea());
 
         CGrid grid = new CGrid(control);
-        SingleCDockable legend = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.legend"), (JPanel) uiMgr.getLegendData());
-        SingleCDockable symbol = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.symbol"), uiMgr.getSLDSymbolData());
-        SingleCDockable sld = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.sld"), SLDTextArea.getPanel());
-        SingleCDockable map = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.map"), RenderPanelFactory.getMapRenderer());
-        SingleCDockable dataSource = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.dataSource"), uiMgr.getDataSourceConfig());
-        SingleCDockable vendorOption = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.vendorOption"), uiMgr.getVendorOption());
+        SingleCDockable legend = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.legend"),
+                (JPanel) uiMgr.getLegendData());
+        SingleCDockable symbol = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.symbol"),
+                uiMgr.getSLDSymbolData());
+        SingleCDockable sld = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.sld"),
+                SLDTextArea.getPanel());
+        SingleCDockable map = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.map"),
+                RenderPanelFactory.getMapRenderer());
+        SingleCDockable dataSource = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.dataSource"),
+                uiMgr.getDataSourceConfig());
+        SingleCDockable vendorOption = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.vendorOption"),
+                uiMgr.getVendorOption());
 
-        SingleCDockable console = create(Localisation.getString(SLDEditorDockableLayout.class, "panels.console"), ConsoleManager.getInstance().getPanel());
+        SingleCDockable console = create(
+                Localisation.getString(SLDEditorDockableLayout.class, "panels.console"),
+                ConsoleManager.getInstance().getPanel());
 
         control.addDockable(sld);
         control.addDockable(legend);
@@ -91,37 +105,37 @@ public class SLDEditorDockableLayout implements UILayoutInterface
         ToolManager toolManagerInstance = ToolManager.getInstance();
         toolManagerInstance.setApplication(application);
 
-        for(ExtensionInterface extension : extensionList)
-        {
+        for (ExtensionInterface extension : extensionList) {
             extension.initialise(application.getLoadSLDInterface(), toolManagerInstance);
 
             SingleCDockable dockablePlugin = create(extension.getName(), extension.getPanel());
             control.addDockable(dockablePlugin);
-            grid.add(0,0,1,4, dockablePlugin);
+            grid.add(0, 0, 1, 4, dockablePlugin);
         }
 
-        grid.add(1,0,2,4, sld);
-        grid.add(1,0,2,4, legend);
-        grid.add(1,0,2,4, map);
-        grid.add(1,0,2,4, dataSource);
-        grid.add(1,0,2,4, vendorOption);
-        grid.add(1,0,2,4, symbol);
+        grid.add(1, 0, 2, 4, sld);
+        grid.add(1, 0, 2, 4, legend);
+        grid.add(1, 0, 2, 4, map);
+        grid.add(1, 0, 2, 4, dataSource);
+        grid.add(1, 0, 2, 4, vendorOption);
+        grid.add(1, 0, 2, 4, symbol);
 
-        grid.add(0,4,3,1, console);
+        grid.add(0, 4, 3, 1, console);
 
         CContentArea content = control.getContentArea();
         content.deploy(grid);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.layout.UILayoutInterface#readLayout(java.lang.String)
      */
     @Override
     public void readLayout(String folder) {
         File file = getFile(folder);
 
-        if(file.exists())
-        {
+        if (file.exists()) {
             try {
                 control.read(file);
             } catch (IOException e) {
@@ -137,11 +151,13 @@ public class SLDEditorDockableLayout implements UILayoutInterface
      * @param panel the panel
      * @return the SingleCDockable
      */
-    private static SingleCDockable create(String title, JPanel panel){
+    private static SingleCDockable create(String title, JPanel panel) {
         return new DefaultSingleCDockable(title, title, panel);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.layout.UILayoutInterface#writeLayout(java.lang.String)
      */
     @Override
@@ -165,23 +181,21 @@ public class SLDEditorDockableLayout implements UILayoutInterface
     private File getFile(String folder) {
         File file = null;
 
-        if(folder == null)
-        {
+        if (folder == null) {
             file = new File(LAYOUT_FILENAME);
-        }
-        else
-        {
+        } else {
             file = new File(folder, LAYOUT_FILENAME);
         }
         return file;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.layout.UILayoutInterface#getDisplayName()
      */
     @Override
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return "Dockable";
     }
 }

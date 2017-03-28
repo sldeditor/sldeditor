@@ -42,10 +42,8 @@ public class SLDTreeManager {
      *
      * @return single instance of SLDTreeManager
      */
-    public static SLDTreeManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static SLDTreeManager getInstance() {
+        if (instance == null) {
             instance = new SLDTreeManager();
         }
 
@@ -59,26 +57,22 @@ public class SLDTreeManager {
      * @param treeTools the tree tools
      * @return the SLD tree
      */
-    public SLDTree createSLDTree(List<RenderSymbolInterface> renderList, SLDTreeTools treeTools)
-    {
+    public SLDTree createSLDTree(List<RenderSymbolInterface> renderList, SLDTreeTools treeTools) {
         SLDTree tree = new SLDTree(renderList, treeTools);
 
         treeList.add(tree);
 
         return tree;
     }
-    
+
     /**
      * Rebuild tree.
      *
      * @param originatingTree the originating tree
      */
-    public void rebuildTree(SLDTree originatingTree)
-    {
-        for(SLDTree tree : treeList)
-        {
-            if(tree != originatingTree)
-            {
+    public void rebuildTree(SLDTree originatingTree) {
+        for (SLDTree tree : treeList) {
+            if (tree != originatingTree) {
                 tree.populateSLD();
             }
         }

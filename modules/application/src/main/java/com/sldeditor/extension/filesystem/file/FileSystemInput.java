@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.file;
 
 import java.awt.Toolkit;
@@ -85,7 +86,8 @@ public class FileSystemInput implements FileSystemInterface {
     private DefaultTreeModel treeModel = null;
 
     /** The file handler map. */
-    private Map<String, FileHandlerInterface> fileHandlerMap = new LinkedHashMap<String, FileHandlerInterface>();
+    private Map<String, FileHandlerInterface> fileHandlerMap = 
+            new LinkedHashMap<String, FileHandlerInterface>();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(FileSystemInput.class);
@@ -121,8 +123,7 @@ public class FileSystemInput implements FileSystemInterface {
         }
 
         // Get the file handlers for the file based databases
-        for(FileHandlerInterface fileHandler : DatabaseConnectionFactory.getFileHandlers())
-        {
+        for (FileHandlerInterface fileHandler : DatabaseConnectionFactory.getFileHandlers()) {
             for (String fileExtension : fileHandler.getFileExtensionList()) {
                 fileHandlerMap.put(fileExtension, fileHandler);
             }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
+public class VendorOptionRasterFactory
+        implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option geo server contrast enhancement normalize (red). */
     private VOGeoServerContrastEnhancementNormalizeRed vendorOptionGeoServerContrastEnhancementNormalizeRed = null;
@@ -69,13 +71,17 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      * @param panelId the panel id
      * @param parentPanel the parent panel
      */
-    public VendorOptionRasterFactory(Class<?> panelId, RasterSymbolizerDetails parentPanel)
-    {
-        vendorOptionGeoServerContrastEnhancementNormalizeRed = new VOGeoServerContrastEnhancementNormalizeRed(panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeGreen = new VOGeoServerContrastEnhancementNormalizeGreen(panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeBlue = new VOGeoServerContrastEnhancementNormalizeBlue(panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeGrey = new VOGeoServerContrastEnhancementNormalizeGrey(panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeOverall = new VOGeoServerContrastEnhancementNormalizeOverall(panelId, parentPanel);
+    public VendorOptionRasterFactory(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        vendorOptionGeoServerContrastEnhancementNormalizeRed = new VOGeoServerContrastEnhancementNormalizeRed(
+                panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeGreen = new VOGeoServerContrastEnhancementNormalizeGreen(
+                panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeBlue = new VOGeoServerContrastEnhancementNormalizeBlue(
+                panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeGrey = new VOGeoServerContrastEnhancementNormalizeGrey(
+                panelId, parentPanel);
+        vendorOptionGeoServerContrastEnhancementNormalizeOverall = new VOGeoServerContrastEnhancementNormalizeOverall(
+                panelId, parentPanel);
 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeRed);
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeGreen);
@@ -93,8 +99,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      * @return the vendor option list
      */
     @Override
-    public List<VendorOptionInterface> getVendorOptionList()
-    {
+    public List<VendorOptionInterface> getVendorOptionList() {
         return vendorOptionList;
     }
 
@@ -103,10 +108,8 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      *
      * @param rasterSymbolizer the raster symbolizer
      */
-    public void populate(RasterSymbolizer rasterSymbolizer)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
+    public void populate(RasterSymbolizer rasterSymbolizer) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
             vendorOption.populate(rasterSymbolizer);
         }
     }
@@ -116,25 +119,24 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      *
      * @param rasterSymbolizer the raster symbolizer
      */
-    public void updateSymbol(RasterSymbolizer rasterSymbolizer)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            boolean displayVendorOption = VendorOptionManager.getInstance()
+                    .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
 
-            if(displayVendorOption)
-            {
+            if (displayVendorOption) {
                 vendorOption.updateSymbol(rasterSymbolizer);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
         this.vendorOptionVersionsList = vendorOptionVersionsList;
     }
 
@@ -143,47 +145,44 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      *
      * @param fieldConfigManager the field config manager
      */
-    public void updateFieldDataManager(GraphicPanelFieldManager fieldConfigManager)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            if(vendorOption != null)
-            {
-                PopulateDetailsInterface populateInterface = (PopulateDetailsInterface)vendorOption;
+    public void updateFieldDataManager(GraphicPanelFieldManager fieldConfigManager) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption != null) {
+                PopulateDetailsInterface populateInterface = (PopulateDetailsInterface) vendorOption;
                 fieldConfigManager.add(populateInterface.getFieldDataManager());
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
         List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
 
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            if(vendorOption.getClass().getName().compareTo(className) == 0)
-            {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption.getClass().getName().compareTo(className) == 0) {
                 matchingList.add(vendorOption);
             }
         }
         return matchingList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
         List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
 
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();
-            if(vendorOptionInfo != null)
-            {
+            if (vendorOptionInfo != null) {
                 vendorOptionInfoList.add(vendorOptionInfo);
             }
         }
@@ -199,8 +198,7 @@ public class VendorOptionRasterFactory implements VendorOptionFactoryInterface, 
      */
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        for(VendorOptionInterface vo : vendorOptionList)
-        {
+        for (VendorOptionInterface vo : vendorOptionList) {
             vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }
     }

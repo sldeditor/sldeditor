@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.scale;
 
 import java.util.ArrayList;
@@ -154,6 +155,8 @@ public class ScaleSLDModel extends AbstractTableModel {
             if (data.isMaxScaleSet()) {
                 return data.getMaxScaleString();
             }
+            break;
+        default:
             break;
         }
         return null;

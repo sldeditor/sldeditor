@@ -34,8 +34,7 @@ public class CheckUpdateClientFactory {
      *
      * @return the client
      */
-    public static CheckUpdateClientInterface getClient()
-    {
+    public static CheckUpdateClientInterface getClient() {
         return gitHubClient;
     }
 }

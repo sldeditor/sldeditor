@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
 
 
     /**
-     * Instantiates a new VOGeoServerWKTSymbol
+     * Instantiates a new VOGeoServerWKTSymbol.
      */
     public VOGeoServerWKTSymbol() {
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.dbconnectionlist;
 
 import java.awt.BorderLayout;
@@ -50,7 +51,8 @@ public class DBConnectorDetailsPanel extends JPanel {
     private boolean ok = false;
 
     /** The database connection map. */
-    private Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap = new LinkedHashMap<String, DatabaseConnectionConfigInterface>();
+    private Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap = 
+            new LinkedHashMap<String, DatabaseConnectionConfigInterface>();
 
     /** The connection panel. */
     private JPanel connectionPanel = null;

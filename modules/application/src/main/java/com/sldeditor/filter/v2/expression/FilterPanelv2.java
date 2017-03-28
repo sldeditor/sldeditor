@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.awt.BorderLayout;
@@ -77,9 +78,7 @@ import com.sldeditor.filter.v2.function.FilterManager;
 public class FilterPanelv2 extends JDialog
         implements ExpressionFilterInterface, DataSourceUpdatedInterface, FilterPanelInterface {
 
-    /**
-     * 
-     */
+    /** The Constant INVALID_RESULT_STRING. */
     private static final String INVALID_RESULT_STRING = Localisation
             .getString(ExpressionPanelv2.class, "FilterPanelv2.invalidResult");
 
@@ -364,6 +363,7 @@ public class FilterPanelv2 extends JDialog
                 try {
                     result = CQL.toCQL(overallFilter);
                 } catch (Exception e) {
+                    // DO nothing
                 }
             }
         }

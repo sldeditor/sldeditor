@@ -38,7 +38,8 @@ public class VOGeoServerContrastEnhancementNormalizeBlue
         extends VOGeoServerContrastEnhancementNormalize {
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = "symbol/raster/PanelConfig_ContrastEnhancementNormalizeBlue.xml";
+    private static final String PANEL_CONFIG =
+            "symbol/raster/PanelConfig_ContrastEnhancementNormalizeBlue.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;

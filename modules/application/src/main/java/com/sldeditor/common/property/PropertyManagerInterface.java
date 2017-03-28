@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.property;
 
 import java.awt.Color;
@@ -23,11 +24,28 @@ import java.io.File;
 import java.util.List;
 
 /**
- * interface for class implementing peoprty manager
+ * interface for class implementing property manager.
  * 
  * @author Robert Ward (SCISYS)
  */
 public interface PropertyManagerInterface {
+
+    /**
+     * Update value. (Multiple)
+     *
+     * @param key the key
+     * @param count the count
+     * @param value the value
+     */
+    void updateValue(String key, int count, String value);
+
+    /**
+     * Update value.
+     *
+     * @param key the key
+     * @param backgroundColour the background colour
+     */
+    void updateValue(String key, Color backgroundColour);
 
     /**
      * Update property value.
@@ -46,12 +64,20 @@ public interface PropertyManagerInterface {
     void updateValue(String key, boolean value);
 
     /**
+     * Update value.
+     *
+     * @param key the key
+     * @param stringList the string list
+     */
+    void updateValue(String key, List<String> stringList);
+
+    /**
      * Read config.
      */
     void readConfig();
 
     /**
-     * Gets the double value of a property
+     * Gets the double value of a property.
      *
      * @param field the field
      * @param defaultValue the default value
@@ -95,37 +121,12 @@ public interface PropertyManagerInterface {
     List<String> getStringListValue(String field);
 
     /**
-     * Update value.
-     *
-     * @param key the key
-     * @param stringList the string list
-     */
-    void updateValue(String key, List<String> stringList);
-
-    /**
-     * Update value. (Multiple)
-     *
-     * @param key the key
-     * @param count the count
-     * @param value the value
-     */
-    void updateValue(String key, int count, String value);
-
-    /**
-     * Gets values where the key is a prefix
+     * Gets values where the key is a prefix.
      *
      * @param key the key
      * @return the multiple values
      */
     List<String> getMultipleValues(String key);
-
-    /**
-     * Update value.
-     *
-     * @param key the key
-     * @param backgroundColour the background colour
-     */
-    void updateValue(String key, Color backgroundColour);
 
     /**
      * Clear list value.

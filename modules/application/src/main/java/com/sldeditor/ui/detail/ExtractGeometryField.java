@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.sldeditor.ui.detail;
 
 import org.opengis.filter.expression.Expression;
@@ -23,14 +24,12 @@ public class ExtractGeometryField {
      */
     public static Expression getGeometryField(FieldConfigPopulation fieldConfigVisitor) {
 
-        if(fieldConfigVisitor == null)
-        {
+        if (fieldConfigVisitor == null) {
             return null;
         }
 
         Expression geometryExpression = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
-        if(!validGeometryFieldName(geometryExpression))
-        {
+        if (!validGeometryFieldName(geometryExpression)) {
             return null;
         }
 
@@ -44,8 +43,7 @@ public class ExtractGeometryField {
      * @return true, if valid
      */
     private static boolean validGeometryFieldName(Expression geometryField) {
-        return((geometryField != null) && 
-                (geometryField.toString() != null) &&
-                !geometryField.toString().trim().isEmpty());
+        return ((geometryField != null) && (geometryField.toString() != null)
+                && !geometryField.toString().trim().isEmpty());
     }
 }

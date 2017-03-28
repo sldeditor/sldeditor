@@ -131,14 +131,11 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
         if (aValue instanceof LiteralExpressionImpl) {
             value = ((Expression) aValue).toString();
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
-        }
-        else {
+        } else {
             if (aValue instanceof String) {
                 value = ((String) aValue);
             }

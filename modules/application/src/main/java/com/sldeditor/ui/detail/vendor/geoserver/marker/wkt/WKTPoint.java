@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import org.opengis.geometry.DirectPosition;
@@ -25,10 +26,9 @@ import org.opengis.geometry.DirectPosition;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class WKTPoint
-{
+public class WKTPoint {
 
-    /**  The x coordinate. */
+    /** The x coordinate. */
     private double x = 0.0;
 
     /** The y coordinate. */
@@ -41,8 +41,7 @@ public class WKTPoint
      */
     public WKTPoint(DirectPosition pt) {
 
-        if(pt != null)
-        {
+        if (pt != null) {
             this.x = pt.getCoordinate()[0];
             this.y = pt.getCoordinate()[1];
         }
@@ -115,19 +114,25 @@ public class WKTPoint
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        ;
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         WKTPoint other = (WKTPoint) obj;
         double diffX = Math.abs(x - other.x);
-        if (diffX > 0.0001)
+        if (diffX > 0.0001) {
             return false;
+        }
         double diffY = Math.abs(y - other.y);
-        if (diffY > 0.0001)
+        if (diffY > 0.0001) {
             return false;
+        }
         return true;
     }
 }

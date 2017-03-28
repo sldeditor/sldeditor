@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.geoserverconnection;
 
 import java.util.List;
@@ -27,8 +28,7 @@ import com.sldeditor.common.data.GeoServerConnection;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface GeoServerConnectStateInterface
-{
+public interface GeoServerConnectStateInterface {
 
     /**
      * Checks if is connected.
@@ -39,14 +39,14 @@ public interface GeoServerConnectStateInterface
     boolean isConnected(GeoServerConnection connection);
 
     /**
-     * Connect to GeoServer
+     * Connect to GeoServer.
      *
      * @param connectionList the connection list
      */
     void connect(List<GeoServerConnection> connectionList);
 
     /**
-     * Disconnect from GeoServer
+     * Disconnect from GeoServer.
      *
      * @param connectionList the connection list
      */

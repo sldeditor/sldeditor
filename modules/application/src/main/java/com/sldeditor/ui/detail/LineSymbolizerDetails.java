@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.List;
@@ -36,16 +37,16 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class LineSymbolizerDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
+public class LineSymbolizerDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructor
+     * Constructor.
      */
-    public LineSymbolizerDetails()
-    {
+    public LineSymbolizerDetails() {
         super(LineSymbolizerDetails.class);
 
         createUI();
@@ -59,22 +60,24 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
         readConfigFile(null, getClass(), this, "Line.xml");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.marker.iface.PointMarkerDetailsInterface#populate(com.sldeditor.marker.detail.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             LineSymbolizer lineSymbolizer = (LineSymbolizer) selectedSymbol.getSymbolizer();
-            if(lineSymbolizer != null)
-            {
+            if (lineSymbolizer != null) {
                 populateStandardData(lineSymbolizer);
 
-                fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET, lineSymbolizer.getPerpendicularOffset());
+                fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET,
+                        lineSymbolizer.getPerpendicularOffset());
 
-                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, lineSymbolizer.getGeometry());
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY,
+                        lineSymbolizer.getGeometry());
             }
         }
     }
@@ -83,17 +86,17 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            Expression perpendicularOffset = fieldConfigVisitor.getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
+        if (!Controller.getInstance().isPopulating()) {
+            Expression perpendicularOffset = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
             Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
             StandardData standardData = getStandardData();
 
-            LineSymbolizer lineSymbolizer = (LineSymbolizer)SelectedSymbol.getInstance().getSymbolizer();
+            LineSymbolizer lineSymbolizer = (LineSymbolizer) SelectedSymbol.getInstance()
+                    .getSymbolizer();
 
-            if(lineSymbolizer != null)
-            {
+            if (lineSymbolizer != null) {
                 lineSymbolizer.setName(standardData.name);
                 lineSymbolizer.setDescription(standardData.description);
                 lineSymbolizer.setUnitOfMeasure(standardData.unit);
@@ -107,7 +110,9 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.marker.ui.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -115,7 +120,9 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
         updateSymbol();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.BasePanel#addRenderer(com.sldeditor.render.iface.RenderSymbolInterface)
      */
     @Override
@@ -123,25 +130,29 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
         super.addRenderer(renderer);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return this.fieldConfigManager;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -149,7 +160,9 @@ public class LineSymbolizerDetails extends StandardPanel implements PopulateDeta
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

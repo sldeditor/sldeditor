@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.file.sldeditor;
 
 import java.io.BufferedWriter;
@@ -77,18 +78,27 @@ import com.sldeditor.ui.legend.option.LegendOptionData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorFileHandler implements FileHandlerInterface
-{
+public class SLDEditorFileHandler implements FileHandlerInterface {
     private static final String ROOT_ELEMENT = "SLDEditor";
+
     private static final String YES = "yes";
+
     private static final String DATASOURCE_ELEMENT = "datasource";
+
     private static final String SLD_ELEMENT = "sld";
+
     private static final String ENVVARLIST_ELEMENT = "EnvVarList";
+
     private static final String ENVVAR_ELEMENT = "EnvVar";
+
     private static final String ENVVAR_VALUE_ATTRIBUTE = "value";
+
     private static final String ENVVAR_NAME_ATTRIBUTE = "name";
+
     private static final String ENVVAR_TYPE_ATTRIBUTE = "type";
+
     private static final String VENDOR_OPTION_ELEMENT = "vendorOption";
+
     private static final String LEGEND_OPTION_ELEMENT = "legend";
 
     /** The Constant RESOURCE_ICON. */
@@ -100,41 +110,43 @@ public class SLDEditorFileHandler implements FileHandlerInterface
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3193761375262410975L;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
     @Override
-    public List<String> getFileExtensionList()
-    {
+    public List<String> getFileExtensionList() {
         return Arrays.asList("sldeditor");
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInferface,  DefaultTreeModel treeModel, FileTreeNode node)
-    {
+    public boolean populate(FileSystemInterface inputInferface, DefaultTreeModel treeModel,
+            FileTreeNode node) {
         // Do nothing
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public List<SLDDataInterface> getSLDContents(NodeInterface node)
-    {
-        if(node instanceof FileTreeNode)
-        {
-            FileTreeNode fileTreeNode = (FileTreeNode)node;
+    public List<SLDDataInterface> getSLDContents(NodeInterface node) {
+        if (node instanceof FileTreeNode) {
+            FileTreeNode fileTreeNode = (FileTreeNode) node;
 
             File f = fileTreeNode.getFile();
 
-            if(f != null)
-            {
-                if(FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList()))
-                {
+            if (f != null) {
+                if (FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
                     List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
 
                     SLDDataInterface sldData = readSLDEditorFile(f);
@@ -153,8 +165,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
      * @param file the file
      * @return the SLD data
      */
-    private SLDDataInterface readSLDEditorFile(File file)
-    {
+    private SLDDataInterface readSLDEditorFile(File file) {
         SLDDataInterface sldData = null;
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -164,10 +175,14 @@ public class SLDEditorFileHandler implements FileHandlerInterface
             Document document = documentBuilder.parse(file);
 
             String sldFile = extractTextData(document, SLDEditorFileHandler.SLD_ELEMENT);
-            DataSourcePropertiesInterface dataSourceProperties = DataSourceProperties.decodeXML(document, SLDEditorFileHandler.DATASOURCE_ELEMENT);
-            List<VersionData> vendorOptionList = extractVendorOptionData(document, SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
-            List<EnvVar> envVarList = extractEnvironmentVariables(document, SLDEditorFileHandler.ENVVAR_ELEMENT);
-            LegendOptionData legendOption = LegendOptionData.decodeXML(document, SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
+            DataSourcePropertiesInterface dataSourceProperties = DataSourceProperties
+                    .decodeXML(document, SLDEditorFileHandler.DATASOURCE_ELEMENT);
+            List<VersionData> vendorOptionList = extractVendorOptionData(document,
+                    SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
+            List<EnvVar> envVarList = extractEnvironmentVariables(document,
+                    SLDEditorFileHandler.ENVVAR_ELEMENT);
+            LegendOptionData legendOption = LegendOptionData.decodeXML(document,
+                    SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
 
             File f = new File(sldFile);
             String sldContents = readFile(f, Charset.defaultCharset());
@@ -200,13 +215,11 @@ public class SLDEditorFileHandler implements FileHandlerInterface
      * @param envvarElement the environment variable element
      * @return the list
      */
-    private List<EnvVar> extractEnvironmentVariables(Document document,
-            String elementName) {
+    private List<EnvVar> extractEnvironmentVariables(Document document, String elementName) {
         List<EnvVar> list = new ArrayList<EnvVar>();
 
         NodeList nodeList = document.getElementsByTagName(elementName);
-        for(int index = 0; index < nodeList.getLength(); index ++)
-        {
+        for (int index = 0; index < nodeList.getLength(); index++) {
             Element element = (Element) nodeList.item(index);
 
             Class<?> type = null;
@@ -215,11 +228,10 @@ public class SLDEditorFileHandler implements FileHandlerInterface
             } catch (ClassNotFoundException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
-            EnvVar envVar = new EnvVar(element.getAttribute(ENVVAR_NAME_ATTRIBUTE),
-                    type, false);  // Assume not predefined, will get sorted out later
+            // Assume not predefined, will get sorted out later
+            EnvVar envVar = new EnvVar(element.getAttribute(ENVVAR_NAME_ATTRIBUTE), type, false);
 
-            if(element.hasAttribute(ENVVAR_VALUE_ATTRIBUTE))
-            {
+            if (element.hasAttribute(ENVVAR_VALUE_ATTRIBUTE)) {
                 envVar.setValue(element.getAttribute(ENVVAR_VALUE_ATTRIBUTE));
             }
 
@@ -239,8 +251,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
     private static String extractTextData(Document document, String elementName) {
         String value = "";
         NodeList nodeList = document.getElementsByTagName(elementName);
-        if(nodeList.getLength() > 0)
-        {
+        if (nodeList.getLength() > 0) {
             value = nodeList.item(0).getTextContent();
         }
 
@@ -259,19 +270,18 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
         // Try and remove any duplicates
         List<String> nameList = new ArrayList<String>();
-        nameList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest().toString());
+        nameList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest()
+                .toString());
         list.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
 
         NodeList nodeList = document.getElementsByTagName(elementName);
-        for(int index = 0; index < nodeList.getLength(); index ++)
-        {
+        for (int index = 0; index < nodeList.getLength(); index++) {
             String value = nodeList.item(index).getTextContent();
 
             VendorOptionVersion vendorOption = VendorOptionVersion.fromString(value);
             VersionData newVersion = vendorOption.getLatest();
 
-            if(!nameList.contains(newVersion.toString()))
-            {
+            if (!nameList.contains(newVersion.toString())) {
                 list.add(newVersion);
                 nameList.add(newVersion.toString());
             }
@@ -289,10 +299,11 @@ public class SLDEditorFileHandler implements FileHandlerInterface
      * @return corresponding enum, or null
      */
     public static <T extends Enum<T>> T getEnumFromString(Class<T> c, String string) {
-        if( c != null && string != null ) {
+        if (c != null && string != null) {
             try {
                 return Enum.valueOf(c, string.trim());
-            } catch(IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ex) {
+                // Do nothing
             }
         }
         return null;
@@ -306,22 +317,21 @@ public class SLDEditorFileHandler implements FileHandlerInterface
      * @return the string
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private static String readFile(File file, Charset encoding)  throws IOException 
-    {
+    private static String readFile(File file, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
         return new String(encoded, encoding);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#open(java.io.File)
      */
     @Override
-    public List<SLDDataInterface> open(File file)
-    {
+    public List<SLDDataInterface> open(File file) {
         List<SLDDataInterface> list = null;
 
-        if(FileSystemUtils.isFileExtensionSupported(file, getFileExtensionList()))
-        {
+        if (FileSystemUtils.isFileExtensionSupported(file, getFileExtensionList())) {
             list = new ArrayList<SLDDataInterface>();
 
             SLDDataInterface sldData = readSLDEditorFile(file);
@@ -330,14 +340,14 @@ public class SLDEditorFileHandler implements FileHandlerInterface
         return list;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public boolean save(SLDDataInterface sldData)
-    {
-        if(sldData == null)
-        {
+    public boolean save(SLDDataInterface sldData) {
+        if (sldData == null) {
             return false;
         }
 
@@ -359,13 +369,13 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
             // Vendor options
             List<VersionData> vendorOptionList = sldData.getVendorOptionList();
-            if(vendorOptionList != null)
-            {
-                for(VersionData versionData : vendorOptionList)
-                {
-                    Element vendorOptionElement = doc.createElement(SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
+            if (vendorOptionList != null) {
+                for (VersionData versionData : vendorOptionList) {
+                    Element vendorOptionElement = doc
+                            .createElement(SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
 
-                    VendorOptionVersion vendorOption = new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
+                    VendorOptionVersion vendorOption = new VendorOptionVersion(
+                            versionData.getVendorOptionType(), versionData);
                     vendorOptionElement.appendChild(doc.createTextNode(vendorOption.toString()));
                     root.appendChild(vendorOptionElement);
                 }
@@ -373,8 +383,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
             // Write out the data source connector
             DataSourcePropertiesInterface dataSourceProperties = sldData.getDataSourceProperties();
-            if(dataSourceProperties != null)
-            {
+            if (dataSourceProperties != null) {
                 dataSourceProperties.encodeXML(doc, root, SLDEditorFileHandler.DATASOURCE_ELEMENT);
             }
 
@@ -382,19 +391,19 @@ public class SLDEditorFileHandler implements FileHandlerInterface
             Element envVarListElement = doc.createElement(SLDEditorFileHandler.ENVVARLIST_ELEMENT);
             root.appendChild(envVarListElement);
             List<EnvVar> envVarList = sldData.getEnvVarList();
-            if(envVarList != null)
-            {
-                for(EnvVar envVar : envVarList)
-                {
+            if (envVarList != null) {
+                for (EnvVar envVar : envVarList) {
                     Element envVarElement = doc.createElement(SLDEditorFileHandler.ENVVAR_ELEMENT);
 
-                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_NAME_ATTRIBUTE, envVar.getName());
-                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_TYPE_ATTRIBUTE, envVar.getType().getName());
+                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_NAME_ATTRIBUTE,
+                            envVar.getName());
+                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_TYPE_ATTRIBUTE,
+                            envVar.getType().getName());
 
-                    if(envVar.getValue() != null)
-                    {
+                    if (envVar.getValue() != null) {
                         String value = envVar.getValue().toString();
-                        envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_VALUE_ATTRIBUTE, value);
+                        envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_VALUE_ATTRIBUTE,
+                                value);
                     }
 
                     envVarListElement.appendChild(envVarElement);
@@ -403,8 +412,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
             // Write out the legend options
             LegendOptionData legendOptions = sldData.getLegendOptions();
-            if(legendOptions != null)
-            {
+            if (legendOptions != null) {
                 legendOptions.encodeXML(doc, root, SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
             }
 
@@ -413,32 +421,26 @@ public class SLDEditorFileHandler implements FileHandlerInterface
 
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, SLDEditorFileHandler.YES);
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, SLDEditorFileHandler.YES);
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+                    SLDEditorFileHandler.YES);
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             StringWriter stringWriter = new StringWriter();
             transformer.transform(new DOMSource(doc), new StreamResult(stringWriter));
             String outputXML = stringWriter.getBuffer().toString();
 
             BufferedWriter writer = null;
-            try
-            {
+            try {
                 writer = new BufferedWriter(new FileWriter(fileToSave));
                 writer.write(outputXML);
-            }
-            catch (IOException e)
-            {
-            }
-            finally
-            {
-                try
-                {
-                    if (writer != null)
-                    {
+            } catch (IOException e) {
+                // Do nothing
+            } finally {
+                try {
+                    if (writer != null) {
                         writer.close();
                     }
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
+                    // Do nothing
                 }
             }
         } catch (ParserConfigurationException e) {
@@ -454,15 +456,16 @@ public class SLDEditorFileHandler implements FileHandlerInterface
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public String getSLDName(SLDDataInterface sldData)
-    {
-        if(sldData != null)
-        {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+    public String getSLDName(SLDDataInterface sldData) {
+        if (sldData != null) {
+            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
+                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -478,13 +481,14 @@ public class SLDEditorFileHandler implements FileHandlerInterface
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override
     public Icon getIcon(String path, String filename) {
-        if(treeIcon == null)
-        {
+        if (treeIcon == null) {
             URL url = SLDFileHandler.class.getClassLoader().getResource(RESOURCE_ICON);
 
             treeIcon = new ImageIcon(url);

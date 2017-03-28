@@ -66,12 +66,9 @@ public class Help {
     public void display(String section) {
         URL url = null;
         try {
-            if(section == null)
-            {
+            if (section == null) {
                 url = new URL(USER_GUIDE_URL);
-            }
-            else
-            {
+            } else {
                 url = new URL(USER_GUIDE_URL + "#" + section);
             }
         } catch (MalformedURLException e1) {

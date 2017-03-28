@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.render;
 
 import org.geotools.styling.FeatureTypeStyle;
@@ -68,7 +69,8 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      * @param symbolizerIndex the symbolizer index
      * @param options the options
      */
-    public RuleRenderVisitor(FeatureTypeStyle featureTypeStyle, Rule rule, int symbolizerIndex, RuleRenderOptions options) {
+    public RuleRenderVisitor(FeatureTypeStyle featureTypeStyle, Rule rule, int symbolizerIndex,
+            RuleRenderOptions options) {
         this.ftsToRender = featureTypeStyle;
         this.ruleToRender = rule;
         this.symbolizerIndex = symbolizerIndex;
@@ -80,7 +82,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @param rule the rule
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.Rule)
      */
     @SuppressWarnings("deprecation")
@@ -92,18 +96,15 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
         Symbolizer[] symsCopy = null;
 
-        if(!displayOverall)
-        {
-            if((symbolizerIndex >= 0) && (symbolizerIndex < rule.getSymbolizers().length))
-            {
+        if (!displayOverall) {
+            if ((symbolizerIndex >= 0) && (symbolizerIndex < rule.getSymbolizers().length)) {
                 symsCopy = new Symbolizer[1];
                 symsCopy[0] = copy(rule.getSymbolizers()[symbolizerIndex]);
             }
         }
 
         // As a catch all copy everything
-        if(symsCopy == null)
-        {
+        if (symsCopy == null) {
             symsCopy = rule.getSymbolizers();
             for (int i = 0; i < symsCopy.length; i++) {
                 symsCopy[i] = copy(symsCopy[i]);
@@ -127,8 +128,8 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setElseFilter(rule.isElseFilter());
         // Do not copy the min and max scales
 
-        if(STRICT && !copy.equals( rule )) {
-            throw new IllegalStateException("Was unable to duplicate provided Rule:"+rule );
+        if (STRICT && !copy.equals(rule)) {
+            throw new IllegalStateException("Was unable to duplicate provided Rule:" + rule);
         }
         pages.push(copy);
     }
@@ -138,26 +139,26 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @param fts the fts
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.FeatureTypeStyle)
      */
     @SuppressWarnings("deprecation")
     @Override
     public void visit(FeatureTypeStyle fts) {
 
-        FeatureTypeStyle copy = new FeatureTypeStyleImpl( (FeatureTypeStyleImpl)fts);
+        FeatureTypeStyle copy = new FeatureTypeStyleImpl((FeatureTypeStyleImpl) fts);
 
-        if(!options.isTransformationApplied())
-        {
+        if (!options.isTransformationApplied()) {
             copy.setTransformation(null);
         }
 
         Rule[] rules = fts.getRules();
 
-        int length=rules.length;
+        int length = rules.length;
         Rule[] rulesCopy = null;
-        if(this.ruleToRender == null)
-        {
+        if (this.ruleToRender == null) {
             rulesCopy = new Rule[length];
             for (int i = 0; i < length; i++) {
                 if (rules[i] != null) {
@@ -165,14 +166,11 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
                     rulesCopy[i] = (Rule) pages.pop();
                 }
             }
-        }
-        else
-        {
+        } else {
             rulesCopy = new Rule[1];
             for (int i = 0; i < length; i++) {
                 if (rules[i] != null) {
-                    if(renderRule(rules[i]))
-                    {
+                    if (renderRule(rules[i])) {
                         rules[i].accept(this);
                         rulesCopy[0] = (Rule) pages.pop();
                     }
@@ -181,8 +179,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         }
         copy.setRules(rulesCopy);
 
-        if( STRICT && !copy.equals( fts )){
-            throw new IllegalStateException("Was unable to duplicate provided FeatureTypeStyle:"+fts );
+        if (STRICT && !copy.equals(fts)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided FeatureTypeStyle:" + fts);
         }
         pages.push(copy);
     }
@@ -196,8 +195,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     private boolean renderRule(Rule rule) {
         boolean render = false;
 
-        if((rule != null) && (ruleToRender != null))
-        {
+        if ((rule != null) && (ruleToRender != null)) {
             render = (rule == ruleToRender);
         }
         return render;
@@ -215,21 +213,17 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
         FeatureTypeStyle[] fts = style.getFeatureTypeStyles();
         FeatureTypeStyle[] ftsCopy = null;
-        if(this.ftsToRender != null)
-        {
+        if (this.ftsToRender != null) {
             ftsCopy = new FeatureTypeStyle[1];
             for (int i = 0; i < fts.length; i++) {
                 if (fts[i] != null) {
-                    if(fts[i] == this.ftsToRender)
-                    {
+                    if (fts[i] == this.ftsToRender) {
                         fts[i].accept(this);
                         ftsCopy[0] = (FeatureTypeStyle) pages.pop();
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             ftsCopy = new FeatureTypeStyle[fts.length];
             for (int i = 0; i < fts.length; i++) {
                 if (fts[i] != null) {
@@ -245,13 +239,15 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setTitle(style.getTitle());
         copy.setFeatureTypeStyles(ftsCopy);
 
-        if( STRICT && !copy.equals( style )){
-            throw new IllegalStateException("Was unable to duplicate provided Style:"+style );
+        if (STRICT && !copy.equals(style)) {
+            throw new IllegalStateException("Was unable to duplicate provided Style:" + style);
         }
         pages.push(copy);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
      */
     public void visit(PointSymbolizer ps) {
@@ -260,18 +256,20 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setGeometry(copy(ps.getGeometry()));
 
         copy.setUnitOfMeasure(ps.getUnitOfMeasure());
-        copy.setGraphic( copy( ps.getGraphic() ));
+        copy.setGraphic(copy(ps.getGraphic()));
         copy.getOptions().putAll(ps.getOptions());
 
-        if( STRICT ){
-            if( !copy.equals( ps )){
-                throw new IllegalStateException("Was unable to duplicate provided Graphic:"+ps );
+        if (STRICT) {
+            if (!copy.equals(ps)) {
+                throw new IllegalStateException("Was unable to duplicate provided Graphic:" + ps);
             }
         }
         pages.push(copy);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
      */
     public void visit(LineSymbolizer line) {
@@ -280,22 +278,25 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setGeometry(copy(line.getGeometry()));
 
         copy.setUnitOfMeasure(line.getUnitOfMeasure());
-        copy.setStroke( copy( line.getStroke()));
+        copy.setStroke(copy(line.getStroke()));
         copy.getOptions().putAll(line.getOptions());
         copy.setPerpendicularOffset(line.getPerpendicularOffset());
 
-        if( STRICT && !copy.equals( line )){
-            throw new IllegalStateException("Was unable to duplicate provided LineSymbolizer:"+line );
+        if (STRICT && !copy.equals(line)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided LineSymbolizer:" + line);
         }
         pages.push(copy);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
      */
     public void visit(PolygonSymbolizer poly) {
         PolygonSymbolizer copy = sf.createPolygonSymbolizer();
-        copy.setFill( copy( poly.getFill()));
+        copy.setFill(copy(poly.getFill()));
 
         copy.setGeometry(copy(poly.getGeometry()));
 
@@ -303,19 +304,22 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setStroke(copy(poly.getStroke()));
         copy.getOptions().putAll(poly.getOptions());
 
-        if( STRICT && !copy.equals( poly )){
-            throw new IllegalStateException("Was unable to duplicate provided PolygonSymbolizer:"+poly );
+        if (STRICT && !copy.equals(poly)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided PolygonSymbolizer:" + poly);
         }
         pages.push(copy);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.TextSymbolizer)
      */
     public void visit(TextSymbolizer text) {
         TextSymbolizer copy = sf.createTextSymbolizer();
 
-        copy.setFill( copy( text.getFill()));
+        copy.setFill(copy(text.getFill()));
         copy.fonts().clear();
         copy.fonts().addAll(copyFonts(text.fonts()));
 
@@ -323,24 +327,25 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setGeometry(copy(text.getGeometry()));
 
         copy.setUnitOfMeasure(text.getUnitOfMeasure());
-        copy.setHalo( copy( text.getHalo() ));
-        copy.setLabel( copy( text.getLabel()));
-        copy.setLabelPlacement( copy( text.getLabelPlacement()));
-        copy.setPriority( copy( text.getPriority()));
+        copy.setHalo(copy(text.getHalo()));
+        copy.setLabel(copy(text.getLabel()));
+        copy.setLabelPlacement(copy(text.getLabelPlacement()));
+        copy.setPriority(copy(text.getPriority()));
         copy.getOptions().putAll(text.getOptions());
 
-        if (text instanceof TextSymbolizer2){
+        if (text instanceof TextSymbolizer2) {
             TextSymbolizer2 text2 = (TextSymbolizer2) text;
             TextSymbolizer2 copy2 = (TextSymbolizer2) copy;
 
-            copy2.setGraphic( copy(text2.getGraphic()));
+            copy2.setGraphic(copy(text2.getGraphic()));
             copy2.setSnippet(copy(text2.getSnippet()));
             copy2.setFeatureDescription(copy(text2.getFeatureDescription()));
             copy2.setOtherText(copy(text2.getOtherText()));
         }
 
-        if( STRICT && !copy.equals( text )){
-            throw new IllegalStateException("Was unable to duplicate provided TextSymbolizer:"+text );
+        if (STRICT && !copy.equals(text)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided TextSymbolizer:" + text);
         }
         pages.push(copy);
     }
@@ -352,37 +357,39 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      * @return the other text
      */
     private OtherText copy(OtherText otherText) {
-        if (otherText == null) return null;
+        if (otherText == null)
+            return null;
 
         // TODO: add methods to the factory to create OtherText instances
         // sf.createOtherText();
         OtherTextImpl copy = new OtherTextImpl();
-        copy.setTarget( otherText.getTarget() );
-        copy.setText( copy(otherText.getText()) );
+        copy.setTarget(otherText.getTarget());
+        copy.setText(copy(otherText.getText()));
         return copy;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.RasterSymbolizer)
      */
     public void visit(RasterSymbolizer raster) {
         RasterSymbolizer copy = sf.createRasterSymbolizer();
-        copy.setChannelSelection( copy( raster.getChannelSelection() ));
-        copy.setColorMap( copy( raster.getColorMap() ));
-        copy.setContrastEnhancement( copy( raster.getContrastEnhancement()));
+        copy.setChannelSelection(copy(raster.getChannelSelection()));
+        copy.setColorMap(copy(raster.getColorMap()));
+        copy.setContrastEnhancement(copy(raster.getContrastEnhancement()));
 
         copy.setGeometry(copy(raster.getGeometry()));
 
         copy.setUnitOfMeasure(raster.getUnitOfMeasure());
-        copy.setImageOutline( copy( raster.getImageOutline()));
-        copy.setOpacity( copy( raster.getOpacity() ));
-        copy.setOverlap( copy( raster.getOverlap()));
-        copy.setShadedRelief( copy( raster.getShadedRelief()));
+        copy.setImageOutline(copy(raster.getImageOutline()));
+        copy.setOpacity(copy(raster.getOpacity()));
+        copy.setOverlap(copy(raster.getOverlap()));
+        copy.setShadedRelief(copy(raster.getShadedRelief()));
 
-        if( STRICT && !copy.equals( raster )){
-            throw new IllegalStateException("Was unable to duplicate provided raster:"+raster );
+        if (STRICT && !copy.equals(raster)) {
+            throw new IllegalStateException("Was unable to duplicate provided raster:" + raster);
         }
         pages.push(copy);
     }
 }
-

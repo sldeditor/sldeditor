@@ -93,17 +93,17 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
 
         if (aValue instanceof Envelope) {
             this.value = (Envelope) aValue;
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof LiteralExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof LiteralExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -111,7 +111,9 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
         return Arrays.asList(ReferencedEnvelope.class, Envelope.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -119,7 +121,9 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
         return new FieldConfigBoundingBox(commonData);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

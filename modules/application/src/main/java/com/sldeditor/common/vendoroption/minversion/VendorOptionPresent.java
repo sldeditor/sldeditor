@@ -40,8 +40,7 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
      * @param sldObj the sld obj
      * @param vendorOptionInfo the vendor option info
      */
-    public VendorOptionPresent(Object sldObj,
-            VendorOptionInfo vendorOptionInfo) {
+    public VendorOptionPresent(Object sldObj, VendorOptionInfo vendorOptionInfo) {
         this.sldObj = sldObj;
         this.vendorOptionInfo = vendorOptionInfo;
     }
@@ -56,31 +55,35 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
     }
 
     /**
-     * @return the vendorOptionInfo
+     * Gets the vendor option info.
+     *
+     * @return the vendorOptionInfo.
      */
     public VendorOptionInfo getVendorOptionInfo() {
         return vendorOptionInfo;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
     public int compareTo(VendorOptionPresent o) {
-        if(o == null)
-        {
+        if (o == null) {
             return -1;
         }
 
-        if(this.vendorOptionInfo == null)
-        {
+        if (this.vendorOptionInfo == null) {
             return (o.vendorOptionInfo == null) ? 0 : 1;
         }
 
         return this.vendorOptionInfo.compareTo(o.vendorOptionInfo);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -92,7 +95,9 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

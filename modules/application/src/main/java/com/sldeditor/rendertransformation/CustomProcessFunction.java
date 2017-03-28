@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class CustomProcessFunction {
     private static final String GEOMETRY_NAME = "Geometry";
 
     /** The data type map. */
-    private static Map<String, Class<?> > dataTypeMap = new HashMap<String, Class<?> >();
+    private static Map<String, Class<?>> dataTypeMap = new HashMap<String, Class<?>>();
 
     /**
      * Extract parameters.
@@ -62,18 +63,18 @@ public class CustomProcessFunction {
      */
     public List<ProcessFunctionParameterValue> extractParameters(
             ProcessDescriptionType selectedCustomFunction) {
-        List<ProcessFunctionParameterValue> valueList = new ArrayList<ProcessFunctionParameterValue>();
+        List<ProcessFunctionParameterValue> valueList =
+                new ArrayList<ProcessFunctionParameterValue>();
 
-        if(dataTypeMap.isEmpty())
-        {
+        if (dataTypeMap.isEmpty()) {
             populateDataMap();
         }
 
-        if(selectedCustomFunction != null)
-        {
-            for(int index = 0; index < selectedCustomFunction.getDataInputs().getInput().size(); index ++)
-            {
-                InputDescriptionType input = (InputDescriptionType) selectedCustomFunction.getDataInputs().getInput().get(index);
+        if (selectedCustomFunction != null) {
+            for (int index = 0; index < selectedCustomFunction.getDataInputs().getInput()
+                    .size(); index++) {
+                InputDescriptionType input = (InputDescriptionType) selectedCustomFunction
+                        .getDataInputs().getInput().get(index);
 
                 ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
 
@@ -116,8 +117,7 @@ public class CustomProcessFunction {
         int minOccurs = input.getMinOccurs().intValue();
         int maxOccurs = input.getMaxOccurs().intValue();
 
-        if((minOccurs == 0) && (maxOccurs == 1))
-        {
+        if ((minOccurs == 0) && (maxOccurs == 1)) {
             return true;
         }
         return false;
@@ -130,29 +130,22 @@ public class CustomProcessFunction {
      * @param value the value
      * @return the type
      */
-    private void getType(InputDescriptionType inputDescription, ProcessFunctionParameterValue value) {
+    private void getType(InputDescriptionType inputDescription,
+            ProcessFunctionParameterValue value) {
         LiteralInputType literal = inputDescription.getLiteralData();
-        if(literal != null)
-        {
+        if (literal != null) {
             RenderTransformValueFactory.getInstance().getValueCustomProcess(value, literal);
-            
-            if(value.objectValue instanceof EnumValues)
-            {
+
+            if (value.objectValue instanceof EnumValues) {
                 value.dataType = ENUMERATION_NAME;
             }
-        }
-        else
-        {
+        } else {
             SupportedCRSsType bbox = inputDescription.getBoundingBoxData();
-            if(bbox != null)
-            {
+            if (bbox != null) {
                 value.dataType = BBOX_NAME;
-            }
-            else
-            {
+            } else {
                 SupportedComplexDataType complex = inputDescription.getComplexData();
-                if(complex != null)
-                {
+                if (complex != null) {
                     // ComplexDataCombinationsType parameterDataType = complex.getSupported();
 
                     value.dataType = GEOMETRY_NAME;

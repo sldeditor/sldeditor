@@ -76,8 +76,7 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
      */
     @Override
     public Expression getExpression() {
-        if(expression != null)
-        {
+        if (expression != null) {
             return expression;
         }
         return filterFactory.literal(value);
@@ -95,17 +94,17 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
 
         if (aValue instanceof Date) {
             this.value = (Date) aValue;
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof LiteralExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof LiteralExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -113,7 +112,9 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
         return Arrays.asList(Date.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -121,7 +122,9 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
         return new FieldConfigDate(commonData);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

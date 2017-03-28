@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.ArrayList;
@@ -169,7 +170,8 @@ public class StrokeDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
-            // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
+            // Ignore the anchor point if it is the same as the
+            // default so it doesn't appear in the SLD
             if (DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint)) {
                 anchorPoint = null;
             }
@@ -178,7 +180,8 @@ public class StrokeDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
-            // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
+            // Ignore the displacement if it is the same as the default
+            // so it doesn't appear in the SLD
             if (DetailsUtilities.isSame(defaultDisplacement, displacement)) {
                 displacement = null;
             }

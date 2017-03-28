@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.file.ysld;
 
 import java.io.BufferedWriter;
@@ -57,8 +58,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class YSLDFileHandler implements FileHandlerInterface
-{
+public class YSLDFileHandler implements FileHandlerInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2572421275144887604L;
@@ -77,49 +77,49 @@ public class YSLDFileHandler implements FileHandlerInterface
 
     /** The tree icon SLD. */
     private Icon treeIcon = null;
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
     @Override
-    public List<String> getFileExtensionList()
-    {
+    public List<String> getFileExtensionList() {
         return Arrays.asList(YSLD_FILE_EXTENSION);
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface,  DefaultTreeModel treeModel, FileTreeNode node)
-    {
+    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
+            FileTreeNode node) {
         // Do nothing
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public List<SLDDataInterface> getSLDContents(NodeInterface node)
-    {
-        if(node instanceof FileTreeNode)
-        {
-            FileTreeNode fileTreeNode = (FileTreeNode)node;
+    public List<SLDDataInterface> getSLDContents(NodeInterface node) {
+        if (node instanceof FileTreeNode) {
+            FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-            if(fileTreeNode.isDir())
-            {
+            if (fileTreeNode.isDir()) {
                 // Cater for folders
                 return open(fileTreeNode.getFile());
-            }
-            else
-            {
+            } else {
                 // Cater for single file
                 File f = fileTreeNode.getFile();
 
                 String fileExtension = ExternalFilenames.getFileExtension(f.getAbsolutePath());
-                if(getFileExtensionList().contains(fileExtension))
-                {
+                if (getFileExtensionList().contains(fileExtension)) {
                     return open(f);
                 }
             }
@@ -135,8 +135,7 @@ public class YSLDFileHandler implements FileHandlerInterface
      * @return the string
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private static String readFile(File file, Charset encoding)  throws IOException 
-    {
+    private static String readFile(File file, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
         return new String(encoded, encoding);
     }
@@ -148,30 +147,22 @@ public class YSLDFileHandler implements FileHandlerInterface
      * @return the list
      */
     @Override
-    public List<SLDDataInterface> open(File f)
-    {
-        if(f != null)
-        {
+    public List<SLDDataInterface> open(File f) {
+        if (f != null) {
             List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
 
-            if(f.isDirectory())
-            {
+            if (f.isDirectory()) {
                 File[] listFiles = f.listFiles();
-                if(listFiles != null)
-                {
-                    for(File subFile : listFiles)
-                    {
+                if (listFiles != null) {
+                    for (File subFile : listFiles) {
                         internalOpenFile(subFile, list);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 internalOpenFile(f, list);
             }
 
-            if(list.isEmpty())
-            {
+            if (list.isEmpty()) {
                 return null;
             }
 
@@ -187,17 +178,14 @@ public class YSLDFileHandler implements FileHandlerInterface
      * @param list the list
      */
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
-        if(f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList()))
-        {
-            try
-            {
+        if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
+            try {
                 String contents = readFile(f, Charset.defaultCharset());
 
                 StyledLayerDescriptor sld = Ysld.parse(contents);
 
                 // Convert YSLD to SLD string
-                if(sldWriter == null)
-                {
+                if (sldWriter == null) {
                     sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
                 }
 
@@ -209,36 +197,34 @@ public class YSLDFileHandler implements FileHandlerInterface
                 sldData.setOriginalFormat(SLDOutputFormatEnum.YSLD);
 
                 list.add(sldData);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public boolean save(SLDDataInterface sldData)
-    {
-        if(sldData == null)
-        {
+    public boolean save(SLDDataInterface sldData) {
+        if (sldData == null) {
             return false;
         }
 
         File fileToSave = sldData.getSLDFile();
 
-        if(ysldWriter == null)
-        {
+        if (ysldWriter == null) {
             ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
         }
 
         BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter(fileToSave));
-            String contents = ysldWriter.encodeSLD(sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());
+            String contents = ysldWriter.encodeSLD(sldData.getResourceLocator(),
+                    SelectedSymbol.getInstance().getSld());
             out.write(contents);
             out.close();
         } catch (IOException e) {
@@ -250,14 +236,14 @@ public class YSLDFileHandler implements FileHandlerInterface
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public String getSLDName(SLDDataInterface sldData)
-    {
-        if(sldData != null)
-        {
+    public String getSLDName(SLDDataInterface sldData) {
+        if (sldData != null) {
             return sldData.getLayerNameWithOutSuffix() + "." + YSLDFileHandler.YSLD_FILE_EXTENSION;
         }
 
@@ -274,13 +260,14 @@ public class YSLDFileHandler implements FileHandlerInterface
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override
     public Icon getIcon(String path, String filename) {
-        if(treeIcon == null)
-        {
+        if (treeIcon == null) {
             URL url = YSLDFileHandler.class.getClassLoader().getResource(RESOURCE_ICON);
 
             treeIcon = new ImageIcon(url);

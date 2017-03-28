@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
@@ -34,9 +35,8 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerOverallNode extends DefaultMutableTreeNode implements NodeInterface
-{
-    
+public class GeoServerOverallNode extends DefaultMutableTreeNode implements NodeInterface {
+
     /** The Constant GEOSERVER_NODE. */
     public static final String GEOSERVER_NODE = "GeoServer";
 
@@ -57,27 +57,28 @@ public class GeoServerOverallNode extends DefaultMutableTreeNode implements Node
      *
      * @param handler the handler
      */
-    public GeoServerOverallNode(FileSystemInterface handler)
-    {
+    public GeoServerOverallNode(FileSystemInterface handler) {
         super(GEOSERVER_NODE);
         this.handler = handler;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
-    public FileSystemInterface getHandler()
-    {
+    public FileSystemInterface getHandler() {
         return handler;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return BuiltInDataFlavour.GEOSERVER_OVERALL_DATAITEM_FLAVOUR;
     }
 
@@ -91,13 +92,14 @@ public class GeoServerOverallNode extends DefaultMutableTreeNode implements Node
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override
     public Icon getIcon() {
-        if(treeIcon == null)
-        {
+        if (treeIcon == null) {
             URL url = GeoServerOverallNode.class.getClassLoader().getResource(RESOURCE_ICON);
 
             treeIcon = new ImageIcon(url);

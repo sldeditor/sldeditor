@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.render;
 
 import java.awt.Color;
@@ -84,8 +85,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  * @author Robert Ward (SCISYS)
  */
 public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, PrefUpdateInterface,
-DataSourceUpdatedInterface, VendorOptionUpdateInterface
-{
+        DataSourceUpdatedInterface, VendorOptionUpdateInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -108,10 +108,12 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
     private static final double BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE = 0.001;
 
     /** The Constant NO_DATA_SOURCE. */
-    private static final String NO_DATA_SOURCE = Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.noDataSource");
+    private static final String NO_DATA_SOURCE = Localisation.getString(RenderPanelImpl.class,
+            "RenderPanelImpl.noDataSource");
 
     /** The Constant INVALID_SYMBOL_STRING. */
-    private static final String INVALID_SYMBOL_STRING = Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.invalidSymbol");
+    private static final String INVALID_SYMBOL_STRING = Localisation
+            .getString(RenderPanelImpl.class, "RenderPanelImpl.invalidSymbol");
 
     /** The Constant DPI. */
     private static final int DPI = 96;
@@ -125,7 +127,7 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
     /** The Constant ST_HEIGHT, height of the area containing the rendered image. */
     private static final int ST_HEIGHT = 200;
 
-    /**  The image to display. */
+    /** The image to display. */
     private BufferedImage bImage = null;
 
     /** The feature list. */
@@ -177,7 +179,7 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
 
         PrefManager.getInstance().addListener(this);
         VendorOptionManager.getInstance().addVendorOptionListener(this);
-        
+
         renderer.addRenderListener(RendererErrors.getInstance());
     }
 
@@ -224,25 +226,21 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
 
         g.fillRect(0, 0, width - 1, height - 1);
 
-        if(validSymbol)
-        {
-            if(bImage != null)
-            {
+        if (validSymbol) {
+            if (bImage != null) {
                 g.drawImage(bImage, 0, 0, null);
             }
-        }
-        else
-        {
+        } else {
             String displayString = dataLoaded ? INVALID_SYMBOL_STRING : NO_DATA_SOURCE;
             g.setColor(Color.black);
             Rectangle2D bounds = g.getFontMetrics().getStringBounds(displayString, g);
             double x = (width / 2) - (bounds.getWidth() / 2);
             double y = (height / 2) - (bounds.getHeight() / 2);
-            g.drawString(displayString, (int) x, (int)y);
+            g.drawString(displayString, (int) x, (int) y);
         }
         g.setColor(Color.black);
         Rectangle2D bounds = g.getFontMetrics().getStringBounds(vendorOptionString, g);
-        g.drawString(vendorOptionString, 2, (int)bounds.getHeight());
+        g.drawString(vendorOptionString, 2, (int) bounds.getHeight());
         g.drawRect(0, 0, width - 1, height - 1);
     }
 
@@ -251,19 +249,16 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
      *
      * @param style the style
      */
-    private void renderSymbol(Style style)
-    {
-        if(!underTest)
-        {
-          //  if(!dataLoaded)
+    private void renderSymbol(Style style) {
+        if (!underTest) {
+            // if(!dataLoaded)
             {
                 createFeature();
             }
 
             Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
 
-            switch(geometryType)
-            {
+            switch (geometryType) {
             case RASTER:
                 renderRasterMap(imageSize, style, DPI);
                 break;
@@ -292,16 +287,14 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         AbstractGridCoverage2DReader gridCoverage = dataSource.getGridCoverageReader();
 
-        if(gridCoverage == null)
-        {
+        if (gridCoverage == null) {
             validSymbol = false;
         }
 
         GridReaderLayer rasterLayer = null;
         MapViewport viewport = null;
         List<Layer> layerList = new ArrayList<Layer>();
-        if(style != null)
-        {
+        if (style != null) {
             rasterLayer = new GridReaderLayer(gridCoverage, style);
             layerList.add(rasterLayer);
             viewport = new MapViewport(rasterLayer.getBounds());
@@ -313,9 +306,8 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
         map.addLayers(layerList);
         map.setViewport(viewport);
         try {
-            Map<Object,Object> hints = new HashMap<Object,Object>();
-            if(OVERRIDE_DPI)
-            {
+            Map<Object, Object> hints = new HashMap<Object, Object>();
+            if (OVERRIDE_DPI) {
                 hints.put(StreamingRenderer.DPI_KEY, dpi);
             }
             // This ensures all the labelling is cleared
@@ -323,39 +315,36 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
 
             renderer.setRendererHints(hints);
             renderer.setMapContent(map);
-            BufferedImage image = new BufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage image = new BufferedImage(imageSize.width, imageSize.height,
+                    BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
-            if(useAntiAlias)
-            {
-                graphics.setRenderingHints(new RenderingHints(
-                        RenderingHints.KEY_ANTIALIASING,
+            if (useAntiAlias) {
+                graphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON));
             }
 
             try {
-                if(!hasGeometry){
+                if (!hasGeometry) {
                     graphics.setColor(Color.BLACK);
                     int y = imageSize.height / 2;
-                    Font font = new Font(Font.SERIF,Font.BOLD, 14);
+                    Font font = new Font(Font.SERIF, Font.BOLD, 14);
                     graphics.setFont(font);
-                    graphics.drawString(Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"), 10, y - 14);
-                }
-                else {
-                    if(rasterLayer != null)
-                    {
+                    graphics.drawString(
+                            Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"),
+                            10, y - 14);
+                } else {
+                    if (rasterLayer != null) {
                         ReferencedEnvelope bounds = rasterLayer.getBounds();
                         renderer.paint(graphics, imageSize, bounds);
                     }
 
                     this.bImage = image;
                 }
-            }
-            finally {
+            } finally {
                 graphics.dispose();
             }
-        }
-        finally {
+        } finally {
             map.dispose();
         }
     }
@@ -369,13 +358,9 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
      * @param dpi the dpi
      */
     private void renderVectorMap(FeatureSource<SimpleFeatureType, SimpleFeature> features,
-            Rectangle imageSize,
-            Style style,
-            int dpi)
-    {
+            Rectangle imageSize, Style style, int dpi) {
         List<Layer> layerList = new ArrayList<Layer>();
-        if(style != null)
-        {
+        if (style != null) {
             FeatureLayer featureLayer = new FeatureLayer(features, style);
             layerList.add(featureLayer);
         }
@@ -383,16 +368,14 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
         boolean hasGeometry = false;
         ReferencedEnvelope bounds = null;
 
-        if(features != null)
-        {
+        if (features != null) {
             bounds = calculateBounds();
 
             wmsEnvVarValues.setMapBounds(bounds);
 
             EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
 
-            if(features.getSchema() != null)
-            {
+            if (features.getSchema() != null) {
                 hasGeometry = (features.getSchema().getGeometryDescriptor() != null);
             }
         }
@@ -411,39 +394,42 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
         try {
             bounds = featureList.getBounds();
 
-            if(bounds == null)
-            {
+            if (bounds == null) {
                 // It could be that the above call was too costly!
                 bounds = featureList.getFeatures().getBounds();
             }
 
-            if(bounds.getCoordinateReferenceSystem() == null)
-            {
-                // We need a coordinate reference system set otherwise transformations fail to render
+            if (bounds.getCoordinateReferenceSystem() == null) {
+                // We need a coordinate reference system set otherwise
+                // transformations fail to render
                 bounds = ReferencedEnvelope.create(bounds, DefaultGeographicCRS.WGS84);
             }
 
-            if(bounds != null)
-            {
-                Unit<?> unit = CRSUtilities.getUnit(bounds.getCoordinateReferenceSystem().getCoordinateSystem());
+            if (bounds != null) {
+                Unit<?> unit = CRSUtilities
+                        .getUnit(bounds.getCoordinateReferenceSystem().getCoordinateSystem());
 
                 double width;
                 double height;
-                if(unit == NonSI.DEGREE_ANGLE)
-                {
-                    width = (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE) ? BOUNDINGBOX_BUFFER_MIN_ANGLE : (bounds.getWidth() * BOUNDINGBOX_BUFFER_ANGLE);
-                    height = (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE) ? BOUNDINGBOX_BUFFER_MIN_ANGLE : (bounds.getHeight() * BOUNDINGBOX_BUFFER_ANGLE);
-                }
-                else
-                {
-                    width = (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR) ? BOUNDINGBOX_BUFFER_MIN_LINEAR : (bounds.getWidth() * BOUNDINGBOX_BUFFER_LINEAR);
-                    height = (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR) ? BOUNDINGBOX_BUFFER_MIN_LINEAR : (bounds.getHeight() * BOUNDINGBOX_BUFFER_LINEAR);
+                if (unit == NonSI.DEGREE_ANGLE) {
+                    width = (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
+                            ? BOUNDINGBOX_BUFFER_MIN_ANGLE
+                            : (bounds.getWidth() * BOUNDINGBOX_BUFFER_ANGLE);
+                    height = (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
+                            ? BOUNDINGBOX_BUFFER_MIN_ANGLE
+                            : (bounds.getHeight() * BOUNDINGBOX_BUFFER_ANGLE);
+                } else {
+                    width = (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
+                            ? BOUNDINGBOX_BUFFER_MIN_LINEAR
+                            : (bounds.getWidth() * BOUNDINGBOX_BUFFER_LINEAR);
+                    height = (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
+                            ? BOUNDINGBOX_BUFFER_MIN_LINEAR
+                            : (bounds.getHeight() * BOUNDINGBOX_BUFFER_LINEAR);
                 }
 
                 bounds.expandBy(width, height);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
         return bounds;
@@ -458,18 +444,13 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
      * @param hasGeometry the has geometry
      * @param dpi the dpi
      */
-    private void internal_renderMap(List<Layer> layers,
-            ReferencedEnvelope bounds,
-            Rectangle imageSize,
-            boolean hasGeometry,
-            int dpi)
-    {
+    private void internal_renderMap(List<Layer> layers, ReferencedEnvelope bounds,
+            Rectangle imageSize, boolean hasGeometry, int dpi) {
         MapContent map = new MapContent();
         map.addLayers(layers);
         try {
-            Map<Object,Object> hints = new HashMap<Object,Object>();
-            if(OVERRIDE_DPI)
-            {
+            Map<Object, Object> hints = new HashMap<Object, Object>();
+            if (OVERRIDE_DPI) {
                 hints.put(StreamingRenderer.DPI_KEY, dpi);
             }
             // This ensures all the labelling is cleared
@@ -477,35 +458,33 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
 
             renderer.setRendererHints(hints);
             renderer.setMapContent(map);
-            BufferedImage image = new BufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage image = new BufferedImage(imageSize.width, imageSize.height,
+                    BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
-            if(useAntiAlias)
-            {
-                graphics.setRenderingHints(new RenderingHints(
-                        RenderingHints.KEY_ANTIALIASING,
+            if (useAntiAlias) {
+                graphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON));
             }
 
             try {
-                if(!hasGeometry){
+                if (!hasGeometry) {
                     graphics.setColor(Color.BLACK);
                     int y = imageSize.height / 2;
-                    Font font = new Font(Font.SERIF,Font.BOLD, 14);
+                    Font font = new Font(Font.SERIF, Font.BOLD, 14);
                     graphics.setFont(font);
-                    graphics.drawString(Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"), 10, y - 14);
-                }
-                else {
+                    graphics.drawString(
+                            Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"),
+                            10, y - 14);
+                } else {
                     renderer.paint(graphics, imageSize, bounds);
 
                     this.bImage = image;
                 }
-            }
-            finally {
+            } finally {
                 graphics.dispose();
             }
-        }
-        finally {
+        } finally {
             map.dispose();
         }
     }
@@ -515,20 +494,14 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
      */
     private void createFeature() {
 
-        if(geometryType == GeometryTypeEnum.UNKNOWN)
-        {
+        if (geometryType == GeometryTypeEnum.UNKNOWN) {
             dataLoaded = false;
-        }
-        else
-        {
+        } else {
             DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
-            if(geometryType == GeometryTypeEnum.RASTER)
-            {
+            if (geometryType == GeometryTypeEnum.RASTER) {
                 dataLoaded = (dataSource.getGridCoverageReader() != null);
-            }
-            else
-            {
+            } else {
                 featureList = dataSource.getExampleFeatureSource();
                 dataLoaded = true;
             }
@@ -538,7 +511,9 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
     /**
      * Render symbol.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.marker.iface.RenderSymbolInterface#renderSymbol()
      */
     @Override
@@ -546,27 +521,20 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
 
         validSymbol = SelectedSymbol.getInstance().isValid();
 
-        if(validSymbol)
-        {
+        if (validSymbol) {
             StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
             SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
 
-            if(sld != null)
-            {
-                for(SLDOutputInterface sldOutput : sldOutputList)
-                {
+            if (sld != null) {
+                for (SLDOutputInterface sldOutput : sldOutputList) {
                     sldOutput.updatedSLD(sldData, sld);
                 }
 
                 renderSymbol((Style) renderSymbol.getRenderStyle(SelectedSymbol.getInstance()));
-            }
-            else
-            {
+            } else {
                 renderSymbol(null);
             }
-        }
-        else
-        {
+        } else {
             repaint();
         }
     }
@@ -586,7 +554,9 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
      *
      * @param value the value
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.preferences.PrefUpdateInterface#useAntiAliasUpdated(boolean)
      */
     @Override
@@ -602,15 +572,17 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
      * @param geometryType the geometry type
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
         this.geometryType = geometryType;
 
-        if(dataLoaded)
-        {
+        if (dataLoaded) {
             dataLoaded = false;
         }
         renderSymbol();
@@ -636,7 +608,9 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
         this.backgroundColour = backgroundColour;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -653,7 +627,9 @@ DataSourceUpdatedInterface, VendorOptionUpdateInterface
         RenderPanelImpl.underTest = underTest;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

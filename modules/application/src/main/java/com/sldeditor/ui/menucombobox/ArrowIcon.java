@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.menucombobox;
 
 import java.awt.Component;
@@ -75,18 +76,22 @@ public class ArrowIcon implements Icon, SwingConstants {
         iconRenderer = new BasicArrowButton(direction);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
      */
     public void paintIcon(Component c, Graphics g, int x, int y) {
         iconRenderer.paintTriangle(g, x, y, size, direction, isEnabled);
     }
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see javax.swing.Icon#getIconWidth()
      */
     public int getIconWidth() {
-        //int retCode;
+        // int retCode;
         switch (direction) {
         case NORTH:
         case SOUTH:
@@ -94,11 +99,15 @@ public class ArrowIcon implements Icon, SwingConstants {
         case EAST:
         case WEST:
             return size;
+        default:
+            break;
         }
         return iconSize;
     }
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see javax.swing.Icon#getIconHeight()
      */
     public int getIconHeight() {
@@ -109,6 +118,8 @@ public class ArrowIcon implements Icon, SwingConstants {
         case EAST:
         case WEST:
             return iconSize;
+        default:
+            break;
         }
         return size;
     }

@@ -43,8 +43,7 @@ public class ColourRampData {
     /**
      * Instantiates a new colour ramp data.
      */
-    public ColourRampData()
-    {
+    public ColourRampData() {
     }
 
     /**

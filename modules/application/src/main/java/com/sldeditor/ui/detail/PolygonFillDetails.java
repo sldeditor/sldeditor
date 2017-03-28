@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.List;
@@ -59,7 +60,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  *
  * @author Robert Ward (SCISYS)
  */
-public class PolygonFillDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
+public class PolygonFillDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -70,10 +72,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     /** The symbol type factory. */
     private SymbolTypeFactory symbolTypeFactory = null;
 
-    /**  The field override map, indicates which fields to enable. */
+    /** The field override map, indicates which fields to enable. */
     private FieldEnableState fieldEnableState = null;
 
-    /**  The panel id of the selected fill. */
+    /** The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
 
     /** The vendor option fill factory. */
@@ -91,15 +93,16 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
     /**
      * Constructor.
      */
-    public PolygonFillDetails()
-    {
+    public PolygonFillDetails() {
         super(PolygonFillDetails.class);
 
         setUpdateSymbolListener(this);
 
         symbolTypeFactory = new SymbolTypeFactory(PolygonFillDetails.class,
-                new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.POLYGON_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.POLYGON_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR,
+                        FieldIdEnum.POLYGON_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_FILL_COLOUR,
+                        FieldIdEnum.POLYGON_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(PolygonFillDetails.class);
@@ -132,10 +135,8 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         vendorOptionFillFactory = new VendorOptionFillFactory(getPanelId());
 
         List<VendorOptionInterface> voList = vendorOptionFillFactory.getVendorOptionList();
-        if(voList != null)
-        {
-            for(VendorOptionInterface vendorOption : voList)
-            {
+        if (voList != null) {
+            for (VendorOptionInterface vendorOption : voList) {
                 vendorOption.setParentPanel(this);
             }
         }
@@ -156,7 +157,9 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -175,79 +178,60 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         Expression expOpacity = null;
 
         symbolizer = null;
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             symbolizer = selectedSymbol.getSymbolizer();
 
             Graphic graphic = null;
-            if(symbolizer instanceof PointSymbolizerImpl)
-            {
+            if (symbolizer instanceof PointSymbolizerImpl) {
                 PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
                 graphic = pointSymbolizer.getGraphic();
-                if(graphic != null)
-                {
+                if (graphic != null) {
                     List<GraphicalSymbol> graphicSymbolList = graphic.graphicalSymbols();
-                    if(!graphicSymbolList.isEmpty())
-                    {
+                    if (!graphicSymbolList.isEmpty()) {
                         GraphicalSymbol graphicalSymbol = graphicSymbolList.get(0);
-                        if(graphicalSymbol instanceof MarkImpl)
-                        {
+                        if (graphicalSymbol instanceof MarkImpl) {
                             MarkImpl mark = (MarkImpl) graphicalSymbol;
                             fill = mark.getFill();
-                            if(fill != null)
-                            {
+                            if (fill != null) {
                                 expOpacity = fill.getOpacity();
                             }
                         }
                     }
                 }
-            }
-            else if(symbolizer instanceof PolygonSymbolizerImpl)
-            {
+            } else if (symbolizer instanceof PolygonSymbolizerImpl) {
                 PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer;
-                if(polygonSymbolizer != null)
-                {
+                if (polygonSymbolizer != null) {
                     fill = polygonSymbolizer.getFill();
 
-                    if(fill != null)
-                    {
+                    if (fill != null) {
                         expOpacity = fill.getOpacity();
                         graphic = fill.getGraphicFill();
                     }
                 }
             }
 
-            if(graphic == null)
-            {
-                if(fill != null)
-                {
+            if (graphic == null) {
+                if (fill != null) {
                     expFillColour = fill.getColor();
                 }
 
-                if(fill == null)
-                {
+                if (fill == null) {
                     symbolTypeFactory.setNoFill(this.fieldConfigManager);
+                } else {
+                    symbolTypeFactory.setSolidFill(this.fieldConfigManager, expFillColour,
+                            expOpacity);
                 }
-                else
-                {
-                    symbolTypeFactory.setSolidFill(this.fieldConfigManager, expFillColour, expOpacity);
-                }
-            }
-            else
-            {
+            } else {
                 expSize = graphic.getSize();
                 expRotation = graphic.getRotation();
 
                 // Anchor point
                 AnchorPoint anchorPoint = graphic.getAnchorPoint();
 
-                if(anchorPoint != null)
-                {
+                if (anchorPoint != null) {
                     expAnchorPointX = anchorPoint.getAnchorPointX();
                     expAnchorPointY = anchorPoint.getAnchorPointY();
-                }
-                else
-                {
+                } else {
                     expAnchorPointX = defaultAnchorPoint.getAnchorPointX();
                     expAnchorPointY = defaultAnchorPoint.getAnchorPointY();
                 }
@@ -255,13 +239,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
                 // Offset
                 Displacement displacement = graphic.getDisplacement();
 
-                if(displacement != null)
-                {
+                if (displacement != null) {
                     expDisplacementX = displacement.getDisplacementX();
                     expDisplacementY = displacement.getDisplacementY();
-                }
-                else
-                {
+                } else {
                     expDisplacementX = defaultDisplacement.getDisplacementX();
                     expDisplacementY = defaultDisplacement.getDisplacementY();
                 }
@@ -271,10 +252,10 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
 
                 List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
 
-                if(!graphicalSymbolList.isEmpty())
-                {
+                if (!graphicalSymbolList.isEmpty()) {
                     GraphicalSymbol symbol = graphicalSymbolList.get(0);
-                    symbolTypeFactory.setValue(PolygonSymbolizer.class, this.fieldConfigManager, graphic, symbol);
+                    symbolTypeFactory.setValue(PolygonSymbolizer.class, this.fieldConfigManager,
+                            graphic, symbol);
                 }
             }
         }
@@ -289,10 +270,8 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
         fieldConfigVisitor.populateField(FieldIdEnum.OVERALL_OPACITY, expOpacity);
 
-        if(vendorOptionFillFactory != null)
-        {
-            if(symbolizer instanceof PolygonSymbolizer)
-            {
+        if (vendorOptionFillFactory != null) {
+            if (symbolizer instanceof PolygonSymbolizer) {
                 vendorOptionFillFactory.populate((PolygonSymbolizer) symbolizer);
             }
         }
@@ -304,27 +283,24 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            if(symbolizer instanceof PolygonSymbolizer)
-            {
+        if (!Controller.getInstance().isPopulating()) {
+            if (symbolizer instanceof PolygonSymbolizer) {
                 PolygonSymbolizerImpl newPolygonSymbolizer = (PolygonSymbolizerImpl) symbolizer;
 
                 GraphicFill graphicFill = getGraphicFill();
                 Fill fill = symbolTypeFactory.getFill(graphicFill, this.fieldConfigManager);
 
-                Expression expOpacity = fieldConfigVisitor.getExpression(FieldIdEnum.OVERALL_OPACITY);
+                Expression expOpacity = fieldConfigVisitor
+                        .getExpression(FieldIdEnum.OVERALL_OPACITY);
 
                 // If field is not enabled it returns null
-                if((fill != null) && (expOpacity != null))
-                {
+                if ((fill != null) && (expOpacity != null)) {
                     fill.setOpacity(expOpacity);
                 }
 
                 newPolygonSymbolizer.setFill(fill);
 
-                if(vendorOptionFillFactory != null)
-                {
+                if (vendorOptionFillFactory != null) {
                     vendorOptionFillFactory.updateSymbol(newPolygonSymbolizer);
                 }
             }
@@ -356,14 +332,13 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         AnchorPoint anchorPoint = null;
         GroupConfigInterface anchorPointPanel = getGroup(GroupIdEnum.ANCHORPOINT);
 
-        if(anchorPointPanel.isPanelEnabled())
-        {
-            anchorPoint = (AnchorPoint) getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
+        if (anchorPointPanel.isPanelEnabled()) {
+            anchorPoint = (AnchorPoint) getStyleFactory().anchorPoint(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint))
-            {
+            if (DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint)) {
                 anchorPoint = null;
             }
         }
@@ -374,21 +349,22 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         Displacement displacement = null;
         GroupConfigInterface displacementPanel = getGroup(GroupIdEnum.DISPLACEMENT);
 
-        if(displacementPanel.isPanelEnabled())
-        {
-            displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
+        if (displacementPanel.isPanelEnabled()) {
+            displacement = getStyleFactory().displacement(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(defaultDisplacement, displacement))
-            {
+            if (DetailsUtilities.isSame(defaultDisplacement, displacement)) {
                 displacement = null;
             }
         }
 
-        List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager, symbolType, hasFill, hasStroke, selectedFillPanelId);
+        List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager,
+                symbolType, hasFill, hasStroke, selectedFillPanelId);
 
-        GraphicFill graphicFill = getStyleFactory().graphicFill(symbols, opacity, size, rotation, anchorPoint, displacement);
+        GraphicFill graphicFill = getStyleFactory().graphicFill(symbols, opacity, size, rotation,
+                anchorPoint, displacement);
 
         return graphicFill;
     }
@@ -407,17 +383,15 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         selectedFillPanelId = fieldPanelId;
 
         FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.SIZE);
-        if(fieldConfig.isEnabled())
-        {
+        if (fieldConfig.isEnabled()) {
             Expression expression = fieldConfig.getExpression();
 
-            if(expression instanceof LiteralExpressionImpl)
-            {
+            if (expression instanceof LiteralExpressionImpl) {
                 LiteralExpressionImpl l = (LiteralExpressionImpl) expression;
                 Double d = (Double) l.getValue();
-                if(d <= 0.0)
-                {
-                    fieldConfigVisitor.populateField(FieldIdEnum.SIZE, getFilterFactory().literal(1));
+                if (d <= 0.0) {
+                    fieldConfigVisitor.populateField(FieldIdEnum.SIZE,
+                            getFilterFactory().literal(1));
                 }
             }
         }
@@ -431,39 +405,35 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
      * @param panelId the panel id
      * @param selectedItem the selected item
      */
-    private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem)
-    {
-        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
+    private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
+        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(),
+                selectedItem);
 
-        for(GroupIdEnum groupId : groupList.keySet())
-        {
+        for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(), groupId);
-            if(groupConfig != null)
-            {
+            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(),
+                    groupId);
+            if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find group : " + groupId.toString());
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find group : " + groupId.toString());
             }
         }
 
-        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(),
+                selectedItem);
 
-        for(FieldIdEnum fieldId : fieldList.keySet())
-        {
+        for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 CurrentFieldState fieldState = fieldConfig.getFieldState();
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find field : " + fieldId.toString());
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find field : " + fieldId.toString());
             }
         }
     }
@@ -473,14 +443,14 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
-        if(vendorOptionFillFactory != null)
-        {
+    public GraphicPanelFieldManager getFieldDataManager() {
+        if (vendorOptionFillFactory != null) {
             vendorOptionFillFactory.getFieldDataManager(fieldConfigManager);
         }
 
@@ -492,16 +462,19 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return SelectedSymbol.getInstance().hasFill();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -509,7 +482,9 @@ public class PolygonFillDetails extends StandardPanel implements PopulateDetails
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

@@ -51,7 +51,7 @@ public class ColourRamp {
     private static final int IMAGE_HEIGHT = BasePanel.WIDGET_HEIGHT;
 
     /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** The colour list. */
     private List<Color> colourList = new ArrayList<Color>();
@@ -71,8 +71,7 @@ public class ColourRamp {
     /**
      * Instantiates a new colour ramp.
      */
-    public ColourRamp()
-    {
+    public ColourRamp() {
     }
 
     /**
@@ -80,8 +79,7 @@ public class ColourRamp {
      *
      * @param colour the colour
      */
-    public void addColour(Color colour)
-    {
+    public void addColour(Color colour) {
         colourList.add(colour);
     }
 
@@ -91,8 +89,7 @@ public class ColourRamp {
      * @param firstColour the first colour
      * @param lastColour the last colour
      */
-    public void setColourRamp(Color firstColour, Color lastColour)
-    {
+    public void setColourRamp(Color firstColour, Color lastColour) {
         colourList.clear();
         colourList.add(firstColour);
         colourList.add(lastColour);
@@ -112,10 +109,8 @@ public class ColourRamp {
      *
      * @return the start colour
      */
-    public Color getStartColour()
-    {
-        if(!colourList.isEmpty())
-        {
+    public Color getStartColour() {
+        if (!colourList.isEmpty()) {
             return colourList.get(0);
         }
         return Color.BLACK;
@@ -126,10 +121,8 @@ public class ColourRamp {
      *
      * @return the end colour
      */
-    public Color getEndColour()
-    {
-        if(!colourList.isEmpty())
-        {
+    public Color getEndColour() {
+        if (!colourList.isEmpty()) {
             return colourList.get(colourList.size() - 1);
         }
         return Color.WHITE;
@@ -141,8 +134,7 @@ public class ColourRamp {
      * @param reverseColours the reverse colours
      * @return the image icon
      */
-    public ImageIcon getImageIcon(boolean reverseColours)
-    {
+    public ImageIcon getImageIcon(boolean reverseColours) {
         BufferedImage bufferedImage = createImage(IMAGE_WIDTH, reverseColours);
 
         ImageIcon imageIcon = new ImageIcon(bufferedImage);
@@ -157,12 +149,12 @@ public class ColourRamp {
      * @param reverseColours the reverse colours
      * @return the image icon
      */
-    private BufferedImage createImage(int width, boolean reverseColours)
-    {
+    private BufferedImage createImage(int width, boolean reverseColours) {
         BufferedImage image = new BufferedImage(width, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
-        GradientPaint gradient = new GradientPaint(0, 0, reverseColours ? getEndColour() : getStartColour(),
-                width, 0, reverseColours ? getStartColour() : getEndColour());
+        GradientPaint gradient = new GradientPaint(0, 0,
+                reverseColours ? getEndColour() : getStartColour(), width, 0,
+                reverseColours ? getStartColour() : getEndColour());
         g2.setPaint(gradient);
         g2.fillRect(0, 0, width, IMAGE_HEIGHT);
 
@@ -177,20 +169,18 @@ public class ColourRamp {
      * @param reverseColours the reverse colours
      * @return the colour
      */
-    public Expression getColour(ColourRampData data, Expression quantityExpression, boolean reverseColours) {
+    public Expression getColour(ColourRampData data, Expression quantityExpression,
+            boolean reverseColours) {
 
         Expression expression = null;
-        if(quantityExpression instanceof LiteralExpressionImpl)
-        {
+        if (quantityExpression instanceof LiteralExpressionImpl) {
             int value = Integer.valueOf(quantityExpression.toString());
 
             int tmpRange = Math.abs(data.getMaxValue() - data.getMinValue());
 
             // Check to see if we have set up the gradient yet
-            if((range != tmpRange) ||
-                    (lastMinValue != data.getMinValue()) ||
-                    (lastReverseColoursFlag != reverseColours))
-            {
+            if ((range != tmpRange) || (lastMinValue != data.getMinValue())
+                    || (lastReverseColoursFlag != reverseColours)) {
                 range = tmpRange;
                 lastMinValue = data.getMinValue();
                 gradientImage = createImage(range, reverseColours);
@@ -198,13 +188,11 @@ public class ColourRamp {
             }
             int pos = value - data.getMinValue();
 
-            if(pos >= range)
-            {
+            if (pos >= range) {
                 pos = range - 1;
             }
 
-            if(pos < 0)
-            {
+            if (pos < 0) {
                 pos = 0;
             }
             int rgb = gradientImage.getRGB(pos, 0);

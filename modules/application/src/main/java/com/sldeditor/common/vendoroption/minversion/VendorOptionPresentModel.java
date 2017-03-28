@@ -43,6 +43,9 @@ public class VendorOptionPresentModel extends AbstractTableModel {
     /** The column names. */
     private String[] columnNames = new String[2];
 
+    /**
+     * Instantiates a new vendor option present model.
+     */
     public VendorOptionPresentModel() {
         columnNames[0] = Localisation.getString(VendorOptionPresentModel.class,
                 "VendorOptionPresentModel.name");
@@ -124,7 +127,8 @@ public class VendorOptionPresentModel extends AbstractTableModel {
      */
     public List<VersionData> getMinimum() {
         List<VersionData> minimum = new ArrayList<VersionData>();
-        VendorOptionPresent voPresent = vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
+        VendorOptionPresent voPresent = vendorOptionsPresentList
+                .get(vendorOptionsPresentList.size() - 1);
 
         VersionData data = voPresent.getVendorOptionInfo().getVersionData().getEarliest();
         minimum.add(data);

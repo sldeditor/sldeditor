@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.data;
 
 import java.io.Serializable;
@@ -25,8 +27,7 @@ import java.io.Serializable;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerLayer implements Serializable
-{
+public class GeoServerLayer implements Serializable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2342181945338903327L;
@@ -36,7 +37,7 @@ public class GeoServerLayer implements Serializable
 
     /** The default workspace name. */
     private static String defaultWorkspaceName = null;
-    
+
     /** The layer workspace. */
     private String layerWorkspace = null;
 
@@ -45,25 +46,23 @@ public class GeoServerLayer implements Serializable
 
     /** The style wrapper. */
     private StyleWrapper styleWrapper = null;
-    
+
     /** The style string. */
     private String styleString = null;
 
     /** The connection. */
     private GeoServerConnection connection = null;
-    
+
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public GeoServerLayer()
-    {
+    public GeoServerLayer() {
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
-    public GeoServerLayer(String layerWorkspace, String layerName)
-    {
+    public GeoServerLayer(String layerWorkspace, String layerName) {
         this.layerWorkspace = layerWorkspace;
         this.layerName = layerName;
     }
@@ -73,8 +72,7 @@ public class GeoServerLayer implements Serializable
      *
      * @return the layer workspace
      */
-    public String getLayerWorkspace()
-    {
+    public String getLayerWorkspace() {
         return layerWorkspace;
     }
 
@@ -83,8 +81,7 @@ public class GeoServerLayer implements Serializable
      *
      * @return the layer name
      */
-    public String getLayerName()
-    {
+    public String getLayerName() {
         return layerName;
     }
 
@@ -93,8 +90,7 @@ public class GeoServerLayer implements Serializable
      *
      * @param layerWorkspace the new layer workspace
      */
-    public void setLayerWorkspace(String layerWorkspace)
-    {
+    public void setLayerWorkspace(String layerWorkspace) {
         this.layerWorkspace = layerWorkspace;
     }
 
@@ -103,23 +99,20 @@ public class GeoServerLayer implements Serializable
      *
      * @param layerName the new layer name
      */
-    public void setLayerName(String layerName)
-    {
+    public void setLayerName(String layerName) {
         this.layerName = layerName;
     }
 
     /**
      * Encode style.
      */
-    private void encodeStyle()
-    {
-        if(styleWrapper.getWorkspace() == null || (defaultWorkspaceName == null ) || (styleWrapper.getWorkspace().compareTo(defaultWorkspaceName) == 0))
-        {
+    private void encodeStyle() {
+        if (styleWrapper.getWorkspace() == null || (defaultWorkspaceName == null)
+                || (styleWrapper.getWorkspace().compareTo(defaultWorkspaceName) == 0)) {
             styleString = styleWrapper.getStyle();
-        }
-        else
-        {
-            styleString = String.format("%s%s%s", styleWrapper.getWorkspace(), SEPARATOR, styleWrapper.getStyle());
+        } else {
+            styleString = String.format("%s%s%s", styleWrapper.getWorkspace(), SEPARATOR,
+                    styleWrapper.getStyle());
         }
     }
 
@@ -128,8 +121,7 @@ public class GeoServerLayer implements Serializable
      *
      * @param workspaceName the new default workspace name
      */
-    public static void setDefaultWorkspaceName(String workspaceName)
-    {
+    public static void setDefaultWorkspaceName(String workspaceName) {
         defaultWorkspaceName = workspaceName;
     }
 
@@ -138,8 +130,7 @@ public class GeoServerLayer implements Serializable
      *
      * @return the style
      */
-    public StyleWrapper getStyle()
-    {
+    public StyleWrapper getStyle() {
         return styleWrapper;
     }
 
@@ -148,8 +139,7 @@ public class GeoServerLayer implements Serializable
      *
      * @param styleWrapper the new style
      */
-    public void setStyle(StyleWrapper styleWrapper)
-    {
+    public void setStyle(StyleWrapper styleWrapper) {
         this.styleWrapper = styleWrapper;
         encodeStyle();
     }
@@ -159,8 +149,7 @@ public class GeoServerLayer implements Serializable
      *
      * @return the style string
      */
-    public String getStyleString()
-    {
+    public String getStyleString() {
         return styleString;
     }
 
@@ -169,8 +158,7 @@ public class GeoServerLayer implements Serializable
      *
      * @return the connection
      */
-    public GeoServerConnection getConnection()
-    {
+    public GeoServerConnection getConnection() {
         return connection;
     }
 
@@ -179,8 +167,7 @@ public class GeoServerLayer implements Serializable
      *
      * @param connection the new connection
      */
-    public void setConnection(GeoServerConnection connection)
-    {
+    public void setConnection(GeoServerConnection connection) {
         this.connection = connection;
     }
 }

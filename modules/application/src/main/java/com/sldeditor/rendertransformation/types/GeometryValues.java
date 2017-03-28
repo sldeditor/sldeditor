@@ -101,25 +101,28 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
 
         if (aValue instanceof Geometry) {
             this.value = (Geometry) aValue;
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof LiteralExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof LiteralExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
     public List<Class<?>> getType() {
-        return Arrays.asList(Geometry.class, LineString.class, Point.class, Polygon.class, GridCoverage2D.class);
+        return Arrays.asList(Geometry.class, LineString.class, Point.class, Polygon.class,
+                GridCoverage2D.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -127,7 +130,9 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
         return new FieldConfigGeometry(commonData, null);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

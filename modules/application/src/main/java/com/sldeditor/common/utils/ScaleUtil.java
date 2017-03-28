@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.utils;
 
 import java.text.NumberFormat;
@@ -38,10 +39,8 @@ public class ScaleUtil {
      * @param value the value
      * @return the value
      */
-    public static String getValue(double value)
-    {
-        if(isNotSet(value))
-        {
+    public static String getValue(double value) {
+        if (isNotSet(value)) {
             return "";
         }
 
@@ -59,30 +58,29 @@ public class ScaleUtil {
     }
 
     /**
-     * Format a map scale into a string
+     * Format a map scale into a string.
      *
      * @param value the value
      * @return the string
      */
-    private static String format(double value)
-    {
-        return String.format("%s%s", SCALE_PREFIX, NumberFormat.getIntegerInstance().format((int)value));
+    private static String format(double value) {
+        return String.format("%s%s", SCALE_PREFIX,
+                NumberFormat.getIntegerInstance().format((int) value));
     }
 
     /**
-     * Checks if rule has minimum or maximum scale denominator set.
-     * Returns false if rule is null.
+     * Checks if rule has minimum or maximum scale denominator set. Returns false if rule is null.
      *
      * @param rule the rule
      * @return true, if minimum or maximum scale denominator set
      */
     public static boolean isPresent(Rule rule) {
-        if(rule == null)
-        {
+        if (rule == null) {
             return false;
         }
 
-        return (!isNotSet(rule.getMinScaleDenominator()) || !isNotSet(rule.getMaxScaleDenominator()));
+        return (!isNotSet(rule.getMinScaleDenominator())
+                || !isNotSet(rule.getMaxScaleDenominator()));
     }
 
     /**
@@ -91,29 +89,21 @@ public class ScaleUtil {
      * @param stringValue the scale string value
      * @return the scale expressed as a double
      */
-    public static double extractValue(String stringValue)
-    {
+    public static double extractValue(String stringValue) {
         double value = 0.0;
 
-        if(stringValue != null)
-        {
+        if (stringValue != null) {
             String sValue = stringValue.replace(",", "").replace(" ", "").trim();
-            try
-            {
-                if(sValue.startsWith(SCALE_PREFIX))
-                {
+            try {
+                if (sValue.startsWith(SCALE_PREFIX)) {
                     String substring = sValue.substring(SCALE_PREFIX.length());
                     value = Double.valueOf(substring);
-                }
-                else
-                {
+                } else {
                     // Try and decode anyway
                     value = Double.valueOf(sValue);
                 }
-            }
-            catch(NumberFormatException e)
-            {
-
+            } catch (NumberFormatException e) {
+                // Do nothing
             }
         }
         return value;

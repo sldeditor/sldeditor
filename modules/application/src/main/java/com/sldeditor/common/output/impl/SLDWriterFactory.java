@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.output.impl;
 
 import com.sldeditor.common.output.SLDOutputFormatEnum;
@@ -43,32 +45,25 @@ public class SLDWriterFactory {
      * @param hint the hint
      * @return the SLD writer interface
      */
-    public static SLDWriterInterface createWriter(SLDOutputFormatEnum hint)
-    {
-        if(hint == null)
-        {
+    public static SLDWriterInterface createWriter(SLDOutputFormatEnum hint) {
+        if (hint == null) {
             hint = defaultWriter;
         }
 
-        switch(hint)
-        {
-            case YSLD:
-            {
-                if(ysldWriterImpl == null)
-                {
-                    ysldWriterImpl = new YSLDWriterImpl();
-                }
-                return ysldWriterImpl;
+        switch (hint) {
+        case YSLD: {
+            if (ysldWriterImpl == null) {
+                ysldWriterImpl = new YSLDWriterImpl();
             }
-            case SLD:
-            default:
-            {
-                if(sldWriterImpl == null)
-                {
-                    sldWriterImpl = new SLDWriterImpl();
-                }
-                return sldWriterImpl;
+            return ysldWriterImpl;
+        }
+        case SLD:
+        default: {
+            if (sldWriterImpl == null) {
+                sldWriterImpl = new SLDWriterImpl();
             }
+            return sldWriterImpl;
+        }
         }
     }
 }

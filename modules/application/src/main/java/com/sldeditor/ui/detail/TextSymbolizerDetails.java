@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.ArrayList;
@@ -81,8 +82,10 @@ public class TextSymbolizerDetails extends StandardPanel
         // Cache the default point placement anchor point values
         StyleBuilder styleBuilder = new StyleBuilder();
         PointPlacement defaultPointPlacement = styleBuilder.createPointPlacement();
-        defaultPointPlacementAnchorPointX = defaultPointPlacement.getAnchorPoint().getAnchorPointX();
-        defaultPointPlacementAnchorPointY = defaultPointPlacement.getAnchorPoint().getAnchorPointY();
+        defaultPointPlacementAnchorPointX = defaultPointPlacement.getAnchorPoint()
+                .getAnchorPointX();
+        defaultPointPlacementAnchorPointY = defaultPointPlacement.getAnchorPoint()
+                .getAnchorPointY();
 
         createUI();
     }
@@ -196,17 +199,13 @@ public class TextSymbolizerDetails extends StandardPanel
                         if (anchorPoint != null) {
                             anchorPointX = anchorPoint.getAnchorPointX();
                             anchorPointY = anchorPoint.getAnchorPointY();
-                        }
-                        else
-                        {
+                        } else {
                             // Use the defaults as non specified
                             anchorPointX = defaultPointPlacementAnchorPointX;
                             anchorPointY = defaultPointPlacementAnchorPointY;
                         }
-                        fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H,
-                                anchorPointX);
-                        fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V,
-                                anchorPointY);
+                        fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_H, anchorPointX);
+                        fieldConfigVisitor.populateField(FieldIdEnum.ANCHOR_POINT_V, anchorPointY);
 
                         Displacement displacement = pointPlacement.getDisplacement();
                         if (displacement == null) {

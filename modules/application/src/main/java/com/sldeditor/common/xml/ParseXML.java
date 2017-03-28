@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.xml;
 
 import java.io.File;
@@ -64,35 +65,35 @@ public class ParseXML {
      * @param classToParse the class to parse
      * @return the object
      */
-    public static Object parseFile(String resourceFolder,
-            String resourceName, String schemaResource, Class<?> classToParse)
-    {
+    public static Object parseFile(String resourceFolder, String resourceName,
+            String schemaResource, Class<?> classToParse) {
         String fullResourceName = resourceFolder + resourceName;
 
         logger.debug("Reading : " + fullResourceName);
-        InputStream inputStream = ParseXML.class.getResourceAsStream(fullResourceName); 
+        InputStream inputStream = ParseXML.class.getResourceAsStream(fullResourceName);
 
-        if(inputStream == null)
-        {
+        if (inputStream == null) {
             File file = new File(fullResourceName);
 
-            if(!file.exists())
-            {
-                ConsoleManager.getInstance().error(ParseXML.class, Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource") + fullResourceName);
+            if (!file.exists()) {
+                ConsoleManager.getInstance().error(ParseXML.class,
+                        Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
+                                + fullResourceName);
                 return null;
             }
             try {
                 inputStream = new FileInputStream(file);
             } catch (FileNotFoundException e) {
-                ConsoleManager.getInstance().error(ParseXML.class, Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource") + fullResourceName);
+                ConsoleManager.getInstance().error(ParseXML.class,
+                        Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
+                                + fullResourceName);
                 return null;
             }
         }
 
         ValidationEventCollector vec = new ValidationEventCollector();
         URL xsdURL = ParseXML.class.getResource(schemaResource);
-        try
-        {
+        try {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
             Schema schema = sf.newSchema(xsdURL);
@@ -106,8 +107,7 @@ public class ParseXML {
             return jaxbUnmarshaller.unmarshal(inputStream);
         } catch (SAXException e) {
             ConsoleManager.getInstance().exception(ParseXML.class, e);
-        }
-        catch (javax.xml.bind.UnmarshalException ex) {
+        } catch (javax.xml.bind.UnmarshalException ex) {
 
             if (vec != null && vec.hasEvents()) {
 
@@ -123,8 +123,7 @@ public class ParseXML {
                             Localisation.getField(ParseXML.class, "ParseXML.line"),
                             vel.getLineNumber(),
                             Localisation.getField(ParseXML.class, "ParseXML.column"),
-                            vel.getColumnNumber(),
-                            msg);
+                            vel.getColumnNumber(), msg);
                     ConsoleManager.getInstance().error(ParseXML.class, message);
                 }
             }
@@ -142,8 +141,7 @@ public class ParseXML {
      * @param classToParse the class to parse
      * @return the object
      */
-    public static Object parseUIFile(String resourceString,
-            String schemaResource,
+    public static Object parseUIFile(String resourceString, String schemaResource,
             Class<?> classToParse) {
         return parseFile(UI_RESOURCE_FOLDER, resourceString, schemaResource, classToParse);
     }
@@ -157,17 +155,12 @@ public class ParseXML {
      * @param schemaResource the schema resource
      * @param objectToWrite the object to write
      */
-    public static void writeFile(String rootFolder,
-            String resourceFolder,
-            String resourceName,
-            String schemaResource,
-            Object objectToWrite)
-    {
-        if(objectToWrite == null)
-        {
+    public static void writeFile(String rootFolder, String resourceFolder, String resourceName,
+            String schemaResource, Object objectToWrite) {
+        if (objectToWrite == null) {
             ConsoleManager.getInstance().error(ParseXML.class, "No object to write");
         }
-        
+
         JAXBContext contextObj;
         String fullResourceName = rootFolder + resourceFolder + resourceName;
 
@@ -183,5 +176,5 @@ public class ParseXML {
         } catch (FileNotFoundException e) {
             ConsoleManager.getInstance().exception(ParseXML.class, e);
         }
-    } 
+    }
 }

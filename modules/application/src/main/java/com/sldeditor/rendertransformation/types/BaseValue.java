@@ -47,8 +47,7 @@ public abstract class BaseValue {
      * @param commonData the common data
      * @return the field config base
      */
-    protected FieldConfigBase createEnum(FieldConfigCommonData commonData)
-    {
+    protected FieldConfigBase createEnum(FieldConfigCommonData commonData) {
         FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(commonData);
 
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
@@ -67,7 +66,7 @@ public abstract class BaseValue {
      * @param symbolTypeConfig the symbol type config
      */
     protected abstract void populateSymbolType(SymbolTypeConfig symbolTypeConfig);
-    
+
     /** The expression. */
     protected Expression expression = null;
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.html;
 
 import java.awt.Color;
@@ -44,8 +45,7 @@ import com.sldeditor.ui.legend.LegendManager;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ExportHTML
-{
+public class ExportHTML {
 
     /** The Constant HTML_TEMPLATE. */
     private static final String HTML_TEMPLATE = "/html/exportedmxd.html";
@@ -54,6 +54,7 @@ public class ExportHTML
     private static final String TEMPLATE_INSERT_CODE = "<!-- SLD Editor insert -->";
 
     private static final String PREFIX = "extracted";
+
     private static final String SUFFIX = ".html";
 
     /**
@@ -64,56 +65,40 @@ public class ExportHTML
      * @param sldDataList the sld data list
      * @param backgroundColour the background colour
      */
-    public static void save(File destinationFolder,
-            String filename,
-            List<SLDDataInterface> sldDataList, 
-            Color backgroundColour)
-    {
-        if(!destinationFolder.exists())
-        {
+    public static void save(File destinationFolder, String filename,
+            List<SLDDataInterface> sldDataList, Color backgroundColour) {
+        if (!destinationFolder.exists()) {
             destinationFolder.mkdirs();
         }
 
         InputStream inputStream = ExportHTML.class.getResourceAsStream(HTML_TEMPLATE);
 
-        if(inputStream == null)
-        {
+        if (inputStream == null) {
             ConsoleManager.getInstance().error(ExportHTML.class, "Failed to find html template");
-        }
-        else
-        {
+        } else {
             String htmlTemplate = null;
             BufferedReader reader = null;
             File file = null;
-            try
-            {
+            try {
                 file = stream2file(inputStream);
 
                 reader = new BufferedReader(new FileReader(file));
-                String         line = null;
-                StringBuilder  stringBuilder = new StringBuilder();
-                String         ls = System.getProperty("line.separator");
+                String line = null;
+                StringBuilder stringBuilder = new StringBuilder();
+                String ls = System.getProperty("line.separator");
 
-                while( ( line = reader.readLine() ) != null ) {
-                    stringBuilder.append( line );
-                    stringBuilder.append( ls );
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                    stringBuilder.append(ls);
                 }
                 htmlTemplate = stringBuilder.toString();
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 ConsoleManager.getInstance().exception(ExportHTML.class, e);
-            }
-            finally
-            {
-                if(reader != null)
-                {
-                    try
-                    {
+            } finally {
+                if (reader != null) {
+                    try {
                         reader.close();
-                    }
-                    catch (IOException e)
-                    {
+                    } catch (IOException e) {
                         ConsoleManager.getInstance().exception(ExportHTML.class, e);
                     }
                 }
@@ -125,8 +110,7 @@ public class ExportHTML
             sb.append("    <th>Legend</th>\n");
             sb.append("  </tr>\n");
 
-            for(SLDDataInterface sldData : sldDataList)
-            {
+            for (SLDDataInterface sldData : sldDataList) {
                 StyleWrapper styleWrapper = sldData.getStyle();
 
                 String layerName = styleWrapper.getStyle();
@@ -136,44 +120,40 @@ public class ExportHTML
 
                 StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
-                if(sld != null)
-                {
+                if (sld != null) {
                     String showHeading = null;
                     String showFilename = null;
 
                     List<String> legendFileNameList = new ArrayList<String>();
 
-                    boolean result = LegendManager.getInstance().saveLegendImage(sld, destinationFolder, layerName, showHeading, showFilename, legendFileNameList);
+                    boolean result = LegendManager.getInstance().saveLegendImage(sld,
+                            destinationFolder, layerName, showHeading, showFilename,
+                            legendFileNameList);
 
-                    if(result)
-                    {
+                    if (result) {
                         String legendFilename = legendFileNameList.get(0);
-                        sb.append(String.format("    <td><img src=\"%s\" alt=\"%s\" ></td>\n", legendFilename, layerName));
+                        sb.append(String.format("    <td><img src=\"%s\" alt=\"%s\" ></td>\n",
+                                legendFilename, layerName));
                     }
                 }
                 sb.append("  </tr>\n");
             }
 
-            if(htmlTemplate != null)
-            {
+            if (htmlTemplate != null) {
                 htmlTemplate = htmlTemplate.replace(TEMPLATE_INSERT_CODE, sb.toString());
 
                 PrintWriter out;
-                try
-                {
+                try {
                     File f = new File(destinationFolder, filename);
                     out = new PrintWriter(f);
                     out.println(htmlTemplate);
                     out.close();
-                }
-                catch (FileNotFoundException e)
-                {
+                } catch (FileNotFoundException e) {
                     ConsoleManager.getInstance().exception(ExportHTML.class, e);
                 }
             }
 
-            if(file != null)
-            {
+            if (file != null) {
                 file.delete();
             }
         }
@@ -186,7 +166,7 @@ public class ExportHTML
      * @return the file
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private static File stream2file (InputStream in) throws IOException {
+    private static File stream2file(InputStream in) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, SUFFIX);
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);

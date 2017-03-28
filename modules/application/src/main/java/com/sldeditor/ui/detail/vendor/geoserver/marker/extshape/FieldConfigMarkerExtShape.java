@@ -37,7 +37,8 @@ import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 public class FieldConfigMarkerExtShape extends FieldConfigMarker {
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/extshape/SymbolTypeFieldState_ExtShape.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = 
+            "symbol/marker/extshape/SymbolTypeFieldState_ExtShape.xml";
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
@@ -57,28 +58,30 @@ public class FieldConfigMarkerExtShape extends FieldConfigMarker {
                 symbolSelectionField);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                getVendorOptionInfo());
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo = new VendorOptionInfo("extshape://",
-                    getVendorOption(),
-                    Localisation.getString(VOGeoServerExtShapeSymbol.class, "VOGeoServerExtShapeSymbol.description"));
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo("extshape://", getVendorOption(),
+                    Localisation.getString(VOGeoServerExtShapeSymbol.class,
+                            "VOGeoServerExtShapeSymbol.description"));
         }
         return vendorOptionInfo;
     }

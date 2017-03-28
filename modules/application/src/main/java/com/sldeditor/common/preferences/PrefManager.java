@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.preferences;
 
 import java.awt.Color;
@@ -37,8 +38,8 @@ import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Class that manages user preference data.
- * <p>
- * Implemented as a singleton.
+ * 
+ * <p>Implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -66,7 +67,8 @@ public class PrefManager implements UndoActionInterface {
     private static final String LAST_GEOSERVER_VIEWED_FIELD = "SldEditor.lastGeoServerViewed";
 
     /** The Constant CHECK_APP_VERSION_ON_STARTUP_FIELD. */
-    private static final String CHECK_APP_VERSION_ON_STARTUP_FIELD = "SldEditor.checkAppVersionOnStartUp";
+    private static final String CHECK_APP_VERSION_ON_STARTUP_FIELD =
+            "SldEditor.checkAppVersionOnStartUp";
 
     /** The singleton instance. */
     private static PrefManager instance = null;

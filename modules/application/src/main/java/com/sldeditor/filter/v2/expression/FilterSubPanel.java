@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.awt.BorderLayout;
@@ -101,18 +102,17 @@ public class FilterSubPanel extends JPanel {
         //
         panelFilter = new JPanel(new FlowLayout());
 
-        lblFilter = new JLabel(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.filter"));
+        lblFilter = new JLabel(
+                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.filter"));
         panelFilter.add(lblFilter);
 
-        filterPanel = new FilterField(new SubPanelUpdatedInterface()
-        {
+        filterPanel = new FilterField(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 updateButtonState(true);
             }
         }, FilterManager.getInstance());
         panelFilter.add(filterPanel);
-
 
         box.add(panelFilter);
 
@@ -127,8 +127,7 @@ public class FilterSubPanel extends JPanel {
      */
     private void displayFilter(FilterNode node) {
 
-        if(node == null)
-        {
+        if (node == null) {
             return;
         }
 
@@ -141,12 +140,12 @@ public class FilterSubPanel extends JPanel {
 
         boolean addFilterButtonFlag = filter instanceof LogicFilterImpl;
         btnAddFilter.setVisible(addFilterButtonFlag);
-        
+
         boolean removeFilterButtonFlag = false;
         FilterNode parentNode = (FilterNode) node.getParent();
-        if(parentNode != null)
-        {
-            removeFilterButtonFlag = (parentNode.getFilter() instanceof LogicFilterImpl) && (parentNode.getChildCount() > 2);
+        if (parentNode != null) {
+            removeFilterButtonFlag = (parentNode.getFilter() instanceof LogicFilterImpl)
+                    && (parentNode.getChildCount() > 2);
         }
         btnRemoveFilter.setVisible(removeFilterButtonFlag);
         revalidate();
@@ -160,15 +159,15 @@ public class FilterSubPanel extends JPanel {
     private JPanel createAddRemoveFilterPanel() {
         JPanel panel = new JPanel();
 
-        btnAddFilter = new JButton(Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.addFilter"));
+        btnAddFilter = new JButton(
+                Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.addFilter"));
         btnAddFilter.setVisible(false);
         btnAddFilter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 selectedNode.addFilter();
 
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
 
@@ -177,18 +176,17 @@ public class FilterSubPanel extends JPanel {
         });
         panel.add(btnAddFilter);
 
-        btnRemoveFilter = new JButton(Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.removeFilter"));
+        btnRemoveFilter = new JButton(
+                Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.removeFilter"));
         btnRemoveFilter.setVisible(false);
         btnRemoveFilter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 FilterNode parentNode = (FilterNode) selectedNode.getParent();
-                if(parentNode != null)
-                {
+                if (parentNode != null) {
                     parentNode.remove(selectedNode);
                 }
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
 
@@ -205,8 +203,7 @@ public class FilterSubPanel extends JPanel {
      *
      * @return the j panel
      */
-    private JPanel createApplyRevertPanel()
-    {
+    private JPanel createApplyRevertPanel() {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.apply"));
@@ -216,8 +213,7 @@ public class FilterSubPanel extends JPanel {
 
                 selectedNode.setFilter(filterPanel.getFilter(), filterPanel.getFilterConfig());
 
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
 

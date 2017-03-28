@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.temporal;
 
 import org.geotools.temporal.object.DefaultPeriod;
@@ -60,8 +61,7 @@ public class TimePeriod {
      *
      * @return the string
      */
-    public String getString()
-    {
+    public String getString() {
         return String.format("%s %s %s", start.getString(), separator, end.getString());
     }
 
@@ -90,8 +90,7 @@ public class TimePeriod {
      */
     public void decode(String stringValue) {
         String[] components = stringValue.replace(" ", "").split(separator);
-        if(components.length == 2)
-        {
+        if (components.length == 2) {
             start = new Duration(components[0]);
             end = new Duration(components[1]);
         }

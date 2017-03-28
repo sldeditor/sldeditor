@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.tree.leaf;
 
 import java.util.List;
@@ -38,74 +39,70 @@ import org.opengis.style.Symbolizer;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTreeLeafPoint implements SLDTreeLeafInterface
-{
+public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getSymbolizer()
      */
     @Override
-    public Class<?> getSymbolizer()
-    {
+    public Class<?> getSymbolizer() {
         return PointSymbolizerImpl.class;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public boolean hasFill(Symbolizer symbolizer)
-    {
-        if(symbolizer instanceof PointSymbolizer)
-        {
-            PointSymbolizer point = (PointSymbolizer)symbolizer;
-            if(point != null)
-            {
-                return(point.getGraphic() != null);
+    public boolean hasFill(Symbolizer symbolizer) {
+        if (symbolizer instanceof PointSymbolizer) {
+            PointSymbolizer point = (PointSymbolizer) symbolizer;
+            if (point != null) {
+                return (point.getGraphic() != null);
             }
         }
 
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public boolean hasStroke(Symbolizer symbolizer)
-    {
+    public boolean hasStroke(Symbolizer symbolizer) {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public Fill getFill(Symbolizer symbolizer)
-    {
-        if(symbolizer instanceof PointSymbolizer)
-        {
-            PointSymbolizer point = (PointSymbolizer)symbolizer;
-            if(point != null)
-            {
+    public Fill getFill(Symbolizer symbolizer) {
+        if (symbolizer instanceof PointSymbolizer) {
+            PointSymbolizer point = (PointSymbolizer) symbolizer;
+            if (point != null) {
                 Graphic graphic = point.getGraphic();
 
-                if(graphic != null)
-                {
+                if (graphic != null) {
                     List<GraphicalSymbol> symbolList = graphic.graphicalSymbols();
 
-                    if((symbolList != null) && !symbolList.isEmpty())
-                    {
+                    if ((symbolList != null) && !symbolList.isEmpty()) {
                         GraphicalSymbol obj = symbolList.get(0);
 
-                        if(obj != null)
-                        {
-                            if(obj instanceof MarkImpl)
-                            {
-                                MarkImpl mark = (MarkImpl)obj;
+                        if (obj != null) {
+                            if (obj instanceof MarkImpl) {
+                                MarkImpl mark = (MarkImpl) obj;
 
                                 return mark.getFill();
                             }
@@ -117,56 +114,55 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public Stroke getStroke(Symbolizer symbolizer)
-    {
+    public Stroke getStroke(Symbolizer symbolizer) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public void removeStroke(Symbolizer symbolizer)
-    {
+    public void removeStroke(Symbolizer symbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public void createStroke(Symbolizer symbolizer)
-    {
+    public void createStroke(Symbolizer symbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public void createFill(Symbolizer symbolizer)
-    {
-        if(symbolizer instanceof PointSymbolizer)
-        {
-            PointSymbolizer point = (PointSymbolizer)symbolizer;
+    public void createFill(Symbolizer symbolizer) {
+        if (symbolizer instanceof PointSymbolizer) {
+            PointSymbolizer point = (PointSymbolizer) symbolizer;
 
-            if(point != null)
-            {
+            if (point != null) {
                 Graphic graphic = point.getGraphic();
-                if(graphic == null)
-                {
+                if (graphic == null) {
                     graphic = styleFactory.createDefaultGraphic();
                     point.setGraphic(graphic);
                 }
 
-                if(graphic != null)
-                {
-                    if(graphic.graphicalSymbols().isEmpty())
-                    {
+                if (graphic != null) {
+                    if (graphic.graphicalSymbols().isEmpty()) {
                         Mark mark = styleFactory.getDefaultMark();
 
                         graphic.graphicalSymbols().add(mark);
@@ -176,18 +172,17 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public void removeFill(Symbolizer symbolizer)
-    {
-        if(symbolizer instanceof PointSymbolizer)
-        {
-            PointSymbolizer point = (PointSymbolizer)symbolizer;
+    public void removeFill(Symbolizer symbolizer) {
+        if (symbolizer instanceof PointSymbolizer) {
+            PointSymbolizer point = (PointSymbolizer) symbolizer;
 
-            if(point != null)
-            {
+            if (point != null) {
                 point.setGraphic(null);
             }
         }

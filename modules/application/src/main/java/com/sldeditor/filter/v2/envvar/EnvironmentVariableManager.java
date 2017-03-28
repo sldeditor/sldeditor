@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     private List<Class<?>> envVarTypeList = new ArrayList<Class<?>>();
 
     /** The filter factory. */
-    private static FilterFactory2 ff = (FilterFactory2) CommonFactoryFinder.getFilterFactory( null );
+    private static FilterFactory2 ff = (FilterFactory2) CommonFactoryFinder.getFilterFactory(null);
 
     /** The Constant OUTPUT_SCHEMA_RESOURCE. */
     private static final String OUTPUT_SCHEMA_RESOURCE = "/xsd/envvar.xsd";
@@ -81,7 +82,8 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     private WMSEnvVarValues wmsEnvVarValues = null;
 
     /** The Constant wmsEnvVarList, the list of WMS map environment variable names. */
-    private static final List<String> wmsEnvVarList = Arrays.asList(WMS_BBOX, WMS_HEIGHT, WMS_WIDTH);
+    private static final List<String> wmsEnvVarList = Arrays.asList(WMS_BBOX, WMS_HEIGHT,
+            WMS_WIDTH);
 
     /** The env var updated listener list. */
     private List<EnvVarUpdateInterface> listenerList = new ArrayList<EnvVarUpdateInterface>();
@@ -89,8 +91,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     /**
      * Instantiates a new environment variable manager.
      */
-    private EnvironmentVariableManager()
-    {
+    private EnvironmentVariableManager() {
         populate();
     }
 
@@ -100,10 +101,8 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      * @param listener the listener
      */
     @Override
-    public void addEnvVarUpdatedListener(EnvVarUpdateInterface listener)
-    {
-        if(!listenerList.contains(listener))
-        {
+    public void addEnvVarUpdatedListener(EnvVarUpdateInterface listener) {
+        if (!listenerList.contains(listener)) {
             listenerList.add(listener);
         }
     }
@@ -113,21 +112,21 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      */
     private void populate() {
 
-        EnvironmentVariables envVarXML = (EnvironmentVariables) ParseXML.parseFile("", EnvironmentVariableManager.ENV_VAR_XML, OUTPUT_SCHEMA_RESOURCE, EnvironmentVariables.class);
+        EnvironmentVariables envVarXML = (EnvironmentVariables) ParseXML.parseFile("",
+                EnvironmentVariableManager.ENV_VAR_XML, OUTPUT_SCHEMA_RESOURCE,
+                EnvironmentVariables.class);
 
         // Read built in types
         XMLBuiltInEnvVarList xmlBuiltInList = envVarXML.getBuiltInEnvVarList();
 
-        for(XMLEnvVar xmlEnvVar : xmlBuiltInList.getEnvVar())
-        {
+        for (XMLEnvVar xmlEnvVar : xmlBuiltInList.getEnvVar()) {
             Class<?> type;
             try {
                 type = Class.forName(xmlEnvVar.getType());
                 EnvVar envVar = new EnvVar(xmlEnvVar.getName(), type, true);
                 envVarList.add(envVar);
                 builtInEnvVarMap.put(envVar.getName(), envVar);
-            }
-            catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
@@ -135,14 +134,12 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
         // Read allowed data types
         XMLEnvVarTypeList xmlEnvVarTypeList = envVarXML.getEnvVarTypeList();
 
-        for(XMLEnvVarType envVarType : xmlEnvVarTypeList.getEnvVarType())
-        {
+        for (XMLEnvVarType envVarType : xmlEnvVarTypeList.getEnvVarType()) {
             Class<?> type;
             try {
                 type = Class.forName(envVarType.getName());
                 envVarTypeList.add(type);
-            }
-            catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
@@ -155,10 +152,8 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      *
      * @return singleton instance of EnvironmentVariableManager
      */
-    public static EnvironmentManagerInterface getInstance()
-    {
-        if(instance == null)
-        {
+    public static EnvironmentManagerInterface getInstance() {
+        if (instance == null) {
             instance = new EnvironmentVariableManager();
         }
 
@@ -174,12 +169,10 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      * @return the env var, null is the environment variable already exists
      */
     @Override
-    public EnvVar addNewEnvVar(String name, Class<?> type, String value)
-    {
+    public EnvVar addNewEnvVar(String name, Class<?> type, String value) {
         EnvVar envVar = null;
 
-        if(!exist(name))
-        {
+        if (!exist(name)) {
             envVar = new EnvVar(name, type, false);
             envVar.setValue(value);
 
@@ -196,10 +189,8 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      * @return true, if environment variable name exists
      */
     private boolean exist(String name) {
-        for(EnvVar envVar : envVarList)
-        {
-            if(envVar.getName().compareTo(name) == 0)
-            {
+        for (EnvVar envVar : envVarList) {
+            if (envVar.getName().compareTo(name) == 0) {
                 return true;
             }
         }
@@ -215,8 +206,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     public List<EnvVar> getEnvVarList() {
 
         List<EnvVar> newEnvVarList = new ArrayList<EnvVar>();
-        for(EnvVar envVar : envVarList)
-        {
+        for (EnvVar envVar : envVarList) {
             newEnvVarList.add(new EnvVar(envVar));
         }
         return newEnvVarList;
@@ -230,8 +220,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      */
     @Override
     public Expression createExpression(EnvVar envVar) {
-        if(envVar == null)
-        {
+        if (envVar == null) {
             return null;
         }
 
@@ -247,8 +236,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      */
     @Override
     public void removeEnvVar(EnvVar envVar) {
-        if(envVar != null)
-        {
+        if (envVar != null) {
             envVarList.remove(envVar);
         }
     }
@@ -262,25 +250,17 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     public void update(List<EnvVar> dataList) {
         envVarList.clear();
 
-        if(dataList == null)
-        {
+        if (dataList == null) {
             // Assign the built in environment variables
-            for(EnvVar envVar : builtInEnvVarMap.values())
-            {
+            for (EnvVar envVar : builtInEnvVarMap.values()) {
                 envVarList.add(envVar);
             }
-        }
-        else
-        {
+        } else {
             // Make sure predefined flags are set correctly
-            for(EnvVar envVar : dataList)
-            {
-                if(builtInEnvVarMap.containsKey(envVar.getName()))
-                {
+            for (EnvVar envVar : dataList) {
+                if (builtInEnvVarMap.containsKey(envVar.getName())) {
                     envVarList.add(new EnvVar(envVar, true));
-                }
-                else
-                {
+                } else {
                     envVarList.add(new EnvVar(envVar, false));
                 }
             }
@@ -304,18 +284,17 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      * @param envVarLiteral the env var literal
      * @return the data type
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface#getDataType(org.opengis.filter.expression.Expression)
      */
     @Override
     public Class<?> getDataType(Expression envVarLiteral) {
-        if(envVarLiteral instanceof LiteralExpressionImpl)
-        {
+        if (envVarLiteral instanceof LiteralExpressionImpl) {
             LiteralExpressionImpl literal = (LiteralExpressionImpl) envVarLiteral;
-            for(EnvVar envVar : envVarList)
-            {
-                if(envVar.getName().compareTo((String) literal.getValue()) == 0)
-                {
+            for (EnvVar envVar : envVarList) {
+                if (envVar.getName().compareTo((String) literal.getValue()) == 0) {
                     return envVar.getType();
                 }
             }
@@ -326,16 +305,12 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     /**
      * Notify rest of the system when environment variable updates occur.
      */
-    private void setEnvironmentVariableValues()
-    {
+    private void setEnvironmentVariableValues() {
         EnvFunction.clearGlobalValues();
 
-        for(EnvVar envVar : envVarList)
-        {
-            if(envVar != null)
-            {
-                if(!wmsEnvVarList.contains(envVar.getName()))
-                {
+        for (EnvVar envVar : envVarList) {
+            if (envVar != null) {
+                if (!wmsEnvVarList.contains(envVar.getName())) {
                     EnvFunction.setGlobalValue(envVar.getName(), envVar.getValue());
                 }
             }
@@ -349,10 +324,8 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     /**
      * Notify rest of application of env var updates.
      */
-    private void notifyUpdates()
-    {
-        for(EnvVarUpdateInterface listener : listenerList)
-        {
+    private void notifyUpdates() {
+        for (EnvVarUpdateInterface listener : listenerList) {
             listener.envVarsUpdated(this.envVarList);
         }
     }
@@ -361,52 +334,39 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      * Internal method to set WMS environment variable values.
      */
     private void internal_setWMSEnvVarValues() {
-        if(wmsEnvVarValues == null)
-        {
+        if (wmsEnvVarValues == null) {
             return;
         }
 
         EnvVar imageWidth = getEnvVar(WMS_WIDTH);
-        if(imageWidth != null)
-        {
+        if (imageWidth != null) {
             // Check to see if value has been overridden
-            if(imageWidth.getValue() == null)
-            {
+            if (imageWidth.getValue() == null) {
                 // Not overridden use default
                 EnvFunction.setGlobalValue(WMS_WIDTH, wmsEnvVarValues.getImageWidth());
-            }
-            else
-            {
+            } else {
                 EnvFunction.setGlobalValue(WMS_WIDTH, imageWidth.getValue());
             }
         }
 
         EnvVar imageheight = getEnvVar(WMS_HEIGHT);
-        if(imageheight != null)
-        {
+        if (imageheight != null) {
             // Check to see if value has been overridden
-            if(imageheight.getValue() == null)
-            {
+            if (imageheight.getValue() == null) {
                 // Not overridden use default
                 EnvFunction.setGlobalValue(WMS_HEIGHT, wmsEnvVarValues.getImageHeight());
-            }
-            else
-            {
+            } else {
                 EnvFunction.setGlobalValue(WMS_HEIGHT, imageheight.getValue());
             }
         }
 
         EnvVar bbox = getEnvVar(WMS_BBOX);
-        if(bbox != null)
-        {
+        if (bbox != null) {
             // Check to see if value has been overridden
-            if(bbox.getValue() == null)
-            {
+            if (bbox.getValue() == null) {
                 // Not overridden use default
                 EnvFunction.setGlobalValue(WMS_BBOX, wmsEnvVarValues.getMapBounds());
-            }
-            else
-            {
+            } else {
                 EnvFunction.setGlobalValue(WMS_BBOX, bbox.getValue());
             }
         }
@@ -419,10 +379,8 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      * @return the env var, null if not found
      */
     private EnvVar getEnvVar(String envVarName) {
-        for(EnvVar envVar : envVarList)
-        {
-            if(envVar.getName().compareTo(envVarName) == 0)
-            {
+        for (EnvVar envVar : envVarList) {
+            if (envVar.getName().compareTo(envVarName) == 0) {
                 return envVar;
             }
         }

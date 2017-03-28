@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node;
 
 import java.awt.Component;
@@ -29,12 +30,9 @@ import javax.swing.tree.TreeCellRenderer;
 import com.sldeditor.common.NodeInterface;
 
 /**
- * A FSTreeCellRenderer displays each node of a tree. The default renderer
- * displays arbitrary Object nodes by calling their toString() method. The
- * Component.toString() method returns long strings with extraneous
- * information. Therefore, we use this "wrapper" implementation of
- * TreeCellRenderer to convert nodes from Component objects to useful String
- * values before passing those String values on to the default renderer.
+ * A FSTreeCellRenderer displays each node of a tree. The default renderer displays arbitrary Object nodes by calling their toString() method. The
+ * Component.toString() method returns long strings with extraneous information. Therefore, we use this "wrapper" implementation of TreeCellRenderer
+ * to convert nodes from Component objects to useful String values before passing those String values on to the default renderer.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -51,26 +49,25 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
 
     // This is the only TreeCellRenderer method.
     // Compute the string to display, and pass it to the wrapped renderer
-    /* (non-Javadoc)
-     * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int,
+     * boolean)
      */
-    public Component getTreeCellRendererComponent(JTree tree, Object value,
-            boolean selected, boolean expanded, boolean leaf, int row,
-            boolean hasFocus) {
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
+            boolean expanded, boolean leaf, int row, boolean hasFocus) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
 
         String name = getItemText(node, userObject);
 
-        super.getTreeCellRendererComponent(tree, name,
-                selected, expanded, leaf, row, hasFocus);
+        super.getTreeCellRendererComponent(tree, name, selected, expanded, leaf, row, hasFocus);
 
-        if(node instanceof NodeInterface)
-        {
-            Icon icon = ((NodeInterface)node).getIcon();
+        if (node instanceof NodeInterface) {
+            Icon icon = ((NodeInterface) node).getIcon();
 
-            if(icon != null)
-            {
+            if (icon != null) {
                 setIcon(icon);
             }
         }
@@ -87,10 +84,8 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
     public static String getItemText(DefaultMutableTreeNode node, Object userObject) {
         String name = null;
 
-        if(userObject != null)
-        {
-            if(userObject instanceof String)
-            {
+        if (userObject != null) {
+            if (userObject instanceof String) {
                 name = (String) userObject;
             }
         }

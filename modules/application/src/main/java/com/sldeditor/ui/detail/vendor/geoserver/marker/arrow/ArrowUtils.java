@@ -28,7 +28,7 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 /**
- * The Class ArrowUtils, handles deocoding/encoding of arrow to/from strings
+ * The Class ArrowUtils, handles decoding/encoding of arrow to/from strings.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -38,7 +38,8 @@ public class ArrowUtils {
     private static final String HEAD_BASE_RATIO_ATTRIBUTE = MeteoMarkFactory.ARROWHEAD_BASE_KEY;
 
     /** The Constant HEIGHT_OVER_WIDTH_ATTRIBUTE. */
-    private static final String HEIGHT_OVER_WIDTH_ATTRIBUTE = MeteoMarkFactory.ARROW_HEIGHT_RATIO_KEY;
+    private static final String HEIGHT_OVER_WIDTH_ATTRIBUTE =
+            MeteoMarkFactory.ARROW_HEIGHT_RATIO_KEY;
 
     /** The Constant ARROW_THICKNESS_ATTRIBUTE. */
     private static final String ARROW_THICKNESS_ATTRIBUTE = MeteoMarkFactory.ARROW_THICKNESS_KEY;
@@ -47,7 +48,7 @@ public class ArrowUtils {
     private static final String ARROW_PREFIX = MeteoMarkFactory.SHAPE_PREFIX + "arrow";
 
     /** The filter factory. */
-    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** The default map. */
     private static Map<String, Double> defaultMap = new HashMap<String, Double>();
@@ -69,18 +70,13 @@ public class ArrowUtils {
      * @param abExpression the ab expression
      * @return the string
      */
-    public static String encode(Expression hrExpression,
-            Expression tValueExpression,
-            Expression abExpression)
-    {
-        String string = String.format("%s?%s=%s&%s=%s&%s=%s",
-                ARROW_PREFIX,
+    public static String encode(Expression hrExpression, Expression tValueExpression,
+            Expression abExpression) {
+        String string = String.format("%s?%s=%s&%s=%s&%s=%s", ARROW_PREFIX,
                 HEIGHT_OVER_WIDTH_ATTRIBUTE,
-                getExpression(hrExpression, HEIGHT_OVER_WIDTH_ATTRIBUTE),
-                ARROW_THICKNESS_ATTRIBUTE,
+                getExpression(hrExpression, HEIGHT_OVER_WIDTH_ATTRIBUTE), ARROW_THICKNESS_ATTRIBUTE,
                 getExpression(tValueExpression, ARROW_THICKNESS_ATTRIBUTE),
-                HEAD_BASE_RATIO_ATTRIBUTE,
-                getExpression(abExpression, HEAD_BASE_RATIO_ATTRIBUTE));
+                HEAD_BASE_RATIO_ATTRIBUTE, getExpression(abExpression, HEAD_BASE_RATIO_ATTRIBUTE));
 
         return string;
     }
@@ -94,12 +90,9 @@ public class ArrowUtils {
      */
     private static String getExpression(Expression expression, String attribute) {
         String string;
-        if(expression != null)
-        {
+        if (expression != null) {
             string = expression.toString();
-        }
-        else
-        {
+        } else {
             initialise();
             string = String.valueOf(defaultMap.get(attribute));
         }
@@ -116,21 +109,16 @@ public class ArrowUtils {
     private static Expression getAttribute(String requiredAttribute, String string) {
         Expression expression = null;
 
-        if(string != null)
-        {
+        if (string != null) {
             String[] components = string.split("\\?");
 
-            if(components.length == 2)
-            {
+            if (components.length == 2) {
                 String[] attributes = components[1].split("\\&");
 
-                for(String attribute : attributes)
-                {
+                for (String attribute : attributes) {
                     String[] value = attribute.split("\\=");
-                    if(value.length == 2)
-                    {
-                        if(value[0].compareToIgnoreCase(requiredAttribute) == 0)
-                        {
+                    if (value.length == 2) {
+                        if (value[0].compareToIgnoreCase(requiredAttribute) == 0) {
                             expression = ff.literal(value[1]);
                         }
                     }
@@ -138,8 +126,7 @@ public class ArrowUtils {
             }
         }
 
-        if(expression == null)
-        {
+        if (expression == null) {
             initialise();
             expression = ff.literal(defaultMap.get(requiredAttribute));
         }
@@ -149,10 +136,8 @@ public class ArrowUtils {
     /**
      * Initialise.
      */
-    private static void initialise()
-    {
-        if(defaultMap.isEmpty())
-        {
+    private static void initialise() {
+        if (defaultMap.isEmpty()) {
             defaultMap.put(ARROW_THICKNESS_ATTRIBUTE, 0.2);
             defaultMap.put(HEIGHT_OVER_WIDTH_ATTRIBUTE, 2.0);
             defaultMap.put(HEAD_BASE_RATIO_ATTRIBUTE, 0.5);
@@ -165,8 +150,7 @@ public class ArrowUtils {
      * @param string the string
      * @return the expression
      */
-    public static Expression decodeArrowThickness(String string)
-    {
+    public static Expression decodeArrowThickness(String string) {
         Expression expression = getAttribute(ARROW_THICKNESS_ATTRIBUTE, string);
 
         return expression;

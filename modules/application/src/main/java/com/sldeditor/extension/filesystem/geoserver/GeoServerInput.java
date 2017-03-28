@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver;
 
 import java.awt.event.ActionEvent;
@@ -79,7 +80,7 @@ import com.sldeditor.tool.scale.ScaleTool;
 public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpdateInterface,
         GeoServerConnectStateInterface, GeoServerLayerUpdateInterface,
         GeoServerParseCompleteInterface {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6659749130067227L;
 
@@ -90,10 +91,12 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
     private transient GeoServerConnectionTool geoServerConnectionTool = null;
 
     /** The style map. */
-    private Map<GeoServerConnection, Map<String, List<StyleWrapper>>> geoServerStyleMap = new HashMap<GeoServerConnection, Map<String, List<StyleWrapper>>>();
+    private Map<GeoServerConnection, Map<String, List<StyleWrapper>>> geoServerStyleMap =
+            new HashMap<GeoServerConnection, Map<String, List<StyleWrapper>>>();
 
     /** The GeoServer layer map. */
-    private Map<GeoServerConnection, Map<String, List<GeoServerLayer>>> geoServerLayerMap = new HashMap<GeoServerConnection, Map<String, List<GeoServerLayer>>>();
+    private Map<GeoServerConnection, Map<String, List<GeoServerLayer>>> geoServerLayerMap =
+            new HashMap<GeoServerConnection, Map<String, List<GeoServerLayer>>>();
 
     /** The progress. */
     private transient GeoServerReadProgress progress = new GeoServerReadProgress(this, this);
@@ -143,7 +146,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
                     new GeoServerLayerUpdateTool(this));
             ToolManager.getInstance().registerTool(GeoServerLayerHeadingNode.class,
                     new GeoServerLayerUpdateTool(this));
-            
+
             // Batch update font tool
             ToolManager.getInstance().registerTool(GeoServerStyleHeadingNode.class,
                     new BatchUpdateFontTool(toolMgr.getApplication()));
@@ -271,7 +274,8 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
             }
         } else if (selectedItem instanceof FileTreeNode) {
             FileTreeNode fileNode = (FileTreeNode) selectedItem;
-            if (ExternalFilenames.getFileExtension(fileNode.getFile().getAbsolutePath()).compareToIgnoreCase(SLD_FILE_EXTENSION) == 0) {
+            if (ExternalFilenames.getFileExtension(fileNode.getFile().getAbsolutePath())
+                    .compareToIgnoreCase(SLD_FILE_EXTENSION) == 0) {
                 JMenu uploadToGeoServerMenu = new JMenu(Localisation.getString(GeoServerInput.class,
                         "GeoServerInput.uploadToGeoServer"));
                 populateGeoServerConnections(uploadToGeoServerMenu);

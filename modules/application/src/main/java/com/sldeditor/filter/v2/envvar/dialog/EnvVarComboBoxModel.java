@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar.dialog;
 
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
  *
  * @author Robert Ward (SCISYS)
  */
-public class EnvVarComboBoxModel extends AbstractListModel<Class<?>> implements ComboBoxModel<Class<?>> {
+public class EnvVarComboBoxModel extends AbstractListModel<Class<?>>
+        implements ComboBoxModel<Class<?>> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -45,10 +47,8 @@ public class EnvVarComboBoxModel extends AbstractListModel<Class<?>> implements 
     /**
      * Instantiates a new env var combo box model.
      */
-    public EnvVarComboBoxModel(EnvironmentManagerInterface envVarMgr)
-    {
-        if(envVarMgr != null)
-        {
+    public EnvVarComboBoxModel(EnvironmentManagerInterface envVarMgr) {
+        if (envVarMgr != null) {
             list = envVarMgr.getEnvVarTypeList();
         }
     }

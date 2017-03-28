@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.data;
 
 import java.io.Serializable;
@@ -28,13 +30,13 @@ import com.sldeditor.common.property.EncryptedProperties;
 /**
  * The Class GeoServerConnection encapsulates GeoServer connection details,
  * including connection name, url, user name and password.
- * <p>
- * The class is also capable of writing to and reading from a string all of its attribute data.
+ * 
+ * <p>The class is also capable of writing to and reading from a string all
+ * of its attribute data.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerConnection implements Comparable<GeoServerConnection>, Serializable
-{
+public class GeoServerConnection implements Comparable<GeoServerConnection>, Serializable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1230528722618014923L;
 
@@ -62,8 +64,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
     /**
      * Default constructor.
      */
-    public GeoServerConnection()
-    {
+    public GeoServerConnection() {
     }
 
     /**
@@ -72,23 +73,17 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      * @param connectionString the connection string
      * @return the geo server connection
      */
-    public static GeoServerConnection decodeString(String connectionString)
-    {
+    public static GeoServerConnection decodeString(String connectionString) {
         GeoServerConnection connectionData = null;
-        if(connectionString != null)
-        {
+        if (connectionString != null) {
             String[] components = connectionString.split(DELIMETER);
-            if(components.length == 4)
-            {
+            if (components.length == 4) {
                 connectionData = new GeoServerConnection();
 
                 connectionData.connectionName = components[0];
-                try
-                {
+                try {
                     connectionData.url = new URL(components[1]);
-                }
-                catch (MalformedURLException e)
-                {
+                } catch (MalformedURLException e) {
                     ConsoleManager.getInstance().exception(GeoServerConnection.class, e);
                     return null;
                 }
@@ -104,8 +99,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @return the url
      */
-    public URL getUrl()
-    {
+    public URL getUrl() {
         return url;
     }
 
@@ -114,8 +108,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @param url the new url
      */
-    public void setUrl(URL url)
-    {
+    public void setUrl(URL url) {
         this.url = url;
     }
 
@@ -124,8 +117,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @return the user name
      */
-    public String getUserName()
-    {
+    public String getUserName() {
         return userName;
     }
 
@@ -134,8 +126,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @param userName the new user name
      */
-    public void setUserName(String userName)
-    {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -144,16 +135,11 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @return the password
      */
-    public String getPassword()
-    {
-        if(password == null)
-        {
+    public String getPassword() {
+        if (password == null) {
             return "";
-        }
-        else
-        {
-            if(useEncrpytion)
-            {
+        } else {
+            if (useEncrpytion) {
                 return EncryptedProperties.getInstance().decrypt(password);
             }
             return password;
@@ -165,14 +151,10 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @param password the new password
      */
-    public void setPassword(String password)
-    {
-        if(useEncrpytion)
-        {
+    public void setPassword(String password) {
+        if (useEncrpytion) {
             this.password = EncryptedProperties.getInstance().encrypt(password);
-        }
-        else
-        {
+        } else {
             this.password = password;
         }
     }
@@ -182,8 +164,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @return the connection name
      */
-    public String getConnectionName()
-    {
+    public String getConnectionName() {
         return connectionName;
     }
 
@@ -192,8 +173,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @param connectionName the new connection name
      */
-    public void setConnectionName(String connectionName)
-    {
+    public void setConnectionName(String connectionName) {
         this.connectionName = connectionName;
     }
 
@@ -203,12 +183,13 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      * @param o the o
      * @return the int
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(GeoServerConnection o)
-    {       
+    public int compareTo(GeoServerConnection o) {
         return connectionName.compareTo(o.connectionName);
     }
 
@@ -245,8 +226,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      *
      * @return the string
      */
-    public String encodeAsString()
-    {
+    public String encodeAsString() {
         StringBuilder sb = new StringBuilder();
         sb.append(connectionName);
         sb.append(DELIMETER);

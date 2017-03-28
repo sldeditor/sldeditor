@@ -37,7 +37,8 @@ import net.opengis.wps10.LiteralInputType;
 public class RenderTransformValueFactory {
 
     /** The value list. */
-    private Map<Class<?>, RenderTransformValueInterface> valueList = new HashMap<Class<?>, RenderTransformValueInterface>();
+    private Map<Class<?>, RenderTransformValueInterface> valueList = 
+            new HashMap<Class<?>, RenderTransformValueInterface>();
 
     /** The instance. */
     private static RenderTransformValueFactory instance = null;
@@ -108,7 +109,8 @@ public class RenderTransformValueFactory {
     public RenderTransformValueInterface getValue(Class<?> classToFind) {
         RenderTransformValueInterface value = valueList.get(classToFind);
         if (value == null) {
-            System.err.println("Failed to find object for :" + ((classToFind != null) ? classToFind.getName() : "null"));
+            System.err.println("Failed to find object for :"
+                    + ((classToFind != null) ? classToFind.getName() : "null"));
             return null;
         }
         return value.createInstance();

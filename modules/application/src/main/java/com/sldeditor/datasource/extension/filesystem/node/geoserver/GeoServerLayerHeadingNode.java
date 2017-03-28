@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
@@ -33,9 +34,8 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourMana
  *
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements NodeInterface
-{
-    
+public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements NodeInterface {
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1235388265828637479L;
 
@@ -55,9 +55,8 @@ public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements
      * @param connection the connection
      * @param title the title
      */
-    public GeoServerLayerHeadingNode(FileSystemInterface handler,
-            GeoServerConnection connection, String title)
-    {
+    public GeoServerLayerHeadingNode(FileSystemInterface handler, GeoServerConnection connection,
+            String title) {
         super(title);
 
         this.handler = handler;
@@ -70,12 +69,13 @@ public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements
      *
      * @return the handler
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
-    public FileSystemInterface getHandler()
-    {
+    public FileSystemInterface getHandler() {
         return handler;
     }
 
@@ -84,12 +84,13 @@ public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements
      *
      * @return the data flavour
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return DataFlavourManager.GEOSERVER_HEADING_LAYER_FLAVOUR;
     }
 
@@ -98,8 +99,7 @@ public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements
      *
      * @return the connection
      */
-    public GeoServerConnection getConnection()
-    {
+    public GeoServerConnection getConnection() {
         return connection;
     }
 
@@ -108,8 +108,7 @@ public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements
      *
      * @return the title
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
@@ -125,7 +124,6 @@ public class GeoServerLayerHeadingNode extends DefaultMutableTreeNode implements
 
     @Override
     public Icon getIcon() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

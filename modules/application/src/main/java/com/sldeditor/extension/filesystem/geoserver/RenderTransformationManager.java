@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver;
 
 import java.net.MalformedURLException;
@@ -44,10 +45,8 @@ public class RenderTransformationManager {
      *
      * @return single instance of RenderTransformationManager
      */
-    public static RenderTransformationManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static RenderTransformationManager getInstance() {
+        if (instance == null) {
             instance = new RenderTransformationManager();
         }
 
@@ -60,13 +59,13 @@ public class RenderTransformationManager {
      * @param connection the connection
      * @return the render transform
      */
-    public List<ProcessBriefType> getRenderTransform(GeoServerConnection connection)
-    {
+    public List<ProcessBriefType> getRenderTransform(GeoServerConnection connection) {
         GeoServerWPSClientInterface client = new GeoServerWPSClient(connection);
 
         client.getCapabilities();
 
-        List<ProcessBriefType> functionList = client.getRenderTransformations(DataTypeEnum.E_VECTOR);
+        List<ProcessBriefType> functionList = client
+                .getRenderTransformations(DataTypeEnum.E_VECTOR);
 
         functionList = client.getRenderTransformations(DataTypeEnum.E_RASTER);
 
@@ -87,8 +86,7 @@ public class RenderTransformationManager {
             connection.setPassword("geoserver");
 
             RenderTransformationManager.getInstance().getRenderTransform(connection);
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }

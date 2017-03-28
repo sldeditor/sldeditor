@@ -85,33 +85,34 @@ public class VendorOptionInfo implements Comparable<VendorOptionInfo> {
      * @return the version string
      */
     public String getVersionString() {
-        if(versionData != null)
-        {
+        if (versionData != null) {
             return VendorOptionStatus.getVendorOptionVersionString(versionData);
         }
         return "";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
     public int compareTo(VendorOptionInfo o) {
         // Sort on the version data field
-        if((versionData == null) && (o.versionData == null))
-        {
+        if ((versionData == null) && (o.versionData == null)) {
             return 0;
         }
 
-        if((versionData != null) && (o.versionData != null))
-        {
+        if ((versionData != null) && (o.versionData != null)) {
             return versionData.getEarliest().compareTo(o.versionData.getEarliest());
         }
 
         return (versionData != null) ? -1 : 1;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -124,7 +125,9 @@ public class VendorOptionInfo implements Comparable<VendorOptionInfo> {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

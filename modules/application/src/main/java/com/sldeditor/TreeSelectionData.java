@@ -1,3 +1,4 @@
+
 package com.sldeditor;
 
 import com.sldeditor.common.xml.ui.SelectedTreeItemEnum;
@@ -149,98 +150,45 @@ public class TreeSelectionData {
      *
      * @return the selection
      */
-    public SelectedTreeItemEnum getSelection()
-    {
+    public SelectedTreeItemEnum getSelection() {
         SelectedTreeItemEnum selection = SelectedTreeItemEnum.UNKNOWN;
 
-        if((layerIndex > -1) &&
-                (styleIndex == -1) &&
-                (featureTypeStyleIndex == -1) &&
-                (ruleIndex == -1) &&
-                (symbolizerIndex == -1) &&
-                (symbolizerDetailIndex == -1))
-        {
+        if ((layerIndex > -1) && (styleIndex == -1) && (featureTypeStyleIndex == -1)
+                && (ruleIndex == -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.LAYER;
-        }
-        else if((layerIndex > -1) &&
-                (styleIndex > -1) &&
-                (featureTypeStyleIndex == -1) &&
-                (ruleIndex == -1) &&
-                (symbolizerIndex == -1) &&
-                (symbolizerDetailIndex == -1))
-        {
+        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex == -1)
+                && (ruleIndex == -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.STYLE;
-        }
-        else if((layerIndex > -1) &&
-                (styleIndex > -1) &&
-                (featureTypeStyleIndex > -1) &&
-                (ruleIndex == -1) &&
-                (symbolizerIndex == -1) &&
-                (symbolizerDetailIndex == -1))
-        {
+        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
+                && (ruleIndex == -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.FEATURETYPESTYLE;
-        }
-        else if((layerIndex > -1) &&
-                (styleIndex > -1) &&
-                (featureTypeStyleIndex > -1) &&
-                (ruleIndex > -1) &&
-                (symbolizerIndex == -1) &&
-                (symbolizerDetailIndex == -1))
-        {
+        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
+                && (ruleIndex > -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.RULE;
-        }
-        else if((layerIndex > -1) &&
-                (styleIndex > -1) &&
-                (featureTypeStyleIndex > -1) &&
-                (ruleIndex > -1) &&
-                (symbolizerIndex > -1) &&
-                (symbolizerDetailIndex == -1))
-        {
-            if(selectedPanel == PointSymbolizerDetails.class)
-            {
+        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
+                && (ruleIndex > -1) && (symbolizerIndex > -1) && (symbolizerDetailIndex == -1)) {
+            if (selectedPanel == PointSymbolizerDetails.class) {
                 selection = SelectedTreeItemEnum.POINT_SYMBOLIZER;
-            }
-            else if(selectedPanel == LineSymbolizerDetails.class)
-            {
+            } else if (selectedPanel == LineSymbolizerDetails.class) {
                 selection = SelectedTreeItemEnum.LINE_SYMBOLIZER;
-            }
-            else if(selectedPanel == PolygonSymbolizerDetails.class)
-            {
+            } else if (selectedPanel == PolygonSymbolizerDetails.class) {
                 selection = SelectedTreeItemEnum.POLYGON_SYMBOLIZER;
-            }
-            else if(selectedPanel == TextSymbolizerDetails.class)
-            {
+            } else if (selectedPanel == TextSymbolizerDetails.class) {
                 selection = SelectedTreeItemEnum.TEXT_SYMBOLIZER;
-            }
-            else if(selectedPanel == RasterSymbolizerDetails.class)
-            {
+            } else if (selectedPanel == RasterSymbolizerDetails.class) {
                 selection = SelectedTreeItemEnum.RASTER_SYMBOLIZER;
-            }
-            else
-            {
+            } else {
                 selection = SelectedTreeItemEnum.UNKNOWN;
             }
-        }
-        else if((layerIndex > -1) &&
-                (styleIndex > -1) &&
-                (featureTypeStyleIndex > -1) &&
-                (ruleIndex > -1) &&
-                (symbolizerIndex > -1))
-        {
-            if(selectedPanel == PointFillDetails.class)
-            {
+        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
+                && (ruleIndex > -1) && (symbolizerIndex > -1)) {
+            if (selectedPanel == PointFillDetails.class) {
                 selection = SelectedTreeItemEnum.POINT_FILL;
-            }
-            else if(selectedPanel == PolygonFillDetails.class)
-            {
+            } else if (selectedPanel == PolygonFillDetails.class) {
                 selection = SelectedTreeItemEnum.POLYGON_FILL;
-            }
-            else if(selectedPanel == StrokeDetails.class)
-            {
+            } else if (selectedPanel == StrokeDetails.class) {
                 selection = SelectedTreeItemEnum.STROKE;
-            }
-            else
-            {
+            } else {
                 selection = SelectedTreeItemEnum.UNKNOWN;
             }
         }

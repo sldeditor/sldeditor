@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node;
 
 import java.awt.datatransfer.DataFlavor;
@@ -53,50 +54,46 @@ public class TreeTransferHandler extends TransferHandler {
     /** The is dragging. */
     private boolean isDragging = false;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.TransferHandler#createTransferable(javax.swing.JComponent)
      */
     @Override
     protected Transferable createTransferable(JComponent c) {
         transferredDataItem = null;
 
-        if(!(c instanceof JTree))
-        {
+        if (!(c instanceof JTree)) {
             return null;
         }
 
-        JTree tree = (JTree)c;
-        if(tree.isEditing()) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+        JTree tree = (JTree) c;
+        if (tree.isEditing()) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
+                    .getLastSelectedPathComponent();
             TreePath editPath = tree.getEditingPath();
-            DefaultMutableTreeNode editNode = (DefaultMutableTreeNode)editPath.getLastPathComponent();
-            if(node == editNode)
-            {
+            DefaultMutableTreeNode editNode = (DefaultMutableTreeNode) editPath
+                    .getLastPathComponent();
+            if (node == editNode) {
                 tree.stopEditing();
             }
         }
 
         TreePath[] paths = tree.getSelectionPaths();
-        if (paths == null)
-        {
+        if (paths == null) {
             return null;
-        }
-        else
-        {
+        } else {
             Map<NodeInterface, TreePath> map = new LinkedHashMap<NodeInterface, TreePath>();
 
-            for(TreePath path : paths)
-            {
-                if(path.getLastPathComponent() instanceof NodeInterface)
-                {
-                    NodeInterface selection = (NodeInterface)path.getLastPathComponent();
+            for (TreePath path : paths) {
+                if (path.getLastPathComponent() instanceof NodeInterface) {
+                    NodeInterface selection = (NodeInterface) path.getLastPathComponent();
 
                     map.put(selection, path);
                 }
             }
 
-            if(map.isEmpty())
-            {
+            if (map.isEmpty()) {
                 return null;
             }
             transferredDataItem = new TransferableDataItem(map);
@@ -106,57 +103,54 @@ public class TreeTransferHandler extends TransferHandler {
     }
 
     /**
-     * Sets the is dragging flag
+     * Sets the is dragging flag.
      *
      * @param b the new dragging
      */
-    private synchronized void setDragging(boolean b)
-    {
+    private synchronized void setDragging(boolean b) {
         isDragging = b;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.TransferHandler#exportDone(javax.swing.JComponent, java.awt.datatransfer.Transferable, int)
      */
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
-        if(!(source instanceof JTree) || (data == null))
-        {
+        if (!(source instanceof JTree) || (data == null)) {
             return;
         }
 
-        JTree tree = (JTree)source;
-        NodeInterface destinationTreeNode = (NodeInterface)tree.getLastSelectedPathComponent();
+        JTree tree = (JTree) source;
+        NodeInterface destinationTreeNode = (NodeInterface) tree.getLastSelectedPathComponent();
 
-        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         DataFlavor destDataFlavour = destinationTreeNode.getDataFlavour();
 
         TransferredData transferredData = null;
-        try
-        {
-            transferredData = (TransferredData)data.getTransferData(destDataFlavour);
-        }
-        catch (UnsupportedFlavorException e)
-        {
+        try {
+            transferredData = (TransferredData) data.getTransferData(destDataFlavour);
+        } catch (UnsupportedFlavorException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        if(action == MOVE) {
+        if (action == MOVE) {
             DataFlavourManager.deleteNodes(model, transferredData);
         }
 
-        if(action != NONE) {
+        if (action != NONE) {
             DataFlavourManager.displayMessages(destinationTreeNode, transferredData, action);
         }
 
         setDragging(false);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.TransferHandler#getSourceActions(javax.swing.JComponent)
      */
     @Override
@@ -164,35 +158,30 @@ public class TreeTransferHandler extends TransferHandler {
         return TransferHandler.COPY;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.TransferHandler#importData(javax.swing.JComponent, java.awt.datatransfer.Transferable)
      */
     @Override
-    public boolean importData(JComponent comp, Transferable t)
-    {
-        if(!(comp instanceof JTree) || (t == null))
-        {
+    public boolean importData(JComponent comp, Transferable t) {
+        if (!(comp instanceof JTree) || (t == null)) {
             return false;
         }
 
         boolean result = false;
-        JTree tree = (JTree)comp;
-        NodeInterface destinationTreeNode = (NodeInterface)tree.getLastSelectedPathComponent();
+        JTree tree = (JTree) comp;
+        NodeInterface destinationTreeNode = (NodeInterface) tree.getLastSelectedPathComponent();
 
         DataFlavor destDataFlavour = destinationTreeNode.getDataFlavour();
 
         TransferredData transferredData = null;
-        try
-        {
-            transferredData = (TransferredData)t.getTransferData(destDataFlavour);
+        try {
+            transferredData = (TransferredData) t.getTransferData(destDataFlavour);
             result = DataFlavourManager.copy(destinationTreeNode, transferredData);
-        }
-        catch (UnsupportedFlavorException e)
-        {
+        } catch (UnsupportedFlavorException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
@@ -200,64 +189,53 @@ public class TreeTransferHandler extends TransferHandler {
     }
 
     /**
-     * Checks if a dragging operation is currently happening
+     * Checks if a dragging operation is currently happening.
      *
      * @return true, if is dragging
      */
-    public synchronized boolean isDragging()
-    {
+    public synchronized boolean isDragging() {
         return isDragging;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.TransferHandler#canImport(javax.swing.TransferHandler.TransferSupport)
      */
     @Override
-    public boolean canImport(TransferSupport support)
-    {
-        if(support == null)
-        {
+    public boolean canImport(TransferSupport support) {
+        if (support == null) {
             return false;
         }
 
-        JTree.DropLocation dropLocation = (JTree.DropLocation)support.getDropLocation();
+        JTree.DropLocation dropLocation = (JTree.DropLocation) support.getDropLocation();
         TreePath destinationPath = dropLocation.getPath();
 
         NodeInterface destinationTreeNode = null;
 
-        try
-        {
-            destinationTreeNode = (NodeInterface)destinationPath.getLastPathComponent();
-        }
-        catch(ClassCastException e)
-        {
+        try {
+            destinationTreeNode = (NodeInterface) destinationPath.getLastPathComponent();
+        } catch (ClassCastException e) {
             return false;
         }
 
         Transferable transferable = support.getTransferable();
         DataFlavor destDataFlavour = destinationTreeNode.getDataFlavour();
         TransferredData transferredData = null;
-        try
-        {
-            transferredData = (TransferredData)transferable.getTransferData(destDataFlavour);
-        }
-        catch (UnsupportedFlavorException e)
-        {
+        try {
+            transferredData = (TransferredData) transferable.getTransferData(destDataFlavour);
+        } catch (UnsupportedFlavorException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        if(transferredData == null)
-        {
+        if (transferredData == null) {
             return false;
         }
 
         TreePath treePath = transferredData.getTreePath(0);
-        if(isSameTreePath(treePath, destinationPath))
-        {
+        if (isSameTreePath(treePath, destinationPath)) {
             return false;
         }
 
@@ -272,8 +250,7 @@ public class TreeTransferHandler extends TransferHandler {
      * @return true, if is same tree path
      */
     private static boolean isSameTreePath(TreePath tp1, TreePath tp2) {
-        if((tp1 == null) || (tp2 == null))
-        {
+        if ((tp1 == null) || (tp2 == null)) {
             return false;
         }
         return (tp1.toString().compareTo(tp2.toString()) == 0);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 /**
@@ -23,8 +24,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class WKTType
-{
+public class WKTType {
 
     /** The name. */
     private String name;
@@ -54,13 +54,8 @@ public class WKTType
      * @param canHaveMultipleShapes the can have multiple shapes
      * @param doFirstLastHaveToBeSame the do first last have to be same
      */
-    public WKTType(String name, 
-            boolean multipleCoordinates,
-            int numOfPoints,
-            String listItem, 
-            boolean canHaveMultipleShapes,
-            boolean doFirstLastHaveToBeSame)
-    {
+    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem,
+            boolean canHaveMultipleShapes, boolean doFirstLastHaveToBeSame) {
         super();
         this.name = name;
         this.multipleCoordinates = multipleCoordinates;
@@ -93,7 +88,9 @@ public class WKTType
      *
      * @return the string
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -137,7 +134,9 @@ public class WKTType
         return doFirstLastHaveToBeSame;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -153,36 +152,49 @@ public class WKTType
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         WKTType other = (WKTType) obj;
-        if (canHaveMultipleShapes != other.canHaveMultipleShapes)
+        if (canHaveMultipleShapes != other.canHaveMultipleShapes) {
             return false;
-        if (doFirstLastHaveToBeSame != other.doFirstLastHaveToBeSame)
+        }
+        if (doFirstLastHaveToBeSame != other.doFirstLastHaveToBeSame) {
             return false;
+        }
         if (listItem == null) {
-            if (other.listItem != null)
+            if (other.listItem != null) {
                 return false;
-        } else if (!listItem.equals(other.listItem))
+            }
+        } else if (!listItem.equals(other.listItem)) {
             return false;
-        if (multipleCoordinates != other.multipleCoordinates)
+        }
+        if (multipleCoordinates != other.multipleCoordinates) {
             return false;
+        }
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
-        if (numOfPoints != other.numOfPoints)
+        }
+        if (numOfPoints != other.numOfPoints) {
             return false;
+        }
         return true;
     }
 };

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.attribute;
 
 /**
@@ -30,7 +31,7 @@ public class AttributeUtils {
 
     /** The Constant ATTRIBUTE_END. */
     private static final String ATTRIBUTE_END = "</ogc:PropertyName>";
-    
+
     /**
      * Checks if string is actually an attribute.
      *
@@ -38,11 +39,9 @@ public class AttributeUtils {
      * @return true, if is attribute
      */
     public static boolean isAttribute(Object objValue) {
-        if(objValue instanceof String)
-        {
+        if (objValue instanceof String) {
             String stringValue = (String) objValue;
-            if(stringValue.startsWith(ATTRIBUTE_START) && stringValue.endsWith(ATTRIBUTE_END))
-            {
+            if (stringValue.startsWith(ATTRIBUTE_START) && stringValue.endsWith(ATTRIBUTE_END)) {
                 return true;
             }
         }
@@ -57,10 +56,10 @@ public class AttributeUtils {
      */
     public static String extract(String value) {
         String extractedValue = value;
-        
-        if(isAttribute(value))
-        {
-            extractedValue = value.substring(ATTRIBUTE_START.length(), value.length() - ATTRIBUTE_END.length()); 
+
+        if (isAttribute(value)) {
+            extractedValue = value.substring(ATTRIBUTE_START.length(),
+                    value.length() - ATTRIBUTE_END.length());
         }
         return extractedValue;
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.render;
 
 import java.util.HashMap;
@@ -33,7 +34,8 @@ import com.sldeditor.map.MapRender;
 public class RenderPanelFactory {
 
     /** The symbol render panel map. */
-    private static Map<String, RenderSymbolInterface> symbolRenderPanelMap = new HashMap<String, RenderSymbolInterface>();
+    private static Map<String, RenderSymbolInterface> symbolRenderPanelMap =
+            new HashMap<String, RenderSymbolInterface>();
 
     /** The map panel render. */
     private static MapRender mapPanelRender = null;
@@ -44,10 +46,8 @@ public class RenderPanelFactory {
      * @param className the class name
      * @return the renderer
      */
-    public static RenderSymbolInterface getRenderer(String className)
-    {
-        if(!symbolRenderPanelMap.containsKey(className))
-        {
+    public static RenderSymbolInterface getRenderer(String className) {
+        if (!symbolRenderPanelMap.containsKey(className)) {
             symbolRenderPanelMap.put(className, new RenderPanelImpl());
         }
 
@@ -60,8 +60,7 @@ public class RenderPanelFactory {
      * @param sldOutput the sld output
      */
     public static void addSLDOutputListener(SLDOutputInterface sldOutput) {
-        for(String key : symbolRenderPanelMap.keySet())
-        {
+        for (String key : symbolRenderPanelMap.keySet()) {
             RenderSymbolInterface render = symbolRenderPanelMap.get(key);
 
             render.addSLDOutputListener(sldOutput);
@@ -74,8 +73,7 @@ public class RenderPanelFactory {
      * @return the map renderer
      */
     public static MapRender getMapRenderer() {
-        if(mapPanelRender == null)
-        {
+        if (mapPanelRender == null) {
             mapPanelRender = new MapRender();
         }
 

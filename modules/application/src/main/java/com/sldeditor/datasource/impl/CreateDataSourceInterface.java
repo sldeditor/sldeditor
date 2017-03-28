@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.datasource.impl;
 
 import java.util.List;
@@ -37,6 +39,7 @@ public interface CreateDataSourceInterface {
      * @param editorFile the editor file
      * @return the list
      */
-    List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile);
+    List<DataSourceInfo> connect(String typeName, String geometryFieldName,
+            SLDEditorFileInterface editorFile);
 
 }

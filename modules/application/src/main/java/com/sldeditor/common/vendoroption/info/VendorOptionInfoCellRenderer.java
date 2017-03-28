@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.vendoroption.info;
 
 import java.awt.Color;
@@ -49,12 +51,13 @@ public class VendorOptionInfoCellRenderer extends DefaultTableCellRenderer {
         this.model = model;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+    public Component getTableCellRendererComponent(JTable table,
+            Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
         setText((String) value);
 

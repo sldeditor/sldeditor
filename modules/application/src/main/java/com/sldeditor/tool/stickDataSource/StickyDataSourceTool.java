@@ -39,8 +39,7 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
     /**
      * Instantiates a new sticky data source tool.
      */
-    public StickyDataSourceTool()
-    {
+    public StickyDataSourceTool() {
         createUI();
         SLDEditorFile.getInstance().addStickyDataSourceListener(this);
     }
@@ -53,24 +52,28 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(StickyDataSourceTool.class, "StickyDataSourceTool.groupTitle")));
+        groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation
+                .getString(StickyDataSourceTool.class, "StickyDataSourceTool.groupTitle")));
 
         // Export to YSLD
-        stickyButton = new ToggleToolButton(Localisation.getString(StickyDataSourceTool.class, "StickyDataSourceTool.dataSource"),
-                "tool/stickydatasource.png");
+        stickyButton = new ToggleToolButton(Localisation.getString(StickyDataSourceTool.class,
+                "StickyDataSourceTool.dataSource"), "tool/stickydatasource.png");
         stickyButton.setEnabled(true);
         final StickyDataSourceTool callingObj = this;
-        
+
         stickyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SLDEditorFile.getInstance().setStickyDataSource(callingObj, stickyButton.isSelected());
+                SLDEditorFile.getInstance().setStickyDataSource(callingObj,
+                        stickyButton.isSelected());
             }
         });
 
         groupPanel.add(stickyButton);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
@@ -78,7 +81,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         return groupPanel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
@@ -86,7 +91,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
             List<SLDDataInterface> sldDataList) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
@@ -94,7 +101,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         return getClass().getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List, java.util.List)
      */
     @Override
@@ -103,7 +112,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.StickyDataSourceInterface#stickyDataSourceUpdates(boolean)
      */
     @Override

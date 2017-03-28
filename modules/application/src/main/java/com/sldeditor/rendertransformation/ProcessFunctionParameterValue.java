@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
@@ -23,14 +24,12 @@ import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 /**
  * Class that encapsulates process function parameter values.
  */
-public class ProcessFunctionParameterValue
-{
-    
+public class ProcessFunctionParameterValue {
+
     /**
      * Default constructor.
      */
-    public ProcessFunctionParameterValue()
-    {
+    public ProcessFunctionParameterValue() {
     }
 
     /**

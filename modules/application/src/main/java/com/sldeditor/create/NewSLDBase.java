@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.create;
 
 import org.geotools.factory.CommonFactoryFinder;
@@ -32,15 +33,15 @@ public class NewSLDBase {
     private String name;
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /**
      * Instantiates a new new sld base.
      *
      * @param name the name
      */
-    public NewSLDBase(String name)
-    {
+    public NewSLDBase(String name) {
         this.name = name;
     }
 
@@ -58,8 +59,7 @@ public class NewSLDBase {
      *
      * @return the style factory
      */
-    protected static StyleFactoryImpl getStyleFactory()
-    {
+    protected static StyleFactoryImpl getStyleFactory() {
         return styleFactory;
     }
 }

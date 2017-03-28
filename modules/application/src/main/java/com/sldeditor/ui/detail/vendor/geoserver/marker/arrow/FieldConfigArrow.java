@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
 import java.awt.BorderLayout;
@@ -56,14 +57,15 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigArrow wraps a text field GUI component and an optional value/attribute/expression drop down,
+ * The Class FieldConfigArrow wraps a text field GUI component and an optional
+ *  value/attribute/expression drop down,
  * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Allows the user to configure a extshape:arrow string.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Allows the user to configure a extshape:arrow string.
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -75,8 +77,10 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     /** The arrow panel. */
     private ArrowDetails arrowPanel = null;
 
-    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/arrow/SymbolTypeFieldState_Arrow.xml";
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable
+     *  field states for the different symbol types. */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
+            "symbol/marker/arrow/SymbolTypeFieldState_Arrow.xml";
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
@@ -470,7 +474,8 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     }
 
     /**
-     * Method called when the field has been selected from a combo box and may need to be initialised.
+     * Method called when the field has been selected from a combo box
+     * and may need to be initialised.
      */
     @Override
     public void justSelected() {
@@ -555,28 +560,30 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                getVendorOptionInfo());
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo = new VendorOptionInfo("extshape://arrow",
-                    getVendorOptionVersion(),
-                    Localisation.getString(VOGeoServerArrowSymbol.class, "VOGeoServerArrowSymbol.description"));
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo("extshape://arrow", getVendorOptionVersion(),
+                    Localisation.getString(VOGeoServerArrowSymbol.class,
+                            "VOGeoServerArrowSymbol.description"));
         }
 
         return vendorOptionInfo;

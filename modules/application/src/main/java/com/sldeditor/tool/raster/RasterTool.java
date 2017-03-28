@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.raster;
 
 import java.awt.FlowLayout;
@@ -80,8 +81,7 @@ public class RasterTool implements ToolInterface {
      *
      * @param sldEditorInterface the sld editor interface
      */
-    public RasterTool(SLDEditorInterface sldEditorInterface)
-    {
+    public RasterTool(SLDEditorInterface sldEditorInterface) {
         super();
 
         this.sldEditorInterface = sldEditorInterface;
@@ -96,12 +96,14 @@ public class RasterTool implements ToolInterface {
         FlowLayout flowLayout = (FlowLayout) rasterPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        rasterPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(RasterTool.class, "RasterTool.title")));
+        rasterPanel.setBorder(BorderFactory
+                .createTitledBorder(Localisation.getString(RasterTool.class, "RasterTool.title")));
 
         //
         // Import raster
         //
-        importRasterButton = new ToolButton(Localisation.getString(RasterTool.class, "RasterTool.import"),
+        importRasterButton = new ToolButton(
+                Localisation.getString(RasterTool.class, "RasterTool.import"),
                 "tool/importraster.png");
         rasterPanel.add(importRasterButton);
         importRasterButton.setEnabled(false);
@@ -109,26 +111,27 @@ public class RasterTool implements ToolInterface {
         importRasterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if((nodeTypeList != null) && (nodeTypeList.size() == 1))
-                {
-                    if(sldEditorInterface != null)
-                    {
+                if ((nodeTypeList != null) && (nodeTypeList.size() == 1)) {
+                    if (sldEditorInterface != null) {
                         FileTreeNode fileTreeNode = (FileTreeNode) nodeTypeList.get(0);
 
                         File rasterFile = fileTreeNode.getFile();
                         ConsoleManager.getInstance().information(this,
-                                String.format("%s : %s", 
-                                        Localisation.getString(RasterTool.class, "RasterTool.createSymbol"),
+                                String.format("%s : %s",
+                                        Localisation.getString(RasterTool.class,
+                                                "RasterTool.createSymbol"),
                                         rasterFile.getAbsolutePath()));
                         SLDDataInterface sldData = rasterReader.createRasterSLDData(rasterFile);
-                        LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
 
                         // Raster file
-                        DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance().getDataSource();
+                        DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance()
+                                .getDataSource();
 
-                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory
+                                .getDataSource(DataSourceConnector.class);
 
-                        dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFile.getAbsolutePath()));
+                        dsProperties = dsc.getDataSourceProperties(
+                                DataSourceProperties.encodeFilename(rasterFile.getAbsolutePath()));
 
                         SLDEditorFile.getInstance().setSLDData(sldData);
                         SLDEditorFile.getInstance().setDataSource(dsProperties);
@@ -144,6 +147,7 @@ public class RasterTool implements ToolInterface {
                         selectedFiles.setSldData(sldFilesToLoad);
                         selectedFiles.setFolderName(rasterFile.getParent());
 
+                        LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
                         loadSLD.loadSLDString(selectedFiles);
                     }
                 }
@@ -153,7 +157,8 @@ public class RasterTool implements ToolInterface {
         //
         // Set data source
         //
-        dataSourceButton = new ToolButton(Localisation.getString(RasterTool.class, "RasterTool.dataSource"),
+        dataSourceButton = new ToolButton(
+                Localisation.getString(RasterTool.class, "RasterTool.dataSource"),
                 "tool/setdatasource.png");
         rasterPanel.add(dataSourceButton);
         dataSourceButton.setEnabled(false);
@@ -161,38 +166,37 @@ public class RasterTool implements ToolInterface {
         dataSourceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if((nodeTypeList != null) && (nodeTypeList.size() == 1))
-                {
-                    if(sldEditorInterface != null)
-                    {
+                if ((nodeTypeList != null) && (nodeTypeList.size() == 1)) {
+                    if (sldEditorInterface != null) {
                         FileTreeNode fileTreeNode = (FileTreeNode) nodeTypeList.get(0);
 
                         File rasterFile = fileTreeNode.getFile();
 
-                        ConsoleManager.getInstance().information(this, 
-                                String.format("%s : %s", 
-                                        Localisation.getString(RasterTool.class, "RasterTool.setDataSource"),
+                        ConsoleManager.getInstance().information(this,
+                                String.format("%s : %s",
+                                        Localisation.getString(RasterTool.class,
+                                                "RasterTool.setDataSource"),
                                         rasterFile.getAbsolutePath()));
 
                         // Raster file
-                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
+                        DataSourceConnectorInterface dsc = DataSourceConnectorFactory
+                                .getDataSource(DataSourceConnector.class);
 
                         String rasterFilename = null;
                         try {
                             rasterFilename = rasterFile.toURI().toURL().toString();
-                        }
-                        catch (MalformedURLException exceptionObj) {
+                        } catch (MalformedURLException exceptionObj) {
                             ConsoleManager.getInstance().exception(RasterTool.class, exceptionObj);
                             return;
                         }
-                        DataSourcePropertiesInterface dsProperties = dsc.getDataSourceProperties(DataSourceProperties.encodeFilename(rasterFilename));
+                        DataSourcePropertiesInterface dsProperties = dsc.getDataSourceProperties(
+                                DataSourceProperties.encodeFilename(rasterFilename));
 
                         SLDEditorFile.getInstance().setDataSource(dsProperties);
 
                         DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
-                        if(dataSource != null)
-                        {
+                        if (dataSource != null) {
                             dataSource.connect(rasterFilename, SLDEditorFile.getInstance(), null);
                         }
                     }
@@ -222,13 +226,11 @@ public class RasterTool implements ToolInterface {
             List<SLDDataInterface> sldDataList) {
         this.nodeTypeList = nodeTypeList;
 
-        if(importRasterButton != null)
-        {
+        if (importRasterButton != null) {
             importRasterButton.setEnabled(nodeTypeList.size() == 1);
         }
 
-        if(dataSourceButton != null)
-        {
+        if (dataSourceButton != null) {
             dataSourceButton.setEnabled(nodeTypeList.size() == 1);
         }
     }
@@ -252,20 +254,16 @@ public class RasterTool implements ToolInterface {
      * @return true, if successful
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
-        for(NodeInterface node : nodeTypeList)
-        {
-            if(node instanceof FileTreeNode)
-            {
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
+        for (NodeInterface node : nodeTypeList) {
+            if (node instanceof FileTreeNode) {
                 FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-                if(fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.RASTER)
-                {
+                if (fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.RASTER) {
                     return false;
                 }
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function;
 
 import java.util.ArrayList;
@@ -105,10 +106,12 @@ public class FilterManager implements FilterNameInterface {
     private Map<String, FilterName> functionNameMap = new HashMap<String, FilterName>();
 
     /** The filter map. */
-    private Map<String, FilterConfigInterface> filterMap = new HashMap<String, FilterConfigInterface>();
+    private Map<String, FilterConfigInterface> filterMap =
+            new HashMap<String, FilterConfigInterface>();
 
     /** The filter type map. */
-    private Map<Class<?>, FilterConfigInterface> filterTypeMap = new HashMap<Class<?>, FilterConfigInterface>();
+    private Map<Class<?>, FilterConfigInterface> filterTypeMap =
+            new HashMap<Class<?>, FilterConfigInterface>();
 
     /** The function factory. */
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
@@ -121,10 +124,8 @@ public class FilterManager implements FilterNameInterface {
      *
      * @return single instance of FilterManager
      */
-    public static FilterNameInterface getInstance()
-    {
-        if(instance == null)
-        {
+    public static FilterNameInterface getInstance() {
+        if (instance == null) {
             instance = new FilterManager();
         }
 
@@ -134,8 +135,7 @@ public class FilterManager implements FilterNameInterface {
     /**
      * Instantiates a new filter manager.
      */
-    private FilterManager()
-    {
+    private FilterManager() {
         initialise();
     }
 
@@ -147,8 +147,7 @@ public class FilterManager implements FilterNameInterface {
 
         filterNameList = new ArrayList<FilterName>();
 
-        for(FilterConfigInterface filterConfig : filterConfigList)
-        {
+        for (FilterConfigInterface filterConfig : filterConfigList) {
             filterNameList.add(filterConfig.getFilterConfiguration());
             String key = filterConfig.getFilterConfiguration().getFilterName();
             filterMap.put(key, filterConfig);
@@ -159,46 +158,48 @@ public class FilterManager implements FilterNameInterface {
 
         Logger logger = Logger.getLogger(getClass());
 
-        for(FilterName function : filterNameList)
-        {
+        for (FilterName function : filterNameList) {
             logger.debug(function.getFilterName());
 
             functionNameMap.put(function.getFilterName(), function);
 
-            for(FilterNameParameter parameter : function.getParameterList())
-            {
-                if(!classList.contains(parameter.getDataType()))
-                {
+            for (FilterNameParameter parameter : function.getParameterList()) {
+                if (!classList.contains(parameter.getDataType())) {
                     classList.add(parameter.getDataType());
                 }
                 logger.debug("\t" + parameter.getName() + "\t" + parameter.getDataType().getName());
             }
 
-            if(!classList.contains(function.getReturnType()))
-            {
+            if (!classList.contains(function.getReturnType())) {
                 classList.add(function.getReturnType());
             }
             logger.debug("\tRet : " + function.getReturnType().getName());
         }
 
         logger.debug("\nClasses");
-        for(Class<?> className : classList)
-        {
+        for (Class<?> className : classList) {
             logger.debug(className.getName());
         }
 
-        Class<?>[] allowedNumberTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class};
-        Class<?>[] allowedDoubleTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class};
-        Class<?>[] allowedFloatTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class};
-        Class<?>[] allowedIntegerTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class};
-        Class<?>[] allowedLongTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class};
-        Class<?>[] allowedBooleanTypes = {Boolean.class};
-        Class<?>[] allowedStringTypes = {String.class};
-        Class<?>[] allowedGeometryTypes = {Geometry.class, LineString.class, Point.class, MultiPoint.class, LinearRing.class};
-        Class<?>[] allowedDateTypes = {Date.class};
-        Class<?>[] allowedClassifierTypes = {RangedClassifier.class, Classifier.class};
-        Class<?>[] allowedUnitTypes = {Unit.class};
-        Class<?>[] allowedComparableTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class, Date.class, String.class, Boolean.class};
+        Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
+                Long.class };
+        Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
+                Long.class };
+        Class<?>[] allowedFloatTypes = { Number.class, Double.class, Float.class, Integer.class,
+                Long.class };
+        Class<?>[] allowedIntegerTypes = { Number.class, Double.class, Float.class, Integer.class,
+                Long.class };
+        Class<?>[] allowedLongTypes = { Number.class, Double.class, Float.class, Integer.class,
+                Long.class };
+        Class<?>[] allowedBooleanTypes = { Boolean.class };
+        Class<?>[] allowedStringTypes = { String.class };
+        Class<?>[] allowedGeometryTypes = { Geometry.class, LineString.class, Point.class,
+                MultiPoint.class, LinearRing.class };
+        Class<?>[] allowedDateTypes = { Date.class };
+        Class<?>[] allowedClassifierTypes = { RangedClassifier.class, Classifier.class };
+        Class<?>[] allowedUnitTypes = { Unit.class };
+        Class<?>[] allowedComparableTypes = { Number.class, Double.class, Float.class,
+                Integer.class, Long.class, Date.class, String.class, Boolean.class };
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
         populateAllowedTypes(Double.class, allowedDoubleTypes);
@@ -270,8 +271,7 @@ public class FilterManager implements FilterNameInterface {
      * @param key the key
      * @param allowedTypeArray the allowed type array
      */
-    private void populateAllowedTypes(Class<?> key, Class<?>[] allowedTypeArray)
-    {
+    private void populateAllowedTypes(Class<?> key, Class<?>[] allowedTypeArray) {
         allowedTypeMap.put(key, Arrays.asList(allowedTypeArray));
     }
 
@@ -283,14 +283,14 @@ public class FilterManager implements FilterNameInterface {
      */
     @Override
     public Expression createExpression(FunctionName functionName) {
-        if(functionName == null)
-        {
+        if (functionName == null) {
             return null;
         }
 
         List<Expression> parameters = null;
         Literal fallback = null;
-        Function function = functionFactory.function(functionName.getFunctionName(), parameters, fallback);
+        Function function = functionFactory.function(functionName.getFunctionName(), parameters,
+                fallback);
 
         return function;
     }
@@ -303,11 +303,11 @@ public class FilterManager implements FilterNameInterface {
      * @return the list of ui components to display
      */
     @Override
-    public List<GroupConfigInterface> convertParameters(Class<?> panelId, FunctionName functionName) {
+    public List<GroupConfigInterface> convertParameters(Class<?> panelId,
+            FunctionName functionName) {
         List<GroupConfigInterface> groupConfigList = new ArrayList<GroupConfigInterface>();
 
-        if(functionName != null)
-        {
+        if (functionName != null) {
             GroupConfig groupConfig = new GroupConfig();
 
             StringBuilder funcPrototypeStringBuilder = new StringBuilder();
@@ -316,16 +316,13 @@ public class FilterManager implements FilterNameInterface {
 
             int argCount = functionName.getArgumentCount();
 
-            if(functionName.getArgumentCount() < 0)
-            {
+            if (functionName.getArgumentCount() < 0) {
                 argCount *= -1;
             }
 
-            for(int index = 0; index < argCount; index ++)
-            {
+            for (int index = 0; index < argCount; index++) {
                 int argIndex = index;
-                if(argIndex >= functionName.getArguments().size())
-                {
+                if (argIndex >= functionName.getArguments().size()) {
                     argIndex = functionName.getArguments().size() - 1;
                 }
                 String label = functionName.getArgumentNames().get(argIndex);
@@ -334,82 +331,51 @@ public class FilterManager implements FilterNameInterface {
                 boolean valueOnly = false;
                 FieldIdEnum id = FieldIdEnum.UNKNOWN;
 
-                if(index > 0)
-                {
+                if (index > 0) {
                     funcPrototypeStringBuilder.append(", ");
                 }
                 Class<?> type = parameterType.getType();
                 funcPrototypeStringBuilder.append(type.getSimpleName());
 
                 FieldConfigBase fieldConfig = null;
-                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label, valueOnly);
-                if(type == java.lang.Number.class)
-                {
+                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label,
+                        valueOnly);
+                if (type == java.lang.Number.class) {
                     fieldConfig = new FieldConfigDouble(commonData);
-                }
-                else if(type == Double.class)
-                {
+                } else if (type == Double.class) {
                     fieldConfig = new FieldConfigDouble(commonData);
-                }
-                else if(type == Float.class)
-                {
+                } else if (type == Float.class) {
                     fieldConfig = new FieldConfigDouble(commonData);
-                }
-                else if(type == Integer.class)
-                {
+                } else if (type == Integer.class) {
                     fieldConfig = new FieldConfigInteger(commonData);
-                }
-                else if(type == Long.class)
-                {
+                } else if (type == Long.class) {
                     fieldConfig = new FieldConfigInteger(commonData);
-                }
-                else if(type == String.class)
-                {
+                } else if (type == String.class) {
                     fieldConfig = new FieldConfigString(commonData, null);
-                }
-                else if(type == Object.class)
-                {
+                } else if (type == Object.class) {
                     fieldConfig = new FieldConfigString(commonData, null);
-                }
-                else if(type == Boolean.class)
-                {
+                } else if (type == Boolean.class) {
                     fieldConfig = new FieldConfigBoolean(commonData);
-                }
-                else if(type == Geometry.class)
-                {
+                } else if (type == Geometry.class) {
                     fieldConfig = new FieldConfigGeometry(commonData, null);
-                }
-                else if(type == org.opengis.geometry.Geometry.class)
-                {
+                } else if (type == org.opengis.geometry.Geometry.class) {
                     fieldConfig = new FieldConfigGeometry(commonData, null);
-                }
-                else if(type == LineString.class)
-                {
+                } else if (type == LineString.class) {
                     fieldConfig = new FieldConfigGeometry(commonData, null);
-                }
-                else if(type == Date.class)
-                {
+                } else if (type == Date.class) {
                     fieldConfig = new FieldConfigDate(commonData);
-                }
-                else if(type == Class.class)
-                {
+                } else if (type == Class.class) {
                     fieldConfig = new FieldConfigString(commonData, null);
-                }
-                else if(type == Classifier.class)
-                {
+                } else if (type == Classifier.class) {
                     fieldConfig = new FieldConfigString(commonData, null);
-                }
-                else if(type == Unit.class)
-                {
+                } else if (type == Unit.class) {
                     fieldConfig = new FieldConfigMapUnits(commonData);
-                }
-                else if(type == Comparable.class)
-                {
+                } else if (type == Comparable.class) {
                     fieldConfig = new FieldConfigString(commonData, null);
-                }
-                else
-                {
-                    ConsoleManager.getInstance().error(this, Localisation.getField(ExpressionPanelv2.class, "FilterManager.error1") + type.getName());
+                } else {
+                    ConsoleManager.getInstance().error(this,
+                            Localisation.getField(ExpressionPanelv2.class, "FilterManager.error1")
+                                    + type.getName());
                 }
 
                 groupConfig.addField(fieldConfig);
@@ -435,8 +401,7 @@ public class FilterManager implements FilterNameInterface {
     public Class<?> getFunctionType(String functionName) {
         FilterName filterName = functionNameMap.get(functionName);
 
-        if(filterName == null)
-        {
+        if (filterName == null) {
             return null;
         }
 
@@ -462,19 +427,15 @@ public class FilterManager implements FilterNameInterface {
      */
     @Override
     public FilterConfigInterface getFilterConfig(Filter filter) {
-        if(filter == null)
-        {
+        if (filter == null) {
             return null;
         }
 
         Class<?> filterClassTypeName = null;
 
-        if(filter instanceof FilterExtendedInterface)
-        {
-            filterClassTypeName = ((FilterExtendedInterface)filter).getOriginalFilter();
-        }
-        else
-        {
+        if (filter instanceof FilterExtendedInterface) {
+            filterClassTypeName = ((FilterExtendedInterface) filter).getOriginalFilter();
+        } else {
             filterClassTypeName = filter.getClass();
         }
 

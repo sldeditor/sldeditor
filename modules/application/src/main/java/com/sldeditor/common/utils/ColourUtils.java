@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.utils;
 
 import java.awt.Color;
@@ -31,8 +32,7 @@ import org.opengis.filter.expression.Expression;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ColourUtils
-{
+public class ColourUtils {
 
     /** The Constant HEX_PATTERN. */
     private static final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
@@ -45,15 +45,14 @@ public class ColourUtils
 
     /**
      * Create a #rrggbb string From colour.
+     * 
      * <p>Returns null if colour is null.
      *
      * @param colour the colour
      * @return the string
      */
-    public static String fromColour(Color colour)
-    {
-        if(colour == null)
-        {
+    public static String fromColour(Color colour) {
+        if (colour == null) {
             return null;
         }
 
@@ -66,12 +65,10 @@ public class ColourUtils
      * @param htmlColour the html colour
      * @return the colour
      */
-    public static Color toColour(String htmlColour)
-    {
+    public static Color toColour(String htmlColour) {
         Color colour = null;
 
-        if(validColourString(htmlColour))
-        {
+        if (validColourString(htmlColour)) {
             colour = SLD.toColor(htmlColour);
         }
 
@@ -79,24 +76,22 @@ public class ColourUtils
     }
 
     /**
-     * Gets the colour as an int value, i.e remove '#' symbol and 
-     * convert the remaining hex values as a decimal.
+     * Gets the colour as an int value, i.e remove '#' symbol and convert 
+     * the remaining hex values as a decimal.
+     * 
      * <p>Returns 0 if colourExpression is null.
      *
      * @param colourExpression the colour expression
      * @return the int colour value
      */
-    public static int getIntColour(Expression colourExpression)
-    {
-        if(colourExpression == null)
-        {
+    public static int getIntColour(Expression colourExpression) {
+        if (colourExpression == null) {
             return 0;
         }
 
         String tmpColour = colourExpression.toString();
 
-        if(tmpColour.startsWith("#"))
-        {
+        if (tmpColour.startsWith("#")) {
             tmpColour = colourExpression.toString().substring(1);
         }
 
@@ -126,17 +121,15 @@ public class ColourUtils
      * @param colour the colour
      * @return the text colour
      */
-    public static Color getTextColour(Color colour)
-    {
-        // Counting the perceptive luminance - human eye favours green colour... 
-        double a = 1.0 - ( 0.299 * colour.getRed() + 0.587 * colour.getGreen() + 0.114 * colour.getBlue()) / 255.0;
+    public static Color getTextColour(Color colour) {
+        // Counting the perceptive luminance - human eye favours green colour...
+        double a = 1.0
+                - (0.299 * colour.getRed() + 0.587 * colour.getGreen() + 0.114 * colour.getBlue())
+                        / 255.0;
 
-        if (a < 0.5)
-        {
+        if (a < 0.5) {
             return Color.black;
-        }
-        else
-        {
+        } else {
             return Color.white;
         }
     }
@@ -148,13 +141,11 @@ public class ColourUtils
      * @return true, if successful
      */
     public static boolean validColourString(String htmlColour) {
-        if(htmlColour == null)
-        {
+        if (htmlColour == null) {
             return false;
         }
 
-        if(htmlColourPattern == null)
-        {
+        if (htmlColourPattern == null) {
             htmlColourPattern = Pattern.compile(HEX_PATTERN);
         }
 

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.tree.leaf;
 
 import org.geotools.styling.Fill;
@@ -29,87 +30,95 @@ import org.opengis.style.Symbolizer;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTreeLeafText implements SLDTreeLeafInterface
-{
+public class SLDTreeLeafText implements SLDTreeLeafInterface {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getSymbolizer()
      */
     @Override
-    public Class<?> getSymbolizer()
-    {
+    public Class<?> getSymbolizer() {
         return TextSymbolizerImpl.class;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public boolean hasFill(Symbolizer symbolizer)
-    {
+    public boolean hasFill(Symbolizer symbolizer) {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public boolean hasStroke(Symbolizer symbolizer)
-    {
+    public boolean hasStroke(Symbolizer symbolizer) {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public Fill getFill(Symbolizer symbolizer)
-    {
+    public Fill getFill(Symbolizer symbolizer) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public Stroke getStroke(Symbolizer symbolizer)
-    {
+    public Stroke getStroke(Symbolizer symbolizer) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public void removeStroke(Symbolizer symbolizer)
-    {
+    public void removeStroke(Symbolizer symbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public void createStroke(Symbolizer symbolizer)
-    {
+    public void createStroke(Symbolizer symbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public void createFill(Symbolizer symbolizer)
-    {        
+    public void createFill(Symbolizer symbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public void removeFill(Symbolizer symbolizer)
-    {
+    public void removeFill(Symbolizer symbolizer) {
         // Do nothing
     }
 

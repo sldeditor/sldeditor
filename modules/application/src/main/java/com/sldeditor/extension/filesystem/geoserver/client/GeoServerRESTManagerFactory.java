@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver.client;
 
 import java.net.URL;
@@ -32,11 +33,11 @@ import it.geosolutions.geoserver.rest.GeoServerRESTManager;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerRESTManagerFactory
-{
+public class GeoServerRESTManagerFactory {
 
     /** The map. */
-    private Map<GeoServerConnection, GeoServerRESTManager> map = new HashMap<GeoServerConnection, GeoServerRESTManager>();
+    private Map<GeoServerConnection, GeoServerRESTManager> map = 
+            new HashMap<GeoServerConnection, GeoServerRESTManager>();
 
     /** The instance. */
     private static GeoServerRESTManagerFactory instance = null;
@@ -44,8 +45,7 @@ public class GeoServerRESTManagerFactory
     /**
      * Instantiates a new geo server rest manager factory.
      */
-    private GeoServerRESTManagerFactory()
-    {
+    private GeoServerRESTManagerFactory() {
     }
 
     /**
@@ -53,10 +53,8 @@ public class GeoServerRESTManagerFactory
      *
      * @return single instance of GeoServerRESTManagerFactory
      */
-    private static GeoServerRESTManagerFactory getInstance()
-    {
-        if(instance == null)
-        {
+    private static GeoServerRESTManagerFactory getInstance() {
+        if (instance == null) {
             instance = new GeoServerRESTManagerFactory();
         }
 
@@ -69,8 +67,7 @@ public class GeoServerRESTManagerFactory
      * @param connection the connection
      * @return the manager
      */
-    public static GeoServerRESTManager getManager(GeoServerConnection connection)
-    {
+    public static GeoServerRESTManager getManager(GeoServerConnection connection) {
         return getInstance().internal_getManager(connection);
     }
 
@@ -80,32 +77,25 @@ public class GeoServerRESTManagerFactory
      * @param connection the connection
      * @return the geo server rest manager
      */
-    private GeoServerRESTManager internal_getManager(GeoServerConnection connection)
-    {
-        if(connection == null)
-        {
+    private GeoServerRESTManager internal_getManager(GeoServerConnection connection) {
+        if (connection == null) {
             return null;
         }
 
         GeoServerRESTManager manager = map.get(connection);
 
-        if(manager == null)
-        {
+        if (manager == null) {
             URL geoserverURL = connection.getUrl();
 
-            if(geoserverURL != null)
-            {
-                try
-                {
-                    if(connection.getUserName() != null)
-                    {
-                        manager = new GeoServerRESTManager(geoserverURL, connection.getUserName(), connection.getPassword());
+            if (geoserverURL != null) {
+                try {
+                    if (connection.getUserName() != null) {
+                        manager = new GeoServerRESTManager(geoserverURL, connection.getUserName(),
+                                connection.getPassword());
 
-                        map.put(connection,  manager);
+                        map.put(connection, manager);
                     }
-                }
-                catch(IllegalArgumentException e)
-                {
+                } catch (IllegalArgumentException e) {
                     ConsoleManager.getInstance().exception(this, e);
                 }
             }
@@ -118,9 +108,8 @@ public class GeoServerRESTManagerFactory
      *
      * @param connection the connection
      */
-    public static void deleteConnection(GeoServerConnection connection)
-    {
-        getInstance().internal_deleteConnection(connection);   
+    public static void deleteConnection(GeoServerConnection connection) {
+        getInstance().internal_deleteConnection(connection);
     }
 
     /**
@@ -128,8 +117,7 @@ public class GeoServerRESTManagerFactory
      *
      * @param connection the connection
      */
-    private void internal_deleteConnection(GeoServerConnection connection)
-    {
+    private void internal_deleteConnection(GeoServerConnection connection) {
         map.remove(connection);
     }
 

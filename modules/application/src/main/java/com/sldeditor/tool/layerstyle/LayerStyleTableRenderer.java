@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import java.awt.Color;
@@ -48,21 +49,19 @@ public class LayerStyleTableRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
         // Cells are by default rendered as a JLabel.
-        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
+                hasFocus, row, column);
 
         // Get the status for the current row.
         LayerStyleModel tableModel = (LayerStyleModel) table.getModel();
 
-        if(isSelected)
-        {
+        if (isSelected) {
             if (tableModel.hasValueBeenUpdated(row, column)) {
                 label.setForeground(Color.RED);
             } else {
                 label.setForeground(Color.BLACK);
             }
-        }
-        else
-        {
+        } else {
             if (tableModel.hasValueBeenUpdated(row, column)) {
                 label.setBackground(Color.RED);
             } else {

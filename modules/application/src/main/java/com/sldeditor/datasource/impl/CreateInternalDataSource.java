@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.util.ArrayList;
@@ -84,7 +85,6 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
         if (editorFile != null) {
             StyledLayerDescriptor sld = editorFile.getSLD();
-            SLDDataInterface sldData = editorFile.getSLDData();
 
             determineGeometryType(sld);
 
@@ -101,6 +101,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             // add a geometry property
             b.setCRS(DefaultGeographicCRS.WGS84); // set crs first
 
+            SLDDataInterface sldData = editorFile.getSLDData();
             List<DataSourceAttributeData> fieldList = sldData.getFieldList();
 
             // Set the geometry field by default
@@ -161,9 +162,8 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param b the feature type builder
      * @param fieldList the field list
      */
-    private void addFields(List<AttributeDescriptor> attrDescList, 
-            ExtendedSimpleFeatureTypeBuilder b,
-            List<DataSourceAttributeData> fieldList) {
+    private void addFields(List<AttributeDescriptor> attrDescList,
+            ExtendedSimpleFeatureTypeBuilder b, List<DataSourceAttributeData> fieldList) {
 
         for (DataSourceAttributeData field : fieldList) {
             Class<?> fieldType = field.getType();
@@ -199,8 +199,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
             break;
         }
         b.setDefaultGeometry(fieldName);
-        AttributeDescriptor attributeDescriptor = b.createAttributeDescriptor(fieldName,
-                fieldType);
+        AttributeDescriptor attributeDescriptor = b.createAttributeDescriptor(fieldName, fieldType);
         return attributeDescriptor;
     }
 

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.util.HashMap;
@@ -78,8 +79,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     /**
      * Instantiates a new expression node.
      */
-    public ExpressionNode()
-    {
+    public ExpressionNode() {
         setDisplayString();
     }
 
@@ -96,53 +96,41 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     /**
      * Sets the display string.
      */
-    private void setDisplayString()
-    {
+    private void setDisplayString() {
         StringBuilder sb = new StringBuilder();
 
-        if(name != null)
-        {
+        if (name != null) {
             sb.append(name);
             sb.append(" : ");
         }
 
-        if(expression == null)
-        {
-            if(expressionType == ExpressionTypeEnum.LITERAL)
-            {
-                sb.append(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.literalNotSet"));
-            }
-            else if(expressionType == ExpressionTypeEnum.PROPERTY)
-            {
-                sb.append(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.propertyNotSet"));
-            }
-            else
-            {
-                sb.append(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet"));
+        if (expression == null) {
+            if (expressionType == ExpressionTypeEnum.LITERAL) {
+                sb.append(Localisation.getString(ExpressionPanelv2.class,
+                        "ExpressionPanelv2.literalNotSet"));
+            } else if (expressionType == ExpressionTypeEnum.PROPERTY) {
+                sb.append(Localisation.getString(ExpressionPanelv2.class,
+                        "ExpressionPanelv2.propertyNotSet"));
+            } else {
+                sb.append(Localisation.getString(ExpressionPanelv2.class,
+                        "ExpressionPanelv2.expressionNotSet"));
             }
         }
 
-        if(expression instanceof LiteralExpressionImpl)
-        {
-            sb.append(Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.literal") + " ");
+        if (expression instanceof LiteralExpressionImpl) {
+            sb.append(Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.literal")
+                    + " ");
             sb.append(expression.toString());
-        }
-        else if(expression instanceof AttributeExpressionImpl)
-        {
-            sb.append(String.format("%s : [%s]", Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"), expression.toString()));
-        }
-        else if(expression instanceof FunctionExpressionImpl)
-        {
+        } else if (expression instanceof AttributeExpressionImpl) {
+            sb.append(String.format("%s : [%s]",
+                    Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"),
+                    expression.toString()));
+        } else if (expression instanceof FunctionExpressionImpl) {
             sb.append(expression.toString());
-        }
-        else if(expression instanceof FunctionImpl)
-        {
+        } else if (expression instanceof FunctionImpl) {
             sb.append(expression.toString());
-        }
-        else if(expression instanceof MathExpressionImpl)
-        {
-            if(mathExpressionMap.isEmpty())
-            {
+        } else if (expression instanceof MathExpressionImpl) {
+            if (mathExpressionMap.isEmpty()) {
                 mathExpressionMap.put(AddImpl.class, "+");
                 mathExpressionMap.put(SubtractImpl.class, "-");
                 mathExpressionMap.put(DivideImpl.class, "/");
@@ -190,12 +178,10 @@ public class ExpressionNode extends DefaultMutableTreeNode {
      */
     public void setExpression(Expression expression) {
         this.expression = expression;
-        if(expression instanceof LiteralExpressionImpl)
-        {
-            Object value = ((LiteralExpressionImpl)expression).getValue();
-            if(value instanceof AttributeExpressionImpl)
-            {
-                this.expression = (AttributeExpressionImpl)value;
+        if (expression instanceof LiteralExpressionImpl) {
+            Object value = ((LiteralExpressionImpl) expression).getValue();
+            if (value instanceof AttributeExpressionImpl) {
+                this.expression = (AttributeExpressionImpl) value;
             }
         }
 
@@ -203,55 +189,47 @@ public class ExpressionNode extends DefaultMutableTreeNode {
 
         this.removeAllChildren();
 
-        if(this.expression instanceof EnvFunction)
-        {
+        if (this.expression instanceof EnvFunction) {
             EnvFunction envVarExpression = (EnvFunction) this.expression;
             ExpressionNode childNode = new ExpressionNode();
             childNode.setExpressionType(ExpressionTypeEnum.ENVVAR);
-            
+
             Expression envVarLiteral = envVarExpression.getParameters().get(0);
             Class<?> dataType = Object.class;
-            
-            if(envMgr != null)
-            {
+
+            if (envMgr != null) {
                 dataType = envMgr.getDataType(envVarLiteral);
             }
             childNode.setType(dataType);
-            childNode.setName(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.envVar"));
+            childNode.setName(
+                    Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.envVar"));
 
             childNode.setExpression(envVarLiteral);
 
             this.insert(childNode, this.getChildCount());
-        }
-        else if(this.expression instanceof FunctionExpression)
-        {
+        } else if (this.expression instanceof FunctionExpression) {
             FunctionExpression functionExpression = (FunctionExpression) this.expression;
             FunctionName functionName = functionExpression.getFunctionName();
 
             TypeManager.getInstance().setDataType(functionName.getReturn().getType());
             int argCount = functionName.getArgumentCount();
 
-            if(functionName.getArgumentCount() < 0)
-            {
+            if (functionName.getArgumentCount() < 0) {
                 argCount *= -1;
             }
-            
-            for(int index = 0; index < argCount; index ++)
-            {
+
+            for (int index = 0; index < argCount; index++) {
                 ExpressionNode childNode = new ExpressionNode();
                 Parameter<?> parameter = functionName.getArguments().get(index);
                 childNode.setType(parameter.getType());
                 childNode.setName(parameter.getName());
 
-                if(index < functionExpression.getParameters().size())
-                {
+                if (index < functionExpression.getParameters().size()) {
                     childNode.setExpression(functionExpression.getParameters().get(index));
                 }
                 this.insert(childNode, this.getChildCount());
             }
-        }
-        else if(this.expression instanceof FunctionImpl)
-        {
+        } else if (this.expression instanceof FunctionImpl) {
             FunctionImpl functionExpression = (FunctionImpl) this.expression;
             FunctionName functionName = functionExpression.getFunctionName();
 
@@ -259,25 +237,22 @@ public class ExpressionNode extends DefaultMutableTreeNode {
 
             int maxArgument = Math.abs(functionName.getArgumentCount());
 
-            for(int index = 0; index < maxArgument; index ++)
-            {
+            for (int index = 0; index < maxArgument; index++) {
                 ExpressionNode childNode = new ExpressionNode();
                 Parameter<?> parameter = functionName.getArguments().get(0);
                 childNode.setType(parameter.getType());
                 childNode.setName(parameter.getName());
 
-                if(index < functionExpression.getParameters().size())
-                {
+                if (index < functionExpression.getParameters().size()) {
                     childNode.setExpression(functionExpression.getParameters().get(index));
                 }
                 this.insert(childNode, this.getChildCount());
             }
-        }
-        else if(expression instanceof MathExpressionImpl)
-        {
+        } else if (expression instanceof MathExpressionImpl) {
             MathExpressionImpl mathsExpression = (MathExpressionImpl) expression;
 
-            String expressionText = Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expression");
+            String expressionText = Localisation.getString(ExpressionPanelv2.class,
+                    "ExpressionPanelv2.expression");
             ExpressionNode childNode1 = new ExpressionNode();
             childNode1.setType(Number.class);
             childNode1.setName(expressionText + " 1");
@@ -289,19 +264,14 @@ public class ExpressionNode extends DefaultMutableTreeNode {
             childNode2.setName(expressionText + " 2");
             childNode2.setExpression(mathsExpression.getExpression2());
             this.insert(childNode2, this.getChildCount());
-        }
-        else if(expression instanceof AttributeExpressionImpl)
-        {
+        } else if (expression instanceof AttributeExpressionImpl) {
             @SuppressWarnings("unused")
-            AttributeExpressionImpl property = (AttributeExpressionImpl)expression;
+            AttributeExpressionImpl property = (AttributeExpressionImpl) expression;
 
-            //TypeManager.getInstance().setLiteralType(literal.getValue().getClass());
-        }
-        else if(expression instanceof LiteralExpressionImpl)
-        {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl)expression;
-            if(literal.getValue() != null)
-            {
+            // TypeManager.getInstance().setLiteralType(literal.getValue().getClass());
+        } else if (expression instanceof LiteralExpressionImpl) {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) expression;
+            if (literal.getValue() != null) {
                 TypeManager.getInstance().setDataType(literal.getValue().getClass());
             }
         }

@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.vendoroption.selection;
 
 import java.awt.Component;
@@ -35,7 +37,8 @@ import com.sldeditor.common.vendoroption.VersionData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VersionCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+public class VersionCellEditor extends AbstractCellEditor
+        implements TableCellEditor, ActionListener {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -61,7 +64,9 @@ public class VersionCellEditor extends AbstractCellEditor implements TableCellEd
         this.model = model;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.CellEditor#getCellEditorValue()
      */
     @Override
@@ -69,12 +74,14 @@ public class VersionCellEditor extends AbstractCellEditor implements TableCellEd
         return this.versionData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value,
-            boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+            int row, int column) {
 
         selectedRowIndex = row;
 
@@ -101,7 +108,9 @@ public class VersionCellEditor extends AbstractCellEditor implements TableCellEd
         return comboVersionData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override

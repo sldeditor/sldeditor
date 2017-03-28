@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.preferences;
 
 import java.awt.Color;
@@ -59,8 +60,7 @@ public class PrefData implements Cloneable {
     /**
      * Default constructor.
      */
-    public PrefData()
-    {
+    public PrefData() {
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
     }
 
@@ -69,7 +69,9 @@ public class PrefData implements Cloneable {
      *
      * @return the pref data
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#clone()
      */
     @Override
@@ -83,12 +85,10 @@ public class PrefData implements Cloneable {
         copy.lastViewedKey = this.lastViewedKey;
         copy.checkAppVersionOnStartUp = this.checkAppVersionOnStartUp;
 
-        if(this.vendorOptionList != null)
-        {
+        if (this.vendorOptionList != null) {
             copy.vendorOptionList = new ArrayList<VersionData>();
 
-            for(VersionData versionData : vendorOptionList)
-            {
+            for (VersionData versionData : vendorOptionList) {
                 copy.vendorOptionList.add(versionData.clone());
             }
         }
@@ -136,8 +136,7 @@ public class PrefData implements Cloneable {
      *
      * @return the ui layout class
      */
-    public String getUiLayoutClass()
-    {
+    public String getUiLayoutClass() {
         return uiLayoutClass;
     }
 
@@ -146,8 +145,7 @@ public class PrefData implements Cloneable {
      *
      * @param uiLayoutClass the new ui layout class
      */
-    public void setUiLayoutClass(String uiLayoutClass)
-    {
+    public void setUiLayoutClass(String uiLayoutClass) {
         this.uiLayoutClass = uiLayoutClass;
     }
 
@@ -223,7 +221,9 @@ public class PrefData implements Cloneable {
         this.lastViewedKey = lastViewedKey;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -241,7 +241,9 @@ public class PrefData implements Cloneable {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

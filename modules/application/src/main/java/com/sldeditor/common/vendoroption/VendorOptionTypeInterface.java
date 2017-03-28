@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.vendoroption;
 
 import java.util.List;
@@ -25,8 +27,7 @@ import java.util.List;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface VendorOptionTypeInterface
-{
+public interface VendorOptionTypeInterface {
 
     /**
      * Gets the name.

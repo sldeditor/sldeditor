@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.utils;
 
 import java.io.File;
@@ -51,7 +53,7 @@ public class ExternalFilenames {
     private static Map<String, String> formatMap = new HashMap<String, String>();
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public ExternalFilenames() {
     }
@@ -65,43 +67,33 @@ public class ExternalFilenames {
     }
 
     /**
-     * Returns a File from the supplied path.
-     * Strips <code>file://</code> from URLs.
+     * Returns a File from the supplied path. Strips <code>file://</code> from URLs.
      *
      * @param sldDataInterface the sld data interface
      * @param filePath the supplied file path
      * @return the file
      */
     public static File getFile(SLDDataInterface sldDataInterface, String filePath) {
-        if((filePath == null) || (sldDataInterface == null))
-        {
+        if ((filePath == null) || (sldDataInterface == null)) {
             return null;
         }
 
         String filename = null;
 
-        if(filePath.startsWith(FILE_PREFIX))
-        {
+        if (filePath.startsWith(FILE_PREFIX)) {
             filename = filePath.substring(FILE_PREFIX.length());
-        }
-        else
-        {
+        } else {
             File f = new File(filePath);
-            if(!f.isAbsolute())
-            {
-                if(sldDataInterface.getSLDFile() != null)
-                {
+            if (!f.isAbsolute()) {
+                if (sldDataInterface.getSLDFile() != null) {
                     String parentFolder = sldDataInterface.getSLDFile().getParent();
                     filename = parentFolder + File.separator + filePath;
-                }
-                else
-                {
-                    ConsoleManager.getInstance().error(ExternalFilenames.class, "No SLD filename set");
+                } else {
+                    ConsoleManager.getInstance().error(ExternalFilenames.class,
+                            "No SLD filename set");
                     return null;
                 }
-            }
-            else
-            {
+            } else {
                 filename = f.getAbsolutePath();
             }
         }
@@ -120,8 +112,7 @@ public class ExternalFilenames {
      */
     public static String getText(SLDDataInterface sldDataInterface, URL location) {
 
-        if(location == null)
-        {
+        if (location == null) {
             return null;
         }
 
@@ -130,22 +121,16 @@ public class ExternalFilenames {
 
         text = new File(text).getAbsolutePath();
 
-        if(sldDataInterface != null)
-        {
-            if(sldDataInterface.getSLDFile() != null)
-            {
+        if (sldDataInterface != null) {
+            if (sldDataInterface.getSLDFile() != null) {
                 String parentFolder = sldDataInterface.getSLDFile().getParent();
 
-                if(parentFolder != null)
-                {
-                    if(text.startsWith(parentFolder))
-                    {
+                if (parentFolder != null) {
+                    if (text.startsWith(parentFolder)) {
                         text = text.substring(parentFolder.length());
                     }
                 }
-            }
-            else
-            {
+            } else {
                 ConsoleManager.getInstance().error(ExternalFilenames.class, "No SLD filename set");
                 return null;
             }
@@ -156,15 +141,14 @@ public class ExternalFilenames {
 
     /**
      * Gets the file extension.
+     * 
      * <p>Returns null if fileName is null
      *
      * @param fileName the file name
      * @return the file extension
      */
-    public static String getFileExtension(String fileName)
-    {
-        if(fileName == null)
-        {
+    public static String getFileExtension(String fileName) {
+        if (fileName == null) {
             return null;
         }
 
@@ -173,7 +157,7 @@ public class ExternalFilenames {
         int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
 
         if (i > p) {
-            extension = fileName.substring(i+1);
+            extension = fileName.substring(i + 1);
         }
 
         return extension;
@@ -181,32 +165,29 @@ public class ExternalFilenames {
 
     /**
      * Gets the image format.
+     * 
      * <p>If fileExtension is null then method returns null.
      *
      * @param fileExtension the file extension
      * @return the image format
      */
     public static String getImageFormat(String fileExtension) {
-        if(fileExtension == null)
-        {
+        if (fileExtension == null) {
             return null;
         }
 
         String imageFormat = fileExtension;
 
-        if(formatMap.isEmpty())
-        {
+        if (formatMap.isEmpty()) {
             initialise();
         }
 
-        if(formatMap.containsKey(fileExtension))
-        {
+        if (formatMap.containsKey(fileExtension)) {
             imageFormat = formatMap.get(fileExtension);
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(ExternalFilenames.class,
-                    String.format("%s : %s", Localisation.getString(ExternalFilenames.class, "ExternalFilenames.error"), fileExtension));
+        } else {
+            ConsoleManager.getInstance().error(ExternalFilenames.class, String.format("%s : %s",
+                    Localisation.getString(ExternalFilenames.class, "ExternalFilenames.error"),
+                    fileExtension));
         }
         return imageFormat;
     }
@@ -218,8 +199,7 @@ public class ExternalFilenames {
      * @return the string
      */
     public static String convertURLToFile(URL url) {
-        if(url == null)
-        {
+        if (url == null) {
             return "";
         }
         return convertURLToFile(url.toString());
@@ -232,19 +212,16 @@ public class ExternalFilenames {
      * @return the string
      */
     public static String convertURLToFile(String url) {
-        if(url == null)
-        {
+        if (url == null) {
             return "";
         }
 
         String prefix = FILE_PREFIX;
-        if(OSValidator.isWindows())
-        {
+        if (OSValidator.isWindows()) {
             prefix = WINDOWS_FILE_PREFIX;
         }
 
-        if(url.startsWith(prefix))
-        {
+        if (url.startsWith(prefix)) {
             try {
                 int length = prefix.length();
 
@@ -264,8 +241,7 @@ public class ExternalFilenames {
      * @param fileExtension the file extension
      * @return the string
      */
-    public static String addFileExtensionSeparator(String fileExtension)
-    {
+    public static String addFileExtensionSeparator(String fileExtension) {
         return "." + fileExtension;
     }
 
@@ -277,13 +253,11 @@ public class ExternalFilenames {
      */
     public static File createSLDFilename(File file) {
         File newFile = null;
-        if(file != null)
-        {
+        if (file != null) {
             String filename = file.getAbsolutePath();
 
             String fileExtension = getFileExtension(filename);
-            if(SLD_FILE_EXTENSION.compareToIgnoreCase(fileExtension) == 0)
-            {
+            if (SLD_FILE_EXTENSION.compareToIgnoreCase(fileExtension) == 0) {
                 // The filename already has the correct SLD file extension
                 return file;
             }
@@ -308,8 +282,7 @@ public class ExternalFilenames {
         String updatedString = inputString;
         int index = updatedString.lastIndexOf('.');
 
-        if((index >= 0) && (index < inputString.length()))
-        {
+        if ((index >= 0) && (index < inputString.length())) {
             updatedString = updatedString.substring(0, index);
         }
         return updatedString;

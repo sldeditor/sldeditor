@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.iface;
 
 import java.util.List;
@@ -55,7 +56,7 @@ public interface SymbolPanelInterface {
     public abstract JPanel addCentrePanel();
 
     /**
-     * Populate the selected symbol in the panels
+     * Populate the selected symbol in the panels.
      *
      * @param selectedSymbol the selected symbol
      */

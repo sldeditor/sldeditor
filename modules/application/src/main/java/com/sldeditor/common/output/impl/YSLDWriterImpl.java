@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.output.impl;
 
 import java.io.IOException;
@@ -38,22 +40,19 @@ public class YSLDWriterImpl implements SLDWriterInterface {
     /**
      * Default constructor.
      */
-    public YSLDWriterImpl()
-    {
+    public YSLDWriterImpl() {
     }
 
     /**
-     * Encode sld to a string
+     * Encode sld to a string.
      *
      * @param sld the sld
      * @return the YSLD string
      */
     @Override
-    public String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld)
-    {
+    public String encodeSLD(URL resourceLocator, StyledLayerDescriptor sld) {
         StringWriter out = new StringWriter();
-        if(sld != null)
-        {
+        if (sld != null) {
             try {
                 Ysld.encode(sld, out);
             } catch (IOException e) {

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar;
 
 import java.awt.BorderLayout;
@@ -74,8 +75,7 @@ public class EnvironmentVariablePanel extends JPanel {
     private void createUI() {
         setLayout(new BorderLayout());
 
-        dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface()
-        {
+        dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 updateButtonState(true);
@@ -94,8 +94,7 @@ public class EnvironmentVariablePanel extends JPanel {
      */
     private void displayExpression(ExpressionNode node) {
 
-        if(node == null)
-        {
+        if (node == null) {
             return;
         }
 
@@ -110,8 +109,7 @@ public class EnvironmentVariablePanel extends JPanel {
      *
      * @return the j panel
      */
-    private JPanel createApplyRevertPanel()
-    {
+    private JPanel createApplyRevertPanel() {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(EnvVarDlg.class, "common.apply"));
@@ -119,13 +117,11 @@ public class EnvironmentVariablePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Expression expression = dataSourceAttributePanel.getExpression();
 
-                if(expression != null)
-                {
+                if (expression != null) {
                     selectedNode.setExpression(expression);
                 }
 
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
                 updateButtonState(false);

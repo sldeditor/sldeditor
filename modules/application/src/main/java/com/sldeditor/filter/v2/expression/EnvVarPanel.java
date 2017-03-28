@@ -1,4 +1,5 @@
 /*
+
  * SLD Editor - The Open Source Java SLD Editor
  *
  * Copyright (C) 2016, SCISYS UK Limited
@@ -16,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.awt.BorderLayout;
@@ -75,8 +77,7 @@ public class EnvVarPanel extends JPanel {
     private void createUI() {
         setLayout(new BorderLayout());
 
-        envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface()
-        {
+        envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 updateButtonState(true);
@@ -93,8 +94,7 @@ public class EnvVarPanel extends JPanel {
      *
      * @param fieldType the new data type
      */
-    public void setDataType(Class<?> fieldType)
-    {
+    public void setDataType(Class<?> fieldType) {
         envVarField.setDataType(fieldType);
     }
 
@@ -105,8 +105,7 @@ public class EnvVarPanel extends JPanel {
      */
     private void displayExpression(ExpressionNode node) {
 
-        if(node == null)
-        {
+        if (node == null) {
             return;
         }
 
@@ -121,8 +120,7 @@ public class EnvVarPanel extends JPanel {
      *
      * @return the j panel
      */
-    private JPanel createApplyRevertPanel()
-    {
+    private JPanel createApplyRevertPanel() {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(EnvVarDlg.class, "common.apply"));
@@ -130,14 +128,12 @@ public class EnvVarPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Expression expression = envVarField.getExpression();
 
-                if(expression != null)
-                {
+                if (expression != null) {
                     ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
                     parentNode.setExpression(expression);
                 }
 
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
                 updateButtonState(false);

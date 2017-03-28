@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.tree.leaf;
 
 import org.geotools.factory.CommonFactoryFinder;
@@ -32,23 +33,24 @@ import org.opengis.style.Symbolizer;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTreeLeafLine implements SLDTreeLeafInterface
-{
+public class SLDTreeLeafLine implements SLDTreeLeafInterface {
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /**
      * Gets the symbolizer.
      *
      * @return the symbolizer
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getSymbolizer()
      */
     @Override
-    public Class<?> getSymbolizer()
-    {
+    public Class<?> getSymbolizer() {
         return LineSymbolizerImpl.class;
     }
 
@@ -58,12 +60,13 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      * @param symbolizer the symbolizer
      * @return true, if successful
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public boolean hasFill(Symbolizer symbolizer)
-    {
+    public boolean hasFill(Symbolizer symbolizer) {
         return false;
     }
 
@@ -73,12 +76,13 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      * @param symbolizer the symbolizer
      * @return true, if successful
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public boolean hasStroke(Symbolizer symbolizer)
-    {
+    public boolean hasStroke(Symbolizer symbolizer) {
         return true;
     }
 
@@ -88,12 +92,13 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      * @param symbolizer the symbolizer
      * @return the fill
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public Fill getFill(Symbolizer symbolizer)
-    {
+    public Fill getFill(Symbolizer symbolizer) {
         return null;
     }
 
@@ -103,20 +108,19 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      * @param symbolizer the symbolizer
      * @return the stroke
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public Stroke getStroke(Symbolizer symbolizer)
-    {
+    public Stroke getStroke(Symbolizer symbolizer) {
         Stroke stroke = null;
-        
-        if(symbolizer instanceof LineSymbolizer)
-        {
-            LineSymbolizer line = (LineSymbolizer)symbolizer;
 
-            if(line != null)
-            {
+        if (symbolizer instanceof LineSymbolizer) {
+            LineSymbolizer line = (LineSymbolizer) symbolizer;
+
+            if (line != null) {
                 stroke = line.getStroke();
             }
         }
@@ -129,18 +133,17 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      *
      * @param symbolizer the symbolizer
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public void removeStroke(Symbolizer symbolizer)
-    {
-        if(symbolizer instanceof LineSymbolizer)
-        {
-            LineSymbolizer line = (LineSymbolizer)symbolizer;
+    public void removeStroke(Symbolizer symbolizer) {
+        if (symbolizer instanceof LineSymbolizer) {
+            LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-            if(line != null)
-            {
+            if (line != null) {
                 line.setStroke(null);
             }
         }
@@ -151,18 +154,17 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      *
      * @param symbolizer the symbolizer
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
-    public void createStroke(Symbolizer symbolizer)
-    {
-        if(symbolizer instanceof LineSymbolizer)
-        {
-            LineSymbolizer line = (LineSymbolizer)symbolizer;
+    public void createStroke(Symbolizer symbolizer) {
+        if (symbolizer instanceof LineSymbolizer) {
+            LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-            if(line != null)
-            {
+            if (line != null) {
                 line.setStroke(styleFactory.getDefaultStroke());
             }
         }
@@ -173,12 +175,13 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      *
      * @param symbolizer the symbolizer
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public void createFill(Symbolizer symbolizer)
-    {
+    public void createFill(Symbolizer symbolizer) {
         // Do nothing
     }
 
@@ -187,12 +190,13 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface
      *
      * @param symbolizer the symbolizer
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeFill(org.opengis.style.Symbolizer)
      */
     @Override
-    public void removeFill(Symbolizer symbolizer)
-    {
+    public void removeFill(Symbolizer symbolizer) {
         // Do nothing
     }
 

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.awt.BorderLayout;
@@ -283,8 +284,7 @@ public class ExpressionPanelv2 extends JDialog
             }
 
             // Auto select the first item
-            if(tree.getRowCount() > 0)
-            {
+            if (tree.getRowCount() > 0) {
                 tree.setSelectionRow(0);
             }
         }
@@ -306,8 +306,7 @@ public class ExpressionPanelv2 extends JDialog
             displayResult();
 
             // Auto select the first entry
-            if(tree.getRowCount() > 0)
-            {
+            if (tree.getRowCount() > 0) {
                 tree.setSelectionRow(0);
             }
         }
@@ -356,6 +355,7 @@ public class ExpressionPanelv2 extends JDialog
             try {
                 result = CQL.toCQL(overallFilter);
             } catch (Exception e) {
+                // Do nothing
             }
         }
 

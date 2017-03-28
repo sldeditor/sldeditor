@@ -75,8 +75,7 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
      */
     @Override
     public Expression getExpression() {
-        if(expression != null)
-        {
+        if (expression != null) {
             return expression;
         }
         return filterFactory.literal(value);
@@ -94,25 +93,21 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
 
         if (aValue instanceof String) {
             this.value = (String) aValue;
-        }
-        else if(aValue instanceof LiteralExpressionImpl)
-        {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+        } else if (aValue instanceof LiteralExpressionImpl) {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
             value = literal.evaluate(value, String.class);
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
-        }
-        else
-        {
+        } else {
             this.value = aValue.toString();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -120,7 +115,9 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
         return Arrays.asList(String.class, Object.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -128,7 +125,9 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
         return new FieldConfigString(commonData, null);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.data;
 
 import java.io.File;
@@ -34,9 +35,10 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 
 /**
- * The Class DatabaseConnection encapsulates database connection details, including connection name, url, user name and password.
- * <p>
- * The class is also capable of writing to and reading from a string all of its attribute data.
+ * The Class DatabaseConnection encapsulates database connection details, 
+ * including connection name, url, user name and password.
+ * 
+ * <p>The class is also capable of writing to and reading from a string all of its attribute data.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -129,8 +131,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         for (DatabaseConnectionField detail : detailList) {
             String defaultValue = "";
 
-            if(detail.getDefaultValue() != null)
-            {
+            if (detail.getDefaultValue() != null) {
                 defaultValue = detail.getDefaultValue().toString();
             }
             initialValues.put(detail.getKey(), defaultValue);
@@ -261,8 +262,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      */
     @Override
     public int compareTo(DatabaseConnection o) {
-        if(connectionName == null)
-        {
+        if (connectionName == null) {
             return (o.connectionName == null) ? 0 : 1;
         }
         return connectionName.compareTo(o.connectionName);
@@ -415,9 +415,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
                 if ((value != null) && !value.trim().isEmpty()) {
                     params.put(field.getKey(), getValue(value, field.getType()));
                 }
-            }
-            else
-            {
+            } else {
                 String value = connectionDataMap.get(field.getKey());
                 params.put(field.getKey(), getValue(value, field.getType()));
             }
@@ -434,27 +432,22 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @return the value
      */
     private Object getValue(String value, Class<?> type) {
-        if(type == String.class)
-        {
+        if (type == String.class) {
             return value;
-        }
-        else if(type == Integer.class)
-        {
+        } else if (type == Integer.class) {
             return Integer.valueOf(value);
-        }
-        else if(type == Long.class)
-        {
+        } else if (type == Long.class) {
             return Long.valueOf(value);
-        }
-        else if(type == File.class)
-        {
+        } else if (type == File.class) {
             return value;
         }
 
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -469,43 +462,58 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         DatabaseConnection other = (DatabaseConnection) obj;
         if (connectionDataMap == null) {
-            if (other.connectionDataMap != null)
+            if (other.connectionDataMap != null) {
                 return false;
-        } else if (!connectionDataMap.equals(other.connectionDataMap))
+            }
+        } else if (!connectionDataMap.equals(other.connectionDataMap)) {
             return false;
+        }
         if (connectionName == null) {
-            if (other.connectionName != null)
+            if (other.connectionName != null) {
                 return false;
-        } else if (!connectionName.equals(other.connectionName))
+            }
+        } else if (!connectionName.equals(other.connectionName)) {
             return false;
+        }
         if (databaseType == null) {
-            if (other.databaseType != null)
+            if (other.databaseType != null) {
                 return false;
-        } else if (!databaseType.equals(other.databaseType))
+            }
+        } else if (!databaseType.equals(other.databaseType)) {
             return false;
+        }
         if (databaseTypeLabel == null) {
-            if (other.databaseTypeLabel != null)
+            if (other.databaseTypeLabel != null) {
                 return false;
-        } else if (!databaseTypeLabel.equals(other.databaseTypeLabel))
+            }
+        } else if (!databaseTypeLabel.equals(other.databaseTypeLabel)) {
             return false;
+        }
         if (userName == null) {
-            if (other.userName != null)
+            if (other.userName != null) {
                 return false;
-        } else if (!userName.equals(other.userName))
+            }
+        } else if (!userName.equals(other.userName)) {
             return false;
+        }
         return true;
     }
 }

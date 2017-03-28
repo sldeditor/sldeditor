@@ -57,13 +57,12 @@ public class CheckUpdate {
      */
     public boolean shouldUpdate(String currentVersion) {
 
-        if(client != null)
-        {
+        if (client != null) {
             latestData = client.getLatest();
 
-            if(latestData != null)
-            {
-                VersionData current = VersionData.decode(latestData.getVersion().getVendorOptionType(), currentVersion);
+            if (latestData != null) {
+                VersionData current = VersionData
+                        .decode(latestData.getVersion().getVendorOptionType(), currentVersion);
 
                 int result = current.compareTo(latestData.getVersion());
 
@@ -86,11 +85,10 @@ public class CheckUpdate {
      * Show download page.
      */
     public void showDownloadPage() {
-        if(client != null)
-        {
+        if (client != null) {
             URL url = client.getDownloadURL();
 
-            if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)){
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
                 Desktop desktop = Desktop.getDesktop();
                 try {
                     desktop.browse(url.toURI());
@@ -107,8 +105,7 @@ public class CheckUpdate {
      * @return the destinationReached flag
      */
     public boolean isDestinationReached() {
-        if(client != null)
-        {
+        if (client != null) {
             return client.isDestinationReached();
         }
         return false;

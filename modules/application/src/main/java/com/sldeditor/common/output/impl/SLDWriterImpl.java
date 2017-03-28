@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.output.impl;
 
 import java.net.URL;
@@ -104,16 +105,11 @@ public class SLDWriterImpl implements SLDWriterInterface {
      *
      * @return the header
      */
-    private static String getHeader()
-    {
-        if(cachedHeader == null)
-        {
-            if(OSValidator.isWindows())
-            {
+    private static String getHeader() {
+        if (cachedHeader == null) {
+            if (OSValidator.isWindows()) {
                 cachedHeader = "\n" + header;
-            }
-            else
-            {
+            } else {
                 cachedHeader = header + "\n";
             }
         }

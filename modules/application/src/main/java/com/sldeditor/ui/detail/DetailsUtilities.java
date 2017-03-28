@@ -26,11 +26,15 @@ import org.geotools.styling.Displacement;
 import org.opengis.filter.expression.Expression;
 
 /**
- * The Class DetailsUtilities provides utility methods to check if the following objects are the same:<p>
- * - Displacement<p>
- * - Anchor point<p>
- * <p>
- * GeoTools objects can't compare expressions if are of different types even though the values may be the same.
+ * The Class DetailsUtilities provides utility methods to check if the following
+ *  objects are the same:
+ * 
+ * <p>- Displacement
+ * 
+ * <p>- Anchor point
+ *
+ * <p>GeoTools objects can't compare expressions if are of different types even 
+ * though the values may be the same.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -44,10 +48,11 @@ public class DetailsUtilities {
      * @return true, if is same
      */
     public static boolean isSame(Displacement defaultDisplacement, Displacement displacement) {
-        if((defaultDisplacement != null) && (displacement != null))
-        {
-            return areDoubleValuesSame(defaultDisplacement.getDisplacementX(), displacement.getDisplacementX()) &&
-                    areDoubleValuesSame(defaultDisplacement.getDisplacementY(), displacement.getDisplacementY());
+        if ((defaultDisplacement != null) && (displacement != null)) {
+            return areDoubleValuesSame(defaultDisplacement.getDisplacementX(),
+                    displacement.getDisplacementX())
+                    && areDoubleValuesSame(defaultDisplacement.getDisplacementY(),
+                            displacement.getDisplacementY());
         }
         return false;
     }
@@ -60,10 +65,11 @@ public class DetailsUtilities {
      * @return true, if is same
      */
     public static boolean isSame(AnchorPoint defaultAnchorPoint, AnchorPoint anchorPoint) {
-        if((defaultAnchorPoint != null) && (anchorPoint != null))
-        {
-            return areDoubleValuesSame(defaultAnchorPoint.getAnchorPointX(), anchorPoint.getAnchorPointX()) &&
-                    areDoubleValuesSame(defaultAnchorPoint.getAnchorPointY(), anchorPoint.getAnchorPointY());
+        if ((defaultAnchorPoint != null) && (anchorPoint != null)) {
+            return areDoubleValuesSame(defaultAnchorPoint.getAnchorPointX(),
+                    anchorPoint.getAnchorPointX())
+                    && areDoubleValuesSame(defaultAnchorPoint.getAnchorPointY(),
+                            anchorPoint.getAnchorPointY());
         }
         return false;
     }
@@ -90,30 +96,20 @@ public class DetailsUtilities {
      */
     private static double getValue(Expression expression) {
         Object objValue = null;
-        if(expression instanceof ConstantExpression)
-        {
-            objValue = ((ConstantExpression)expression).getValue();
-        }
-        else if(expression instanceof LiteralExpressionImpl)
-        {
-            objValue = ((LiteralExpressionImpl)expression).getValue();
+        if (expression instanceof ConstantExpression) {
+            objValue = ((ConstantExpression) expression).getValue();
+        } else if (expression instanceof LiteralExpressionImpl) {
+            objValue = ((LiteralExpressionImpl) expression).getValue();
         }
 
-        if(objValue instanceof Double)
-        {
-            return ((Double)objValue).doubleValue();
-        }
-        else if(objValue instanceof Long)
-        {
-            return ((Long)objValue).doubleValue();
-        }
-        else if(objValue instanceof Integer)
-        {
-            return ((Integer)objValue).doubleValue();
-        }
-        else if(objValue instanceof String)
-        {
-            return Double.valueOf((String)objValue).doubleValue();
+        if (objValue instanceof Double) {
+            return ((Double) objValue).doubleValue();
+        } else if (objValue instanceof Long) {
+            return ((Long) objValue).doubleValue();
+        } else if (objValue instanceof Integer) {
+            return ((Integer) objValue).doubleValue();
+        } else if (objValue instanceof String) {
+            return Double.valueOf((String) objValue).doubleValue();
         }
 
         return 0.0;

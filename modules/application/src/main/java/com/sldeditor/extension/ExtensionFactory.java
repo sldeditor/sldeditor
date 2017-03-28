@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension;
 
 import java.util.ArrayList;
@@ -30,8 +31,7 @@ import com.sldeditor.extension.filesystem.FileSystemExtension;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ExtensionFactory
-{
+public class ExtensionFactory {
 
     /** The Constant EXTENSION_PREFIX. */
     public static final String EXTENSION_PREFIX = "-extension";
@@ -44,10 +44,8 @@ public class ExtensionFactory
      *
      * @return the available extensions
      */
-    public static List<ExtensionInterface> getAvailableExtensions()
-    {
-        if(extensionList.isEmpty())
-        {
+    public static List<ExtensionInterface> getAvailableExtensions() {
+        if (extensionList.isEmpty()) {
             populate();
         }
 
@@ -57,12 +55,12 @@ public class ExtensionFactory
     /**
      * Populate extension list.
      */
-    private static void populate()
-    {
+    private static void populate() {
         String className = FileSystemExtension.class.getName();
 
         try {
-            ExtensionInterface extension = (ExtensionInterface) Class.forName(className).newInstance();
+            ExtensionInterface extension = (ExtensionInterface) Class.forName(className)
+                    .newInstance();
             extensionList.add(extension);
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             ConsoleManager.getInstance().exception(ExtensionFactory.class, e);
@@ -77,29 +75,22 @@ public class ExtensionFactory
      * @return the arguments
      */
     public static List<String> getArguments(ExtensionInterface extension,
-            List<String> extensionArgList)
-    {
+            List<String> extensionArgList) {
         List<String> specificExtensionArgList = new ArrayList<String>();
 
-        if(extensionArgList != null)
-        {
-            for(String extensionArg : extensionArgList)
-            {
-                String [] components = extensionArg.split("\\.");
+        if (extensionArgList != null) {
+            for (String extensionArg : extensionArgList) {
+                String[] components = extensionArg.split("\\.");
 
-                if(components.length >= 2)
-                {
-                    if((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0) &&
-                            (components[1].compareToIgnoreCase(extension.getExtensionArgPrefix()) == 0))
-                    {
+                if (components.length >= 2) {
+                    if ((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0) && (components[1]
+                            .compareToIgnoreCase(extension.getExtensionArgPrefix()) == 0)) {
                         StringBuilder sb = new StringBuilder();
 
-                        for(int index = 2; index < components.length; index ++)
-                        {
+                        for (int index = 2; index < components.length; index++) {
                             sb.append(components[index]);
 
-                            if(index + 1 != components.length)
-                            {
+                            if (index + 1 != components.length) {
                                 sb.append(".");
                             }
                         }
@@ -118,18 +109,14 @@ public class ExtensionFactory
      * @param args the args
      * @return the argument list
      */
-    public static List<String> getArgumentList(String[] args)
-    {
+    public static List<String> getArgumentList(String[] args) {
         List<String> extensionArgList = new ArrayList<String>();
 
-        for(String extensionArg : args)
-        {
-            String [] components = extensionArg.split("\\.");
+        for (String extensionArg : args) {
+            String[] components = extensionArg.split("\\.");
 
-            if(components.length >= 2)
-            {
-                if(components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0)
-                {
+            if (components.length >= 2) {
+                if (components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0) {
                     extensionArgList.add(extensionArg);
                 }
             }
@@ -145,10 +132,8 @@ public class ExtensionFactory
      * @param extensionArgList the extension arg list
      */
     public static void updateForPreferences(PrefData prefData, List<String> extensionArgList) {
-        for(ExtensionInterface extension : extensionList)
-        {
-            if(extension != null)
-            {
+        for (ExtensionInterface extension : extensionList) {
+            if (extension != null) {
                 extension.updateForPreferences(prefData, extensionArgList);
             }
         }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.legend;
 
 import java.awt.BorderLayout;
@@ -36,8 +37,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class LegendPanel extends JPanel implements RenderSymbolInterface
-{
+public class LegendPanel extends JPanel implements RenderSymbolInterface {
     /** The Constant SCROLL_PANE_HEIGHT. */
     private static final int SCROLL_PANE_HEIGHT = 150;
 
@@ -65,12 +65,14 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag)
-    {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
         // Do nothing
     }
 
@@ -80,17 +82,17 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
      * @param sldOutput the sld output
      */
     @Override
-    public void addSLDOutputListener(SLDOutputInterface sldOutput)
-    {
+    public void addSLDOutputListener(SLDOutputInterface sldOutput) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.render.iface.RenderSymbolInterface#renderSymbol()
      */
     @Override
-    public void renderSymbol()
-    {
+    public void renderSymbol() {
         legendImagePanel.renderSymbol();
     }
 
@@ -105,7 +107,9 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override

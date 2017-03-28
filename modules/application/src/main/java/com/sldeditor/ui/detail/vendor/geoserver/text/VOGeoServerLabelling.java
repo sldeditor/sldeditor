@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
 import java.util.Arrays;
@@ -651,8 +652,7 @@ public class VOGeoServerLabelling extends StandardPanel
                     VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                             getVendorOptionInfo());
 
-                    if(!vendorOptionsPresentList.contains(voPresent))
-                    {
+                    if (!vendorOptionsPresentList.contains(voPresent)) {
                         vendorOptionsPresentList.add(voPresent);
                     }
                 }

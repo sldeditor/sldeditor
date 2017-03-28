@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.filesystem;
 
 import java.awt.event.MouseEvent;
@@ -33,13 +35,12 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 
 /**
- * The Interface FileSystemInterface is implemented by nodes that
+ * The Interface FileSystemInterface is implemented by nodes that 
  * are displayed in the file system tree.
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface FileSystemInterface extends Serializable
-{
+public interface FileSystemInterface extends Serializable {
 
     /**
      * Populate the tree.
@@ -105,7 +106,8 @@ public interface FileSystemInterface extends Serializable
      * @param droppedDataMap the dropped data map
      * @return true, if successful
      */
-    boolean copyNodes(NodeInterface destinationTreeNode, Map<NodeInterface, List<SLDDataInterface>> droppedDataMap);
+    boolean copyNodes(NodeInterface destinationTreeNode,
+            Map<NodeInterface, List<SLDDataInterface>> droppedDataMap);
 
     /**
      * Delete nodes.

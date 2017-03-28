@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.util.HashMap;
@@ -38,13 +39,13 @@ import com.vividsolutions.jts.geom.Polygon;
 public class GeometryTypeMapping {
 
     /** The geometry map. */
-    private static Map<Class<?>, GeometryTypeEnum> geometryMap = new HashMap<Class<?>, GeometryTypeEnum>();
+    private static Map<Class<?>, GeometryTypeEnum> geometryMap =
+            new HashMap<Class<?>, GeometryTypeEnum>();
 
     /**
-     * Populate member data
+     * Populate member data.
      */
-    private static void populate()
-    {
+    private static void populate() {
         geometryMap.put(Point.class, GeometryTypeEnum.POINT);
         geometryMap.put(MultiPoint.class, GeometryTypeEnum.POINT);
         geometryMap.put(LineString.class, GeometryTypeEnum.LINE);
@@ -64,13 +65,11 @@ public class GeometryTypeMapping {
 
         GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
-        if(geometryMap.isEmpty())
-        {
+        if (geometryMap.isEmpty()) {
             populate();
         }
 
-        if(geometryMap.containsKey(bindingType))
-        {
+        if (geometryMap.containsKey(bindingType)) {
             geometryType = geometryMap.get(bindingType);
         }
 

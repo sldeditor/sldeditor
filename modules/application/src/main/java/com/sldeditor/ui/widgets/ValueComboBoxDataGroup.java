@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.util.List;
@@ -57,7 +58,8 @@ public class ValueComboBoxDataGroup {
      * @param dataList the data list
      * @param isSubMenu the is sub menu
      */
-    public ValueComboBoxDataGroup(String groupName, List<ValueComboBoxData> dataList, boolean isSubMenu) {
+    public ValueComboBoxDataGroup(String groupName, List<ValueComboBoxData> dataList,
+            boolean isSubMenu) {
         super();
         this.groupName = groupName;
         this.dataList = dataList;

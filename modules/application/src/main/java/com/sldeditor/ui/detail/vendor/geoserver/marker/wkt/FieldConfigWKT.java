@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.awt.BorderLayout;
@@ -58,15 +59,18 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigWKT wraps a text field GUI component and an optional value/attribute/expression drop down,
+ * The Class FieldConfigWKT wraps a text field GUI component and an optional 
+ * value/attribute/expression drop down,
  * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * A button when clicked on displays a dialog ({@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog}) that allows the user to
+ * 
+ * <p>A button when clicked on displays a dialog 
+ * ({@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog})
+ *  that allows the user to
  * configure a WKT string.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -81,8 +85,10 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     /** The wkt panel. */
     private WKTDetails wktPanel = null;
 
-    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/wkt/SymbolTypeFieldState_WKT.xml";
+    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field
+     * enable/disable field states for the different symbol types. */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
+            "symbol/marker/wkt/SymbolTypeFieldState_WKT.xml";
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
@@ -239,10 +245,10 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     populateColour(fieldConfigManager, fillFieldConfig, fill.getColor(),
                             fill.getOpacity());
                 }
-                
-                GroupConfigInterface fillGroup = fieldConfigManager.getGroup(fieldConfigManager.getComponentId(), fillFieldConfig.getGroup());
-                if(fillGroup != null)
-                {
+
+                GroupConfigInterface fillGroup = fieldConfigManager
+                        .getGroup(fieldConfigManager.getComponentId(), fillFieldConfig.getGroup());
+                if (fillGroup != null) {
                     fillGroup.enable(fill != null);
                 }
 
@@ -253,9 +259,9 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                     populateColour(fieldConfigManager, strokeFieldConfig, stroke.getColor(),
                             stroke.getOpacity());
                 }
-                GroupConfigInterface strokeGroup = fieldConfigManager.getGroup(fieldConfigManager.getComponentId(), strokeFieldConfig.getGroup());
-                if(strokeGroup != null)
-                {
+                GroupConfigInterface strokeGroup = fieldConfigManager.getGroup(
+                        fieldConfigManager.getComponentId(), strokeFieldConfig.getGroup());
+                if (strokeGroup != null) {
                     strokeGroup.enable(stroke != null);
                 }
 
@@ -340,8 +346,7 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
                             expStrokeColourOpacity = field.getExpression();
                         }
 
-                        stroke = getStyleFactory().createStroke(expStrokeColour,
-                                strokeWidth,
+                        stroke = getStyleFactory().createStroke(expStrokeColour, strokeWidth,
                                 expStrokeColourOpacity);
                     }
 

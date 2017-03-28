@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import com.sldeditor.datasource.DataSourceInterface;
@@ -90,8 +91,7 @@ public class DataSourceFactory {
      * @return the data source
      */
     public static DataSourceInterface getDataSource() {
-        if(dataSource == null)
-        {
+        if (dataSource == null) {
             createDataSource(null);
         }
         return dataSource;

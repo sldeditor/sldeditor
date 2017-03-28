@@ -56,7 +56,8 @@ public class VendorOptionInfoManager {
     private List<Class<?>> receivedFromList = new ArrayList<Class<?>>();
 
     /** The vendor option factory list. */
-    private List<VendorOptionFactoryInterface> voFactoryList = new ArrayList<VendorOptionFactoryInterface>();
+    private List<VendorOptionFactoryInterface> voFactoryList =
+            new ArrayList<VendorOptionFactoryInterface>();
 
     /**
      * Instantiates a new vendor option info manager.

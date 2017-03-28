@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.vendoroption;
 
 import java.util.ArrayList;
@@ -26,65 +27,67 @@ import java.util.List;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerVendorOption implements VendorOptionTypeInterface
-{
+public class GeoServerVendorOption implements VendorOptionTypeInterface {
     /** The version list. */
     private List<VersionData> versionList = new ArrayList<VersionData>();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getName()
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "GeoServer";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionStringList()
      */
     @Override
-    public List<String> getVersionStringList()
-    {
+    public List<String> getVersionStringList() {
         List<String> versionStringList = new ArrayList<String>();
 
-        for(VersionData versionData : versionList)
-        {
+        for (VersionData versionData : versionList) {
             versionStringList.add(versionData.getVersionString());
         }
 
         return versionStringList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#addVersion(com.sldeditor.vendoroption.VersionData)
      */
     @Override
-    public void addVersion(VersionData versionData)
-    {
-        if(versionData != null)
-        {
+    public void addVersion(VersionData versionData) {
+        if (versionData != null) {
             versionList.add(versionData);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersion(java.lang.String)
      */
     @Override
-    public VersionData getVersion(String versionString)
-    {
+    public VersionData getVersion(String versionString) {
         VersionData versionData = VersionData.decode(this.getClass(), versionString);
 
         return versionData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionList()
      */
     @Override
-    public List<VersionData> getVersionList()
-    {
+    public List<VersionData> getVersionList() {
         return versionList;
     }
 }

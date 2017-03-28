@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem;
 
 import java.util.List;
@@ -23,21 +24,19 @@ import java.util.List;
 import com.sldeditor.common.data.DatabaseConnection;
 
 /**
- * The Interface DatabaseConnectUpdateInterface allows information
- * about database connections to be transferred.
+ * The Interface DatabaseConnectUpdateInterface allows information about database connections to be transferred.
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface DatabaseConnectUpdateInterface
-{
-    
+public interface DatabaseConnectUpdateInterface {
+
     /**
      * Gets the connection details.
      *
      * @return the connection details
      */
     List<DatabaseConnection> getConnectionDetails();
-    
+
     /**
      * Adds the new connection.
      *
@@ -51,7 +50,8 @@ public interface DatabaseConnectUpdateInterface
      * @param originalConnectionDetails the original connection details
      * @param newConnectionDetails the new connection details
      */
-    void updateConnectionDetails(DatabaseConnection originalConnectionDetails, DatabaseConnection newConnectionDetails);
+    void updateConnectionDetails(DatabaseConnection originalConnectionDetails,
+            DatabaseConnection newConnectionDetails);
 
     /**
      * Delete connections.

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class DataSourceInfo {
     private Map<Integer, Name> fieldNameMap = new HashMap<Integer, Name>();
 
     /** The field type map. */
-    private Map<Integer, Class<?> > fieldTypeMap = new HashMap<Integer, Class<?> >();
+    private Map<Integer, Class<?>> fieldTypeMap = new HashMap<Integer, Class<?>>();
 
     /** The user layer. */
     private UserLayer userLayer = null;
@@ -97,15 +98,13 @@ public class DataSourceInfo {
     /**
      * Default constructor.
      */
-    public DataSourceInfo()
-    {
+    public DataSourceInfo() {
     }
 
     /**
      * Reset the member data.
      */
-    public void reset()
-    {
+    public void reset() {
         schema = null;
 
         geometryType = GeometryTypeEnum.UNKNOWN;
@@ -188,8 +187,7 @@ public class DataSourceInfo {
      * Unload data store.
      */
     public void unloadDataStore() {
-        if(dataStore != null)
-        {
+        if (dataStore != null) {
             dataStore.dispose();
         }
     }
@@ -202,13 +200,11 @@ public class DataSourceInfo {
     public FeatureSource<SimpleFeatureType, SimpleFeature> getFeatures() {
         FeatureSource<SimpleFeatureType, SimpleFeature> features = null;
 
-        try
-        {
-            if((schema != null) && (dataStore != null))
-            {
+        try {
+            if ((schema != null) && (dataStore != null)) {
                 features = dataStore.getFeatureSource(schema.getName());
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
@@ -223,8 +219,7 @@ public class DataSourceInfo {
     public SimpleFeatureCollection getFeatureCollection() {
         SimpleFeatureCollection featureCollection = null;
         try {
-            if(dataStore != null)
-            {
+            if (dataStore != null) {
                 SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
                 featureCollection = source.getFeatures();
             }
@@ -242,11 +237,10 @@ public class DataSourceInfo {
     public FeatureStore<SimpleFeatureType, SimpleFeature> getFeatureStore() {
         FeatureStore<SimpleFeatureType, SimpleFeature> featureStore = null;
 
-        if(dataStore != null)
-        {
-            try
-            {
-                FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = dataStore.getFeatureSource(typeName);
+        if (dataStore != null) {
+            try {
+                FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = dataStore
+                        .getFeatureSource(typeName);
 
                 featureStore = (FeatureStore<SimpleFeatureType, SimpleFeature>) featureSource;
             } catch (IOException e) {
@@ -262,16 +256,11 @@ public class DataSourceInfo {
      * @return the property descriptor list
      */
     public Collection<PropertyDescriptor> getPropertyDescriptorList() {
-        if(schema != null)
-        {
+        if (schema != null) {
             return schema.getDescriptors();
-        }
-        else
-        {
-            if(geometryType == GeometryTypeEnum.RASTER)
-            {
-                if(rasterPropertyDescriptorList == null)
-                {
+        } else {
+            if (geometryType == GeometryTypeEnum.RASTER) {
+                if (rasterPropertyDescriptorList == null) {
                     rasterPropertyDescriptorList = new ArrayList<PropertyDescriptor>();
 
                     CoordinateReferenceSystem crs = null;
@@ -280,15 +269,15 @@ public class DataSourceInfo {
                     List<Filter> restrictions = null;
                     AttributeType superType = null;
                     InternationalString description = null;
-                    GeometryType type = featureTypeFactory.createGeometryType(new NameImpl(rasterGeometryField),
-                            GridCoverage2D.class,
-                            crs, isIdentifiable, isAbstract, restrictions, superType, description);
+                    GeometryType type = featureTypeFactory.createGeometryType(
+                            new NameImpl(rasterGeometryField), GridCoverage2D.class, crs,
+                            isIdentifiable, isAbstract, restrictions, superType, description);
                     GeometryDescriptor descriptor = featureTypeFactory.createGeometryDescriptor(
                             type, new NameImpl(rasterGeometryField), 0, 1, false, null);
 
                     rasterPropertyDescriptorList.add(descriptor);
                 }
-                
+
                 return rasterPropertyDescriptorList;
             }
         }
@@ -301,14 +290,10 @@ public class DataSourceInfo {
      * @return the geometry field name
      */
     public String getGeometryFieldName() {
-        if(schema != null)
-        {
+        if (schema != null) {
             return schema.getGeometryDescriptor().getLocalName();
-        }
-        else
-        {
-            if(geometryType == GeometryTypeEnum.RASTER)
-            {
+        } else {
+            if (geometryType == GeometryTypeEnum.RASTER) {
                 return rasterGeometryField;
             }
         }
@@ -371,17 +356,15 @@ public class DataSourceInfo {
         logger.debug("Datasource fields:");
         int index = 0;
         Collection<PropertyDescriptor> descriptorList = getPropertyDescriptorList();
-        if(descriptorList != null)
-        {
-            for(PropertyDescriptor property : descriptorList)
-            {
-                if(property != null)
-                {
-                    logger.debug(String.format("    %-20s %s", property.getName(), property.getType().getBinding().getName()));
+        if (descriptorList != null) {
+            for (PropertyDescriptor property : descriptorList) {
+                if (property != null) {
+                    logger.debug(String.format("    %-20s %s", property.getName(),
+                            property.getType().getBinding().getName()));
                     fieldNameMap.put(index, property.getName());
                     fieldTypeMap.put(index, property.getType().getBinding());
                 }
-                index ++;
+                index++;
             }
         }
     }

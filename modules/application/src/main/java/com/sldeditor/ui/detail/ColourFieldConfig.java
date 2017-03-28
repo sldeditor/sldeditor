@@ -34,10 +34,10 @@ public class ColourFieldConfig {
 
     /** The colour field. */
     private FieldIdEnum colour;
-    
+
     /** The opacity field. */
     private FieldIdEnum opacity;
-    
+
     /** The stroke width field. */
     private FieldIdEnum width;
 
@@ -49,7 +49,8 @@ public class ColourFieldConfig {
      * @param opacity the opacity
      * @param width the width
      */
-    public ColourFieldConfig(GroupIdEnum group, FieldIdEnum colour, FieldIdEnum opacity, FieldIdEnum width) {
+    public ColourFieldConfig(GroupIdEnum group, FieldIdEnum colour, FieldIdEnum opacity,
+            FieldIdEnum width) {
         super();
         this.group = group;
         this.colour = colour;

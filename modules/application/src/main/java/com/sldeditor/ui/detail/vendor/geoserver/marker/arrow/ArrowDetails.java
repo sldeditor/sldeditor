@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
 import java.util.List;
@@ -33,13 +34,13 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
- * The Class ArrowDetails panel contains all the fields to configure 
+ * The Class ArrowDetails panel contains all the fields to configure
  * an GeoServer vendor option arrow strings.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ArrowDetails extends StandardPanel implements PopulateDetailsInterface, 
-UpdateSymbolInterface {
+public class ArrowDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/marker/arrow/PanelConfig_Arrow.xml";
@@ -55,8 +56,7 @@ UpdateSymbolInterface {
      *
      * @param parentObj the parent obj
      */
-    public ArrowDetails(ArrowUpdateInterface parentObj)
-    {
+    public ArrowDetails(ArrowUpdateInterface parentObj) {
         super(ArrowDetails.class);
 
         this.parentObj = parentObj;
@@ -76,7 +76,9 @@ UpdateSymbolInterface {
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -106,7 +108,9 @@ UpdateSymbolInterface {
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -118,10 +122,8 @@ UpdateSymbolInterface {
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            if(parentObj != null)
-            {
+        if (!Controller.getInstance().isPopulating()) {
+            if (parentObj != null) {
                 parentObj.arrowValueUpdated();
             }
         }
@@ -132,12 +134,13 @@ UpdateSymbolInterface {
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -146,12 +149,13 @@ UpdateSymbolInterface {
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
@@ -161,11 +165,14 @@ UpdateSymbolInterface {
      * @return the expression
      */
     public Expression getExpression() {
-        Expression tValueExpression = fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_THICKNESS);
-        Expression hrExpression = fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_HEIGHT_OVER_WIDTH);
+        Expression tValueExpression = fieldConfigVisitor
+                .getExpression(FieldIdEnum.VO_ARROW_THICKNESS);
+        Expression hrExpression = fieldConfigVisitor
+                .getExpression(FieldIdEnum.VO_ARROW_HEIGHT_OVER_WIDTH);
         Expression abExpression = fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_HEAD);
 
-        Expression expression = getFilterFactory().literal(ArrowUtils.encode(hrExpression, tValueExpression, abExpression));
+        Expression expression = getFilterFactory()
+                .literal(ArrowUtils.encode(hrExpression, tValueExpression, abExpression));
 
         return expression;
     }
@@ -176,16 +183,16 @@ UpdateSymbolInterface {
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
-        for(FieldConfigBase field : fieldList)
-        {
-            if(field != null)
-            {
+        for (FieldConfigBase field : fieldList) {
+            if (field != null) {
                 field.revertToDefaultValue();
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -193,19 +200,22 @@ UpdateSymbolInterface {
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
     public void setEnabled(boolean enabled) {
-        for(FieldConfigBase fieldConfig : getFieldConfigList())
-        {
+        for (FieldConfigBase fieldConfig : getFieldConfigList()) {
             fieldConfig.setEnabled(enabled);
         }
         super.setEnabled(enabled);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

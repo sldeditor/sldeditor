@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver;
 
 import java.util.List;
@@ -52,13 +53,6 @@ public interface VendorOptionInterface {
     public void populate(TextSymbolizer textSymbolizer);
 
     /**
-     * Update symbol for a polygon symbolizer.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    public void updateSymbol(PolygonSymbolizer polygonSymbolizer);
-
-    /**
      * Populate for a polygon symbolizer.
      *
      * @param polygonSymbolizer the polygon symbolizer
@@ -72,6 +66,14 @@ public interface VendorOptionInterface {
      */
     public void populate(RasterSymbolizer rasterSymbolizer);
 
+
+    /**
+     * Update symbol for a polygon symbolizer.
+     *
+     * @param polygonSymbolizer the polygon symbolizer
+     */
+    public void updateSymbol(PolygonSymbolizer polygonSymbolizer);
+    
     /**
      * Update symbol for a text symbolizer.
      *

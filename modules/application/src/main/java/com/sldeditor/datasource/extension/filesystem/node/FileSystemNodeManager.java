@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node;
 
 import java.io.File;
@@ -66,105 +67,6 @@ public class FileSystemNodeManager {
     public static void create(FSTree tree, DefaultTreeModel model) {
         fileSystemTreeComponent = tree;
         treeModel = model;
-    }
-
-    /**
-     * Show node in tree.
-     *
-     * @param url the url
-     */
-    public static void showNodeInTree(URL url) {
-        getTreePath(url, true);
-    }
-
-    /**
-     * Gets the tree path for the given folder/file.
-     *
-     * @param url the url
-     * @param showInTree the show in tree
-     * @return the tree path
-     */
-    private static DefaultMutableTreeNode getTreePath(URL url, boolean showInTree) {
-        if (url == null) {
-            return null;
-        }
-
-        String urlFilename = ExternalFilenames.convertURLToFile(url);
-        File file = new File(urlFilename);
-        File folder = getFolder(file);
-
-        if (folder != null) {
-            File parent = folder;
-
-            boolean finished = false;
-
-            List<String> folderList = new ArrayList<String>();
-
-            while (!finished) {
-                if (parent.getParentFile() == null) {
-                    finished = true;
-                } else {
-                    folderList.add(0, parent.getName());
-                    parent = parent.getParentFile();
-                }
-            }
-
-            if (parent != null) {
-                folderList.add(0, parent.getPath());
-                folderList.add(0, FileSystemExtension.ROOT_NODE);
-
-                DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
-
-                boolean isRoot = true;
-
-                for (String subFolder : folderList) {
-                    node = searchNode(isRoot, node, subFolder);
-
-                    if (node == null) {
-                        break;
-                    }
-                    isRoot = false;
-                }
-
-                if (node != null) {
-                    TreeNode[] nodes = treeModel.getPathToRoot(node);
-                    TreePath path = new TreePath(nodes);
-
-                    if (showInTree) {
-                        fileSystemTreeComponent.scrollPathToVisible(path);
-                        fileSystemTreeComponent.expandPath(path);
-                    }
-
-                    // Select file
-                    if (file.isFile()) {
-                        node = searchNode(isRoot, node, file.getName());
-                        if (node != null) {
-                            nodes = treeModel.getPathToRoot(node);
-                            path = new TreePath(nodes);
-
-                            if (showInTree) {
-                                fileSystemTreeComponent.setSelectionPath(path);
-
-                                if (!node.isLeaf()) {
-                                    fileSystemTreeComponent.expandPath(path);
-                                }
-                            }
-                        }
-                    } else {
-                        if (showInTree) {
-                            fileSystemTreeComponent.setSelectionPath(path);
-                        }
-                    }
-
-                    return node;
-                }
-            } else {
-                ConsoleManager.getInstance().error(FileSystemNodeManager.class,
-                        "Failed to find parent path for folder : " + folder.getAbsolutePath());
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -269,6 +171,15 @@ public class FileSystemNodeManager {
     /**
      * Show node in tree.
      *
+     * @param url the url
+     */
+    public static void showNodeInTree(URL url) {
+        getTreePath(url, true);
+    }
+
+    /**
+     * Show node in tree.
+     *
      * @param connectionData the connection data
      */
     public static void showNodeInTree(GeoServerConnection connectionData) {
@@ -343,8 +254,7 @@ public class FileSystemNodeManager {
      * @return the tree path
      */
     private static DefaultMutableTreeNode getTreePath(String overallNodeName,
-            DatabaseConnection connectionData,
-            boolean showInTree) {
+            DatabaseConnection connectionData, boolean showInTree) {
         if (treeModel == null) {
             return null;
         }
@@ -380,6 +290,96 @@ public class FileSystemNodeManager {
             }
 
             return node;
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the tree path for the given folder/file.
+     *
+     * @param url the url
+     * @param showInTree the show in tree
+     * @return the tree path
+     */
+    private static DefaultMutableTreeNode getTreePath(URL url, boolean showInTree) {
+        if (url == null) {
+            return null;
+        }
+
+        String urlFilename = ExternalFilenames.convertURLToFile(url);
+        File file = new File(urlFilename);
+        File folder = getFolder(file);
+
+        if (folder != null) {
+            File parent = folder;
+
+            boolean finished = false;
+
+            List<String> folderList = new ArrayList<String>();
+
+            while (!finished) {
+                if (parent.getParentFile() == null) {
+                    finished = true;
+                } else {
+                    folderList.add(0, parent.getName());
+                    parent = parent.getParentFile();
+                }
+            }
+
+            if (parent != null) {
+                folderList.add(0, parent.getPath());
+                folderList.add(0, FileSystemExtension.ROOT_NODE);
+
+                DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
+
+                boolean isRoot = true;
+
+                for (String subFolder : folderList) {
+                    node = searchNode(isRoot, node, subFolder);
+
+                    if (node == null) {
+                        break;
+                    }
+                    isRoot = false;
+                }
+
+                if (node != null) {
+                    TreeNode[] nodes = treeModel.getPathToRoot(node);
+                    TreePath path = new TreePath(nodes);
+
+                    if (showInTree) {
+                        fileSystemTreeComponent.scrollPathToVisible(path);
+                        fileSystemTreeComponent.expandPath(path);
+                    }
+
+                    // Select file
+                    if (file.isFile()) {
+                        node = searchNode(isRoot, node, file.getName());
+                        if (node != null) {
+                            nodes = treeModel.getPathToRoot(node);
+                            path = new TreePath(nodes);
+
+                            if (showInTree) {
+                                fileSystemTreeComponent.setSelectionPath(path);
+
+                                if (!node.isLeaf()) {
+                                    fileSystemTreeComponent.expandPath(path);
+                                }
+                            }
+                        }
+                    } else {
+                        if (showInTree) {
+                            fileSystemTreeComponent.setSelectionPath(path);
+                        }
+                    }
+
+                    return node;
+                }
+            } else {
+                ConsoleManager.getInstance().error(FileSystemNodeManager.class,
+                        "Failed to find parent path for folder : " + folder.getAbsolutePath());
+            }
         }
 
         return null;

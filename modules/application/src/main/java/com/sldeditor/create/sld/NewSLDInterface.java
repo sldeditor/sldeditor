@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.create.sld;
 
 import org.geotools.styling.StyledLayerDescriptor;
@@ -25,8 +26,7 @@ import org.geotools.styling.StyledLayerDescriptor;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface NewSLDInterface
-{
+public interface NewSLDInterface {
 
     /**
      * Gets the name.

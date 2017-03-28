@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.sldtext;
 
 import java.awt.BorderLayout;
@@ -52,8 +53,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInterface
-{
+public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInterface {
     /** The sld source text area. */
     private JTextArea sldSourceTextArea;
 
@@ -77,10 +77,8 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
      *
      * @return the panel
      */
-    public static JPanel getPanel()
-    {
-        if(instance == null)
-        {
+    public static JPanel getPanel() {
+        if (instance == null) {
             instance = new SLDTextArea();
         }
 
@@ -90,8 +88,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
     /**
      * Instantiates a new SLD text area.
      */
-    private SLDTextArea()
-    {
+    private SLDTextArea() {
         // Listen for changes in the SLD
         RenderPanelFactory.addSLDOutputListener(this);
 
@@ -110,8 +107,10 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
 
         List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
-        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.SLD.name(), "SLD", VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
-        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.YSLD.name(), "YSLD", VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.SLD.name(), "SLD",
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.YSLD.name(), "YSLD",
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
 
         // Options panel
         JPanel optionsPanel = new JPanel();
@@ -120,7 +119,8 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         optionsPanel.add(label);
 
         comboBox = new ValueComboBox();
-        comboBox.setPreferredSize(new Dimension(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT));
+        comboBox.setPreferredSize(
+                new Dimension(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT));
         comboBox.initialiseSingle(dataList);
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -149,14 +149,16 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         return sldSourcePanel;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.SLDDataInterface, org.geotools.styling.StyledLayerDescriptor)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.SLDDataInterface,
+     * org.geotools.styling.StyledLayerDescriptor)
      */
     @Override
-    public void updatedSLD(SLDDataInterface sldData, StyledLayerDescriptor sld)
-    {
+    public void updatedSLD(SLDDataInterface sldData, StyledLayerDescriptor sld) {
         this.displayedSld = sld;
-        this.resourceLocator  = sldData.getResourceLocator();
+        this.resourceLocator = sldData.getResourceLocator();
 
         outputText();
     }
@@ -164,8 +166,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
     /**
      * Output text.
      */
-    private void outputText()
-    {
+    private void outputText() {
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(outputFormat);
 
         String encodedSLD = sldWriter.encodeSLD(resourceLocator, displayedSld);
@@ -178,14 +179,14 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
      * @param sldData the sld data
      * @param dataEditedFlag the data edited flag
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)
      */
     @Override
-    public void sldDataUpdated(SLDDataInterface sldData, boolean dataEditedFlag)
-    {
-        if(sldData != null)
-        {
+    public void sldDataUpdated(SLDDataInterface sldData, boolean dataEditedFlag) {
+        if (sldData != null) {
             outputFormat = sldData.getOriginalFormat();
 
             comboBox.setSelectValueKey(outputFormat.name());

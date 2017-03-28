@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.tree.item;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,7 +35,9 @@ public class StyledLayerDescriptorTreeItem implements SLDTreeItemInterface {
     /** The Constant TREEITEM_STRING. */
     private static final String TREEITEM_STRING = "SLD";
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -42,7 +45,9 @@ public class StyledLayerDescriptorTreeItem implements SLDTreeItemInterface {
         return TREEITEM_STRING;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override

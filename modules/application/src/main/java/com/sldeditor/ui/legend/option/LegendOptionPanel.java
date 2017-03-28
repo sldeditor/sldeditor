@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.legend.option;
 
 import java.awt.BorderLayout;
@@ -54,8 +55,7 @@ import com.sldeditor.ui.widgets.ColourButton;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class LegendOptionPanel extends JPanel
-{
+public class LegendOptionPanel extends JPanel {
     /** The Constant LABEL_X. */
     private static final int LABEL_X = 2;
 
@@ -84,7 +84,8 @@ public class LegendOptionPanel extends JPanel
     private static final long serialVersionUID = 1L;
 
     /** The listener list. */
-    private List<LegendOptionDataUpdateInterface> listenerList = new ArrayList<LegendOptionDataUpdateInterface>();
+    private List<LegendOptionDataUpdateInterface> listenerList =
+            new ArrayList<LegendOptionDataUpdateInterface>();
 
     /** The data. */
     private LegendOptionData data = new LegendOptionData();
@@ -148,11 +149,12 @@ public class LegendOptionPanel extends JPanel
 
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
-        p.setBorder(new EmptyBorder(5, 10, 5, 10) );//adds margin to panel
+        p.setBorder(new EmptyBorder(5, 10, 5, 10));// adds margin to panel
 
         Box box = Box.createVerticalBox();
 
-        JPanel widthPanel = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.width"));
+        JPanel widthPanel = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.width"));
         box.add(widthPanel);
 
         heightSpinner = new JSpinner();
@@ -163,18 +165,18 @@ public class LegendOptionPanel extends JPanel
         //
         widthSpinner = new JSpinner();
         widthSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
-        widthSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+        widthSpinner.setModel(
+                new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
         widthPanel.add(widthSpinner);
         widthSpinner.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
 
-                Integer imageWidth = (Integer)widthSpinner.getValue();
+                Integer imageWidth = (Integer) widthSpinner.getValue();
 
                 data.setImageWidth(imageWidth);
-                if(data.isMaintainAspectRatio())
-                {
+                if (data.isMaintainAspectRatio()) {
                     heightSpinner.setValue(imageWidth);
                 }
                 notifyListeners();
@@ -184,29 +186,31 @@ public class LegendOptionPanel extends JPanel
         //
         // Height field
         //
-        JPanel heightPanel = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.height"));
+        JPanel heightPanel = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.height"));
         box.add(heightPanel);
 
-        heightSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+        heightSpinner.setModel(
+                new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
         heightPanel.add(heightSpinner);
         heightSpinner.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
 
-                Integer imageHeight = (Integer)heightSpinner.getValue();
+                Integer imageHeight = (Integer) heightSpinner.getValue();
 
                 data.setImageHeight(imageHeight);
 
-                if(data.isMaintainAspectRatio())
-                {
+                if (data.isMaintainAspectRatio()) {
                     widthSpinner.setValue(imageHeight);
                 }
                 notifyListeners();
             }
         });
 
-        JPanel panelMaintainAspect = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.linked"));
+        JPanel panelMaintainAspect = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.linked"));
         box.add(panelMaintainAspect);
 
         chckboxMaintainAspect = new JCheckBox("");
@@ -221,19 +225,21 @@ public class LegendOptionPanel extends JPanel
         //
         // DPI field
         //
-        JPanel panelDPI = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.dpi"));
+        JPanel panelDPI = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.dpi"));
         box.add(panelDPI);
 
         dpiSpinner = new JSpinner();
         dpiSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
-        dpiSpinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+        dpiSpinner.setModel(
+                new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
         panelDPI.add(dpiSpinner);
         dpiSpinner.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
 
-                Integer dpi = (Integer)dpiSpinner.getValue();
+                Integer dpi = (Integer) dpiSpinner.getValue();
 
                 data.setDpi(dpi);
 
@@ -244,7 +250,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Anti alias
         //
-        JPanel panelAntiAlias = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.antiAlias"));
+        JPanel panelAntiAlias = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.antiAlias"));
         box.add(panelAntiAlias);
 
         chckboxAntiAlias = new JCheckBox("");
@@ -260,7 +267,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Show Labels
         //
-        JPanel panelShowLabels = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showLabels"));
+        JPanel panelShowLabels = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showLabels"));
         box.add(panelShowLabels);
 
         chckboxShowLabels = new JCheckBox("");
@@ -276,7 +284,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Show Titles
         //
-        JPanel panelShowTitles = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showTitles"));
+        JPanel panelShowTitles = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showTitles"));
         box.add(panelShowTitles);
 
         chckboxShowTitles = new JCheckBox("");
@@ -292,7 +301,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Image size
         //
-        JPanel panelImageSize = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.imageSize"));
+        JPanel panelImageSize = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.imageSize"));
         box.add(panelImageSize);
 
         imageSizeSpinner = new JSpinner();
@@ -304,7 +314,7 @@ public class LegendOptionPanel extends JPanel
             @Override
             public void stateChanged(ChangeEvent e) {
 
-                Integer imageSize = (Integer)imageSizeSpinner.getValue();
+                Integer imageSize = (Integer) imageSizeSpinner.getValue();
 
                 data.setImageSize(imageSize);
 
@@ -315,7 +325,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Separate images
         //
-        JPanel panelSeparateImages = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.separate"));
+        JPanel panelSeparateImages = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.separate"));
         box.add(panelSeparateImages);
 
         chckboxSeparateImages = new JCheckBox("");
@@ -331,7 +342,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Transparent
         //
-        JPanel panelTransparent = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.transparent"));
+        JPanel panelTransparent = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.transparent"));
         box.add(panelTransparent);
 
         chckboxTransparent = new JCheckBox("");
@@ -350,11 +362,13 @@ public class LegendOptionPanel extends JPanel
         //
         // Background colour
         //
-        JPanel panelBackgroundColour = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.backgroundColour"));
+        JPanel panelBackgroundColour = createPanel(Localisation.getField(LegendOptionPanel.class,
+                "LegendOptionPanel.backgroundColour"));
         box.add(panelBackgroundColour);
 
         backgroundColourButton = new ColourButton();
-        backgroundColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        backgroundColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         panelBackgroundColour.add(backgroundColourButton);
         backgroundColourButton.registerObserver(new ColourNotifyInterface() {
             @Override
@@ -376,7 +390,8 @@ public class LegendOptionPanel extends JPanel
 
         box.add(panelLabelFont);
 
-        JButton labelFont = new JButton(Localisation.getString(LegendOptionPanel.class, "LegendOptionPanel.labelFont"));
+        JButton labelFont = new JButton(
+                Localisation.getString(LegendOptionPanel.class, "LegendOptionPanel.labelFont"));
         labelFont.setBounds(LABEL_X, 0, FIELD_X - LABEL_X, BasePanel.WIDGET_HEIGHT);
         panelLabelFont.add(labelFont);
 
@@ -385,11 +400,13 @@ public class LegendOptionPanel extends JPanel
         panelLabelFont.add(labelFontName);
 
         labelFontStyle = new JLabel();
-        labelFontStyle.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        labelFontStyle.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT, FIELD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         panelLabelFont.add(labelFontStyle);
 
         labelFontSize = new JLabel();
-        labelFontSize.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT + BasePanel.WIDGET_HEIGHT, FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        labelFontSize.setBounds(FIELD_X, BasePanel.WIDGET_HEIGHT + BasePanel.WIDGET_HEIGHT,
+                FIELD_WIDTH, BasePanel.WIDGET_HEIGHT);
         panelLabelFont.add(labelFontSize);
 
         labelFont.addActionListener(new ActionListener() {
@@ -399,7 +416,9 @@ public class LegendOptionPanel extends JPanel
                 StyleBuilder sb = new StyleBuilder();
                 Font existingFont = sb.createFont(data.getLabelFont());
                 Font font = (Font) JFontChooser.showDialog(Controller.getInstance().getFrame(),
-                        Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.labelFontTitle"), existingFont);
+                        Localisation.getField(LegendOptionPanel.class,
+                                "LegendOptionPanel.labelFontTitle"),
+                        existingFont);
                 if (font != null) {
                     java.awt.Font newFont = FontUtils.getFont(font);
 
@@ -408,16 +427,19 @@ public class LegendOptionPanel extends JPanel
 
                     notifyListeners();
                 }
-            }});
+            }
+        });
 
         //
         // Label font colour
         //
-        JPanel panelLabelColour = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.labelFontColour"));
+        JPanel panelLabelColour = createPanel(Localisation.getField(LegendOptionPanel.class,
+                "LegendOptionPanel.labelFontColour"));
         box.add(panelLabelColour);
 
         labelFontColourButton = new ColourButton();
-        labelFontColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        labelFontColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         panelLabelColour.add(labelFontColourButton);
         labelFontColourButton.registerObserver(new ColourNotifyInterface() {
             @Override
@@ -433,7 +455,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Show border
         //
-        JPanel panelShowBorder = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showBorder"));
+        JPanel panelShowBorder = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.showBorder"));
         box.add(panelShowBorder);
 
         chckboxShowBorder = new JCheckBox("");
@@ -450,11 +473,13 @@ public class LegendOptionPanel extends JPanel
         //
         // Border colour
         //
-        JPanel panelBorderColour = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.borderColour"));
+        JPanel panelBorderColour = createPanel(
+                Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.borderColour"));
         box.add(panelBorderColour);
 
         borderColourButton = new ColourButton();
-        borderColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        borderColourButton.setBounds(FIELD_X, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         panelBorderColour.add(borderColourButton);
         borderColourButton.registerObserver(new ColourNotifyInterface() {
             @Override
@@ -470,7 +495,8 @@ public class LegendOptionPanel extends JPanel
         //
         // Show band information
         //
-        JPanel panelShowBandInformation = createPanel(Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.bandInformation"));
+        JPanel panelShowBandInformation = createPanel(Localisation.getField(LegendOptionPanel.class,
+                "LegendOptionPanel.bandInformation"));
         box.add(panelShowBandInformation);
 
         chckboxBandInformation = new JCheckBox("");
@@ -510,8 +536,7 @@ public class LegendOptionPanel extends JPanel
      *
      * @param optionData the option data
      */
-    private void populate(LegendOptionData optionData)
-    {
+    private void populate(LegendOptionData optionData) {
         widthSpinner.setValue(Integer.valueOf(optionData.getImageWidth()));
         heightSpinner.setValue(Integer.valueOf(optionData.getImageHeight()));
         dpiSpinner.setValue(Integer.valueOf(optionData.getDpi()));
@@ -543,20 +568,13 @@ public class LegendOptionPanel extends JPanel
         labelFontName.setText(font.getFontName());
         String style;
 
-        if(font.isBold() && font.isItalic())
-        {
+        if (font.isBold() && font.isItalic()) {
             style = "Bold, Italic";
-        }
-        else if(font.isBold())
-        {
+        } else if (font.isBold()) {
             style = "Bold";
-        }
-        else if(font.isItalic())
-        {
+        } else if (font.isItalic()) {
             style = "Italic";
-        }
-        else
-        {
+        } else {
             style = "Plain";
         }
         labelFontStyle.setText(style);
@@ -569,14 +587,12 @@ public class LegendOptionPanel extends JPanel
      * @param label the label
      * @return the j panel
      */
-    private JPanel createPanel(String label)
-    {
+    private JPanel createPanel(String label) {
         JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
-        if(label != null)
-        {
+        if (label != null) {
             JLabel lbl = new JLabel(label);
             lbl.setBounds(LABEL_X, 0, LABEL_WIDTH, PANEL_HEIGHT);
             panel.add(lbl);
@@ -588,10 +604,8 @@ public class LegendOptionPanel extends JPanel
     /**
      * Notify listeners.
      */
-    private void notifyListeners()
-    {
-        for(LegendOptionDataUpdateInterface listener : listenerList)
-        {
+    private void notifyListeners() {
+        for (LegendOptionDataUpdateInterface listener : listenerList) {
             listener.updateLegendOptionData(data);
         }
     }
@@ -601,10 +615,8 @@ public class LegendOptionPanel extends JPanel
      *
      * @param listener the listener
      */
-    public void addListener(LegendOptionDataUpdateInterface listener)
-    {
-        if(listener != null)
-        {
+    public void addListener(LegendOptionDataUpdateInterface listener) {
+        if (listener != null) {
             listenerList.add(listener);
         }
     }
@@ -614,8 +626,7 @@ public class LegendOptionPanel extends JPanel
      *
      * @return the data
      */
-    public LegendOptionData getData()
-    {
+    public LegendOptionData getData() {
         return data;
     }
 
@@ -624,8 +635,7 @@ public class LegendOptionPanel extends JPanel
      *
      * @param newOptionData the new option data
      */
-    public void updateData(LegendOptionData newOptionData)
-    {
+    public void updateData(LegendOptionData newOptionData) {
         data = newOptionData;
 
         populate(newOptionData);

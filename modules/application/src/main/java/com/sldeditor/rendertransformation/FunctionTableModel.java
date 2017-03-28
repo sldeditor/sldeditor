@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.util.ArrayList;
@@ -134,11 +135,12 @@ public class FunctionTableModel extends AbstractTableModel {
         case COL_VALUE:
             if (value.objectValue != null) {
                 Expression expression = value.objectValue.getExpression();
-                if(expression != null)
-                {
+                if (expression != null) {
                     return expression.toString();
                 }
             }
+        default:
+            break;
         }
         return null;
     }
@@ -199,8 +201,7 @@ public class FunctionTableModel extends AbstractTableModel {
         if (columnIndex == COL_OPTIONAL) {
             value.included = (Boolean) aValue;
         } else {
-            if(value.objectValue != null)
-            {
+            if (value.objectValue != null) {
                 value.objectValue.setValue(aValue);
             }
         }
@@ -295,8 +296,7 @@ public class FunctionTableModel extends AbstractTableModel {
             if (setValue) {
                 if (value.objectValue != null) {
                     Expression expression = value.objectValue.getExpression();
-                    if(expression != null)
-                    {
+                    if (expression != null) {
                         parameterList.add(expression);
                     }
                 }
@@ -309,8 +309,7 @@ public class FunctionTableModel extends AbstractTableModel {
             }
         }
 
-        if(this.selectedFunction.getFunctionName() == null)
-        {
+        if (this.selectedFunction.getFunctionName() == null) {
             return null;
         }
         Function processFunction = factory.function(this.selectedFunction.getFunctionName(),
@@ -355,8 +354,7 @@ public class FunctionTableModel extends AbstractTableModel {
             value.included = true;
         }
 
-        if(value.objectValue != null)
-        {
+        if (value.objectValue != null) {
             value.objectValue.setValue(expression);
         }
     }

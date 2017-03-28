@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
 import java.util.ArrayList;
@@ -48,8 +49,11 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
     public VOGeoServerArrowSymbol() {
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class,
+     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
@@ -65,7 +69,9 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
         return fieldStateList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
      */
     @Override
@@ -73,7 +79,9 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override

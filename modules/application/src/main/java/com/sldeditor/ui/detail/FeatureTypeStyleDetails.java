@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.ArrayList;
@@ -36,7 +37,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
+public class FeatureTypeStyleDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -44,8 +46,7 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
     /**
      * Constructor.
      */
-    public FeatureTypeStyleDetails()
-    {
+    public FeatureTypeStyleDetails() {
         super(FeatureTypeStyleDetails.class);
 
         createUI();
@@ -63,20 +64,21 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             FeatureTypeStyle featureTypeStyle = selectedSymbol.getFeatureTypeStyle();
 
             populateStandardData(featureTypeStyle);
 
-            if(featureTypeStyle != null)
-            {
-                fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION, featureTypeStyle.getTransformation());
+            if (featureTypeStyle != null) {
+                fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION,
+                        featureTypeStyle.getTransformation());
             }
         }
     }
@@ -86,7 +88,9 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -98,30 +102,25 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
 
-            Expression transformation = fieldConfigVisitor.getExpression(FieldIdEnum.TRANSFORMATION);
+            Expression transformation = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.TRANSFORMATION);
 
             FeatureTypeStyle existingFTS = SelectedSymbol.getInstance().getFeatureTypeStyle();
-            if(existingFTS != null)
-            {
+            if (existingFTS != null) {
                 List<org.opengis.style.Rule> newRuleList = new ArrayList<org.opengis.style.Rule>();
-                for(org.opengis.style.Rule rule : existingFTS.rules())
-                {
+                for (org.opengis.style.Rule rule : existingFTS.rules()) {
                     newRuleList.add(rule);
                 }
 
-                FeatureTypeStyle fts = (FeatureTypeStyle) getStyleFactory().featureTypeStyle(standardData.name,
-                        (org.opengis.style.Description)standardData.description,
-                        existingFTS.getFeatureInstanceIDs(),
-                        existingFTS.featureTypeNames(), 
-                        existingFTS.semanticTypeIdentifiers(),
-                        newRuleList);
+                FeatureTypeStyle fts = (FeatureTypeStyle) getStyleFactory().featureTypeStyle(
+                        standardData.name, (org.opengis.style.Description) standardData.description,
+                        existingFTS.getFeatureInstanceIDs(), existingFTS.featureTypeNames(),
+                        existingFTS.semanticTypeIdentifiers(), newRuleList);
 
-                if(transformation != null)
-                {
+                if (transformation != null) {
                     fts.setTransformation(transformation);
                 }
 
@@ -137,12 +136,13 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -151,16 +151,19 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -168,7 +171,9 @@ public class FeatureTypeStyleDetails extends StandardPanel implements PopulateDe
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

@@ -32,9 +32,12 @@ import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 
 /**
- * The Class ReloadManager, class implemented as a singleton. Receives the currently load SLD file when it updates and compares it to all modified
- * files from the FileWatcher. If the currently loaded when is modified and the save flag has n't been set then inform the application that the
- * currently loaded file has been modified. Added some protection to prevent multiple file watcher events for the currently loaded file to trigger
+ * The Class ReloadManager, class implemented as a singleton.
+ * Receives the currently load SLD file when it updates and compares it to all modified
+ * files from the FileWatcher. If the currently loaded when is modified and the save flag 
+ * hasn't been set then inform the application that the
+ * currently loaded file has been modified. Added some protection to prevent multiple
+ * file watcher events for the currently loaded file to trigger
  * more than once.
  *
  * @author Robert Ward (SCISYS)
@@ -48,7 +51,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     private static ReloadManager instance = null;
 
     /** The under test flag. */
-    private static boolean underTest = false;;
+    private static boolean underTest = false;
 
     /** The current loaded file list. */
     private Map<Path, Boolean> currentLoadedFileList = new HashMap<Path, Boolean>();

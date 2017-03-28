@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar;
 
 import java.util.List;
@@ -76,7 +77,7 @@ public interface EnvironmentManagerInterface {
     List<Class<?>> getEnvVarTypeList();
 
     /**
-     * Gets the data type of the given environment variable
+     * Gets the data type of the given environment variable.
      *
      * @param envVarLiteral the env var literal
      * @return the data type

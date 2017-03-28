@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.connection;
 
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     public static Class<?> geoServerClientClass = GeoServerClient.class;
 
     /** The connection map. */
-    private Map<GeoServerConnection, GeoServerClientInterface> connectionMap = new LinkedHashMap<GeoServerConnection, GeoServerClientInterface>();
+    private Map<GeoServerConnection, GeoServerClientInterface> connectionMap =
+            new LinkedHashMap<GeoServerConnection, GeoServerClientInterface>();
 
     /**
      * Gets the singleton instance of GeoServerConnectionManager.
@@ -123,7 +125,9 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
         return null;
     }
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.connection.GeoServerConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress)
      */
     public void readPropertyFile(GeoServerReadProgress progress) {

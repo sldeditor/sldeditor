@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.databaseconnection;
 
 import java.util.List;
@@ -27,8 +28,7 @@ import com.sldeditor.common.data.DatabaseConnection;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface DatabaseConnectStateInterface
-{
+public interface DatabaseConnectStateInterface {
 
     /**
      * Checks if is connected.
@@ -39,14 +39,14 @@ public interface DatabaseConnectStateInterface
     boolean isConnected(DatabaseConnection connection);
 
     /**
-     * Connect to GeoServer
+     * Connect to GeoServer.
      *
      * @param connectionList the connection list
      */
     void connect(List<DatabaseConnection> connectionList);
 
     /**
-     * Disconnect from GeoServer
+     * Disconnect from GeoServer.
      *
      * @param connectionList the connection list
      */

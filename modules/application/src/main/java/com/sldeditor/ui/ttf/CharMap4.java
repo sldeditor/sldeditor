@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.ttf;
 
 import java.awt.BorderLayout;
@@ -47,80 +48,48 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ChangeListener;
 
 /**
- * Character Map #4 - Display Characters and Copy to System Clipboard
- * Written by: Keith Fenske, http://www.psc-consulting.ca/fenske/
- * Monday, 19 May 2008
- * Java class name: CharMap4
- * Copyright (c) 2008 by Keith Fenske.  Released under GNU Public License.
+ * Character Map #4 - Display Characters and Copy to System Clipboard Written by: Keith Fenske, http://www.psc-consulting.ca/fenske/ Monday, 19 May
+ * 2008 Java class name: CharMap4 Copyright (c) 2008 by Keith Fenske. Released under GNU Public License.
  * 
- * This is a Java 5.0 graphical (GUI) application to display Unicode characters
- * or glyphs in text fonts, and copy those characters to the system clipboard.
- * Its major purpose is as a visual accessory for word processors such as
- * Microsoft Word.  The "character map" utility that comes with Windows suffers
- * from several problems.  This Java application can be resized, for text and
- * the program window, which is important in many languages.  Features are
- * limited to make the application faster and simpler to use.  A single click
- * adds a character to the sample text, and the sample text is automatically
- * copied to the system clipboard on each click.
+ * This is a Java 5.0 graphical (GUI) application to display Unicode characters or glyphs in text fonts, and copy those characters to the system
+ * clipboard. Its major purpose is as a visual accessory for word processors such as Microsoft Word. The "character map" utility that comes with
+ * Windows suffers from several problems. This Java application can be resized, for text and the program window, which is important in many languages.
+ * Features are limited to make the application faster and simpler to use. A single click adds a character to the sample text, and the sample text is
+ * automatically copied to the system clipboard on each click.
  *
- * You may choose the font to be displayed and the size of the characters or
- * glyphs.  (Glyphs are bits and pieces that a font combines to produce the
- * characters you see.  In most cases, one character maps to one glyph.)  You
- * may edit the sample text, erase it with the "Clear" button, or copy it to the
- * system clipboard with the "Copy All" button.  Paste the text into your word
- * processor in the normal manner, which is usually a Control-V key combination.
- * Editing the sample text and pressing the Enter key also copies to the
- * clipboard.  Specific characters can be copied from the sample text by
- * selection and with the usual Control-C combination.  More characters are
- * available via the scroll bar on the right.  A description is shown in the
- * "caption" field when characters have a particular name or meaning.  Common
- * readings or sounds are given for Chinese, Japanese, and Korean characters.
- * Cantonese is prefixed with "C", Japanese "Kun" with "J", Korean with "K",
- * Mandarin with "M", and Sino-Japanese "On" with "S".  An English translation
- * of CJK character definitions would have been more amusing but less practical.
+ * You may choose the font to be displayed and the size of the characters or glyphs. (Glyphs are bits and pieces that a font combines to produce the
+ * characters you see. In most cases, one character maps to one glyph.) You may edit the sample text, erase it with the "Clear" button, or copy it to
+ * the system clipboard with the "Copy All" button. Paste the text into your word processor in the normal manner, which is usually a Control-V key
+ * combination. Editing the sample text and pressing the Enter key also copies to the clipboard. Specific characters can be copied from the sample
+ * text by selection and with the usual Control-C combination. More characters are available via the scroll bar on the right. A description is shown
+ * in the "caption" field when characters have a particular name or meaning. Common readings or sounds are given for Chinese, Japanese, and Korean
+ * characters. Cantonese is prefixed with "C", Japanese "Kun" with "J", Korean with "K", Mandarin with "M", and Sino-Japanese "On" with "S". An
+ * English translation of CJK character definitions would have been more amusing but less practical.
  * 
- * Keyboard shortcuts are provided to mimic the scroll bar: the Control-Home key
- * combination goes to the very first character, Control-End goes to the last
- * character, Page Down and Page Up scroll one screen at a time, and the arrow
- * keys scroll one line at a time.  You need to combine the End and Home keys
- * with the Control (Ctrl) key when the sample text has keyboard focus.  The F1
- * key is the only helpful undocumented feature.
+ * Keyboard shortcuts are provided to mimic the scroll bar: the Control-Home key combination goes to the very first character, Control-End goes to the
+ * last character, Page Down and Page Up scroll one screen at a time, and the arrow keys scroll one line at a time. You need to combine the End and
+ * Home keys with the Control (Ctrl) key when the sample text has keyboard focus. The F1 key is the only helpful undocumented feature.
  *
- * GNU General Public License (GPL)
- * --------------------------------
- * CharMap4 is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License or (at your option) any later
- * version.  This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY, without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
+ * GNU General Public License (GPL) -------------------------------- CharMap4 is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License or (at your option) any later
+ * version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * 
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see the http://www.gnu.org/licenses/ web page.
+ * You should have received a copy of the GNU General Public License along with this program. If not, see the http://www.gnu.org/licenses/ web page.
  * 
- * Restrictions and Limitations
- * ----------------------------
- * Which fonts will work with this program depends upon the operating system and
- * version of the Java run-time environment.  Java 5.0 on Windows 2000/XP will
- * show installed TrueType fonts, that is, fonts that have been added with the
- * Control Panel, Fonts icon.  (Temporary fonts are not shown if opened with the
- * Windows Font Viewer by double clicking on a font file name.)  If you think
- * this program is not working correctly on your computer, then "Lucida Console"
- * is a good font for testing the spacing and positioning, because its glyphs
- * are tightly packed.  Version 4 of CharMap supports extended Unicode (up to
- * 1,114,112 characters) and is noticeably slower than version 3, which only
- * supports the standard range of 65,536 characters.  Version 4 also tends to
- * run out of memory for very large fonts; see the -Xmx option on the Java
+ * Restrictions and Limitations ---------------------------- Which fonts will work with this program depends upon the operating system and version of
+ * the Java run-time environment. Java 5.0 on Windows 2000/XP will show installed TrueType fonts, that is, fonts that have been added with the Control
+ * Panel, Fonts icon. (Temporary fonts are not shown if opened with the Windows Font Viewer by double clicking on a font file name.) If you think this
+ * program is not working correctly on your computer, then "Lucida Console" is a good font for testing the spacing and positioning, because its glyphs
+ * are tightly packed. Version 4 of CharMap supports extended Unicode (up to 1,114,112 characters) and is noticeably slower than version 3, which only
+ * supports the standard range of 65,536 characters. Version 4 also tends to run out of memory for very large fonts; see the -Xmx option on the Java
  * command line.
  * 
- * This program contains character data from the Unicode Consortium; please
- * visit their web site at http://www.unicode.org/ for more information.  Korean
- * character names were converted from Korean standards document KS X 1001:2002
- * with the title "Hangeul Syllables in Unicode 4.0" and dated 25 March 2004.
+ * This program contains character data from the Unicode Consortium; please visit their web site at http://www.unicode.org/ for more information.
+ * Korean character names were converted from Korean standards document KS X 1001:2002 with the title "Hangeul Syllables in Unicode 4.0" and dated 25
+ * March 2004.
  */
-public class CharMap4 extends JDialog
-{
+public class CharMap4 extends JDialog {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -155,53 +124,52 @@ public class CharMap4 extends JDialog
     /** Default font name. */
     private static final String DEFAULT_FONT = "Verdana";
 
-    /**  Default window height in pixels. */
+    /** Default window height in pixels. */
     private static final int DEFAULT_HEIGHT = 500;
 
-    /**  Default window left position ("x"). */
-    private static final int DEFAULT_LEFT = 50; 
+    /** Default window left position ("x"). */
+    private static final int DEFAULT_LEFT = 50;
 
-    /**  Default point size for display text. */
+    /** Default point size for display text. */
     private static final int DEFAULT_SIZE = 30;
 
-    /**  Default window top position ("y"). */
-    private static final int DEFAULT_TOP = 50; 
+    /** Default window top position ("y"). */
+    private static final int DEFAULT_TOP = 50;
 
-    /**  Default window width in pixels. */
+    /** Default window width in pixels. */
     private static final int DEFAULT_WIDTH = 700;
 
-    /**  Message when no status to display. */
+    /** Message when no status to display. */
     private static final String EMPTY_STATUS = " ";
 
-    /**  Standard point sizes for display text. */
-    private static final String[] FONT_SIZES = {"18", "24", "30", "36", "48", "60", "72",
-    "96"};
+    /** Standard point sizes for display text. */
+    private static final String[] FONT_SIZES = { "18", "24", "30", "36", "48", "60", "72", "96" };
 
-    /**  Maximum point size for display text. */
+    /** Maximum point size for display text. */
     private static final int MAX_SIZE = 999;
 
-    /**  Minimum point size for display text. */
+    /** Minimum point size for display text. */
     private static final int MIN_SIZE = 10;
 
     /** The Constant PROGRAM_TITLE. */
     private static final String PROGRAM_TITLE = "TTF Character Selector";
 
-    /**  Unicode replacement character. */
-    private static final char REPLACE_CHAR = '\uFFFD'; 
+    /** Unicode replacement character. */
+    private static final char REPLACE_CHAR = '\uFFFD';
 
-    /**  This font is always available. */
-    private static final String SYSTEM_FONT = "Dialog"; 
+    /** This font is always available. */
+    private static final String SYSTEM_FONT = "Dialog";
 
     /** The ok button pressed. */
     private boolean okButtonPressed = false;
 
     // The following constants are our definitions for the supported Unicode
-    // range.  We use names separate from the Java standard, so that we can more
+    // range. We use names separate from the Java standard, so that we can more
     // easily compile 16-bit Unicode on Java 1.4 and extended Unicode on Java 5.0
-    // or later.  Only a few lines in this entire program depend upon the Unicode
-    // range, and all have "Java 1.4" or "Java 5.0" comment flags.  If you want a
+    // or later. Only a few lines in this entire program depend upon the Unicode
+    // range, and all have "Java 1.4" or "Java 5.0" comment flags. If you want a
     // character map to start from something other than binary zero (such as from
-    // 0x20 or U+0020 for a space), then change MIN_UNICODE.  Both the minimum and
+    // 0x20 or U+0020 for a space), then change MIN_UNICODE. Both the minimum and
     // the maximum are assumed to be non-negative integers, with the maximum larger
     // than the minimum.
 
@@ -211,13 +179,13 @@ public class CharMap4 extends JDialog
     /** The Constant MIN_UNICODE. */
     private static final int MIN_UNICODE = Character.MIN_CODE_POINT; // Java 5.0 0x000000
 
-    /**  Font for buttons, labels, status, etc. */
+    /** Font for buttons, labels, status, etc. */
     private Font buttonFont = null;
 
     /** Mapping of char values to mouse captions. */
     private TreeMap<Integer, String> captionMap = null;
 
-    /**  common font object for display text. */
+    /** common font object for display text. */
     private static Font displayFont = null;
 
     /** The font name. */
@@ -226,16 +194,16 @@ public class CharMap4 extends JDialog
     /** The font size. */
     private int fontSize = DEFAULT_SIZE;
 
-    /**  formats with commas (digit grouping). */
+    /** formats with commas (digit grouping). */
     private static NumberFormat formatComma;
 
-    /**  true if showing glyphs, false for chars. */
+    /** true if showing glyphs, false for chars. */
     private static boolean glyphFlag = false;
 
-    /**  displays a grid of characters for a font. */
+    /** displays a grid of characters for a font. */
     private CharMap4Grid gridPanel = null;
 
-    /**  vertical scroll bar beside */
+    /** vertical scroll bar beside */
     private JScrollBar gridScroll;
 
     /** true if running on Microsoft Windows. */
@@ -271,8 +239,7 @@ public class CharMap4 extends JDialog
     /**
      * CharMap4 default constructor.
      */
-    public CharMap4()
-    {
+    public CharMap4() {
         setTitle(PROGRAM_TITLE);
         setModal(true);
 
@@ -282,26 +249,26 @@ public class CharMap4 extends JDialog
 
         // Initialise shared graphical objects.
 
-        setFontName(fontName);        // checks preferred name, sets <displayFont>
+        setFontName(fontName); // checks preferred name, sets <displayFont>
         userActions = new CharMap4User(this, null); // create our shared action listener
 
         // Create the graphical interface as a series of little panels inside
-        // bigger panels.  The intermediate panel names are
+        // bigger panels. The intermediate panel names are
 
         // and hence are only numbered (panel1, panel2, etc). */
 
         // Create a top row for the menu button, font name and size, and caption
-        // text.  We put this panel inside a BorderLayout so that we can control the margins.
+        // text. We put this panel inside a BorderLayout so that we can control the margins.
 
         JPanel panel1 = new JPanel(new BorderLayout(10, 0)); // contains top row
 
         JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        String [] availableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        String[] availableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getAvailableFontFamilyNames();
         nameDialog = new JComboBox<String>(availableFonts);
         nameDialog.setEditable(true); // allow user to edit this dialog field
-        if (buttonFont != null)
-        {
+        if (buttonFont != null) {
             nameDialog.setFont(buttonFont);
         }
         nameDialog.setSelectedItem(fontName); // select default font name
@@ -313,7 +280,8 @@ public class CharMap4 extends JDialog
 
         sizeDialog = new JComboBox<String>(FONT_SIZES); // create list from standard sizes
         sizeDialog.setEditable(false); // temporarily disable editing during layout
-        if (buttonFont != null) sizeDialog.setFont(buttonFont);
+        if (buttonFont != null)
+            sizeDialog.setFont(buttonFont);
         sizeDialog.setPrototypeDisplayValue("9999"); // allow for up to four digits
         sizeDialog.setToolTipText("Point size for display text.");
         panel2.add(sizeDialog);
@@ -321,7 +289,8 @@ public class CharMap4 extends JDialog
         panel1.add(panel2, BorderLayout.WEST); // put menu, font on left side
 
         statusDialog = new JLabel(getEmptyStatus(), JLabel.CENTER);
-        if (buttonFont != null) statusDialog.setFont(buttonFont);
+        if (buttonFont != null)
+            statusDialog.setFont(buttonFont);
         panel1.add(statusDialog, BorderLayout.CENTER); // put status in center
 
         JPanel panel3 = new JPanel(new BorderLayout(0, 0));
@@ -331,7 +300,7 @@ public class CharMap4 extends JDialog
         panel3.add(Box.createHorizontalStrut(10), BorderLayout.EAST);
         panel3.add(Box.createVerticalStrut(5), BorderLayout.SOUTH);
 
-        // Create a panel to display the grid of characters.  To the right of that
+        // Create a panel to display the grid of characters. To the right of that
         // is a vertical scroll bar that we control.
 
         gridPanel = new CharMap4Grid(this); // create display as special JPanel
@@ -339,7 +308,7 @@ public class CharMap4 extends JDialog
 
         gridScroll = new JScrollBar(JScrollBar.VERTICAL, 0, 1, 0, 1);
         getGridScroll().addMouseWheelListener((MouseWheelListener) gridPanel);
-        getGridScroll().setEnabled(true);  // scroll bar always present, always enabled
+        getGridScroll().setEnabled(true); // scroll bar always present, always enabled
         getGridScroll().setFocusable(true); // allow keyboard focus for scroll bar
         getGridScroll().getModel().addChangeListener((ChangeListener) gridPanel);
 
@@ -362,7 +331,7 @@ public class CharMap4 extends JDialog
         btnOk.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                okButtonPressed  = true;
+                okButtonPressed = true;
                 setVisible(false);
             }
         });
@@ -393,14 +362,14 @@ public class CharMap4 extends JDialog
         panel6.add(getGridScroll(), BorderLayout.EAST); // scroll bar for grid display
         panel6.add(panel5, BorderLayout.SOUTH); // clear, sample, copy button
 
-        //       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //       if (maximizeFlag) setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // if (maximizeFlag) setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocation(windowLeft, windowTop); // initial top-left corner
         setSize(windowWidth, windowHeight); // initial window size
-        validate();         // do the application window layout
+        validate(); // do the application window layout
 
         // The default width for editable combo boxes is much too wide for the font
-        // point size.  A better width is obtained by making the dialog non-editable
+        // point size. A better width is obtained by making the dialog non-editable
         // and then fixing the dialog at that size, before turning editing back on. */
 
         sizeDialog.setMaximumSize(sizeDialog.getPreferredSize());
@@ -409,7 +378,7 @@ public class CharMap4 extends JDialog
         // selected item is our default size
         sizeDialog.addActionListener(userActions); // do last so don't fire early
 
-        // Hook into the keyboard to mimic the scroll bar.  It's better to do this
+        // Hook into the keyboard to mimic the scroll bar. It's better to do this
         // here, with mappings, than an old-style keyboard listener in CharMap4Grid,
         // because then we don't have problems about which component has the focus. */
 
@@ -423,22 +392,28 @@ public class CharMap4 extends JDialog
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0), ACTION_GOTO_HOME);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, InputEvent.CTRL_MASK), ACTION_GOTO_HOME);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, 0), ACTION_LINE_DOWN);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, InputEvent.CTRL_MASK), ACTION_LINE_DOWN);
+        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, InputEvent.CTRL_MASK),
+                ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_LEFT, 0), ACTION_LINE_UP);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_LEFT, InputEvent.CTRL_MASK), ACTION_LINE_UP);
+        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_LEFT, InputEvent.CTRL_MASK),
+                ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, 0), ACTION_LINE_DOWN);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, InputEvent.CTRL_MASK), ACTION_LINE_DOWN);
+        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, InputEvent.CTRL_MASK),
+                ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, 0), ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, InputEvent.CTRL_MASK), ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.CTRL_MASK), ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0), ACTION_PAGE_DOWN);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, InputEvent.CTRL_MASK), ACTION_PAGE_DOWN);
+        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, InputEvent.CTRL_MASK),
+                ACTION_PAGE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0), ACTION_PAGE_UP);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, InputEvent.CTRL_MASK), ACTION_PAGE_UP);
+        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, InputEvent.CTRL_MASK),
+                ACTION_PAGE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_MASK), ACTION_REPORT_SHOW);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), ACTION_LINE_DOWN);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.CTRL_MASK), ACTION_LINE_DOWN);
+        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.CTRL_MASK),
+                ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.CTRL_MASK), ACTION_LINE_UP);
 
@@ -457,22 +432,21 @@ public class CharMap4 extends JDialog
      *
      * @param args the arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         CharMap4 charMap4 = new CharMap4();
 
         charMap4.loadConfig();
-        //        Thread loader;                // low-priority thread for loading captions
+        // Thread loader; // low-priority thread for loading captions
         //
-        //        // It can take several seconds to load the caption strings, because there
-        //        // are so many Unicode character numbers.  Rather than delaying the user when
-        //        // this application first starts, or when the mouse first moves over a cell in
-        //        // the display grid, load the captions as a low-priority background task.
+        // // It can take several seconds to load the caption strings, because there
+        // // are so many Unicode character numbers. Rather than delaying the user when
+        // // this application first starts, or when the mouse first moves over a cell in
+        // // the display grid, load the captions as a low-priority background task.
         //
-        //        loader = new Thread((Runnable) userActions, "loadConfig");
-        //        // re-use the same action listener as above
-        //        loader.setPriority(Thread.MIN_PRIORITY); // low priority has less impact
-        //        loader.start();               // run separate thread to load captions
+        // loader = new Thread((Runnable) userActions, "loadConfig");
+        // // re-use the same action listener as above
+        // loader.setPriority(Thread.MIN_PRIORITY); // low priority has less impact
+        // loader.start(); // run separate thread to load captions
 
         charMap4.setTTFString("ttf://Symbol#221");
 
@@ -482,17 +456,15 @@ public class CharMap4 extends JDialog
     /**
      * Copy text.
      * 
-     * Copy all sample text to the system clipboard.  Remember the current caret
-     * position (selection) and restore that afterwards.
+     * Copy all sample text to the system clipboard. Remember the current caret position (selection) and restore that afterwards.
      */
-    public void copyText()
-    {
-        int end, start;               // text positions for caret and/or selection
+    public void copyText() {
+        int end, start; // text positions for caret and/or selection
 
         end = selectedCharField.getSelectionEnd(); // remember current position in text
         start = selectedCharField.getSelectionStart();
-        selectedCharField.selectAll();     // select all text in the dialog box
-        selectedCharField.copy();          // place that text onto the clipboard
+        selectedCharField.selectAll(); // select all text in the dialog box
+        selectedCharField.copy(); // place that text onto the clipboard
         selectedCharField.select(start, end); // restore previous caret position
     }
 
@@ -502,38 +474,35 @@ public class CharMap4 extends JDialog
      * @param value the value
      * @return the string
      */
-    public String captionGet(int value)
-    {
-        StringBuffer buffer;          // faster than String for multiple appends
-        String caption;               // defined caption string or <null>
+    public String captionGet(int value) {
+        StringBuffer buffer; // faster than String for multiple appends
+        String caption; // defined caption string or <null>
 
         // Convert the character number to Unicode "U+nnnn" notation.
 
-        buffer = new StringBuffer();  // allocate empty string buffer for result
+        buffer = new StringBuffer(); // allocate empty string buffer for result
         buffer.append(unicodeNotation(value));
         buffer.append(" = ");
 
         // Append the defined caption string, or create a generic caption.
 
-        if (captionMap == null)       // have the caption strings been loaded?
-            caption = null;             // no, follow through with generic caption
-        else                          // yes, attempt to fetch defined caption
+        if (captionMap == null) // have the caption strings been loaded?
+            caption = null; // no, follow through with generic caption
+        else // yes, attempt to fetch defined caption
             caption = (String) captionMap.get(new Integer(value)); // may be <null>
 
-        if (caption == null)          // was there a defined caption string?
+        if (caption == null) // was there a defined caption string?
         {
-            /* No caption string has been defined for this character.  Use the name
-             * of the Unicode "block" or range instead, as obtained from the file:
+            /*
+             * No caption string has been defined for this character. Use the name of the Unicode "block" or range instead, as obtained from the file:
              * 
              * http://www.unicode.org/Public/UNIDATA/Blocks.txt
              *
-             * Block names differ slightly from the "First" and "Last" names found in
-             * the UNIDATA/UnicodeData.txt file.  Whatever you may think of the block
-             * names, they are the official punctuation and spelling.
+             * Block names differ slightly from the "First" and "Last" names found in the UNIDATA/UnicodeData.txt file. Whatever you may think of the
+             * block names, they are the official punctuation and spelling.
              * 
-             * The following piece of code (except for the first line) is mechanically
-             * generated from UNIDATA/Blocks.txt by the unpublished CharMapParse1 Java
-             * application.  Do not edit this code manually.
+             * The following piece of code (except for the first line) is mechanically generated from UNIDATA/Blocks.txt by the unpublished
+             * CharMapParse1 Java application. Do not edit this code manually.
              * 
              * Last updated from the 2011-06-15 UNIDATA/Blocks.txt file (6.1.0).
              */
@@ -980,101 +949,90 @@ public class CharMap4 extends JDialog
                 caption = "Supplementary Private Use Area-B";
 
             // Korean Hangul syllables are so regular that they can be re-created
-            // from Unicode character numbers ... if so desired.  Break into initial,
-            // medial (middle), and final phonetic pieces.  For the code below to be
+            // from Unicode character numbers ... if so desired. Break into initial,
+            // medial (middle), and final phonetic pieces. For the code below to be
             // effective, the U+AC00 to U+D7AF range above must be commented out. */
 
-            //    else if ((value >= 0xAC00) && (value <= 0xD7A3)) // Korean Hangul range?
-            //    {
-            //      int first = value - 0xAC00; // set zero point for following calculation
-            //      int third = first % 28;   // index of "final" phonetic piece
-            //      first = first / 28;       // remove value of final piece
-            //      int second = first % 21;  // index of "medial" phonetic piece
-            //      first = first / 21;       // index of "initial" phonetic piece
+            // else if ((value >= 0xAC00) && (value <= 0xD7A3)) // Korean Hangul range?
+            // {
+            // int first = value - 0xAC00; // set zero point for following calculation
+            // int third = first % 28; // index of "final" phonetic piece
+            // first = first / 28; // remove value of final piece
+            // int second = first % 21; // index of "medial" phonetic piece
+            // first = first / 21; // index of "initial" phonetic piece
             //
-            //      caption = "Hangul Syllable " + HANGUL_NAME_INITIAL[first] + " "
-            //        + HANGUL_NAME_MEDIAL[second] + " " + HANGUL_NAME_FINAL[third];
-            //      caption = caption.trim(); // remove any unused third piece
-            //      String sound = HANGUL_SOUND_INITIAL[first]
-            //        + HANGUL_SOUND_MEDIAL[second] + HANGUL_SOUND_FINAL[third];
-            //      caption += " (" + sound.charAt(0) + sound.substring(1).toLowerCase()
-            //        + ")";                  // first "letter" may be from second piece
-            //    }
+            // caption = "Hangul Syllable " + HANGUL_NAME_INITIAL[first] + " "
+            // + HANGUL_NAME_MEDIAL[second] + " " + HANGUL_NAME_FINAL[third];
+            // caption = caption.trim(); // remove any unused third piece
+            // String sound = HANGUL_SOUND_INITIAL[first]
+            // + HANGUL_SOUND_MEDIAL[second] + HANGUL_SOUND_FINAL[third];
+            // caption += " (" + sound.charAt(0) + sound.substring(1).toLowerCase()
+            // + ")"; // first "letter" may be from second piece
+            // }
 
             // Default to a numeric caption in decimal if nothing else found.
 
-            else                        // no defined caption, unknown character
+            else // no defined caption, unknown character
                 caption = "decimal " + getFormatComma().format(value);
         }
-        buffer.append(caption);       // append selected caption to result
-        return(buffer.toString());    // give caller our converted string
+        buffer.append(caption); // append selected caption to result
+        return (buffer.toString()); // give caller our converted string
 
     }
-
 
     /**
      * Caption put.
      * 
-     * Save a mouse caption (string) corresponding to a character value.  Do not
-     * include a character number in the caption; that is added by captionGet().
+     * Save a mouse caption (string) corresponding to a character value. Do not include a character number in the caption; that is added by
+     * captionGet().
      *
      * @param value the value
      * @param text the text
      */
-    private void captionPut(int value, String text)
-    {
+    private void captionPut(int value, String text) {
         captionMap.put(new Integer(value), text);
     }
 
     /**
      * Char to string.
      *
-     * Convert an integer character number to a standard Java string (that is,
-     * encode the character as UTF-16 text).  This isolates one of the code
+     * Convert an integer character number to a standard Java string (that is, encode the character as UTF-16 text). This isolates one of the code
      * differences between Java 1.4 and Java 5.0 inside a single common method.
      * 
      * @param value the value
      * @return the string
      */
-    public static String charToString(int value)
-    {
-        return(String.valueOf(Character.toChars(value))); // Java 5.0
+    public static String charToString(int value) {
+        return (String.valueOf(Character.toChars(value))); // Java 5.0
     }
 
     /**
      * loadConfig() method
      *
-     * Load configuration data from a text file in the current working directory,
-     * which is usually the same folder as the program's *.class files.  Should we
-     * encounter an error, then print a message, but continue normal execution.
-     * None of the file data is critical to the operation of this program.
+     * Load configuration data from a text file in the current working directory, which is usually the same folder as the program's *.class files.
+     * Should we encounter an error, then print a message, but continue normal execution. None of the file data is critical to the operation of this
+     * program.
      * 
-     * Please see the following web sources for the most recent Unicode mapping
-     * tables for regular characters:
-     *     http://www.unicode.org/Public/UNIDATA/UCD.html
-     *     http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
-     *     
+     * Please see the following web sources for the most recent Unicode mapping tables for regular characters:
+     * http://www.unicode.org/Public/UNIDATA/UCD.html http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
+     * 
      * The best source for information about Chinese-Japanese-Korean ideographs is:
      * 
-     *     http://www.unicode.org/Public/UNIDATA/Unihan.html
-     *     http://www.unicode.org/Public/UNIDATA/Unihan.txt
-     *     
+     * http://www.unicode.org/Public/UNIDATA/Unihan.html http://www.unicode.org/Public/UNIDATA/Unihan.txt
+     * 
      * Names for the Korean Hangul syllables can be found in:
      * 
-     *     http://www.unicode.org/Public/UNIDATA/HangulSyllableType.txt
-     *     http://www.unicode.org/Public/UNIDATA/Jamo.txt
-     *     http://www.iana.org/assignments/idn/kr-korean.html (best raw data file)
-     *     http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP949.TXT
+     * http://www.unicode.org/Public/UNIDATA/HangulSyllableType.txt http://www.unicode.org/Public/UNIDATA/Jamo.txt
+     * http://www.iana.org/assignments/idn/kr-korean.html (best raw data file) http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP949.TXT
      */
-    public void loadConfig()
-    {
-        byte[] array;                 // an array for exactly one byte
-        String caption;               // defined caption string or <null>
-        char ch;                      // one character from input line
-        int i;                        // index variable
-        String text;                  // one input line from file, or otherwise
+    public void loadConfig() {
+        byte[] array; // an array for exactly one byte
+        String caption; // defined caption string or <null>
+        char ch; // one character from input line
+        int i; // index variable
+        String text; // one input line from file, or otherwise
 
-        captionMap = new TreeMap<Integer, String>();   // start without any mouse captions
+        captionMap = new TreeMap<Integer, String>(); // start without any mouse captions
 
         // Supply default names for the plain text ASCII characters only.
 
@@ -1174,32 +1132,29 @@ public class CharMap4 extends JDialog
         captionPut(0x007D, "Right Curly Bracket");
         captionPut(0x007E, "Tilde");
 
-        /* Windows has a pre-defined way of entering non-keyboard characters up to
-         * 0xFF or decimal 255: hold down the Alt key and press exactly four digits
-         * from 0000 to 0255 on the numeric keypad with NumLock on.  This will use the
-         * system's default character set encoding.  (Three digits are interpreted
-         * with an older MS-DOS character set.)  The Alt+nnnn numbers are helpful, but
-         * since they vary from locale to locale, they must be re-generated here, and
-         * can not be fixed as part of the regular caption strings.  Dingbat fonts
-         * that use the C1 control region (0x80 to 0x9F) may not receive correct Alt+
-         * numbers for that region.  This is unavoidable because the C1 control region
-         * has shift codes for many double-byte character sets. */
+        /*
+         * Windows has a pre-defined way of entering non-keyboard characters up to 0xFF or decimal 255: hold down the Alt key and press exactly four
+         * digits from 0000 to 0255 on the numeric keypad with NumLock on. This will use the system's default character set encoding. (Three digits
+         * are interpreted with an older MS-DOS character set.) The Alt+nnnn numbers are helpful, but since they vary from locale to locale, they must
+         * be re-generated here, and can not be fixed as part of the regular caption strings. Dingbat fonts that use the C1 control region (0x80 to
+         * 0x9F) may not receive correct Alt+ numbers for that region. This is unavoidable because the C1 control region has shift codes for many
+         * double-byte character sets.
+         */
 
-        if (isMswinFlag())                // only if running on Microsoft Windows
+        if (isMswinFlag()) // only if running on Microsoft Windows
         {
-            array = new byte[1];        // test one encoded byte at a time
-            for (i = 0x20; i <= 0xFF; i ++) // do all non-control 8-bit bytes
+            array = new byte[1]; // test one encoded byte at a time
+            for (i = 0x20; i <= 0xFF; i++) // do all non-control 8-bit bytes
             {
-                array[0] = (byte) i;      // construct byte array for decoding
+                array[0] = (byte) i; // construct byte array for decoding
                 text = new String(array); // convert byte to Unicode, or replace char
-                if ((text.length() == 1) && ((ch = text.charAt(0)) != REPLACE_CHAR))
-                {
+                if ((text.length() == 1) && ((ch = text.charAt(0)) != REPLACE_CHAR)) {
                     caption = (String) captionMap.get(new Integer((int) ch));
                     // fetch actual value, not via <captionGet>
-                    if (caption == null)    // but have we already created a caption?
-                        caption = "";         // no, use empty string, nothing to append to
-                    else                    // yes, there is a caption and we are adding
-                        caption += " = ";     // insert delimiter between caption and Alt+
+                    if (caption == null) // but have we already created a caption?
+                        caption = ""; // no, use empty string, nothing to append to
+                    else // yes, there is a caption and we are adding
+                        caption += " = "; // insert delimiter between caption and Alt+
                     caption += winaltNotation(i); // append Windows Alt+nnnn key code
                     captionPut((int) ch, caption); // save new caption string
                 }
@@ -1208,15 +1163,12 @@ public class CharMap4 extends JDialog
     }
 
     /**
-     * Put error.
-     * Show an error message to the user, either printed or as a pop-up dialog.
+     * Put error. Show an error message to the user, either printed or as a pop-up dialog.
      *
      * @param text the text
      */
-    private void putError(String text)
-    {
-        if(isVisible())
-        {
+    private void putError(String text) {
+        if (isVisible()) {
             JOptionPane.showMessageDialog(this, text); // pop-up dialog for GUI
         }
     }
@@ -1224,78 +1176,66 @@ public class CharMap4 extends JDialog
     /**
      * Sets the display font.
      * 
-     * This method is called after either the font name or the point size changes
-     * for display text.
+     * This method is called after either the font name or the point size changes for display text.
      */
-    private void setDisplayFont()
-    {
+    private void setDisplayFont() {
         displayFont = new Font(fontName, Font.PLAIN, fontSize);
 
-        if(gridPanel != null)
-        {
-            validate();         // redo the application window layout
-            gridPanel.clear();  // display characters from the beginning
+        if (gridPanel != null) {
+            validate(); // redo the application window layout
+            gridPanel.clear(); // display characters from the beginning
         }
     }
 
     /**
      * Sets the font name.
      * 
-     * The caller gives us a preferred font name for display text.  We use that font
-     * if it's available.  Otherwise, we default to the local system font.
+     * The caller gives us a preferred font name for display text. We use that font if it's available. Otherwise, we default to the local system font.
      *
      * @param text the new font name
      */
-    private void setFontName(String text)
-    {
-        fontName = text;              // assume name is valid, remember this name
-        if (fontName.equals((new Font(fontName, Font.PLAIN, fontSize)).getFamily()))
+    private void setFontName(String text) {
+        fontName = text; // assume name is valid, remember this name
+        if (fontName.equals((new Font(fontName, Font.PLAIN, fontSize)).getFamily())) {
+            /* This is a valid font name. No changes are required. */
+        } else // can't find requested font
         {
-            /* This is a valid font name.  No changes are required. */
-        }
-        else                          // can't find requested font
-        {
-            putError("Font name <" + fontName + "> not found; using <" + SYSTEM_FONT
-                    + "> instead.");
-            fontName = SYSTEM_FONT;     // replace with standard system font
-            if(nameDialog != null)
-            {
+            putError(
+                    "Font name <" + fontName + "> not found; using <" + SYSTEM_FONT + "> instead.");
+            fontName = SYSTEM_FONT; // replace with standard system font
+            if (nameDialog != null) {
                 nameDialog.setSelectedItem(fontName); // reset dialog
             }
         }
-        setDisplayFont();             // redo the layout with the new font or size
+        setDisplayFont(); // redo the layout with the new font or size
     }
 
     /**
      * Sets the point size.
      * 
-     * The caller gives us a preferred point size for display text, as a string.  We
-     * use that size if it's available.  Otherwise, we default to our initial size.
+     * The caller gives us a preferred point size for display text, as a string. We use that size if it's available. Otherwise, we default to our
+     * initial size.
      *
      * @param text the new point size
      */
-    private void setPointSize(String text)
-    {
-        try                           // try to parse parameter as an integer
+    private void setPointSize(String text) {
+        try // try to parse parameter as an integer
         {
             fontSize = Integer.parseInt(text); // return signed integer, or exception
-        }
-        catch (NumberFormatException nfe) // if not a number or bad syntax
+        } catch (NumberFormatException nfe) // if not a number or bad syntax
         {
-            fontSize = -1;              // mark result as invalid
+            fontSize = -1; // mark result as invalid
         }
-        if ((fontSize >= MIN_SIZE) && (fontSize <= MAX_SIZE))
+        if ((fontSize >= MIN_SIZE) && (fontSize <= MAX_SIZE)) {
+            /* This is a valid point size. No changes are required. */
+        } else // given point size was out of range
         {
-            /* This is a valid point size.  No changes are required. */
-        }
-        else                          // given point size was out of range
-        {
-            putError("Point size <" + text + "> must be from " + MIN_SIZE + " to "
-                    + MAX_SIZE + "; using " + DEFAULT_SIZE + " instead.");
-            fontSize = DEFAULT_SIZE;    // default point size for display text
+            putError("Point size <" + text + "> must be from " + MIN_SIZE + " to " + MAX_SIZE
+                    + "; using " + DEFAULT_SIZE + " instead.");
+            fontSize = DEFAULT_SIZE; // default point size for display text
             sizeDialog.setSelectedItem(String.valueOf(fontSize)); // reset dialog
         }
-        setDisplayFont();             // redo the layout with the new font or size
+        setDisplayFont(); // redo the layout with the new font or size
     }
 
     /**
@@ -1306,18 +1246,17 @@ public class CharMap4 extends JDialog
      * @param value the value
      * @return the string
      */
-    public static String unicodeNotation(int value)
-    {
-        String result;                // our converted result
+    public static String unicodeNotation(int value) {
+        String result; // our converted result
 
         result = Integer.toHexString(value).toUpperCase(); // convert binary to hex
-        if (result.length() < 4)      // must have at least four digits
+        if (result.length() < 4) // must have at least four digits
         {
             result = "0000".substring(result.length()) + result;
         }
-        result = UNICODE_PREFIX + result;       // insert the "U+" prefix
+        result = UNICODE_PREFIX + result; // insert the "U+" prefix
 
-        return(result);               // give caller our converted string
+        return (result); // give caller our converted string
     }
 
     /**
@@ -1326,13 +1265,12 @@ public class CharMap4 extends JDialog
      * @param unicodeString the unicode string
      * @return the int
      */
-    public static int decodeUnicodeNotation(String unicodeString)
-    {
+    public static int decodeUnicodeNotation(String unicodeString) {
         String string = unicodeString.substring(UNICODE_PREFIX.length());
 
         int result = (int) Long.parseLong(string, 16);
 
-        return(result);
+        return (result);
     }
 
     /**
@@ -1341,104 +1279,82 @@ public class CharMap4 extends JDialog
      * @param unicodeString the unicode string
      * @return true, if is unicode
      */
-    public static boolean isUnicode(String unicodeString)
-    {
+    public static boolean isUnicode(String unicodeString) {
         return unicodeString.startsWith(UNICODE_PREFIX);
     }
 
     /**
      * User button.
      * 
-     * This method is called by our action listener actionPerformed() to process
-     * buttons, in the context of the main CharMap4 class.
+     * This method is called by our action listener actionPerformed() to process buttons, in the context of the main CharMap4 class.
      *
      * @param event the event
      */
-    public void userButton(ActionEvent event)
-    {
+    public void userButton(ActionEvent event) {
         Object source = event.getSource(); // where the event came from
         if (source == nameDialog) // font name for display text
         {
             setFontName((String) nameDialog.getSelectedItem());
-        }
-        else if (source == sizeDialog) // point size for display text
+        } else if (source == sizeDialog) // point size for display text
         {
             setPointSize((String) sizeDialog.getSelectedItem());
         }
 
         /* Programming error: unknown GUI element invoked this action listener. */
 
-        else                          // fault in program logic, not by user
+        else // fault in program logic, not by user
         {
-            System.err.println("Error in userButton(): unknown ActionEvent: "
-                    + event);                 // should never happen, so write on console
+            System.err.println("Error in userButton(): unknown ActionEvent: " + event); // should never happen, so write on console
         }
     }
 
     /**
      * User key.
      * 
-     *  The caller gives us a command string for a keyboard action.  The only actions
-     *  currently defined are to mimic the scroll bar or menu items.
+     * The caller gives us a command string for a keyboard action. The only actions currently defined are to mimic the scroll bar or menu items.
      *
      * @param command the command
      */
-    public void userKey(String command)
-    {
-        if (command.equals(ACTION_GOTO_END))
-        {
+    public void userKey(String command) {
+        if (command.equals(ACTION_GOTO_END)) {
             getGridScroll().setValue(getGridScroll().getMaximum());
-        }
-        else if (command.equals(ACTION_GOTO_HOME))
-        {
+        } else if (command.equals(ACTION_GOTO_HOME)) {
             getGridScroll().setValue(getGridScroll().getMinimum());
-        }
-        else if (command.equals(ACTION_LINE_DOWN))
-        {
+        } else if (command.equals(ACTION_LINE_DOWN)) {
             getGridScroll().setValue(getGridScroll().getValue() + 1);
-        }
-        else if (command.equals(ACTION_LINE_UP))
-        {
+        } else if (command.equals(ACTION_LINE_UP)) {
             getGridScroll().setValue(getGridScroll().getValue() - 1);
-        }
-        else if (command.equals(ACTION_PAGE_DOWN))
+        } else if (command.equals(ACTION_PAGE_DOWN)) {
+            getGridScroll()
+                    .setValue(getGridScroll().getValue() + getGridScroll().getBlockIncrement());
+        } else if (command.equals(ACTION_PAGE_UP)) {
+            getGridScroll()
+                    .setValue(getGridScroll().getValue() - getGridScroll().getBlockIncrement());
+        } else // fault in program logic, not by user
         {
-            getGridScroll().setValue(getGridScroll().getValue()
-                    + getGridScroll().getBlockIncrement());
-        }
-        else if (command.equals(ACTION_PAGE_UP))
-        {
-            getGridScroll().setValue(getGridScroll().getValue()
-                    - getGridScroll().getBlockIncrement());
-        }
-        else                          // fault in program logic, not by user
-        {
-            System.err.println("Error in userKey(): unknown command: "
-                    + command);       // should never happen, so write on console
+            System.err.println("Error in userKey(): unknown command: " + command); // should never happen, so write on console
         }
     }
 
     /**
      * Winalt notation.
      * 
-     *   Given an integer, return the Windows "Alt+nnnn" notation for that character
-     *   number.  Valid range is only from 0032 to 0255 decimal.
+     * Given an integer, return the Windows "Alt+nnnn" notation for that character number. Valid range is only from 0032 to 0255 decimal.
      *
      * @param value the value
      * @return the string
      */
-    static String winaltNotation(int value)
-    {
-        String result;                // our converted result
+    static String winaltNotation(int value) {
+        String result; // our converted result
 
         result = Integer.toString(value); // convert binary to decimal
-        if (result.length() < 4)      // must have at least four digits
+        if (result.length() < 4) // must have at least four digits
         {
             result = "0000".substring(result.length()) + result;
         }
-        result = "Alt+" + result;     // insert the "Alt+" prefix
+        result = "Alt+" + result; // insert the "Alt+" prefix
 
-        return(result);               // give caller our converted string
+        return (result); // give caller our converted string
     }
 
     /**
@@ -1518,8 +1434,7 @@ public class CharMap4 extends JDialog
      *
      * @param displayText the new selected character
      */
-    public void setSelectedCharacter(String displayText)
-    {
+    public void setSelectedCharacter(String displayText) {
         selectedCharField.setText(displayText);
     }
 
@@ -1528,34 +1443,28 @@ public class CharMap4 extends JDialog
      *
      * @param text the new status text
      */
-    public void setStatusText(String text)
-    {
+    public void setStatusText(String text) {
         // Don't waste time setting the dialog box if nothing has changed.
 
-        if ((text != null)            // if we constructed a new caption string
-                && (statusDialog.getText().equals(text) == false))
-        {
+        if ((text != null) // if we constructed a new caption string
+                && (statusDialog.getText().equals(text) == false)) {
             statusDialog.setText(text); // copy new string to mouse caption
         }
     }
-
 
     /**
      * Sets the selected character.
      *
      * @param ttfFontString the new TTF string
      */
-    public void setTTFString(String ttfFontString)
-    {
+    public void setTTFString(String ttfFontString) {
         String string = ttfFontString;
-        if(ttfFontString.startsWith(TTF_PREFIX))
-        {
+        if (ttfFontString.startsWith(TTF_PREFIX)) {
             string = ttfFontString.substring(TTF_PREFIX.length());
 
             String[] components = string.split("#");
 
-            if(components.length == 2)
-            {
+            if (components.length == 2) {
                 nameDialog.setSelectedItem(components[0]);
 
                 gridPanel.setSelected(components[0], components[1]);
@@ -1569,12 +1478,10 @@ public class CharMap4 extends JDialog
      *
      * @return the string
      */
-    public String showDialog()
-    {
+    public String showDialog() {
         setVisible(true);
 
-        if(okButtonPressed)
-        {
+        if (okButtonPressed) {
             return selectedCharField.getText();
         }
         return null;

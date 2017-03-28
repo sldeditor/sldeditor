@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool;
 
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class ToolManager implements ToolSelectionInterface {
     private static ToolManager instance = null;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface>> toolMap = new HashMap<Class<?>, List<ToolInterface>>();
+    private Map<Class<?>, List<ToolInterface>> toolMap = 
+            new HashMap<Class<?>, List<ToolInterface>>();
 
     /** The unique tool map. */
     private Map<Class<?>, ToolInterface> uniqueToolMap = new HashMap<Class<?>, ToolInterface>();
@@ -224,19 +226,19 @@ public class ToolManager implements ToolSelectionInterface {
     @Override
     public void setRecursiveFlag(boolean recursiveFlag) {
         this.recursiveFlag = recursiveFlag;
-        for(RecursiveUpdateInterface listener : recursiveUpdateListenerList)
-        {
+        for (RecursiveUpdateInterface listener : recursiveUpdateListenerList) {
             listener.recursiveValuesUpdated(this.recursiveFlag);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.RecursiveUpdateInterface)
      */
     @Override
     public void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate) {
-        if(!recursiveUpdateListenerList.contains(recursiveUpdate))
-        {
+        if (!recursiveUpdateListenerList.contains(recursiveUpdate)) {
             recursiveUpdateListenerList.add(recursiveUpdate);
         }
     }

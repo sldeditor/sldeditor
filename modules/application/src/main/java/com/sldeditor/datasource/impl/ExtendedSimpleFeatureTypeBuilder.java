@@ -18,11 +18,11 @@ import org.opengis.feature.type.GeometryType;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * The Class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder so that a
- * AttributeDescriptor object can be created.  This then allows it be added using 
- * SimpleFeatureTypeBuilder.add( int index, AttributeDescriptor descriptor ).
- * The GeoTools class suggests use of this method is discouraged it allows the order of the
- * fields to be preserved.
+ * The Class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder so
+ * that a AttributeDescriptor object can be created. This then allows
+ * it be added using SimpleFeatureTypeBuilder.add( int index, AttributeDescriptor descriptor ).
+ * The GeoTools class suggests use of this method is
+ * discouraged it allows the order of the fields to be preserved.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -71,8 +71,9 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
 
             // if no crs was set, set to defaultCRS
             if (!attributeBuilder.isCRSSet()) {
-                if( defaultCrs == null && !defaultCrsSet){
-                    LOGGER.fine("Creating "+name+" with null CoordinateReferenceSystem - did you mean to setCRS?");
+                if (defaultCrs == null && !defaultCrsSet) {
+                    LOGGER.fine("Creating " + name
+                            + " with null CoordinateReferenceSystem - did you mean to setCRS?");
                 }
                 attributeBuilder.setCRS(defaultCrs);
             }

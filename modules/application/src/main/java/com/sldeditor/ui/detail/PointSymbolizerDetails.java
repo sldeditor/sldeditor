@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.List;
@@ -37,7 +38,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class PointSymbolizerDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
+public class PointSymbolizerDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -45,8 +47,7 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
     /**
      * Constructor.
      */
-    public PointSymbolizerDetails()
-    {
+    public PointSymbolizerDetails() {
         super(PointSymbolizerDetails.class);
         createUI();
     }
@@ -59,14 +60,15 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         readConfigFile(null, getClass(), this, "Point.xml");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             Symbolizer symbolizer = selectedSymbol.getSymbolizer();
             populateStandardData(symbolizer);
 
@@ -80,16 +82,15 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
 
             Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
-            PointSymbolizer pointSymbolizer = (PointSymbolizer)SelectedSymbol.getInstance().getSymbolizer();
+            PointSymbolizer pointSymbolizer = (PointSymbolizer) SelectedSymbol.getInstance()
+                    .getSymbolizer();
 
-            if(pointSymbolizer != null)
-            {
+            if (pointSymbolizer != null) {
                 pointSymbolizer.setName(standardData.name);
                 pointSymbolizer.setDescription(standardData.description);
                 pointSymbolizer.setUnitOfMeasure(standardData.unit);
@@ -100,7 +101,9 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
      */
     @Override
@@ -108,7 +111,9 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         updateSymbol();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.BasePanel#addRenderer(com.sldeditor.render.iface.RenderSymbolInterface)
      */
     @Override
@@ -116,25 +121,29 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         super.addRenderer(renderer);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return this.fieldConfigManager;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -142,7 +151,9 @@ public class PointSymbolizerDetails extends StandardPanel implements PopulateDet
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

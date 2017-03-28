@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.file.database;
 
 import java.io.File;
@@ -56,7 +57,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
     private List<String> fileExtensionList;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public DatabaseFileHandler(String resourceIcon, List<String> fileExtensionList) {
         this.resourceIcon = resourceIcon;
@@ -172,8 +173,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
      */
     @Override
     public Icon getIcon(String path, String filename) {
-        if(icon == null)
-        {
+        if (icon == null) {
             URL url = DatabaseOverallNode.class.getClassLoader().getResource(resourceIcon);
 
             icon = new ImageIcon(url);

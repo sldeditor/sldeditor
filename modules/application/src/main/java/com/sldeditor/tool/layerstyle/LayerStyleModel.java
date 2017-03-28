@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class LayerStyleModel extends AbstractTableModel {
     private static final int COL_STYLE = 2;
 
     /** The column headings. */
-    private String[] columnHeadings = {"Workspace", "Layer", "Style"};
+    private String[] columnHeadings = { "Workspace", "Layer", "Style" };
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -63,16 +64,13 @@ public class LayerStyleModel extends AbstractTableModel {
      * @param styleMap the style map
      * @param layerList the layer list
      */
-    public void populate(Map<String, List<StyleWrapper>> styleMap, List<GeoServerLayer> layerList)
-    {
+    public void populate(Map<String, List<StyleWrapper>> styleMap, List<GeoServerLayer> layerList) {
         this.layerMap.clear();
         this.layerList = layerList;
 
-        if(layerList != null)
-        {
-            for(GeoServerLayer layer : layerList)
-            {
-                this.layerMap.put(layer,  Boolean.FALSE);
+        if (layerList != null) {
+            for (GeoServerLayer layer : layerList) {
+                this.layerMap.put(layer, Boolean.FALSE);
             }
         }
     }
@@ -107,12 +105,10 @@ public class LayerStyleModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         GeoServerLayer layer = getLayer(rowIndex);
-        if(layer != null)
-        {
+        if (layer != null) {
             StyleWrapper style = layer.getStyle();
 
-            switch(columnIndex)
-            {
+            switch (columnIndex) {
             case COL_WORKSPACE:
                 return layer.getLayerWorkspace();
             case COL_LAYER:
@@ -132,8 +128,7 @@ public class LayerStyleModel extends AbstractTableModel {
      * @param rowIndex the row index
      * @return the layer
      */
-    public GeoServerLayer getLayer(int rowIndex)
-    {
+    public GeoServerLayer getLayer(int rowIndex) {
         GeoServerLayer layer = layerList.get(rowIndex);
 
         return layer;
@@ -167,8 +162,7 @@ public class LayerStyleModel extends AbstractTableModel {
      * @param styleWrapper the style wrapper
      */
     public void updateStyle(int[] selectedRows, StyleWrapper styleWrapper) {
-        for(int index = 0; index < selectedRows.length; index ++)
-        {
+        for (int index = 0; index < selectedRows.length; index++) {
             GeoServerLayer layer = getLayer(selectedRows[index]);
 
             layer.setStyle(styleWrapper);
@@ -186,8 +180,7 @@ public class LayerStyleModel extends AbstractTableModel {
      * @return true, if successful
      */
     public boolean hasValueBeenUpdated(int row, int column) {
-        if(column == COL_STYLE)
-        {
+        if (column == COL_STYLE) {
             GeoServerLayer layer = getLayer(row);
 
             return layerMap.get(layer);
@@ -212,10 +205,8 @@ public class LayerStyleModel extends AbstractTableModel {
     public List<GeoServerLayer> getUpdatedLayers() {
         List<GeoServerLayer> updatedList = new ArrayList<GeoServerLayer>();
 
-        for(GeoServerLayer layer : layerList)
-        {
-            if(layerMap.get(layer))
-            {
+        for (GeoServerLayer layer : layerList) {
+            if (layerMap.get(layer)) {
                 updatedList.add(layer);
             }
         }

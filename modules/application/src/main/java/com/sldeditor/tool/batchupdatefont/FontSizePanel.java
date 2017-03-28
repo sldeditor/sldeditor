@@ -50,16 +50,14 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
     }
 
     /**
-     * 
+     * Creates the UI.
      */
     private void createUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        value = new FieldConfigInteger(
-                new FieldConfigCommonData(getClass(),
-                        FieldIdEnum.FONT_SIZE, Localisation
-                                .getField(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.fontSize"),
-                        true, false, false));
+        value = new FieldConfigInteger(new FieldConfigCommonData(getClass(), FieldIdEnum.FONT_SIZE,
+                Localisation.getField(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.fontSize"),
+                true, false, false));
         value.createUI();
         value.addDataChangedListener(this);
         add(value.getPanel());
@@ -84,14 +82,13 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
         value.populateField(0);
         value.setEnabled((entries != null) && !entries.isEmpty());
     }
-    
+
     /**
      * Gets the font size.
      *
      * @return the font size
      */
-    public int getFontSize()
-    {
+    public int getFontSize() {
         return value.getIntValue();
     }
 }

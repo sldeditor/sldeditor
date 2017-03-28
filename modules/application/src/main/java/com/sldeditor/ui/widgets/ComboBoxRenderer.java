@@ -54,16 +54,10 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
      * @return the list cell renderer component
      */
     /*
-     * This method finds the image and text corresponding
-     * to the selected value and returns the label, set up
-     * to display the text and image.
+     * This method finds the image and text corresponding to the selected value and returns the label, set up to display the text and image.
      */
-    public Component getListCellRendererComponent(
-            JList list,
-            Object value,
-            int index,
-            boolean isSelected,
-            boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus) {
 
         if (isSelected) {
             setBackground(list.getSelectionBackground());
@@ -74,14 +68,10 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
         }
 
         ValueComboBoxData data = (ValueComboBoxData) value;
-        if(data != null)
-        {
-            if(data.getImageIcon() != null)
-            {
+        if (data != null) {
+            if (data.getImageIcon() != null) {
                 setIcon(data.getImageIcon());
-            }
-            else
-            {
+            } else {
                 setText(data.getText());
             }
         }

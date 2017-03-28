@@ -94,13 +94,11 @@ public class BooleanValues extends BaseValue implements RenderTransformValueInte
         if (aValue instanceof Boolean) {
             this.value = (Boolean) aValue;
         } else if (aValue instanceof LiteralExpressionImpl) {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
             value = literal.evaluate(value, Boolean.class);
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }

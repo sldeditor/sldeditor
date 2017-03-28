@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.datasource.extension.filesystem.node.database;
 
 import java.awt.datatransfer.DataFlavor;
@@ -34,9 +36,8 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeInterface
-{
-    
+public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeInterface {
+
     /** The node label. */
     private String nodeLabel = "Database";
 
@@ -56,29 +57,30 @@ public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeI
      *
      * @param handler the handler
      */
-    public DatabaseOverallNode(FileSystemInterface handler, String label, String resourceIcon)
-    {
+    public DatabaseOverallNode(FileSystemInterface handler, String label, String resourceIcon) {
         super(label);
         this.handler = handler;
         this.nodeLabel = label;
         this.resourceIcon = resourceIcon;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
-    public FileSystemInterface getHandler()
-    {
+    public FileSystemInterface getHandler() {
         return handler;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return BuiltInDataFlavour.DATABASE_OVERALL_DATAITEM_FLAVOUR;
     }
 
@@ -92,13 +94,14 @@ public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeI
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override
     public Icon getIcon() {
-        if(treeIcon == null)
-        {
+        if (treeIcon == null) {
             URL url = DatabaseOverallNode.class.getClassLoader().getResource(resourceIcon);
 
             treeIcon = new ImageIcon(url);

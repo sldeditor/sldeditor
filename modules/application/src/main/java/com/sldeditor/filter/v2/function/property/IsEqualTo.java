@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.property;
 
 import java.util.List;
@@ -41,14 +42,12 @@ public class IsEqualTo implements FilterConfigInterface {
     /**
      * The Class IsEqualToExtended.
      */
-    public class IsEqualToExtended extends IsEqualsToImpl implements FilterExtendedInterface
-    {
+    public class IsEqualToExtended extends IsEqualsToImpl implements FilterExtendedInterface {
 
         /**
          * Instantiates a new checks if is equal to extended.
          */
-        public IsEqualToExtended()
-        {
+        public IsEqualToExtended() {
             super(null, null);
         }
 
@@ -59,12 +58,14 @@ public class IsEqualTo implements FilterConfigInterface {
          * @param expression2 the expression 2
          * @param matchCase the match case
          */
-        public IsEqualToExtended(Expression expression1, Expression expression2, boolean matchCase)
-        {
+        public IsEqualToExtended(Expression expression1, Expression expression2,
+                boolean matchCase) {
             super(expression1, expression2, matchCase);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -76,8 +77,7 @@ public class IsEqualTo implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsEqualTo()
-    {
+    public IsEqualTo() {
     }
 
     /**
@@ -88,21 +88,14 @@ public class IsEqualTo implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("PropertyIsEqualTo", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
-        filterName.addParameter(new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new IsEqualToExtended();
     }
 
     /**
@@ -118,6 +111,16 @@ public class IsEqualTo implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new IsEqualToExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -125,15 +128,13 @@ public class IsEqualTo implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsEqualsToImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 3))
-        {
+        if ((parameterList == null) || (parameterList.size() != 3)) {
             filter = new IsEqualToExtended();
-        }
-        else
-        {
-            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+        } else {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(2);
 
-            filter = new IsEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+            filter = new IsEqualToExtended(parameterList.get(0), parameterList.get(1),
+                    (Boolean) matchCase.getValue());
         }
         return filter;
     }

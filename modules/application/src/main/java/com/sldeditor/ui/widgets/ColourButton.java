@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.awt.Color;
@@ -40,8 +41,7 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.ColourNotifyInterface;
 
 /**
- * A JButton displaying a selected colour, clicking on the button displays
- * a colour editor.
+ * A JButton displaying a selected colour, clicking on the button displays a colour editor.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -64,15 +64,15 @@ public class ColourButton extends JButton {
     public ColourButton() {
         final JComponent parent = this;
 
-        image = new BufferedImage(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        image = new BufferedImage(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT,
+                BufferedImage.TYPE_INT_ARGB);
         this.setIcon(new ImageIcon(image));
         addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                Color newColour = JColorChooser.showDialog(parent, "Pick color", colour );
+                Color newColour = JColorChooser.showDialog(parent, "Pick color", colour);
 
-                if(newColour != null)
-                {
+                if (newColour != null) {
                     colour = newColour;
 
                     displayColour();
@@ -88,14 +88,10 @@ public class ColourButton extends JButton {
      *
      * @param newColour the new colour
      */
-    public void populate(Color newColour)
-    {
-        if(colour == null)
-        {
+    public void populate(Color newColour) {
+        if (colour == null) {
             colour = hex2Rgb(DefaultSymbols.defaultColour());
-        }
-        else
-        {
+        } else {
             colour = newColour;
         }
 
@@ -108,51 +104,36 @@ public class ColourButton extends JButton {
      * @param value the colour value
      * @param opacity the opacity
      */
-    public void populate(String value, Expression opacity)
-    {
+    public void populate(String value, Expression opacity) {
         Color tmpColour = null;
         float alpha = DefaultSymbols.defaultColourOpacity();
-        if(value == null)
-        {
+        if (value == null) {
             tmpColour = hex2Rgb(DefaultSymbols.defaultColour());
-        }
-        else
-        {
+        } else {
             tmpColour = hex2Rgb(value);
         }
 
-        if(opacity instanceof LiteralExpressionImpl)
-        {
+        if (opacity instanceof LiteralExpressionImpl) {
             LiteralExpressionImpl literal = (LiteralExpressionImpl) opacity;
 
             Object obj = literal.getValue();
-            if (obj instanceof Long)
-            {
-                alpha = ((Long)obj).floatValue();
-            }
-            else if (obj instanceof Integer)
-            {
-                alpha = ((Integer)obj).floatValue();
-            }
-            else if (obj instanceof Float)
-            {
-                alpha = ((Float)obj).floatValue();
-            }
-            else if (obj instanceof Double)
-            {
-                alpha = ((Double)obj).floatValue();
-            }
-            else if (obj instanceof String)
-            {
-                Double d = Double.valueOf((String)obj);
+            if (obj instanceof Long) {
+                alpha = ((Long) obj).floatValue();
+            } else if (obj instanceof Integer) {
+                alpha = ((Integer) obj).floatValue();
+            } else if (obj instanceof Float) {
+                alpha = ((Float) obj).floatValue();
+            } else if (obj instanceof Double) {
+                alpha = ((Double) obj).floatValue();
+            } else if (obj instanceof String) {
+                Double d = Double.valueOf((String) obj);
                 alpha = d.floatValue();
-            }
-            else
-            {
+            } else {
                 ConsoleManager.getInstance().error(this, "Unknown number format");
             }
         }
-        colour = new Color(tmpColour.getRed() / 255.0f, tmpColour.getGreen() / 255.0f, tmpColour.getBlue() / 255.0f, alpha);
+        colour = new Color(tmpColour.getRed() / 255.0f, tmpColour.getGreen() / 255.0f,
+                tmpColour.getBlue() / 255.0f, alpha);
         displayColour();
     }
 
@@ -169,13 +150,13 @@ public class ColourButton extends JButton {
         String htmlColour = ColourUtils.fromColour(colour);
         int width = g2.getFontMetrics().stringWidth(htmlColour);
         int height = g2.getFontMetrics().getHeight();
-        int x = (this.getWidth() / 2 ) - (width / 2);
-        int y = this.getHeight() - ((this.getHeight() / 2 ) - (height / 2));
+        int x = (this.getWidth() / 2) - (width / 2);
+        int y = this.getHeight() - ((this.getHeight() / 2) - (height / 2));
         g2.drawString(htmlColour, x, y);
         setContentAreaFilled(false);
         setOpaque(true);
         setBorderPainted(false);
-        
+
         repaint();
     }
 
@@ -186,10 +167,9 @@ public class ColourButton extends JButton {
      * @return the colour
      */
     public static Color hex2Rgb(String colourStr) {
-        return new Color(
-            Integer.valueOf( colourStr.substring( 1, 3 ), 16 ),
-            Integer.valueOf( colourStr.substring( 3, 5 ), 16 ),
-            Integer.valueOf( colourStr.substring( 5, 7 ), 16 ) );
+        return new Color(Integer.valueOf(colourStr.substring(1, 3), 16),
+                Integer.valueOf(colourStr.substring(3, 5), 16),
+                Integer.valueOf(colourStr.substring(5, 7), 16));
     }
 
     /**
@@ -208,7 +188,7 @@ public class ColourButton extends JButton {
         String colourString = getColourString();
         double opacity = getColourOpacity();
 
-        for(ColourNotifyInterface observer : observers) {
+        for (ColourNotifyInterface observer : observers) {
             observer.notify(colourString, opacity);
         }
     }
@@ -238,8 +218,7 @@ public class ColourButton extends JButton {
      *
      * @return the colour
      */
-    public Color getColour()
-    {
+    public Color getColour() {
         return colour;
     }
 
@@ -251,7 +230,7 @@ public class ColourButton extends JButton {
     public void setColour(Color colour) {
         this.colour = colour;
         displayColour();
-        
+
         repaint();
     }
 }

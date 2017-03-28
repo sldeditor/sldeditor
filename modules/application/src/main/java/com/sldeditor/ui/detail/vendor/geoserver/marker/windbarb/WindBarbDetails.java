@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;
 
 import java.util.List;
@@ -47,16 +48,17 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
- * The Class WindBarbDetails panel contains all the fields to configure 
- * the GeoServer vendor option for displaying weather wind barbs.
+ * The Class WindBarbDetails panel contains all the fields to configure the
+ * GeoServer vendor option for displaying weather wind barbs.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class WindBarbDetails extends StandardPanel implements PopulateDetailsInterface, 
-UpdateSymbolInterface {
+public class WindBarbDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = "symbol/marker/windbarb/PanelConfig_WindBarbSymbol.xml";
+    private static final String PANEL_CONFIG = 
+            "symbol/marker/windbarb/PanelConfig_WindBarbSymbol.xml";
 
     /** The Constant HEMISPHERE_S. */
     private static final String HEMISPHERE_S = "?hemisphere=s";
@@ -75,8 +77,7 @@ UpdateSymbolInterface {
      *
      * @param parentObj the parent obj
      */
-    public WindBarbDetails(WindBarbUpdateInterface parentObj)
-    {
+    public WindBarbDetails(WindBarbUpdateInterface parentObj) {
         super(WindBarbDetails.class);
 
         this.parentObj = parentObj;
@@ -95,7 +96,9 @@ UpdateSymbolInterface {
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -104,8 +107,7 @@ UpdateSymbolInterface {
         Symbolizer symbolizer = selectedSymbol.getSymbolizer();
         Expression wellKnownName = getWellKnownName(symbolizer);
 
-        if(wellKnownName != null)
-        {
+        if (wellKnownName != null) {
             populateExpression(wellKnownName.toString());
         }
     }
@@ -118,17 +120,14 @@ UpdateSymbolInterface {
      */
     private Expression getWellKnownName(Symbolizer symbolizer) {
         Expression wellKnownName = null;
-        if(symbolizer instanceof PointSymbolizerImpl)
-        {
+        if (symbolizer instanceof PointSymbolizerImpl) {
             PointSymbolizerImpl point = (PointSymbolizerImpl) symbolizer;
 
             List<GraphicalSymbol> graphicalSymbolList = point.getGraphic().graphicalSymbols();
-            if((graphicalSymbolList != null) && !graphicalSymbolList.isEmpty())
-            {
+            if ((graphicalSymbolList != null) && !graphicalSymbolList.isEmpty()) {
                 GraphicalSymbol graphicalSymbol = graphicalSymbolList.get(0);
 
-                if(graphicalSymbol instanceof MarkImpl)
-                {
+                if (graphicalSymbol instanceof MarkImpl) {
                     MarkImpl mark = (MarkImpl) graphicalSymbol;
 
                     wellKnownName = mark.getWellKnownName();
@@ -145,45 +144,43 @@ UpdateSymbolInterface {
      */
     public void populateExpression(String wellKnownName) {
 
-        if(wellKnownName != null)
-        {
+        if (wellKnownName != null) {
             int startSpeedOpenBracket = wellKnownName.indexOf("(");
             int endSpeedCloseBracket = wellKnownName.indexOf(")");
 
-            if((startSpeedOpenBracket < 0) || (endSpeedCloseBracket < 0))
-            {
+            if ((startSpeedOpenBracket < 0) || (endSpeedCloseBracket < 0)) {
                 // Invalid
                 return;
             }
-            String windSpeed = wellKnownName.substring(startSpeedOpenBracket + 1, endSpeedCloseBracket);
+            String windSpeed = wellKnownName.substring(startSpeedOpenBracket + 1,
+                    endSpeedCloseBracket);
 
             int startUnitsOpenBracket = wellKnownName.indexOf("[");
             int endUnitsOpenBracket = wellKnownName.indexOf("]");
-            if((startUnitsOpenBracket < 0) || (endUnitsOpenBracket < 0))
-            {
+            if ((startUnitsOpenBracket < 0) || (endUnitsOpenBracket < 0)) {
                 // Invalid
                 return;
             }
 
-            String windSpeedUnits = wellKnownName.substring(startUnitsOpenBracket + 1, endUnitsOpenBracket);
+            String windSpeedUnits = wellKnownName.substring(startUnitsOpenBracket + 1,
+                    endUnitsOpenBracket);
 
             Expression windSpeedExpression = null;
-            if(AttributeUtils.isAttribute(windSpeed))
-            {
+            if (AttributeUtils.isAttribute(windSpeed)) {
                 String propertyName = AttributeUtils.extract(windSpeed);
                 windSpeedExpression = getFilterFactory().property(propertyName);
                 DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
                 dataSource.addField(new DataSourceAttributeData(propertyName, Double.class, null));
-            }
-            else
-            {
+            } else {
                 windSpeedExpression = getFilterFactory().literal(windSpeed);
             }
             boolean isNorthernHemisphere = !wellKnownName.endsWith(HEMISPHERE_S);
             fieldConfigVisitor.populateField(FieldIdEnum.WINDBARB_WINDSPEED, windSpeedExpression);
-            fieldConfigVisitor.populateBooleanField(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE, isNorthernHemisphere);
-            fieldConfigVisitor.populateComboBoxField(FieldIdEnum.WINDBARB_WINDSPEED_UNITS, windSpeedUnits);
+            fieldConfigVisitor.populateBooleanField(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE,
+                    isNorthernHemisphere);
+            fieldConfigVisitor.populateComboBoxField(FieldIdEnum.WINDBARB_WINDSPEED_UNITS,
+                    windSpeedUnits);
         }
     }
 
@@ -192,7 +189,9 @@ UpdateSymbolInterface {
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -204,48 +203,46 @@ UpdateSymbolInterface {
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            ValueComboBoxData windSpeedUnits = fieldConfigVisitor.getComboBox(FieldIdEnum.WINDBARB_WINDSPEED_UNITS);
-            Expression windSpeedExpression = fieldConfigVisitor.getExpression(FieldIdEnum.WINDBARB_WINDSPEED);
-            boolean inNorthernHemisphere = fieldConfigVisitor.getBoolean(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE);
+        if (!Controller.getInstance().isPopulating()) {
+            ValueComboBoxData windSpeedUnits = fieldConfigVisitor
+                    .getComboBox(FieldIdEnum.WINDBARB_WINDSPEED_UNITS);
+            Expression windSpeedExpression = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.WINDBARB_WINDSPEED);
+            boolean inNorthernHemisphere = fieldConfigVisitor
+                    .getBoolean(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE);
             Object windSpeed = null;
 
-            if(windSpeedExpression == null)
-            {
+            if (windSpeedExpression == null) {
                 windSpeed = Integer.valueOf(0);
-            }
-            else if(windSpeedExpression instanceof LiteralExpressionImpl)
-            {
-                LiteralExpressionImpl literalExpression = (LiteralExpressionImpl) windSpeedExpression;
+            } else if (windSpeedExpression instanceof LiteralExpressionImpl) {
+                LiteralExpressionImpl literalExpression = 
+                        (LiteralExpressionImpl) windSpeedExpression;
                 windSpeed = literalExpression.getValue();
-            }
-            else if(windSpeedExpression instanceof ConstantExpression)
-            {
+            } else if (windSpeedExpression instanceof ConstantExpression) {
                 ConstantExpression constantExpression = (ConstantExpression) windSpeedExpression;
 
                 windSpeed = constantExpression.getValue();
-            }
-            else if(windSpeedExpression instanceof AttributeExpressionImpl)
-            {
-                AttributeExpressionImpl attributeExpression = (AttributeExpressionImpl) windSpeedExpression;
+            } else if (windSpeedExpression instanceof AttributeExpressionImpl) {
+                AttributeExpressionImpl attributeExpression = 
+                        (AttributeExpressionImpl) windSpeedExpression;
 
-                windSpeed = String.format("<ogc:PropertyName>%s</ogc:PropertyName>",attributeExpression.getPropertyName());;
+                windSpeed = String.format("<ogc:PropertyName>%s</ogc:PropertyName>",
+                        attributeExpression.getPropertyName());
+                ;
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        Localisation.getField(WindBarbDetails.class, "WindBarb.windspeedError1")
+                                + windSpeedExpression.getClass().getName());
             }
-            else
-            {
-                ConsoleManager.getInstance().error(this, Localisation.getField(WindBarbDetails.class, "WindBarb.windspeedError1") + windSpeedExpression.getClass().getName());
-            }
-            String url = String.format("windbarbs://default(%s)[%s]", windSpeed, windSpeedUnits.getKey());
+            String url = String.format("windbarbs://default(%s)[%s]", windSpeed,
+                    windSpeedUnits.getKey());
 
-            if(!inNorthernHemisphere)
-            {
+            if (!inNorthernHemisphere) {
                 url = url + HEMISPHERE_S;
             }
             windBarbsExpression = getFilterFactory().literal(url);
 
-            if(parentObj != null)
-            {
+            if (parentObj != null) {
                 parentObj.windBarbValueUpdated();
             }
         }
@@ -256,12 +253,13 @@ UpdateSymbolInterface {
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -270,12 +268,13 @@ UpdateSymbolInterface {
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
@@ -285,10 +284,8 @@ UpdateSymbolInterface {
      * @return the expression
      */
     public Expression getExpression() {
-        if(windBarbsExpression == null)
-        {
-            if(!Controller.getInstance().isPopulating())
-            {
+        if (windBarbsExpression == null) {
+            if (!Controller.getInstance().isPopulating()) {
                 revertToDefaultValue();
             }
 
@@ -303,10 +300,8 @@ UpdateSymbolInterface {
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
-        for(FieldConfigBase field : fieldList)
-        {
-            if(field != null)
-            {
+        for (FieldConfigBase field : fieldList) {
+            if (field != null) {
                 field.revertToDefaultValue();
             }
         }
@@ -324,7 +319,9 @@ UpdateSymbolInterface {
         updateSymbol();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -332,7 +329,9 @@ UpdateSymbolInterface {
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

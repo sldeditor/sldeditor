@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool;
 
 import java.util.List;
@@ -45,7 +46,8 @@ public interface ToolInterface {
      * @param nodeTypeList the node type list
      * @param sldDataList the new selected items
      */
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList);
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList);
 
     /**
      * Gets the tool name.
@@ -62,5 +64,6 @@ public interface ToolInterface {
      * @param sldDataList the sld data list
      * @return true, if successful
      */
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList);
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList);
 }

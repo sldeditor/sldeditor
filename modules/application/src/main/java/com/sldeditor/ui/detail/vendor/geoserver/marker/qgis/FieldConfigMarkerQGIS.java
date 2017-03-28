@@ -37,7 +37,8 @@ import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 public class FieldConfigMarkerQGIS extends FieldConfigMarker {
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/qgis/SymbolTypeFieldState_QGIS.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
+            "symbol/marker/qgis/SymbolTypeFieldState_QGIS.xml";
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
@@ -57,29 +58,29 @@ public class FieldConfigMarkerQGIS extends FieldConfigMarker {
                 symbolSelectionField);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                getVendorOptionInfo());
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
     }
 
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo = new VendorOptionInfo("qgis://",
-                    this.getVendorOption(),
-                    Localisation.getString(VOGeoServerQGISSymbol.class, "VOGeoServerQGISSymbol.description"));
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo("qgis://", this.getVendorOption(), Localisation
+                    .getString(VOGeoServerQGISSymbol.class, "VOGeoServerQGISSymbol.description"));
         }
         return vendorOptionInfo;
     }

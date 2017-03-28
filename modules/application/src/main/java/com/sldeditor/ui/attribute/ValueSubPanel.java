@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.attribute;
 
 import java.awt.BorderLayout;
@@ -47,8 +48,7 @@ public class ValueSubPanel extends JPanel {
      *
      * @return the panel name
      */
-    public static String getPanelName()
-    {
+    public static String getPanelName() {
         return VALUE_PANEL;
     }
 
@@ -57,12 +57,10 @@ public class ValueSubPanel extends JPanel {
      *
      * @param addValueField the add value field
      */
-    public ValueSubPanel(boolean addValueField)
-    {
+    public ValueSubPanel(boolean addValueField) {
         setLayout(new BorderLayout(0, 0));
 
-        if(addValueField)
-        {
+        if (addValueField) {
             valueTextField = new JTextField();
             add(valueTextField, BorderLayout.CENTER);
         }
@@ -74,8 +72,7 @@ public class ValueSubPanel extends JPanel {
      * @param expression the expression
      */
     public void populateExpression(Expression expression) {
-        if(valueTextField != null)
-        {
+        if (valueTextField != null) {
             valueTextField.setText(expression.toString());
         }
     }
@@ -86,8 +83,7 @@ public class ValueSubPanel extends JPanel {
      * @param enabled the new panel enabled
      */
     public void setPanelEnabled(boolean enabled) {
-        if(valueTextField != null)
-        {
+        if (valueTextField != null) {
             valueTextField.setEnabled(enabled);
         }
     }
@@ -100,8 +96,7 @@ public class ValueSubPanel extends JPanel {
     public Expression getExpression() {
         Expression expression = null;
 
-        if(valueTextField != null)
-        {
+        if (valueTextField != null) {
             expression = new LiteralExpressionImpl(valueTextField.getText());
         }
 

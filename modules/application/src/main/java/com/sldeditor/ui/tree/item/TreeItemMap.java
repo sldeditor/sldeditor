@@ -29,14 +29,11 @@ import org.geotools.styling.UserLayerImpl;
  *
  * @author Robert Ward (SCISYS)
  */
-/**
- * @author Robert Ward (SCISYS)
- *
- */
 public class TreeItemMap {
 
     /** The tree item map. */
-    private Map<Class<?>, SLDTreeItemInterface> treeItemMap = new HashMap<Class<?>, SLDTreeItemInterface>();
+    private Map<Class<?>, SLDTreeItemInterface> treeItemMap =
+            new HashMap<Class<?>, SLDTreeItemInterface>();
 
     /** The rule tree item. */
     private RuleTreeItem ruleTreeItem = new RuleTreeItem();
@@ -50,8 +47,7 @@ public class TreeItemMap {
     /**
      * Instantiates a new tree item map.
      */
-    private TreeItemMap()
-    {
+    private TreeItemMap() {
         createTreeItemMap();
     }
 
@@ -60,8 +56,7 @@ public class TreeItemMap {
      */
     private void createTreeItemMap() {
 
-        if(treeItemMap.isEmpty())
-        {
+        if (treeItemMap.isEmpty()) {
             /** The sld tree item. */
             StyledLayerDescriptorTreeItem sldTreeItem = new StyledLayerDescriptorTreeItem();
 
@@ -118,8 +113,7 @@ public class TreeItemMap {
      * @return singleton instance of TreeItemMap
      */
     public static TreeItemMap getInstance() {
-        if(instance == null)
-        {
+        if (instance == null) {
             instance = new TreeItemMap();
         }
         return instance;

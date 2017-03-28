@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.data;
 
 import java.io.Serializable;
@@ -25,14 +26,13 @@ import java.io.Serializable;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Cloneable
-{
+public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Cloneable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2100490761170323010L;
 
     /** The workspace. */
     private String workspace = null;
-    
+
     /** The style. */
     private String style = null;
 
@@ -42,18 +42,16 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      * @param workspace the workspace
      * @param style the style
      */
-    public StyleWrapper(String workspace, String style)
-    {
+    public StyleWrapper(String workspace, String style) {
         super();
         this.workspace = workspace;
         this.style = style;
     }
-    
+
     /**
      * Instantiates a new style wrapper.
      */
-    public StyleWrapper()
-    {
+    public StyleWrapper() {
     }
 
     /**
@@ -61,8 +59,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      *
      * @param style the style
      */
-    public StyleWrapper(String style)
-    {
+    public StyleWrapper(String style) {
         super();
         this.style = style;
     }
@@ -72,8 +69,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      *
      * @return the workspace
      */
-    public String getWorkspace()
-    {
+    public String getWorkspace() {
         return workspace;
     }
 
@@ -82,8 +78,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      *
      * @param workspace the new workspace
      */
-    public void setWorkspace(String workspace)
-    {
+    public void setWorkspace(String workspace) {
         this.workspace = workspace;
     }
 
@@ -92,8 +87,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      *
      * @return the style
      */
-    public String getStyle()
-    {
+    public String getStyle() {
         return style;
     }
 
@@ -102,8 +96,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      *
      * @param style the new style
      */
-    public void setStyle(String style)
-    {
+    public void setStyle(String style) {
         this.style = style;
     }
 
@@ -113,20 +106,20 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      * @param o the o
      * @return the int
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(StyleWrapper o)
-    {
-        if(o == null)
-        {
+    public int compareTo(StyleWrapper o) {
+        if (o == null) {
             return -1;
         }
 
         String s1 = this.workspace + this.style;
         String s2 = o.workspace + o.style;
-        
+
         return s1.compareTo(s2);
     }
 
@@ -144,13 +137,14 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
         return clonedStyleWrapper;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        if(workspace == null)
-        {
+        if (workspace == null) {
             return style;
         }
         return String.format("%s/%s", workspace, style);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.config;
 
 import java.awt.Component;
@@ -41,16 +42,19 @@ public class ComboBoxCellRenderer implements TableCellRenderer {
      */
     public ComboBoxCellRenderer(JComboBox<String> comboBox) {
         this.combo = new JComboBox<String>();
-        for (int i = 0; i<comboBox.getItemCount(); i++){
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
             combo.addItem(comboBox.getItemAt(i));
         }
     }
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
     @Override
-    public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
         combo.setSelectedItem(value);
         return combo;
     }

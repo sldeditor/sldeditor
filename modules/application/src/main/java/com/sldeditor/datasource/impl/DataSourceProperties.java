@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.util.LinkedHashMap;
@@ -31,22 +32,22 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 
 /**
- * Class that encapsulates the properties of a data source,
- * includes data source connection details.
+ * Class that encapsulates the properties of a data source, includes data source connection details.
+ * 
  * <p>Can read and write it self to a string.
+ * 
  * <p>Passwords are encoded.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceProperties implements DataSourcePropertiesInterface
-{
+public class DataSourceProperties implements DataSourcePropertiesInterface {
     /** The Constant PASSWORD_KEY. */
     private static final String PASSWORD_KEY = "password";
 
     /** The property map. */
     private Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
 
-    /**  The data source connector. */
+    /** The data source connector. */
     private DataSourceConnectorInterface dsc = null;
 
     /**
@@ -54,8 +55,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      *
      * @param dsc the dsc
      */
-    public DataSourceProperties(DataSourceConnectorInterface dsc)
-    {
+    public DataSourceProperties(DataSourceConnectorInterface dsc) {
         this.dsc = dsc;
     }
 
@@ -65,10 +65,8 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return the connection properties
      */
     @Override
-    public Map<String, Object> getConnectionProperties()
-    {
-        if(this.dsc != null)
-        {
+    public Map<String, Object> getConnectionProperties() {
+        if (this.dsc != null) {
             return dsc.getConnectionProperties(this);
         }
         return propertyMap;
@@ -80,8 +78,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return all the connection properties
      */
     @Override
-    public Map<String, Object> getAllConnectionProperties()
-    {
+    public Map<String, Object> getAllConnectionProperties() {
         return propertyMap;
     }
 
@@ -91,8 +88,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param propertyMap the property map
      */
     @Override
-    public void setPropertyMap(Map<String, Object> propertyMap)
-    {
+    public void setPropertyMap(Map<String, Object> propertyMap) {
         this.propertyMap = propertyMap;
     }
 
@@ -102,8 +98,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param filename the new filename
      */
     @Override
-    public void setFilename(String filename)
-    {
+    public void setFilename(String filename) {
         propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
     }
 
@@ -113,8 +108,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return the data source connector
      */
     @Override
-    public DataSourceConnectorInterface getDataSourceConnector()
-    {
+    public DataSourceConnectorInterface getDataSourceConnector() {
         return dsc;
     }
 
@@ -122,10 +116,8 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * Populate.
      */
     @Override
-    public void populate()
-    {
-        if(dsc != null)
-        {
+    public void populate() {
+        if (dsc != null) {
             dsc.populate(this);
         }
     }
@@ -136,9 +128,8 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return the filename
      */
     @Override
-    public String getFilename()
-    {
-        return (String)propertyMap.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+    public String getFilename() {
+        return (String) propertyMap.get(DataSourceConnectorInterface.FILE_MAP_KEY);
     }
 
     /**
@@ -149,19 +140,16 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param elementName the element name
      */
     @Override
-    public void encodeXML(Document doc, Element root, String elementName)
-    {
-        if((doc == null) || (root == null) || (elementName == null))
-        {
+    public void encodeXML(Document doc, Element root, String elementName) {
+        if ((doc == null) || (root == null) || (elementName == null)) {
             return;
         }
 
         Element dataSourceElement = doc.createElement(elementName);
 
-        for(String key : propertyMap.keySet())
-        {
+        for (String key : propertyMap.keySet()) {
             Element element = doc.createElement(key);
-            element.appendChild(doc.createTextNode((String)propertyMap.get(key)));
+            element.appendChild(doc.createTextNode((String) propertyMap.get(key)));
 
             dataSourceElement.appendChild(element);
         }
@@ -176,34 +164,27 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param elementName the element name
      * @return the data source properties
      */
-    public static DataSourcePropertiesInterface decodeXML(Document document, String elementName)
-    {
-        if((document == null) || (elementName == null))
-        {
+    public static DataSourcePropertiesInterface decodeXML(Document document, String elementName) {
+        if ((document == null) || (elementName == null)) {
             return null;
         }
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
         NodeList nodeList = document.getElementsByTagName(elementName);
-        if(nodeList.getLength() > 0)
-        {
+        if (nodeList.getLength() > 0) {
             Node node = nodeList.item(0);
 
             Node child = node.getFirstChild();
 
-            while(child != null)
-            {
-                if(child.getNodeType() == Node.ELEMENT_NODE)
-                {
+            while (child != null) {
+                if (child.getNodeType() == Node.ELEMENT_NODE) {
                     map.put(child.getNodeName(), child.getTextContent());
                 }
                 child = child.getNextSibling();
             }
             return DataSourceConnectorFactory.getDataSourceProperties(map);
-        }
-        else
-        {
+        } else {
             return DataSourceConnectorFactory.getNoDataSource();
         }
     }
@@ -214,14 +195,10 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return true, if data source is empty
      */
     @Override
-    public boolean isEmpty()
-    {
-        if(dsc != null)
-        {
+    public boolean isEmpty() {
+        if (dsc != null) {
             return dsc.isEmpty();
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
@@ -232,8 +209,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param filename the filename
      * @return the map
      */
-    public static Map<String, Object> encodeFilename(String filename)
-    {
+    public static Map<String, Object> encodeFilename(String filename) {
         Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
 
         propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
@@ -247,13 +223,11 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param map the property map
      * @return the string
      */
-    public static String decodeFilename(Map<String, Object> map)
-    {
-        if(map != null)
-        {
-            return (String)map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+    public static String decodeFilename(Map<String, Object> map) {
+        if (map != null) {
+            return (String) map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
         }
-        
+
         return null;
     }
 
@@ -263,8 +237,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return true, if successful
      */
     @Override
-    public boolean hasPassword()
-    {
+    public boolean hasPassword() {
         return propertyMap.containsKey(PASSWORD_KEY);
     }
 
@@ -274,9 +247,8 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return the password
      */
     @Override
-    public String getPassword()
-    {
-        return (String)propertyMap.get(PASSWORD_KEY);
+    public String getPassword() {
+        return (String) propertyMap.get(PASSWORD_KEY);
     }
 
     /**
@@ -285,8 +257,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @param password the new password
      */
     @Override
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         propertyMap.put(PASSWORD_KEY, password);
     }
 
@@ -296,8 +267,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface
      * @return the debug connection string
      */
     @Override
-    public String getDebugConnectionString()
-    {
+    public String getDebugConnectionString() {
         Map<String, Object> properties = getConnectionProperties();
 
         properties.remove(PASSWORD_KEY);

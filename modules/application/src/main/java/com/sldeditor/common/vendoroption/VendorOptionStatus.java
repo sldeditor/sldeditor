@@ -58,8 +58,7 @@ public class VendorOptionStatus {
         if (versionData != null) {
             String vendorOptionName = getVendorOptionName(versionData.getVendorOptionType());
 
-            if(vendorOptionName != null)
-            {
+            if (vendorOptionName != null) {
                 if (versionData.getVendorOptionType() == NoVendorOption.class) {
                     versionString = vendorOptionName;
                 } else {
@@ -101,20 +100,17 @@ public class VendorOptionStatus {
      * @return the version string
      */
     public static String getVendorOptionVersionString(VendorOptionVersion versionData) {
-        if(versionData == null)
-        {
+        if (versionData == null) {
             return "";
         }
         boolean hasEarliest = false;
         VersionData earliest = versionData.getEarliest();
-        if(earliest != null)
-        {
+        if (earliest != null) {
             hasEarliest = !earliest.isEarliest();
         }
         boolean hasLatest = false;
         VersionData latest = versionData.getLatest();
-        if(latest != null)
-        {
+        if (latest != null) {
             hasLatest = !latest.isLatest();
         }
 
@@ -122,14 +118,12 @@ public class VendorOptionStatus {
 
         if (versionData.getClassType() != NoVendorOption.class) {
             if (hasEarliest && !hasLatest) {
-                return String.format("%s %s-", vendorOptionName,
-                        earliest.getVersionString());
+                return String.format("%s %s-", vendorOptionName, earliest.getVersionString());
             } else if (!hasEarliest && hasLatest) {
                 return String.format("%s -%s", vendorOptionName,
                         versionData.getLatest().getVersionString());
             } else if (hasEarliest && hasLatest) {
-                return String.format("%s %s-%s", vendorOptionName,
-                        earliest.getVersionString(),
+                return String.format("%s %s-%s", vendorOptionName, earliest.getVersionString(),
                         versionData.getLatest().getVersionString());
             }
         }

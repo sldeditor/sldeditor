@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common;
 
 import java.util.Map;
@@ -27,8 +29,7 @@ import javax.swing.JPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface DataSourceConnectorInterface
-{
+public interface DataSourceConnectorInterface {
 
     /** The file map key. */
     public static String FILE_MAP_KEY = "url";
@@ -48,7 +49,7 @@ public interface DataSourceConnectorInterface
     public JPanel getPanel();
 
     /**
-     * Accept if data source filename
+     * Accept if data source filename.
      *
      * @param filename the filename
      * @return true, if successful
@@ -91,7 +92,8 @@ public interface DataSourceConnectorInterface
      * @param dataSourceProperties the data source properties
      * @return the connection properties
      */
-    public Map<String, Object> getConnectionProperties(DataSourcePropertiesInterface dataSourceProperties);
+    public Map<String, Object> getConnectionProperties(
+            DataSourcePropertiesInterface dataSourceProperties);
 
     /**
      * Reset ui.

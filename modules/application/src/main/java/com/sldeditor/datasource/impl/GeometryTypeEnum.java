@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 /**
- * The Enum GeometryTypeEnum, represents the geometry type of the loaded symbol
+ * The Enum GeometryTypeEnum, represents the geometry type of the loaded symbol.
  * 
  * @author Robert Ward (SCISYS)
  */

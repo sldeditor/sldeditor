@@ -25,10 +25,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import com.sldeditor.common.console.ConsoleManager;
 
 /**
- * The Class RendererErrors, only output error messages for
- * the first object allocated top a renderer.
- * The same error will be reported by the symbol renderer and the legend renderer
- * so this class reduces the number of error messages reported.
+ * The Class RendererErrors, only output error messages for the first object allocated top a renderer. The same error will be reported by the symbol
+ * renderer and the legend renderer so this class reduces the number of error messages reported.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -67,8 +65,7 @@ public class RendererErrors implements RenderListener {
     @Override
     public void errorOccurred(Exception e) {
         if (outputMessages) {
-            if(e != null)
-            {
+            if (e != null) {
                 ConsoleManager.getInstance().error(this, e.getMessage());
             }
         }

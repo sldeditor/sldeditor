@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.create;
 
 import java.awt.BorderLayout;
@@ -68,10 +69,9 @@ public class NewSLDPanel extends JDialog {
     private SLDWriterInterface sldWriter = null;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public NewSLDPanel()
-    {
+    public NewSLDPanel() {
         setModal(true);
         setResizable(false);
         setModalityType(ModalityType.APPLICATION_MODAL);
@@ -89,18 +89,18 @@ public class NewSLDPanel extends JDialog {
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
 
-        JLabel lblSldType = new JLabel(Localisation.getField(NewSLDPanel.class, "NewSLDPanel.symbolField"));
+        JLabel lblSldType = new JLabel(
+                Localisation.getField(NewSLDPanel.class, "NewSLDPanel.symbolField"));
         panel.add(lblSldType);
 
         comboBoxNewSLD = new JComboBox<String>();
         newSLDObjectMap = NewSLDFactory.getAvailable();
         String[] itemArray = new String[newSLDObjectMap.size()];
         int index = 0;
-        for(Object obj : newSLDObjectMap.keySet())
-        {
+        for (Object obj : newSLDObjectMap.keySet()) {
             itemArray[index] = (String) obj;
 
-            index ++;
+            index++;
         }
         comboBoxNewSLD.setModel(new DefaultComboBoxModel<String>(itemArray));
 
@@ -139,8 +139,7 @@ public class NewSLDPanel extends JDialog {
         List<SLDDataInterface> newSLDList = null;
         selected = null;
 
-        if(parent != null)
-        {
+        if (parent != null) {
             this.setLocationRelativeTo(parent);
             int x = ((parent.getWidth() - getWidth()) / 2);
             int y = ((parent.getHeight() - getHeight()) / 2);
@@ -149,18 +148,17 @@ public class NewSLDPanel extends JDialog {
 
         setVisible(true);
 
-        if(selected != null)
-        {
+        if (selected != null) {
             newSLDList = new ArrayList<SLDDataInterface>();
 
             StyledLayerDescriptor sld = selected.create();
 
-            if(sldWriter == null)
-            {
+            if (sldWriter == null) {
                 sldWriter = SLDWriterFactory.createWriter(null);
             }
 
-            newSLDList.add(new SLDData(new StyleWrapper(selected.getName()), sldWriter.encodeSLD(null, sld)));
+            newSLDList.add(new SLDData(new StyleWrapper(selected.getName()),
+                    sldWriter.encodeSLD(null, sld)));
             return newSLDList;
         }
 
@@ -173,10 +171,8 @@ public class NewSLDPanel extends JDialog {
     protected void okButtonPressed() {
         String selectedItem = (String) comboBoxNewSLD.getSelectedItem();
 
-        if(selectedItem != null)
-        {
-            if(newSLDObjectMap != null)
-            {
+        if (selectedItem != null) {
+            if (newSLDObjectMap != null) {
                 selected = newSLDObjectMap.get(selectedItem);
             }
         }

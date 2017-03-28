@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.database;
 
 import java.awt.datatransfer.DataFlavor;
@@ -33,8 +34,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements NodeInterface
-{
+public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements NodeInterface {
 
     /** The connection data. */
     private DatabaseConnection connectData = null;
@@ -55,8 +55,8 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
      * @param connectData the connect data
      * @param featureClass the feature class
      */
-    public DatabaseFeatureClassNode(FileSystemInterface handler, DatabaseConnection connectData, String featureClass)
-    {
+    public DatabaseFeatureClassNode(FileSystemInterface handler, DatabaseConnection connectData,
+            String featureClass) {
         super(featureClass);
         this.handler = handler;
         this.featureClass = featureClass;
@@ -68,8 +68,7 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
      *
      * @return the feature class
      */
-    public String getFeatureClass()
-    {
+    public String getFeatureClass() {
         return featureClass;
     }
 
@@ -82,21 +81,23 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
         return connectData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
-    public FileSystemInterface getHandler()
-    {
+    public FileSystemInterface getHandler() {
         return handler;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return BuiltInDataFlavour.DATABASE_DATAITEM_FLAVOUR;
     }
 
@@ -110,7 +111,9 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override

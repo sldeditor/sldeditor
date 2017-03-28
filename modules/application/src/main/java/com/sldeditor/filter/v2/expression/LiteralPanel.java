@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.filter.v2.expression;
 
 import java.awt.BorderLayout;
@@ -84,23 +86,20 @@ public class LiteralPanel extends JPanel {
      */
     private void displayLiteral(ExpressionNode node) {
 
-        if(node == null)
-        {
+        if (node == null) {
             return;
         }
 
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             remove(fieldConfig.getPanel());
         }
 
-        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "LiteralPanel.value", node.getType());
+        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "LiteralPanel.value",
+                node.getType());
 
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.createUI();
-            fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
-            {
+            fieldConfig.addDataChangedListener(new UpdateSymbolInterface() {
                 @Override
                 public void dataChanged(FieldIdEnum changedField) {
                     updateButtonState(true);
@@ -119,8 +118,7 @@ public class LiteralPanel extends JPanel {
      *
      * @return the j panel
      */
-    private JPanel createApplyRevertPanel()
-    {
+    private JPanel createApplyRevertPanel() {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.apply"));
@@ -128,13 +126,11 @@ public class LiteralPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Expression expression = fieldConfig.getExpression();
 
-                if(expression != null)
-                {
+                if (expression != null) {
                     selectedNode.setExpression(expression);
                 }
 
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
                 updateButtonState(false);

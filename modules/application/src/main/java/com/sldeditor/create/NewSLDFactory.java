@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.create;
 
 import java.util.ArrayList;
@@ -37,7 +39,8 @@ import com.sldeditor.create.sld.NewSLDInterface;
 public class NewSLDFactory {
 
     /** The available map. */
-    private static Map<String, NewSLDInterface> availableMap = new LinkedHashMap<String, NewSLDInterface>();
+    private static Map<String, NewSLDInterface> availableMap =
+            new LinkedHashMap<String, NewSLDInterface>();
 
     /**
      * Instantiates a new NewSLDFactory.
@@ -46,18 +49,15 @@ public class NewSLDFactory {
     }
 
     /**
-     * Gets the available New SLD options
+     * Gets the available New SLD options.
      *
      * @return the available
      */
-    public static Map<String, NewSLDInterface> getAvailable()
-    {
-        if(availableMap.isEmpty())
-        {
+    public static Map<String, NewSLDInterface> getAvailable() {
+        if (availableMap.isEmpty()) {
             List<NewSLDInterface> list = populateAvailableList();
 
-            for(NewSLDInterface obj : list)
-            {
+            for (NewSLDInterface obj : list) {
                 availableMap.put(obj.getName(), obj);
             }
         }

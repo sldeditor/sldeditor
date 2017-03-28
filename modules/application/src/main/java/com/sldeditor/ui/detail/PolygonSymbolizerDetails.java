@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.List;
@@ -37,7 +38,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class PolygonSymbolizerDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
+public class PolygonSymbolizerDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -45,8 +47,7 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
     /**
      * Constructor.
      */
-    public PolygonSymbolizerDetails()
-    {
+    public PolygonSymbolizerDetails() {
         super(PolygonSymbolizerDetails.class);
 
         createUI();
@@ -60,22 +61,25 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
         readConfigFile(null, getClass(), this, "Polygon.xml");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        if(selectedSymbol != null)
-        {
-            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) selectedSymbol.getSymbolizer();
-            if(polygonSymbolizer != null)
-            {
+        if (selectedSymbol != null) {
+            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) selectedSymbol
+                    .getSymbolizer();
+            if (polygonSymbolizer != null) {
                 populateStandardData(polygonSymbolizer);
 
-                fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET, polygonSymbolizer.getPerpendicularOffset());
+                fieldConfigVisitor.populateField(FieldIdEnum.PERPENDICULAR_OFFSET,
+                        polygonSymbolizer.getPerpendicularOffset());
 
-                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY, polygonSymbolizer.getGeometry());
+                fieldConfigVisitor.populateField(FieldIdEnum.GEOMETRY,
+                        polygonSymbolizer.getGeometry());
             }
         }
     }
@@ -84,11 +88,11 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
-            Expression perpendicularOffset = fieldConfigVisitor.getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
+            Expression perpendicularOffset = fieldConfigVisitor
+                    .getExpression(FieldIdEnum.PERPENDICULAR_OFFSET);
 
             //
             // Displacement
@@ -97,10 +101,10 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
 
             StandardData standardData = getStandardData();
 
-            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer)SelectedSymbol.getInstance().getSymbolizer();
+            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) SelectedSymbol.getInstance()
+                    .getSymbolizer();
 
-            if(polygonSymbolizer != null)
-            {
+            if (polygonSymbolizer != null) {
                 polygonSymbolizer.setName(standardData.name);
                 polygonSymbolizer.setDescription(standardData.description);
                 polygonSymbolizer.setUnitOfMeasure(standardData.unit);
@@ -124,7 +128,9 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
         updateSymbol();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.BasePanel#addRenderer(com.sldeditor.render.iface.RenderSymbolInterface)
      */
     @Override
@@ -132,25 +138,29 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
         super.addRenderer(renderer);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return this.fieldConfigManager;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -158,7 +168,9 @@ public class PolygonSymbolizerDetails extends StandardPanel implements PopulateD
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

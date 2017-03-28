@@ -38,7 +38,8 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
         extends VOGeoServerContrastEnhancementNormalize {
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = "symbol/raster/PanelConfig_ContrastEnhancementNormalizeGreen.xml";
+    private static final String PANEL_CONFIG =
+            "symbol/raster/PanelConfig_ContrastEnhancementNormalizeGreen.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -101,7 +102,6 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

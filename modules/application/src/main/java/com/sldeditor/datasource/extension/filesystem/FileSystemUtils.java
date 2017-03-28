@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem;
 
 import java.io.File;
@@ -29,7 +30,7 @@ import com.sldeditor.common.utils.ExternalFilenames;
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemUtils {
-   
+
     /**
      * Checks if is file extension supported.
      *
@@ -38,22 +39,18 @@ public class FileSystemUtils {
      * @return true, if is file extension supported
      */
     public static boolean isFileExtensionSupported(File file, List<String> fileExtensionList) {
-        if(file == null)
-        {
+        if (file == null) {
             return false;
         }
 
         String fileExtension = ExternalFilenames.getFileExtension(file.getAbsolutePath());
-        
-        for(String allowedFileExtension : fileExtensionList)
-        {
-            if(fileExtension.compareToIgnoreCase(allowedFileExtension) == 0)
-            {
+
+        for (String allowedFileExtension : fileExtensionList) {
+            if (fileExtension.compareToIgnoreCase(allowedFileExtension) == 0) {
                 return true;
             }
         }
         return false;
     }
-
 
 }

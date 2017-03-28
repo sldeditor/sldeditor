@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.tool.batchupdatefont;
 
 import java.awt.event.ActionEvent;
@@ -69,8 +71,7 @@ public class BatchUpdateFontTool implements ToolInterface {
      *
      * @param application the application
      */
-    public BatchUpdateFontTool(SLDEditorInterface application)
-    {
+    public BatchUpdateFontTool(SLDEditorInterface application) {
         super();
         this.application = application;
 
@@ -85,9 +86,11 @@ public class BatchUpdateFontTool implements ToolInterface {
         FlowLayout flowLayout = (FlowLayout) scaleGroupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        scaleGroupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title")));
+        scaleGroupPanel.setBorder(BorderFactory.createTitledBorder(
+                Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title")));
 
-        scaleButton = new ToolButton(Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title"),
+        scaleButton = new ToolButton(
+                Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title"),
                 "tool/batchupdatefont.png");
         scaleGroupPanel.add(scaleButton);
         scaleButton.setEnabled(false);
@@ -107,8 +110,7 @@ public class BatchUpdateFontTool implements ToolInterface {
      * @return the panel
      */
     @Override
-    public JPanel getPanel()
-    {
+    public JPanel getPanel() {
         return scaleGroupPanel;
     }
 
@@ -118,15 +120,17 @@ public class BatchUpdateFontTool implements ToolInterface {
      * @param nodeTypeList the node type list
      * @param sldDataList the sld data list
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         this.sldDataList = sldDataList;
 
-        if(scaleButton != null)
-        {
+        if (scaleButton != null) {
             scaleButton.setEnabled(sldDataList.size() > 0);
         }
     }
@@ -136,12 +140,13 @@ public class BatchUpdateFontTool implements ToolInterface {
      *
      * @return the tool name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
-    public String getToolName()
-    {
+    public String getToolName() {
         return getClass().getName();
     }
 
@@ -152,38 +157,29 @@ public class BatchUpdateFontTool implements ToolInterface {
      * @param sldDataList the sld data list
      * @return true, if successful
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
-        for(NodeInterface node : nodeTypeList)
-        {
-            if(node instanceof FileTreeNode)
-            {
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
+        for (NodeInterface node : nodeTypeList) {
+            if (node instanceof FileTreeNode) {
                 FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-                if(fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.SLD)
-                {
+                if (fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.SLD) {
                     return false;
                 }
-            }
-            else if(node instanceof GeoServerStyleNode)
-            {
+            } else if (node instanceof GeoServerStyleNode) {
                 return true;
-            }
-            else if(node instanceof GeoServerStyleHeadingNode)
-            {
+            } else if (node instanceof GeoServerStyleHeadingNode) {
                 return true;
-            }
-            else if(node instanceof GeoServerWorkspaceNode)
-            {
+            } else if (node instanceof GeoServerWorkspaceNode) {
                 GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
                 return workspaceNode.isStyle();
-            }
-            else
-            {
+            } else {
                 return true;
             }
         }

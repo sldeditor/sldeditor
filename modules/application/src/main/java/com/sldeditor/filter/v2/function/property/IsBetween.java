@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.property;
 
 import java.util.List;
@@ -40,14 +41,12 @@ public class IsBetween implements FilterConfigInterface {
     /**
      * The Class IsBetweenExtended.
      */
-    public class IsBetweenExtended extends IsBetweenImpl implements FilterExtendedInterface
-    {
-        
+    public class IsBetweenExtended extends IsBetweenImpl implements FilterExtendedInterface {
+
         /**
          * Instantiates a new checks if is between extended.
          */
-        public IsBetweenExtended()
-        {
+        public IsBetweenExtended() {
             super(null, null, null);
         }
 
@@ -58,12 +57,13 @@ public class IsBetween implements FilterConfigInterface {
          * @param expression the expression
          * @param upper the upper
          */
-        public IsBetweenExtended(Expression lower, Expression expression, Expression upper)
-        {
+        public IsBetweenExtended(Expression lower, Expression expression, Expression upper) {
             super(lower, expression, upper);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -75,8 +75,7 @@ public class IsBetween implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsBetween()
-    {
+    public IsBetween() {
     }
 
     /**
@@ -87,21 +86,14 @@ public class IsBetween implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("PropertyIsBetween", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("lower", ExpressionTypeEnum.EXPRESSION, Object.class));
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
-        filterName.addParameter(new FilterNameParameter("upper", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("lower", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("upper", ExpressionTypeEnum.EXPRESSION, Object.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new IsBetweenExtended();
     }
 
     /**
@@ -117,6 +109,16 @@ public class IsBetween implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new IsBetweenExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -124,13 +126,11 @@ public class IsBetween implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsBetweenImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 3))
-        {
+        if ((parameterList == null) || (parameterList.size() != 3)) {
             filter = new IsBetweenExtended();
-        }
-        else
-        {
-            filter = new IsBetweenExtended(parameterList.get(0), parameterList.get(1), parameterList.get(2));
+        } else {
+            filter = new IsBetweenExtended(parameterList.get(0), parameterList.get(1),
+                    parameterList.get(2));
         }
 
         return filter;

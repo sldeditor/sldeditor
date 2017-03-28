@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.awt.BorderLayout;
@@ -91,7 +92,8 @@ public class RenderTransformationDialog extends JDialog {
     private GeoServerWPSClientInterface client = null;
 
     /** The connection map. */
-    private Map<String, GeoServerConnection> connectionMap = new HashMap<String, GeoServerConnection>();
+    private Map<String, GeoServerConnection> connectionMap = 
+            new HashMap<String, GeoServerConnection>();
 
     /** The available function list. */
     private List<ProcessBriefType> availableFunctionList = null;
@@ -339,7 +341,8 @@ public class RenderTransformationDialog extends JDialog {
     }
 
     /**
-     * Show message, set text colour according to whether message is informational (black) or an error (red).
+     * Show message, set text colour according to whether message
+     * is informational (black) or an error (red).
      *
      * @param message the message
      * @param error the error
@@ -506,7 +509,8 @@ public class RenderTransformationDialog extends JDialog {
      * @param args the arguments
      */
     public static void main(String[] args) {
-        GeoServerConnectionManagerInterface dummyInterface = new GeoServerConnectionManagerInterface() {
+        GeoServerConnectionManagerInterface dummyInterface = 
+                new GeoServerConnectionManagerInterface() {
 
             @Override
             public List<GeoServerConnection> getConnectionList() {

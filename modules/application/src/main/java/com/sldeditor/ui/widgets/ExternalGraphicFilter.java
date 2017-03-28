@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.io.File;
@@ -32,19 +33,19 @@ import com.sldeditor.common.localisation.Localisation;
 public class ExternalGraphicFilter extends FileFilter {
 
     /** The Constant jpeg. */
-    public final static String jpeg = "jpeg";
+    public static final String jpeg = "jpeg";
 
     /** The Constant jpg. */
-    public final static String jpg = "jpg";
+    public static final String jpg = "jpg";
 
     /** The Constant gif. */
-    public final static String gif = "gif";
+    public static final String gif = "gif";
 
     /** The Constant svg. */
-    public final static String svg = "svg";
+    public static final String svg = "svg";
 
     /** The Constant png. */
-    public final static String png = "png";
+    public static final String png = "png";
 
     /*
      * Get the extension of a file.
@@ -60,14 +61,16 @@ public class ExternalGraphicFilter extends FileFilter {
         String s = f.getName();
         int i = s.lastIndexOf('.');
 
-        if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
+        if (i > 0 && i < s.length() - 1) {
+            ext = s.substring(i + 1).toLowerCase();
         }
         return ext;
     }
 
-    //Accept all directories and all gif, jpg, tiff, or png files.
-    /* (non-Javadoc)
+    // Accept all directories and all gif, jpg, tiff, or png files.
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
      */
     public boolean accept(File f) {
@@ -77,16 +80,13 @@ public class ExternalGraphicFilter extends FileFilter {
 
         String extension = getExtension(f);
         if (extension != null) {
-            if (extension.equals(ExternalGraphicFilter.svg) ||
-                    extension.equals(ExternalGraphicFilter.gif) ||
-                    extension.equals(ExternalGraphicFilter.jpeg) ||
-                    extension.equals(ExternalGraphicFilter.jpg) ||
-                    extension.equals(ExternalGraphicFilter.png))
-            {
+            if (extension.equals(ExternalGraphicFilter.svg)
+                    || extension.equals(ExternalGraphicFilter.gif)
+                    || extension.equals(ExternalGraphicFilter.jpeg)
+                    || extension.equals(ExternalGraphicFilter.jpg)
+                    || extension.equals(ExternalGraphicFilter.png)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -94,10 +94,13 @@ public class ExternalGraphicFilter extends FileFilter {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.filechooser.FileFilter#getDescription()
      */
     public String getDescription() {
-        return Localisation.getString(ExternalGraphicFilter.class, "ExternalGraphicFilter.description");
+        return Localisation.getString(ExternalGraphicFilter.class,
+                "ExternalGraphicFilter.description");
     }
 }

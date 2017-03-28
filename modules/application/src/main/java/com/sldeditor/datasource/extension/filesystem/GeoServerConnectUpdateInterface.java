@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem;
 
 import java.util.List;
@@ -23,21 +24,20 @@ import java.util.List;
 import com.sldeditor.common.data.GeoServerConnection;
 
 /**
- * The Interface GeoServerConnectUpdateInterface allows information
- * about GeoServer connections to be transferred.
+ * The Interface GeoServerConnectUpdateInterface allows information about
+ * GeoServer connections to be transferred.
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface GeoServerConnectUpdateInterface
-{
-    
+public interface GeoServerConnectUpdateInterface {
+
     /**
      * Gets the connection details.
      *
      * @return the connection details
      */
     List<GeoServerConnection> getConnectionDetails();
-    
+
     /**
      * Adds the new connection.
      *
@@ -51,7 +51,8 @@ public interface GeoServerConnectUpdateInterface
      * @param originalConnectionDetails the original connection details
      * @param newConnectionDetails the new connection details
      */
-    void updateConnectionDetails(GeoServerConnection originalConnectionDetails, GeoServerConnection newConnectionDetails);
+    void updateConnectionDetails(GeoServerConnection originalConnectionDetails,
+            GeoServerConnection newConnectionDetails);
 
     /**
      * Delete connections.

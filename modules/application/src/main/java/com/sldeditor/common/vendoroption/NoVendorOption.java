@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.vendoroption;
 
 import java.util.List;
@@ -25,51 +27,55 @@ import java.util.List;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class NoVendorOption implements VendorOptionTypeInterface
-{
+public class NoVendorOption implements VendorOptionTypeInterface {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getName()
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Strict SLD";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionStringList()
      */
     @Override
-    public List<String> getVersionStringList()
-    {
+    public List<String> getVersionStringList() {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#addVersion(com.sldeditor.vendoroption.VersionData)
      */
     @Override
-    public void addVersion(VersionData versionData)
-    {
+    public void addVersion(VersionData versionData) {
         // Does nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersion(java.lang.String)
      */
     @Override
-    public VersionData getVersion(String versionString)
-    {
+    public VersionData getVersion(String versionString) {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionList()
      */
     @Override
-    public List<VersionData> getVersionList()
-    {
+    public List<VersionData> getVersionList() {
         return null;
     }
 }

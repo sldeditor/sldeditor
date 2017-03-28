@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter;
 
 import java.awt.Color;
@@ -50,10 +51,8 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      *
      * @return single instance of ExpressionPanelFactory
      */
-    private static ExpressionPanelFactory getInstance()
-    {
-        if(instance == null)
-        {
+    private static ExpressionPanelFactory getInstance() {
+        if (instance == null) {
             instance = new ExpressionPanelFactory();
         }
 
@@ -63,8 +62,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
     /**
      * Instantiates a new expression panel factory.
      */
-    private ExpressionPanelFactory()
-    {
+    private ExpressionPanelFactory() {
         PrefManager.getInstance().addListener(this);
         VendorOptionManager.getInstance().addVendorOptionListener(this);
 
@@ -78,8 +76,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the filter panel
      */
-    private FilterPanelInterface internal_getFilterPanel(String hints)
-    {
+    private FilterPanelInterface internal_getFilterPanel(String hints) {
         return new FilterPanelv2(this.vendorOptionVersionsList);
     }
 
@@ -89,8 +86,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the expression panel
      */
-    private ExpressionPanelInterface internal_getExpressionPanel(String hints)
-    {
+    private ExpressionPanelInterface internal_getExpressionPanel(String hints) {
         return new ExpressionPanelv2(this.vendorOptionVersionsList);
     }
 
@@ -100,8 +96,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the filter panel
      */
-    public static FilterPanelInterface getFilterPanel(String hints)
-    {
+    public static FilterPanelInterface getFilterPanel(String hints) {
         return getInstance().internal_getFilterPanel(hints);
     }
 
@@ -111,8 +106,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the expression panel
      */
-    public static ExpressionPanelInterface getExpressionPanel(String hints)
-    {
+    public static ExpressionPanelInterface getExpressionPanel(String hints) {
         return getInstance().internal_getExpressionPanel(hints);
     }
 
@@ -131,7 +125,9 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      *
      * @param vendorOptionVersionsList the vendor option list
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

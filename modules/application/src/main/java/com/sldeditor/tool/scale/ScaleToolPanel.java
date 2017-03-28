@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.scale;
 
 import java.awt.BorderLayout;
@@ -40,7 +41,8 @@ import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
 
 /**
- * Dialog that displays one or more slds in table showing the scales at which rules are displayed. User is able to update and save the scales.
+ * Dialog that displays one or more slds in table showing the scales at which 
+ * rules are displayed. User is able to update and save the scales.
  */
 public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
 
@@ -101,8 +103,7 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        btnRevert = new JButton(
-                Localisation.getString(ScaleToolPanel.class, "common.revert"));
+        btnRevert = new JButton(Localisation.getString(ScaleToolPanel.class, "common.revert"));
         btnRevert.setEnabled(false);
         btnRevert.addActionListener(new ActionListener() {
             @Override
@@ -164,7 +165,9 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
         dataModel.loadData(scaleDataList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.scale.ScaleToolUpdate#dataUpdated()
      */
     @Override

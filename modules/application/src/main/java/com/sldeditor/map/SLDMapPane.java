@@ -40,7 +40,7 @@ import org.geotools.swing.JMapFrame;
 import org.geotools.swing.RenderingExecutor;
 
 /**
- * Class based on JMapPane but updated to allow anti alias flags to be set
+ * Class based on JMapPane but updated to allow anti alias flags to be set.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -69,7 +69,7 @@ public class SLDMapPane extends AbstractMapPane {
     private Graphics2D baseImageGraphics;
 
     /**
-     * Creates a new map pane. 
+     * Creates a new map pane.
      */
     public SLDMapPane() {
         this(null);
@@ -78,8 +78,7 @@ public class SLDMapPane extends AbstractMapPane {
     /**
      * Creates a new map pane.
      *
-     * @param content the map content containing the layers to display
-     *     (may be {@code null})
+     * @param content the map content containing the layers to display (may be {@code null})
      */
     public SLDMapPane(MapContent content) {
         this(content, null, null);
@@ -167,15 +166,14 @@ public class SLDMapPane extends AbstractMapPane {
 
     /**
      * Retrieve the map pane's current base image.
-     * <p>
-     * The map pane caches the most recent rendering of map layers
-     * as an image to avoid time-consuming rendering requests whenever
-     * possible. The base image will be re-drawn whenever there is a
-     * change to map layer data, style or visibility; and it will be
-     * replaced by a new image when the pane is resized.
-     * <p>
-     * This method returns a <b>live</b> reference to the current
-     * base image. Use with caution.
+     * 
+     * <p>The map pane caches the most recent rendering of map layers as an image to avoid
+     * time-consuming rendering requests whenever possible. The base
+     * image will be re-drawn whenever there is a change to map layer data, style or
+     * visibility; and it will be replaced by a new image when the pane
+     * is resized.
+     * 
+     * <p>This method returns a <b>live</b> reference to the current base image. Use with caution.
      *
      * @return a live reference to the current base image
      */
@@ -212,15 +210,14 @@ public class SLDMapPane extends AbstractMapPane {
     protected void drawLayers(boolean createNewImage) {
         drawingLock.lock();
         try {
-            if (mapContent != null
-                    && !mapContent.getViewport().isEmpty()
+            if (mapContent != null && !mapContent.getViewport().isEmpty()
                     && acceptRepaintRequests.get()) {
 
                 Rectangle r = getVisibleRect();
                 if (baseImage == null || createNewImage) {
-                    baseImage = GraphicsEnvironment.getLocalGraphicsEnvironment().
-                            getDefaultScreenDevice().getDefaultConfiguration().
-                            createCompatibleImage(r.width, r.height, Transparency.TRANSLUCENT);
+                    baseImage = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                            .getDefaultScreenDevice().getDefaultConfiguration()
+                            .createCompatibleImage(r.width, r.height, Transparency.TRANSLUCENT);
 
                     if (baseImageGraphics != null) {
                         baseImageGraphics.dispose();
@@ -228,8 +225,7 @@ public class SLDMapPane extends AbstractMapPane {
 
                     baseImageGraphics = baseImage.createGraphics();
                     baseImageGraphics.setRenderingHints(new RenderingHints(
-                            RenderingHints.KEY_ANTIALIASING,
-                            RenderingHints.VALUE_ANTIALIAS_ON));
+                            RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
                     clearLabelCache.set(true);
 
                 } else {
@@ -238,7 +234,8 @@ public class SLDMapPane extends AbstractMapPane {
                 }
 
                 if (mapContent != null && !mapContent.layers().isEmpty()) {
-                    getRenderingExecutor().submit(mapContent, getRenderer(), baseImageGraphics, this);
+                    getRenderingExecutor().submit(mapContent, getRenderer(), baseImageGraphics,
+                            this);
                 }
             }
         } finally {
@@ -249,8 +246,7 @@ public class SLDMapPane extends AbstractMapPane {
     /**
      * Reset renderer.
      */
-    public void resetRenderer()
-    {
+    public void resetRenderer() {
         if (renderingExecutor != null) {
             renderingExecutor.shutdown();
         }

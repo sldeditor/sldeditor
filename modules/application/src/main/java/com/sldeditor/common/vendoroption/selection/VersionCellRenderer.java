@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.vendoroption.selection;
 
 import java.awt.Component;
@@ -35,11 +36,13 @@ public class VersionCellRenderer extends DefaultTableCellRenderer {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
         if (value instanceof VersionData) {
             VersionData versonData = (VersionData) value;
             setText(versonData.getVersionString());

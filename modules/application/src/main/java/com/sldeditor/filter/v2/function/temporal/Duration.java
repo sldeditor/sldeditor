@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.temporal;
 
 import java.text.DateFormat;
@@ -36,8 +37,7 @@ import com.sldeditor.common.console.ConsoleManager;
  *
  * @author Robert Ward (SCISYS)
  */
-public class Duration
-{
+public class Duration {
 
     /** The Constant BEFORE_PREFIX. */
     private static final String DURATION_TIME_PREFIX = "T";
@@ -99,8 +99,7 @@ public class Duration
     /**
      * Instantiates a new duration.
      */
-    public Duration()
-    {
+    public Duration() {
     }
 
     /**
@@ -109,8 +108,7 @@ public class Duration
      * @param string the string
      */
     public Duration(String string) {
-        if(string.startsWith(DURATION_DATE_PREFIX))
-        {
+        if (string.startsWith(DURATION_DATE_PREFIX)) {
             int year = 0;
             int month = 0;
             int day = 0;
@@ -121,24 +119,23 @@ public class Duration
             // Assume duration
             List<String> outputList = extractDurationValues(string.substring(1));
 
-            boolean hasTime = (outputList.size() >= 2) && (outputList.get(0).endsWith(YEAR_SUFFIX) &&
-                    (outputList.get(1).endsWith(HOUR_SUFFIX) || outputList.get(1).endsWith(MINUTE_SUFFIX) || outputList.get(1).endsWith(SECOND_SUFFIX)));
+            boolean hasTime = (outputList.size() >= 2) && (outputList.get(0).endsWith(YEAR_SUFFIX)
+                    && (outputList.get(1).endsWith(HOUR_SUFFIX)
+                            || outputList.get(1).endsWith(MINUTE_SUFFIX)
+                            || outputList.get(1).endsWith(SECOND_SUFFIX)));
 
             year = extractValue(outputList, YEAR_SUFFIX);
             month = extractValue(outputList, MONTH_SUFFIX);
             day = extractValue(outputList, DAY_SUFFIX);
 
-            if(hasTime)
-            {
+            if (hasTime) {
                 hour = extractValue(outputList, HOUR_SUFFIX);
                 minute = extractValue(outputList, MINUTE_SUFFIX);
                 second = extractValue(outputList, SECOND_SUFFIX);
             }
 
             setDuration(year, month, day, hour, minute, second);
-        }
-        else if(string.startsWith(DURATION_TIME_PREFIX))
-        {
+        } else if (string.startsWith(DURATION_TIME_PREFIX)) {
             int year = 0;
             int month = 0;
             int day = 0;
@@ -154,9 +151,7 @@ public class Duration
             second = extractValue(outputList, SECOND_SUFFIX);
 
             setDuration(year, month, day, hour, minute, second);
-        }
-        else
-        {
+        } else {
             String[] components = string.split(DURATION_TIME_PREFIX);
 
             try {
@@ -175,8 +170,7 @@ public class Duration
                 cal.set(Calendar.SECOND, seconds);
 
                 setDate(cal.getTime());
-            }
-            catch (ParseException e) {
+            } catch (ParseException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
@@ -205,11 +199,9 @@ public class Duration
      * @return the int
      */
     private int extractValue(List<String> outputList, String suffix) {
-        if(!outputList.isEmpty())
-        {
+        if (!outputList.isEmpty()) {
             String value = outputList.get(0);
-            if(value.endsWith(suffix))
-            {
+            if (value.endsWith(suffix)) {
                 outputList.remove(0);
                 return Integer.valueOf(value.substring(0, value.length() - 1)).intValue();
             }
@@ -237,8 +229,7 @@ public class Duration
      * @param minutes the minutes
      * @param seconds the seconds
      */
-    public void setDuration(int years, int months, int days, int hours, int minutes, int seconds)
-    {
+    public void setDuration(int years, int months, int days, int hours, int minutes, int seconds) {
         isDate = false;
         durationYears = years;
         durationMonths = months;
@@ -254,68 +245,47 @@ public class Duration
      *
      * @return the string
      */
-    public String getString()
-    {
-        if(isDate)
-        {
+    public String getString() {
+        if (isDate) {
             return String.format("%sT%sZ", df.format(date), tf.format(date));
-        }
-        else
-        {
+        } else {
             List<String> list = new ArrayList<String>();
 
-            if(durationDays > 0)
-            {
-                if(durationYears > 0)
-                {
+            if (durationDays > 0) {
+                if (durationYears > 0) {
                     list.add(buildDurationString(durationYears, YEAR_SUFFIX));
                 }
 
-                if(durationMonths > 0)
-                {
+                if (durationMonths > 0) {
                     list.add(buildDurationString(durationMonths, MONTH_SUFFIX));
                 }
 
                 list.add(buildDurationString(durationDays, DAY_SUFFIX));
-            }
-            else if(durationMonths > 0)
-            {
-                if(durationYears > 0)
-                {
+            } else if (durationMonths > 0) {
+                if (durationYears > 0) {
                     list.add(buildDurationString(durationYears, YEAR_SUFFIX));
                 }
                 list.add(buildDurationString(durationMonths, MONTH_SUFFIX));
-            }
-            else if(durationYears > 0)
-            {
+            } else if (durationYears > 0) {
                 list.add(buildDurationString(durationYears, YEAR_SUFFIX));
             }
 
-            if(durationSeconds > 0)
-            {
-                if(durationHours > 0)
-                {
+            if (durationSeconds > 0) {
+                if (durationHours > 0) {
                     list.add(buildDurationString(durationHours, HOUR_SUFFIX));
                 }
-                if(durationMinutes > 0)
-                {
+                if (durationMinutes > 0) {
                     list.add(buildDurationString(durationMinutes, MINUTE_SUFFIX));
                 }
                 list.add(buildDurationString(durationSeconds, SECOND_SUFFIX));
-            }
-            else if(durationMinutes > 0)
-            {
-                if(isDurationDate && (durationYears == 0))
-                {
+            } else if (durationMinutes > 0) {
+                if (isDurationDate && (durationYears == 0)) {
                     list.add(buildDurationString(durationYears, YEAR_SUFFIX));
                 }
                 list.add(buildDurationString(durationHours, HOUR_SUFFIX));
                 list.add(buildDurationString(durationMinutes, MINUTE_SUFFIX));
-            }
-            else if(durationHours > 0)
-            {
-                if(isDurationDate && (durationYears == 0))
-                {
+            } else if (durationHours > 0) {
+                if (isDurationDate && (durationYears == 0)) {
                     list.add(buildDurationString(durationYears, YEAR_SUFFIX));
                 }
                 list.add(buildDurationString(durationHours, HOUR_SUFFIX));
@@ -324,8 +294,7 @@ public class Duration
             StringBuilder sb = new StringBuilder();
 
             sb.append(isDurationDate ? DURATION_DATE_PREFIX : DURATION_TIME_PREFIX);
-            for(String item : list)
-            {
+            for (String item : list) {
                 sb.append(item);
             }
 

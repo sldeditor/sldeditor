@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource;
 
 import com.sldeditor.common.SLDDataInterface;
@@ -25,9 +26,8 @@ import com.sldeditor.common.SLDDataInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface SLDEditorDataUpdateInterface
-{
-    
+public interface SLDEditorDataUpdateInterface {
+
     /**
      * SLD data updated.
      *
