@@ -1,7 +1,23 @@
 # Change Log
 
-## [0.7.3](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2017-03-21)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.2...0.7.3)
+## [0.7.4](https://github.com/robward-scisys/sldeditor/tree/0.7.4) (2017-03-28)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.3...0.7.4)
+
+**Implemented enhancements:**
+
+- Check project with CheckStyle [\#315](https://github.com/robward-scisys/sldeditor/issues/315)
+- Updated to use GeoTools 16.2 and GeoServer 2.11 [\#318](https://github.com/robward-scisys/sldeditor/pull/318) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Create release 0.7.3 [\#313](https://github.com/robward-scisys/sldeditor/issues/313)
+
+**Merged pull requests:**
+
+- Iss315 checkstyle [\#316](https://github.com/robward-scisys/sldeditor/pull/316) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.3](https://github.com/robward-scisys/sldeditor/tree/v0.7.3) (2017-03-21)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.2...v0.7.3)
 
 **Implemented enhancements:**
 
@@ -22,12 +38,13 @@
 - Enable Save SLD to GeoServer [\#295](https://github.com/robward-scisys/sldeditor/issues/295)
 - Expression/attribute values not cleared [\#292](https://github.com/robward-scisys/sldeditor/issues/292)
 - Iss303 reinstate inline features [\#306](https://github.com/robward-scisys/sldeditor/pull/306) ([robward-scisys](https://github.com/robward-scisys))
+- Iss303 reinstate inline features [\#304](https://github.com/robward-scisys/sldeditor/pull/304) ([robward-scisys](https://github.com/robward-scisys))
 - Save SLD menu option now enabled for GeoServer [\#297](https://github.com/robward-scisys/sldeditor/pull/297) ([robward-scisys](https://github.com/robward-scisys))
 - Expression/property values are cleared when value set [\#294](https://github.com/robward-scisys/sldeditor/pull/294) ([robward-scisys](https://github.com/robward-scisys))
 - Changed LabelCacheImpl to SynchronizedLabelCache [\#291](https://github.com/robward-scisys/sldeditor/pull/291) ([robward-scisys](https://github.com/robward-scisys))
 - Killed off the zombie labels again [\#288](https://github.com/robward-scisys/sldeditor/pull/288) ([robward-scisys](https://github.com/robward-scisys))
-- Iss282 long rule does not reload [\#286](https://github.com/robward-scisys/sldeditor/pull/286) ([robward-scisys](https://github.com/robward-scisys))
-- Not filter now only uses one input [\#283](https://github.com/robward-scisys/sldeditor/pull/283) ([robward-scisys](https://github.com/robward-scisys))
+- Iss282 long rule doesnot reload [\#286](https://github.com/robward-scisys/sldeditor/pull/286) ([robward-scisys](https://github.com/robward-scisys))
+- Not filter now only uses on input [\#283](https://github.com/robward-scisys/sldeditor/pull/283) ([robward-scisys](https://github.com/robward-scisys))
 
 **Closed issues:**
 
@@ -39,6 +56,7 @@
 
 **Merged pull requests:**
 
+- Version 0.7.3 [\#314](https://github.com/robward-scisys/sldeditor/pull/314) ([robward-scisys](https://github.com/robward-scisys))
 - Iss309 set data source crash [\#310](https://github.com/robward-scisys/sldeditor/pull/310) ([robward-scisys](https://github.com/robward-scisys))
 - Add missing file from last pull request [\#307](https://github.com/robward-scisys/sldeditor/pull/307) ([robward-scisys](https://github.com/robward-scisys))
 - Revert "Iss303 reinstate inline features" [\#305](https://github.com/robward-scisys/sldeditor/pull/305) ([robward-scisys](https://github.com/robward-scisys))
