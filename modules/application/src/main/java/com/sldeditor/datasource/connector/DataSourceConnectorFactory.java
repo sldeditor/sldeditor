@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.connector;
 
 import java.util.LinkedHashMap;
@@ -34,7 +35,8 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
  */
 public class DataSourceConnectorFactory {
     /** The data connector map. */
-    private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap = new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
+    private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap = 
+            new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
 
     /** The no data source. */
     private static DataSourceConnectorEmpty noDataSource = null;

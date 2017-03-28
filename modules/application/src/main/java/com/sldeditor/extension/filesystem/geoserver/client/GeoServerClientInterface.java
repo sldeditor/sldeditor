@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver.client;
 
 import java.util.List;
@@ -132,7 +133,7 @@ public interface GeoServerClientInterface {
      * @param workspaceName the workspace name
      */
     void refreshWorkspace(String workspaceName);
-    
+
     /**
      * Delete workspace.
      *

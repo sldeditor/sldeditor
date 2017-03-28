@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.util.List;
@@ -56,14 +57,10 @@ public class SelectedProcessFunction {
      *
      * @return the list
      */
-    public List<ProcessFunctionParameterValue> extractParameters()
-    {
-        if(builtInSelected)
-        {
+    public List<ProcessFunctionParameterValue> extractParameters() {
+        if (builtInSelected) {
             return builtIn.extractParameters(builtInProcessFunction, selectedProcessFunctionData);
-        }
-        else
-        {
+        } else {
             return custom.extractParameters(selectedCustomFunction);
         }
     }
@@ -86,7 +83,8 @@ public class SelectedProcessFunction {
      * @param builtInProcessFunction the builtInProcessFunction to set
      * @param existingProcessFunction the existing process function
      */
-    public void setBuiltInProcessFunction(FunctionName builtInProcessFunction, ProcessFunction existingProcessFunction) {
+    public void setBuiltInProcessFunction(FunctionName builtInProcessFunction,
+            ProcessFunction existingProcessFunction) {
         this.builtInProcessFunction = builtInProcessFunction;
         this.selectedProcessFunctionData = existingProcessFunction;
         this.selectedCustomFunction = null;
@@ -108,18 +106,13 @@ public class SelectedProcessFunction {
      * @return the row count
      */
     public int getRowCount() {
-        if(builtInSelected)
-        {
-            if(builtInProcessFunction == null)
-            {
+        if (builtInSelected) {
+            if (builtInProcessFunction == null) {
                 return 0;
             }
             return builtInProcessFunction.getArguments().size();
-        }
-        else
-        {
-            if(selectedCustomFunction == null)
-            {
+        } else {
+            if (selectedCustomFunction == null) {
                 return 0;
             }
             return selectedCustomFunction.getDataInputs().getInput().size();
@@ -132,18 +125,13 @@ public class SelectedProcessFunction {
      * @return the function name
      */
     public Name getFunctionName() {
-        if(builtInSelected)
-        {
-            if(builtInProcessFunction == null)
-            {
+        if (builtInSelected) {
+            if (builtInProcessFunction == null) {
                 return null;
             }
             return builtInProcessFunction.getFunctionName();
-        }
-        else
-        {
-            if(selectedCustomFunction == null)
-            {
+        } else {
+            if (selectedCustomFunction == null) {
                 return null;
             }
             return new NameImpl(selectedCustomFunction.getTitle().getValue());
@@ -158,15 +146,11 @@ public class SelectedProcessFunction {
      */
     public static String extractLocalFunctionName(String functionName) {
         String functionNameString = null;
-        if(functionName != null)
-        {
+        if (functionName != null) {
             String[] components = functionName.split(":");
-            if(components.length == 2)
-            {
+            if (components.length == 2) {
                 functionNameString = components[1];
-            }
-            else
-            {
+            } else {
                 functionNameString = functionName;
             }
         }

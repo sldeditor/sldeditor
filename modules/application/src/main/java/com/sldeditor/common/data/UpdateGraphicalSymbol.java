@@ -41,20 +41,19 @@ import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
  */
 public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.data.ProcessGraphicSymbolInterface#processGraphicalSymbol(java.net.URL, java.util.List, java.util.List)
      */
     @Override
     public void processGraphicalSymbol(URL resourceLocator,
-            List<GraphicalSymbol> graphicalSymbolList,
-            List<String> externalImageList)
-    {
-        for(GraphicalSymbol symbol : graphicalSymbolList)
-        {
-            if(symbol instanceof ExternalGraphic)
-            {
+            List<GraphicalSymbol> graphicalSymbolList, List<String> externalImageList) {
+        for (GraphicalSymbol symbol : graphicalSymbolList) {
+            if (symbol instanceof ExternalGraphic) {
                 ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) symbol;
-                OnLineResourceImpl onlineResource = (OnLineResourceImpl) externalGraphic.getOnlineResource();
+                OnLineResourceImpl onlineResource = (OnLineResourceImpl) externalGraphic
+                        .getOnlineResource();
 
                 String currentValue = null;
                 URL currentValueURL = null;
@@ -65,8 +64,7 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                     ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
                 }
 
-                if((resourceLocator == null) || RelativePath.hasHost(currentValueURL))
-                {
+                if ((resourceLocator == null) || RelativePath.hasHost(currentValueURL)) {
                     // Just report back the external image
                     URI uri = null;
                     try {
@@ -75,15 +73,13 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                     } catch (URISyntaxException e) {
                         ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
                     }
-                }
-                else
-                {
+                } else {
                     try {
                         File file = new File(currentValueURL.getFile());
                         File folder = new File(resourceLocator.getFile());
                         currentValue = RelativePath.getRelativePath(file, folder);
 
-                        // If the backslashes are not converted to forward slashes 
+                        // If the backslashes are not converted to forward slashes
                         // creating the URI does not work
                         currentValue = currentValue.replace('\\', '/');
                         OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();

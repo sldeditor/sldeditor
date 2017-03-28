@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.coordinate;
 
 import java.util.ArrayList;
@@ -61,7 +62,8 @@ public class CoordManager {
     private static List<ValueComboBoxData> crsDataList = new ArrayList<ValueComboBoxData>();
 
     /** The crs map. */
-    private static HashMap<String, ValueComboBoxData> crsMap = new HashMap<String, ValueComboBoxData>();
+    private static HashMap<String, ValueComboBoxData> crsMap = 
+            new HashMap<String, ValueComboBoxData>();
 
     /** The default crs. */
     private CoordinateReferenceSystem defaultCRS = null;

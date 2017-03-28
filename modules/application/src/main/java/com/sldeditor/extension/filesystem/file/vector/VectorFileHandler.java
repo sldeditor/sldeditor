@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.file.vector;
 
 import java.io.File;
@@ -42,16 +43,14 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VectorFileHandler implements FileHandlerInterface
-{
+public class VectorFileHandler implements FileHandlerInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7418498226923733628L;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public VectorFileHandler()
-    {
+    public VectorFileHandler() {
     }
 
     /**
@@ -60,8 +59,7 @@ public class VectorFileHandler implements FileHandlerInterface
      * @return the file extension
      */
     @Override
-    public List<String> getFileExtensionList()
-    {
+    public List<String> getFileExtensionList() {
         return Arrays.asList("shp");
     }
 
@@ -74,10 +72,9 @@ public class VectorFileHandler implements FileHandlerInterface
      * @return true, if successful
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface,  DefaultTreeModel treeModel, FileTreeNode node)
-    {
-        if(node != null)
-        {
+    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
+            FileTreeNode node) {
+        if (node != null) {
             node.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
         }
 
@@ -90,26 +87,23 @@ public class VectorFileHandler implements FileHandlerInterface
      * @param node the node
      * @return the SLD contents
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
-    public List<SLDDataInterface> getSLDContents(NodeInterface node)
-    {
-        if(node instanceof FileTreeNode)
-        {
-            FileTreeNode fileTreeNode = (FileTreeNode)node;
+    public List<SLDDataInterface> getSLDContents(NodeInterface node) {
+        if (node instanceof FileTreeNode) {
+            FileTreeNode fileTreeNode = (FileTreeNode) node;
 
             File f = fileTreeNode.getFile();
 
             String fileExtension = ExternalFilenames.getFileExtension(f.getAbsolutePath());
-            if(getFileExtensionList().contains(fileExtension))
-            {
+            if (getFileExtensionList().contains(fileExtension)) {
                 return open(f);
             }
-        }
-        else if(node instanceof DatabaseFeatureClassNode)
-        {
+        } else if (node instanceof DatabaseFeatureClassNode) {
             return open(null);
         }
         return null;
@@ -122,8 +116,7 @@ public class VectorFileHandler implements FileHandlerInterface
      * @return the list
      */
     @Override
-    public List<SLDDataInterface> open(File f)
-    {
+    public List<SLDDataInterface> open(File f) {
         return new ArrayList<SLDDataInterface>();
     }
 
@@ -133,12 +126,13 @@ public class VectorFileHandler implements FileHandlerInterface
      * @param sldData the sld data
      * @return true, if successful
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public boolean save(SLDDataInterface sldData)
-    {
+    public boolean save(SLDDataInterface sldData) {
         return false;
     }
 
@@ -148,15 +142,16 @@ public class VectorFileHandler implements FileHandlerInterface
      * @param sldData the sld data
      * @return the SLD name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
-    public String getSLDName(SLDDataInterface sldData)
-    {
-        if(sldData != null)
-        {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+    public String getSLDName(SLDDataInterface sldData) {
+        if (sldData != null) {
+            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
+                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -172,7 +167,9 @@ public class VectorFileHandler implements FileHandlerInterface
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override

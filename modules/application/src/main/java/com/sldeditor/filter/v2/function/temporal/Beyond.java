@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.temporal;
 
 import java.util.List;
@@ -40,14 +41,12 @@ public class Beyond implements FilterConfigInterface {
     /**
      * The Class BeyondExtended.
      */
-    public class BeyondExtended extends BeyondImpl implements FilterExtendedInterface
-    {
-        
+    public class BeyondExtended extends BeyondImpl implements FilterExtendedInterface {
+
         /**
          * Instantiates a new beyond extended.
          */
-        public BeyondExtended()
-        {
+        public BeyondExtended() {
             super(null, null);
         }
 
@@ -57,19 +56,22 @@ public class Beyond implements FilterConfigInterface {
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public BeyondExtended(Expression expression1, Expression expression2)
-        {
+        public BeyondExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.geotools.filter.CartesianDistanceFilter#toString()
          */
         public String toString() {
             return "[ " + getExpression1() + " Beyond " + getExpression2() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -81,8 +83,7 @@ public class Beyond implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Beyond()
-    {
+    public Beyond() {
     }
 
     /**
@@ -93,20 +94,12 @@ public class Beyond implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("Beyond", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Number.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.LITERAL, Number.class));
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Number.class));
+        filterName.addParameter(
+                new FilterNameParameter("expression", ExpressionTypeEnum.LITERAL, Number.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new BeyondExtended();
     }
 
     /**
@@ -122,6 +115,16 @@ public class Beyond implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new BeyondExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -130,12 +133,9 @@ public class Beyond implements FilterConfigInterface {
 
         BeyondImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 2))
-        {
+        if ((parameterList == null) || (parameterList.size() != 2)) {
             filter = new BeyondExtended();
-        }
-        else
-        {
+        } else {
             filter = new BeyondExtended(parameterList.get(0), parameterList.get(1));
         }
 

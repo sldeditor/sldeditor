@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public interface LoadSLDInterface {
     void emptySLD();
 
     /**
-     * Method called when a new folder/file has been selected but not processed
+     * Method called when a new folder/file has been selected but not processed.
      */
     void preLoad();
 

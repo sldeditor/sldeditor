@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.layout;
 
 import java.awt.BorderLayout;
@@ -43,8 +44,7 @@ import com.sldeditor.ui.sldtext.SLDTextArea;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorDefaultLayout implements UILayoutInterface
-{
+public class SLDEditorDefaultLayout implements UILayoutInterface {
 
     /**
      * Creates the ui.
@@ -53,14 +53,16 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
      * @param uiMgr the ui mgr
      * @param extensionList the extension list
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.UILayoutInterface#createUI(com.sldeditor.SLDEditorInterface, com.sldeditor.SLDEditorUIPanels, java.util.List)
      */
     @Override
-    public void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr, List<ExtensionInterface> extensionList) {
+    public void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr,
+            List<ExtensionInterface> extensionList) {
 
-        if(application == null)
-        {
+        if (application == null) {
             return;
         }
         JPanel appPanel = application.getAppPanel();
@@ -80,10 +82,9 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
 
         ToolManager toolManagerInstance = ToolManager.getInstance();
         toolManagerInstance.setApplication(application);
-        
+
         // Initialise extensions
-        for(ExtensionInterface extension : extensionList)
-        {
+        for (ExtensionInterface extension : extensionList) {
             extension.initialise(application.getLoadSLDInterface(), toolManagerInstance);
         }
 
@@ -91,32 +92,39 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
         JComponent legendPanel = uiMgr.getLegendData();
         JComponent dataPanel = uiMgr.getSLDSymbolData();
 
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol"), null, dataPanel,
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol"),
+                null, dataPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol.tooltip"));
 
         // Legend data panel
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend"), null, legendPanel,
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend"),
+                null, legendPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.legend.tooltip"));
 
         // SLD raw data panel
         JComponent sldPanel = SLDTextArea.getPanel();
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.sld"), null, sldPanel,
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.sld"), null,
+                sldPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.sld.tooltip"));
 
         // Map renderer
         MapRender mapTabPanel = RenderPanelFactory.getMapRenderer();
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.map"), null, mapTabPanel,
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.map"), null,
+                mapTabPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.map.tooltip"));
 
         // Data source
         JComponent dataSourceConfig = uiMgr.getDataSourceConfig();
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource"), null, dataSourceConfig,
+        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource"),
+                null, dataSourceConfig,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.dataSource.tooltip"));
 
         // Vendor option
         JComponent vendorOptionConfig = uiMgr.getVendorOption();
-        tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption"), null, vendorOptionConfig,
-                Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption.tooltip"));
+        tabbedPane.addTab(
+                Localisation.getString(SLDEditorDefaultLayout.class, "panels.vendorOption"), null,
+                vendorOptionConfig, Localisation.getString(SLDEditorDefaultLayout.class,
+                        "panels.vendorOption.tooltip"));
 
         panel.add(tabbedPane);
         tabbedPane.addChangeListener(new ChangeListener() {
@@ -125,28 +133,26 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
             public void stateChanged(ChangeEvent e) {
                 if (e.getSource() instanceof JTabbedPane) {
                     JTabbedPane pane = (JTabbedPane) e.getSource();
-                    
-                    if(pane.getSelectedComponent() == mapTabPanel)
-                    {
+
+                    if (pane.getSelectedComponent() == mapTabPanel) {
                         mapTabPanel.updateStyle();
                     }
                 }
-            }});
+            }
+        });
 
         // Extension tab
         JTabbedPane extensionTab = new JTabbedPane(JTabbedPane.TOP);
         panel.add(extensionTab, BorderLayout.WEST);
 
-        for(ExtensionInterface extension : extensionList)
-        {
-            extensionTab.addTab(extension.getName(), null, extension.getPanel(), extension.getTooltip());
+        for (ExtensionInterface extension : extensionList) {
+            extensionTab.addTab(extension.getName(), null, extension.getPanel(),
+                    extension.getTooltip());
         }
 
-        if(application != null)
-        {
+        if (application != null) {
             JFrame applicationFrame = application.getApplicationFrame();
-            if(applicationFrame != null)
-            {
+            if (applicationFrame != null) {
                 applicationFrame.getContentPane().add(appPanel);
             }
         }
@@ -157,7 +163,9 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
      *
      * @param folder the folder
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.layout.UILayoutInterface#writeLayout(java.lang.String)
      */
     @Override
@@ -170,7 +178,9 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
      *
      * @param folder the folder
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.layout.UILayoutInterface#readLayout(java.lang.String)
      */
     @Override
@@ -183,12 +193,13 @@ public class SLDEditorDefaultLayout implements UILayoutInterface
      *
      * @return the display name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.layout.UILayoutInterface#getDisplayName()
      */
     @Override
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return "Default";
     }
 }

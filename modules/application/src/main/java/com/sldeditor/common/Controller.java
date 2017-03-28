@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common;
 
 import javax.swing.JDialog;
@@ -30,8 +31,7 @@ import javax.swing.JFrame;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class Controller implements PopulatingInterface
-{
+public class Controller implements PopulatingInterface {
 
     /** The singleton instance. */
     private static Controller instance = null;
@@ -45,8 +45,7 @@ public class Controller implements PopulatingInterface
     /**
      * Instantiates a new controller.
      */
-    private Controller()
-    {
+    private Controller() {
     }
 
     /**
@@ -54,10 +53,8 @@ public class Controller implements PopulatingInterface
      *
      * @return single instance of Controller
      */
-    public static Controller getInstance()
-    {
-        if(instance == null)
-        {
+    public static Controller getInstance() {
+        if (instance == null) {
             instance = new Controller();
         }
 
@@ -70,8 +67,7 @@ public class Controller implements PopulatingInterface
      * @return true, if is populating
      */
     @Override
-    public boolean isPopulating()
-    {
+    public boolean isPopulating() {
         return populating;
     }
 
@@ -81,8 +77,7 @@ public class Controller implements PopulatingInterface
      * @param populating the new populating
      */
     @Override
-    public void setPopulating(boolean populating)
-    {
+    public void setPopulating(boolean populating) {
         this.populating = populating;
     }
 
@@ -110,8 +105,7 @@ public class Controller implements PopulatingInterface
      * @param dialog the dialog to centre
      */
     public void centreDialog(JDialog dialog) {
-        if((frame != null) && (dialog != null))
-        {
+        if ((frame != null) && (dialog != null)) {
             final int x = (frame.getWidth() - dialog.getWidth()) / 2;
             final int y = (frame.getHeight() - dialog.getHeight()) / 2;
             dialog.setLocation(x, y);

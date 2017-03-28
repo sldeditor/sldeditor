@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.attribute;
 
 import java.awt.BorderLayout;
@@ -64,8 +65,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      *
      * @return the panel name
      */
-    public static String getPanelName()
-    {
+    public static String getPanelName() {
         return EXPRESSION_PANEL;
     }
 
@@ -75,41 +75,41 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      * @param parentObj the parent obj
      * @param expectedDataType the expected data type
      */
-    public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType)
-    {
+    public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType) {
         setLayout(new BorderLayout(0, 0));
 
-        btnEditExpression = new JButton(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.edit"));
+        btnEditExpression = new JButton(
+                Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.edit"));
         expressionTextField = new JTextField();
 
         btnEditExpression.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                ExpressionPanelInterface expressionPanel = ExpressionPanelFactory.getExpressionPanel(null);
+                ExpressionPanelInterface expressionPanel = ExpressionPanelFactory
+                        .getExpressionPanel(null);
 
-                expressionPanel.configure(Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"),
-                        expectedDataType,
-                        SelectedSymbol.getInstance().isRasterSymbol());
+                expressionPanel.configure(
+                        Localisation.getString(ExpressionSubPanel.class,
+                                "ExpressionSubPanel.dialogTitle"),
+                        expectedDataType, SelectedSymbol.getInstance().isRasterSymbol());
 
                 expressionPanel.populate(storedExpression);
 
-                if(expressionPanel.showDialog())
-                {
+                if (expressionPanel.showDialog()) {
                     Expression expression = expressionPanel.getExpression();
 
                     populateExpression(expression);
 
-                    if(parentObj != null)
-                    {
+                    if (parentObj != null) {
                         parentObj.updateSymbol();
                     }
 
-                    //                    String expressionString = expressionPanel.getExpressionString();
+                    // String expressionString = expressionPanel.getExpressionString();
                     //
-                    //                    if(expressionString != null)
-                    //                    {
-                    //                        createExpression(expressionString);
-                    //                    }
+                    // if(expressionString != null)
+                    // {
+                    // createExpression(expressionString);
+                    // }
                 }
             }
         });
@@ -125,13 +125,12 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
      * @return the expression
      */
     public Expression getExpression() {
-        if(storedExpression == null)
-        {
+        if (storedExpression == null) {
             Expression expression = null;
             try {
                 expression = CQL.toExpression(expressionTextField.getText());
             } catch (CQLException e) {
-                //     ConsoleManager.getInstance().exception(this, e);
+                // ConsoleManager.getInstance().exception(this, e);
             }
             return expression;
         }
@@ -149,8 +148,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
 
         String expressionString = "";
 
-        if(expression != null)
-        {
+        if (expression != null) {
             expressionString = expression.toString();
         }
         expressionTextField.setText(expressionString);

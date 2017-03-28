@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -23,7 +24,7 @@ import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
- * The Class ArrowDetails panel contains all the fields to configure 
+ * The Class ArrowDetails panel contains all the fields to configure
  * an GeoServer vendor option arrow strings.
  * 
  * @author Robert Ward (SCISYS)
@@ -38,8 +39,7 @@ public class EmptyDetails extends StandardPanel implements UpdateSymbolInterface
      *
      * @param resourceFile the resource file
      */
-    public EmptyDetails(String resourceFile)
-    {
+    public EmptyDetails(String resourceFile) {
         super(EmptyDetails.class);
 
         readConfigFileNoScrollPane(null, getClass(), this, resourceFile);
@@ -50,7 +50,9 @@ public class EmptyDetails extends StandardPanel implements UpdateSymbolInterface
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override

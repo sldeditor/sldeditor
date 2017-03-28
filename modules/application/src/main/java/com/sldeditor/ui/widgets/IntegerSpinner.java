@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.util.ArrayList;
@@ -66,15 +67,12 @@ public class IntegerSpinner extends JSpinner {
 
                 Double doubleValue = IntegerSpinner.this.getDoubleValue();
 
-                if(doubleValue != oldValue)
-                {
+                if (doubleValue != oldValue) {
                     double oldValueCopy = oldValue;
 
                     oldValue = doubleValue;
-                    if(minIsZero)
-                    {
-                        if(doubleValue < 0.0)
-                        {
+                    if (minIsZero) {
+                        if (doubleValue < 0.0) {
                             doubleValue = 0.0;
                             field.setValue(doubleValue);
                         }
@@ -112,7 +110,7 @@ public class IntegerSpinner extends JSpinner {
      */
     public void notifyListeners(double oldValue, double newValue) {
 
-        for(SpinnerNotifyInterface observer : observers) {
+        for (SpinnerNotifyInterface observer : observers) {
             observer.notify(oldValue, newValue);
         }
     }
@@ -144,15 +142,13 @@ public class IntegerSpinner extends JSpinner {
         Double doubleValue = 0.0;
         Object obj = getValue();
 
-        if(obj instanceof Integer)
-        {
+        if (obj instanceof Integer) {
             Integer intValue = (Integer) obj;
-            doubleValue = (double)intValue;
+            doubleValue = (double) intValue;
         }
 
-        if(obj instanceof Double)
-        {
-            doubleValue = (Double)obj;
+        if (obj instanceof Double) {
+            doubleValue = (Double) obj;
         }
         return doubleValue;
     }

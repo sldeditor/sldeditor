@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.raster;
 
 import java.awt.image.BufferedImage;
@@ -85,10 +86,8 @@ public class RasterReader implements RasterReaderInterface {
      * @return the styled layer descriptor
      */
     @Override
-    public SLDDataInterface createRasterSLDData(File rasterFile)
-    {
-        if(rasterFile == null)
-        {
+    public SLDDataInterface createRasterSLDData(File rasterFile) {
+        if (rasterFile == null) {
             return null;
         }
 
@@ -96,15 +95,13 @@ public class RasterReader implements RasterReaderInterface {
 
         AbstractGridFormat format = GridFormatFinder.findFormat(rasterFile);
         AbstractGridCoverage2DReader reader = null;
-        
-        try
-        {
+
+        try {
             reader = format.getReader(rasterFile);
-        }
-        catch(UnsupportedOperationException e)
-        {
-            ConsoleManager.getInstance().error(this, 
-                    Localisation.getField(RasterTool.class, "RasterReader.unknownFormat") + rasterFile.getAbsolutePath());
+        } catch (UnsupportedOperationException e) {
+            ConsoleManager.getInstance().error(this,
+                    Localisation.getField(RasterTool.class, "RasterReader.unknownFormat")
+                            + rasterFile.getAbsolutePath());
             return null;
         }
 
@@ -139,7 +136,7 @@ public class RasterReader implements RasterReaderInterface {
      * Creates the rgb style.
      *
      * @param reader the reader
-     * @param raster 
+     * @param raster the raster
      * @return the style
      */
     private Style createRGBStyle(AbstractGridCoverage2DReader reader, WritableRaster raster) {
@@ -153,12 +150,9 @@ public class RasterReader implements RasterReaderInterface {
         }
         // We need at least three bands to create an RGB style
         int numBands = cov.getNumSampleDimensions();
-        if (numBands < 3)
-        {
+        if (numBands < 3) {
             createRGBImageSymbol(sym, cov, raster);
-        }
-        else
-        {
+        } else {
             createRGBChannelSymbol(sym, cov, numBands);
         }
         return SLD.wrapSymbolizers(sym);
@@ -169,22 +163,20 @@ public class RasterReader implements RasterReaderInterface {
      *
      * @param sym the sym
      * @param cov the cov
-     * @param raster 
+     * @param raster the raster
      */
-    private void createRGBImageSymbol(RasterSymbolizer sym, GridCoverage2D cov, WritableRaster raster) {
+    private void createRGBImageSymbol(RasterSymbolizer sym, GridCoverage2D cov,
+            WritableRaster raster) {
         double dest;
         List<Double> valueList = new ArrayList<Double>();
 
         GridEnvelope2D gridRange2D = cov.getGridGeometry().getGridRange2D();
-        for(int x = 0; x < gridRange2D.getWidth(); x++)
-        {
-            for(int y = 0; y < gridRange2D.getHeight(); y++)
-            {
+        for (int x = 0; x < gridRange2D.getWidth(); x++) {
+            for (int y = 0; y < gridRange2D.getHeight(); y++) {
                 try {
                     dest = raster.getSampleDouble(x, y, 0);
 
-                    if(!valueList.contains(dest))
-                    {
+                    if (!valueList.contains(dest)) {
                         valueList.add(dest);
                     }
                 } catch (Exception e) {
@@ -199,10 +191,10 @@ public class RasterReader implements RasterReaderInterface {
         Collections.sort(valueList);
 
         // Create colour amp entries in the colour map for all the sample values
-        for(Double value : valueList)
-        {
+        for (Double value : valueList) {
             ColorMapEntry entry = new ColorMapEntryImpl();
-            Literal colourExpression = ff.literal(ColourUtils.fromColour(ColourUtils.createRandomColour()));
+            Literal colourExpression = ff
+                    .literal(ColourUtils.fromColour(ColourUtils.createRandomColour()));
             entry.setColor(colourExpression);
             entry.setQuantity(ff.literal(value.doubleValue()));
 
@@ -228,7 +220,9 @@ public class RasterReader implements RasterReaderInterface {
             sampleDimensionNames[i] = dim.getDescription().toString();
         }
 
-        final int RED = 0, GREEN = 1, BLUE = 2;
+        final int RED = 0;
+        final int GREEN = 1;
+        final int BLUE = 2;
         int[] channelNum = { -1, -1, -1 };
         // We examine the band names looking for "red...", "green...", "blue...".
         // Note that the channel numbers we record are indexed from 1, not 0.

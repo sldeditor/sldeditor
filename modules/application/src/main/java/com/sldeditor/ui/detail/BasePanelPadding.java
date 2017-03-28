@@ -57,17 +57,13 @@ public class BasePanelPadding {
     public Dimension addPadding() {
         Dimension boxSize = null;
 
-        if(box != null)
-        {
+        if (box != null) {
             boxSize = box.getPreferredSize();
-            int paddingSpace = PANEL_HEIGHT - (int)boxSize.getHeight();
-            if(paddingSpace > 0)
-            {
+            int paddingSpace = PANEL_HEIGHT - (int) boxSize.getHeight();
+            if (paddingSpace > 0) {
                 padding = Box.createVerticalStrut(paddingSpace);
                 box.add(padding);
-            }
-            else
-            {
+            } else {
                 padding = null;
                 boxSize = new Dimension((int) box.getPreferredSize().getWidth(), PANEL_HEIGHT);
             }
@@ -78,10 +74,8 @@ public class BasePanelPadding {
     /**
      * Removes the padding.
      */
-    public void removePadding()
-    {
-        if(padding != null)
-        {
+    public void removePadding() {
+        if (padding != null) {
             box.remove(padding);
         }
     }

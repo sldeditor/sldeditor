@@ -28,9 +28,10 @@ import java.util.List;
  * @author Robert Ward (SCISYS)
  */
 public class CheckAttributeFactory {
-    
+
     /** The check list. */
-    private static List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
+    private static List<CheckAttributeInterface> checkList =
+            new ArrayList<CheckAttributeInterface>();
 
     /**
      * Gets the check list.
@@ -38,8 +39,7 @@ public class CheckAttributeFactory {
      * @return the checkList
      */
     public static List<CheckAttributeInterface> getCheckList() {
-        if(checkList.isEmpty())
-        {
+        if (checkList.isEmpty()) {
             checkList.add(new MissingSLDAttributes());
         }
         return checkList;

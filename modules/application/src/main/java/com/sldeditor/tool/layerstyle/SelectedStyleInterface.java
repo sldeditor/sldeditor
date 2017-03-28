@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import com.sldeditor.common.data.StyleWrapper;
 
 /**
- * Selected style interface
+ * Selected style interface.
  * 
  * @author Robert Ward (SCISYS)
  */
 public interface SelectedStyleInterface {
-    
+
     /**
      * Selected style.
      *

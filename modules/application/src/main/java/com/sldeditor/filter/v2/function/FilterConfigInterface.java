@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function;
 
 import java.util.List;
@@ -38,18 +39,18 @@ public interface FilterConfigInterface {
     FilterName getFilterConfiguration();
 
     /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    Filter createFilter();
-    
-    /**
      * Gets the filter class.
      *
      * @return the filter class
      */
     Class<?> getFilterClass();
+
+    /**
+     * Creates the filter.
+     *
+     * @return the filter
+     */
+    Filter createFilter();
 
     /**
      * Creates the filter.

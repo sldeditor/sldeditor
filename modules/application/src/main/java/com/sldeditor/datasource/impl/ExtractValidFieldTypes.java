@@ -41,7 +41,7 @@ import com.sldeditor.common.data.SelectedSymbol;
 
 /**
  * The Class ExtractValidFieldTypes checks to see if the extracted field data types are correct.
- * If they are not then they are updated.  This is a horrible hack but the symbol is rendered
+ * If they are not then they are updated. This is a horrible hack but the symbol is rendered
  * and the exception messages returned are parsed to workout what data type should be set.
  *
  * @author Robert Ward (SCISYS)
@@ -66,41 +66,31 @@ public class ExtractValidFieldTypes {
 
         StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
 
-        if(sld != null)
-        {
+        if (sld != null) {
             List<StyledLayer> styledLayerList = sld.layers();
 
-            for(StyledLayer styledLayer : styledLayerList)
-            {
+            for (StyledLayer styledLayer : styledLayerList) {
                 List<org.geotools.styling.Style> styleList = null;
 
-                if(styledLayer instanceof NamedLayerImpl)
-                {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                if (styledLayer instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
                     styleList = namedLayerImpl.styles();
-                }
-                else if(styledLayer instanceof UserLayerImpl)
-                {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                } else if (styledLayer instanceof UserLayerImpl) {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
 
                     styleList = userLayerImpl.userStyles();
                 }
 
-                if(styleList != null)
-                {
-                    for(Style style : styleList)
-                    {
-                        for(FeatureTypeStyle fts : style.featureTypeStyles())
-                        {
-                            for(Rule rule : fts.rules())
-                            {
-                                for(Symbolizer symbolizer : rule.symbolizers())
-                                {
-                                    FeatureSource<SimpleFeatureType, SimpleFeature> featureList = DataSourceFactory.getDataSource().getFeatureSource();
+                if (styleList != null) {
+                    for (Style style : styleList) {
+                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                            for (Rule rule : fts.rules()) {
+                                for (Symbolizer symbolizer : rule.symbolizers()) {
+                                    FeatureSource<SimpleFeatureType, SimpleFeature> featureList = 
+                                            DataSourceFactory.getDataSource().getFeatureSource();
 
-                                    if(featureList != null)
-                                    {
+                                    if (featureList != null) {
                                         Object drawMe = null;
                                         try {
                                             drawMe = featureList.getFeatures().features().next();
@@ -110,23 +100,23 @@ public class ExtractValidFieldTypes {
                                             e.printStackTrace();
                                         }
 
-                                        try
-                                        {
+                                        try {
                                             styleFactory.createStyle(drawMe, symbolizer);
-                                        }
-                                        catch(IllegalArgumentException e)
-                                        {
+                                        } catch (IllegalArgumentException e) {
                                             String message = e.getMessage();
-                                            if(message.startsWith(UNABLE_TO_DECODE_PREFIX) && message.endsWith(UNABLE_TO_DECODE_SUFFIX))
-                                            {
-                                                String fieldName = message.substring(UNABLE_TO_DECODE_PREFIX.length(), message.length() - UNABLE_TO_DECODE_SUFFIX.length());
+                                            if (message.startsWith(UNABLE_TO_DECODE_PREFIX)
+                                                    && message.endsWith(UNABLE_TO_DECODE_SUFFIX)) {
+                                                String fieldName = message.substring(
+                                                        UNABLE_TO_DECODE_PREFIX.length(),
+                                                        message.length()
+                                                                - UNABLE_TO_DECODE_SUFFIX.length());
 
-                                                DataSourceFactory.getDataSource().updateFieldType(fieldName, Long.class);
+                                                DataSourceFactory.getDataSource()
+                                                        .updateFieldType(fieldName, Long.class);
                                                 fieldsUpdated = true;
-                                            }
-                                            else
-                                            {
-                                                ConsoleManager.getInstance().exception(ExtractValidFieldTypes.class, e);
+                                            } else {
+                                                ConsoleManager.getInstance()
+                                                        .exception(ExtractValidFieldTypes.class, e);
                                             }
                                         }
                                     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.tree.item;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -31,8 +32,7 @@ import com.sldeditor.ui.tree.SLDTreeTools;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FillTreeItem implements SLDTreeItemInterface
-{
+public class FillTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
     private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.fill");
@@ -40,35 +40,33 @@ public class FillTreeItem implements SLDTreeItemInterface
     /**
      * Instantiates a new fill tree item.
      */
-    public FillTreeItem()
-    {
+    public FillTreeItem() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
-    public String getTreeString(DefaultMutableTreeNode node, Object nodeObject)
-    {
+    public String getTreeString(DefaultMutableTreeNode node, Object nodeObject) {
         return TITLE;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
-    public void itemSelected(DefaultMutableTreeNode node, Object userObject)
-    {
+    public void itemSelected(DefaultMutableTreeNode node, Object userObject) {
         SelectedSymbol selectedSymbol = SelectedSymbol.getInstance();
 
         // Individual symbol selected
-        if(node != null)
-        {
+        if (node != null) {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-            if(parent != null)
-            {
-                if(parent.getUserObject() instanceof Symbolizer)
-                {
+            if (parent != null) {
+                if (parent.getUserObject() instanceof Symbolizer) {
                     Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
                     selectedSymbol.setSymbolizer(symbolizer);
                 }

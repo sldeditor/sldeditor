@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class FileSystemExtensionFactory {
 
     /** The extension list. */
     private static List<FileSystemInterface> extensionList = new ArrayList<FileSystemInterface>();
-    
+
     /** The geo server input. */
     private static GeoServerInput geoServerInput;
 
@@ -67,14 +68,10 @@ public class FileSystemExtensionFactory {
      *
      * @param overrideExtensionList the override extension list
      */
-    public static void override(List<FileSystemInterface> overrideExtensionList)
-    {
-        if(overrideExtensionList != null)
-        {
+    public static void override(List<FileSystemInterface> overrideExtensionList) {
+        if (overrideExtensionList != null) {
             extensionList = overrideExtensionList;
-        }
-        else
-        {
+        } else {
             extensionList.clear();
         }
     }
@@ -85,11 +82,9 @@ public class FileSystemExtensionFactory {
      * @param toolMgr the tool manager
      * @return the file extension list
      */
-    public static List<FileSystemInterface> getFileExtensionList(ToolSelectionInterface toolMgr)
-    {
+    public static List<FileSystemInterface> getFileExtensionList(ToolSelectionInterface toolMgr) {
         // Populate with defaults if no override has been set
-        if(extensionList.isEmpty())
-        {
+        if (extensionList.isEmpty()) {
             populateExtensions(toolMgr);
         }
 

@@ -34,15 +34,18 @@ import javax.swing.plaf.ColorUIResource;
  * @author Robert Ward (SCISYS)
  */
 /**
- * A TreeCellRenderer displays each node of a tree. The default renderer displays arbitrary Object nodes by calling their toString() method. The
- * Component.toString() method returns long strings with extraneous information. Therefore, we use this "wrapper" implementation of
- * TreeCellRenderer to convert nodes from Component objects to useful String values before passing those String values on to the default renderer.
+ * A TreeCellRenderer displays each node of a tree. The default renderer displays
+ * arbitrary Object nodes by calling their toString() method. The Component.toString()
+ * method returns long strings with extraneous information. Therefore, we use this
+ * "wrapper" implementation of TreeCellRenderer
+ * to convert nodes from Component objects to useful String values before passing
+ * those String values on to the default renderer.
  * 
  * @author Robert Ward (SCISYS)
  */
 
 public class TreeLabel extends JLabel {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -58,7 +61,9 @@ public class TreeLabel extends JLabel {
     public TreeLabel() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setBackground(java.awt.Color)
      */
     public void setBackground(Color color) {
@@ -67,7 +72,9 @@ public class TreeLabel extends JLabel {
         super.setBackground(color);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#paint(java.awt.Graphics)
      */
     public void paint(Graphics g) {
@@ -85,7 +92,7 @@ public class TreeLabel extends JLabel {
                 if (currentI != null) {
                     imageOffset = currentI.getIconWidth() + Math.max(0, getIconTextGap() - 1);
                 }
-                g.fillRect(imageOffset,  1, d.width - 1 - imageOffset, d.height);
+                g.fillRect(imageOffset, 1, d.width - 1 - imageOffset, d.height);
                 if (hasFocus) {
                     g.setColor(UIManager.getColor("Tree.selectionBorderColor"));
                     g.drawRect(imageOffset, 1, d.width - 1 - imageOffset, d.height - 1);
@@ -96,7 +103,9 @@ public class TreeLabel extends JLabel {
         super.paint(g);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#getPreferredSize()
      */
     public Dimension getPreferredSize() {

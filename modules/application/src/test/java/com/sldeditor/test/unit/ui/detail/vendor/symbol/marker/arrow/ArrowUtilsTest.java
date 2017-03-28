@@ -30,7 +30,9 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils;
 
 /**
  * The unit test for ArrowUtils.
- * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils}
+ * 
+ * <p>
+ * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -45,16 +47,21 @@ public class ArrowUtilsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#encode(org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#encode(org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testEncode() {
-        FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
-        assertEquals("extshape://arrow?hr=1.2&t=0.34&ab=0.56", ArrowUtils.encode(ff.literal(1.2), ff.literal(0.34), ff.literal(0.56)));
-        assertEquals("extshape://arrow?hr=2.0&t=0.34&ab=0.56", ArrowUtils.encode(null, ff.literal(0.34), ff.literal(0.56)));
-        assertEquals("extshape://arrow?hr=1.2&t=0.2&ab=0.56", ArrowUtils.encode(ff.literal(1.2), null, ff.literal(0.56)));
-        assertEquals("extshape://arrow?hr=1.2&t=0.34&ab=0.5", ArrowUtils.encode(ff.literal(1.2), ff.literal(0.34), null));
+        assertEquals("extshape://arrow?hr=1.2&t=0.34&ab=0.56",
+                ArrowUtils.encode(ff.literal(1.2), ff.literal(0.34), ff.literal(0.56)));
+        assertEquals("extshape://arrow?hr=2.0&t=0.34&ab=0.56",
+                ArrowUtils.encode(null, ff.literal(0.34), ff.literal(0.56)));
+        assertEquals("extshape://arrow?hr=1.2&t=0.2&ab=0.56",
+                ArrowUtils.encode(ff.literal(1.2), null, ff.literal(0.56)));
+        assertEquals("extshape://arrow?hr=1.2&t=0.34&ab=0.5",
+                ArrowUtils.encode(ff.literal(1.2), ff.literal(0.34), null));
     }
 
     /**
@@ -62,7 +69,7 @@ public class ArrowUtilsTest {
      */
     @Test
     public void testDecodeArrowThickness() {
-        FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
         Expression hr = ff.literal(1.2);
         Expression t = ff.literal(0.34);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -39,8 +40,7 @@ public class WMSEnvVarValues {
     /**
      * Instantiates a new WMS env var values.
      */
-    public WMSEnvVarValues()
-    {
+    public WMSEnvVarValues() {
     }
 
     /**

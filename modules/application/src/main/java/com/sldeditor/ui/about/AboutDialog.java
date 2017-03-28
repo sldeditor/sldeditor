@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.about;
 
 import java.awt.BorderLayout;
@@ -60,8 +61,7 @@ public class AboutDialog extends JDialog {
     /**
      * The Class TextPosition.
      */
-    class TextPosition
-    {
+    class TextPosition {
         /** The text string. */
         private String textString;
 
@@ -137,8 +137,7 @@ public class AboutDialog extends JDialog {
             BufferedImage image = mergeImageAndText(url, textList);
             label.setIcon(new ImageIcon(image));
             label.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
@@ -158,14 +157,17 @@ public class AboutDialog extends JDialog {
      */
     private List<TextPosition> createTextList() {
         List<TextPosition> textList = new ArrayList<TextPosition>();
-        
+
         // Application version string
         Point textPosition = AppSplashScreen.getTextPosition();
         textList.add(new TextPosition(AppSplashScreen.getVersionString(), textPosition));
 
         // GeoTools version string
-        Point p = new Point((int)textPosition.getX(), (int)(textPosition.getY() + AppSplashScreen.getFont().getSize2D()));
-        String geoToolsVersionString = String.format("%s GeoTools %s", Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"), GeoTools.getVersion().toString());
+        Point p = new Point((int) textPosition.getX(),
+                (int) (textPosition.getY() + AppSplashScreen.getFont().getSize2D()));
+        String geoToolsVersionString = String.format("%s GeoTools %s",
+                Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"),
+                GeoTools.getVersion().toString());
         textList.add(new TextPosition(geoToolsVersionString, p));
 
         return textList;
@@ -179,20 +181,18 @@ public class AboutDialog extends JDialog {
      * @return the byte[]
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public static BufferedImage mergeImageAndText(URL imageFilePath,
-            List<TextPosition> textList) throws IOException {
+    public static BufferedImage mergeImageAndText(URL imageFilePath, List<TextPosition> textList)
+            throws IOException {
         BufferedImage im = ImageIO.read(imageFilePath);
         Graphics2D g2 = im.createGraphics();
         Font font = AppSplashScreen.getFont();
 
         g2.setFont(font);
-        g2.setRenderingHint(
-                RenderingHints.KEY_TEXT_ANTIALIASING,
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.black);
 
-        for(TextPosition obj : textList)
-        {
+        for (TextPosition obj : textList) {
             g2.drawString(obj.textString, obj.position.x, obj.position.y);
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

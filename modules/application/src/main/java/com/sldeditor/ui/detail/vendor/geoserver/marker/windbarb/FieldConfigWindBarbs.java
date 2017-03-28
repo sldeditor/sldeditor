@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;
 
 import java.awt.BorderLayout;
@@ -69,8 +70,12 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     /** The wind barbs panel. */
     private WindBarbDetails windBarbsPanel = null;
 
-    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/windbarb/SymbolTypeFieldState_WindBarb.xml";
+    /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable
+     *  field states for the different symbol types.
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = 
+            "symbol/marker/windbarb/SymbolTypeFieldState_WindBarb.xml";
 
     private VendorOptionInfo vendorOptionInfo;
 
@@ -497,30 +502,31 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                getVendorOptionInfo());
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo = new VendorOptionInfo("Windbarbs",
-                    getVendorOptionVersion(),
-                    Localisation.getString(WindBarbDetails.class, "VOGeoServerWindbarbSymbol.description"));
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo("Windbarbs", getVendorOptionVersion(),
+                    Localisation.getString(WindBarbDetails.class,
+                            "VOGeoServerWindbarbSymbol.description"));
         }
         return vendorOptionInfo;
     }
 }
-

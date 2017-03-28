@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.tree.leaf;
 
 import org.geotools.styling.Fill;
@@ -28,8 +29,7 @@ import org.opengis.style.Symbolizer;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface SLDTreeLeafInterface
-{
+public interface SLDTreeLeafInterface {
 
     /**
      * Gets the symbolizer.

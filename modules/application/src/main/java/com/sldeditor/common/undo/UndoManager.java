@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.undo;
 
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ import com.sldeditor.common.PopulatingInterface;
 
 /**
  * Class that manages the undo/redo framework.
+ * 
  * <p>Implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class UndoManager
-{
+public class UndoManager {
 
     /** The listener list. */
     private List<UndoStateInterface> listenerList = new ArrayList<UndoStateInterface>();
@@ -58,8 +59,7 @@ public class UndoManager
     /**
      * Instantiates a new undo manager.
      */
-    private UndoManager()
-    {
+    private UndoManager() {
         reset();
     }
 
@@ -68,16 +68,14 @@ public class UndoManager
      *
      * @param listener the listener
      */
-    public void addListener(UndoStateInterface listener)
-    {
+    public void addListener(UndoStateInterface listener) {
         listenerList.add(listener);
     }
 
     /**
-     * Reset undo list
+     * Reset undo list.
      */
-    private void reset()
-    {
+    private void reset() {
         currentIndex = 0;
         undoList.clear();
 
@@ -89,10 +87,8 @@ public class UndoManager
      *
      * @return single instance of UndoManager
      */
-    public static UndoManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static UndoManager getInstance() {
+        if (instance == null) {
             instance = new UndoManager();
         }
 
@@ -104,16 +100,12 @@ public class UndoManager
      *
      * @param event the event
      */
-    public void addUndoEvent(UndoInterface event)
-    {
-        if(shouldProcessUndoRedoAction())
-        {
+    public void addUndoEvent(UndoInterface event) {
+        if (shouldProcessUndoRedoAction()) {
             boolean atEndOfList = (currentIndex >= undoList.size());
 
-            if(!atEndOfList)
-            {
-                while(undoList.size() > currentIndex)
-                {
+            if (!atEndOfList) {
+                while (undoList.size() > currentIndex) {
                     int lastIndex = undoList.size() - 1;
                     undoList.remove(lastIndex);
                 }
@@ -131,27 +123,23 @@ public class UndoManager
     /**
      * File loaded.
      */
-    public void fileLoaded()
-    {
+    public void fileLoaded() {
         reset();
     }
 
     /**
      * File saved.
      */
-    public void fileSaved()
-    {
+    public void fileSaved() {
         reset();
     }
 
     /**
      * Undo.
      */
-    public void undo()
-    {
-        if(currentIndex > 0)
-        {
-            currentIndex --;
+    public void undo() {
+        if (currentIndex > 0) {
+            currentIndex--;
 
             UndoInterface undoObject = undoList.get(currentIndex);
 
@@ -168,12 +156,10 @@ public class UndoManager
     /**
      * Redo.
      */
-    public void redo()
-    {
-        if(currentIndex < undoList.size())
-        {
+    public void redo() {
+        if (currentIndex < undoList.size()) {
             UndoInterface undoObject = undoList.get(currentIndex);
-            currentIndex ++;
+            currentIndex++;
 
             logger.debug(undoObject.getRedoString());
 
@@ -188,14 +174,13 @@ public class UndoManager
     /**
      * Update menu items.
      */
-    private void updateMenuItems()
-    {
+    private void updateMenuItems() {
         boolean undoAllowed = (currentIndex > 0) && !undoList.isEmpty();
         boolean redoAllowed = (currentIndex < undoList.size());
 
-        logger.debug(String.format("Current index : %d List : %d Undo %s Redo %s", currentIndex, undoList.size(), undoAllowed, redoAllowed));
-        for(UndoStateInterface listener : listenerList)
-        {
+        logger.debug(String.format("Current index : %d List : %d Undo %s Redo %s", currentIndex,
+                undoList.size(), undoAllowed, redoAllowed));
+        for (UndoStateInterface listener : listenerList) {
             listener.updateUndoRedoState(undoAllowed, redoAllowed);
         }
     }
@@ -205,8 +190,7 @@ public class UndoManager
      *
      * @param isUndoRedoAction the new undo redo action
      */
-    private void setUndoRedoAction(boolean isUndoRedoAction)
-    {
+    private void setUndoRedoAction(boolean isUndoRedoAction) {
         this.isUndoRedoAction = isUndoRedoAction;
     }
 
@@ -215,15 +199,13 @@ public class UndoManager
      *
      * @return true, if successful
      */
-    private boolean shouldProcessUndoRedoAction()
-    {
+    private boolean shouldProcessUndoRedoAction() {
         boolean populating = false;
 
-        if(populationCheck != null)
-        {
+        if (populationCheck != null) {
             populating = populationCheck.isPopulating();
         }
-        
+
         return (!isUndoRedoAction && !populating);
     }
 

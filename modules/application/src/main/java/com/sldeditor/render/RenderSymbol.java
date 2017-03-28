@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.render;
 
 import java.util.List;
@@ -39,12 +40,11 @@ public class RenderSymbol {
 
     /** The render options. */
     private RuleRenderOptions renderOptions = new RuleRenderOptions();
-    
+
     /**
      * Instantiates a new render symbol.
      */
-    public RenderSymbol()
-    {
+    public RenderSymbol() {
     }
 
     /**
@@ -53,37 +53,29 @@ public class RenderSymbol {
      * @param selectedSymbol the selected symbol
      * @return the render style
      */
-    public Style getRenderStyle(SelectedSymbol selectedSymbol)
-    {
+    public Style getRenderStyle(SelectedSymbol selectedSymbol) {
         List<StyledLayer> styledLayerList = selectedSymbol.getSld().layers();
 
-        for(StyledLayer styledLayer : styledLayerList)
-        {
+        for (StyledLayer styledLayer : styledLayerList) {
             List<Style> styleList = null;
 
-            if(styledLayer instanceof NamedLayerImpl)
-            {
+            if (styledLayer instanceof NamedLayerImpl) {
                 NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
 
                 styleList = namedLayer.styles();
-            }
-            else if(styledLayer instanceof UserLayerImpl)
-            {
+            } else if (styledLayer instanceof UserLayerImpl) {
                 UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
 
                 styleList = userLayer.userStyles();
             }
 
-            if(styleList != null)
-            {
-                for(Style style : styleList)
-                {
+            if (styleList != null) {
+                for (Style style : styleList) {
                     FeatureTypeStyle ftsToRender = selectedSymbol.getFeatureTypeStyle();
                     Rule ruleToRender = selectedSymbol.getRule();
 
                     // Check to see if style contains the rule to render
-                    if(shouldRenderSymbol(style, ftsToRender, ruleToRender))
-                    {
+                    if (shouldRenderSymbol(style, ftsToRender, ruleToRender)) {
                         return renderSymbol(style, ftsToRender, ruleToRender, renderOptions);
                     }
                 }
@@ -101,15 +93,14 @@ public class RenderSymbol {
      * @param options the options
      * @return the style
      */
-    private Style renderSymbol(Style style, FeatureTypeStyle ftsToRender, Rule ruleToRender, RuleRenderOptions options) {
+    private Style renderSymbol(Style style, FeatureTypeStyle ftsToRender, Rule ruleToRender,
+            RuleRenderOptions options) {
 
         int symbolIndex = SelectedSymbol.getInstance().getSymbolIndex();
 
-        RuleRenderVisitor visitor = new RuleRenderVisitor(ftsToRender,
-                ruleToRender,
-                symbolIndex,
+        RuleRenderVisitor visitor = new RuleRenderVisitor(ftsToRender, ruleToRender, symbolIndex,
                 options);
-        style.accept( visitor );
+        style.accept(visitor);
         Style copy = (Style) visitor.getCopy();
 
         return copy;
@@ -122,21 +113,17 @@ public class RenderSymbol {
      * @param ruleToRender the rule to render
      * @return true, if successful
      */
-    private boolean shouldRenderSymbol(Style style, FeatureTypeStyle ftsToRender, Rule ruleToRender) {
+    private boolean shouldRenderSymbol(Style style, FeatureTypeStyle ftsToRender,
+            Rule ruleToRender) {
 
-        if(ruleToRender == null)
-        {
+        if (ruleToRender == null) {
             return true;
         }
 
-        for(FeatureTypeStyle fts : style.featureTypeStyles())
-        {
-            if(fts == ftsToRender)
-            {
-                for(Rule rule : fts.rules())
-                {
-                    if(rule == ruleToRender)
-                    {
+        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+            if (fts == ftsToRender) {
+                for (Rule rule : fts.rules()) {
+                    if (rule == ruleToRender) {
                         return true;
                     }
                 }

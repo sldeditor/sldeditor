@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.menucombobox;
 
 import java.awt.Color;
@@ -173,8 +174,10 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
     }
 
     /**
-     * The listener interface for receiving menuItem events. The class that is interested in processing a menuItem event implements this interface,
-     * and the object created with that class is registered with a component using the component's <code>addMenuItemListener<code> method. When the
+     * The listener interface for receiving menuItem events. 
+     * The class that is interested in processing a menuItem event implements this interface,
+     * and the object created with that class is registered with 
+     * a component using the component's <code>addMenuItemListener<code> method. When the
      * menuItem event occurs, that object's appropriate method is invoked.
      *
      * @see MenuItemEvent
@@ -275,10 +278,11 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
      *
      * @param args the arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception evt) {
+            // Do nothing
         }
 
         List<ValueComboBoxData> list1 = new ArrayList<ValueComboBoxData>();
@@ -454,24 +458,26 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
     public void setEnabled(boolean enabled) {
-        if(this.menu != null)
-        {
+        if (this.menu != null) {
             this.menu.setEnabled(enabled);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.Component#isEnabled()
      */
     @Override
     public boolean isEnabled() {
-        if(this.menu != null)
-        {
+        if (this.menu != null) {
             return this.menu.isEnabled();
         }
         return false;

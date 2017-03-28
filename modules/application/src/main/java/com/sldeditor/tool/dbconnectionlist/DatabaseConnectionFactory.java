@@ -59,10 +59,12 @@ public class DatabaseConnectionFactory {
     private static Map<String, String> nameMap = new HashMap<String, String>();
 
     /** The file handler list. */
-    private static List<FileHandlerInterface> fileHandlerList = new ArrayList<FileHandlerInterface>();
+    private static List<FileHandlerInterface> fileHandlerList =
+            new ArrayList<FileHandlerInterface>();
 
     /** The file handler map. */
-    private static Map<DatabaseFileHandler, String> fileHandlerMap = new HashMap<DatabaseFileHandler, String>();
+    private static Map<DatabaseFileHandler, String> fileHandlerMap =
+            new HashMap<DatabaseFileHandler, String>();
 
     /**
      * Creates a new DatabaseConnection object for a GeoPackage.
@@ -87,7 +89,8 @@ public class DatabaseConnectionFactory {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionFactory.class, "common.notSet");
+                        String connectionName = Localisation
+                                .getString(DatabaseConnectionFactory.class, "common.notSet");
                         String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);
@@ -141,7 +144,8 @@ public class DatabaseConnectionFactory {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionFactory.class, "common.notSet");
+                        String connectionName = Localisation
+                                .getString(DatabaseConnectionFactory.class, "common.notSet");
                         String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);
@@ -219,7 +223,9 @@ public class DatabaseConnectionFactory {
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionFactory.class, "common.notSet");
+                        String connectionName = Localisation
+                                .getString(DatabaseConnectionFactory.class,
+                                        "common.notSet");
                         String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);

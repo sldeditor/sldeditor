@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.ArrayList;
@@ -36,7 +37,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class StyleDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface {
+public class StyleDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -44,8 +46,7 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
     /**
      * Constructor.
      */
-    public StyleDetails()
-    {
+    public StyleDetails() {
         super(StyleDetails.class);
         createUI();
     }
@@ -62,20 +63,21 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             Style style = selectedSymbol.getStyle();
 
             populateStandardData(style);
-            if(style != null)
-            {
-                fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE, style.isDefault());
+            if (style != null) {
+                fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE,
+                        style.isDefault());
             }
         }
     }
@@ -85,7 +87,9 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
      */
     @Override
@@ -97,24 +101,21 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
 
             boolean isDefault = fieldConfigVisitor.getBoolean(FieldIdEnum.DEFAULT_STYLE);
 
             Style existingStyle = SelectedSymbol.getInstance().getStyle();
-            if(existingStyle != null)
-            {
+            if (existingStyle != null) {
                 List<org.opengis.style.FeatureTypeStyle> newFTSList = new ArrayList<org.opengis.style.FeatureTypeStyle>();
-                for(org.opengis.style.FeatureTypeStyle fts : existingStyle.featureTypeStyles())
-                {
+                for (org.opengis.style.FeatureTypeStyle fts : existingStyle.featureTypeStyles()) {
                     newFTSList.add(fts);
                 }
 
                 Symbolizer defaultSymbolizer = null;
-                Style newStyle = (Style) getStyleFactory().style(standardData.name, standardData.description, isDefault,
-                        newFTSList, defaultSymbolizer);
+                Style newStyle = (Style) getStyleFactory().style(standardData.name,
+                        standardData.description, isDefault, newFTSList, defaultSymbolizer);
 
                 SelectedSymbol.getInstance().replaceStyle(newStyle);
 
@@ -128,12 +129,13 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -142,16 +144,19 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -159,7 +164,9 @@ public class StyleDetails extends StandardPanel implements PopulateDetailsInterf
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

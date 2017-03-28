@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.batchupdatefont;
 
 import java.awt.BorderLayout;
@@ -48,7 +49,8 @@ import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
 
 /**
- * Dialog that displays one or more slds in table showing the fonts User is able to batch update the fonts.
+ * Dialog that displays one or more slds in table showing the fonts.
+ * User is able to batch update the fonts.
  */
 public class BatchUpdateFontPanel extends JDialog {
 
@@ -195,8 +197,8 @@ public class BatchUpdateFontPanel extends JDialog {
                 cl.show(panelSelector, (String) comboBox.getSelectedItem());
             }
         });
-        comboBox.setModel(
-                new DefaultComboBoxModel<String>(new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
+        comboBox.setModel(new DefaultComboBoxModel<String>(
+                new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
         editPanel.add(comboBox);
 
         panelSelector = new JPanel();
@@ -232,10 +234,8 @@ public class BatchUpdateFontPanel extends JDialog {
      * Save data.
      */
     private void saveData() {
-        if(dataModel.saveData(application))
-        {
-            if(application != null)
-            {
+        if (dataModel.saveData(application)) {
+            if (application != null) {
                 application.refreshPanel(RuleImpl.class, TextSymbolizerImpl.class);
             }
         }

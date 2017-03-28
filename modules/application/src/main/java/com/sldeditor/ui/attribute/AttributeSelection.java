@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.attribute;
 
 import java.awt.BorderLayout;
@@ -56,11 +57,13 @@ import com.sldeditor.ui.iface.ExpressionUpdateInterface;
  * <li>value</li>
  * <li>attribute</li>
  * <li>expression</li>
- * </ul>.
+ * </ul>
+ * .
  *
  * @author Robert Ward (SCISYS)
  */
-public class AttributeSelection extends JPanel implements DataSourceUpdatedInterface, SubPanelUpdatedInterface, UndoActionInterface {
+public class AttributeSelection extends JPanel
+        implements DataSourceUpdatedInterface, SubPanelUpdatedInterface, UndoActionInterface {
 
     /** The Constant WIDTH. */
     private static final int WIDTH = 270;
@@ -69,7 +72,8 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
     private static final long serialVersionUID = 1L;
 
     /** The selected listeners. */
-    private List<AttributeButtonSelectionInterface> selectedListeners = new ArrayList<AttributeButtonSelectionInterface>();
+    private List<AttributeButtonSelectionInterface> selectedListeners =
+            new ArrayList<AttributeButtonSelectionInterface>();
 
     /** The outer panel. */
     private JPanel outerPanel;
@@ -110,8 +114,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * @param expectedDataType the expected data type
      * @param field the field
      */
-    private AttributeSelection(Class<?> expectedDataType,
-            FieldConfigBase field) {
+    private AttributeSelection(Class<?> expectedDataType, FieldConfigBase field) {
 
         this.field = field;
 
@@ -121,8 +124,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         createUI(expectedDataType);
 
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-        if(dataSource != null)
-        {
+        if (dataSource != null) {
             dataSource.addListener(this);
         }
     }
@@ -132,10 +134,8 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param listener the listener
      */
-    public void addListener(AttributeButtonSelectionInterface listener)
-    {
-        if(!selectedListeners.contains(listener))
-        {
+    public void addListener(AttributeButtonSelectionInterface listener) {
+        if (!selectedListeners.contains(listener)) {
             selectedListeners.add(listener);
         }
     }
@@ -163,16 +163,16 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         attributeChooserComboBox.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                JComboBox<String> cb = (JComboBox<String>)e.getSource();
-                String selected = (String)cb.getSelectedItem();
+                JComboBox<String> cb = (JComboBox<String>) e.getSource();
+                String selected = (String) cb.getSelectedItem();
                 showPanel(selected);
 
-                if((oldValueObj == null) && cb.getItemCount() > 0)
-                {
+                if ((oldValueObj == null) && cb.getItemCount() > 0) {
                     oldValueObj = cb.getItemAt(0);
                 }
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj, "DataSourceAttribute", oldValueObj, selected));
+                UndoManager.getInstance().addUndoEvent(
+                        new UndoEvent(thisObj, "DataSourceAttribute", oldValueObj, selected));
 
                 updateSymbol();
             }
@@ -228,36 +228,27 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         boolean enableField = false;
 
         String selectedString = (String) attributeChooserComboBox.getSelectedItem();
-        if(selectedString.compareTo(ValueSubPanel.getPanelName()) == 0)
-        {
+        if (selectedString.compareTo(ValueSubPanel.getPanelName()) == 0) {
             enableField = true;
 
-            for(ExpressionUpdateInterface listener : listenerList)
-            {
+            for (ExpressionUpdateInterface listener : listenerList) {
                 listener.valueUpdated();
             }
-        }
-        else if(selectedString.compareTo(DataSourceAttributePanel.getPanelName()) == 0)
-        {
+        } else if (selectedString.compareTo(DataSourceAttributePanel.getPanelName()) == 0) {
             String attribute = dataSourceAttributePanel.getSelectedItem();
 
-            for(ExpressionUpdateInterface listener : listenerList)
-            {
+            for (ExpressionUpdateInterface listener : listenerList) {
                 listener.attributeUpdated(attribute);
             }
-        }
-        else if(selectedString.compareTo(ExpressionSubPanel.getPanelName()) == 0)
-        {
+        } else if (selectedString.compareTo(ExpressionSubPanel.getPanelName()) == 0) {
             Expression expression = expressionPanel.getExpression();
 
-            for(ExpressionUpdateInterface listener : listenerList)
-            {
+            for (ExpressionUpdateInterface listener : listenerList) {
                 listener.expressionUpdated(expression);
             }
         }
 
-        if(this.field != null)
-        {
+        if (this.field != null) {
             this.field.setVisible(enableField);
         }
     }
@@ -267,25 +258,17 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param expression the expression
      */
-    public void populate(Expression expression)
-    {
-        if(expression != null)
-        {
+    public void populate(Expression expression) {
+        if (expression != null) {
             populateAttributeComboxBox(expression);
 
-            if((expression == null) ||
-                    (expression instanceof NilExpression) ||
-                    (expression instanceof ConstantExpression) ||
-                    (expression instanceof LiteralExpressionImpl))
-            {
+            if ((expression == null) || (expression instanceof NilExpression)
+                    || (expression instanceof ConstantExpression)
+                    || (expression instanceof LiteralExpressionImpl)) {
                 valuePanel.populateExpression(expression);
-            }
-            else if(expression instanceof AttributeExpressionImpl)
-            {
+            } else if (expression instanceof AttributeExpressionImpl) {
                 setAttribute(expression);
-            }
-            else
-            {
+            } else {
                 expressionPanel.populateExpression(expression);
             }
         }
@@ -304,28 +287,17 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         expressionPanel.populateExpression(null);
         dataSourceAttributePanel.setAttribute(null);
 
-        if(expression == null)
-        {
+        if (expression == null) {
             panelName = ValueSubPanel.getPanelName();
-        }
-        else if(expression instanceof NilExpression)
-        {
+        } else if (expression instanceof NilExpression) {
             panelName = ValueSubPanel.getPanelName();
-        }
-        else if(expression instanceof ConstantExpression)
-        {
+        } else if (expression instanceof ConstantExpression) {
             panelName = ValueSubPanel.getPanelName();
-        }
-        else if(expression instanceof LiteralExpressionImpl)
-        {
+        } else if (expression instanceof LiteralExpressionImpl) {
             panelName = ValueSubPanel.getPanelName();
-        }
-        else if(expression instanceof AttributeExpressionImpl)
-        {
+        } else if (expression instanceof AttributeExpressionImpl) {
             panelName = DataSourceAttributePanel.getPanelName();
-        }
-        else
-        {
+        } else {
             panelName = ExpressionSubPanel.getPanelName();
         }
 
@@ -339,11 +311,14 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * @param geometryType the geometry type
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
         dataSourceAttributePanel.dataSourceLoaded(dataSource);
@@ -355,7 +330,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * @param selectedItem the selected item
      */
     private void showPanel(String selectedItem) {
-        CardLayout cl = (CardLayout)(outerPanel.getLayout());
+        CardLayout cl = (CardLayout) (outerPanel.getLayout());
         cl.show(outerPanel, selectedItem);
     }
 
@@ -364,7 +339,9 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param enabled the new enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
@@ -391,8 +368,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param expression the new attribute
      */
-    public void setAttribute(Expression expression)
-    {
+    public void setAttribute(Expression expression) {
         dataSourceAttributePanel.setAttribute(expression);
     }
 
@@ -401,22 +377,16 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @return the expression
      */
-    public Expression getExpression()
-    {
+    public Expression getExpression() {
         Expression expression = null;
 
-        String selectedItem = (String)attributeChooserComboBox.getSelectedItem();
+        String selectedItem = (String) attributeChooserComboBox.getSelectedItem();
 
-        if(selectedItem.compareToIgnoreCase(ValueSubPanel.getPanelName()) == 0)
-        {
+        if (selectedItem.compareToIgnoreCase(ValueSubPanel.getPanelName()) == 0) {
             expression = valuePanel.getExpression();
-        }
-        else if(selectedItem.compareToIgnoreCase(DataSourceAttributePanel.getPanelName()) == 0)
-        {
+        } else if (selectedItem.compareToIgnoreCase(DataSourceAttributePanel.getPanelName()) == 0) {
             expression = dataSourceAttributePanel.getExpression();
-        }
-        else if(selectedItem.compareToIgnoreCase(ExpressionSubPanel.getPanelName()) == 0)
-        {
+        } else if (selectedItem.compareToIgnoreCase(ExpressionSubPanel.getPanelName()) == 0) {
             expression = expressionPanel.getExpression();
         }
         return expression;
@@ -427,12 +397,14 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String)undoRedoObject.getOldValue();
+        String oldValueObj = (String) undoRedoObject.getOldValue();
 
         attributeChooserComboBox.setSelectedItem(oldValueObj);
     }
@@ -442,17 +414,21 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String)undoRedoObject.getNewValue();
+        String newValueObj = (String) undoRedoObject.getNewValue();
 
         attributeChooserComboBox.setSelectedItem(newValueObj);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -469,9 +445,7 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
      * @return the attribute selection object
      */
     public static AttributeSelection createAttributes(Class<?> expectedDataType,
-            FieldConfigBase field,
-            boolean rasterSymbol)
-    {
+            FieldConfigBase field, boolean rasterSymbol) {
         AttributeSelection obj = new AttributeSelection(expectedDataType, field);
         obj.updateAttributeSelection(!rasterSymbol);
 
@@ -489,14 +463,12 @@ public class AttributeSelection extends JPanel implements DataSourceUpdatedInter
         List<String> allowedItemList = new ArrayList<String>();
         allowedItemList.add(ValueSubPanel.getPanelName());
 
-        if(excludeAttributePanel)
-        {
+        if (excludeAttributePanel) {
             allowedItemList.add(DataSourceAttributePanel.getPanelName());
         }
         allowedItemList.add(ExpressionSubPanel.getPanelName());
 
-        if(attributeChooserComboBox != null)
-        {
+        if (attributeChooserComboBox != null) {
             attributeChooserComboBox.setModel(new DefaultComboBoxModel(allowedItemList.toArray()));
         }
     }

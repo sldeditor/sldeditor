@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.batchupdatefont;
 
 import java.util.ArrayList;
@@ -186,6 +187,8 @@ public class BatchUpdateFontModel extends AbstractTableModel {
                 return data.getFontSize();
             }
             break;
+        default:
+            break;
         }
         return null;
     }
@@ -326,20 +329,6 @@ public class BatchUpdateFontModel extends AbstractTableModel {
     }
 
     /**
-     * Find out if any data changes have been made
-     *
-     * @return true, if changes exists
-     */
-    public boolean anyChanges() {
-        for (BatchUpdateFontData data : fontList) {
-            if (data.anyChanges()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Apply font size data.
      *
      * @param selectedRows the selected rows
@@ -354,5 +343,19 @@ public class BatchUpdateFontModel extends AbstractTableModel {
             }
         }
         this.fireTableDataChanged();
+    }
+
+    /**
+     * Find out if any data changes have been made.
+     *
+     * @return true, if changes exists
+     */
+    public boolean anyChanges() {
+        for (BatchUpdateFontData data : fontList) {
+            if (data.anyChanges()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

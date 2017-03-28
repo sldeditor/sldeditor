@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import javax.measure.quantity.Length;
@@ -38,8 +39,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
- * The Class StandardPanel responsible for populating/extracting
- *  standard data - name, description, unit of measure.
+ * The Class StandardPanel responsible for populating/extracting standard data - name, description, unit of measure.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -51,8 +51,7 @@ public class StandardPanel extends BasePanel {
     /**
      * Internal class containing SLD common data.
      */
-    protected class StandardData
-    {
+    protected class StandardData {
         /** The name. */
         public String name;
 
@@ -77,12 +76,10 @@ public class StandardPanel extends BasePanel {
      *
      * @param style the style
      */
-    protected void populateStandardData(Style style)
-    {
+    protected void populateStandardData(Style style) {
         StandardData standardData = new StandardData();
 
-        if(style != null)
-        {
+        if (style != null) {
             standardData.name = style.getName();
             standardData.description = style.getDescription();
         }
@@ -95,12 +92,10 @@ public class StandardPanel extends BasePanel {
      *
      * @param rule the rule
      */
-    protected void populateStandardData(Rule rule)
-    {
+    protected void populateStandardData(Rule rule) {
         StandardData standardData = new StandardData();
 
-        if(rule != null)
-        {
+        if (rule != null) {
             standardData.name = rule.getName();
             standardData.description = (Description) rule.getDescription();
         }
@@ -116,8 +111,7 @@ public class StandardPanel extends BasePanel {
     protected void populateStandardData(FeatureTypeStyle featureTypeStyle) {
         StandardData standardData = new StandardData();
 
-        if(featureTypeStyle != null)
-        {
+        if (featureTypeStyle != null) {
             standardData.name = featureTypeStyle.getName();
             standardData.description = featureTypeStyle.getDescription();
         }
@@ -130,47 +124,40 @@ public class StandardPanel extends BasePanel {
      *
      * @param standardData the standard data
      */
-    private void populateStandardData(StandardData standardData)
-    {
+    private void populateStandardData(StandardData standardData) {
         Description description = standardData.description;
         String titleString = "";
         String descriptionString = "";
-        if(description != null)
-        {
+        if (description != null) {
             InternationalString title = description.getTitle();
 
-            if(title != null)
-            {
+            if (title != null) {
                 titleString = title.toString();
             }
 
             InternationalString abstractDesc = description.getAbstract();
 
-            if(abstractDesc != null)
-            {
+            if (abstractDesc != null) {
                 descriptionString = abstractDesc.toString();
             }
         }
 
-        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.NAME) != null)
-        {
+        if (fieldConfigVisitor.getFieldConfig(FieldIdEnum.NAME) != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.NAME, standardData.name);
         }
-        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.TITLE) != null)
-        {
+        if (fieldConfigVisitor.getFieldConfig(FieldIdEnum.TITLE) != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.TITLE, titleString);
         }
-        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.DESCRIPTION) != null)
-        {
+        if (fieldConfigVisitor.getFieldConfig(FieldIdEnum.DESCRIPTION) != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.DESCRIPTION, descriptionString);
         }
 
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
-        if(uomFieldConfig != null)
-        {
+        if (uomFieldConfig != null) {
             uomFieldConfig.updateAttributeSelection(SelectedSymbol.getInstance().isRasterSymbol());
             String uomString = UnitsOfMeasure.getInstance().convert(standardData.unit);
-            fieldConfigVisitor.populateField(FieldIdEnum.UOM, getFilterFactory().literal(uomString));
+            fieldConfigVisitor.populateField(FieldIdEnum.UOM,
+                    getFilterFactory().literal(uomString));
         }
     }
 
@@ -182,8 +169,7 @@ public class StandardPanel extends BasePanel {
     protected void populateStandardData(Symbolizer symbolizer) {
         StandardData standardData = new StandardData();
 
-        if(symbolizer != null)
-        {
+        if (symbolizer != null) {
             standardData.name = symbolizer.getName();
             standardData.description = symbolizer.getDescription();
             standardData.unit = symbolizer.getUnitOfMeasure();
@@ -200,35 +186,34 @@ public class StandardPanel extends BasePanel {
     protected StandardData getStandardData() {
         StandardData standardData = new StandardData();
 
-        if(fieldConfigVisitor.getFieldConfig(FieldIdEnum.NAME) != null)
-        {
+        if (fieldConfigVisitor.getFieldConfig(FieldIdEnum.NAME) != null) {
             standardData.name = fieldConfigVisitor.getText(FieldIdEnum.NAME);
         }
 
-        if((fieldConfigVisitor.getFieldConfig(FieldIdEnum.TITLE) != null) && 
-                (fieldConfigVisitor.getFieldConfig(FieldIdEnum.DESCRIPTION) != null))
-        {
-            InternationalString titleString = Text.text(fieldConfigVisitor.getText(FieldIdEnum.TITLE));
-            InternationalString descriptionString = Text.text(fieldConfigVisitor.getText(FieldIdEnum.DESCRIPTION));
+        if ((fieldConfigVisitor.getFieldConfig(FieldIdEnum.TITLE) != null)
+                && (fieldConfigVisitor.getFieldConfig(FieldIdEnum.DESCRIPTION) != null)) {
+            InternationalString titleString = Text
+                    .text(fieldConfigVisitor.getText(FieldIdEnum.TITLE));
+            InternationalString descriptionString = Text
+                    .text(fieldConfigVisitor.getText(FieldIdEnum.DESCRIPTION));
 
-            standardData.description = (Description) getStyleFactory().description(titleString, descriptionString);
+            standardData.description = (Description) getStyleFactory().description(titleString,
+                    descriptionString);
         }
 
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
-        if(uomFieldConfig != null)
-        {
+        if (uomFieldConfig != null) {
             Expression uomExpression = fieldConfigVisitor.getExpression(FieldIdEnum.UOM);
 
             String uomString = "";
-            if(uomExpression instanceof LiteralExpressionImpl)
-            {
-                uomString = (String)((LiteralExpressionImpl)uomExpression).getValue();
-            }
-            else
-            {
-                if(uomExpression != null)
-                {
-                    ConsoleManager.getInstance().error(this, Localisation.getString(StandardPanel.class, "StandardPanel.unsupportedUOM") + uomExpression.getClass().getName());
+            if (uomExpression instanceof LiteralExpressionImpl) {
+                uomString = (String) ((LiteralExpressionImpl) uomExpression).getValue();
+            } else {
+                if (uomExpression != null) {
+                    ConsoleManager.getInstance().error(this,
+                            Localisation.getString(StandardPanel.class,
+                                    "StandardPanel.unsupportedUOM")
+                                    + uomExpression.getClass().getName());
                 }
             }
             standardData.unit = UnitsOfMeasure.getInstance().convert(uomString);

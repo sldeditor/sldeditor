@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.console;
 
 import javax.swing.JPanel;
@@ -24,13 +26,14 @@ import org.apache.log4j.Logger;
 
 /**
  * Central point to which all messages/errors/exceptions are sent to appear in the console panel.
- * <p>Received messages/errors/exceptions are logged as well. 
+ * 
+ * <p>Received messages/errors/exceptions are logged as well.
+ * 
  * <p>Class is implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ConsoleManager
-{
+public class ConsoleManager {
 
     /** The singleton instance. */
     private static ConsoleManager instance = null;
@@ -43,10 +46,8 @@ public class ConsoleManager
      *
      * @return single instance of ConsoleManager
      */
-    public static ConsoleManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static ConsoleManager getInstance() {
+        if (instance == null) {
             instance = new ConsoleManager();
         }
 
@@ -58,16 +59,14 @@ public class ConsoleManager
      *
      * @return the panel
      */
-    public JPanel getPanel()
-    {
-        return (JPanel)panel;
+    public JPanel getPanel() {
+        return (JPanel) panel;
     }
 
     /**
      * Make default constructor private.
      */
-    private ConsoleManager()
-    {
+    private ConsoleManager() {
 
     }
 
@@ -77,8 +76,7 @@ public class ConsoleManager
      * @param obj the obj
      * @param errorMessage the error message
      */
-    public void error(Object obj, String errorMessage)
-    {
+    public void error(Object obj, String errorMessage) {
         Logger logger = Logger.getLogger(obj.getClass());
         logger.error(errorMessage);
 
@@ -92,8 +90,7 @@ public class ConsoleManager
      * @param obj the obj
      * @param infoMessage the info message
      */
-    public void information(Object obj, String infoMessage)
-    {
+    public void information(Object obj, String infoMessage) {
         Logger logger = Logger.getLogger(obj.getClass());
 
         logger.info(infoMessage);
@@ -107,8 +104,7 @@ public class ConsoleManager
      * @param clazz the clazz
      * @param e the e
      */
-    public void exception(Class<?> clazz, Exception e)
-    {
+    public void exception(Class<?> clazz, Exception e) {
         e.printStackTrace();
 
         Logger logger = Logger.getLogger(clazz);
@@ -122,8 +118,7 @@ public class ConsoleManager
      * @param obj the obj
      * @param e the e
      */
-    public void exception(Object obj, Exception e)
-    {
+    public void exception(Object obj, Exception e) {
         e.printStackTrace();
 
         Logger logger = Logger.getLogger(obj.getClass());
@@ -137,8 +132,7 @@ public class ConsoleManager
      * @param e the e
      * @param logger the logger
      */
-    private void internal_logException(Exception e, Logger logger)
-    {
+    private void internal_logException(Exception e, Logger logger) {
         logger.error(e.getMessage());
         panel.addErrorMessage(e.getMessage());
 
@@ -146,8 +140,7 @@ public class ConsoleManager
 
         StringBuilder sb = new StringBuilder();
 
-        for(StackTraceElement t : stackTrace)
-        {
+        for (StackTraceElement t : stackTrace) {
             sb.append(t.toString());
             sb.append("\n");
         }

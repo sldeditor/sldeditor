@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.util.ArrayList;
@@ -62,10 +63,12 @@ import com.vividsolutions.jts.io.WKTReader;
 public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /** The processed field list. */
-    private List<DataSourceAttributeData> processedFieldList = new ArrayList<DataSourceAttributeData>();
+    private List<DataSourceAttributeData> processedFieldList =
+            new ArrayList<DataSourceAttributeData>();
 
     /** The field list. */
-    private Map<String, DataSourceAttributeData> fieldList = new HashMap<String, DataSourceAttributeData>();
+    private Map<String, DataSourceAttributeData> fieldList =
+            new HashMap<String, DataSourceAttributeData>();
 
     /** The geometry field list. */
     private List<String> geometryFieldList = new ArrayList<String>();

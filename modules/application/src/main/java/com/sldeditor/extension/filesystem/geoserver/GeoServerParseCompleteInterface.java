@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver;
 
 import java.util.List;
@@ -30,8 +31,7 @@ import com.sldeditor.common.data.StyleWrapper;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface GeoServerParseCompleteInterface
-{
+public interface GeoServerParseCompleteInterface {
 
     /**
      * Populate complete.
@@ -40,8 +40,7 @@ public interface GeoServerParseCompleteInterface
      * @param styleMap the style map
      * @param layerMap the layer map
      */
-    void populateComplete(GeoServerConnection connection,
-        Map<String, List<StyleWrapper>> styleMap,
-        Map<String, List<GeoServerLayer>> layerMap);
+    void populateComplete(GeoServerConnection connection, Map<String, List<StyleWrapper>> styleMap,
+            Map<String, List<GeoServerLayer>> layerMap);
 
 }

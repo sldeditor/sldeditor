@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.vendoroption.selection;
 
 import java.util.ArrayList;
@@ -48,7 +49,8 @@ public class VendorOptionTableModel extends AbstractTableModel {
     private List<VersionData> selectedVersionList = new ArrayList<VersionData>();
 
     /** The name map. */
-    private Map<VendorOptionTypeInterface, String> nameMap = new HashMap<VendorOptionTypeInterface, String>();
+    private Map<VendorOptionTypeInterface, String> nameMap = 
+            new HashMap<VendorOptionTypeInterface, String>();
 
     /** The name order. */
     private List<VendorOptionTypeInterface> nameOrder = null;

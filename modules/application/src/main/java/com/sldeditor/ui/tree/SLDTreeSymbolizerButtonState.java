@@ -52,8 +52,7 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isMarkerVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
+        if (overallEnableSymbolizersOverride) {
             enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.POINT);
         }
         return enabled;
@@ -68,8 +67,7 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isLineVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
+        if (overallEnableSymbolizersOverride) {
             enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.LINE);
         }
         return enabled;
@@ -84,8 +82,7 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isPolygonVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
+        if (overallEnableSymbolizersOverride) {
             enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.POLYGON);
         }
         return enabled;
@@ -100,8 +97,7 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isRasterVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
+        if (overallEnableSymbolizersOverride) {
             enabled = (obj instanceof Rule) && (geometryType == GeometryTypeEnum.RASTER);
         }
         return enabled;
@@ -116,8 +112,7 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isTextVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
+        if (overallEnableSymbolizersOverride) {
             enabled = (obj instanceof Rule);
         }
         return enabled;
@@ -132,12 +127,11 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isImageOutlineLineVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
-            if(obj instanceof RasterSymbolizer)
-            {
+        if (overallEnableSymbolizersOverride) {
+            if (obj instanceof RasterSymbolizer) {
                 RasterSymbolizer raster = (RasterSymbolizer) obj;
-                enabled = (raster.getImageOutline() == null) && (geometryType == GeometryTypeEnum.RASTER);
+                enabled = (raster.getImageOutline() == null)
+                        && (geometryType == GeometryTypeEnum.RASTER);
             }
         }
         return enabled;
@@ -152,12 +146,11 @@ public class SLDTreeSymbolizerButtonState {
      */
     public boolean isImageOutlinePolygonVisible(Object parentObj, Object obj) {
         boolean enabled = false;
-        if(overallEnableSymbolizersOverride)
-        {
-            if(obj instanceof RasterSymbolizer)
-            {
+        if (overallEnableSymbolizersOverride) {
+            if (obj instanceof RasterSymbolizer) {
                 RasterSymbolizer raster = (RasterSymbolizer) obj;
-                enabled = (raster.getImageOutline() == null) && (geometryType == GeometryTypeEnum.RASTER);
+                enabled = (raster.getImageOutline() == null)
+                        && (geometryType == GeometryTypeEnum.RASTER);
             }
         }
         return enabled;

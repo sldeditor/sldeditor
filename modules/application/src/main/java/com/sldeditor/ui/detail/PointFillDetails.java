@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.List;
@@ -52,7 +53,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class PointFillDetails extends StandardPanel implements PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
+public class PointFillDetails extends StandardPanel
+        implements PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -66,7 +68,7 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
     /** The field override map, indicates which fields to enable. */
     private FieldEnableState fieldEnableState = null;
 
-    /**  The panel id of the selected fill. */
+    /** The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
 
     /** The vendor option fill factory. */
@@ -75,15 +77,16 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
     /**
      * Constructor.
      */
-    public PointFillDetails()
-    {
+    public PointFillDetails() {
         super(PointFillDetails.class);
 
         setUpdateSymbolListener(this);
 
         symbolTypeFactory = new SymbolTypeFactory(PointFillDetails.class,
-                new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.POINT_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR,
+                        FieldIdEnum.POINT_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
+                new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_FILL_COLOUR,
+                        FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
                 FieldIdEnum.SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(PointFillDetails.class);
@@ -116,10 +119,8 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
         vendorOptionFillFactory = new VendorOptionFillFactory(getPanelId());
 
         List<VendorOptionInterface> voList = vendorOptionFillFactory.getVendorOptionList();
-        if(voList != null)
-        {
-            for(VendorOptionInterface vendorOption : voList)
-            {
+        if (voList != null) {
+            for (VendorOptionInterface vendorOption : voList) {
                 vendorOption.setParentPanel(this);
             }
         }
@@ -140,7 +141,9 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -156,30 +159,24 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
 
         PointSymbolizer pointSymbolizer = null;
 
-        if(selectedSymbol != null)
-        {
+        if (selectedSymbol != null) {
             Symbolizer symbolizer = selectedSymbol.getSymbolizer();
 
-            if(symbolizer instanceof PointSymbolizerImpl)
-            {
+            if (symbolizer instanceof PointSymbolizerImpl) {
                 pointSymbolizer = (PointSymbolizer) symbolizer;
                 Graphic graphic = pointSymbolizer.getGraphic();
 
-                if(graphic != null)
-                {
+                if (graphic != null) {
                     expSize = graphic.getSize();
                     expRotation = graphic.getRotation();
 
                     // Anchor point
                     AnchorPoint anchorPoint = graphic.getAnchorPoint();
 
-                    if(anchorPoint != null)
-                    {
+                    if (anchorPoint != null) {
                         expAnchorPointX = anchorPoint.getAnchorPointX();
                         expAnchorPointY = anchorPoint.getAnchorPointY();
-                    }
-                    else
-                    {
+                    } else {
                         expAnchorPointX = AnchorPoint.DEFAULT.getAnchorPointX();
                         expAnchorPointY = AnchorPoint.DEFAULT.getAnchorPointY();
                     }
@@ -187,13 +184,10 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
                     // Offset
                     Displacement displacement = graphic.getDisplacement();
 
-                    if(displacement != null)
-                    {
+                    if (displacement != null) {
                         expDisplacementX = displacement.getDisplacementX();
                         expDisplacementY = displacement.getDisplacementY();
-                    }
-                    else
-                    {
+                    } else {
                         expDisplacementX = Displacement.DEFAULT.getDisplacementX();
                         expDisplacementY = Displacement.DEFAULT.getDisplacementY();
                     }
@@ -203,10 +197,10 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
 
                     List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
 
-                    if(!graphicalSymbolList.isEmpty())
-                    {
+                    if (!graphicalSymbolList.isEmpty()) {
                         GraphicalSymbol symbol = graphicalSymbolList.get(0);
-                        symbolTypeFactory.setValue(PointSymbolizer.class, this.fieldConfigManager, graphic, symbol);
+                        symbolTypeFactory.setValue(PointSymbolizer.class, this.fieldConfigManager,
+                                graphic, symbol);
                     }
                 }
             }
@@ -221,8 +215,7 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
         fieldConfigVisitor.populateField(FieldIdEnum.GAP, expGap);
         fieldConfigVisitor.populateField(FieldIdEnum.INITIAL_GAP, expInitialGap);
 
-        if(vendorOptionFillFactory != null)
-        {
+        if (vendorOptionFillFactory != null) {
             vendorOptionFillFactory.populate(pointSymbolizer);
         }
 
@@ -233,12 +226,10 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
+        if (!Controller.getInstance().isPopulating()) {
             Symbolizer symbolizer = SelectedSymbol.getInstance().getSymbolizer();
 
-            if(symbolizer instanceof PointSymbolizer)
-            {
+            if (symbolizer instanceof PointSymbolizer) {
                 PointSymbolizerImpl newPointSymbolizer = (PointSymbolizerImpl) symbolizer;
 
                 Graphic graphic = getGraphic();
@@ -278,14 +269,13 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
         //
         GroupConfigInterface anchorPointPanel = getGroup(GroupIdEnum.ANCHORPOINT);
 
-        if(anchorPointPanel.isPanelEnabled())
-        {
-            anchor = (AnchorPoint) getStyleFactory().anchorPoint(fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
+        if (anchorPointPanel.isPanelEnabled()) {
+            anchor = (AnchorPoint) getStyleFactory().anchorPoint(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(AnchorPoint.DEFAULT, anchor))
-            {
+            if (DetailsUtilities.isSame(AnchorPoint.DEFAULT, anchor)) {
                 anchor = null;
             }
         }
@@ -295,32 +285,30 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
         //
         GroupConfigInterface displacementPanel = getGroup(GroupIdEnum.DISPLACEMENT);
 
-        if(displacementPanel.isPanelEnabled())
-        {
-            displacement = getStyleFactory().displacement(fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
+        if (displacementPanel.isPanelEnabled()) {
+            displacement = getStyleFactory().displacement(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
-            if(DetailsUtilities.isSame(Displacement.DEFAULT, displacement))
-            {
+            if (DetailsUtilities.isSame(Displacement.DEFAULT, displacement)) {
                 displacement = null;
             }
         }
 
-        List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(fieldConfigManager, 
-                symbolType, 
-                hasFill, hasStroke, 
+        List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(fieldConfigManager, symbolType,
+                hasFill, hasStroke, selectedFillPanelId);
+
+        boolean overallOpacity = symbolTypeFactory.isOverallOpacity(PointSymbolizer.class,
                 selectedFillPanelId);
 
-        boolean overallOpacity = symbolTypeFactory.isOverallOpacity(PointSymbolizer.class,selectedFillPanelId);
-
-        Graphic graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor, displacement);
+        Graphic graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor,
+                displacement);
 
         graphic.setInitialGap(initialGap);
         graphic.setGap(gap);
 
-        if(overallOpacity)
-        {
+        if (overallOpacity) {
             graphic.setOpacity(opacity);
         }
         return graphic;
@@ -340,17 +328,15 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
         selectedFillPanelId = fieldPanelId;
 
         FieldConfigBase fieldConfig = fieldConfigManager.get(FieldIdEnum.SIZE);
-        if(fieldConfig.isEnabled())
-        {
+        if (fieldConfig.isEnabled()) {
             Expression expression = fieldConfig.getExpression();
 
-            if(expression instanceof LiteralExpressionImpl)
-            {
+            if (expression instanceof LiteralExpressionImpl) {
                 LiteralExpressionImpl l = (LiteralExpressionImpl) expression;
                 Double d = (Double) l.getValue();
-                if(d <= 0.0)
-                {
-                    fieldConfigVisitor.populateField(FieldIdEnum.SIZE, getFilterFactory().literal(1));
+                if (d <= 0.0) {
+                    fieldConfigVisitor.populateField(FieldIdEnum.SIZE,
+                            getFilterFactory().literal(1));
                 }
             }
         }
@@ -364,39 +350,35 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
      * @param panelId the panel id
      * @param selectedItem the selected item
      */
-    private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem)
-    {
-        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
+    private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
+        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(),
+                selectedItem);
 
-        for(GroupIdEnum groupId : groupList.keySet())
-        {
+        for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(), groupId);
-            if(groupConfig != null)
-            {
+            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(),
+                    groupId);
+            if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find group : " + groupId.toString());
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find group : " + groupId.toString());
             }
         }
 
-        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(),
+                selectedItem);
 
-        for(FieldIdEnum fieldId : fieldList.keySet())
-        {
+        for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 CurrentFieldState fieldState = fieldConfig.getFieldState();
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
-            }
-            else
-            {
-                ConsoleManager.getInstance().error(this, "Failed to find field : " + fieldId.toString());
+            } else {
+                ConsoleManager.getInstance().error(this,
+                        "Failed to find field : " + fieldId.toString());
             }
         }
     }
@@ -406,14 +388,14 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
-        if(vendorOptionFillFactory != null)
-        {
+    public GraphicPanelFieldManager getFieldDataManager() {
+        if (vendorOptionFillFactory != null) {
             vendorOptionFillFactory.getFieldDataManager(fieldConfigManager);
         }
 
@@ -425,16 +407,19 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return SelectedSymbol.getInstance().hasFill();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -442,7 +427,9 @@ public class PointFillDetails extends StandardPanel implements PopulateDetailsIn
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

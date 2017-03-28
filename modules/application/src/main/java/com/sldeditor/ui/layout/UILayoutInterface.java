@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.layout;
 
 import java.util.List;
@@ -29,8 +30,7 @@ import com.sldeditor.ui.panels.SLDEditorUIPanels;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface UILayoutInterface
-{
+public interface UILayoutInterface {
 
     /**
      * Creates the ui.
@@ -39,7 +39,8 @@ public interface UILayoutInterface
      * @param uiMgr the ui mgr
      * @param extensionList the extension list
      */
-    void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr, List<ExtensionInterface> extensionList);
+    void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr,
+            List<ExtensionInterface> extensionList);
 
     /**
      * Read layout.

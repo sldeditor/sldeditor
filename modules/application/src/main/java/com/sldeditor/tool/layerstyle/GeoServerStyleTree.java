@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import java.awt.BorderLayout;
@@ -45,8 +46,7 @@ import com.sldeditor.common.data.StyleWrapper;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerStyleTree extends JPanel
-{
+public class GeoServerStyleTree extends JPanel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -92,8 +92,7 @@ public class GeoServerStyleTree extends JPanel
     /**
      * Instantiates a new geo server style tree.
      */
-    public GeoServerStyleTree(SelectedStyleInterface parent)
-    {
+    public GeoServerStyleTree(SelectedStyleInterface parent) {
         parentObj = parent;
         createUI();
 
@@ -117,12 +116,10 @@ public class GeoServerStyleTree extends JPanel
         styleCardPanel.add(styleTreePanel, STYLE_PANEL);
 
         geoserverStyleTree = new JTree(treeModel);
-        geoserverStyleTree.addTreeSelectionListener(new TreeSelectionListener()
-        {
+        geoserverStyleTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                if(!populating )
-                {
+                if (!populating) {
                     setButtonState(true);
                 }
             }
@@ -135,27 +132,29 @@ public class GeoServerStyleTree extends JPanel
         styleTreePanel.add(styleButtonsPanel, BorderLayout.SOUTH);
 
         btnApply = new JButton("Apply");
-        btnApply.addActionListener(new ActionListener(){
+        btnApply.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                LayerStyleNode node = (LayerStyleNode)geoserverStyleTree.getLastSelectedPathComponent();
+                LayerStyleNode node = (LayerStyleNode) geoserverStyleTree
+                        .getLastSelectedPathComponent();
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.selectedStyle(node.getStyleWrapper());
                 }
 
-            }});
+            }
+        });
         styleButtonsPanel.add(btnApply);
 
         btnRevert = new JButton("Revert");
-        btnRevert.addActionListener(new ActionListener(){
+        btnRevert.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 showSelectedStyle(originalStyleWrapper);
-            }});
+            }
+        });
         styleButtonsPanel.add(btnRevert);
 
         //
@@ -172,45 +171,38 @@ public class GeoServerStyleTree extends JPanel
      * @param geoserverName the geoserver name
      * @param styleMap the style map
      */
-    public void populate(String geoserverName, Map<String, List<StyleWrapper> > styleMap)
-    {
+    public void populate(String geoserverName, Map<String, List<StyleWrapper>> styleMap) {
         populating = true;
         CardLayout cardLayout = (CardLayout) styleCardPanel.getLayout();
         cardLayout.show(styleCardPanel, EMPTY_PANEL);
 
         setButtonState(false);
-        rootNode.removeAllChildren(); //this removes all nodes
+        rootNode.removeAllChildren(); // this removes all nodes
 
-        if(styleMap == null)
-        {
+        if (styleMap == null) {
             rootNode.setUserObject(NOT_CONNECTED);
-        }
-        else
-        {
+        } else {
             rootNode.setUserObject((geoserverName != null) ? geoserverName : CONNECTED_GEOSERVER);
 
-            for(String workspaceName : styleMap.keySet())
-            {
+            for (String workspaceName : styleMap.keySet()) {
                 List<StyleWrapper> styleList = styleMap.get(workspaceName);
 
                 DefaultMutableTreeNode workspaceNode = new DefaultMutableTreeNode(workspaceName);
 
                 // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-                treeModel.insertNodeInto(workspaceNode, rootNode, 
-                        rootNode.getChildCount());
+                treeModel.insertNodeInto(workspaceNode, rootNode, rootNode.getChildCount());
 
-                for(StyleWrapper styleWrapper : styleList)
-                {
+                for (StyleWrapper styleWrapper : styleList) {
                     LayerStyleNode childNode = new LayerStyleNode(styleWrapper);
 
                     // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-                    treeModel.insertNodeInto(childNode, workspaceNode, 
+                    treeModel.insertNodeInto(childNode, workspaceNode,
                             workspaceNode.getChildCount());
                 }
             }
         }
 
-        treeModel.reload(); //this notifies the listeners and changes the GUI
+        treeModel.reload(); // this notifies the listeners and changes the GUI
 
         populating = false;
     }
@@ -230,16 +222,14 @@ public class GeoServerStyleTree extends JPanel
      *
      * @return the tree
      */
-    public Component getTree()
-    {
+    public Component getTree() {
         return geoserverStyleTree;
     }
 
     /**
      * Initialise.
      */
-    public void initialise()
-    {
+    public void initialise() {
         rootNode = new DefaultMutableTreeNode(NOT_CONNECTED);
 
         treeModel = new DefaultTreeModel(rootNode);
@@ -253,8 +243,7 @@ public class GeoServerStyleTree extends JPanel
     /**
      * Clear selection.
      */
-    public void clearSelection()
-    {
+    public void clearSelection() {
         geoserverStyleTree.clearSelection();
     }
 
@@ -263,8 +252,7 @@ public class GeoServerStyleTree extends JPanel
      *
      * @param styleWrapper the style wrapper
      */
-    public void select(StyleWrapper styleWrapper)
-    {
+    public void select(StyleWrapper styleWrapper) {
         originalStyleWrapper = styleWrapper;
 
         showSelectedStyle(styleWrapper);
@@ -275,8 +263,7 @@ public class GeoServerStyleTree extends JPanel
      *
      * @param styleWrapper the style wrapper
      */
-    private void showSelectedStyle(StyleWrapper styleWrapper)
-    {
+    private void showSelectedStyle(StyleWrapper styleWrapper) {
         populating = true;
         CardLayout cardLayout = (CardLayout) styleCardPanel.getLayout();
         cardLayout.show(styleCardPanel, STYLE_PANEL);
@@ -285,21 +272,19 @@ public class GeoServerStyleTree extends JPanel
 
         DefaultMutableTreeNode node = null;
 
-        if(styleWrapper != null)
-        {
-            for(int index = 0; (index < rootNode.getChildCount()) && (node == null); index ++)
-            {
-                DefaultMutableTreeNode workspaceNode = (DefaultMutableTreeNode) rootNode.getChildAt(index);
+        if (styleWrapper != null) {
+            for (int index = 0; (index < rootNode.getChildCount()) && (node == null); index++) {
+                DefaultMutableTreeNode workspaceNode = (DefaultMutableTreeNode) rootNode
+                        .getChildAt(index);
 
-                if(workspaceNode.toString().compareTo(styleWrapper.getWorkspace()) == 0)
-                {
+                if (workspaceNode.toString().compareTo(styleWrapper.getWorkspace()) == 0) {
                     // Found workspace node, now find style node
-                    for(int styleIndex = 0; styleIndex < workspaceNode.getChildCount() && (node == null); styleIndex ++)
-                    {
-                        LayerStyleNode styleNode = (LayerStyleNode) workspaceNode.getChildAt(styleIndex);
+                    for (int styleIndex = 0; styleIndex < workspaceNode.getChildCount()
+                            && (node == null); styleIndex++) {
+                        LayerStyleNode styleNode = (LayerStyleNode) workspaceNode
+                                .getChildAt(styleIndex);
 
-                        if(styleNode.getStyleWrapper().compareTo(styleWrapper) == 0)
-                        {
+                        if (styleNode.getStyleWrapper().compareTo(styleWrapper) == 0) {
                             node = styleNode;
                         }
                     }
@@ -307,8 +292,7 @@ public class GeoServerStyleTree extends JPanel
             }
         }
 
-        if(node != null)
-        {
+        if (node != null) {
             TreeNode[] nodes = treeModel.getPathToRoot(node);
             TreePath path = new TreePath(nodes);
             geoserverStyleTree.setSelectionPath(path);
@@ -322,16 +306,18 @@ public class GeoServerStyleTree extends JPanel
      *
      * @return the selected style
      */
-    public StyleWrapper getSelectedStyle()
-    {
+    public StyleWrapper getSelectedStyle() {
         StyleWrapper selectedStyle = null;
         TreePath selectedStylePath = geoserverStyleTree.getSelectionPath();
 
-        if((selectedStylePath != null) && (selectedStylePath.getPathCount() == 3))
-        {
+        if ((selectedStylePath != null) && (selectedStylePath.getPathCount() == 3)) {
             selectedStyle = new StyleWrapper();
-            selectedStyle.setWorkspace((String)((DefaultMutableTreeNode)selectedStylePath.getPathComponent(1)).getUserObject());
-            selectedStyle.setStyle((String)((DefaultMutableTreeNode)selectedStylePath.getPathComponent(2)).getUserObject());
+            selectedStyle.setWorkspace(
+                    (String) ((DefaultMutableTreeNode) selectedStylePath.getPathComponent(1))
+                            .getUserObject());
+            selectedStyle.setStyle(
+                    (String) ((DefaultMutableTreeNode) selectedStylePath.getPathComponent(2))
+                            .getUserObject());
         }
 
         return selectedStyle;

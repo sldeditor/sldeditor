@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.property;
 
 import java.io.File;
@@ -34,18 +35,18 @@ public class PropertyManagerFactory {
     private static PropertyManagerInterface instance = null;
 
     /**
-     * Private default constructor
+     * Private default constructor.
      */
     private PropertyManagerFactory() {
         // Does nothing
     }
 
     /**
-     * Return the Property Manager
+     * Return the Property Manager.
      *
      * @return singleton instance of PropertyManagerInterface
      */
-    public synchronized static PropertyManagerInterface getInstance() {
+    public static synchronized PropertyManagerInterface getInstance() {
         if (instance == null) {
             instance = new PropertyManager();
             instance.setPropertyFile(new File(CONFIG_PROPERTIES));
@@ -57,7 +58,7 @@ public class PropertyManagerFactory {
     /**
      * Destroy instance.
      */
-    public synchronized static void destroyInstance() {
+    public static synchronized void destroyInstance() {
         instance = null;
     }
 }

@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.vendoroption;
 
 import java.io.InputStream;
@@ -57,10 +59,12 @@ public class VendorOptionManager {
     private static VendorOptionManager instance = null;
 
     /** The vendor option map. */
-    private Map<String, VendorOptionTypeInterface> vendorOptionMap = new HashMap<String, VendorOptionTypeInterface>();
+    private Map<String, VendorOptionTypeInterface> vendorOptionMap =
+            new HashMap<String, VendorOptionTypeInterface>();
 
     /** The vendor option class map. */
-    private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap = new HashMap<Class<?>, VendorOptionTypeInterface>();
+    private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap =
+            new HashMap<Class<?>, VendorOptionTypeInterface>();
 
     /** The default vendor option version. */
     private VendorOptionVersion defaultVendorOptionVersion = null;
@@ -69,7 +73,8 @@ public class VendorOptionManager {
     private VendorOptionTypeInterface defaultVendorOption = null;
 
     /** The vendor option listener list. */
-    private List<VendorOptionUpdateInterface> vendorOptionListenerList = new ArrayList<VendorOptionUpdateInterface>();
+    private List<VendorOptionUpdateInterface> vendorOptionListenerList =
+            new ArrayList<VendorOptionUpdateInterface>();
 
     /** The selected vendor options. */
     private List<VersionData> selectedVendorOptions = new ArrayList<VersionData>();
@@ -202,6 +207,23 @@ public class VendorOptionManager {
      * Gets the vendor option version.
      *
      * @param classType the class type
+     * @return the vendor option version
+     */
+    public VendorOptionVersion getVendorOptionVersion(Class<?> classType) {
+        if (classType == null) {
+            return null;
+        }
+
+        VersionData minimum = VersionData.getEarliestVersion(classType);
+        VersionData maximum = VersionData.getLatestVersion(classType);
+
+        return new VendorOptionVersion(classType, minimum, maximum);
+    }
+
+    /**
+     * Gets the vendor option version.
+     *
+     * @param classType the class type
      * @param startVersion the start version
      * @param endVersion the end version
      * @return the vendor option version
@@ -254,23 +276,6 @@ public class VendorOptionManager {
         }
 
         return defaultVendorOptionVersion;
-    }
-
-    /**
-     * Gets the vendor option version.
-     *
-     * @param classType the class type
-     * @return the vendor option version
-     */
-    public VendorOptionVersion getVendorOptionVersion(Class<?> classType) {
-        if (classType == null) {
-            return null;
-        }
-
-        VersionData minimum = VersionData.getEarliestVersion(classType);
-        VersionData maximum = VersionData.getLatestVersion(classType);
-
-        return new VendorOptionVersion(classType, minimum, maximum);
     }
 
     /**

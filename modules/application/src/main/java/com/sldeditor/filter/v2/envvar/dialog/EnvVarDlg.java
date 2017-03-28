@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar.dialog;
 
 import java.awt.BorderLayout;
@@ -84,7 +85,8 @@ public class EnvVarDlg extends JDialog {
      * Instantiates a new env var dlg.
      */
     public EnvVarDlg(EnvironmentManagerInterface envVarMgr) {
-        super(Controller.getInstance().getFrame(), Localisation.getString(EnvVarDlg.class, "EnvVarDlg.title"), true);
+        super(Controller.getInstance().getFrame(),
+                Localisation.getString(EnvVarDlg.class, "EnvVarDlg.title"), true);
 
         this.envVarMgr = envVarMgr;
 
@@ -148,17 +150,18 @@ public class EnvVarDlg extends JDialog {
                 boolean enableRemoveButton = false;
 
                 EnvVar envVar = dataModel.getEnvVar(table.getSelectedRow());
-                if(envVar != null)
-                {
+                if (envVar != null) {
                     enableRemoveButton = !envVar.isPredefined();
                 }
                 btnRemove.setEnabled(enableRemoveButton);
-            }});
+            }
+        });
         JPanel panelWMS = new JPanel();
         panel.add(panelWMS, BorderLayout.NORTH);
         panelWMS.setLayout(new BoxLayout(panelWMS, BoxLayout.X_AXIS));
 
-        JButton btnDecode = new JButton(Localisation.getString(EnvVarDlg.class, "EnvVarDlg.decode"));
+        JButton btnDecode = new JButton(
+                Localisation.getString(EnvVarDlg.class, "EnvVarDlg.decode"));
         btnDecode.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 URL url;
@@ -166,15 +169,12 @@ public class EnvVarDlg extends JDialog {
                     url = new URL(textField.getText());
                     Map<String, List<String>> parameterMap = splitQuery(url);
 
-                    if(parameterMap.containsKey(WMS_ENV_PARAMETER))
-                    {
+                    if (parameterMap.containsKey(WMS_ENV_PARAMETER)) {
                         dataModel.addNew(parameterMap.get(WMS_ENV_PARAMETER));
                     }
-                }
-                catch (MalformedURLException e1) {
+                } catch (MalformedURLException e1) {
                     ConsoleManager.getInstance().exception(this, e1);
-                }
-                catch (UnsupportedEncodingException e1) {
+                } catch (UnsupportedEncodingException e1) {
                     ConsoleManager.getInstance().exception(this, e1);
                 }
 
@@ -214,8 +214,7 @@ public class EnvVarDlg extends JDialog {
      *
      * @return true, if successful
      */
-    public boolean showDialog()
-    {
+    public boolean showDialog() {
         dataModel.populate();
         setVisible(true);
 
@@ -240,7 +239,8 @@ public class EnvVarDlg extends JDialog {
      * @return the map
      * @throws UnsupportedEncodingException the unsupported encoding exception
      */
-    private static Map<String, List<String>> splitQuery(URL url) throws UnsupportedEncodingException {
+    private static Map<String, List<String>> splitQuery(URL url)
+            throws UnsupportedEncodingException {
         final Map<String, List<String>> query_pairs = new LinkedHashMap<String, List<String>>();
         final String[] pairs = url.getQuery().split("&");
         for (String pair : pairs) {
@@ -249,7 +249,8 @@ public class EnvVarDlg extends JDialog {
             if (!query_pairs.containsKey(key)) {
                 query_pairs.put(key, new LinkedList<String>());
             }
-            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
+            final String value = idx > 0 && pair.length() > idx + 1
+                    ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
             query_pairs.get(key).add(value);
         }
         return query_pairs;

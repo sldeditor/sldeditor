@@ -59,7 +59,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     /**
      * Populate interpolation map.
      */
-    private synchronized static void populateKernelKAI() {
+    private static synchronized void populateKernelKAI() {
         if (kernelJAIMap == null) {
             kernelJAIMap = new HashMap<KernelJAI, String>();
             kernelJAIMap.put(KernelJAI.GRADIENT_MASK_SOBEL_HORIZONTAL,
@@ -97,8 +97,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
      */
     @Override
     public Expression getExpression() {
-        if(value != null)
-        {
+        if (value != null) {
             return filterFactory.literal(value.getClass().getSimpleName());
         }
         return null;

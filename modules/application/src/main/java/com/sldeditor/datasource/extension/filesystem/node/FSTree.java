@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node;
 
 import javax.swing.JTree;
@@ -30,8 +31,7 @@ import com.sldeditor.extension.filesystem.FileSelectionInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FSTree extends JTree
-{
+public class FSTree extends JTree {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5333097014279697712L;
 
@@ -42,10 +42,9 @@ public class FSTree extends JTree
     private boolean ignoreSelection = false;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public FSTree()
-    {
+    public FSTree() {
         transferHandler = new TreeTransferHandler();
         setTransferHandler(transferHandler);
         setAutoscrolls(true);
@@ -56,20 +55,18 @@ public class FSTree extends JTree
     }
 
     /**
-     * Checks if a dragging operation is currently happening
+     * Checks if a dragging operation is currently happening.
      *
      * @return true, if is dragging
      */
-    public boolean isDragging()
-    {
+    public boolean isDragging() {
         return transferHandler.isDragging();
     }
 
     /**
      * Sets the ignore selection flag state.
      */
-    public void setIgnoreSelection(boolean value)
-    {
+    public void setIgnoreSelection(boolean value) {
         ignoreSelection = value;
     }
 
@@ -78,8 +75,7 @@ public class FSTree extends JTree
      *
      * @return true, if successful
      */
-    private boolean shouldIgnoreSelection()
-    {
+    private boolean shouldIgnoreSelection() {
         return ignoreSelection;
     }
 
@@ -101,15 +97,11 @@ public class FSTree extends JTree
      */
     public void setTreeSelection(FileSelectionInterface fileSelection) {
 
-        addTreeSelectionListener(new TreeSelectionListener()
-        {
+        addTreeSelectionListener(new TreeSelectionListener() {
             @Override
-            public void valueChanged(TreeSelectionEvent e)
-            {
-                if(!shouldIgnoreSelection())
-                {
-                    if(fileSelection != null)
-                    {
+            public void valueChanged(TreeSelectionEvent e) {
+                if (!shouldIgnoreSelection()) {
+                    if (fileSelection != null) {
                         fileSelection.treeSelection(e);
                     }
                 }

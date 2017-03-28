@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.batchupdatefont;
 
 import java.util.ArrayList;
@@ -64,13 +65,16 @@ public class BatchUpdateFontUtils {
                                     for (Rule rule : fts.rules()) {
                                         for (Symbolizer symbolizer : rule.symbolizers()) {
                                             if (symbolizer instanceof TextSymbolizer) {
-                                                TextSymbolizer textSymbol = (TextSymbolizer) symbolizer;
+                                                TextSymbolizer textSymbol =
+                                                        (TextSymbolizer) symbolizer;
                                                 Font font = textSymbol.getFont();
                                                 if (font != null) {
                                                     if (dataList == null) {
-                                                        dataList = new ArrayList<BatchUpdateFontData>();
+                                                        dataList =
+                                                               new ArrayList<BatchUpdateFontData>();
                                                     }
-                                                    BatchUpdateFontData fontSLDData = new BatchUpdateFontData(
+                                                    BatchUpdateFontData fontSLDData =
+                                                            new BatchUpdateFontData(
                                                             sld, sldData);
 
                                                     fontSLDData.setNamedLayer(

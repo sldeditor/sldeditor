@@ -32,21 +32,23 @@ import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 
 /**
- * The Class FunctionNameFilterRaster.  Accept on functions suitable for raster symbols.
- * Ignore functions which return geometry or contain geometry parameters.
+ * The Class FunctionNameFilterRaster. Accept on functions suitable for raster symbols.
+ * Ignore functions which return geometry or contain geometry
+ * parameters.
  *
  * @author Robert Ward (SCISYS)
  */
 public class FunctionNameFilterRaster implements FunctionNameFilterInterface {
 
     /** The allowed geometry types. */
-    private static Class<?>[] allowedGeometryTypes = {Geometry.class, LineString.class, Point.class, MultiPoint.class, LinearRing.class, Object.class};
+    private static Class<?>[] allowedGeometryTypes = { Geometry.class, LineString.class,
+            Point.class, MultiPoint.class, LinearRing.class, Object.class };
 
     /** The allowed geometry type list. */
     private List<Class<?>> allowedGeometryTypeList = Arrays.asList(allowedGeometryTypes);
 
     /** The disallowed function names. */
-    private static String[] disallowedFunctionNames = {"id", "property"};
+    private static String[] disallowedFunctionNames = { "id", "property" };
 
     /** The disallowed function name list. */
     private List<String> disallowedFunctionNameList = Arrays.asList(disallowedFunctionNames);
@@ -54,35 +56,31 @@ public class FunctionNameFilterRaster implements FunctionNameFilterInterface {
     /**
      * Instantiates a new function name filter raster.
      */
-    public FunctionNameFilterRaster()
-    {
+    public FunctionNameFilterRaster() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface#accept(org.opengis.filter.capability.FunctionName)
      */
     @Override
     public boolean accept(FunctionName functionName) {
-        if(functionName != null)
-        {
+        if (functionName != null) {
             // Check return type
-            if(allowedGeometryTypeList.contains(functionName.getReturn().getType()))
-            {
+            if (allowedGeometryTypeList.contains(functionName.getReturn().getType())) {
                 return false;
             }
 
             // Check all parameters
-            for(Parameter<?> parameter : functionName.getArguments())
-            {
-                if(allowedGeometryTypeList.contains(parameter.getType()))
-                {
+            for (Parameter<?> parameter : functionName.getArguments()) {
+                if (allowedGeometryTypeList.contains(parameter.getType())) {
                     return false;
                 }
             }
 
             // Check to see if function name is on the banned list
-            if(disallowedFunctionNameList.contains(functionName.getName()))
-            {
+            if (disallowedFunctionNameList.contains(functionName.getName())) {
                 return false;
             }
         }

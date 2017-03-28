@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.envvar;
 
 import java.awt.BorderLayout;
@@ -76,8 +77,7 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      *
      * @return the panel name
      */
-    public static String getPanelName()
-    {
+    public static String getPanelName() {
         return ENVVARFIELD_PANEL;
     }
 
@@ -87,9 +87,8 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      * @param parentObj the parent obj
      * @param envVarMgr the env var mgr
      */
-    public EnvironmentVariableField(SubPanelUpdatedInterface parentObj, 
-            EnvironmentManagerInterface envVarMgr)
-    {
+    public EnvironmentVariableField(SubPanelUpdatedInterface parentObj,
+            EnvironmentManagerInterface envVarMgr) {
         final UndoActionInterface thisObj = this;
         this.envVarMgr = envVarMgr;
 
@@ -102,20 +101,20 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
 
                 String newValueObj = (String) envVarComboBox.getSelectedItem();
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj, "EnvVar", oldValueObj, newValueObj));
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(thisObj, "EnvVar", oldValueObj, newValueObj));
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.updateSymbol();
                 }
             }
         });
 
-        JButton editButton = new JButton(Localisation.getString(EnvVarDlg.class, "EnvironmentVariableField.edit"));
+        JButton editButton = new JButton(
+                Localisation.getString(EnvVarDlg.class, "EnvironmentVariableField.edit"));
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(envVarMgr.showDialog())
-                {
+                if (envVarMgr.showDialog()) {
                     populateFunctionComboBox();
                 }
             }
@@ -128,14 +127,12 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      * Populate function combo box.
      */
     private void populateFunctionComboBox() {
-        if(envVarComboBox != null)
-        {
+        if (envVarComboBox != null) {
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
             model.addElement("");
 
-            for(String name : envVarMap.keySet())
-            {
+            for (String name : envVarMap.keySet()) {
                 model.addElement(name);
             }
             envVarComboBox.setModel(model);
@@ -147,8 +144,7 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      *
      * @return the selected item
      */
-    public String getSelectedItem()
-    {
+    public String getSelectedItem() {
         return (String) envVarComboBox.getSelectedItem();
     }
 
@@ -157,8 +153,7 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      *
      * @param enabled the new panel enabled
      */
-    public void setPanelEnabled(boolean enabled)
-    {
+    public void setPanelEnabled(boolean enabled) {
         envVarComboBox.setEnabled(enabled);
     }
 
@@ -169,24 +164,21 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      */
     public void setEnvironmentVariable(Expression expression) {
 
-        if(expression instanceof EnvFunction)
-        {
+        if (expression instanceof EnvFunction) {
             EnvFunction envFunction = (EnvFunction) expression;
-            LiteralExpressionImpl literal = (LiteralExpressionImpl) envFunction.getParameters().get(0);
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) envFunction.getParameters()
+                    .get(0);
             oldValueObj = literal;
 
             envVarComboBox.setSelectedItem(literal.getValue());
-        }
-        else if(expression instanceof LiteralExpressionImpl)
-        {
+        } else if (expression instanceof LiteralExpressionImpl) {
             LiteralExpressionImpl literal = (LiteralExpressionImpl) expression;
             oldValueObj = literal;
 
             envVarComboBox.setSelectedItem(literal.getValue());
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(this, Localisation.getString(EnvironmentVariableField.class, "DataSourceAttributePanel.error1"));
+        } else {
+            ConsoleManager.getInstance().error(this, Localisation
+                    .getString(EnvironmentVariableField.class, "DataSourceAttributePanel.error1"));
         }
     }
 
@@ -196,7 +188,7 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      * @return the expression
      */
     public Expression getExpression() {
-        String nameString = (String)envVarComboBox.getSelectedItem();
+        String nameString = (String) envVarComboBox.getSelectedItem();
 
         EnvVar envVar = envVarMap.get(nameString);
 
@@ -210,12 +202,14 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String)undoRedoObject.getOldValue();
+        String oldValueObj = (String) undoRedoObject.getOldValue();
 
         envVarComboBox.setSelectedItem(oldValueObj);
     }
@@ -225,12 +219,14 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String)undoRedoObject.getNewValue();
+        String newValueObj = (String) undoRedoObject.getNewValue();
 
         envVarComboBox.setSelectedItem(newValueObj);
     }
@@ -241,7 +237,8 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      * @return the vendor option
      */
     public static VendorOptionVersion getVendorOption() {
-        VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(GeoServerVendorOption.class,
+        VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(
+                GeoServerVendorOption.class,
                 VersionData.decode(GeoServerVendorOption.class, "2.0.2"),
                 VersionData.getLatestVersion(GeoServerVendorOption.class));
         return vendorOptionVersion;
@@ -254,10 +251,8 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
         envVarMap.clear();
 
         List<EnvVar> envVarList = envVarMgr.getEnvVarList();
-        for(EnvVar envVar : envVarList)
-        {
-            if(envVar.getType() == fieldType)
-            {
+        for (EnvVar envVar : envVarList) {
+            if (envVar.getType() == fieldType) {
                 envVarMap.put(envVar.getName(), envVar);
             }
         }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.util.ArrayList;
@@ -80,8 +81,7 @@ public class WKTGeometry {
      *
      * @return the no of segments
      */
-    public int getNoOfSegments()
-    {
+    public int getNoOfSegments() {
         return segmentList.size();
     }
 
@@ -92,8 +92,7 @@ public class WKTGeometry {
      * @return the segment list
      */
     public List<WKTSegmentList> getSegmentList(int index) {
-        if((index < 0) || (index >= segmentList.size()))
-        {
+        if ((index < 0) || (index >= segmentList.size())) {
             return null;
         }
         return segmentList.get(index);
@@ -109,24 +108,18 @@ public class WKTGeometry {
     public int addSegmentList(int index, WKTSegmentList segmentListToAdd) {
         List<WKTSegmentList> localSegmentList = null;
 
-        if(index < 0)
-        {
+        if (index < 0) {
             return -1;
-        }
-        else
-        {
-            if(index >= segmentList.size())
-            {
+        } else {
+            if (index >= segmentList.size()) {
                 localSegmentList = new ArrayList<WKTSegmentList>();
                 segmentList.add(localSegmentList);
-            }
-            else
-            {
+            } else {
                 localSegmentList = segmentList.get(index);
             }
 
             localSegmentList.add(segmentListToAdd);
-        }       
+        }
         return localSegmentList.size() - 1;
     }
 
@@ -150,8 +143,7 @@ public class WKTGeometry {
 
         WKTSegmentList newSegmentList = new WKTSegmentList();
         newSegmentList.addPoint(new WKTPoint());
-        if(geometryType.getNumOfPoints() > 1)
-        {
+        if (geometryType.getNumOfPoints() > 1) {
             newSegmentList.addPoint(new WKTPoint());
         }
         return addSegmentList(index, newSegmentList);
@@ -165,8 +157,7 @@ public class WKTGeometry {
     public int addNewShape() {
         WKTSegmentList newSegmentList = new WKTSegmentList();
         newSegmentList.addPoint(new WKTPoint());
-        if(geometryType.getNumOfPoints() > 1)
-        {
+        if (geometryType.getNumOfPoints() > 1) {
             newSegmentList.addPoint(new WKTPoint());
         }
         addSegmentList(segmentList.size(), newSegmentList);
@@ -183,8 +174,7 @@ public class WKTGeometry {
     public void removeSegment(int shapeIndex, int segmentIndex) {
         List<WKTSegmentList> shapeList = segmentList.get(shapeIndex);
 
-        if((segmentIndex >= 0) && (segmentIndex < shapeList.size()))
-        {
+        if ((segmentIndex >= 0) && (segmentIndex < shapeList.size())) {
             shapeList.remove(segmentIndex);
         }
     }
@@ -195,11 +185,11 @@ public class WKTGeometry {
      * @param shapeIndex the shape index
      */
     public void removeShape(int shapeIndex) {
-        if((shapeIndex >= 0) && (shapeIndex < segmentList.size()))
-        {
+        if ((shapeIndex >= 0) && (shapeIndex < segmentList.size())) {
             segmentList.remove(shapeIndex);
         }
     }
+
     /**
      * Gets the multi shape name.
      *
@@ -217,18 +207,16 @@ public class WKTGeometry {
      * @return the segment name
      */
     public String getSegmentName(int index) {
-        if(geometryType.canHaveMultipleShapes())
-        {
-            return String.format("%s %d", Localisation.getString(WKTDialog.class, "WKTDialog.partShape"), index + 1);
-        }
-        else
-        {
+        if (geometryType.canHaveMultipleShapes()) {
+            return String.format("%s %d",
+                    Localisation.getString(WKTDialog.class, "WKTDialog.partShape"), index + 1);
+        } else {
             return String.format("%s %d", geometryType.getListItem(), index + 1);
         }
     }
 
     /**
-     * Checks if WKT shape empty, no type set and no multi shapes/segments set
+     * Checks if WKT shape empty, no type set and no multi shapes/segments set.
      *
      * @return true, if is empty
      */
@@ -236,7 +224,9 @@ public class WKTGeometry {
         return (geometryType == null) || segmentList.isEmpty();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -249,30 +239,40 @@ public class WKTGeometry {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         WKTGeometry other = (WKTGeometry) obj;
         if (geometryType == null) {
-            if (other.geometryType != null)
+            if (other.geometryType != null) {
                 return false;
-        } else if (!geometryType.equals(other.geometryType))
+            }
+        } else if (!geometryType.equals(other.geometryType)) {
             return false;
+        }
         if (segmentList == null) {
-            if (other.segmentList != null)
+            if (other.segmentList != null) {
                 return false;
-        } else if (!segmentList.equals(other.segmentList))
+            }
+        } else if (!segmentList.equals(other.segmentList)) {
             return false;
-        if (valid != other.valid)
+        }
+        if (valid != other.valid) {
             return false;
+        }
         return true;
     }
 

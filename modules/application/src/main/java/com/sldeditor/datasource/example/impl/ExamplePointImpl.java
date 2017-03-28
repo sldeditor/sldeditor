@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.example.impl;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
@@ -38,14 +39,15 @@ public class ExamplePointImpl implements ExamplePointInterface {
     /** The point. */
     private Point point = null;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.impl.ExamplePointInterface#getPoint()
      */
     @Override
     public Point getPoint() {
 
-        if(point == null)
-        {
+        if (point == null) {
             double longitude = -2.11938;
             double latitude = 51.46518;
             point = geometryFactory.createPoint(new Coordinate(longitude, latitude));

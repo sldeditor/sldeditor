@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.awt.BorderLayout;
@@ -60,14 +61,14 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
  * The Class BasePanel.
- * <p>
- * Notifies the rest of the application if symbol needs redrawing
- * <p>
- * Contains list of field configuration for the panel
- * <p>
- * Defines size, position and spacing of field ui components
- * <p>
- * Reads panel configuration file and configures ui.</li>
+ * 
+ * <p>Notifies the rest of the application if symbol needs redrawing.
+ * 
+ * <p>Contains list of field configuration for the panel.
+ * 
+ * <p>Defines size, position and spacing of field ui components.
+ * 
+ * <p>Reads panel configuration file and configures ui.</li>
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -237,7 +238,8 @@ public class BasePanel extends JPanel {
     }
 
     /**
-     * Set up listener to this class is aware when user changes the expression so the symbol can be redrawn.
+     * Set up listener to this class is aware when user changes the
+     * expression so the symbol can be redrawn.
      *
      * @param fieldList the field list
      * @param obj object to receive the callbacks
@@ -314,8 +316,7 @@ public class BasePanel extends JPanel {
      */
     protected void readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
             Class<?> panelId, UpdateSymbolInterface parent, String filename) {
-        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true,
-                false);
+        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true, false);
     }
 
     /**
@@ -328,8 +329,7 @@ public class BasePanel extends JPanel {
      */
     protected void readRasterConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
             Class<?> panelId, UpdateSymbolInterface parent, String filename) {
-        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true,
-                true);
+        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true, true);
     }
 
     /**
@@ -341,8 +341,7 @@ public class BasePanel extends JPanel {
      */
     protected void readConfigFileNoScrollPane(VendorOptionFactoryInterface vendorOptionFactory,
             Class<?> panelId, UpdateSymbolInterface parent, String filename) {
-        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, false,
-                false);
+        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, false, false);
     }
 
     /**

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
 import java.util.List;
@@ -65,7 +66,7 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorOptionInterface,
-PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
+        PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/text/PanelConfig_TextSymbolizer2.xml";
@@ -319,15 +320,13 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
             Expression featureDescription = fieldConfigVisitor
                     .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION);
-            if(!featureDescription.toString().isEmpty())
-            {
+            if (!featureDescription.toString().isEmpty()) {
                 textSymbol2.setFeatureDescription(featureDescription);
             }
 
             Expression snippet = fieldConfigVisitor
                     .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET);
-            if(!snippet.toString().isEmpty())
-            {
+            if (!snippet.toString().isEmpty()) {
                 textSymbol2.setSnippet(snippet);
             }
 
@@ -341,8 +340,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
                     Expression text = fieldConfigVisitor
                             .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT);
 
-                    if(!target.isEmpty() && !text.toString().isEmpty())
-                    {
+                    if (!target.isEmpty() && !text.toString().isEmpty()) {
                         otherText = new OtherTextImpl();
                         otherText.setTarget(target);
                         otherText.setText(text);
@@ -375,8 +373,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
                 graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor,
                         displacement);
 
-                if(!symbols.isEmpty())
-                {
+                if (!symbols.isEmpty()) {
                     boolean overallOpacity = (symbols.get(0) instanceof ExternalGraphic);
                     if (overallOpacity) {
                         Expression opacity = fieldConfigVisitor
@@ -532,16 +529,14 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
             List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof TextSymbolizer2) {
             TextSymbolizer2 textSymbolizer = (TextSymbolizer2) sldObj;
-            if((textSymbolizer.getFeatureDescription() != null) ||
-                    (textSymbolizer.getSnippet() != null) ||
-                    (textSymbolizer.getGraphic() != null) ||
-                    (textSymbolizer.getOtherText() != null))
-            {
+            if ((textSymbolizer.getFeatureDescription() != null)
+                    || (textSymbolizer.getSnippet() != null)
+                    || (textSymbolizer.getGraphic() != null)
+                    || (textSymbolizer.getOtherText() != null)) {
                 VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                         getVendorOptionInfo());
 
-                if(!vendorOptionsPresentList.contains(voPresent))
-                {
+                if (!vendorOptionsPresentList.contains(voPresent)) {
                     vendorOptionsPresentList.add(voPresent);
                 }
             }
@@ -574,8 +569,7 @@ PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
 
         for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(getPanelId(),
-                    groupId);
+            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(getPanelId(), groupId);
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {

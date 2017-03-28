@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,14 +35,13 @@ public class LayerStyleNode extends DefaultMutableTreeNode {
 
     /** The style wrapper. */
     private StyleWrapper styleWrapper = null;
-    
+
     /**
      * Instantiates a new layer style node.
      *
      * @param styleWrapper the style wrapper
      */
-    public LayerStyleNode(StyleWrapper styleWrapper)
-    {
+    public LayerStyleNode(StyleWrapper styleWrapper) {
         this.styleWrapper = styleWrapper;
     }
 

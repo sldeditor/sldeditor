@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.menucombobox;
 
 import java.awt.Color;
@@ -58,7 +59,9 @@ class BlankIcon implements Icon {
         this.size = size;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
      */
     public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -68,17 +71,21 @@ class BlankIcon implements Icon {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.Icon#getIconWidth()
      */
     public int getIconWidth() {
         return size;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.Icon#getIconHeight()
      */
     public int getIconHeight() {
         return size;
-    } 
+    }
 }

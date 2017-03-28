@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.temporal;
 
 import java.util.Date;
@@ -41,14 +42,12 @@ public class During implements FilterConfigInterface {
     /**
      * The Class DuringExtended.
      */
-    public class DuringExtended extends DuringImpl implements FilterExtendedInterface
-    {
-        
+    public class DuringExtended extends DuringImpl implements FilterExtendedInterface {
+
         /**
          * Instantiates a new during extended.
          */
-        public DuringExtended()
-        {
+        public DuringExtended() {
             super(null, null);
         }
 
@@ -58,19 +57,22 @@ public class During implements FilterConfigInterface {
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public DuringExtended(Expression expression1, Expression expression2)
-        {
+        public DuringExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Object#toString()
          */
         public String toString() {
             return "[ " + getExpression1() + " During " + getExpression2() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,8 +84,7 @@ public class During implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public During()
-    {
+    public During() {
     }
 
     /**
@@ -94,20 +95,12 @@ public class During implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("During", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Date.class));
-        filterName.addParameter(new FilterNameParameter("period", ExpressionTypeEnum.LITERAL, TimePeriod.class));
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Date.class));
+        filterName.addParameter(
+                new FilterNameParameter("period", ExpressionTypeEnum.LITERAL, TimePeriod.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new DuringExtended();
     }
 
     /**
@@ -123,6 +116,16 @@ public class During implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new DuringExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -131,12 +134,9 @@ public class During implements FilterConfigInterface {
 
         DuringImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 2))
-        {
+        if ((parameterList == null) || (parameterList.size() != 2)) {
             filter = new DuringExtended();
-        }
-        else
-        {
+        } else {
             filter = new DuringExtended(parameterList.get(0), parameterList.get(1));
         }
 

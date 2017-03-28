@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.undo;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -25,8 +26,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface UndoInterface
-{
+public interface UndoInterface {
     /**
      * Gets the field id.
      *
@@ -47,17 +47,17 @@ public interface UndoInterface
      * @return the new value
      */
     public Object getNewValue();
-    
+
     /**
      * Undo.
      */
     public void undo();
-    
+
     /**
      * Redo.
      */
     public void redo();
-    
+
     /**
      * Gets the string representation.
      *
@@ -69,7 +69,7 @@ public interface UndoInterface
      * Do undo.
      */
     public void doUndo();
-    
+
     /**
      * Do redo.
      */

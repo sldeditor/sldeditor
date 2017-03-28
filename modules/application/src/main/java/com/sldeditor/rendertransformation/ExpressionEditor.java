@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.awt.Component;
@@ -54,8 +55,7 @@ public class ExpressionEditor extends AbstractCellEditor implements TableCellEdi
     public ExpressionEditor(FunctionTableModel tableModel) {
         this.tableModel = tableModel;
 
-        if(expressionPanel == null)
-        {
+        if (expressionPanel == null) {
             expressionPanel = ExpressionPanelFactory.getExpressionPanel("v2");
         }
     }

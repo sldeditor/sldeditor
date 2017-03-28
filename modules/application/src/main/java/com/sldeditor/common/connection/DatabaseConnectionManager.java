@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.connection;
 
 import java.util.ArrayList;
@@ -50,10 +51,12 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     private static DatabaseConnectionManagerInterface instance = null;
 
     /** The DatabaseClientInterface class to create. */
-    public List<DatabaseClientInterface> databaseClientClassList = new ArrayList<DatabaseClientInterface>();
+    public List<DatabaseClientInterface> databaseClientClassList = 
+            new ArrayList<DatabaseClientInterface>();
 
     /** The connection map. */
-    private Map<DatabaseConnection, DatabaseClientInterface> connectionMap = new LinkedHashMap<DatabaseConnection, DatabaseClientInterface>();
+    private Map<DatabaseConnection, DatabaseClientInterface> connectionMap =
+            new LinkedHashMap<DatabaseConnection, DatabaseClientInterface>();
 
     /**
      * Gets the singleton instance of DatabaseConnectionManager.
@@ -112,7 +115,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see com.sldeditor.common.connection.DatabaseReadProgressInterface#getConnection(java.lang.String)
@@ -130,7 +133,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         return null;
     }
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface)
      */
     public void readPropertyFile(DatabaseReadProgressInterface progress) {
@@ -192,9 +197,11 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         connectionMap.remove(connection);
     }
 
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#addNewConnection(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#addNewConnection(com.sldeditor.extension.filesystem.database.
+     * DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void addNewConnection(DatabaseReadProgressInterface progress,
@@ -210,29 +217,30 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         instance = null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getDBConnectionParams(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public Map<String, Object> getDBConnectionParams(DatabaseConnection databaseConnection) {
         DatabaseClientInterface client = connectionMap.get(databaseConnection);
-        
-        if(client != null)
-        {
+
+        if (client != null) {
             return client.getDBConnectionParams();
         }
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getMatchingConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public DatabaseConnection getMatchingConnection(DatabaseConnection connection) {
-        for(DatabaseConnection dbConnection : connectionMap.keySet())
-        {
-            if(dbConnection.equals(connection))
-            {
+        for (DatabaseConnection dbConnection : connectionMap.keySet()) {
+            if (dbConnection.equals(connection)) {
                 return dbConnection;
             }
         }

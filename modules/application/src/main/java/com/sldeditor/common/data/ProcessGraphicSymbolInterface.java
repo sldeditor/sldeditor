@@ -25,8 +25,9 @@ import java.util.List;
 import org.opengis.style.GraphicalSymbol;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Interface ProcessGraphicSymbolInterface.
  *
+ * @author Robert Ward (SCISYS)
  */
 public interface ProcessGraphicSymbolInterface {
 

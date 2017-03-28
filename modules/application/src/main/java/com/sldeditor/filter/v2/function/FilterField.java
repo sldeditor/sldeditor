@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function;
 
 import java.awt.BorderLayout;
@@ -54,7 +55,8 @@ public class FilterField extends JPanel implements UndoActionInterface {
     private JComboBox<String> filterComboBox;
 
     /** The filter name map. */
-    private Map<String, FilterConfigInterface> filterNameMap = new LinkedHashMap<String, FilterConfigInterface>();
+    private Map<String, FilterConfigInterface> filterNameMap =
+            new LinkedHashMap<String, FilterConfigInterface>();
 
     /** The old value obj. */
     private Object oldValueObj = null;

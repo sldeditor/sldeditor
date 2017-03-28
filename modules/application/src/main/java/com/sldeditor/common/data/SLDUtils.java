@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.data;
 
 import java.io.ByteArrayInputStream;
@@ -44,7 +45,8 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 
 /**
- * The Class SLDUtils, contains utility methods to populate StyledLayerDescriptor objects from a string or a file.
+ * The Class SLDUtils, contains utility methods to populate 
+ * StyledLayerDescriptor objects from a string or a file.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -132,7 +134,7 @@ public class SLDUtils {
     }
 
     /**
-     * Creates a StyledLayerDescriptor object containing a SLD by reading the contents of a file
+     * Creates a StyledLayerDescriptor object containing a SLD by reading the contents of a file.
      *
      * @param file the file
      * @return the styled layer descriptor

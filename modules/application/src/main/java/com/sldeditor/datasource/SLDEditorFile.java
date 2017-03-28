@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource;
 
 import java.io.File;
@@ -46,11 +47,13 @@ import com.sldeditor.ui.render.RuleRenderOptions;
  * <li>SLD file</li>
  * <li>Data source information used by the SLD</li>
  * </ul>
+ * 
  * <p>Class implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterface, EnvVarUpdateInterface, VendorOptionUpdateInterface {
+public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterface,
+        EnvVarUpdateInterface, VendorOptionUpdateInterface {
 
     /** The Constant SLD_FILE_EXTENSION. */
     private static final String SLD_FILE_EXTENSION = "sld";
@@ -62,7 +65,8 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     private SLDDataInterface sldData = null;
 
     /** The listener list. */
-    private List<SLDEditorDataUpdateInterface> sldEditorFileUpdateListenerList = new ArrayList<SLDEditorDataUpdateInterface>();
+    private List<SLDEditorDataUpdateInterface> sldEditorFileUpdateListenerList = 
+            new ArrayList<SLDEditorDataUpdateInterface>();
 
     /** The data edited flag. */
     private boolean dataEditedFlag = false;
@@ -71,17 +75,16 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     private boolean stickyDataSource = false;
 
     /** The sticky data source listener list. */
-    private List<StickyDataSourceInterface> stickyDataSourceListenerList = new ArrayList<StickyDataSourceInterface>();
+    private List<StickyDataSourceInterface> stickyDataSourceListenerList =
+            new ArrayList<StickyDataSourceInterface>();
 
     /**
      * Gets the single instance of SLDEditorFile.
      *
      * @return single instance of SLDEditorFile
      */
-    public static SLDEditorFile getInstance()
-    {
-        if(instance == null)
-        {
+    public static SLDEditorFile getInstance() {
+        if (instance == null) {
             instance = new SLDEditorFile();
         }
 
@@ -91,8 +94,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     /**
      * Private default constructor.
      */
-    private SLDEditorFile()
-    {
+    private SLDEditorFile() {
         EnvironmentVariableManager.getInstance().addEnvVarUpdatedListener(this);
         VendorOptionManager.getInstance().addVendorOptionListener(this);
     }
@@ -110,8 +112,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     /**
      * File has been opened/saved.
      */
-    public void fileOpenedSaved()
-    {
+    public void fileOpenedSaved() {
         dataEditedFlag = false;
         notifySLDEditorFileHasUpdated();
     }
@@ -122,8 +123,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      * @return the sld editor file
      */
     public File getSldEditorFile() {
-        if(sldData == null)
-        {
+        if (sldData == null) {
             return null;
         }
         return sldData.getSldEditorFile();
@@ -132,12 +132,9 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
     /**
      * Notify sld editor file has updated.
      */
-    private void notifySLDEditorFileHasUpdated()
-    {
-        for(SLDEditorDataUpdateInterface listener : sldEditorFileUpdateListenerList)
-        {
-            if(listener != null)
-            {
+    private void notifySLDEditorFileHasUpdated() {
+        for (SLDEditorDataUpdateInterface listener : sldEditorFileUpdateListenerList) {
+            if (listener != null) {
                 listener.sldDataUpdated(sldData, dataEditedFlag);
             }
         }
@@ -148,8 +145,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param listener the listener
      */
-    public void addSLDEditorFileUpdateListener(SLDEditorDataUpdateInterface listener)
-    {
+    public void addSLDEditorFileUpdateListener(SLDEditorDataUpdateInterface listener) {
         sldEditorFileUpdateListenerList.add(listener);
     }
 
@@ -159,12 +155,14 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      * @param geometryType the geometry type
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag)
-    {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
         // Does nothing
     }
 
@@ -174,20 +172,20 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      * @param sldOutput the sld output
      */
     @Override
-    public void addSLDOutputListener(SLDOutputInterface sldOutput)
-    {
+    public void addSLDOutputListener(SLDOutputInterface sldOutput) {
         // Does nothing
     }
 
     /**
      * Render symbol.
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.render.iface.RenderSymbolInterface#renderSymbol()
      */
     @Override
-    public void renderSymbol()
-    {
+    public void renderSymbol() {
         dataEditedFlag = true;
 
         notifySLDEditorFileHasUpdated();
@@ -198,14 +196,12 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param sldData the new SLD data
      */
-    public void setSLDData(SLDDataInterface sldData)
-    {
+    public void setSLDData(SLDDataInterface sldData) {
         this.sldData = sldData;
 
         DataSourcePropertiesInterface dataSourceProperties = null;
 
-        if(sldData != null)
-        {
+        if (sldData != null) {
             dataSourceProperties = sldData.getDataSourceProperties();
         }
 
@@ -213,8 +209,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
         dataEditedFlag = false;
 
         // Update the environment variables, will update the predefined flag
-        if(this.sldData != null)
-        {
+        if (this.sldData != null) {
             EnvironmentVariableManager.getInstance().update(this.sldData.getEnvVarList());
         }
 
@@ -226,10 +221,8 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param sldFile the new sld file
      */
-    public void setSldFile(File sldFile)
-    {
-        if(this.sldData != null)
-        {
+    public void setSldFile(File sldFile) {
+        if (this.sldData != null) {
             this.sldData.setSLDFile(sldFile);
         }
     }
@@ -240,10 +233,8 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      * @return the data source
      */
     @Override
-    public DataSourcePropertiesInterface getDataSource()
-    {
-        if(this.sldData != null)
-        {
+    public DataSourcePropertiesInterface getDataSource() {
+        if (this.sldData != null) {
             return this.sldData.getDataSourceProperties();
         }
         return null;
@@ -254,16 +245,11 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param dataSourceProperties the new data source
      */
-    public void setDataSource(DataSourcePropertiesInterface dataSourceProperties)
-    {
-        if(this.sldData != null)
-        {
-            if(dataSourceProperties == null)
-            {
+    public void setDataSource(DataSourcePropertiesInterface dataSourceProperties) {
+        if (this.sldData != null) {
+            if (dataSourceProperties == null) {
                 this.sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
-            }
-            else
-            {
+            } else {
                 this.sldData.setDataSourceProperties(dataSourceProperties);
             }
         }
@@ -274,10 +260,8 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param sldEditorFile the new sld editor filename
      */
-    public void setSldEditorFile(File sldEditorFile)
-    {
-        if(sldData != null)
-        {
+    public void setSldEditorFile(File sldEditorFile) {
+        if (sldData != null) {
             this.sldData.setSldEditorFile(sldEditorFile);
         }
     }
@@ -287,8 +271,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @return the SLD file extension
      */
-    public static String getSLDFileExtension()
-    {
+    public static String getSLDFileExtension() {
         return SLD_FILE_EXTENSION;
     }
 
@@ -298,8 +281,7 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      * @return the sld
      */
     @Override
-    public StyledLayerDescriptor getSLD()
-    {
+    public StyledLayerDescriptor getSLD() {
         return SelectedSymbol.getInstance().getSld();
     }
 
@@ -321,27 +303,29 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface#envVarsUpdated(java.util.List)
      */
     @Override
     public void envVarsUpdated(List<EnvVar> envVarList) {
         dataEditedFlag = true;
 
-        if(sldData != null)
-        {
+        if (sldData != null) {
             sldData.setEnvVarList(envVarList);
         }
         notifySLDEditorFileHasUpdated();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
-        if(sldData != null)
-        {
+        if (sldData != null) {
             dataEditedFlag = true;
 
             sldData.setVendorOptionList(vendorOptionVersionsList);
@@ -350,7 +334,9 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -372,10 +358,8 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param listener the listener
      */
-    public void addStickyDataSourceListener(StickyDataSourceInterface listener)
-    {
-        if(!stickyDataSourceListenerList.contains(listener) && (listener != null))
-        {
+    public void addStickyDataSourceListener(StickyDataSourceInterface listener) {
+        if (!stickyDataSourceListenerList.contains(listener) && (listener != null)) {
             stickyDataSourceListenerList.add(listener);
         }
     }
@@ -385,13 +369,12 @@ public class SLDEditorFile implements RenderSymbolInterface, SLDEditorFileInterf
      *
      * @param stickyDataSource the stickyDataSource to set
      */
-    public void setStickyDataSource(StickyDataSourceInterface callingObj, boolean stickyDataSource) {
+    public void setStickyDataSource(StickyDataSourceInterface callingObj,
+            boolean stickyDataSource) {
         this.stickyDataSource = stickyDataSource;
 
-        for(StickyDataSourceInterface listener : stickyDataSourceListenerList)
-        {
-            if(listener != callingObj)
-            {
+        for (StickyDataSourceInterface listener : stickyDataSourceListenerList) {
+            if (listener != callingObj) {
                 listener.stickyDataSourceUpdates(stickyDataSource);
             }
         }

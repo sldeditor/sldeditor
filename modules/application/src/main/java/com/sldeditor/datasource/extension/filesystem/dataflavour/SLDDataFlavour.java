@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.dataflavour;
 
 import java.awt.datatransfer.DataFlavor;
@@ -26,14 +27,12 @@ import java.io.Serializable;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDDataFlavour extends DataFlavor implements Serializable
-{
+public class SLDDataFlavour extends DataFlavor implements Serializable {
 
     /**
      * Default constructor.
      */
-    public SLDDataFlavour()
-    {
+    public SLDDataFlavour() {
         super();
     }
 
@@ -45,9 +44,8 @@ public class SLDDataFlavour extends DataFlavor implements Serializable
      * @param classLoader the class loader
      * @throws ClassNotFoundException the class not found exception
      */
-    public SLDDataFlavour(String mimeType, String humanPresentableName,
-            ClassLoader classLoader) throws ClassNotFoundException
-    {
+    public SLDDataFlavour(String mimeType, String humanPresentableName, ClassLoader classLoader)
+            throws ClassNotFoundException {
         super(mimeType, humanPresentableName, classLoader);
     }
 
@@ -57,8 +55,7 @@ public class SLDDataFlavour extends DataFlavor implements Serializable
      * @param mimeType the mime type
      * @param humanPresentableName the human presentable name
      */
-    public SLDDataFlavour(String mimeType, String humanPresentableName)
-    {
+    public SLDDataFlavour(String mimeType, String humanPresentableName) {
         super(mimeType, humanPresentableName);
     }
 
@@ -68,8 +65,7 @@ public class SLDDataFlavour extends DataFlavor implements Serializable
      * @param mimeType the mime type
      * @throws ClassNotFoundException the class not found exception
      */
-    public SLDDataFlavour(String mimeType) throws ClassNotFoundException
-    {
+    public SLDDataFlavour(String mimeType) throws ClassNotFoundException {
         super(mimeType);
     }
 
@@ -79,35 +75,34 @@ public class SLDDataFlavour extends DataFlavor implements Serializable
      * @param representationClass the representation class
      * @param humanPresentableName the human presentable name
      */
-    public SLDDataFlavour(Class<?> representationClass, String humanPresentableName)
-    {
+    public SLDDataFlavour(Class<?> representationClass, String humanPresentableName) {
         super(representationClass, humanPresentableName);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.datatransfer.DataFlavor#hashCode()
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return super.hashCode() + this.getHumanPresentableName().hashCode();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.datatransfer.DataFlavor#equals(java.awt.datatransfer.DataFlavor)
      */
     @Override
-    public boolean equals(DataFlavor that)
-    {
-        if((that == null) || !(that instanceof SLDDataFlavour))
-        {
+    public boolean equals(DataFlavor that) {
+        if ((that == null) || !(that instanceof SLDDataFlavour)) {
             return false;
         }
 
         boolean isEqual = super.equals(that);
 
-        if(isEqual)
-        {
+        if (isEqual) {
             isEqual = this.getHumanPresentableName().equals(that.getHumanPresentableName());
         }
         return isEqual;

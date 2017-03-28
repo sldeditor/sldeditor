@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.awt.Dimension;
@@ -159,10 +160,9 @@ public class FieldPanel extends JPanel {
      */
     private void handleOptionalValue() {
         boolean enabled = true;
-        
+
         if (optionalCheckbox != null) {
-            if(optionalCheckbox.isVisible())
-            {
+            if (optionalCheckbox.isVisible()) {
                 enabled = optionalCheckbox.isSelected();
             }
         }
@@ -205,9 +205,8 @@ public class FieldPanel extends JPanel {
         if (optionalCheckbox == null) {
             return true;
         }
-        
-        if(optionalCheckbox.isVisible())
-        {
+
+        if (optionalCheckbox.isVisible()) {
             return optionalCheckbox.isSelected();
         }
         return true;

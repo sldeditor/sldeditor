@@ -75,8 +75,7 @@ public class LongValues extends BaseValue implements RenderTransformValueInterfa
      */
     @Override
     public Expression getExpression() {
-        if(expression != null)
-        {
+        if (expression != null) {
             return expression;
         }
         return filterFactory.literal(value);
@@ -94,21 +93,19 @@ public class LongValues extends BaseValue implements RenderTransformValueInterfa
 
         if (aValue instanceof Long) {
             this.value = (Long) aValue;
-        }
-        else if(aValue instanceof LiteralExpressionImpl)
-        {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+        } else if (aValue instanceof LiteralExpressionImpl) {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
             value = literal.evaluate(value, Long.class);
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -116,7 +113,9 @@ public class LongValues extends BaseValue implements RenderTransformValueInterfa
         return Arrays.asList(long.class, Long.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -124,7 +123,9 @@ public class LongValues extends BaseValue implements RenderTransformValueInterfa
         return new FieldConfigInteger(commonData);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

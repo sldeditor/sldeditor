@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.database;
 
 import java.util.List;
@@ -27,8 +28,7 @@ import com.sldeditor.common.data.DatabaseConnection;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface DatabaseParseCompleteInterface
-{
+public interface DatabaseParseCompleteInterface {
 
     /**
      * Populate complete.
@@ -36,7 +36,6 @@ public interface DatabaseParseCompleteInterface
      * @param connection the connection
      * @param featureClassList the feature class list
      */
-    void populateComplete(DatabaseConnection connection,
-        List<String> featureClassList);
+    void populateComplete(DatabaseConnection connection, List<String> featureClassList);
 
 }

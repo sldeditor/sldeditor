@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool;
 
 import java.awt.Dimension;
@@ -44,7 +45,7 @@ import com.sldeditor.common.localisation.Localisation;
  * @author Robert Ward (SCISYS)
  */
 public class ToolPanel extends JPanel {
-    
+
     /** The Constant EMPTY_TOOL_PANEL_HEIGHT. */
     private static final int EMPTY_TOOL_PANEL_HEIGHT = 85;
 
@@ -52,7 +53,8 @@ public class ToolPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface>> toolMap = new HashMap<Class<?>, List<ToolInterface>>();
+    private Map<Class<?>, List<ToolInterface>> toolMap = 
+            new HashMap<Class<?>, List<ToolInterface>>();
 
     /** The displayed panels. */
     private List<JPanel> displayedPanels = new ArrayList<JPanel>();
@@ -65,7 +67,7 @@ public class ToolPanel extends JPanel {
 
     /** The tool selection. */
     private ToolSelectionInterface toolSelection = null;
-    
+
     /**
      * Instantiates a new tool panel.
      *
@@ -89,7 +91,8 @@ public class ToolPanel extends JPanel {
         JPanel optionsPanel = new JPanel();
         add(optionsPanel);
 
-        JCheckBox chckbxRecursive = new JCheckBox(Localisation.getString(ToolPanel.class, "ToolPanel.recursive"));
+        JCheckBox chckbxRecursive = new JCheckBox(
+                Localisation.getString(ToolPanel.class, "ToolPanel.recursive"));
         chckbxRecursive.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 toolSelection.setRecursiveFlag(chckbxRecursive.isSelected());

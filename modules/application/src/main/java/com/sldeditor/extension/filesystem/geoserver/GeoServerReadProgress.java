@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver;
 
 import java.util.HashMap;
@@ -45,13 +46,11 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWor
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerReadProgress implements GeoServerReadProgressInterface
-{
+public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     /**
      * Internal class to handle the state of the operation.
      */
-    class PopulateState
-    {
+    class PopulateState {
 
         /** The style complete. */
         private boolean styleComplete = false;
@@ -62,8 +61,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
         /**
          * Instantiates a new populate state.
          */
-        PopulateState()
-        {
+        PopulateState() {
             startStyles();
             startLayers();
         }
@@ -71,16 +69,14 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
         /**
          * Sets the layers complete.
          */
-        public void setLayersComplete()
-        {
+        public void setLayersComplete() {
             layersComplete = true;
         }
 
         /**
          * Sets the styles complete.
          */
-        public void setStylesComplete()
-        {
+        public void setStylesComplete() {
             styleComplete = true;
         }
 
@@ -89,24 +85,21 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
          *
          * @return true, if is complete
          */
-        public boolean isComplete()
-        {
+        public boolean isComplete() {
             return styleComplete && layersComplete;
         }
 
         /**
          * Start styles.
          */
-        public void startStyles()
-        {
+        public void startStyles() {
             styleComplete = false;
         }
 
         /**
          * Start layers.
          */
-        public void startLayers()
-        {
+        public void startLayers() {
             layersComplete = false;
         }
     }
@@ -127,16 +120,20 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
     private FSTree tree = null;
 
     /** The node map. */
-    private Map<GeoServerConnection, GeoServerNode> nodeMap = new HashMap<GeoServerConnection, GeoServerNode>();
+    private Map<GeoServerConnection, GeoServerNode> nodeMap = 
+            new HashMap<GeoServerConnection, GeoServerNode>();
 
     /** The populate state map. */
-    private Map<GeoServerConnection, PopulateState> populateStateMap = new HashMap<GeoServerConnection, PopulateState>();
+    private Map<GeoServerConnection, PopulateState> populateStateMap = 
+            new HashMap<GeoServerConnection, PopulateState>();
 
     /** The style map. */
-    private Map<GeoServerConnection, Map<String, List<StyleWrapper>>> geoServerStyleMap = new HashMap<GeoServerConnection, Map<String, List<StyleWrapper>>>();
+    private Map<GeoServerConnection, Map<String, List<StyleWrapper>>> geoServerStyleMap = 
+            new HashMap<GeoServerConnection, Map<String, List<StyleWrapper>>>();
 
     /** The geo server layer map. */
-    private Map<GeoServerConnection, Map<String, List<GeoServerLayer>>> geoServerLayerMap = new HashMap<GeoServerConnection, Map<String, List<GeoServerLayer>>>();
+    private Map<GeoServerConnection, Map<String, List<GeoServerLayer>>> geoServerLayerMap =
+            new HashMap<GeoServerConnection, Map<String, List<GeoServerLayer>>>();
 
     /** The style progress text. */
     private String styleProgressText;
@@ -156,50 +153,48 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param handler the handler
      * @param parseComplete the parse complete
      */
-    public GeoServerReadProgress(FileSystemInterface handler, GeoServerParseCompleteInterface parseComplete)
-    {
+    public GeoServerReadProgress(FileSystemInterface handler,
+            GeoServerParseCompleteInterface parseComplete) {
         this.handler = handler;
         this.parseComplete = parseComplete;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.geoserver.GeoServerReadProgressInterface#readStylesComplete(com.sldeditor.extension.input.geoserver.GeoServerConnection, java.util.Map, boolean)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.input.geoserver.GeoServerReadProgressInterface#readStylesComplete(com.sldeditor.extension.input.geoserver.
+     * GeoServerConnection, java.util.Map, boolean)
      */
     @Override
-    public void readStylesComplete(GeoServerConnection connection, Map<String, List<StyleWrapper>> styleMap, boolean partialRefresh)
-    {
-        if(styleMap == null)
-        {
+    public void readStylesComplete(GeoServerConnection connection,
+            Map<String, List<StyleWrapper>> styleMap, boolean partialRefresh) {
+        if (styleMap == null) {
             return;
         }
 
-        if(partialRefresh)
-        {
-            Map<String, List<StyleWrapper>> extistingStyleMap = this.geoServerStyleMap.get(connection);
+        if (partialRefresh) {
+            Map<String, List<StyleWrapper>> extistingStyleMap = this.geoServerStyleMap
+                    .get(connection);
 
-            for(String workspace : styleMap.keySet())
-            {
+            for (String workspace : styleMap.keySet()) {
                 extistingStyleMap.put(workspace, styleMap.get(workspace));
             }
 
             GeoServerNode geoServerNode = nodeMap.get(connection);
 
-            for(String workspace : styleMap.keySet())
-            {
+            for (String workspace : styleMap.keySet()) {
                 DefaultMutableTreeNode stylesNode = getNode(geoServerNode, STYLES_NODE_TITLE);
-                GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode)getNode(stylesNode, workspace);
+                GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) getNode(stylesNode,
+                        workspace);
                 refreshWorkspace(connection, workspaceNode);
             }
-        }
-        else
-        {
+        } else {
             this.geoServerStyleMap.put(connection, styleMap);
 
             // Update state
             PopulateState state = populateStateMap.get(connection);
 
-            if(state != null)
-            {
+            if (state != null) {
                 state.setStylesComplete();
             }
 
@@ -212,30 +207,26 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      *
      * @param connection the connection
      */
-    private void checkPopulateComplete(GeoServerConnection connection)
-    {
+    private void checkPopulateComplete(GeoServerConnection connection) {
         PopulateState state = populateStateMap.get(connection);
 
-        if(state != null)
-        {
-            if(state.isComplete())
-            {
+        if (state != null) {
+            if (state.isComplete()) {
                 GeoServerNode geoServerNode = nodeMap.get(connection);
 
-                if(geoServerNode != null)
-                {
+                if (geoServerNode != null) {
                     removeNode(geoServerNode, PROGRESS_NODE_TITLE);
 
                     populateStyles(connection, geoServerNode);
                     populateLayers(connection, geoServerNode);
 
-                    if(treeModel != null)
-                    {
-                        treeModel.reload(geoServerNode); //this notifies the listeners and changes the GUI
+                    if (treeModel != null) {
+                        treeModel.reload(geoServerNode); // this notifies the listeners and changes the GUI
                     }
                 }
 
-                parseComplete.populateComplete(connection, geoServerStyleMap.get(connection), geoServerLayerMap.get(connection));
+                parseComplete.populateComplete(connection, geoServerStyleMap.get(connection),
+                        geoServerLayerMap.get(connection));
             }
         }
     }
@@ -246,31 +237,30 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param connection the connection
      * @param geoServerNode the geo server node
      */
-    private void populateStyles(GeoServerConnection connection, GeoServerNode geoServerNode)
-    {
+    private void populateStyles(GeoServerConnection connection, GeoServerNode geoServerNode) {
         removeNode(geoServerNode, STYLES_NODE_TITLE);
 
-        GeoServerStyleHeadingNode styleNode = new GeoServerStyleHeadingNode(this.handler, connection, STYLES_NODE_TITLE);
+        GeoServerStyleHeadingNode styleNode = new GeoServerStyleHeadingNode(this.handler,
+                connection, STYLES_NODE_TITLE);
         geoServerNode.add(styleNode);
 
         Map<String, List<StyleWrapper>> styleMap = geoServerStyleMap.get(connection);
 
-        for(String workspaceName : styleMap.keySet())
-        {
+        for (String workspaceName : styleMap.keySet()) {
             List<StyleWrapper> styleList = styleMap.get(workspaceName);
 
-            GeoServerWorkspaceNode workspaceNode = new GeoServerWorkspaceNode(this.handler, connection, workspaceName, true);
+            GeoServerWorkspaceNode workspaceNode = new GeoServerWorkspaceNode(this.handler,
+                    connection, workspaceName, true);
 
             // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
             treeModel.insertNodeInto(workspaceNode, styleNode, styleNode.getChildCount());
 
-            for(StyleWrapper styleWrapper : styleList)
-            {
-                GeoServerStyleNode childNode = new GeoServerStyleNode(this.handler, connection, styleWrapper);
+            for (StyleWrapper styleWrapper : styleList) {
+                GeoServerStyleNode childNode = new GeoServerStyleNode(this.handler, connection,
+                        styleWrapper);
 
                 // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-                treeModel.insertNodeInto(childNode, workspaceNode, 
-                        workspaceNode.getChildCount());
+                treeModel.insertNodeInto(childNode, workspaceNode, workspaceNode.getChildCount());
             }
         }
     }
@@ -281,21 +271,20 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param connection the connection
      * @param workspaceNode the workspace node
      */
-    private void refreshWorkspace(GeoServerConnection connection, GeoServerWorkspaceNode workspaceNode)
-    {
+    private void refreshWorkspace(GeoServerConnection connection,
+            GeoServerWorkspaceNode workspaceNode) {
         workspaceNode.removeAllChildren();
 
         Map<String, List<StyleWrapper>> styleMap = geoServerStyleMap.get(connection);
 
         List<StyleWrapper> styleList = styleMap.get(workspaceNode.getWorkspaceName());
 
-        for(StyleWrapper styleWrapper : styleList)
-        {
-            GeoServerStyleNode childNode = new GeoServerStyleNode(this.handler, connection, styleWrapper);
+        for (StyleWrapper styleWrapper : styleList) {
+            GeoServerStyleNode childNode = new GeoServerStyleNode(this.handler, connection,
+                    styleWrapper);
 
             // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-            treeModel.insertNodeInto(childNode, workspaceNode, 
-                    workspaceNode.getChildCount());
+            treeModel.insertNodeInto(childNode, workspaceNode, workspaceNode.getChildCount());
         }
 
         treeModel.reload(workspaceNode);
@@ -307,31 +296,29 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param connection the connection
      * @param geoServerNode the geo server node
      */
-    private void populateLayers(GeoServerConnection connection, GeoServerNode geoServerNode)
-    {
+    private void populateLayers(GeoServerConnection connection, GeoServerNode geoServerNode) {
         removeNode(geoServerNode, LAYERS_NODE_TITLE);
 
-        GeoServerLayerHeadingNode layersNode = new GeoServerLayerHeadingNode(this.handler, connection, LAYERS_NODE_TITLE);
+        GeoServerLayerHeadingNode layersNode = new GeoServerLayerHeadingNode(this.handler,
+                connection, LAYERS_NODE_TITLE);
         geoServerNode.add(layersNode);
 
         Map<String, List<GeoServerLayer>> layerMap = geoServerLayerMap.get(connection);
 
-        for(String workspaceName : layerMap.keySet())
-        {
+        for (String workspaceName : layerMap.keySet()) {
             List<GeoServerLayer> layerList = layerMap.get(workspaceName);
 
-            GeoServerWorkspaceNode workspaceNode = new GeoServerWorkspaceNode(this.handler, connection, workspaceName, false);
+            GeoServerWorkspaceNode workspaceNode = new GeoServerWorkspaceNode(this.handler,
+                    connection, workspaceName, false);
 
             // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
             treeModel.insertNodeInto(workspaceNode, layersNode, layersNode.getChildCount());
 
-            for(GeoServerLayer layer : layerList)
-            {
+            for (GeoServerLayer layer : layerList) {
                 GeoServerLayerNode childNode = new GeoServerLayerNode(this.handler, layer);
 
                 // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-                treeModel.insertNodeInto(childNode, workspaceNode, 
-                        workspaceNode.getChildCount());
+                treeModel.insertNodeInto(childNode, workspaceNode, workspaceNode.getChildCount());
             }
         }
     }
@@ -342,18 +329,14 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param geoServerNode the geo server node
      * @param nodeTitleToRemove the node title to remove
      */
-    public static void removeNode(GeoServerNode geoServerNode, String nodeTitleToRemove)
-    {
-        if((geoServerNode != null) && (nodeTitleToRemove != null))
-        {
-            for(int index = 0; index < geoServerNode.getChildCount(); index ++)
-            {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)geoServerNode.getChildAt(index);
-                String nodeName = (String)node.getUserObject();
-                if(nodeName != null)
-                {
-                    if(nodeName.startsWith(nodeTitleToRemove))
-                    {
+    public static void removeNode(GeoServerNode geoServerNode, String nodeTitleToRemove) {
+        if ((geoServerNode != null) && (nodeTitleToRemove != null)) {
+            for (int index = 0; index < geoServerNode.getChildCount(); index++) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) geoServerNode
+                        .getChildAt(index);
+                String nodeName = (String) node.getUserObject();
+                if (nodeName != null) {
+                    if (nodeName.startsWith(nodeTitleToRemove)) {
                         geoServerNode.remove(index);
                         break;
                     }
@@ -369,18 +352,14 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param nodeTitlePrefix the node title prefix
      * @return the node
      */
-    private DefaultMutableTreeNode getNode(DefaultMutableTreeNode parentNode, String nodeTitlePrefix)
-    {
-        if(parentNode != null)
-        {
-            for(int index = 0; index < parentNode.getChildCount(); index ++)
-            {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)parentNode.getChildAt(index);
-                String nodeName = (String)node.getUserObject();
-                if(nodeName != null)
-                {
-                    if(nodeName.startsWith(nodeTitlePrefix))
-                    {
+    private DefaultMutableTreeNode getNode(DefaultMutableTreeNode parentNode,
+            String nodeTitlePrefix) {
+        if (parentNode != null) {
+            for (int index = 0; index < parentNode.getChildCount(); index++) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) parentNode.getChildAt(index);
+                String nodeName = (String) node.getUserObject();
+                if (nodeName != null) {
+                    if (nodeName.startsWith(nodeTitlePrefix)) {
                         return node;
                     }
                 }
@@ -390,57 +369,63 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.GeoServerInputInterface#readLayersProgress(com.sldeditor.extension.input.GeoServerConnection, int, int)
      */
     @Override
-    public void readLayersProgress(GeoServerConnection connection, int count, int total)
-    {
+    public void readLayersProgress(GeoServerConnection connection, int count, int total) {
         // Calculate progress
-        double value = ((double)count / (double)total) * 100.0;
-        int iValue = (int)value;
+        double value = ((double) count / (double) total) * 100.0;
+        int iValue = (int) value;
 
         layerProgressText = String.format("%s : %d%%", LAYERS_NODE_TITLE, iValue);
 
         showProgress(connection);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.GeoServerInputInterface#populateLayers(com.sldeditor.extension.input.GeoServerConnection, java.util.Map)
      */
     @Override
-    public void readLayersComplete(GeoServerConnection connection, Map<String, List<GeoServerLayer>> layerMap)
-    {
+    public void readLayersComplete(GeoServerConnection connection,
+            Map<String, List<GeoServerLayer>> layerMap) {
         geoServerLayerMap.put(connection, layerMap);
 
         // Update state
         PopulateState state = populateStateMap.get(connection);
 
-        if(state != null)
-        {
+        if (state != null) {
             state.setLayersComplete();
         }
 
         checkPopulateComplete(connection);
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.input.geoserver.GeoServerInputInterface#readStylesProgress(com.sldeditor.extension.input.geoserver.GeoServerConnection, int, int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.extension.input.geoserver.GeoServerInputInterface#readStylesProgress(com.sldeditor.extension.input.geoserver.GeoServerConnection,
+     * int, int)
      */
     @Override
-    public void readStylesProgress(GeoServerConnection connection, int count, int total)
-    {
+    public void readStylesProgress(GeoServerConnection connection, int count, int total) {
         styleProgressText = String.format("%s : %d", STYLES_NODE_TITLE, count);
 
         showProgress(connection);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.geoserver.GeoServerInputInterface#startPopulating()
      */
     @Override
-    public void startPopulating(GeoServerConnection connection)
-    {
+    public void startPopulating(GeoServerConnection connection) {
         GeoServerNode geoServerNode = nodeMap.get(connection);
 
         removeNode(geoServerNode, STYLES_NODE_TITLE);
@@ -448,8 +433,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
 
         PopulateState state = populateStateMap.get(connection);
 
-        if(state != null)
-        {
+        if (state != null) {
             state.startStyles();
             state.startLayers();
         }
@@ -461,24 +445,20 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param connection the connection
      * @return the default mutable tree node
      */
-    private void showProgress(GeoServerConnection connection)
-    {
+    private void showProgress(GeoServerConnection connection) {
         GeoServerNode geoServerNode = nodeMap.get(connection);
 
-        if(geoServerNode == null)
-        {
+        if (geoServerNode == null) {
             return;
         }
 
         DefaultMutableTreeNode stylesNode = getNode(geoServerNode, PROGRESS_NODE_TITLE);
 
-        if(stylesNode == null)
-        {
+        if (stylesNode == null) {
             stylesNode = new DefaultMutableTreeNode(PROGRESS_NODE_TITLE);
             geoServerNode.add(stylesNode);
 
-            if(treeModel != null)
-            {
+            if (treeModel != null) {
                 TreeNode[] nodes = treeModel.getPathToRoot(geoServerNode);
                 TreePath path = new TreePath(nodes);
                 tree.expandPath(path);
@@ -489,10 +469,10 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
             }
         }
 
-        stylesNode.setUserObject(String.format("%s - %s %s", PROGRESS_NODE_TITLE, styleProgressText, layerProgressText));
+        stylesNode.setUserObject(String.format("%s - %s %s", PROGRESS_NODE_TITLE, styleProgressText,
+                layerProgressText));
 
-        if(treeModel != null)
-        {
+        if (treeModel != null) {
             treeModel.reload(stylesNode);
         }
     }
@@ -502,16 +482,14 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      *
      * @param connection the node
      */
-    public void disconnect(GeoServerConnection connection)
-    {
+    public void disconnect(GeoServerConnection connection) {
         GeoServerNode node = nodeMap.get(connection);
 
         removeNode(node, PROGRESS_NODE_TITLE);
         removeNode(node, STYLES_NODE_TITLE);
         removeNode(node, LAYERS_NODE_TITLE);
 
-        if(treeModel != null)
-        {
+        if (treeModel != null) {
             treeModel.reload(node);
         }
     }
@@ -522,8 +500,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param tree the tree
      * @param model the model
      */
-    public void setTreeModel(FSTree tree, DefaultTreeModel model)
-    {
+    public void setTreeModel(FSTree tree, DefaultTreeModel model) {
         this.tree = tree;
         this.treeModel = model;
     }
@@ -534,8 +511,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param connection the connection
      * @param node the node
      */
-    public void addNewConnectionNode(GeoServerConnection connection, GeoServerNode node)
-    {
+    public void addNewConnectionNode(GeoServerConnection connection, GeoServerNode node) {
         nodeMap.put(connection, node);
         populateStateMap.put(connection, new PopulateState());
     }
@@ -545,10 +521,8 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      *
      * @param nodeToRefresh the node to refresh
      */
-    public void refreshNode(DefaultMutableTreeNode nodeToRefresh)
-    {
-        if(treeModel != null)
-        {
+    public void refreshNode(DefaultMutableTreeNode nodeToRefresh) {
+        if (treeModel != null) {
             treeModel.reload(nodeToRefresh);
         }
     }
@@ -558,12 +532,10 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      *
      * @param connection the connection
      */
-    public void deleteConnection(GeoServerConnection connection)
-    {
+    public void deleteConnection(GeoServerConnection connection) {
         GeoServerNode node = nodeMap.get(connection);
 
-        if(treeModel != null)
-        {
+        if (treeModel != null) {
             treeModel.removeNodeFromParent(node);
         }
 
@@ -576,16 +548,14 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param originalConnectionDetails the original connection details
      * @param newConnectionDetails the new connection details
      */
-    public void updateConnection(GeoServerConnection originalConnectionDetails, GeoServerConnection newConnectionDetails)
-    {
-        if(newConnectionDetails != null)
-        {
+    public void updateConnection(GeoServerConnection originalConnectionDetails,
+            GeoServerConnection newConnectionDetails) {
+        if (newConnectionDetails != null) {
             GeoServerNode geoserverNode = nodeMap.get(originalConnectionDetails);
 
             originalConnectionDetails.update(newConnectionDetails);
 
-            if(geoserverNode != null)
-            {
+            if (geoserverNode != null) {
                 geoserverNode.setUserObject(newConnectionDetails.getConnectionName());
 
                 refreshNode(geoserverNode);
@@ -602,18 +572,15 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface
      * @param disableTreeSelection the disable tree selection
      */
     public void setFolder(GeoServerConnection connectionData, boolean disableTreeSelection) {
-        if(tree != null)
-        {
-            if(disableTreeSelection)
-            {
+        if (tree != null) {
+            if (disableTreeSelection) {
                 // Disable the tree selection
                 tree.setIgnoreSelection(true);
             }
             tree.clearSelection();
 
             FileSystemNodeManager.showNodeInTree(connectionData);
-            if(disableTreeSelection)
-            {
+            if (disableTreeSelection) {
                 // Enable the tree selection
                 tree.setIgnoreSelection(false);
             }

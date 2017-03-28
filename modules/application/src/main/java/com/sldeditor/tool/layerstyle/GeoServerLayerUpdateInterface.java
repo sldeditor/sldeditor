@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import java.util.List;
@@ -30,8 +31,7 @@ import com.sldeditor.common.data.StyleWrapper;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface GeoServerLayerUpdateInterface
-{
+public interface GeoServerLayerUpdateInterface {
 
     /**
      * Gets the style map.
@@ -42,7 +42,7 @@ public interface GeoServerLayerUpdateInterface
     Map<String, List<StyleWrapper>> getStyleMap(GeoServerConnection connection);
 
     /**
-     * Update style for layers
+     * Update style for layers.
      *
      * @param layerList the list of layers with updated styles
      */

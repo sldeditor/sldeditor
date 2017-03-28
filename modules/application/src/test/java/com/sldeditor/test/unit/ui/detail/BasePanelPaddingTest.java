@@ -53,8 +53,8 @@ public class BasePanelPaddingTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.BasePanelPadding#addPadding()}.
-     * Test method for {@link com.sldeditor.ui.detail.BasePanelPadding#removePadding()}.
+     * Test method for {@link com.sldeditor.ui.detail.BasePanelPadding#addPadding()}. Test method for
+     * {@link com.sldeditor.ui.detail.BasePanelPadding#removePadding()}.
      */
     @Test
     public void testAddPadding() {
@@ -73,7 +73,8 @@ public class BasePanelPaddingTest {
         Dimension fillerSize = box.getComponent(0).getPreferredSize();
 
         assertTrue(Math.abs(actualSize.getWidth() - expectedSize.getWidth()) < 0.001);
-        assertEquals((int)(BasePanelPadding.getPanelHeight() - fillerSize.getHeight()), (int)expectedSize.getHeight() );
+        assertEquals((int) (BasePanelPadding.getPanelHeight() - fillerSize.getHeight()),
+                (int) expectedSize.getHeight());
         p.removePadding();
         assertEquals(0, box.getComponentCount());
 

@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.watcher;
 
 import java.io.File;
@@ -34,14 +36,16 @@ import java.util.Map;
 import com.sldeditor.common.console.ConsoleManager;
 
 /**
- * Class that implements a file watcher to inform the file system tree whether files have been added or deleted.
+ * Class that implements a file watcher to inform the file system tree 
+ * whether files have been added or deleted.
  * 
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemWatcher implements Runnable {
 
     /** The watcher map. */
-    private Map<WatchKey, FileWatcherUpdateInterface> watcherMap = new HashMap<WatchKey, FileWatcherUpdateInterface>();
+    private Map<WatchKey, FileWatcherUpdateInterface> watcherMap =
+            new HashMap<WatchKey, FileWatcherUpdateInterface>();
 
     /** The watch service. */
     private WatchService watchService = null;
@@ -50,10 +54,9 @@ public class FileSystemWatcher implements Runnable {
     private static FileSystemWatcher instance = null;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    private FileSystemWatcher()
-    {
+    private FileSystemWatcher() {
         // First create the watch service instance. This service watches a
         // directory for changes.
         try {
@@ -70,18 +73,15 @@ public class FileSystemWatcher implements Runnable {
      * @param path the path
      */
     public void addWatch(FileWatcherUpdateInterface parent, Path path) {
-        if(path != null)
-        {
+        if (path != null) {
             // The directory that has to be watched needs to be registered. Any
             // object that implements the Watchable interface can be registered.
 
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
             try {
-                WatchKey key = path.register(watchService,
-                        StandardWatchEventKinds.ENTRY_CREATE,
-                        StandardWatchEventKinds.ENTRY_DELETE,
-                        StandardWatchEventKinds.ENTRY_MODIFY);
+                WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
+                        StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
 
                 watcherMap.put(key, parent);
 
@@ -96,10 +96,8 @@ public class FileSystemWatcher implements Runnable {
      *
      * @return single instance of FileSystemWatcher
      */
-    public static synchronized FileSystemWatcher getInstance()
-    {
-        if(instance == null)
-        {
+    public static synchronized FileSystemWatcher getInstance() {
+        if (instance == null) {
             instance = new FileSystemWatcher();
             (new Thread(instance)).start();
         }
@@ -107,7 +105,9 @@ public class FileSystemWatcher implements Runnable {
         return instance;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Runnable#run()
      */
     @Override
@@ -151,27 +151,24 @@ public class FileSystemWatcher implements Runnable {
                     continue;
                 }
 
-                Path dir = (Path)key.watchable();
+                Path dir = (Path) key.watchable();
                 Path fullPath = dir.resolve((Path) watchEvent.context());
 
                 FileWatcherUpdateInterface parentObj = watcherMap.get(key);
                 if (watchEventKind == StandardWatchEventKinds.ENTRY_CREATE) {
                     // A new file has been created
-                    if(parentObj != null)
-                    {
+                    if (parentObj != null) {
                         parentObj.fileAdded(fullPath);
                     }
                 } else if (watchEventKind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     ReloadManager.getInstance().fileModified(fullPath);
                     // The file has been modified.
-                    if(parentObj != null)
-                    {
+                    if (parentObj != null) {
                         parentObj.fileModified(fullPath);
                     }
                 } else if (watchEventKind == StandardWatchEventKinds.ENTRY_DELETE) {
 
-                    if(parentObj != null)
-                    {
+                    if (parentObj != null) {
                         parentObj.fileDeleted(fullPath);
                     }
                 }
@@ -212,6 +209,7 @@ public class FileSystemWatcher implements Runnable {
             @Override
             public void fileDeleted(Path f) {
                 System.out.println("File Deleted:" + f.toString());
-            }}, dir.toPath());
+            }
+        }, dir.toPath());
     }
 }

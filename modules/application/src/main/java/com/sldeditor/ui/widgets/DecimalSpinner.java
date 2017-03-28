@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.text.DecimalFormat;
@@ -32,8 +33,8 @@ import javax.swing.text.DefaultFormatter;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 
 /**
- * Component that extends a JSpinner allowing the entry of floating point numbers
- * and is configured from an xml file.
+ * Component that extends a JSpinner allowing the entry of floating point 
+ * numbers and is configured from an xml file.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -58,11 +59,7 @@ public class DecimalSpinner extends JSpinner {
      * Instantiates a new decimal spinner with default values.
      */
     public DecimalSpinner() {
-        createUI(0.0,
-                null,
-                null,
-                DEFAULT_STEPSIZE,
-                DEFAULT_NO_OF_DECIMAL_PLACES);
+        createUI(0.0, null, null, DEFAULT_STEPSIZE, DEFAULT_NO_OF_DECIMAL_PLACES);
     }
 
     /**
@@ -86,11 +83,12 @@ public class DecimalSpinner extends JSpinner {
      * @param stepSize the step size
      * @param noOfDecimalPlaces the no of decimal places
      */
-    private void createUI(Double initialValue, Double min, Double max, Double stepSize, double noOfDecimalPlaces) {
+    private void createUI(Double initialValue, Double min, Double max, Double stepSize,
+            double noOfDecimalPlaces) {
         SpinnerNumberModel model = new SpinnerNumberModel(initialValue, min, max, stepSize);
         setModel(model);
 
-        JSpinner.NumberEditor editor = (JSpinner.NumberEditor)getEditor();
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) getEditor();
         DecimalFormat format = editor.getFormat();
         format.setMinimumFractionDigits(3);
 
@@ -105,15 +103,12 @@ public class DecimalSpinner extends JSpinner {
 
                 Double doubleValue = DecimalSpinner.this.getDoubleValue();
 
-                if(doubleValue != oldValue)
-                {
+                if (doubleValue != oldValue) {
                     double oldValueCopy = oldValue;
 
                     oldValue = doubleValue;
-                    if(minIsZero)
-                    {
-                        if(doubleValue < 0.0)
-                        {
+                    if (minIsZero) {
+                        if (doubleValue < 0.0) {
                             doubleValue = 0.0;
                             field.setValue(doubleValue);
                         }
@@ -151,7 +146,7 @@ public class DecimalSpinner extends JSpinner {
      */
     public void notifyListeners(double oldValue, double newValue) {
 
-        for(SpinnerNotifyInterface observer : observers) {
+        for (SpinnerNotifyInterface observer : observers) {
             observer.notify(oldValue, newValue);
         }
     }
@@ -183,15 +178,13 @@ public class DecimalSpinner extends JSpinner {
         Double doubleValue = 0.0;
         Object obj = getValue();
 
-        if(obj instanceof Integer)
-        {
+        if (obj instanceof Integer) {
             Integer intValue = (Integer) obj;
-            doubleValue = (double)intValue;
+            doubleValue = (double) intValue;
         }
 
-        if(obj instanceof Double)
-        {
-            doubleValue = (Double)obj;
+        if (obj instanceof Double) {
+            doubleValue = (Double) obj;
         }
         return doubleValue;
     }

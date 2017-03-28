@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.localisation;
 
 import java.util.HashMap;
@@ -28,12 +30,15 @@ import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * The Class Localisation, the central point for getting localised strings.
- * <p>
- * The localisation is implemented as resource bundles. The root folder is <code>src/main/resources/i18n</code>
- * <p>
- * Underneath is a folder for each of the top level folders in the source tree containing all the package's classes.
- * <p>
- * Calls are made to <code>getString()</code> supplying a class name. The string is looked up in the correspondingly named resource bundle.
+ * 
+ * <p>The localisation is implemented as resource bundles. 
+ * The root folder is <code>src/main/resources/i18n</code>
+ * 
+ * <p>Underneath is a folder for each of the top level folders
+ * in the source tree containing all the package's classes.
+ * 
+ * <p>Calls are made to <code>getString()</code> supplying a class name.
+ * The string is looked up in the correspondingly named resource bundle.
  * 
  * @author Robert Ward (SCISYS)
  */

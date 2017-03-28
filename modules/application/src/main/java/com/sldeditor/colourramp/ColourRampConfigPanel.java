@@ -74,8 +74,7 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
      * @param parent the parent
      * @param model the model
      */
-    public ColourRampConfigPanel(ColourMapModelUpdateInterface parent, ColourMapModel model)
-    {
+    public ColourRampConfigPanel(ColourMapModelUpdateInterface parent, ColourMapModel model) {
         parentObj = parent;
         colourMapModel = model;
 
@@ -104,10 +103,8 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
         CardLayout cardlayout = new CardLayout();
         editPanel.setLayout(cardlayout);
 
-        if(colourRampMap != null)
-        {
-            for(ColourRampPanelInterface data : colourRampMap.keySet())
-            {
+        if (colourRampMap != null) {
+            for (ColourRampPanelInterface data : colourRampMap.keySet()) {
                 data.setParent(this);
                 String key = data.getTitle();
 
@@ -122,19 +119,17 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
     private void createTopPanel() {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(null);
-        topPanel.setPreferredSize(new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
+        topPanel.setPreferredSize(
+                new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         add(topPanel, BorderLayout.NORTH);
 
         List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
-        if(colourRampMap != null)
-        {
-            for(ColourRampPanelInterface data : colourRampMap.keySet())
-            {
+        if (colourRampMap != null) {
+            for (ColourRampPanelInterface data : colourRampMap.keySet()) {
                 Class<?> panel = null;
 
-                if(data.getPanel() != null)
-                {
+                if (data.getPanel() != null) {
                     panel = data.getPanel().getClass();
                 }
 
@@ -148,13 +143,15 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
         }
         typeComboBox = new ValueComboBox();
         typeComboBox.initialiseSingle(dataList);
-        typeComboBox.setBounds(BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
+        typeComboBox.setBounds(BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         topPanel.add(typeComboBox);
-        typeComboBox.addActionListener(new ActionListener(){
+        typeComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 typeChanged(typeComboBox.getSelectedValue());
-            }});
+            }
+        });
     }
 
     /**
@@ -163,9 +160,8 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
      * @param valueComboBoxData the value combo box data
      */
     private void typeChanged(ValueComboBoxData valueComboBoxData) {
-        if(valueComboBoxData != null)
-        {
-            CardLayout cl = (CardLayout)(editPanel.getLayout());
+        if (valueComboBoxData != null) {
+            CardLayout cl = (CardLayout) (editPanel.getLayout());
             cl.show(editPanel, valueComboBoxData.getKey());
         }
     }
@@ -178,34 +174,35 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
     public void populate(ColorMap value) {
 
         ValueComboBoxData selectedValue = typeComboBox.getSelectedValue();
-        if(selectedValue != null)
-        {
-            ColourRampPanelInterface selectedPanel = this.colourRampMapCache.get(selectedValue.getKey());
+        if (selectedValue != null) {
+            ColourRampPanelInterface selectedPanel = this.colourRampMapCache
+                    .get(selectedValue.getKey());
 
-            if(selectedPanel != null)
-            {
+            if (selectedPanel != null) {
                 selectedPanel.populate(value);
             }
         }
     }
 
-    /* (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.colourramp.ColourRampUpdateInterface#colourRampUpdate(com.sldeditor.colourramp.ramp.ColourRampData)
      */
     @Override
     public void colourRampUpdate(ColourRampData data) {
-        if(colourMapModel != null)
-        {
+        if (colourMapModel != null) {
             colourMapModel.updateColourRamp(data);
-            
-            if(parentObj != null)
-            {
+
+            if (parentObj != null) {
                 parentObj.colourMapUpdated();
             }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.colourramp.ColourRampUpdateInterface#getColourMapModel()
      */
     @Override

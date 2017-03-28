@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.render;
 
 import java.awt.event.ActionEvent;
@@ -61,7 +62,8 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
      * @param renderSymbol the render symbol
      * @param rendererList the renderer list
      */
-    public RenderOptionsPanel(RenderSymbolInterface renderSymbol, List<RenderSymbolInterface> rendererList) {
+    public RenderOptionsPanel(RenderSymbolInterface renderSymbol,
+            List<RenderSymbolInterface> rendererList) {
         this.renderSymbol = renderSymbol;
         this.rendererList = rendererList;
 
@@ -71,7 +73,7 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
         createUI();
 
         populate();
-        
+
         updateButtonState(GeometryTypeEnum.UNKNOWN);
     }
 
@@ -80,7 +82,8 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
      */
     private void createUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        applyTransformationCheckBox = new JCheckBox(Localisation.getString(RenderOptionsPanel.class, "RenderOptionsPanel.applyTransformation"));
+        applyTransformationCheckBox = new JCheckBox(Localisation.getString(RenderOptionsPanel.class,
+                "RenderOptionsPanel.applyTransformation"));
         applyTransformationCheckBox.addActionListener(new ActionListener() {
 
             @Override
@@ -90,19 +93,18 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
                 options.setApplyTransformation(applyTransformationCheckBox.isSelected());
 
                 updateSymbols();
-            }});
+            }
+        });
         // Hide for now
-        //  add(applyTransformationCheckBox);
+        // add(applyTransformationCheckBox);
     }
 
     /**
-     * Refresh the drawing of any symbols in renderers
+     * Refresh the drawing of any symbols in renderers.
      */
     private void updateSymbols() {
-        if(rendererList != null)
-        {
-            for(RenderSymbolInterface renderer : rendererList)
-            {
+        if (rendererList != null) {
+            for (RenderSymbolInterface renderer : rendererList) {
                 renderer.renderSymbol();
             }
         }
@@ -111,8 +113,7 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
     /**
      * Populate.
      */
-    private void populate()
-    {
+    private void populate() {
         RuleRenderOptions options = this.renderSymbol.getRuleRenderOptions();
 
         applyTransformationCheckBox.setSelected(options.isTransformationApplied());
@@ -125,8 +126,8 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag)
-    {
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
         updateButtonState(geometryType);
     }
 
@@ -138,8 +139,7 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
     private void updateButtonState(GeometryTypeEnum geometryType) {
         boolean applyTransformEnabled = false;
 
-        switch(geometryType)
-        {
+        switch (geometryType) {
         case POINT:
         case LINE:
         case POLYGON:
@@ -151,13 +151,14 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
             break;
         }
 
-        if(applyTransformationCheckBox != null)
-        {
+        if (applyTransformationCheckBox != null) {
             applyTransformationCheckBox.setEnabled(applyTransformEnabled);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override

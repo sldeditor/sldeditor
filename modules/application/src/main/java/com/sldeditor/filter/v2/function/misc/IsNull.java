@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.misc;
 
 import java.util.List;
@@ -40,14 +41,12 @@ public class IsNull implements FilterConfigInterface {
     /**
      * The Class IsNullExtended.
      */
-    public class IsNullExtended extends IsNullImpl implements FilterExtendedInterface
-    {
+    public class IsNullExtended extends IsNullImpl implements FilterExtendedInterface {
 
         /**
          * Instantiates a new checks if is null extended.
          */
-        public IsNullExtended()
-        {
+        public IsNullExtended() {
             super(null);
         }
 
@@ -56,19 +55,22 @@ public class IsNull implements FilterConfigInterface {
          *
          * @param expression1 the expression 1
          */
-        public IsNullExtended(Expression expression1)
-        {
+        public IsNullExtended(Expression expression1) {
             super(expression1);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.geotools.filter.CompareFilterImpl#toString()
          */
         public String toString() {
             return "[ IsNull " + getExpression() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -80,8 +82,7 @@ public class IsNull implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsNull()
-    {
+    public IsNull() {
     }
 
     /**
@@ -92,19 +93,10 @@ public class IsNull implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("IsNull", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new IsNullExtended();
     }
 
     /**
@@ -120,6 +112,16 @@ public class IsNull implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new IsNullExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -128,12 +130,9 @@ public class IsNull implements FilterConfigInterface {
 
         IsNullImpl filter = null;
 
-        if((parameterList == null) || parameterList.isEmpty())
-        {
+        if ((parameterList == null) || parameterList.isEmpty()) {
             filter = new IsNullExtended();
-        }
-        else
-        {
+        } else {
             filter = new IsNullExtended(parameterList.get(0));
         }
         return filter;

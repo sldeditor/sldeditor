@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.property;
 
 import java.util.List;
@@ -38,15 +39,13 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsNotEqualTo implements FilterConfigInterface {
 
-    public class IsNotEqualToExtended extends IsNotEqualToImpl implements FilterExtendedInterface
-    {
-        public IsNotEqualToExtended()
-        {
+    public class IsNotEqualToExtended extends IsNotEqualToImpl implements FilterExtendedInterface {
+        public IsNotEqualToExtended() {
             super(null, null);
         }
 
-        public IsNotEqualToExtended(Expression expression1, Expression expression2, boolean matchCase)
-        {
+        public IsNotEqualToExtended(Expression expression1, Expression expression2,
+                boolean matchCase) {
             super(expression1, expression2, matchCase);
         }
 
@@ -57,10 +56,9 @@ public class IsNotEqualTo implements FilterConfigInterface {
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public IsNotEqualTo()
-    {
+    public IsNotEqualTo() {
     }
 
     /**
@@ -71,23 +69,15 @@ public class IsNotEqualTo implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("PropertyIsNotEqualTo", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
-        filterName.addParameter(new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
 
         return filterName;
     }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new IsNotEqualToExtended();
-    }
-
 
     /**
      * Gets the filter class.
@@ -102,6 +92,16 @@ public class IsNotEqualTo implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new IsNotEqualToExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -109,15 +109,13 @@ public class IsNotEqualTo implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsNotEqualToImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 3))
-        {
+        if ((parameterList == null) || (parameterList.size() != 3)) {
             filter = new IsNotEqualToExtended();
-        }
-        else
-        {
-            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(2);
+        } else {
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(2);
 
-            filter = new IsNotEqualToExtended(parameterList.get(0), parameterList.get(1), (Boolean)matchCase.getValue());
+            filter = new IsNotEqualToExtended(parameterList.get(0), parameterList.get(1),
+                    (Boolean) matchCase.getValue());
         }
 
         return filter;

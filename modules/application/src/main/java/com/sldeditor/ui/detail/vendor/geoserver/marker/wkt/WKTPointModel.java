@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.util.ArrayList;
@@ -62,7 +63,9 @@ public class WKTPointModel extends AbstractTableModel {
      * @param col the column index
      * @return the column name
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     public String getColumnName(int col) {
@@ -76,7 +79,9 @@ public class WKTPointModel extends AbstractTableModel {
      * @param col the col
      * @return true, if is cell editable
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
     public boolean isCellEditable(int row, int col) {
@@ -88,7 +93,9 @@ public class WKTPointModel extends AbstractTableModel {
      *
      * @return the row count
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -101,7 +108,9 @@ public class WKTPointModel extends AbstractTableModel {
      *
      * @return the column count
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -116,20 +125,20 @@ public class WKTPointModel extends AbstractTableModel {
      * @param columnIndex the column index
      * @return the value at
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if((rowIndex < 0) || (rowIndex >= pointList.size()))
-        {
+        if ((rowIndex < 0) || (rowIndex >= pointList.size())) {
             return null;
         }
 
         WKTPoint data = pointList.get(rowIndex);
 
-        switch(columnIndex)
-        {
+        switch (columnIndex) {
         case X_COLUMN_ID:
             return data.getX();
         case Y_COLUMN_ID:
@@ -146,20 +155,19 @@ public class WKTPointModel extends AbstractTableModel {
      * @param row the row
      * @param col the col
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     public void setValueAt(Object value, int row, int col) {
-        if((row < 0) || (row >= pointList.size()))
-        {
+        if ((row < 0) || (row >= pointList.size())) {
             return;
         }
 
-        if(value instanceof String)
-        {
+        if (value instanceof String) {
             WKTPoint data = pointList.get(row);
-            switch(col)
-            {
+            switch (col) {
             case X_COLUMN_ID:
                 data.setX(Double.valueOf((String) value));
                 break;
@@ -176,8 +184,7 @@ public class WKTPointModel extends AbstractTableModel {
     /**
      * Adds the new field.
      */
-    public void addNewPoint()
-    {
+    public void addNewPoint() {
         pointList.add(new WKTPoint());
 
         this.fireTableDataChanged();
@@ -190,12 +197,9 @@ public class WKTPointModel extends AbstractTableModel {
      */
     public void populate(WKTSegmentList wktPointList) {
 
-        if(wktPointList == null)
-        {
+        if (wktPointList == null) {
             pointList.clear();
-        }
-        else
-        {
+        } else {
             pointList = wktPointList.getWktPointList(ensureFirstAndLastPointsAreTheSame);
         }
 
@@ -208,8 +212,7 @@ public class WKTPointModel extends AbstractTableModel {
      * @param rowIndex the row index
      */
     public void removePoint(int rowIndex) {
-        if((rowIndex < 0) || (rowIndex >= pointList.size()))
-        {
+        if ((rowIndex < 0) || (rowIndex >= pointList.size())) {
             return;
         }
         pointList.remove(rowIndex);
@@ -231,12 +234,9 @@ public class WKTPointModel extends AbstractTableModel {
      * @param wktType the new WKT type
      */
     public void setWKTType(WKTType wktType) {
-        if(wktType != null)
-        {
+        if (wktType != null) {
             ensureFirstAndLastPointsAreTheSame = wktType.doFirstLastHaveToBeSame();
-        }
-        else
-        {
+        } else {
             ensureFirstAndLastPointsAreTheSame = false;
         }
     }

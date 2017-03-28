@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.util.ArrayList;
@@ -54,14 +55,14 @@ import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Class that represents data sources for an SLD symbol. Provides functionality to read and update its schema. Handles the following:
- * <p>
- * - example data
- * <p>
- * - external data (e.g shape file, tiff)
- * <p>
- * - user layer inline data
- * <p>
+ * Class that represents data sources for an SLD symbol. Provides functionality to read
+ * and update its schema. Handles the following:
+ * 
+ * <p>- example data
+ * 
+ * <p>- external data (e.g shape file, tiff)
+ * 
+ * <p>- user layer inline data
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -74,7 +75,8 @@ public class DataSourceImpl implements DataSourceInterface {
     private static Logger logger = Logger.getLogger(DataSourceImpl.class);
 
     /** The listener list. */
-    private List<DataSourceUpdatedInterface> listenerList = new ArrayList<DataSourceUpdatedInterface>();
+    private List<DataSourceUpdatedInterface> listenerList =
+            new ArrayList<DataSourceUpdatedInterface>();
 
     /** The data source info. */
     private DataSourceInfo dataSourceInfo = new DataSourceInfo();
@@ -186,25 +188,21 @@ public class DataSourceImpl implements DataSourceInterface {
                 createUserLayerDataSources();
 
                 // Report any attributes used in SLD but not in data source
-                if(checkList != null)
-                {
-                    for(CheckAttributeInterface check : checkList)
-                    {
+                if (checkList != null) {
+                    for (CheckAttributeInterface check : checkList) {
                         check.checkAttributes(editorFile);
                     }
                 }
 
                 notifyDataSourceLoaded();
-            }
-            else
-            {
+            } else {
                 logger.error("dataSourceProperties is empty");
             }
         }
     }
 
     /**
-     * Create inline data sources
+     * Create inline data sources.
      */
     private void createUserLayerDataSources() {
         logger.debug("createUserLayerDataSources");
@@ -464,12 +462,9 @@ public class DataSourceImpl implements DataSourceInterface {
 
         connectedToDataSourceFlag = false;
 
-        if (this.editorFileInterface.getSLD() == null)
-        {
+        if (this.editorFileInterface.getSLD() == null) {
             logger.debug("Missing StyledLayerDescriptor");
-        }
-        else
-        {
+        } else {
             createInternalDataSource();
         }
     }

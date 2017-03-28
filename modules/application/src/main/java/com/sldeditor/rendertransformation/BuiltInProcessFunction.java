@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.util.ArrayList;
@@ -50,7 +51,8 @@ public class BuiltInProcessFunction {
     public List<ProcessFunctionParameterValue> extractParameters(FunctionName functionName,
             ProcessFunction selectedProcessFunctionData) {
 
-        List<ProcessFunctionParameterValue> valueList = new ArrayList<ProcessFunctionParameterValue>();
+        List<ProcessFunctionParameterValue> valueList =
+                new ArrayList<ProcessFunctionParameterValue>();
 
         // Populate the parameter definitions first.
         // This ensures if there is parameter data missing we
@@ -81,8 +83,7 @@ public class BuiltInProcessFunction {
                         Expression paramValue = parameterList.get(1);
 
                         value.objectValue.setValue(paramValue);
-                        if(value.optional)
-                        {
+                        if (value.optional) {
                             value.included = true;
                         }
                     }
@@ -122,7 +123,8 @@ public class BuiltInProcessFunction {
             value.name = parameter.getName();
             value.type = parameter.getType();
             if (parameter.getType().isEnum()) {
-                value.objectValue = valueFactory.getEnum(parameter.getType(), Arrays.asList(parameter.getType().getEnumConstants()));
+                value.objectValue = valueFactory.getEnum(parameter.getType(),
+                        Arrays.asList(parameter.getType().getEnumConstants()));
 
                 if (parameter.getDefaultValue() != null) {
                     value.objectValue.setDefaultValue(parameter.getDefaultValue().toString());

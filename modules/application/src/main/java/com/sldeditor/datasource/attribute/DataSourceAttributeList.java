@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.attribute;
 
 import java.util.List;
@@ -31,13 +32,14 @@ public class DataSourceAttributeList implements DataSourceAttributeListInterface
     private List<DataSourceAttributeData> attributeList = null;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public DataSourceAttributeList()
-    {
+    public DataSourceAttributeList() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.render.iface.RenderAttributeDataInterface#getData()
      */
     @Override
@@ -45,7 +47,9 @@ public class DataSourceAttributeList implements DataSourceAttributeListInterface
         return attributeList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.render.iface.RenderAttributeDataInterface#setData(java.util.Map)
      */
     @Override

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.logic;
 
 import java.util.List;
@@ -40,15 +41,13 @@ public class Not implements FilterConfigInterface {
     /**
      * The Class NotExtended.
      */
-    public class NotExtended extends NotImpl implements FilterExtendedInterface
-    {
+    public class NotExtended extends NotImpl implements FilterExtendedInterface {
 
         /**
          * Instantiates a new not extended.
          */
         @SuppressWarnings("deprecation")
-        public NotExtended()
-        {
+        public NotExtended() {
             super();
         }
 
@@ -57,12 +56,13 @@ public class Not implements FilterConfigInterface {
          *
          * @param filter the filter
          */
-        public NotExtended(Filter filter)
-        {
+        public NotExtended(Filter filter) {
             super(filter);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -74,8 +74,7 @@ public class Not implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Not()
-    {
+    public Not() {
     }
 
     /**
@@ -86,9 +85,20 @@ public class Not implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("Not", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("filter", ExpressionTypeEnum.FILTER, Filter.class));
+        filterName.addParameter(
+                new FilterNameParameter("filter", ExpressionTypeEnum.FILTER, Filter.class));
 
         return filterName;
+    }
+
+    /**
+     * Gets the filter class.
+     *
+     * @return the filter class
+     */
+    @Override
+    public Class<?> getFilterClass() {
+        return NotImpl.class;
     }
 
     /**
@@ -101,15 +111,6 @@ public class Not implements FilterConfigInterface {
         return new NotExtended();
     }
 
-    /**
-     * Gets the filter class.
-     *
-     * @return the filter class
-     */
-    @Override
-    public Class<?> getFilterClass() {
-        return NotImpl.class;
-    }
 
     /**
      * Creates the filter.
@@ -132,12 +133,9 @@ public class Not implements FilterConfigInterface {
     @Override
     public Filter createLogicFilter(List<Filter> filterList) {
         NotImpl filter = null;
-        if((filterList == null) || filterList.isEmpty())
-        {
+        if ((filterList == null) || filterList.isEmpty()) {
             filter = new NotExtended();
-        }
-        else
-        {
+        } else {
             filter = new NotExtended(filterList.get(0));
         }
         return filter;

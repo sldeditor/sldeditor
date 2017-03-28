@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.layout;
 
 import java.util.LinkedHashMap;
@@ -26,11 +27,11 @@ import java.util.Map;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class UILayoutFactory
-{
+public class UILayoutFactory {
 
     /** The ui layout map. */
-    private static Map<String, UILayoutInterface> uiLayoutMap = new LinkedHashMap<String, UILayoutInterface>();
+    private static Map<String, UILayoutInterface> uiLayoutMap =
+            new LinkedHashMap<String, UILayoutInterface>();
 
     /** The default ui layout. */
     private static String defaultUILayout = null;
@@ -44,17 +45,14 @@ public class UILayoutFactory
      * @param className the class name
      * @return the UI layout
      */
-    public static UILayoutInterface getUILayout(String className)
-    {
-        if(uiLayoutMap.isEmpty())
-        {
+    public static UILayoutInterface getUILayout(String className) {
+        if (uiLayoutMap.isEmpty()) {
             populate();
         }
 
         UILayoutInterface uiLayout = uiLayoutMap.get(className);
 
-        if(uiLayout == null)
-        {
+        if (uiLayout == null) {
             uiLayout = uiLayoutMap.get(defaultUILayout);
         }
 
@@ -66,8 +64,7 @@ public class UILayoutFactory
     /**
      * Populate.
      */
-    private static void populate()
-    {
+    private static void populate() {
         SLDEditorDefaultLayout defaultUI = new SLDEditorDefaultLayout();
 
         populateInternal(defaultUI);
@@ -81,8 +78,7 @@ public class UILayoutFactory
      *
      * @param layout the layout
      */
-    private static void populateInternal(UILayoutInterface layout)
-    {
+    private static void populateInternal(UILayoutInterface layout) {
         String className = layout.getClass().getName();
         uiLayoutMap.put(className, layout);
     }
@@ -92,10 +88,8 @@ public class UILayoutFactory
      *
      * @param folder the folder
      */
-    public static void readLayout(String folder)
-    {
-        if(selectedLayout != null)
-        {
+    public static void readLayout(String folder) {
+        if (selectedLayout != null) {
             selectedLayout.readLayout(folder);
         }
     }
@@ -105,10 +99,8 @@ public class UILayoutFactory
      *
      * @param folder the folder
      */
-    public static void writeLayout(String folder)
-    {
-        if(selectedLayout != null)
-        {
+    public static void writeLayout(String folder) {
+        if (selectedLayout != null) {
             selectedLayout.writeLayout(folder);
         }
     }
@@ -118,17 +110,14 @@ public class UILayoutFactory
      *
      * @return the all layouts
      */
-    public static Map<String, String> getAllLayouts()
-    {
-        if(uiLayoutMap.isEmpty())
-        {
+    public static Map<String, String> getAllLayouts() {
+        if (uiLayoutMap.isEmpty()) {
             populate();
         }
 
         Map<String, String> map = new LinkedHashMap<String, String>();
 
-        for(String className : uiLayoutMap.keySet())
-        {
+        for (String className : uiLayoutMap.keySet()) {
             String displayName = uiLayoutMap.get(className).getDisplayName();
             map.put(displayName, className);
         }

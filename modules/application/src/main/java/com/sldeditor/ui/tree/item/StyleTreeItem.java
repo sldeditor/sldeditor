@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.tree.item;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,27 +35,30 @@ import com.sldeditor.ui.tree.SLDTreeTools;
 public class StyleTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
-    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.style");
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.style");
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
     public String getTreeString(DefaultMutableTreeNode node, Object nodeObject) {
-        Style style = (Style)nodeObject;
+        Style style = (Style) nodeObject;
 
         String name = "";
-        if(style != null)
-        {
-            if(style.getName() != null)
-            {
+        if (style != null) {
+            if (style.getName() != null) {
                 name = style.getName();
             }
         }
         return String.format("%s : %s", TITLE, name);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override

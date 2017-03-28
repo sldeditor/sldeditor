@@ -65,8 +65,7 @@ public class CheckUpdatePanel extends JDialog {
      */
     public CheckUpdatePanel() {
         super(Controller.getInstance().getFrame(),
-                Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.title"),
-                true);
+                Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.title"), true);
         createUI();
         setSize(600, 400);
 
@@ -123,7 +122,8 @@ public class CheckUpdatePanel extends JDialog {
         panel_1.add(panel_4);
         panel_4.setLayout(new BorderLayout(0, 0));
 
-        btnGet = new JButton(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.get"));
+        btnGet = new JButton(
+                Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.get"));
         btnGet.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
@@ -148,15 +148,14 @@ public class CheckUpdatePanel extends JDialog {
      *
      * @param currentVersion the current version
      */
-    public void showPanel(String currentVersion)
-    {
-        lblCurrentVersion.setText(String.format("%s %s", 
-                Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"), 
+    public void showPanel(String currentVersion) {
+        lblCurrentVersion.setText(String.format("%s %s",
+                Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"),
                 currentVersion));
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
 
                 checkForLatestVersion(currentVersion, client, false);
@@ -173,15 +172,14 @@ public class CheckUpdatePanel extends JDialog {
      *
      * @param currentVersion the current version
      */
-    public void showPanelSilent(String currentVersion)
-    {
-        lblCurrentVersion.setText(String.format("%s %s", 
-                Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"), 
+    public void showPanelSilent(String currentVersion) {
+        lblCurrentVersion.setText(String.format("%s %s",
+                Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"),
                 currentVersion));
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 CheckUpdateClientInterface client = CheckUpdateClientFactory.getClient();
 
                 checkForLatestVersion(currentVersion, client, true);
@@ -198,16 +196,15 @@ public class CheckUpdatePanel extends JDialog {
      * @param client the client
      * @param silent the silent flag
      */
-    protected void checkForLatestVersion(String currentVersion,
-            CheckUpdateClientInterface client,
+    protected void checkForLatestVersion(String currentVersion, CheckUpdateClientInterface client,
             boolean silent) {
-        if(client == null)
-        {
+        if (client == null) {
             return;
         }
 
         btnGet.setVisible(false);
-        lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.contacting"));
+        lblStatus.setText(
+                Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.contacting"));
         lblLatestVersion.setText("");
         textArea.setText("");
 
@@ -215,31 +212,27 @@ public class CheckUpdatePanel extends JDialog {
 
         boolean shouldUpdate = update.shouldUpdate(currentVersion);
 
-        if(update.isDestinationReached())
-        {
+        if (update.isDestinationReached()) {
             UpdateData latestData = update.getLatestData();
             String latestVersionString = String.format("%s %s",
-                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"), 
+                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"),
                     latestData.getVersion());
             lblLatestVersion.setText(latestVersionString);
-            if(shouldUpdate)
-            {
+            if (shouldUpdate) {
                 textArea.setText(latestData.getDescription());
-                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.newVersionAvailable"));
+                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class,
+                        "CheckUpdatePanel.newVersionAvailable"));
                 btnGet.setVisible(true);
+            } else {
+                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class,
+                        "CheckUpdatePanel.runningLatest"));
             }
-            else
-            {
-                lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.runningLatest"));
-            }
-        }
-        else
-        {
-            lblStatus.setText(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
+        } else {
+            lblStatus.setText(Localisation.getString(CheckUpdatePanel.class,
+                    "CheckUpdatePanel.destinationUnreachable"));
         }
 
-        if(shouldUpdate && silent)
-        {
+        if (shouldUpdate && silent) {
             setVisible(true);
         }
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.tree.item;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -39,33 +40,42 @@ import com.sldeditor.ui.tree.SLDTreeTools;
 public class SymbolizerTreeItem implements SLDTreeItemInterface {
 
     /** The Constant DEFAULT_MARKER_NAME. */
-    private static final String DEFAULT_MARKER_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.marker");
+    private static final String DEFAULT_MARKER_NAME = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.marker");
 
     /** The Constant DEFAULT_TEXT_NAME. */
-    public static final String DEFAULT_TEXT_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.text");
+    public static final String DEFAULT_TEXT_NAME = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.text");
 
     /** The Constant DEFAULT_LINE_NAME. */
-    public static final String DEFAULT_LINE_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.line");
+    public static final String DEFAULT_LINE_NAME = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.line");
 
     /** The Constant DEFAULT_POLYGON_NAME. */
-    public static final String DEFAULT_POLYGON_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.polygon");
+    public static final String DEFAULT_POLYGON_NAME = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.polygon");
 
     /** The Constant DEFAULT_RASTER_NAME. */
-    public static final String DEFAULT_RASTER_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.raster");
+    public static final String DEFAULT_RASTER_NAME = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.raster");
 
     /** The Constant OUTLINE_NAME. */
-    public static final String OUTLINE_NAME = Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline");
+    public static final String OUTLINE_NAME = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.imageOutline");
 
     /**
-     * Gets the tree string.<p>
-     * Code just returns image outline prefix regardless of symbolizer type, 
-     * doesn't just restrict to line and polygon
+     * Gets the tree string.
+     * 
+     * <p>Code just returns image outline prefix regardless of symbolizer type,
+     *  doesn't just restrict to line and polygon
      *
      * @param node the node
      * @param nodeObject the node object
      * @return the tree string
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -74,17 +84,14 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
 
         String name = null;
 
-        if(symbol != null)
-        {
+        if (symbol != null) {
             name = symbol.getName();
 
-            if((name == null) || name.isEmpty())
-            {
+            if ((name == null) || name.isEmpty()) {
                 name = defaultString(symbol);
             }
 
-            if(imageOutline(node))
-            {
+            if (imageOutline(node)) {
                 name = String.format("%s - %s", OUTLINE_NAME, name);
             }
         }
@@ -100,14 +107,11 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
      */
     private boolean imageOutline(DefaultMutableTreeNode node) {
         boolean isOutline = false;
-        if(node != null)
-        {
+        if (node != null) {
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
 
-            if(parentNode != null)
-            {
-                if(parentNode.getUserObject() instanceof RasterSymbolizer)
-                {
+            if (parentNode != null) {
+                if (parentNode.getUserObject() instanceof RasterSymbolizer) {
                     isOutline = true;
                 }
             }
@@ -124,24 +128,15 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
     private String defaultString(Symbolizer symbol) {
         String name = "";
 
-        if(symbol instanceof PointSymbolizer)
-        {
+        if (symbol instanceof PointSymbolizer) {
             name = DEFAULT_MARKER_NAME;
-        }
-        else if(symbol instanceof TextSymbolizer)
-        {
+        } else if (symbol instanceof TextSymbolizer) {
             name = DEFAULT_TEXT_NAME;
-        }
-        else if(symbol instanceof LineSymbolizer)
-        {
+        } else if (symbol instanceof LineSymbolizer) {
             name = DEFAULT_LINE_NAME;
-        }
-        else if(symbol instanceof PolygonSymbolizer)
-        {
+        } else if (symbol instanceof PolygonSymbolizer) {
             name = DEFAULT_POLYGON_NAME;
-        }
-        else if(symbol instanceof RasterSymbolizer)
-        {
+        } else if (symbol instanceof RasterSymbolizer) {
             name = DEFAULT_RASTER_NAME;
         }
         return name;
@@ -160,11 +155,9 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
         // Individual symbol selected
         Symbolizer symbolizer = (Symbolizer) userObject;
 
-        if(node != null)
-        {
+        if (node != null) {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-            if(parent != null)
-            {
+            if (parent != null) {
                 selectedSymbol.setSymbolizer(symbolizer);
             }
         }

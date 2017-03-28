@@ -49,7 +49,8 @@ public class MinimumVersion {
     private GetMinimumVersionInterface uiMgr = null;
 
     /** The vendor options present list. */
-    private List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<VendorOptionPresent>();
+    private List<VendorOptionPresent> vendorOptionsPresentList = 
+            new ArrayList<VendorOptionPresent>();
 
     /** The default vendor option version. */
     private VendorOptionVersion defaultVendorOptionVersion = VendorOptionManager.getInstance()
@@ -169,8 +170,7 @@ public class MinimumVersion {
     }
 
     /**
-     * Find latest version data between the vendor option version read from the symbol
-     * and the user default.
+     * Find latest version data between the vendor option version read from the symbol and the user default.
      *
      * @param earliestReadFromSymbol the earliest read from symbol
      * @param userDefaultVendorOptionList the user default vendor option

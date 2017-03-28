@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.connector.instance;
 
 import java.awt.BorderLayout;
@@ -54,7 +55,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
     private DefaultTableModel model = new DefaultTableModel();
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public DataSourceConnector() {
         createUI();
@@ -124,7 +125,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         reset();
         for (String key : propertyMap.keySet()) {
             if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
-                model.addRow(new String[]{key, propertyMap.get(key).toString()});
+                model.addRow(new String[] { key, propertyMap.get(key).toString() });
             }
         }
         model.fireTableDataChanged();
@@ -215,8 +216,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
      */
     @Override
     public void reset() {
-        while(model.getRowCount() > 0)
-        {
+        while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
 

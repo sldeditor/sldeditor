@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.tool;
 
 import java.util.Map;
@@ -29,22 +31,21 @@ import com.sldeditor.common.data.StyleWrapper;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface ToolExtensionInterface
-{
+public interface ToolExtensionInterface {
     /**
      * Gets the path.
      *
      * @return the path
      */
     public String getPath();
-    
+
     /**
      * Gets the selected items.
      *
      * @return the selected items
      */
     public Map<StyleWrapper, StyledLayerDescriptor> getSelectedItems();
-    
+
     /**
      * Select all.
      */

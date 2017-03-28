@@ -46,7 +46,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 package com.sldeditor.ui.legend.filechooser;
 
@@ -54,7 +54,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
 
 /**
  * Image file filter class, allows gif, jpg, tiff, or png files.
@@ -67,19 +67,19 @@ public class ImageFilter extends FileFilter {
     private String filterString;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param filterString the filter string
      */
-    public ImageFilter(String filterString)
-    {
+    public ImageFilter(String filterString) {
         this.filterString = filterString;
     }
 
-    /* (non-Javadoc)
+    /**
+     * Accept all directories and all gif, jpg, tiff, or png files.
+     * 
      * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
      */
-    // Accept all directories and all gif, jpg, tiff, or png files.
     public boolean accept(File f) {
         if (f.isDirectory()) {
             return true;
@@ -87,12 +87,9 @@ public class ImageFilter extends FileFilter {
 
         String extension = ImageFileExtensionUtils.getExtension(f);
         if (extension != null) {
-            if (extension.equals(filterString))
-            {
+            if (extension.equals(filterString)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -100,7 +97,9 @@ public class ImageFilter extends FileFilter {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.filechooser.FileFilter#getDescription()
      */
     public String getDescription() {
@@ -112,8 +111,7 @@ public class ImageFilter extends FileFilter {
      *
      * @return the filters
      */
-    public static List<FileFilter> getFilters()
-    {
+    public static List<FileFilter> getFilters() {
         List<FileFilter> filterlist = new ArrayList<FileFilter>();
 
         filterlist.add(new ImageFilter(ImageFileExtensionUtils.jpg));
@@ -129,8 +127,7 @@ public class ImageFilter extends FileFilter {
      *
      * @return the file extension
      */
-    public String getFileExtension()
-    {
+    public String getFileExtension() {
         return filterString;
     }
 
@@ -139,8 +136,7 @@ public class ImageFilter extends FileFilter {
      *
      * @return the string
      */
-    public static String defaultExtension()
-    {
+    public static String defaultExtension() {
         return ImageFileExtensionUtils.png;
     }
 }

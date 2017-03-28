@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.connection;
 
 import java.util.List;
@@ -79,7 +80,8 @@ public interface DatabaseConnectionManagerInterface {
      * @param progress the progress
      * @param newConnectionDetails the new connection details
      */
-    void addNewConnection(DatabaseReadProgressInterface progress, DatabaseConnection newConnectionDetails);
+    void addNewConnection(DatabaseReadProgressInterface progress,
+            DatabaseConnection newConnectionDetails);
 
     /**
      * Gets the DB connection params.

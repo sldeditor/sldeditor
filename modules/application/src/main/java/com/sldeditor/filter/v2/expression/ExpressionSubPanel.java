@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 import java.awt.BorderLayout;
@@ -101,7 +102,7 @@ public class ExpressionSubPanel extends JPanel {
     /** The panel function. */
     private JPanel panelFunction;
 
-    /**  The panel environment variable. */
+    /** The panel environment variable. */
     private JPanel panelEnvVar;
 
     /** The data source attribute panel. */
@@ -141,23 +142,19 @@ public class ExpressionSubPanel extends JPanel {
      * @param fieldType the new data type
      * @param isRasterSymbol the is raster symbol flag
      */
-    public void setDataType(Class<?> fieldType, boolean isRasterSymbol)
-    {
-        if(envVarField != null)
-        {
+    public void setDataType(Class<?> fieldType, boolean isRasterSymbol) {
+        if (envVarField != null) {
             envVarField.setDataType(fieldType);
         }
 
         Class<?> updatedFieldType = (fieldType == StringBuilder.class) ? String.class : fieldType;
 
-        if(dataSourceAttributePanel != null)
-        {
+        if (dataSourceAttributePanel != null) {
             dataSourceAttributePanel.setDataType(updatedFieldType);
         }
         panelAttribute.setVisible(!isRasterSymbol);
 
-        if(functionPanel != null)
-        {
+        if (functionPanel != null) {
             functionPanel.setDataType(updatedFieldType, isRasterSymbol);
         }
     }
@@ -201,7 +198,8 @@ public class ExpressionSubPanel extends JPanel {
         FlowLayout fl_panelLiteral = (FlowLayout) panelLiteral.getLayout();
         fl_panelLiteral.setAlignment(FlowLayout.LEFT);
 
-        rdbtnLiteral = new JRadioButton(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.literal"));
+        rdbtnLiteral = new JRadioButton(
+                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.literal"));
         rdbtnLiteral.setActionCommand(LITERAL);
         buttonGroup.add(rdbtnLiteral);
         panelLiteral.add(rdbtnLiteral);
@@ -216,13 +214,13 @@ public class ExpressionSubPanel extends JPanel {
         FlowLayout fl_panelAttribute = (FlowLayout) panelAttribute.getLayout();
         fl_panelAttribute.setAlignment(FlowLayout.LEFT);
 
-        rdbtnAttribute = new JRadioButton(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"));
+        rdbtnAttribute = new JRadioButton(
+                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"));
         rdbtnAttribute.setActionCommand(ATTRIBUTE);
         buttonGroup.add(rdbtnAttribute);
         panelAttribute.add(rdbtnAttribute);
 
-        dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface()
-        {
+        dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
@@ -237,8 +235,8 @@ public class ExpressionSubPanel extends JPanel {
      * Sets the up env var panel.
      */
     protected void setUpEnvVarPanel() {
-        if(VendorOptionManager.getInstance().isAllowed(this.parent.getVendorOptionList(), EnvironmentVariableField.getVendorOption()))
-        {
+        if (VendorOptionManager.getInstance().isAllowed(this.parent.getVendorOptionList(),
+                EnvironmentVariableField.getVendorOption())) {
             panelEnvVar = new JPanel();
             FlowLayout fl_panelEnvVar = (FlowLayout) panelEnvVar.getLayout();
             fl_panelEnvVar.setAlignment(FlowLayout.LEFT);
@@ -248,8 +246,7 @@ public class ExpressionSubPanel extends JPanel {
             buttonGroup.add(rdbtnEnvVar);
             panelEnvVar.add(rdbtnEnvVar);
 
-            envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface()
-            {
+            envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface() {
                 @Override
                 public void updateSymbol() {
                     buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
@@ -269,13 +266,13 @@ public class ExpressionSubPanel extends JPanel {
         FlowLayout fl_panelFunction = (FlowLayout) panelFunction.getLayout();
         fl_panelFunction.setAlignment(FlowLayout.LEFT);
 
-        rdbtnFunction = new JRadioButton(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.function"));
+        rdbtnFunction = new JRadioButton(
+                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.function"));
         rdbtnFunction.setActionCommand(FUNCTION);
         buttonGroup.add(rdbtnFunction);
         panelFunction.add(rdbtnFunction);
 
-        functionPanel = new FunctionField(new SubPanelUpdatedInterface()
-        {
+        functionPanel = new FunctionField(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 buttonGroup.setSelected(rdbtnFunction.getModel(), true);
@@ -293,23 +290,20 @@ public class ExpressionSubPanel extends JPanel {
      */
     private void displayExpression(ExpressionNode node) {
 
-        if(panelLiteral.getComponentCount() == 2)
-        {
+        if (panelLiteral.getComponentCount() == 2) {
             panelLiteral.remove(1);
         }
 
-        if(node == null)
-        {
+        if (node == null) {
             return;
         }
 
-        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value", node.getType());
+        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value",
+                node.getType());
 
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.createUI();
-            fieldConfig.addDataChangedListener(new UpdateSymbolInterface()
-            {
+            fieldConfig.addDataChangedListener(new UpdateSymbolInterface() {
                 @Override
                 public void dataChanged(FieldIdEnum changedField) {
                     buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
@@ -318,31 +312,24 @@ public class ExpressionSubPanel extends JPanel {
             });
             panelLiteral.add(fieldConfig.getPanel());
 
-            Expression expression = node.getExpression();
-
             // Reset the fields
             dataSourceAttributePanel.setAttribute(null);
             functionPanel.setFunction(null);
 
             dataSourceAttributePanel.setDataType(node.getType());
 
-            if(expression instanceof AttributeExpressionImpl)
-            {
+            Expression expression = node.getExpression();
+
+            if (expression instanceof AttributeExpressionImpl) {
                 dataSourceAttributePanel.setAttribute(expression);
                 buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
-            }
-            else if(expression instanceof EnvFunction)
-            {
+            } else if (expression instanceof EnvFunction) {
                 envVarField.setEnvironmentVariable(expression);
                 buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
-            }
-            else if(expression instanceof FunctionExpressionImpl)
-            {
+            } else if (expression instanceof FunctionExpressionImpl) {
                 functionPanel.setFunction(expression);
                 buttonGroup.setSelected(rdbtnFunction.getModel(), true);
-            }
-            else
-            {
+            } else {
                 fieldConfig.populate(expression);
                 buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
             }
@@ -357,8 +344,7 @@ public class ExpressionSubPanel extends JPanel {
      *
      * @return the j panel
      */
-    private JPanel createApplyRevertPanel()
-    {
+    private JPanel createApplyRevertPanel() {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.apply"));
@@ -368,30 +354,21 @@ public class ExpressionSubPanel extends JPanel {
 
                 String actionCommand = buttonGroup.getSelection().getActionCommand();
 
-                if(actionCommand.compareTo(LITERAL) == 0)
-                {
+                if (actionCommand.compareTo(LITERAL) == 0) {
                     expression = fieldConfig.getExpression();
-                }
-                else if(actionCommand.compareTo(ATTRIBUTE) == 0)
-                {
+                } else if (actionCommand.compareTo(ATTRIBUTE) == 0) {
                     expression = dataSourceAttributePanel.getExpression();
-                }
-                else if(actionCommand.compareTo(FUNCTION) == 0)
-                {
+                } else if (actionCommand.compareTo(FUNCTION) == 0) {
                     expression = functionPanel.getExpression();
-                }
-                else if(actionCommand.compareTo(ENVVAR) == 0)
-                {
+                } else if (actionCommand.compareTo(ENVVAR) == 0) {
                     expression = envVarField.getExpression();
                 }
 
-                if(expression != null)
-                {
+                if (expression != null) {
                     selectedNode.setExpression(expression);
                 }
 
-                if(parent != null)
-                {
+                if (parent != null) {
                     parent.dataApplied();
                 }
                 updateButtonState(false);

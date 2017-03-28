@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
@@ -34,8 +35,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeInterface
-{
+public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeInterface {
 
     /** The connection data. */
     private GeoServerConnection connectData = null;
@@ -56,8 +56,8 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
      * @param connectData the connect data
      * @param style the style
      */
-    public GeoServerStyleNode(FileSystemInterface handler, GeoServerConnection connectData, StyleWrapper style)
-    {
+    public GeoServerStyleNode(FileSystemInterface handler, GeoServerConnection connectData,
+            StyleWrapper style) {
         super(style.getStyle());
         this.handler = handler;
         this.style = style;
@@ -69,8 +69,7 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
      *
      * @return the style
      */
-    public StyleWrapper getStyle()
-    {
+    public StyleWrapper getStyle() {
         return style;
     }
 
@@ -83,21 +82,23 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
         return connectData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
-    public FileSystemInterface getHandler()
-    {
+    public FileSystemInterface getHandler() {
         return handler;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return BuiltInDataFlavour.GEOSERVER_STYLE_DATAITEM_FLAVOUR;
     }
 
@@ -113,7 +114,6 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
 
     @Override
     public Icon getIcon() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

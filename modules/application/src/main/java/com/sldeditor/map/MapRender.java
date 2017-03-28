@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.map;
 
 import java.awt.BorderLayout;
@@ -153,7 +154,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The wms env var values. */
     private WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
 
-    /** The map panel that contains the card layout containing map pane and 'no data source' panel. */
+    /** The map panel that contains the card layout 
+     * containing map pane and 'no data source' panel. */
     private JPanel mapPanel;
 
     /** The map bounds. */
@@ -354,8 +356,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
                     (org.geotools.styling.Style) style);
             mapContent.addLayer(gridLayer);
             mapContent.getViewport().setBounds(gridLayer.getBounds());
-            if(gridCoverage != null)
-            {
+            if (gridCoverage != null) {
                 mapPane.setDisplayArea(gridCoverage.getOriginalEnvelope());
             }
         }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
     private FieldConfigWindBarbs windBarbs;
 
     /**
-     * Instantiates a new VOGeoServerWindbarbSymbol
+     * Instantiates a new VOGeoServerWindbarbSymbol.
      */
     public VOGeoServerWindbarbSymbol()
     {

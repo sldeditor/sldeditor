@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.ui.widgets;
 
 import javax.swing.ImageIcon;
@@ -43,7 +45,8 @@ public class ValueComboBoxData {
     private ImageIcon imageIcon = null;
 
     /** The vendor option. */
-    private VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+    private VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance()
+            .getDefaultVendorOptionVersion();
 
     /**
      * Instantiates a new value combo box data.
@@ -52,8 +55,7 @@ public class ValueComboBoxData {
      * @param text the text
      * @param vendorOptionVersion the vendor option
      */
-    public ValueComboBoxData(String key, String text,
-            VendorOptionVersion vendorOptionVersion) {
+    public ValueComboBoxData(String key, String text, VendorOptionVersion vendorOptionVersion) {
         super();
         this.key = key;
         this.text = text;
@@ -72,7 +74,8 @@ public class ValueComboBoxData {
         this.key = key;
         this.text = text;
         this.panelId = panelId;
-        this.vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+        this.vendorOptionVersion = VendorOptionManager.getInstance()
+                .getDefaultVendorOptionVersion();
     }
 
     /**
@@ -83,7 +86,8 @@ public class ValueComboBoxData {
      * @param vendorOptionVersion the vendor option version
      * @param panelId the panel id
      */
-    public ValueComboBoxData(String key, String text, VendorOptionVersion vendorOptionVersion, Class<?> panelId) {
+    public ValueComboBoxData(String key, String text, VendorOptionVersion vendorOptionVersion,
+            Class<?> panelId) {
         super();
         this.key = key;
         this.text = text;
@@ -103,7 +107,8 @@ public class ValueComboBoxData {
         this.key = key;
         this.imageIcon = imageIcon;
         this.panelId = panelId;
-        this.vendorOptionVersion = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+        this.vendorOptionVersion = VendorOptionManager.getInstance()
+                .getDefaultVendorOptionVersion();
     }
 
     /**
@@ -151,7 +156,9 @@ public class ValueComboBoxData {
         this.panelId = panelId;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override

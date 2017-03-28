@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.data;
 
 import java.io.File;
@@ -46,8 +48,7 @@ import com.sldeditor.ui.legend.option.LegendOptionData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDData implements SLDDataInterface
-{
+public class SLDData implements SLDDataInterface {
     /** The name. */
     private String name;
 
@@ -96,8 +97,7 @@ public class SLDData implements SLDDataInterface
      * @param style the style
      * @param sldContents the sld contents
      */
-    public SLDData(StyleWrapper style, String sldContents)
-    {
+    public SLDData(StyleWrapper style, String sldContents) {
         super();
         updateStyleWrapper(style);
         updateSLDContents(sldContents);
@@ -109,8 +109,7 @@ public class SLDData implements SLDDataInterface
      * @return the layer name
      */
     @Override
-    public String getLayerName()
-    {
+    public String getLayerName() {
         return name;
     }
 
@@ -120,8 +119,7 @@ public class SLDData implements SLDDataInterface
      * @return the sld
      */
     @Override
-    public String getSld()
-    {
+    public String getSld() {
         return sldContents;
     }
 
@@ -131,8 +129,7 @@ public class SLDData implements SLDDataInterface
      * @return the field list
      */
     @Override
-    public List<DataSourceAttributeData> getFieldList()
-    {
+    public List<DataSourceAttributeData> getFieldList() {
         return fieldList;
     }
 
@@ -142,8 +139,7 @@ public class SLDData implements SLDDataInterface
      * @return the data source properties
      */
     @Override
-    public DataSourcePropertiesInterface getDataSourceProperties()
-    {
+    public DataSourcePropertiesInterface getDataSourceProperties() {
         return dataSourceProperties;
     }
 
@@ -235,8 +231,7 @@ public class SLDData implements SLDDataInterface
      */
     @Override
     public void setDataSourceProperties(DataSourcePropertiesInterface dataSourceProperties) {
-        if(this.dataSourceProperties != dataSourceProperties)
-        {
+        if (this.dataSourceProperties != dataSourceProperties) {
             this.dataSourceProperties = dataSourceProperties;
         }
     }
@@ -249,8 +244,7 @@ public class SLDData implements SLDDataInterface
      */
     public static String removeFileExtension(String s) {
 
-        if(s == null)
-        {
+        if (s == null) {
             return null;
         }
         String separator = System.getProperty("file.separator");
@@ -272,8 +266,7 @@ public class SLDData implements SLDDataInterface
      * @return the style
      */
     @Override
-    public StyleWrapper getStyle()
-    {
+    public StyleWrapper getStyle() {
         return style;
     }
 
@@ -283,8 +276,7 @@ public class SLDData implements SLDDataInterface
      * @return the sld editor file
      */
     @Override
-    public File getSldEditorFile()
-    {
+    public File getSldEditorFile() {
         return sldEditorFile;
     }
 
@@ -294,8 +286,7 @@ public class SLDData implements SLDDataInterface
      * @param sldEditorFile the new sld editor file
      */
     @Override
-    public void setSldEditorFile(File sldEditorFile)
-    {
+    public void setSldEditorFile(File sldEditorFile) {
         this.sldEditorFile = sldEditorFile;
     }
 
@@ -305,8 +296,7 @@ public class SLDData implements SLDDataInterface
      * @return the file
      */
     @Override
-    public File getSLDFile()
-    {
+    public File getSLDFile() {
         return sldFile;
     }
 
@@ -316,8 +306,7 @@ public class SLDData implements SLDDataInterface
      * @return the layer name with out suffix
      */
     @Override
-    public String getLayerNameWithOutSuffix()
-    {
+    public String getLayerNameWithOutSuffix() {
         String layerName = getLayerName();
 
         return ExternalFilenames.removeSuffix(layerName);
@@ -330,8 +319,7 @@ public class SLDData implements SLDDataInterface
      */
     public void updateStyleWrapper(StyleWrapper style) {
         this.style = style;
-        if(style != null)
-        {
+        if (style != null) {
             this.name = removeFileExtension(style.getStyle());
         }
     }
@@ -346,12 +334,14 @@ public class SLDData implements SLDDataInterface
         this.sldContents = sldContents;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.SLDDataInterface#setEnvVarList(java.util.List)
      */
     @Override
     public void setEnvVarList(List<EnvVar> envVarList) {
-        this.envVarList  = envVarList;
+        this.envVarList = envVarList;
     }
 
     /**
@@ -364,7 +354,9 @@ public class SLDData implements SLDDataInterface
         return envVarList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.SLDDataInterface#setOriginalFormat(com.sldeditor.common.output.SLDOutputFormatEnum)
      */
     @Override
@@ -372,7 +364,9 @@ public class SLDData implements SLDDataInterface
         originalFormat = format;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.SLDDataInterface#getOriginalFormat()
      */
     @Override
@@ -399,14 +393,13 @@ public class SLDData implements SLDDataInterface
     public void setLegendOptions(LegendOptionData legendOptions) {
         this.legendOptions = legendOptions;
 
-        if(this.legendOptions == null)
-        {
+        if (this.legendOptions == null) {
             this.legendOptions = new LegendOptionData();
         }
     }
 
     /**
-     * Sets the resource locator
+     * Sets the resource locator.
      *
      * @param resourceLocator the resource locator
      */
@@ -425,14 +418,15 @@ public class SLDData implements SLDDataInterface
         return resourceLocator;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.SLDDataInterface#getSLDURL()
      */
     @Override
     public URL getSLDURL() {
         URL url = null;
-        if(sldFile != null)
-        {
+        if (sldFile != null) {
             try {
                 url = sldFile.toURI().toURL();
             } catch (MalformedURLException e) {
@@ -440,8 +434,7 @@ public class SLDData implements SLDDataInterface
             }
         }
 
-        if(connectionData != null)
-        {
+        if (connectionData != null) {
             url = connectionData.getUrl();
         }
         return url;

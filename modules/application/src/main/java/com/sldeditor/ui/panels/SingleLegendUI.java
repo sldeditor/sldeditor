@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
@@ -41,8 +42,8 @@ import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.ui.tree.SLDTreeManager;
 
 /**
- * The Class SingleLegendUI, coordinates creating all the necessary legend panels
- * to view/edit a single SLD file.
+ * The Class SingleLegendUI, coordinates creating all the necessary
+ * legend panels to view/edit a single SLD file.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -60,7 +61,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
     /** The renderer list. */
     private List<RenderSymbolInterface> rendererList = null;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addWestPanel()
      */
     @Override
@@ -68,7 +71,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         return createLegendPanel();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addCentrePanel()
      */
     @Override
@@ -87,9 +92,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      * @return the legend options panel
      */
     private LegendOptionPanel getLegendOptionsPanel() {
-        if(legendOptionPanel == null)
-        {
-            legendOptionPanel = LegendManager.getInstance().createLegendOptionsPanel(getLegendPanel());
+        if (legendOptionPanel == null) {
+            legendOptionPanel = LegendManager.getInstance()
+                    .createLegendOptionsPanel(getLegendPanel());
         }
 
         return legendOptionPanel;
@@ -117,10 +122,8 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      *
      * @return the legend panel
      */
-    private LegendPanel getLegendPanel()
-    {
-        if(legendPanel == null)
-        {
+    private LegendPanel getLegendPanel() {
+        if (legendPanel == null) {
             legendPanel = new LegendPanel();
         }
 
@@ -133,8 +136,7 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      * @return the symbol tree
      */
     public SLDTree getSymbolTree() {
-        if(sldTree == null)
-        {
+        if (sldTree == null) {
             // Create symbol tree without tool buttons
             sldTree = SLDTreeManager.getInstance().createSLDTree(getRendererList(), null);
 
@@ -154,18 +156,20 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      * @return the renderer list
      */
     private List<RenderSymbolInterface> getRendererList() {
-        if(rendererList == null)
-        {
+        if (rendererList == null) {
             rendererList = new ArrayList<RenderSymbolInterface>();
 
-            RenderSymbolInterface renderer = RenderPanelFactory.getRenderer(SingleLegendUI.class.getName());
+            RenderSymbolInterface renderer = RenderPanelFactory
+                    .getRenderer(SingleLegendUI.class.getName());
             rendererList.add(renderer);
             rendererList.add(getLegendPanel());
         }
         return rendererList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -174,7 +178,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         getSymbolTree().selectFirstSymbol();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addNorthPanel()
      */
     @Override
@@ -182,16 +188,19 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#getPanel(java.lang.Class, java.lang.String)
      */
     @Override
@@ -199,7 +208,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#getPanelIds()
      */
     @Override
@@ -207,7 +218,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#show(java.lang.Class, java.lang.Class)
      */
     @Override
@@ -215,7 +228,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         // Currently display the same panel for all types of symbol
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolPanelInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
@@ -224,7 +239,9 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
         // Does nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class, java.lang.Class)
      */
     @Override

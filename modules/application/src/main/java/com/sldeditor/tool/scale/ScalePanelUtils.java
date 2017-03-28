@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.scale;
 
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
 
 /**
- * Class given an SLD file will convert it to a list of ScaleSLDData objects describing
- * the scales at which rules are displayed.
+ * Class given an SLD file will convert it to a list of ScaleSLDData objects
+ * describing the scales at which rules are displayed.
  */
 public class ScalePanelUtils {
 
@@ -49,31 +50,22 @@ public class ScalePanelUtils {
 
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
-        if(sld != null)
-        {
+        if (sld != null) {
             List<StyledLayer> styledLayerList = sld.layers();
 
-            if(sld != null)
-            {
-                for(StyledLayer styledLayer : styledLayerList)
-                {
-                    if(styledLayer instanceof NamedLayerImpl)
-                    {
-                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+            if (sld != null) {
+                for (StyledLayer styledLayer : styledLayerList) {
+                    if (styledLayer instanceof NamedLayerImpl) {
+                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
-                        for(Style style : namedLayerImpl.styles())
-                        {
-                            for(FeatureTypeStyle fts : style.featureTypeStyles())
-                            {
-                                for(Rule rule : fts.rules())
-                                {
+                        for (Style style : namedLayerImpl.styles()) {
+                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                                for (Rule rule : fts.rules()) {
                                     double minScale = rule.getMinScaleDenominator();
                                     double maxScale = rule.getMaxScaleDenominator();
 
-                                    if((minScale > 0.0) || (maxScale > 0.0))
-                                    {
-                                        if(dataList == null)
-                                        {
+                                    if ((minScale > 0.0) || (maxScale > 0.0)) {
+                                        if (dataList == null) {
                                             dataList = new ArrayList<ScaleSLDData>();
                                         }
                                         ScaleSLDData scaleSLDData = new ScaleSLDData(sld, sldData);
@@ -82,13 +74,11 @@ public class ScalePanelUtils {
                                         scaleSLDData.setFeatureTypeStyle(fts.getName());
                                         scaleSLDData.setStyle(style.getName());
                                         scaleSLDData.setRule(rule);
-                                        if(minScale > 0.0)
-                                        {
+                                        if (minScale > 0.0) {
                                             scaleSLDData.setMinScale(minScale);
                                         }
 
-                                        if(maxScale > 0.0)
-                                        {
+                                        if (maxScale > 0.0) {
                                             scaleSLDData.setMaxScale(maxScale);
                                         }
                                         dataList.add(scaleSLDData);

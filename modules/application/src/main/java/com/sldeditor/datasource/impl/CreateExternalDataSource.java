@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.io.File;
@@ -64,11 +65,11 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(CreateExternalDataSource.class);
+
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public CreateExternalDataSource()
-    {
+    public CreateExternalDataSource() {
         defaultCRS = CoordManager.getInstance().getWGS84();
     }
 
@@ -81,27 +82,24 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName, SLDEditorFileInterface editorFile)
-    {
+    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
+            SLDEditorFileInterface editorFile) {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
 
         dsInfo.reset();
 
-        if(editorFile != null)
-        {
+        if (editorFile != null) {
             SLDDataInterface sldData = editorFile.getSLDData();
 
             DataSourcePropertiesInterface dataSourceProperties = sldData.getDataSourceProperties();
 
             Map<String, Object> map = dataSourceProperties.getConnectionProperties();
 
-            if(dataSourceProperties.hasPassword())
-            {
+            if (dataSourceProperties.hasPassword()) {
                 String password = dataSourceProperties.getPassword();
 
-                if(password == null)
-                {
+                if (password == null) {
                     password = "dummy password";
 
                     dataSourceProperties.setPassword(password);
@@ -112,27 +110,25 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
             DataStore dataStore = null;
             try {
-                dataStore = DataStoreFinder.getDataStore( map );
+                dataStore = DataStoreFinder.getDataStore(map);
 
-                if(dataStore != null)
-                {
+                if (dataStore != null) {
                     // Try connecting to a vector data source
                     dsInfo.setTypeName(typeName);
 
                     SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
                     SimpleFeatureType schema = source.getSchema();
 
-                    if(schema.getCoordinateReferenceSystem() == null)
-                    {
+                    if (schema.getCoordinateReferenceSystem() == null) {
                         // No crs found to set a default and reload
-                        if(dataStore instanceof ShapefileDataStore)
-                        {
-                            ShapefileDataStore shapeFileDatastore = (ShapefileDataStore)dataStore;
+                        if (dataStore instanceof ShapefileDataStore) {
+                            ShapefileDataStore shapeFileDatastore = (ShapefileDataStore) dataStore;
 
-                            CoordinateReferenceSystem crs = JCRSChooser.showDialog(Localisation.getString(CreateExternalDataSource.class, "CRSPanel.title"), 
-                                    defaultCRS.getIdentifiers().iterator().next().toString()); 
-                            if(crs != null)
-                            {
+                            CoordinateReferenceSystem crs = JCRSChooser.showDialog(
+                                    Localisation.getString(CreateExternalDataSource.class,
+                                            "CRSPanel.title"),
+                                    defaultCRS.getIdentifiers().iterator().next().toString());
+                            if (crs != null) {
                                 shapeFileDatastore.forceSchemaCRS(crs);
                             }
 
@@ -143,24 +139,21 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                     dsInfo.setSchema(schema);
 
                     determineGeometryType(schema.getGeometryDescriptor().getType());
-                }
-                else
-                {
+                } else {
                     // Try connecting to a raster data source
                     Object rasterFilename = map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
-                    if(rasterFilename != null)
-                    {
-                        File rasterFile = new File(ExternalFilenames.convertURLToFile((String)rasterFilename));
+                    if (rasterFilename != null) {
+                        File rasterFile = new File(
+                                ExternalFilenames.convertURLToFile((String) rasterFilename));
 
-                        ChooseRasterFormatInterface panel = new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
+                        ChooseRasterFormatInterface panel = new ChooseRasterFormatPanel(
+                                Controller.getInstance().getFrame());
 
                         AbstractGridFormat format = DetermineRasterFormat.choose(rasterFile, panel);
                         AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
 
                         dsInfo.setGridCoverageReader(reader);
-                    }
-                    else
-                    {
+                    } else {
                         logger.error("No matching datastore");
                     }
                 }
@@ -170,11 +163,11 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
             dsInfo.setDataStore(dataStore);
 
-            if(!dsInfo.hasData())
-            {
+            if (!dsInfo.hasData()) {
                 ConsoleManager.getInstance().error(this,
-                        Localisation.getField(CreateExternalDataSource.class, "CreateExternalDataSource.failedToConnect") + 
-                        dataSourceProperties.getDebugConnectionString());
+                        Localisation.getField(CreateExternalDataSource.class,
+                                "CreateExternalDataSource.failedToConnect")
+                                + dataSourceProperties.getDebugConnectionString());
             }
         }
         return dataSourceInfoList;

@@ -36,41 +36,33 @@ public class FontUtils {
      * @return the Java font
      */
     public static java.awt.Font getFont(Font font) {
-        String name = font.getFamily().get(0).toString();
-        LiteralExpressionImpl sizeExpression = ((LiteralExpressionImpl)font.getSize());
+        LiteralExpressionImpl sizeExpression = ((LiteralExpressionImpl) font.getSize());
         Object obj = sizeExpression.getValue();
         int size = 10;
-        if(obj instanceof String)
-        {
-            size = Integer.valueOf((String)obj);
-        }
-        else if(obj instanceof Double)
-        {
-            size = ((Double)obj).intValue();
-        }
-        else
-        {
-            size = Integer.valueOf(((String)obj).toString());
+        if (obj instanceof String) {
+            size = Integer.valueOf((String) obj);
+        } else if (obj instanceof Double) {
+            size = ((Double) obj).intValue();
+        } else {
+            size = Integer.valueOf(((String) obj).toString());
         }
         int styleMask = java.awt.Font.PLAIN;
 
         String styleName = font.getStyle().toString();
 
-        if(styleName != null)
-        {
-            if(styleName.compareToIgnoreCase("ITALIC") == 0)
-            {
+        if (styleName != null) {
+            if (styleName.compareToIgnoreCase("ITALIC") == 0) {
                 styleMask |= java.awt.Font.ITALIC;
             }
         }
         String weightName = font.getWeight().toString();
-        if(weightName != null)
-        {
-            if(weightName.compareToIgnoreCase("BOLD") == 0)
-            {
+        if (weightName != null) {
+            if (weightName.compareToIgnoreCase("BOLD") == 0) {
                 styleMask |= java.awt.Font.BOLD;
             }
         }
+
+        String name = font.getFamily().get(0).toString();
 
         java.awt.Font newFont = new java.awt.Font(name, styleMask, size);
 

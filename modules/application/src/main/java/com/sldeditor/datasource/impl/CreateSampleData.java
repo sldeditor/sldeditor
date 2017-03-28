@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class CreateSampleData {
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public CreateSampleData() {
     }
@@ -88,7 +89,8 @@ public class CreateSampleData {
         }
 
         // Put fields into map for speed
-        Map<String, DataSourceAttributeData> fieldMap = new HashMap<String, DataSourceAttributeData>();
+        Map<String, DataSourceAttributeData> fieldMap = 
+                new HashMap<String, DataSourceAttributeData>();
         if (fieldList != null) {
             for (DataSourceAttributeData attributeData : fieldList) {
                 fieldMap.put(attributeData.getName(), attributeData);
@@ -154,7 +156,8 @@ public class CreateSampleData {
     }
 
     /**
-     * Gets the field type value. If value is set return it, if it is null make up a suitable default
+     * Gets the field type value. If value is set return it, 
+     * if it is null make up a suitable default
      *
      * @param index the index
      * @param fieldName the name
@@ -178,9 +181,7 @@ public class CreateSampleData {
                 String s = (String) valueToTest;
                 if (s.trim().isEmpty()) {
                     value = defaultStringValue(fieldName);
-                }
-                else
-                {
+                } else {
                     value = valueToTest;
                 }
             }

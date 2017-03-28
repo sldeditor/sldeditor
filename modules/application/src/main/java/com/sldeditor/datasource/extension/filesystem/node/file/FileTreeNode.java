@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.file;
 
 import java.awt.datatransfer.DataFlavor;
@@ -70,7 +71,8 @@ public class FileTreeNode extends DefaultMutableTreeNode
     /** File object for this node. */
     private boolean isRoot = false;
 
-    /** The path, declared as a string to get round sun.nio.fs.WindowsPath not being serialisable. */
+    /** The path, declared as a string to get round
+     *  sun.nio.fs.WindowsPath not being serialisable. */
     private String path;
 
     /** The name of the node. */
@@ -178,8 +180,10 @@ public class FileTreeNode extends DefaultMutableTreeNode
     }
 
     /**
-     * Populate directories. For display purposes, we return our own name public String toString() { return name; } If we are a directory, scan our
-     * contents and populate with children. In addition, populate those children if the "descend" flag is true. We only descend once, to avoid
+     * Populate directories. For display purposes, we return our own name
+     * public String toString() { return name; } If we are a directory, scan our
+     * contents and populate with children. In addition, populate those children
+     * if the "descend" flag is true. We only descend once, to avoid
      * recursing the whole subtree.
      *
      * @param descend the descend

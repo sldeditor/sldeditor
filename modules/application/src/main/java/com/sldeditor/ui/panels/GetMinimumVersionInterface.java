@@ -24,8 +24,9 @@ import java.util.List;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Interface GetMinimumVersionInterface.
  *
+ * @author Robert Ward (SCISYS)
  */
 public interface GetMinimumVersionInterface {
 

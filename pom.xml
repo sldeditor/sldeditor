@@ -181,7 +181,7 @@
                     <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
                 </configuration>
             </plugin>
-        </plugins>
+          </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>

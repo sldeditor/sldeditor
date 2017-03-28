@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.property;
 
 import java.io.IOException;
@@ -73,18 +74,13 @@ public class EncryptedProperties extends Properties {
      *
      * @return single instance of EncryptedProperties
      */
-    public static synchronized EncryptedProperties getInstance()
-    {
-        if(instance == null)
-        {
+    public static synchronized EncryptedProperties getInstance() {
+        if (instance == null) {
             String password = generatePassword();
 
-            try
-            {
+            try {
                 instance = new EncryptedProperties(password);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -97,8 +93,7 @@ public class EncryptedProperties extends Properties {
      *
      * @return the string
      */
-    private static String generatePassword()
-    {
+    private static String generatePassword() {
         String password = "sldEditor";
 
         StringBuilder sb = new StringBuilder();
@@ -120,14 +115,12 @@ public class EncryptedProperties extends Properties {
     private static String getUniqueIdentifier() {
         String hostname = "Unknown";
 
-        try
-        {
+        try {
             InetAddress addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
-        }
-        catch (UnknownHostException ex)
-        {
-            ConsoleManager.getInstance().error(EncryptedProperties.class, "Hostname can not be resolved");
+        } catch (UnknownHostException ex) {
+            ConsoleManager.getInstance().error(EncryptedProperties.class,
+                    "Hostname can not be resolved");
         }
 
         return hostname;
@@ -141,39 +134,29 @@ public class EncryptedProperties extends Properties {
     private EncryptedProperties(String password) {
         PBEParameterSpec ps = new javax.crypto.spec.PBEParameterSpec(salt, 20);
         SecretKeyFactory kf;
-        try
-        {
+        try {
             kf = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
-            SecretKey k = kf.generateSecret(new javax.crypto.spec.PBEKeySpec(password.toCharArray()));
+            SecretKey k = kf
+                    .generateSecret(new javax.crypto.spec.PBEKeySpec(password.toCharArray()));
             encrypter = Cipher.getInstance("PBEWithMD5AndDES/CBC/PKCS5Padding");
             decrypter = Cipher.getInstance("PBEWithMD5AndDES/CBC/PKCS5Padding");
             encrypter.init(Cipher.ENCRYPT_MODE, k, ps);
             decrypter.init(Cipher.DECRYPT_MODE, k, ps);
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
-        catch (NoSuchPaddingException e)
-        {
+        } catch (NoSuchPaddingException e) {
             e.printStackTrace();
-        }
-        catch (InvalidKeySpecException e)
-        {
+        } catch (InvalidKeySpecException e) {
             e.printStackTrace();
-        }
-        catch (InvalidKeyException e)
-        {
+        } catch (InvalidKeyException e) {
             e.printStackTrace();
-        }
-        catch (InvalidAlgorithmParameterException e)
-        {
+        } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Decrypt a string
+     * Decrypt a string.
      *
      * @param str the str
      * @return the string
@@ -181,22 +164,15 @@ public class EncryptedProperties extends Properties {
     @SuppressWarnings("restriction")
     public synchronized String decrypt(String str) {
         byte[] dec;
-        try
-        {
+        try {
             dec = decoder.decodeBuffer(str);
             byte[] utf8 = decrypter.doFinal(dec);
             return new String(utf8, "UTF-8");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (IllegalBlockSizeException e)
-        {
+        } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
-        }
-        catch (BadPaddingException e)
-        {
+        } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
@@ -204,7 +180,7 @@ public class EncryptedProperties extends Properties {
     }
 
     /**
-     * Encrypt a string
+     * Encrypt a string.
      *
      * @param str the str
      * @return the string
@@ -212,22 +188,15 @@ public class EncryptedProperties extends Properties {
     @SuppressWarnings("restriction")
     public synchronized String encrypt(String str) {
         byte[] utf8;
-        try
-        {
+        try {
             utf8 = str.getBytes("UTF-8");
             byte[] enc = encrypter.doFinal(utf8);
             return encoder.encode(enc);
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
-        catch (IllegalBlockSizeException e)
-        {
+        } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
-        }
-        catch (BadPaddingException e)
-        {
+        } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 

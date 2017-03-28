@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.property;
 
 import java.util.List;
@@ -40,14 +41,13 @@ public class IsGreaterThan implements FilterConfigInterface {
     /**
      * The Class IsGreaterThanExtended.
      */
-    public class IsGreaterThanExtended extends IsGreaterThanImpl implements FilterExtendedInterface
-    {
-        
+    public class IsGreaterThanExtended extends IsGreaterThanImpl
+            implements FilterExtendedInterface {
+
         /**
          * Instantiates a new checks if is greater than extended.
          */
-        public IsGreaterThanExtended()
-        {
+        public IsGreaterThanExtended() {
             super(null, null);
         }
 
@@ -57,12 +57,13 @@ public class IsGreaterThan implements FilterConfigInterface {
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public IsGreaterThanExtended(Expression expression1, Expression expression2)
-        {
+        public IsGreaterThanExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -74,8 +75,7 @@ public class IsGreaterThan implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsGreaterThan()
-    {
+    public IsGreaterThan() {
     }
 
     /**
@@ -86,20 +86,12 @@ public class IsGreaterThan implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("PropertyIsGreaterThan", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
-        
-        return filterName;
-    }
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Object.class));
+        filterName.addParameter(
+                new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, Object.class));
 
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new IsGreaterThanExtended();
+        return filterName;
     }
 
     /**
@@ -115,6 +107,16 @@ public class IsGreaterThan implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new IsGreaterThanExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -122,12 +124,9 @@ public class IsGreaterThan implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsGreaterThanImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() < 3))
-        {
+        if ((parameterList == null) || (parameterList.size() < 3)) {
             filter = new IsGreaterThanExtended();
-        }
-        else
-        {
+        } else {
             filter = new IsGreaterThanExtended(parameterList.get(0), parameterList.get(1));
         }
 

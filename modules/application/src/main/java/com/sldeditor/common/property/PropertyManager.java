@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.property;
 
 import java.awt.Color;
@@ -118,6 +119,55 @@ public class PropertyManager implements PropertyManagerInterface {
     @Override
     public void updateValue(String key, boolean value) {
         updateValue(key, value ? TRUE : FALSE);
+    }
+
+    /**
+     * Update value.
+     *
+     * @param key the key
+     * @param stringList the string list
+     */
+    @Override
+    public void updateValue(String key, List<String> stringList) {
+        StringBuilder sb = new StringBuilder();
+
+        for (String string : stringList) {
+            if (sb.length() > 0) {
+                sb.append(LIST_DELIMETER);
+            }
+            sb.append(string);
+        }
+
+        updateValue(key, sb.toString());
+    }
+
+    /**
+     * Update value.
+     *
+     * @param key the key
+     * @param backgroundColour the background colour
+     */
+    @Override
+    public void updateValue(String key, Color backgroundColour) {
+        String value = String.format("%03d%s%03d%s%03d%s%03d", backgroundColour.getRed(), DELIMETER,
+                backgroundColour.getGreen(), DELIMETER, backgroundColour.getBlue(), DELIMETER,
+                backgroundColour.getAlpha());
+
+        updateValue(key, value);
+    }
+
+    /**
+     * Update value. (Multiple)
+     *
+     * @param key the key
+     * @param count the count
+     * @param value the value
+     */
+    @Override
+    public void updateValue(String key, int count, String value) {
+        String updatedKey = String.format("%s%s%d", key, DELIMETER, count);
+
+        updateValue(updatedKey, value);
     }
 
     /**
@@ -284,40 +334,6 @@ public class PropertyManager implements PropertyManagerInterface {
     }
 
     /**
-     * Update value.
-     *
-     * @param key the key
-     * @param stringList the string list
-     */
-    @Override
-    public void updateValue(String key, List<String> stringList) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String string : stringList) {
-            if (sb.length() > 0) {
-                sb.append(LIST_DELIMETER);
-            }
-            sb.append(string);
-        }
-
-        updateValue(key, sb.toString());
-    }
-
-    /**
-     * Update value. (Multiple)
-     *
-     * @param key the key
-     * @param count the count
-     * @param value the value
-     */
-    @Override
-    public void updateValue(String key, int count, String value) {
-        String updatedKey = String.format("%s%s%d", key, DELIMETER, count);
-
-        updateValue(updatedKey, value);
-    }
-
-    /**
      * Gets values where the key is a prefix.
      *
      * @param key the key
@@ -349,21 +365,6 @@ public class PropertyManager implements PropertyManagerInterface {
             valueList.add(fieldValueMap.get(newKey));
         }
         return valueList;
-    }
-
-    /**
-     * Update value.
-     *
-     * @param key the key
-     * @param backgroundColour the background colour
-     */
-    @Override
-    public void updateValue(String key, Color backgroundColour) {
-        String value = String.format("%03d%s%03d%s%03d%s%03d", backgroundColour.getRed(), DELIMETER,
-                backgroundColour.getGreen(), DELIMETER, backgroundColour.getBlue(), DELIMETER,
-                backgroundColour.getAlpha());
-
-        updateValue(key, value);
     }
 
     /*

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.expression;
 
 /**
@@ -30,39 +31,34 @@ public class TypeManager {
 
     /** The first literal type. */
     private Class<?> firstLiteralType = null;
-    
+
     /**
      * Gets the single instance of TypeManager.
      *
      * @return single instance of TypeManager
      */
-    public static TypeManager getInstance()
-    {
-        if(instance == null)
-        {
+    public static TypeManager getInstance() {
+        if (instance == null) {
             instance = new TypeManager();
         }
 
         return instance;
     }
-    
+
     /**
      * Reset the literal data type.
      */
-    public void reset()
-    {
+    public void reset() {
         firstLiteralType = null;
     }
-    
+
     /**
      * Sets the data type.
      *
      * @param dataType the new literal type
      */
-    public void setDataType(Class<?> dataType)
-    {
-        if(firstLiteralType == null)
-        {
+    public void setDataType(Class<?> dataType) {
+        if (firstLiteralType == null) {
             firstLiteralType = dataType;
         }
     }

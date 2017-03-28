@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.misc;
 
 import java.util.List;
@@ -41,14 +42,12 @@ public class IsLike implements FilterConfigInterface {
     /**
      * The Class IsLikeExtended.
      */
-    public class IsLikeExtended extends LikeFilterImpl implements FilterExtendedInterface
-    {
+    public class IsLikeExtended extends LikeFilterImpl implements FilterExtendedInterface {
 
         /**
          * Instantiates a new checks if is like extended.
          */
-        public IsLikeExtended()
-        {
+        public IsLikeExtended() {
             super(null);
         }
 
@@ -62,20 +61,24 @@ public class IsLike implements FilterConfigInterface {
          * @param escape the escape
          * @param matchCase the match case
          */
-        public IsLikeExtended(Expression expr, String pattern, String wildcardMulti, String wildcardSingle, String escape, boolean matchCase)
-        {
+        public IsLikeExtended(Expression expr, String pattern, String wildcardMulti,
+                String wildcardSingle, String escape, boolean matchCase) {
             super(expr, pattern, wildcardMulti, wildcardSingle, escape);
             setMatchCase(matchCase);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.geotools.filter.LikeFilterImpl#toString()
          */
         public String toString() {
             return "[ Like " + getExpression() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -87,8 +90,7 @@ public class IsLike implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsLike()
-    {
+    public IsLike() {
     }
 
     /**
@@ -99,24 +101,20 @@ public class IsLike implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("Like", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, String.class));
-        filterName.addParameter(new FilterNameParameter("pattern", ExpressionTypeEnum.LITERAL, String.class));
-        filterName.addParameter(new FilterNameParameter("wildcardMulti", ExpressionTypeEnum.LITERAL, String.class));
-        filterName.addParameter(new FilterNameParameter("wildcardSingle", ExpressionTypeEnum.LITERAL, String.class));
-        filterName.addParameter(new FilterNameParameter("escape", ExpressionTypeEnum.LITERAL, String.class));
-        filterName.addParameter(new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
+        filterName.addParameter(
+                new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION, String.class));
+        filterName.addParameter(
+                new FilterNameParameter("pattern", ExpressionTypeEnum.LITERAL, String.class));
+        filterName.addParameter(
+                new FilterNameParameter("wildcardMulti", ExpressionTypeEnum.LITERAL, String.class));
+        filterName.addParameter(new FilterNameParameter("wildcardSingle",
+                ExpressionTypeEnum.LITERAL, String.class));
+        filterName.addParameter(
+                new FilterNameParameter("escape", ExpressionTypeEnum.LITERAL, String.class));
+        filterName.addParameter(
+                new FilterNameParameter("matchCase", ExpressionTypeEnum.LITERAL, Boolean.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new IsLikeExtended();
     }
 
     /**
@@ -132,6 +130,16 @@ public class IsLike implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new IsLikeExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -139,24 +147,18 @@ public class IsLike implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
 
         LikeFilterImpl filter = null;
-        if((parameterList == null) || parameterList.size() != 6)
-        {
+        if ((parameterList == null) || parameterList.size() != 6) {
             filter = new IsLikeExtended();
-        }
-        else
-        {
-            LiteralExpressionImpl pattern = (LiteralExpressionImpl)parameterList.get(1);
-            LiteralExpressionImpl wildcardMulti = (LiteralExpressionImpl)parameterList.get(2);
-            LiteralExpressionImpl wildcardSingle = (LiteralExpressionImpl)parameterList.get(3);
-            LiteralExpressionImpl escape = (LiteralExpressionImpl)parameterList.get(4);
-            LiteralExpressionImpl matchCase = (LiteralExpressionImpl)parameterList.get(5);
+        } else {
+            LiteralExpressionImpl pattern = (LiteralExpressionImpl) parameterList.get(1);
+            LiteralExpressionImpl wildcardMulti = (LiteralExpressionImpl) parameterList.get(2);
+            LiteralExpressionImpl wildcardSingle = (LiteralExpressionImpl) parameterList.get(3);
+            LiteralExpressionImpl escape = (LiteralExpressionImpl) parameterList.get(4);
+            LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(5);
 
-            filter = new IsLikeExtended(parameterList.get(0),
-                    (String)pattern.getValue(),
-                    (String)wildcardMulti.getValue(),
-                    (String)wildcardSingle.getValue(),
-                    (String)escape.getValue(),
-                    (Boolean)matchCase.getValue());
+            filter = new IsLikeExtended(parameterList.get(0), (String) pattern.getValue(),
+                    (String) wildcardMulti.getValue(), (String) wildcardSingle.getValue(),
+                    (String) escape.getValue(), (Boolean) matchCase.getValue());
         }
 
         return filter;

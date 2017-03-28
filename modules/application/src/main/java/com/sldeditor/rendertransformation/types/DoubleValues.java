@@ -75,8 +75,7 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
      */
     @Override
     public Expression getExpression() {
-        if(expression != null)
-        {
+        if (expression != null) {
             return expression;
         }
         return filterFactory.literal(value);
@@ -94,21 +93,19 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
 
         if (aValue instanceof Double) {
             this.value = (Double) aValue;
-        }
-        else if(aValue instanceof LiteralExpressionImpl)
-        {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
+        } else if (aValue instanceof LiteralExpressionImpl) {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
             value = literal.evaluate(value, Double.class);
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -116,7 +113,9 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
         return Arrays.asList(double.class, Double.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -124,7 +123,9 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
         return new FieldConfigDouble(commonData);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

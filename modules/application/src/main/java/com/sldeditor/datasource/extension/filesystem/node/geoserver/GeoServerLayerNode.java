@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.datatransfer.DataFlavor;
@@ -33,11 +34,10 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeInterface
-{
+public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeInterface {
     /** The handler. */
     private FileSystemInterface handler = null;
-    
+
     /** The layer. */
     private GeoServerLayer layer = null;
 
@@ -50,8 +50,7 @@ public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeIn
      * @param handler the handler
      * @param layer the layer
      */
-    public GeoServerLayerNode(FileSystemInterface handler, GeoServerLayer layer)
-    {
+    public GeoServerLayerNode(FileSystemInterface handler, GeoServerLayer layer) {
         super(layer.getLayerName());
         this.layer = layer;
         this.handler = handler;
@@ -62,26 +61,27 @@ public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeIn
      *
      * @return the layer
      */
-    public GeoServerLayer getLayer()
-    {
+    public GeoServerLayer getLayer() {
         return layer;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
-    public FileSystemInterface getHandler()
-    {
+    public FileSystemInterface getHandler() {
         return handler;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return BuiltInDataFlavour.GEOSERVER_LAYER_DATAITEM_FLAVOUR;
     }
 
@@ -97,7 +97,6 @@ public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeIn
 
     @Override
     public Icon getIcon() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

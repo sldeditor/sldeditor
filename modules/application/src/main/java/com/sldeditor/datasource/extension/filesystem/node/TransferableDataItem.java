@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node;
 
 import java.awt.datatransfer.DataFlavor;
@@ -37,8 +38,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData
  * 
  * @author Robert Ward (SCISYS)
  */
-public class TransferableDataItem extends DefaultMutableTreeNode implements Transferable
-{
+public class TransferableDataItem extends DefaultMutableTreeNode implements Transferable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8898392127421632735L;
@@ -47,10 +47,9 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
     private TransferredData data;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public TransferableDataItem()
-    {
+    public TransferableDataItem() {
     }
 
     /**
@@ -58,8 +57,7 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
      *
      * @param selectedData the selected data
      */
-    public TransferableDataItem(Map<NodeInterface, TreePath> selectedData)
-    {
+    public TransferableDataItem(Map<NodeInterface, TreePath> selectedData) {
         internalPopulate(selectedData);
     }
 
@@ -68,17 +66,14 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
      *
      * @param selectedData the selected data
      */
-    private void internalPopulate(Map<NodeInterface, TreePath> selectedData)
-    {
-        if(selectedData != null)
-        {
+    private void internalPopulate(Map<NodeInterface, TreePath> selectedData) {
+        if (selectedData != null) {
             this.data = new TransferredData();
 
-            for(NodeInterface selection : selectedData.keySet())
-            {
+            for (NodeInterface selection : selectedData.keySet()) {
                 TreePath path = selectedData.get(selection);
 
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)path.getLastPathComponent();
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
                 this.data.addData(path, node.getUserObject(), selection.getDataFlavour());
             }
         }
@@ -90,11 +85,10 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
      * @param destinationTreeNode the destination tree node
      * @param path the path
      */
-    public TransferableDataItem(NodeInterface destinationTreeNode, TreePath path)
-    {
-        if((destinationTreeNode != null) && (path != null))
-        {
-            Map<NodeInterface, TreePath> selectedData = new LinkedHashMap<NodeInterface, TreePath>();
+    public TransferableDataItem(NodeInterface destinationTreeNode, TreePath path) {
+        if ((destinationTreeNode != null) && (path != null)) {
+            Map<NodeInterface, TreePath> selectedData = 
+                    new LinkedHashMap<NodeInterface, TreePath>();
 
             selectedData.put(destinationTreeNode, path);
 
@@ -102,38 +96,40 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.datatransfer.Transferable#getTransferDataFlavors()
      */
-    public DataFlavor[] getTransferDataFlavors()
-    {
+    public DataFlavor[] getTransferDataFlavors() {
         return DataFlavourManager.getDataFlavourArray();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.datatransfer.Transferable#getTransferData(java.awt.datatransfer.DataFlavor)
      */
     public Object getTransferData(DataFlavor flavor)
-            throws UnsupportedFlavorException, IOException
-    {
+            throws UnsupportedFlavorException, IOException {
         return data;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.awt.datatransfer.Transferable#isDataFlavorSupported(java.awt.datatransfer.DataFlavor)
      */
-    public boolean isDataFlavorSupported(DataFlavor flavor)
-    {
+    public boolean isDataFlavorSupported(DataFlavor flavor) {
         return DataFlavourManager.isSupported(this.getDataFlavour(), flavor);
     }
 
     /**
-     * Gets the data flavour for the first data item
+     * Gets the data flavour for the first data item.
      *
      * @return the data flavour
      */
-    public DataFlavor getDataFlavour()
-    {
+    public DataFlavor getDataFlavour() {
         return data.getDataFlavour(0);
     }
 }

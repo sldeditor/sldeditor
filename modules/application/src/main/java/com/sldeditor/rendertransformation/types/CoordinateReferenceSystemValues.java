@@ -39,7 +39,8 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  *
  * @author Robert Ward (SCISYS)
  */
-public class CoordinateReferenceSystemValues extends BaseValue implements RenderTransformValueInterface {
+public class CoordinateReferenceSystemValues extends BaseValue
+        implements RenderTransformValueInterface {
 
     /** The crs value list. */
     private static List<ValueComboBoxData> crsValueList = null;
@@ -67,7 +68,9 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
         this.value = (String) defaultValue;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.BaseValue#populateSymbolType(com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig)
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
@@ -104,19 +107,15 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
         this.expression = null;
 
         if (aValue instanceof LiteralExpressionImpl) {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl)aValue;
-            if(literal.getValue() != null)
-            {
+            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
+            if (literal.getValue() != null) {
                 value = literal.toString();
             }
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
-        }
-        else {
+        } else {
             if (aValue instanceof String) {
                 value = ((String) aValue);
             }
@@ -133,7 +132,9 @@ public class CoordinateReferenceSystemValues extends BaseValue implements Render
         return createEnum(commonData);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

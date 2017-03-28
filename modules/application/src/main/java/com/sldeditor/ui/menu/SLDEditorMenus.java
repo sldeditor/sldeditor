@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.menu;
 
 import java.awt.event.ActionEvent;
@@ -355,18 +356,14 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
             public void actionPerformed(ActionEvent e) {
                 URL url = null;
                 try {
-                    SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData(); 
-                    if(sldData != null) 
-                    { 
-                        if(sldData.getSLDFile() != null) 
-                        { 
-                            url = sldData.getSLDFile().toURI().toURL(); 
-                        } 
-                        else if(sldData.getConnectionData() != null) 
-                        { 
-                            url = sldData.getConnectionData().getUrl(); 
-                        } 
-                    } 
+                    SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+                    if (sldData != null) {
+                        if (sldData.getSLDFile() != null) {
+                            url = sldData.getSLDFile().toURI().toURL();
+                        } else if (sldData.getConnectionData() != null) {
+                            url = sldData.getConnectionData().getUrl();
+                        }
+                    }
                 } catch (MalformedURLException e1) {
                     ConsoleManager.getInstance().exception(SLDEditorMenus.class, e1);
                 }
@@ -530,6 +527,8 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                             case JOptionPane.CANCEL_OPTION:
                                 cancelSelection();
                                 return;
+                            default:
+                                break;
                             }
                         }
 
@@ -595,7 +594,9 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
         if (sldData != null) {
             menuSaveSLDEditorFile
                     .setEnabled((sldData.getSldEditorFile() != null) && dataEditedFlag);
-            menuSaveSLDFile.setEnabled(((sldData.getSLDFile() != null) || (sldData.getConnectionData() != null) ) && dataEditedFlag); 
+            menuSaveSLDFile.setEnabled(
+                    ((sldData.getSLDFile() != null) || (sldData.getConnectionData() != null))
+                            && dataEditedFlag);
         }
 
         // Once a symbol is loaded Save As menu items are enabled

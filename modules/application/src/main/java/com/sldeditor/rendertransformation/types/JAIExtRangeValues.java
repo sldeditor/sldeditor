@@ -93,17 +93,17 @@ public class JAIExtRangeValues extends BaseValue implements RenderTransformValue
 
         if (aValue instanceof Range) {
             this.value = (Range) aValue;
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof LiteralExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof LiteralExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -111,7 +111,9 @@ public class JAIExtRangeValues extends BaseValue implements RenderTransformValue
         return Arrays.asList(Range.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -120,7 +122,9 @@ public class JAIExtRangeValues extends BaseValue implements RenderTransformValue
         return new FieldConfigRange(commonData, it.geosolutions.jaiext.range.Range.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

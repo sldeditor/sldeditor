@@ -92,8 +92,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting())
-                {
+                if (!e.getValueIsAdjusting()) {
                     selectFormat();
                 }
             }

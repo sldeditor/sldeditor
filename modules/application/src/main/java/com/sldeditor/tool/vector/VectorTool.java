@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.vector;
 
 import java.awt.FlowLayout;
@@ -125,7 +126,8 @@ public class VectorTool implements ToolInterface {
                                 return;
                             }
                         } else if (nodeInterface instanceof DatabaseFeatureClassNode) {
-                            DatabaseFeatureClassNode featureClassNode = (DatabaseFeatureClassNode) nodeInterface;
+                            DatabaseFeatureClassNode featureClassNode =
+                                    (DatabaseFeatureClassNode) nodeInterface;
 
                             if (!importFeatureClass(featureClassNode)) {
                                 return;
@@ -156,7 +158,8 @@ public class VectorTool implements ToolInterface {
 
                             setDataSource(fileTreeNode);
                         } else if (nodeInterface instanceof DatabaseFeatureClassNode) {
-                            DatabaseFeatureClassNode featureClassNode = (DatabaseFeatureClassNode) nodeInterface;
+                            DatabaseFeatureClassNode featureClassNode =
+                                    (DatabaseFeatureClassNode) nodeInterface;
 
                             setDataSource(featureClassNode);
                         }
@@ -231,9 +234,7 @@ public class VectorTool implements ToolInterface {
                     return false;
                 }
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
 
@@ -297,7 +298,6 @@ public class VectorTool implements ToolInterface {
      */
     private void loadSymbol(DataSourcePropertiesInterface dsProperties, SLDDataInterface sldData,
             String vectorFilename, String folder) {
-        LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
 
         // Vector file
         SLDEditorFile.getInstance().setSLDData(sldData);
@@ -314,6 +314,7 @@ public class VectorTool implements ToolInterface {
         selectedFiles.setSldData(sldFilesToLoad);
         selectedFiles.setFolderName(folder);
 
+        LoadSLDInterface loadSLD = sldEditorInterface.getLoadSLDInterface();
         loadSLD.loadSLDString(selectedFiles);
     }
 

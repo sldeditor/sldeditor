@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
@@ -41,7 +42,9 @@ import com.sldeditor.ui.tree.SLDTree;
  */
 public class MultipleSymbolUI implements SymbolPanelInterface {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addWestPanel()
      */
     @Override
@@ -49,7 +52,9 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
         return createSymbolSelectionPanel();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addCentrePanel()
      */
     @Override
@@ -60,12 +65,13 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new GridBagLayout());
 
-        JLabel label = new JLabel(Localisation.getString(MultipleSymbolUI.class, "MultipleSymbolUI.multipleSymbols"));
+        JLabel label = new JLabel(
+                Localisation.getString(MultipleSymbolUI.class, "MultipleSymbolUI.multipleSymbols"));
         label.setFont(new Font("Arial", Font.BOLD, 16));
         labelPanel.add(label);
-        
+
         labelPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
+
         panel.add(labelPanel, BorderLayout.CENTER);
 
         return panel;
@@ -89,14 +95,18 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addNorthPanel()
      */
     @Override
@@ -104,16 +114,19 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.SymbolPanelInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.rendertransformation;
 
 import java.awt.Component;
@@ -50,7 +51,7 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
 
     /** The selected index. */
     private int selectedIndex = -1;
-    
+
     /**
      * Instantiates a new value editor.
      *
@@ -64,8 +65,10 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                tableModel.setValueAt(checkBox.isSelected(), selectedIndex, FunctionTableModel.COL_OPTIONAL);
-            }});
+                tableModel.setValueAt(checkBox.isSelected(), selectedIndex,
+                        FunctionTableModel.COL_OPTIONAL);
+            }
+        });
     }
 
     /**
@@ -75,8 +78,7 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
      */
     @Override
     public Object getCellEditorValue() {
-        if(currentEditor == checkBox)
-        {
+        if (currentEditor == checkBox) {
             return checkBox.isSelected();
         }
         return null;
@@ -109,15 +111,12 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
 
         ProcessFunctionParameterValue currentValue = tableModel.getValue(row);
 
-        if(currentValue.optional)
-        {
+        if (currentValue.optional) {
             selectedIndex = row;
             currentEditor = checkBox;
             checkBox.setSelected(currentValue.included);
             return checkBox;
-        }
-        else
-        {
+        } else {
             selectedIndex = -1;
             currentEditor = null;
         }

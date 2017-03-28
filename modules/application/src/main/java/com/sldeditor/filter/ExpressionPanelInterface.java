@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter;
 
 import org.opengis.filter.expression.Expression;
@@ -65,7 +66,7 @@ public interface ExpressionPanelInterface {
     public void populate(String expressionString);
 
     /**
-     * Populate using expression
+     * Populate using expression.
      *
      * @param storedExpression the stored expression
      */

@@ -45,7 +45,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 package com.sldeditor.ui.legend.filechooser;
 
@@ -63,37 +63,36 @@ import com.sldeditor.common.console.ConsoleManager;
  * @author Robert Ward (SCISYS)
  */
 public class ImageFileExtensionUtils {
-    
+
     /** The Constant jpg. */
-    public final static String jpg = "jpg";
-    
+    public static final String jpg = "jpg";
+
     /** The Constant gif. */
-    public final static String gif = "gif";
-    
+    public static final String gif = "gif";
+
     /** The Constant tif. */
-    public final static String tif = "tif";
-    
+    public static final String tif = "tif";
+
     /** The Constant png. */
-    public final static String png = "png";
+    public static final String png = "png";
 
     /** The description map. */
     private static Map<String, String> descriptionMap = new HashMap<String, String>();
-    
+
     /**
-     * Populates the description values
+     * Populates the description values.
      */
-    private static void populate()
-    {
-        if(descriptionMap.isEmpty())
-        {
+    private static void populate() {
+        if (descriptionMap.isEmpty()) {
             descriptionMap.put(jpg, "JPEG (*.png)");
             descriptionMap.put(gif, "GIF (*.gif)");
             descriptionMap.put(tif, "TIFF (*.tif)");
             descriptionMap.put(png, "PNG (*.png)");
         }
     }
+
     /**
-     * Gets the extension of the file
+     * Gets the extension of the file.
      *
      * @param f the f
      * @return the extension
@@ -103,25 +102,25 @@ public class ImageFileExtensionUtils {
         String s = f.getName();
         int i = s.lastIndexOf('.');
 
-        if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
+        if (i > 0 && i < s.length() - 1) {
+            ext = s.substring(i + 1).toLowerCase();
         }
         return ext;
     }
 
     /**
-     *  Returns an ImageIcon, or null if the path was invalid.
+     * Returns an ImageIcon, or null if the path was invalid.
      *
      * @param path the path
      * @return the image icon
      */
-    protected static ImageIcon createImageIcon(String path)
-    {
+    protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = ImageFileExtensionUtils.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            ConsoleManager.getInstance().error(ImageFileExtensionUtils.class, "Couldn't find file: " + path);
+            ConsoleManager.getInstance().error(ImageFileExtensionUtils.class,
+                    "Couldn't find file: " + path);
             return null;
         }
     }
@@ -132,10 +131,9 @@ public class ImageFileExtensionUtils {
      * @param filterString the filter string
      * @return the description
      */
-    public static String getDescription(String filterString)
-    {
+    public static String getDescription(String filterString) {
         populate();
-        
+
         return descriptionMap.get(filterString);
     }
 }

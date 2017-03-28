@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.widgets;
 
 import java.util.ArrayList;
@@ -36,7 +37,8 @@ import com.sldeditor.common.vendoroption.VersionData;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ValueComboBox extends JComboBox<ValueComboBoxData> implements VendorOptionUpdateInterface {
+public class ValueComboBox extends JComboBox<ValueComboBoxData>
+        implements VendorOptionUpdateInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -57,10 +59,9 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements Vendo
      * Instantiates a new value combo box.
      */
     @SuppressWarnings("unchecked")
-    public ValueComboBox()
-    {
-        setRenderer( new ComboBoxRenderer() );
-      //  putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
+    public ValueComboBox() {
+        setRenderer(new ComboBoxRenderer());
+        // putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
     }
 
     /**
@@ -68,17 +69,14 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements Vendo
      *
      * @param valueList the value list
      */
-    public void initialiseSingle(List<ValueComboBoxData> valueList)
-    {
+    public void initialiseSingle(List<ValueComboBoxData> valueList) {
         VendorOptionManager.getInstance().addVendorOptionListener(this);
 
-        if(valueList != null)
-        {
+        if (valueList != null) {
             valueMap.clear();
             this.valueList.clear();
 
-            for(ValueComboBoxData data : valueList)
-            {
+            for (ValueComboBoxData data : valueList) {
                 valueMap.put(data.getKey(), data);
 
                 this.valueList.add(data);
@@ -91,15 +89,12 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements Vendo
     /**
      * Update.
      */
-    private void update()
-    {
+    private void update() {
         model = new DefaultComboBoxModel<ValueComboBoxData>();
-        if(valueList != null)
-        {
-            for(ValueComboBoxData data : valueList)
-            {
-                if(VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList, data.getVendorOption()))
-                {
+        if (valueList != null) {
+            for (ValueComboBoxData data : valueList) {
+                if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
+                        data.getVendorOption())) {
                     model.addElement(data);
                 }
             }
@@ -114,11 +109,10 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements Vendo
      */
     public ValueComboBoxData getSelectedValue() {
         Object selectedObj = getSelectedItem();
-        if(selectedObj != null)
-        {
-            if(selectedObj instanceof ValueComboBoxData)
-            {
-                ValueComboBoxData valueComboBoxData = valueMap.get(((ValueComboBoxData)selectedObj).getKey());
+        if (selectedObj != null) {
+            if (selectedObj instanceof ValueComboBoxData) {
+                ValueComboBoxData valueComboBoxData = valueMap
+                        .get(((ValueComboBoxData) selectedObj).getKey());
 
                 return valueComboBoxData;
             }
@@ -136,15 +130,11 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements Vendo
      * @param selectedItemValue the selected item value
      * @return the selected value
      */
-    public ValueComboBoxData getSelectedValue(String selectedItemValue)
-    {
-        if(selectedItemValue != null)
-        {
-            for(String key : valueMap.keySet())
-            {
+    public ValueComboBoxData getSelectedValue(String selectedItemValue) {
+        if (selectedItemValue != null) {
+            for (String key : valueMap.keySet()) {
                 ValueComboBoxData valueComboBoxData = valueMap.get(key);
-                if(valueComboBoxData.getText().compareTo(selectedItemValue) == 0)
-                {
+                if (valueComboBoxData.getText().compareTo(selectedItemValue) == 0) {
                     return valueComboBoxData;
                 }
             }
@@ -161,17 +151,16 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData> implements Vendo
     public void setSelectValueKey(String key) {
         ValueComboBoxData obj = valueMap.get(key);
 
-        if(obj == null)
-        {
+        if (obj == null) {
             ConsoleManager.getInstance().error(this, "Failed to value for key : " + key);
-        }
-        else
-        {
+        } else {
             this.setSelectedItem(obj);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

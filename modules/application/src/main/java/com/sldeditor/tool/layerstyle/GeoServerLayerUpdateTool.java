@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import java.awt.event.ActionEvent;
@@ -46,8 +47,7 @@ import com.sldeditor.tool.ToolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GeoServerLayerUpdateTool implements ToolInterface
-{
+public class GeoServerLayerUpdateTool implements ToolInterface {
 
     /** The button. */
     private JButton button;
@@ -72,8 +72,7 @@ public class GeoServerLayerUpdateTool implements ToolInterface
      *
      * @param geoServerLayerUpdate the geo server layer update
      */
-    public GeoServerLayerUpdateTool(GeoServerLayerUpdateInterface geoServerLayerUpdate)
-    {
+    public GeoServerLayerUpdateTool(GeoServerLayerUpdateInterface geoServerLayerUpdate) {
         super();
 
         this.geoServerLayerUpdate = geoServerLayerUpdate;
@@ -87,8 +86,7 @@ public class GeoServerLayerUpdateTool implements ToolInterface
      * Populate supported node types.
      */
     private void populateSupportedTypes() {
-        if(supportedNodeTypeList.isEmpty())
-        {
+        if (supportedNodeTypeList.isEmpty()) {
             supportedNodeTypeList.add(GeoServerLayerHeadingNode.class);
             supportedNodeTypeList.add(GeoServerWorkspaceNode.class);
             supportedNodeTypeList.add(GeoServerLayerNode.class);
@@ -98,23 +96,23 @@ public class GeoServerLayerUpdateTool implements ToolInterface
     /**
      * Creates the ui.
      */
-    private void createUI()
-    {
+    private void createUI() {
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(GeoServerLayerUpdateTool.class, "GeoServerLayerUpdateTool.title")));
+        panel.setBorder(BorderFactory.createTitledBorder(Localisation
+                .getString(GeoServerLayerUpdateTool.class, "GeoServerLayerUpdateTool.title")));
 
-        button = new ToolButton(Localisation.getString(GeoServerLayerUpdateTool.class, "GeoServerLayerUpdateTool.layer"),
-                "tool/layerupdate.png");
+        button = new ToolButton(Localisation.getString(GeoServerLayerUpdateTool.class,
+                "GeoServerLayerUpdateTool.layer"), "tool/layerupdate.png");
         button.setEnabled(true);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 ConfigureLayerStyleDialog dlg = new ConfigureLayerStyleDialog();
 
-                Map<String, List<StyleWrapper>> styleMap = geoServerLayerUpdate.getStyleMap(connection);
+                Map<String, List<StyleWrapper>> styleMap = geoServerLayerUpdate
+                        .getStyleMap(connection);
 
-                if(dlg.populate(styleMap, layerList))
-                {
+                if (dlg.populate(styleMap, layerList)) {
                     geoServerLayerUpdate.updateLayerStyle(dlg.getUpdatedLayerStyles());
                 }
             }
@@ -123,61 +121,55 @@ public class GeoServerLayerUpdateTool implements ToolInterface
         panel.add(button);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
-    public JPanel getPanel()
-    {
+    public JPanel getPanel() {
         return panel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         layerList.clear();
         connection = null;
 
-        for(NodeInterface node : nodeTypeList)
-        {
-            if(node instanceof GeoServerLayerNode)
-            {
-                GeoServerLayerNode layerNode = (GeoServerLayerNode)node;
+        for (NodeInterface node : nodeTypeList) {
+            if (node instanceof GeoServerLayerNode) {
+                GeoServerLayerNode layerNode = (GeoServerLayerNode) node;
 
                 GeoServerLayer layer = layerNode.getLayer();
                 layerList.add(layer);
 
-                if(connection == null)
-                {
+                if (connection == null) {
                     connection = layer.getConnection();
                 }
-            }
-            else if(node instanceof GeoServerLayerHeadingNode)
-            {
+            } else if (node instanceof GeoServerLayerHeadingNode) {
                 GeoServerLayerHeadingNode layerHeadingNode = (GeoServerLayerHeadingNode) node;
 
                 connection = layerHeadingNode.getConnection();
 
-                for(int workspaceIndex = 0; workspaceIndex < layerHeadingNode.getChildCount(); workspaceIndex ++)
-                {
+                for (int workspaceIndex = 0; workspaceIndex < layerHeadingNode
+                        .getChildCount(); workspaceIndex++) {
                     TreeNode treeNode = layerHeadingNode.getChildAt(workspaceIndex);
-                    if(treeNode instanceof GeoServerWorkspaceNode)
-                    {
+                    if (treeNode instanceof GeoServerWorkspaceNode) {
                         GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) treeNode;
 
                         extractWorkspaceLayers(workspaceNode);
                     }
                 }
-            }
-            else if(node instanceof GeoServerWorkspaceNode)
-            {
+            } else if (node instanceof GeoServerWorkspaceNode) {
                 GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
 
-                if(!workspaceNode.isStyle())
-                {
+                if (!workspaceNode.isStyle()) {
                     connection = workspaceNode.getConnection();
 
                     extractWorkspaceLayers(workspaceNode);
@@ -187,11 +179,9 @@ public class GeoServerLayerUpdateTool implements ToolInterface
     }
 
     private void extractWorkspaceLayers(GeoServerWorkspaceNode workspaceNode) {
-        for(int layerIndex = 0; layerIndex < workspaceNode.getChildCount(); layerIndex ++)
-        {
+        for (int layerIndex = 0; layerIndex < workspaceNode.getChildCount(); layerIndex++) {
             TreeNode childTreeNode = workspaceNode.getChildAt(layerIndex);
-            if(childTreeNode instanceof GeoServerLayerNode)
-            {
+            if (childTreeNode instanceof GeoServerLayerNode) {
                 GeoServerLayerNode layerNode = (GeoServerLayerNode) childTreeNode;
 
                 GeoServerLayer layer = layerNode.getLayer();
@@ -201,36 +191,34 @@ public class GeoServerLayerUpdateTool implements ToolInterface
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
-    public String getToolName()
-    {
+    public String getToolName() {
         return getClass().getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
-        if(uniqueNodeTypeList.size() == 1)
-        {
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
+        if (uniqueNodeTypeList.size() == 1) {
             NodeInterface node = nodeTypeList.get(0);
 
-            if(supportedNodeTypeList.contains(node.getClass()))
-            {
+            if (supportedNodeTypeList.contains(node.getClass())) {
                 // If its a workspace, only allow workspaces in the layer tree
-                if(node.getClass() == GeoServerWorkspaceNode.class)
-                {
+                if (node.getClass() == GeoServerWorkspaceNode.class) {
                     GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
 
                     return (!workspaceNode.isStyle());
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }

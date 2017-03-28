@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.ysld;
 
 import java.awt.event.ActionEvent;
@@ -73,12 +74,13 @@ public class YSLDTool implements ToolInterface {
     /**
      * Instantiates a new ysld tool.
      */
-    public YSLDTool()
-    {
+    public YSLDTool() {
         createUI();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
@@ -86,31 +88,29 @@ public class YSLDTool implements ToolInterface {
         return groupPanel;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         this.sldDataList = sldDataList;
 
-        if(exportToYSLDButton != null)
-        {
+        if (exportToYSLDButton != null) {
             int sldFilesCount = 0;
             int ysldFilesCount = 0;
 
-            if(sldDataList != null)
-            {
-                for(SLDDataInterface sldData : sldDataList)
-                {
-                    String fileExtension = ExternalFilenames.getFileExtension(sldData.getSLDFile().getAbsolutePath());
+            if (sldDataList != null) {
+                for (SLDDataInterface sldData : sldDataList) {
+                    String fileExtension = ExternalFilenames
+                            .getFileExtension(sldData.getSLDFile().getAbsolutePath());
 
-                    if(fileExtension.compareTo(SLDEditorFile.getSLDFileExtension()) == 0)
-                    {
-                        sldFilesCount ++;
-                    }
-                    else if (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
-                    {
-                        ysldFilesCount ++;
+                    if (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension()) == 0) {
+                        sldFilesCount++;
+                    } else if (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0) {
+                        ysldFilesCount++;
                     }
                 }
             }
@@ -122,16 +122,17 @@ public class YSLDTool implements ToolInterface {
     /**
      * Creates the ui.
      */
-    private void createUI()
-    {
+    private void createUI() {
         groupPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        groupPanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(YSLDTool.class, "YSLDTool.groupTitle")));
+        groupPanel.setBorder(BorderFactory
+                .createTitledBorder(Localisation.getString(YSLDTool.class, "YSLDTool.groupTitle")));
 
         // Export to YSLD
-        exportToYSLDButton = new ToolButton(Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD"),
+        exportToYSLDButton = new ToolButton(
+                Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD"),
                 "tool/exporttoysld.png");
         exportToYSLDButton.setEnabled(false);
         exportToYSLDButton.addActionListener(new ActionListener() {
@@ -143,7 +144,8 @@ public class YSLDTool implements ToolInterface {
         groupPanel.add(exportToYSLDButton);
 
         // Export to SLD
-        exportToSLDButton = new ToolButton(Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD"),
+        exportToSLDButton = new ToolButton(
+                Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD"),
                 "tool/exporttosld.png");
         exportToSLDButton.setEnabled(false);
         exportToSLDButton.addActionListener(new ActionListener() {
@@ -156,21 +158,19 @@ public class YSLDTool implements ToolInterface {
     }
 
     /**
-     * Export to YSLD
+     * Export to YSLD.
      *
      */
     private void exportToYSLD() {
 
         SLDWriterInterface ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
 
-        for(SLDDataInterface sldData : sldDataList)
-        {
+        for (SLDDataInterface sldData : sldDataList) {
             StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
             String layerName = sldData.getLayerNameWithOutSuffix();
 
-            if(sld != null)
-            {
+            if (sld != null) {
                 String sldString = ysldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
                 String ysldFilename = layerName + "." + YSLDTool.YSLD_FILE_EXTENSION;
@@ -178,13 +178,16 @@ public class YSLDTool implements ToolInterface {
 
                 File fileToSave = new File(destinationFolder, ysldFilename);
 
-                if(fileToSave.exists())
-                {
-                    ConsoleManager.getInstance().error(this, Localisation.getField(YSLDTool.class, "YSLDTool.destinationAlreadyExists") + " " + ysldFilename);
-                }
-                else
-                {
-                    ConsoleManager.getInstance().information(this, Localisation.getField(YSLDTool.class, "YSLDTool.exportToYSLDMsg") + " " + ysldFilename);
+                if (fileToSave.exists()) {
+                    ConsoleManager.getInstance()
+                            .error(this,
+                                    Localisation.getField(YSLDTool.class,
+                                            "YSLDTool.destinationAlreadyExists") + " "
+                                            + ysldFilename);
+                } else {
+                    ConsoleManager.getInstance().information(this,
+                            Localisation.getField(YSLDTool.class, "YSLDTool.exportToYSLDMsg") + " "
+                                    + ysldFilename);
                     BufferedWriter out;
                     try {
                         out = new BufferedWriter(new FileWriter(fileToSave));
@@ -199,34 +202,35 @@ public class YSLDTool implements ToolInterface {
     }
 
     /**
-     * Export to SLD
+     * Export to SLD.
      */
-    private void exportToSLD()
-    {
+    private void exportToSLD() {
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
 
-        for(SLDDataInterface sldData : sldDataList)
-        {
+        for (SLDDataInterface sldData : sldDataList) {
             StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
             String layerName = sldData.getLayerNameWithOutSuffix();
 
-            if(sld != null)
-            {
+            if (sld != null) {
                 String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
-                String sldFilename = layerName + ExternalFilenames.addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+                String sldFilename = layerName + ExternalFilenames
+                        .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
                 String destinationFolder = sldData.getSLDFile().getParent();
 
                 File fileToSave = new File(destinationFolder, sldFilename);
 
-                if(fileToSave.exists())
-                {
-                    ConsoleManager.getInstance().error(this, Localisation.getField(YSLDTool.class, "YSLDTool.destinationAlreadyExists") + " " + sldFilename);
-                }
-                else
-                {
-                    ConsoleManager.getInstance().information(this, Localisation.getField(YSLDTool.class, "YSLDTool.exportToSLDMsg") + " " + sldFilename);
+                if (fileToSave.exists()) {
+                    ConsoleManager.getInstance()
+                            .error(this,
+                                    Localisation.getField(YSLDTool.class,
+                                            "YSLDTool.destinationAlreadyExists") + " "
+                                            + sldFilename);
+                } else {
+                    ConsoleManager.getInstance().information(this,
+                            Localisation.getField(YSLDTool.class, "YSLDTool.exportToSLDMsg") + " "
+                                    + sldFilename);
                     BufferedWriter out;
                     try {
                         out = new BufferedWriter(new FileWriter(fileToSave));
@@ -240,58 +244,57 @@ public class YSLDTool implements ToolInterface {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
-    public String getToolName()
-    {
+    public String getToolName() {
         return getClass().getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList)
-    {
-        if(nodeTypeList == null)
-        {
+    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
+        if (nodeTypeList == null) {
             return false;
         }
 
-        for(NodeInterface node : nodeTypeList)
-        {
-            if(node instanceof FileTreeNode)
-            {
+        for (NodeInterface node : nodeTypeList) {
+            if (node instanceof FileTreeNode) {
                 FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-                if(fileTreeNode.isDir())
-                {
+                if (fileTreeNode.isDir()) {
                     // Folder
-                    for(int childIndex = 0; childIndex < fileTreeNode.getChildCount(); childIndex ++)
-                    {
+                    for (int childIndex = 0; childIndex < fileTreeNode
+                            .getChildCount(); childIndex++) {
                         FileTreeNode f = (FileTreeNode) fileTreeNode.getChildAt(childIndex);
-                        if(f.getFileCategory() == FileTreeNodeTypeEnum.SLD)
-                        {
-                            String fileExtension = ExternalFilenames.getFileExtension(f.getFile().getAbsolutePath());
-                            return (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0) || (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension()) == 0);
+                        if (f.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+                            String fileExtension = ExternalFilenames
+                                    .getFileExtension(f.getFile().getAbsolutePath());
+                            return (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
+                                    || (fileExtension
+                                            .compareTo(SLDEditorFile.getSLDFileExtension()) == 0);
                         }
                     }
-                }
-                else
-                {
+                } else {
                     // Single file
-                    if(fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD)
-                    {
-                        String fileExtension = ExternalFilenames.getFileExtension(fileTreeNode.getFile().getAbsolutePath());
-                        return (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0) || (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension()) == 0);
+                    if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+                        String fileExtension = ExternalFilenames
+                                .getFileExtension(fileTreeNode.getFile().getAbsolutePath());
+                        return (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
+                                || (fileExtension
+                                        .compareTo(SLDEditorFile.getSLDFileExtension()) == 0);
                     }
                 }
                 return false;
-            }
-            else
-            {
+            } else {
                 return true;
             }
         }

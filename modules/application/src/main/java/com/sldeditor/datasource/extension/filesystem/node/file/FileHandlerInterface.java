@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.node.file;
 
 import java.io.File;
@@ -35,9 +36,8 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface FileHandlerInterface extends Serializable
-{
-    
+public interface FileHandlerInterface extends Serializable {
+
     /**
      * Gets the list of supported file extensions.
      *
@@ -53,7 +53,8 @@ public interface FileHandlerInterface extends Serializable
      * @param node the node
      * @return true, if successful
      */
-    boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node);
+    boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
+            FileTreeNode node);
 
     /**
      * Gets the SLD contents.

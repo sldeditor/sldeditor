@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common.data;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
 
 /**
  * The Class SelectedSymbol contains the SLD data for the symbol being edited.
+ * 
  * <p>Methods exists to:
  * <ul>
  * <li>add new structure items, e.g. rules, symbolizers, etc.</li>
@@ -48,6 +50,7 @@ import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
  * <li>sets the currently selected structure item e.g. rule, symbolizer etc.</li>
  * <li>get the currently selected structure item e.g. rule, symbolizer etc.</li>
  * </ul>
+ * 
  * <p>Class is implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
@@ -70,7 +73,8 @@ public class SelectedSymbol {
     private SymbolData symbolData = new SymbolData();
 
     /** The tree update listener. */
-    private List<SLDTreeUpdatedInterface> treeUpdateListenerList = new ArrayList<SLDTreeUpdatedInterface>();
+    private List<SLDTreeUpdatedInterface> treeUpdateListenerList = 
+            new ArrayList<SLDTreeUpdatedInterface>();
 
     /** The filename. */
     private String filename = null;
@@ -83,10 +87,8 @@ public class SelectedSymbol {
      *
      * @return single instance of SelectedSymbol
      */
-    public static SelectedSymbol getInstance()
-    {
-        if(instance == null)
-        {
+    public static SelectedSymbol getInstance() {
+        if (instance == null) {
             instance = new SelectedSymbol();
         }
         return instance;
@@ -102,8 +104,7 @@ public class SelectedSymbol {
     /**
      * Instantiates a new selected symbol.
      */
-    public SelectedSymbol()
-    {
+    public SelectedSymbol() {
         super();
     }
 
@@ -131,8 +132,7 @@ public class SelectedSymbol {
      * @param symbolToAdd the symbol to add
      * @return the symbol list
      */
-    public List<GraphicalSymbol> getSymbolList(GraphicalSymbol symbolToAdd)
-    {
+    public List<GraphicalSymbol> getSymbolList(GraphicalSymbol symbolToAdd) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         symbolList.add(symbolToAdd);
@@ -183,13 +183,11 @@ public class SelectedSymbol {
 
         updateInternalData(SelectedSymbolMask.SymbolMaskEnum.E_STYLE);
 
-        if(this.symbolData.getStyle() == null)
-        {
+        if (this.symbolData.getStyle() == null) {
             logger.debug("Style cleared");
-        }
-        else
-        {
-            logger.debug(String.format("Selected style : %s (Style %d)", this.symbolData.getStyle().getName(), this.symbolData.getSelectedStyleIndex()));
+        } else {
+            logger.debug(String.format("Selected style : %s (Style %d)",
+                    this.symbolData.getStyle().getName(), this.symbolData.getSelectedStyleIndex()));
         }
     }
 
@@ -204,13 +202,12 @@ public class SelectedSymbol {
 
         updateInternalData(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER);
 
-        if(this.symbolData.getStyledLayer() == null)
-        {
+        if (this.symbolData.getStyledLayer() == null) {
             logger.debug("Styled layer cleared");
-        }
-        else
-        {
-            logger.debug(String.format("Selected styled layer : %s (Styled %d)", this.symbolData.getStyledLayer().getName(), this.symbolData.getSelectedStyledLayerIndex()));
+        } else {
+            logger.debug(String.format("Selected styled layer : %s (Styled %d)",
+                    this.symbolData.getStyledLayer().getName(),
+                    this.symbolData.getSelectedStyledLayerIndex()));
         }
     }
 
@@ -225,13 +222,12 @@ public class SelectedSymbol {
 
         updateInternalData(SelectedSymbolMask.SymbolMaskEnum.E_RULE);
 
-        if(this.symbolData.getRule() == null)
-        {
+        if (this.symbolData.getRule() == null) {
             logger.debug("Rule cleared");
-        }
-        else
-        {
-            logger.debug(String.format("Selected rule : %s (FTS %d/Rule %d)", this.symbolData.getRule().getName(), this.symbolData.getSelectedFTSIndex(), this.symbolData.getSelectedRuleIndex()));
+        } else {
+            logger.debug(String.format("Selected rule : %s (FTS %d/Rule %d)",
+                    this.symbolData.getRule().getName(), this.symbolData.getSelectedFTSIndex(),
+                    this.symbolData.getSelectedRuleIndex()));
         }
     }
 
@@ -240,100 +236,84 @@ public class SelectedSymbol {
      *
      * @param maskValue the mask value
      */
-    private void updateInternalData(SelectedSymbolMask.SymbolMaskEnum maskValue)
-    {
+    private void updateInternalData(SelectedSymbolMask.SymbolMaskEnum maskValue) {
         SymbolData localSymbolData = new SymbolData();
         SelectedSymbolMask mask = new SelectedSymbolMask(maskValue);
 
-        if(sld == null)
-        {
+        if (sld == null) {
             return;
         }
 
         StyledLayer[] styledLayers = sld.getStyledLayers();
 
-        if(styledLayers != null)
-        {
+        if (styledLayers != null) {
             localSymbolData.initialiseSelectedStyledLayerIndex();
-            for(StyledLayer styledLayer : styledLayers)
-            {
+            for (StyledLayer styledLayer : styledLayers) {
                 localSymbolData.setStyledLayer(styledLayer);
 
-                if(styledLayer == symbolData.getStyledLayer())
-                {
+                if (styledLayer == symbolData.getStyledLayer()) {
                     this.symbolData.update(localSymbolData);
                     return;
                 }
 
                 List<Style> styleList = null;
 
-                if((styledLayer instanceof NamedLayerImpl) && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER))
-                {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                if ((styledLayer instanceof NamedLayerImpl)
+                        && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER)) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
                     styleList = namedLayerImpl.styles();
-                }
-                else if((styledLayer instanceof UserLayerImpl) && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER))
-                {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                } else if ((styledLayer instanceof UserLayerImpl)
+                        && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER)) {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
                     styleList = userLayerImpl.userStyles();
                 }
 
-                if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLE) && (styleList != null))
-                {
+                if (mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLE)
+                        && (styleList != null)) {
                     localSymbolData.initialiseSelectedStyleIndex();
-                    for(Style style : styleList)
-                    {
+                    for (Style style : styleList) {
                         localSymbolData.setStyle(style);
 
-                        if(style == symbolData.getStyle())
-                        {
+                        if (style == symbolData.getStyle()) {
                             this.symbolData.update(localSymbolData);
                             return;
                         }
 
-                        if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_FEATURE_TYPE_STYLE))
-                        {
+                        if (mask.shouldContinue(
+                                SelectedSymbolMask.SymbolMaskEnum.E_FEATURE_TYPE_STYLE)) {
                             localSymbolData.initialiseSelectedFTSIndex();
 
-                            for(FeatureTypeStyle fts : style.featureTypeStyles())
-                            {
+                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
                                 localSymbolData.setFeatureTypeStyle(fts);
 
-                                if(fts == symbolData.getFeatureTypeStyle())
-                                {
+                                if (fts == symbolData.getFeatureTypeStyle()) {
                                     this.symbolData.update(localSymbolData);
                                     return;
                                 }
 
-                                if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_RULE))
-                                {
+                                if (mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_RULE)) {
                                     localSymbolData.initialiseSelectedRuleIndex();
-                                    for(Rule rule : fts.rules())
-                                    {
+                                    for (Rule rule : fts.rules()) {
                                         localSymbolData.setRule(rule);
 
-                                        if(rule == symbolData.getRule())
-                                        {
+                                        if (rule == symbolData.getRule()) {
                                             this.symbolData.update(localSymbolData);
                                             return;
                                         }
 
-                                        if(mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_SYMBOLIZER))
-                                        {
+                                        if (mask.shouldContinue(
+                                                SelectedSymbolMask.SymbolMaskEnum.E_SYMBOLIZER)) {
                                             localSymbolData.initialiseSelectedSymbolizerIndex();
 
-                                            for(Symbolizer symbol : rule.symbolizers())
-                                            {
+                                            for (Symbolizer symbol : rule.symbolizers()) {
                                                 localSymbolData.setSymbolizer(symbol);
 
-                                                if(symbol == this.symbolData.getSymbolizer())
-                                                {
+                                                if (symbol == this.symbolData.getSymbolizer()) {
                                                     this.symbolData.update(localSymbolData);
                                                     return;
-                                                }
-                                                else
-                                                {
-                                                    localSymbolData.incrementSelectedSymbolizerIndex();
+                                                } else {
+                                                    localSymbolData
+                                                            .incrementSelectedSymbolizerIndex();
                                                 }
                                             }
                                         }
@@ -356,20 +336,18 @@ public class SelectedSymbol {
      *
      * @param fts the new feature type style
      */
-    public void setFeatureTypeStyle(FeatureTypeStyle fts)
-    {
+    public void setFeatureTypeStyle(FeatureTypeStyle fts) {
         symbolData.resetData();
         this.symbolData.setFeatureTypeStyle(fts);
 
         updateInternalData(SelectedSymbolMask.SymbolMaskEnum.E_FEATURE_TYPE_STYLE);
 
-        if(this.symbolData.getFeatureTypeStyle() == null)
-        {
+        if (this.symbolData.getFeatureTypeStyle() == null) {
             logger.debug("FeatureTypeStyle cleared");
-        }
-        else
-        {
-            logger.debug(String.format("Selected feature type style : %s (FTS %d)", this.symbolData.getFeatureTypeStyle().getName(), this.symbolData.getSelectedFTSIndex()));
+        } else {
+            logger.debug(String.format("Selected feature type style : %s (FTS %d)",
+                    this.symbolData.getFeatureTypeStyle().getName(),
+                    this.symbolData.getSelectedFTSIndex()));
         }
     }
 
@@ -378,39 +356,30 @@ public class SelectedSymbol {
      *
      * @return true, if successful
      */
-    public boolean hasOnlyOneRule()
-    {
+    public boolean hasOnlyOneRule() {
         boolean oneRule = false;
 
         StyledLayer[] styledLayers = sld.getStyledLayers();
 
         int noOfRules = 0;
 
-        if(styledLayers != null)
-        {
-            for(StyledLayer styledLayer : styledLayers)
-            {
+        if (styledLayers != null) {
+            for (StyledLayer styledLayer : styledLayers) {
                 List<Style> styleList = null;
 
-                if(styledLayer instanceof NamedLayerImpl)
-                {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+                if (styledLayer instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
                     styleList = namedLayerImpl.styles();
-                }
-                else if(styledLayer instanceof UserLayerImpl)
-                {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl)styledLayer;
+                } else if (styledLayer instanceof UserLayerImpl) {
+                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
 
                     styleList = userLayerImpl.userStyles();
                 }
 
-                if(styleList != null)
-                {
-                    for(Style style : styleList)
-                    {
-                        for(FeatureTypeStyle fts : style.featureTypeStyles())
-                        {
+                if (styleList != null) {
+                    for (Style style : styleList) {
+                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
                             noOfRules += fts.rules().size();
                         }
                     }
@@ -431,13 +400,11 @@ public class SelectedSymbol {
      * @param newSymbolizer the new symbolizer
      */
     public void addSymbolizerToRule(Symbolizer newSymbolizer) {
-        if(this.symbolData.getRule() == null)
-        {
+        if (this.symbolData.getRule() == null) {
             ConsoleManager.getInstance().error(this, "rule == null");
-        }
-        else
-        {
-            List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule().symbolizers();
+        } else {
+            List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule()
+                    .symbolizers();
             symbolizerList.add(newSymbolizer);
         }
     }
@@ -471,29 +438,23 @@ public class SelectedSymbol {
         int indexFound = -1;
         int index = 0;
         Rule oldRule = null;
-        for(Rule rule : ruleList)
-        {
-            if(rule == this.symbolData.getRule())
-            {
+        for (Rule rule : ruleList) {
+            if (rule == this.symbolData.getRule()) {
                 oldRule = rule;
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             ruleList.remove(indexFound);
             ruleList.add(indexFound, newRule);
             setRule(newRule);
         }
 
-        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
-        {
+        for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
             listener.updateNode(oldRule, newRule);
         }
     }
@@ -509,29 +470,23 @@ public class SelectedSymbol {
         int indexFound = -1;
         int index = 0;
         FeatureTypeStyle oldFTS = null;
-        for(FeatureTypeStyle fts : ftsList)
-        {
-            if(fts == this.symbolData.getFeatureTypeStyle())
-            {
+        for (FeatureTypeStyle fts : ftsList) {
+            if (fts == this.symbolData.getFeatureTypeStyle()) {
                 oldFTS = fts;
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             ftsList.remove(indexFound);
             ftsList.add(indexFound, newFTS);
             setFeatureTypeStyle(newFTS);
         }
 
-        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
-        {
+        for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
             listener.updateNode(oldFTS, newFTS);
         }
     }
@@ -543,8 +498,7 @@ public class SelectedSymbol {
      */
     public void replaceStyledLayer(NamedLayer newNamedLayer) {
 
-        if(this.sld == null)
-        {
+        if (this.sld == null) {
             return;
         }
         StyledLayer[] styledLayerList = this.sld.getStyledLayers();
@@ -552,29 +506,23 @@ public class SelectedSymbol {
         int indexFound = -1;
         int index = 0;
         StyledLayer oldNamedLayer = null;
-        for(StyledLayer styledLayer : styledLayerList)
-        {
-            if(styledLayer == this.symbolData.getStyledLayer())
-            {
+        for (StyledLayer styledLayer : styledLayerList) {
+            if (styledLayer == this.symbolData.getStyledLayer()) {
                 oldNamedLayer = styledLayer;
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             styledLayerList[indexFound] = newNamedLayer;
             this.sld.setStyledLayers(styledLayerList);
             setStyledLayer(newNamedLayer);
         }
 
-        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
-        {
+        for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
             listener.updateNode(oldNamedLayer, newNamedLayer);
         }
     }
@@ -586,8 +534,7 @@ public class SelectedSymbol {
      */
     public void replaceStyledLayer(UserLayer newUserLayer) {
 
-        if(this.sld == null)
-        {
+        if (this.sld == null) {
             return;
         }
         StyledLayer[] styledLayerList = this.sld.getStyledLayers();
@@ -595,29 +542,23 @@ public class SelectedSymbol {
         int indexFound = -1;
         int index = 0;
         StyledLayer oldUserLayer = null;
-        for(StyledLayer styledLayer : styledLayerList)
-        {
-            if(styledLayer == this.symbolData.getStyledLayer())
-            {
+        for (StyledLayer styledLayer : styledLayerList) {
+            if (styledLayer == this.symbolData.getStyledLayer()) {
                 oldUserLayer = styledLayer;
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             styledLayerList[indexFound] = newUserLayer;
             this.sld.setStyledLayers(styledLayerList);
             setStyledLayer(newUserLayer);
         }
 
-        for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
-        {
+        for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
             listener.updateNode(oldUserLayer, newUserLayer);
         }
     }
@@ -628,38 +569,31 @@ public class SelectedSymbol {
      * @param newSymbolizer the new symbolizer
      */
     public void replaceSymbolizer(Symbolizer newSymbolizer) {
-        if(this.symbolData != null)
-        {
-            if(this.symbolData.getRule() != null)
-            {
-                List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule().symbolizers();
+        if (this.symbolData != null) {
+            if (this.symbolData.getRule() != null) {
+                List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule()
+                        .symbolizers();
 
                 Symbolizer oldSymbolizer = null;
                 int indexFound = -1;
                 int index = 0;
-                for(Symbolizer symbolizer : symbolizerList)
-                {
-                    if(symbolizer == this.symbolData.getSymbolizer())
-                    {
+                for (Symbolizer symbolizer : symbolizerList) {
+                    if (symbolizer == this.symbolData.getSymbolizer()) {
                         indexFound = index;
                         oldSymbolizer = symbolizer;
                         break;
-                    }
-                    else
-                    {
-                        index ++;
+                    } else {
+                        index++;
                     }
                 }
 
-                if(indexFound > -1)
-                {
+                if (indexFound > -1) {
                     symbolizerList.remove(indexFound);
                     symbolizerList.add(indexFound, newSymbolizer);
                     setSymbolizer(newSymbolizer);
                 }
 
-                for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
-                {
+                for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
                     listener.updateNode(oldSymbolizer, newSymbolizer);
                 }
             }
@@ -675,47 +609,37 @@ public class SelectedSymbol {
 
         List<Style> styleList = null;
 
-        if(this.symbolData.getStyledLayer() instanceof NamedLayerImpl)
-        {
+        if (this.symbolData.getStyledLayer() instanceof NamedLayerImpl) {
             NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
 
             styleList = namedLayer.styles();
-        }
-        else if(this.symbolData.getStyledLayer() instanceof UserLayerImpl)
-        {
+        } else if (this.symbolData.getStyledLayer() instanceof UserLayerImpl) {
             UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
 
             styleList = userLayer.userStyles();
         }
 
-        if(styleList != null)
-        {
+        if (styleList != null) {
             Style oldStyle = null;
             int indexFound = -1;
             int index = 0;
-            for(Style style : styleList)
-            {
-                if(style == this.symbolData.getStyle())
-                {
+            for (Style style : styleList) {
+                if (style == this.symbolData.getStyle()) {
                     oldStyle = style;
                     indexFound = index;
                     break;
-                }
-                else
-                {
-                    index ++;
+                } else {
+                    index++;
                 }
             }
 
-            if(indexFound > -1)
-            {
+            if (indexFound > -1) {
                 styleList.remove(indexFound);
                 styleList.add(indexFound, newStyle);
                 setStyle(newStyle);
             }
 
-            for(SLDTreeUpdatedInterface listener : treeUpdateListenerList)
-            {
+            for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
                 listener.updateNode(oldStyle, newStyle);
             }
         }
@@ -745,8 +669,7 @@ public class SelectedSymbol {
      * @param treeObj the new tree update listener
      */
     public void setTreeUpdateListener(SLDTreeUpdatedInterface treeObj) {
-        if(!this.treeUpdateListenerList.contains(treeObj))
-        {
+        if (!this.treeUpdateListenerList.contains(treeObj)) {
             this.treeUpdateListenerList.add(treeObj);
         }
     }
@@ -757,12 +680,9 @@ public class SelectedSymbol {
      * @param rule the rule
      */
     public void addNewRule(Rule rule) {
-        if(this.symbolData.getFeatureTypeStyle() == null)
-        {
+        if (this.symbolData.getFeatureTypeStyle() == null) {
             ConsoleManager.getInstance().error(this, "featureTypeStyle == null");
-        }
-        else
-        {
+        } else {
             List<Rule> ruleList = (List<Rule>) this.symbolData.getFeatureTypeStyle().rules();
 
             ruleList.add(rule);
@@ -775,22 +695,16 @@ public class SelectedSymbol {
      * @param style the style
      */
     public void addNewStyle(Style style) {
-        if(this.symbolData.getStyledLayer() == null)
-        {
+        if (this.symbolData.getStyledLayer() == null) {
             ConsoleManager.getInstance().error(this, "styledLayer == null");
-        }
-        else
-        {
-            if(this.symbolData.getStyledLayer() instanceof NamedLayerImpl)
-            {
+        } else {
+            if (this.symbolData.getStyledLayer() instanceof NamedLayerImpl) {
                 NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
 
                 List<Style> styleList = namedLayer.styles();
 
                 styleList.add(style);
-            }
-            else if(this.symbolData.getStyledLayer() instanceof UserLayerImpl)
-            {
+            } else if (this.symbolData.getStyledLayer() instanceof UserLayerImpl) {
                 UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
 
                 List<Style> styleList = userLayer.userStyles();
@@ -806,12 +720,9 @@ public class SelectedSymbol {
      * @param featureTypeStyle the feature type style
      */
     public void addNewFeatureTypeStyle(FeatureTypeStyle featureTypeStyle) {
-        if(this.symbolData.getStyle() == null)
-        {
+        if (this.symbolData.getStyle() == null) {
             ConsoleManager.getInstance().error(this, "style == null");
-        }
-        else
-        {
+        } else {
             List<FeatureTypeStyle> ftsList = this.symbolData.getStyle().featureTypeStyles();
 
             ftsList.add(featureTypeStyle);
@@ -824,12 +735,9 @@ public class SelectedSymbol {
      * @param namedLayer the named layer
      */
     public void addNewStyledLayer(NamedLayer namedLayer) {
-        if(this.sld == null)
-        {
+        if (this.sld == null) {
             ConsoleManager.getInstance().error(this, "sld == null");
-        }
-        else
-        {
+        } else {
             this.sld.addStyledLayer(namedLayer);
         }
     }
@@ -840,12 +748,9 @@ public class SelectedSymbol {
      * @param userLayer the user layer
      */
     public void addNewStyledLayer(UserLayer userLayer) {
-        if(this.sld == null)
-        {
+        if (this.sld == null) {
             ConsoleManager.getInstance().error(this, "sld == null");
-        }
-        else
-        {
+        } else {
             this.sld.addStyledLayer(userLayer);
         }
     }
@@ -856,25 +761,21 @@ public class SelectedSymbol {
      * @param symbolizerToDelete the symbolizer to delete
      */
     public void removeSymbolizer(Symbolizer symbolizerToDelete) {
-        List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule().symbolizers();
+        List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule()
+                .symbolizers();
 
         int indexFound = -1;
         int index = 0;
-        for(Symbolizer symbolizer : symbolizerList)
-        {
-            if(symbolizer == symbolizerToDelete)
-            {
+        for (Symbolizer symbolizer : symbolizerList) {
+            if (symbolizer == symbolizerToDelete) {
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             symbolizerList.remove(indexFound);
         }
     }
@@ -889,21 +790,16 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
-        for(Rule rule : ruleList)
-        {
-            if(rule == ruleToDelete)
-            {
+        for (Rule rule : ruleList) {
+            if (rule == ruleToDelete) {
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             ruleList.remove(indexFound);
         }
     }
@@ -918,21 +814,16 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
-        for(FeatureTypeStyle fts : ftsList)
-        {
-            if(fts == ftsToDelete)
-            {
+        for (FeatureTypeStyle fts : ftsList) {
+            if (fts == ftsToDelete) {
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             ftsList.remove(indexFound);
         }
     }
@@ -945,38 +836,29 @@ public class SelectedSymbol {
     public void removeStyle(Style styleToDelete) {
         List<Style> styleList = null;
 
-        if(this.symbolData.getStyledLayer() instanceof NamedLayerImpl)
-        {
+        if (this.symbolData.getStyledLayer() instanceof NamedLayerImpl) {
             NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
 
             styleList = namedLayer.styles();
-        }
-        else if(this.symbolData.getStyledLayer() instanceof UserLayerImpl)
-        {
+        } else if (this.symbolData.getStyledLayer() instanceof UserLayerImpl) {
             UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
 
             styleList = userLayer.userStyles();
         }
 
-        if(styleList != null)
-        {
+        if (styleList != null) {
             int indexFound = -1;
             int index = 0;
-            for(Style style : styleList)
-            {
-                if(style == styleToDelete)
-                {
+            for (Style style : styleList) {
+                if (style == styleToDelete) {
                     indexFound = index;
                     break;
-                }
-                else
-                {
-                    index ++;
+                } else {
+                    index++;
                 }
             }
 
-            if(indexFound > -1)
-            {
+            if (indexFound > -1) {
                 styleList.remove(indexFound);
             }
         }
@@ -992,21 +874,16 @@ public class SelectedSymbol {
 
         int indexFound = -1;
         int index = 0;
-        for(StyledLayer styledLayer : styledLayerList)
-        {
-            if(styledLayer == layerToDelete)
-            {
+        for (StyledLayer styledLayer : styledLayerList) {
+            if (styledLayer == layerToDelete) {
                 indexFound = index;
                 break;
-            }
-            else
-            {
-                index ++;
+            } else {
+                index++;
             }
         }
 
-        if(indexFound > -1)
-        {
+        if (indexFound > -1) {
             styledLayerList.remove(indexFound);
         }
     }
@@ -1025,8 +902,7 @@ public class SelectedSymbol {
      *
      * @return the filename
      */
-    public String getFilename()
-    {
+    public String getFilename() {
         return filename;
     }
 
@@ -1035,8 +911,7 @@ public class SelectedSymbol {
      *
      * @param filename the new filename
      */
-    public void setFilename(String filename)
-    {
+    public void setFilename(String filename) {
         this.filename = filename;
     }
 
@@ -1045,8 +920,7 @@ public class SelectedSymbol {
      *
      * @return the name
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -1055,8 +929,7 @@ public class SelectedSymbol {
      *
      * @param name the new name
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -1074,8 +947,7 @@ public class SelectedSymbol {
      *
      * @return true, if successful
      */
-    public boolean hasStroke()
-    {
+    public boolean hasStroke() {
         return SLDTreeLeafFactory.getInstance().hasStroke(getSymbolizer());
     }
 
@@ -1084,8 +956,7 @@ public class SelectedSymbol {
      *
      * @return true, if successful
      */
-    public boolean hasFill()
-    {
+    public boolean hasFill() {
         return SLDTreeLeafFactory.getInstance().hasFill(getSymbolizer());
     }
 
@@ -1124,14 +995,10 @@ public class SelectedSymbol {
      */
     public void addImageOutlineSymbolizerToRaster(Symbolizer symbolizer) {
         Symbolizer selectedSymbolizer = this.symbolData.getSymbolizer();
-        if(selectedSymbolizer == null)
-        {
+        if (selectedSymbolizer == null) {
             ConsoleManager.getInstance().error(this, "symbolizer == null");
-        }
-        else
-        {
-            if(selectedSymbolizer instanceof RasterSymbolizer)
-            {
+        } else {
+            if (selectedSymbolizer instanceof RasterSymbolizer) {
                 RasterSymbolizer rasterSymbolizer = (RasterSymbolizer) selectedSymbolizer;
                 rasterSymbolizer.setImageOutline(symbolizer);
             }
@@ -1144,8 +1011,7 @@ public class SelectedSymbol {
      * @param rasterSymbolizer the raster symbolizer
      */
     public void removeRasterImageOutline(RasterSymbolizer rasterSymbolizer) {
-        if(rasterSymbolizer != null)
-        {
+        if (rasterSymbolizer != null) {
             rasterSymbolizer.setImageOutline(null);
         }
     }
@@ -1158,16 +1024,11 @@ public class SelectedSymbol {
     public boolean isRasterSymbol() {
         Style style = getStyle();
 
-        if(style != null)
-        {
-            for(FeatureTypeStyle fts : style.featureTypeStyles())
-            {
-                for(Rule rule : fts.rules())
-                {
-                    for(Symbolizer symbolizer : rule.symbolizers())
-                    {
-                        if(symbolizer instanceof RasterSymbolizer)
-                        {
+        if (style != null) {
+            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                for (Rule rule : fts.rules()) {
+                    for (Symbolizer symbolizer : rule.symbolizers()) {
+                        if (symbolizer instanceof RasterSymbolizer) {
                             return true;
                         }
                     }

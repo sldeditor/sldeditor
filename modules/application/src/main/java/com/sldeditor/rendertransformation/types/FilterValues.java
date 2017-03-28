@@ -92,17 +92,17 @@ public class FilterValues extends BaseValue implements RenderTransformValueInter
 
         if (aValue instanceof Filter) {
             this.value = (Filter) aValue;
-        }
-        else if((aValue instanceof AttributeExpressionImpl) ||
-                (aValue instanceof LiteralExpressionImpl) ||
-                (aValue instanceof FunctionExpressionImpl) ||
-                (aValue instanceof MathExpressionImpl))
-        {
+        } else if ((aValue instanceof AttributeExpressionImpl)
+                || (aValue instanceof LiteralExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
+                || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -110,7 +110,9 @@ public class FilterValues extends BaseValue implements RenderTransformValueInter
         return Arrays.asList(Filter.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -119,7 +121,9 @@ public class FilterValues extends BaseValue implements RenderTransformValueInter
         return new FieldConfigString(commonData, null);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

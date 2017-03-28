@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function;
 
 import java.util.ArrayList;
@@ -48,14 +49,13 @@ public class FilterName {
         this.filterName = filterName;
         this.returnType = returnType;
     }
-    
+
     /**
      * Adds the parameter.
      *
      * @param parameter the parameter
      */
-    public void addParameter(FilterNameParameter parameter)
-    {
+    public void addParameter(FilterNameParameter parameter) {
         parameterList.add(parameter);
     }
 
@@ -93,8 +93,7 @@ public class FilterName {
      * @return the parameter
      */
     public FilterNameParameter getParameter(int index) {
-        if((index < 0) || (index >= parameterList.size()))
-        {
+        if ((index < 0) || (index >= parameterList.size())) {
             return null;
         }
         return parameterList.get(index);

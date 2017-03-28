@@ -155,7 +155,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
         if ((row >= 0) && (row < infoList.size())) {
             VendorOptionInfo info = infoList.get(row);
             VendorOptionVersion vendorOptionVersion = info.getVersionData();
- 
+
             // Check to see if it is strict SLD, always allowed
             if (vendorOptionVersion.getClassType() == NoVendorOption.class) {
                 return true;
@@ -165,7 +165,8 @@ public class VendorOptionInfoModel extends AbstractTableModel {
                 return false;
             }
 
-            return selectedVersion.inRange(vendorOptionVersion.getEarliest(), vendorOptionVersion.getLatest());
+            return selectedVersion.inRange(vendorOptionVersion.getEarliest(),
+                    vendorOptionVersion.getLatest());
         }
         return false;
     }

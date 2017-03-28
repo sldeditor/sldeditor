@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource;
 
 import com.sldeditor.common.output.SLDOutputInterface;
@@ -29,7 +30,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
 public interface RenderSymbolInterface extends DataSourceUpdatedInterface {
 
     /**
-     * Adds the listener to be informed when the SLD symbol has been updated
+     * Adds the listener to be informed when the SLD symbol has been updated.
      *
      * @param sldOutput the sld output object
      */

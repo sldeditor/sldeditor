@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.geometry;
 
 import java.util.List;
@@ -41,14 +42,12 @@ public class BBox implements FilterConfigInterface {
     /**
      * The Class BBoxExtended.
      */
-    public class BBoxExtended extends BBOXImpl implements FilterExtendedInterface
-    {
-        
+    public class BBoxExtended extends BBOXImpl implements FilterExtendedInterface {
+
         /**
          * Instantiates a new b box extended.
          */
-        public BBoxExtended()
-        {
+        public BBoxExtended() {
             super(null, null);
         }
 
@@ -58,19 +57,22 @@ public class BBox implements FilterConfigInterface {
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public BBoxExtended(Expression expression1, Expression expression2)
-        {
+        public BBoxExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
             return "[ " + getExpression1() + " BBox " + getExpression2() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,8 +84,7 @@ public class BBox implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public BBox()
-    {
+    public BBox() {
     }
 
     /**
@@ -94,20 +95,12 @@ public class BBox implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("BBOX", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, BoundingBox.class));
-        filterName.addParameter(new FilterNameParameter("boundingbox", ExpressionTypeEnum.LITERAL, BoundingBox.class));
+        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY,
+                BoundingBox.class));
+        filterName.addParameter(new FilterNameParameter("boundingbox", ExpressionTypeEnum.LITERAL,
+                BoundingBox.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new BBoxExtended();
     }
 
     /**
@@ -123,6 +116,16 @@ public class BBox implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new BBoxExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -131,12 +134,9 @@ public class BBox implements FilterConfigInterface {
 
         BBOXImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 2))
-        {
+        if ((parameterList == null) || (parameterList.size() != 2)) {
             filter = new BBoxExtended();
-        }
-        else
-        {
+        } else {
             filter = new BBoxExtended(parameterList.get(0), parameterList.get(1));
         }
         return filter;

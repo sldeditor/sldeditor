@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver.client;
 
 import java.io.Serializable;
@@ -42,7 +43,8 @@ import it.geosolutions.geoserver.rest.decoder.utils.NameLinkElem;
 import it.geosolutions.geoserver.rest.encoder.GSLayerEncoder;
 
 /**
- * Class that manages the connection to a GeoServer instance. Retrieves style and layer data from and uploads new styles.
+ * Class that manages the connection to a GeoServer instance.
+ * Retrieves style and layer data from and uploads new styles.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -115,7 +117,8 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
         Thread t1 = new Thread(new Runnable() {
             public void run() {
 
-                Map<String, List<StyleWrapper>> styleMap = new LinkedHashMap<String, List<StyleWrapper>>();
+                Map<String, List<StyleWrapper>> styleMap =
+                        new LinkedHashMap<String, List<StyleWrapper>>();
 
                 int count = 1;
                 List<StyleWrapper> styleList = new ArrayList<StyleWrapper>();
@@ -155,7 +158,8 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                     workspaceList.add(null); // Add the default workspace last
                 }
 
-                Map<String, List<GeoServerLayer>> layerMap = new LinkedHashMap<String, List<GeoServerLayer>>();
+                Map<String, List<GeoServerLayer>> layerMap = 
+                        new LinkedHashMap<String, List<GeoServerLayer>>();
                 RESTLayerList layers = reader.getLayers();
 
                 int count = 1;
@@ -572,7 +576,8 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
             GeoServerRESTReader reader = manager.getReader();
 
             if (reader != null) {
-                Map<String, List<StyleWrapper>> styleMap = new LinkedHashMap<String, List<StyleWrapper>>();
+                Map<String, List<StyleWrapper>> styleMap =
+                        new LinkedHashMap<String, List<StyleWrapper>>();
 
                 int count = 1;
                 List<StyleWrapper> styleList = new ArrayList<StyleWrapper>();

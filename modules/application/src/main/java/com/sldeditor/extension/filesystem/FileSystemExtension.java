@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem;
 
 import java.awt.BorderLayout;
@@ -69,7 +70,8 @@ import com.sldeditor.extension.filesystem.file.FileSystemInput;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FileSystemExtension implements ExtensionInterface, FileSelectionInterface, RecursiveUpdateInterface {
+public class FileSystemExtension
+        implements ExtensionInterface, FileSelectionInterface, RecursiveUpdateInterface {
     /** The Constant ROOT_NODE. */
     public static final String ROOT_NODE = Localisation.getString(FileSystemExtension.class,
             "FileSystemExtension.root");
@@ -118,8 +120,7 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         this.toolMgr = toolMgr;
 
         this.parentObj = parent;
-        if(toolMgr != null)
-        {
+        if (toolMgr != null) {
             toolMgr.addRecursiveListener(this);
         }
 
@@ -562,7 +563,9 @@ public class FileSystemExtension implements ExtensionInterface, FileSelectionInt
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.common.RecursiveUpdateInterface#recursiveValuesUpdated(boolean)
      */
     @Override

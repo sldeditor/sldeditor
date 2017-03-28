@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.layerstyle;
 
 import java.awt.BorderLayout;
@@ -44,8 +45,7 @@ import com.sldeditor.common.localisation.Localisation;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleInterface
-{
+public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -69,7 +69,8 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
      */
     public ConfigureLayerStyleDialog() {
         setResizable(true);
-        setTitle(Localisation.getString(ConfigureLayerStyleDialog.class, "ConfigureLayerStyleDialog.title"));
+        setTitle(Localisation.getString(ConfigureLayerStyleDialog.class,
+                "ConfigureLayerStyleDialog.title"));
         setModalityType(ModalityType.APPLICATION_MODAL);
         setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         setModal(true);
@@ -83,8 +84,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
     /**
      * Creates the ui.
      */
-    private void createUI()
-    {
+    private void createUI() {
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(new BorderLayout(0, 0));
@@ -94,12 +94,10 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         dataModel.setColumnRenderer(table.getColumnModel());
 
         ListSelectionModel selectionModel = table.getSelectionModel();
-        selectionModel.addListSelectionListener(new ListSelectionListener()
-        {
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting())
-                {
+                if (e.getValueIsAdjusting()) {
                     return;
                 }
 
@@ -111,18 +109,13 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
                 StyleWrapper selectedLayerStyle = null;
                 boolean isUniqueStyle = true;
 
-                for(int index = 0; index < selectedRows.length; index ++)
-                {
+                for (int index = 0; index < selectedRows.length; index++) {
                     GeoServerLayer layer = dataModel.getLayer(selectedRows[index]);
 
-                    if(selectedLayerStyle == null)
-                    {
+                    if (selectedLayerStyle == null) {
                         selectedLayerStyle = layer.getStyle();
-                    }
-                    else if(isUniqueStyle)
-                    {
-                        if(selectedLayerStyle.compareTo(layer.getStyle()) != 0)
-                        {
+                    } else if (isUniqueStyle) {
+                        if (selectedLayerStyle.compareTo(layer.getStyle()) != 0) {
                             isUniqueStyle = false;
                         }
                     }
@@ -143,15 +136,15 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnOk = new JButton(Localisation.getString(ConfigureLayerStyleDialog.class, "common.ok"));
+        JButton btnOk = new JButton(
+                Localisation.getString(ConfigureLayerStyleDialog.class, "common.ok"));
         btnOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = false;
 
                 updatedLayerList = dataModel.getUpdatedLayers();
 
-                if(!updatedLayerList.isEmpty())
-                {
+                if (!updatedLayerList.isEmpty()) {
                     okButtonPressed = true;
                 }
                 setVisible(false);
@@ -159,7 +152,8 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton(Localisation.getString(ConfigureLayerStyleDialog.class, "common.cancel"));
+        JButton btnCancel = new JButton(
+                Localisation.getString(ConfigureLayerStyleDialog.class, "common.cancel"));
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okButtonPressed = false;
@@ -179,8 +173,8 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
      * @param layerList the layer list
      * @return true, if successful
      */
-    public boolean populate(Map<String, List<StyleWrapper>> styleMap, List<GeoServerLayer> layerList)
-    {
+    public boolean populate(Map<String, List<StyleWrapper>> styleMap,
+            List<GeoServerLayer> layerList) {
         dataModel.populate(styleMap, layerList);
         dataModel.fireTableDataChanged();
 
@@ -188,8 +182,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
 
         String geoserverName = "Unknown";
 
-        if((layerList != null) && !layerList.isEmpty())
-        {
+        if ((layerList != null) && !layerList.isEmpty()) {
             geoserverName = layerList.get(0).getConnection().getConnectionName();
         }
         geoServerStyleTree.populate(geoserverName, styleMap);
@@ -204,8 +197,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
      *
      * @return the updated layer styles
      */
-    public List<GeoServerLayer> getUpdatedLayerStyles()
-    {
+    public List<GeoServerLayer> getUpdatedLayerStyles() {
         return updatedLayerList;
     }
 
@@ -215,8 +207,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
      * @param styleWrapper the style wrapper
      */
     @Override
-    public void selectedStyle(StyleWrapper styleWrapper)
-    {
+    public void selectedStyle(StyleWrapper styleWrapper) {
         int[] selectedRows = table.getSelectedRows();
 
         dataModel.updateStyle(selectedRows, styleWrapper);

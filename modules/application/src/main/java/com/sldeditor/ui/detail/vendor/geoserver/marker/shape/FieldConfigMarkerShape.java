@@ -57,28 +57,29 @@ public class FieldConfigMarkerShape extends FieldConfigMarker {
                 symbolSelectionField);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                getVendorOptionInfo());
+        VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        if(vendorOptionInfo == null)
-        {
-            vendorOptionInfo = new VendorOptionInfo("shape://",
-                    this.getVendorOption(),
-                    Localisation.getString(VOGeoServerShapeSymbol.class, "VOGeoServerShapeSymbol.description"));
+        if (vendorOptionInfo == null) {
+            vendorOptionInfo = new VendorOptionInfo("shape://", this.getVendorOption(), Localisation
+                    .getString(VOGeoServerShapeSymbol.class, "VOGeoServerShapeSymbol.description"));
         }
         return vendorOptionInfo;
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.extension.filesystem.dataflavour;
 
 import java.awt.datatransfer.DataFlavor;
@@ -30,8 +31,7 @@ import javax.swing.tree.TreePath;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class TransferredData implements Serializable
-{
+public class TransferredData implements Serializable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3406201302956370401L;
 
@@ -57,10 +57,9 @@ public class TransferredData implements Serializable
     private List<InternalTransferredData> dataList = new ArrayList<InternalTransferredData>();
 
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public TransferredData()
-    {
+    public TransferredData() {
     }
 
     /**
@@ -68,8 +67,7 @@ public class TransferredData implements Serializable
      *
      * @return the data list size
      */
-    public int getDataListSize()
-    {
+    public int getDataListSize() {
         return dataList.size();
     }
 
@@ -79,10 +77,8 @@ public class TransferredData implements Serializable
      * @param index the index
      * @return the user object
      */
-    public Object getUserObject(int index)
-    {
-        if((index < 0) || (index >= dataList.size()))
-        {
+    public Object getUserObject(int index) {
+        if ((index < 0) || (index >= dataList.size())) {
             return null;
         }
 
@@ -95,10 +91,8 @@ public class TransferredData implements Serializable
      * @param index the index
      * @return the tree path
      */
-    public TreePath getTreePath(int index)
-    {
-        if((index < 0) || (index >= dataList.size()))
-        {
+    public TreePath getTreePath(int index) {
+        if ((index < 0) || (index >= dataList.size())) {
             return null;
         }
         return dataList.get(index).treePath;
@@ -110,10 +104,8 @@ public class TransferredData implements Serializable
      * @param index the index
      * @return the data flavour
      */
-    public DataFlavor getDataFlavour(int index)
-    {
-        if((index < 0) || (index >= dataList.size()))
-        {
+    public DataFlavor getDataFlavour(int index) {
+        if ((index < 0) || (index >= dataList.size())) {
             return null;
         }
         return dataList.get(index).dataFlavour;
@@ -126,8 +118,7 @@ public class TransferredData implements Serializable
      * @param userObject the user object
      * @param dataFlavour the data flavour
      */
-    public void addData(TreePath treePath, Object userObject, DataFlavor dataFlavour)
-    {
+    public void addData(TreePath treePath, Object userObject, DataFlavor dataFlavour) {
         InternalTransferredData data = new InternalTransferredData();
         data.treePath = treePath;
         data.userObject = userObject;

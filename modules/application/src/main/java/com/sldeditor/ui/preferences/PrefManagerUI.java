@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.preferences;
 
 import com.sldeditor.common.preferences.PrefData;
@@ -31,17 +32,14 @@ public class PrefManagerUI {
     /**
      * Show preferences panel.
      */
-    public static void showPrefPanel()
-    {
+    public static void showPrefPanel() {
         PrefPanel panel = new PrefPanel();
 
         PrefData originalPrefData = PrefManager.getInstance().getPrefData();
-        if(panel.showDialog(originalPrefData))
-        {
+        if (panel.showDialog(originalPrefData)) {
             PrefData prefData = panel.getPrefData();
 
-            if(!originalPrefData.isSaveLastFolderView() && prefData.isSaveLastFolderView())
-            {
+            if (!originalPrefData.isSaveLastFolderView() && prefData.isSaveLastFolderView()) {
                 prefData.setLastFolderViewed(originalPrefData.getLastFolderViewed());
             }
             PrefManager.getInstance().setPrefData(prefData);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.awt.Component;
@@ -44,8 +45,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class WKTDetails extends StandardPanel implements PopulateDetailsInterface, 
-UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+public class WKTDetails extends StandardPanel implements PopulateDetailsInterface,
+        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/marker/wkt/PanelConfig_WKT.xml";
@@ -64,8 +65,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param parentObj the parent obj
      */
-    public WKTDetails(WKTUpdateInterface parentObj)
-    {
+    public WKTDetails(WKTUpdateInterface parentObj) {
         super(WKTDetails.class);
 
         this.parentObj = parentObj;
@@ -86,7 +86,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param selectedSymbol the selected symbol
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -101,8 +103,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public void populateExpression(String wellKnownName) {
 
-        if(wellKnownName != null)
-        {
+        if (wellKnownName != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, wellKnownName);
         }
     }
@@ -112,7 +113,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @param changedField the changed field
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -124,10 +127,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * Update symbol.
      */
     private void updateSymbol() {
-        if(!Controller.getInstance().isPopulating())
-        {
-            if(parentObj != null)
-            {
+        if (!Controller.getInstance().isPopulating()) {
+            if (parentObj != null) {
                 parentObj.wktValueUpdated();
             }
         }
@@ -138,12 +139,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return fieldConfigManager;
     }
 
@@ -152,12 +154,13 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return true;
     }
 
@@ -168,9 +171,9 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     public Expression getExpression() {
         String string = fieldConfigVisitor.getText(FieldIdEnum.WKT);
-        
+
         Expression expression = getFilterFactory().literal(string);
-        
+
         return expression;
     }
 
@@ -180,10 +183,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
-        for(FieldConfigBase field : fieldList)
-        {
-            if(field != null)
-            {
+        for (FieldConfigBase field : fieldList) {
+            if (field != null) {
                 field.revertToDefaultValue();
             }
         }
@@ -208,7 +209,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValue = (String)undoRedoObject.getNewValue();
+        String newValue = (String) undoRedoObject.getNewValue();
 
         fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, (String) newValue);
     }
@@ -221,26 +222,30 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     @Override
     public void buttonPressed(Component buttonExternal) {
         WKTDialog dlg = new WKTDialog();
-        if(dlg.showDialog(fieldConfigVisitor.getText(FieldIdEnum.WKT)));
+        if (dlg.showDialog(fieldConfigVisitor.getText(FieldIdEnum.WKT)))
+            ;
         {
             String wktString = dlg.getWKTString();
-            
+
             fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, wktString);
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this, FieldIdEnum.WKT, oldValueObj, wktString));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, FieldIdEnum.WKT, oldValueObj, wktString));
 
             oldValueObj = wktString;
 
-            EventQueue.invokeLater(new Runnable(){
+            EventQueue.invokeLater(new Runnable() {
 
-                public void run(){
+                public void run() {
                     updateSymbol();
                 }
             });
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -248,19 +253,22 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
     public void setEnabled(boolean enabled) {
-        for(FieldConfigBase fieldConfig : getFieldConfigList())
-        {
+        for (FieldConfigBase fieldConfig : getFieldConfigList()) {
             fieldConfig.setEnabled(enabled);
         }
         super.setEnabled(enabled);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override

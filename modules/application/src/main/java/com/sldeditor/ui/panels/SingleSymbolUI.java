@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
@@ -41,8 +42,7 @@ import com.sldeditor.ui.tree.SLDTreeManager;
 import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
- * The Class SingleSymbolUI, coordinates creating all the necessary SLD symbol panels
- * to view/edit a single SLD file.
+ * The Class SingleSymbolUI, coordinates creating all the necessary SLD symbol panels to view/edit a single SLD file.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -57,7 +57,9 @@ public class SingleSymbolUI implements SymbolPanelInterface {
     /** The renderer list. */
     private List<RenderSymbolInterface> rendererList = null;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addWestPanel()
      */
     @Override
@@ -65,7 +67,9 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         return createSymbolSelectionPanel();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addCentrePanel()
      */
     @Override
@@ -84,8 +88,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      * @return the marker details panel
      */
     private JPanel getSymbolizerDetailsPanel() {
-        if(panelSymbolizerDetails == null)
-        {
+        if (panelSymbolizerDetails == null) {
             List<RenderSymbolInterface> rendererList = new ArrayList<RenderSymbolInterface>();
             rendererList.add(RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName()));
             rendererList.add(LegendManager.getInstance().getRendererUpdate());
@@ -106,9 +109,10 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         JPanel symbolPanel = new JPanel();
         symbolPanel.setLayout(new GridLayout(2, 1));
 
-        RenderSymbolInterface renderSymbol = RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName()); 
+        RenderSymbolInterface renderSymbol = RenderPanelFactory
+                .getRenderer(SingleSymbolUI.class.getName());
 
-        symbolPanel.add((Component)renderSymbol);
+        symbolPanel.add((Component) renderSymbol);
 
         JPanel symbolTreePanel = getSymbolTree();
         symbolPanel.add(symbolTreePanel);
@@ -122,8 +126,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      * @return the symbol tree
      */
     public SLDTree getSymbolTree() {
-        if(sldTree == null)
-        {
+        if (sldTree == null) {
             SLDTreeTools sldTreeTools = new SLDTreeTools();
             sldTree = SLDTreeManager.getInstance().createSLDTree(getRendererList(), sldTreeTools);
 
@@ -131,7 +134,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
             SelectedSymbol.getInstance().setTreeUpdateListener(sldTree);
 
             // Register for notifications when user clicks on the SLD tree
-            sldTree.addSymbolSelectedListener((SymbolizerSelectedInterface) getSymbolizerDetailsPanel());
+            sldTree.addSymbolSelectedListener(
+                    (SymbolizerSelectedInterface) getSymbolizerDetailsPanel());
         }
 
         return sldTree;
@@ -143,23 +147,24 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      * @return the renderer list
      */
     private List<RenderSymbolInterface> getRendererList() {
-        if(rendererList == null)
-        {
+        if (rendererList == null) {
             rendererList = new ArrayList<RenderSymbolInterface>();
 
-            RenderSymbolInterface renderer = RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName());
+            RenderSymbolInterface renderer = RenderPanelFactory
+                    .getRenderer(SingleSymbolUI.class.getName());
             rendererList.add(renderer);
         }
         return rendererList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
-        if(panelSymbolizerDetails != null)
-        {
+        if (panelSymbolizerDetails != null) {
             // Reset all field values
             panelSymbolizerDetails.preLoadSymbol();
         }
@@ -168,7 +173,9 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         getSymbolTree().selectFirstSymbol();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#addNorthPanel()
      */
     @Override
@@ -176,12 +183,13 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.SymbolPanelInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         GraphicPanelFieldManager mergedData = new GraphicPanelFieldManager(null);
 
         panelSymbolizerDetails.mergeFieldDataManager(mergedData);

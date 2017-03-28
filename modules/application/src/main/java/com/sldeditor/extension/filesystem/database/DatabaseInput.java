@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.database;
 
 import java.awt.event.MouseEvent;
@@ -72,10 +73,11 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     private transient DatabaseReadProgress progress = new DatabaseReadProgress(this, this);
 
     /** The feature class map. */
-    private Map<DatabaseConnection, List<String>> featureClassMap = new HashMap<DatabaseConnection, List<String>>();
+    private Map<DatabaseConnection, List<String>> featureClassMap =
+            new HashMap<DatabaseConnection, List<String>>();
 
     /** The logger. */
-    private transient static Logger logger = Logger.getLogger(DatabaseInput.class.getName());
+    private static transient Logger logger = Logger.getLogger(DatabaseInput.class.getName());
 
     /** The database root node map. */
     private transient Map<String, DatabaseOverallNode> databaseRootNodeMap = null;
@@ -153,8 +155,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
 
             List<DatabaseOverallNode> list = new ArrayList<DatabaseOverallNode>();
 
-            list.add(new DatabaseOverallNode(this, "PostGIS",
-                    "ui/filesystemicons/postgresql.png"));
+            list.add(new DatabaseOverallNode(this, "PostGIS", "ui/filesystemicons/postgresql.png"));
 
             list.add(new DatabaseOverallNode(this, "GeoPackage",
                     "ui/filesystemicons/geopackage.png"));
@@ -162,26 +163,20 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
             list.add(new DatabaseOverallNode(this, "SpatiaLite",
                     "ui/filesystemicons/spatialite.png"));
 
-            list.add(new DatabaseOverallNode(this, "DB2",
-                    "ui/filesystemicons/db2.png"));
+            list.add(new DatabaseOverallNode(this, "DB2", "ui/filesystemicons/db2.png"));
 
-            list.add(new DatabaseOverallNode(this, "H2",
-                    "ui/filesystemicons/h2.png"));
+            list.add(new DatabaseOverallNode(this, "H2", "ui/filesystemicons/h2.png"));
 
-            list.add(new DatabaseOverallNode(this, "MySQL",
-                    "ui/filesystemicons/mysql.png"));
+            list.add(new DatabaseOverallNode(this, "MySQL", "ui/filesystemicons/mysql.png"));
 
-            list.add(new DatabaseOverallNode(this, "Oracle",
-                    "ui/filesystemicons/oracle.png"));
+            list.add(new DatabaseOverallNode(this, "Oracle", "ui/filesystemicons/oracle.png"));
 
             list.add(new DatabaseOverallNode(this, "Microsoft SQL Server (JTDS Driver) (JNDI)",
                     "ui/filesystemicons/sqlserver.png"));
 
-            list.add(new DatabaseOverallNode(this, "Teradata",
-                    "ui/filesystemicons/teradata.png"));
+            list.add(new DatabaseOverallNode(this, "Teradata", "ui/filesystemicons/teradata.png"));
 
-            for(DatabaseOverallNode node : list)
-            {
+            for (DatabaseOverallNode node : list) {
                 databaseRootNodeMap.put(node.toString(), node);
             }
         }
@@ -247,9 +242,9 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     private boolean connectToDatabase(DatabaseConnection connection) {
         boolean isConnected = false;
 
-        DatabaseConnection dbConnection = DatabaseConnectionManager.getInstance().getMatchingConnection(connection);
-        if(dbConnection == null)
-        {
+        DatabaseConnection dbConnection = DatabaseConnectionManager.getInstance()
+                .getMatchingConnection(connection);
+        if (dbConnection == null) {
             addNewConnection(connection);
             dbConnection = connection;
         }
@@ -319,7 +314,9 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#getConnectionDetails()
      */
     @Override
@@ -344,7 +341,9 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return nodeTypeList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.databaseconnection.DatabaseConnectStateInterface#isConnected(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -357,7 +356,9 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.tool.databaseconnection.DatabaseConnectStateInterface#connect(java.util.List)
      */
     @Override
@@ -392,8 +393,11 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.extension.filesystem.database.DatabaseParseCompleteInterface#populateComplete(com.sldeditor.common.data.DatabaseConnection, java.util.List)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.extension.filesystem.database.DatabaseParseCompleteInterface#populateComplete(com.sldeditor.common.data.DatabaseConnection,
+     * java.util.List)
      */
     @Override
     public void populateComplete(DatabaseConnection connection, List<String> featureClassList) {
@@ -404,8 +408,11 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#addNewConnection(com.sldeditor.common.data.DatabaseConnection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#addNewConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void addNewConnection(DatabaseConnection newConnectionDetails) {
@@ -418,7 +425,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
             addConnectionNode(newConnectionDetails);
 
             progress.refreshNode(getRootDatabaseNode(newConnectionDetails));
-            progress.setFolder(newConnectionDetails.getDatabaseTypeLabel(), newConnectionDetails, false);
+            progress.setFolder(newConnectionDetails.getDatabaseTypeLabel(), newConnectionDetails,
+                    false);
 
             updatePropertyFile();
         }
@@ -434,8 +442,11 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         return getRootDatabaseNodes().get(newConnectionDetails.getDatabaseTypeLabel());
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#updateConnectionDetails(com.sldeditor.common.data.DatabaseConnection, com.sldeditor.common.data.DatabaseConnection)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#updateConnectionDetails(com.sldeditor.common.data.
+     * DatabaseConnection, com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void updateConnectionDetails(DatabaseConnection originalConnectionDetails,
@@ -454,8 +465,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
 
         progress.updateConnection(originalConnectionDetails, newConnectionDetails);
 
-        DatabaseConnectionManager.getInstance().addNewConnection(progress,
-                newConnectionDetails);
+        DatabaseConnectionManager.getInstance().addNewConnection(progress, newConnectionDetails);
         if (toolMgr != null) {
             toolMgr.refreshSelection();
         }
@@ -463,7 +473,9 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
         updatePropertyFile();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#deleteConnections(java.util.List)
      */
     @Override

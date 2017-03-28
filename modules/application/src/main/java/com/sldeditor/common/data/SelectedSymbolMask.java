@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.common.data;
 
 import java.util.ArrayList;
@@ -31,8 +33,7 @@ public class SelectedSymbolMask {
     /**
      * The Enum SymbolMaskEnum representing the different attributes of an SLD symbol.
      */
-    public enum SymbolMaskEnum
-    {
+    public enum SymbolMaskEnum {
 
         /** Styled layer. */
         E_STYLED_LAYER,
@@ -61,10 +62,8 @@ public class SelectedSymbolMask {
      *
      * @param level the level
      */
-    public SelectedSymbolMask(SymbolMaskEnum level)
-    {
-        if(maskOrderlist.isEmpty())
-        {
+    public SelectedSymbolMask(SymbolMaskEnum level) {
+        if (maskOrderlist.isEmpty()) {
             maskOrderlist.add(SymbolMaskEnum.E_STYLED_LAYER);
             maskOrderlist.add(SymbolMaskEnum.E_STYLE);
             maskOrderlist.add(SymbolMaskEnum.E_FEATURE_TYPE_STYLE);
@@ -72,11 +71,9 @@ public class SelectedSymbolMask {
             maskOrderlist.add(SymbolMaskEnum.E_SYMBOLIZER);
         }
 
-        for(SymbolMaskEnum key : maskOrderlist)
-        {
+        for (SymbolMaskEnum key : maskOrderlist) {
             maskList.add(key);
-            if(key == level)
-            {
+            if (key == level) {
                 break;
             }
         }
@@ -88,8 +85,7 @@ public class SelectedSymbolMask {
      * @param level the level
      * @return true, if successful
      */
-    public boolean shouldContinue(SymbolMaskEnum level)
-    {
+    public boolean shouldContinue(SymbolMaskEnum level) {
         return (maskList.contains(level));
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.filter.v2.function.temporal;
 
 import java.util.Date;
@@ -41,14 +42,12 @@ public class Before implements FilterConfigInterface {
     /**
      * The Class BeforeExtended.
      */
-    public class BeforeExtended extends BeforeImpl implements FilterExtendedInterface
-    {
-        
+    public class BeforeExtended extends BeforeImpl implements FilterExtendedInterface {
+
         /**
          * Instantiates a new before extended.
          */
-        public BeforeExtended()
-        {
+        public BeforeExtended() {
             super(null, null);
         }
 
@@ -58,19 +57,22 @@ public class Before implements FilterConfigInterface {
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public BeforeExtended(Expression expression1, Expression expression2)
-        {
+        public BeforeExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see java.lang.Object#toString()
          */
         public String toString() {
             return "[ " + getExpression1() + " Before " + getExpression2() + " ]";
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,8 +84,7 @@ public class Before implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Before()
-    {
+    public Before() {
     }
 
     /**
@@ -94,20 +95,12 @@ public class Before implements FilterConfigInterface {
     @Override
     public FilterName getFilterConfiguration() {
         FilterName filterName = new FilterName("Before", Boolean.class);
-        filterName.addParameter(new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Date.class));
-        filterName.addParameter(new FilterNameParameter("datetime", ExpressionTypeEnum.LITERAL, Date.class));
+        filterName.addParameter(
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Date.class));
+        filterName.addParameter(
+                new FilterNameParameter("datetime", ExpressionTypeEnum.LITERAL, Date.class));
 
         return filterName;
-    }
-
-    /**
-     * Creates the filter.
-     *
-     * @return the filter
-     */
-    @Override
-    public Filter createFilter() {
-        return new BeforeExtended();
     }
 
     /**
@@ -123,6 +116,16 @@ public class Before implements FilterConfigInterface {
     /**
      * Creates the filter.
      *
+     * @return the filter
+     */
+    @Override
+    public Filter createFilter() {
+        return new BeforeExtended();
+    }
+
+    /**
+     * Creates the filter.
+     *
      * @param parameterList the parameter list
      * @return the filter
      */
@@ -131,12 +134,9 @@ public class Before implements FilterConfigInterface {
 
         BeforeImpl filter = null;
 
-        if((parameterList == null) || (parameterList.size() != 2))
-        {
+        if ((parameterList == null) || (parameterList.size() != 2)) {
             filter = new BeforeExtended();
-        }
-        else
-        {
+        } else {
             filter = new BeforeExtended(parameterList.get(0), parameterList.get(1));
         }
 

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.panels;
 
 import java.awt.BorderLayout;
@@ -36,10 +37,19 @@ import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;
 
 /**
- * The Class SLDEditorUIPanels contains references to the panels to display for: - no symbols selected - one symbol selected - multiple symbols
- * selected
+ * The Class SLDEditorUIPanels contains references to the panels to display for.:
  * 
- * Also contains references for the following panels: - DataSourceConfigPanel - Panel layout for the SLD viewing/editing component
+ * <p>- no symbols selected
+ * 
+ * <p>- one symbol selected
+ * 
+ * <p>- multiple symbols selected
+ * 
+ * <p>Also contains references for the following panels:
+ * 
+ * <p>- DataSourceConfigPanel
+ * 
+ * <p>- Panel layout for the SLD viewing/editing component
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -121,25 +131,19 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     public void populateUI(int noOfItems) {
         String selectedItem = null;
 
-        if(noOfItems > 1)
-        {
+        if (noOfItems > 1) {
             selectedItem = MULTIPLE_SYMBOL;
-        }
-        else if(noOfItems == 1)
-        {
+        } else if (noOfItems == 1) {
             selectedItem = SINGLE_SYMBOL;
-        }
-        else
-        {
+        } else {
             selectedItem = NO_SYMBOL;
         }
 
         // Symbol panel
         SymbolPanelInterface symbolPanelUI = uiSymbolMap.get(selectedItem);
 
-        if(symbolPanelUI != null)
-        {
-            CardLayout cl = (CardLayout)(panelDataTab.getLayout());
+        if (symbolPanelUI != null) {
+            CardLayout cl = (CardLayout) (panelDataTab.getLayout());
             cl.show(panelDataTab, selectedItem);
 
             symbolPanelUI.populate(SelectedSymbol.getInstance());
@@ -148,9 +152,8 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
         // Legend panel
         SymbolPanelInterface legendPanelUI = uiLegendMap.get(selectedItem);
 
-        if(legendPanelUI != null)
-        {
-            CardLayout cl = (CardLayout)(panelLegendTab.getLayout());
+        if (legendPanelUI != null) {
+            CardLayout cl = (CardLayout) (panelLegendTab.getLayout());
             cl.show(panelLegendTab, selectedItem);
 
             legendPanelUI.populate(SelectedSymbol.getInstance());
@@ -160,7 +163,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     }
 
     /**
-     * Create panel that contains the SLD symbol viewing/editing panels
+     * Create panel that contains the SLD symbol viewing/editing panels.
      *
      * @return the panel
      */
@@ -196,7 +199,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     }
 
     /**
-     * Gets the data source config panel, creates it if it hasn't been already
+     * Gets the data source config panel, creates it if it hasn't been already.
      *
      * @return the data source config
      */

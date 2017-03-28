@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker.qgis;
 
 import java.util.ArrayList;
@@ -68,9 +69,8 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
         markerField = new FieldConfigMarkerQGIS(
-                new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "",
-                        false),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+                new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "", false), fillFieldConfig,
+                strokeFieldConfig, symbolSelectionField);
 
         markerField.setVendorOptionVersion(emptyDetails.getVendorOptionVersion());
 
@@ -89,7 +89,9 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override

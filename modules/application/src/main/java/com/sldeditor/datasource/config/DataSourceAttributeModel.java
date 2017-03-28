@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.datasource.config;
 
 import java.util.ArrayList;
@@ -85,7 +86,8 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     private List<DataSourceAttributeData> valueList = new ArrayList<DataSourceAttributeData>();
 
     /** The value map. */
-    private Map<String, DataSourceAttributeData> valueMap = new HashMap<String, DataSourceAttributeData>();
+    private Map<String, DataSourceAttributeData> valueMap =
+            new HashMap<String, DataSourceAttributeData>();
 
     /** The is connected to data source. */
     private boolean isConnectedToDataSource = false;

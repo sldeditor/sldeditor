@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.tree.item;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,27 +35,30 @@ import com.sldeditor.ui.tree.SLDTreeTools;
 public class FeatureTypeStyleTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
-    private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle");
+    private static final String TITLE = Localisation.getString(SLDTreeTools.class,
+            "TreeItem.featureTypeStyle");
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
     public String getTreeString(DefaultMutableTreeNode node, Object nodeObject) {
-        FeatureTypeStyle fts = (FeatureTypeStyle)nodeObject;
+        FeatureTypeStyle fts = (FeatureTypeStyle) nodeObject;
 
         String name = "";
-        if(fts != null)
-        {
-            if(fts.getName() != null)
-            {
+        if (fts != null) {
+            if (fts.getName() != null) {
                 name = fts.getName();
             }
         }
         return String.format("%s : %s", TITLE, name);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override

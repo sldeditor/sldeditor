@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor;
 
 import java.awt.Image;
@@ -197,7 +198,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             Class util = Class.forName("com.apple.eawt.Application");
             Method getApplication = util.getMethod("getApplication", new Class[0]);
             Object application = getApplication.invoke(util);
-            Class params[] = new Class[1];
+            Class[] params = new Class[1];
             params[0] = Image.class;
             Method setDockIconImage = util.getMethod("setDockIconImage", params);
             URL url = SLDEditor.class.getClassLoader()

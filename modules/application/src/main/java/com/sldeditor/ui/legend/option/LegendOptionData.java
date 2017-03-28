@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.legend.option;
 
 import java.awt.Color;
@@ -35,8 +36,7 @@ import com.sldeditor.common.utils.ColourUtils;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class LegendOptionData
-{
+public class LegendOptionData {
 
     /** The Constant BACKGROUND_COLOUR. */
     private static final String BACKGROUND_COLOUR = "backgroundColour";
@@ -145,8 +145,7 @@ public class LegendOptionData
      *
      * @return the image width
      */
-    public int getImageWidth()
-    {
+    public int getImageWidth() {
         return imageWidth;
     }
 
@@ -155,12 +154,10 @@ public class LegendOptionData
      *
      * @param imageWidth the new image width
      */
-    public void setImageWidth(int imageWidth)
-    {
+    public void setImageWidth(int imageWidth) {
         this.imageWidth = imageWidth;
 
-        if(maintainAspectRatio)
-        {
+        if (maintainAspectRatio) {
             this.imageHeight = imageWidth;
         }
     }
@@ -170,8 +167,7 @@ public class LegendOptionData
      *
      * @return the image height
      */
-    public int getImageHeight()
-    {
+    public int getImageHeight() {
         return imageHeight;
     }
 
@@ -180,12 +176,10 @@ public class LegendOptionData
      *
      * @param imageHeight the new image height
      */
-    public void setImageHeight(int imageHeight)
-    {
+    public void setImageHeight(int imageHeight) {
         this.imageHeight = imageHeight;
 
-        if(maintainAspectRatio)
-        {
+        if (maintainAspectRatio) {
             this.imageWidth = imageHeight;
         }
     }
@@ -195,8 +189,7 @@ public class LegendOptionData
      *
      * @return true, if is maintain aspect ratio
      */
-    public boolean isMaintainAspectRatio()
-    {
+    public boolean isMaintainAspectRatio() {
         return maintainAspectRatio;
     }
 
@@ -205,8 +198,7 @@ public class LegendOptionData
      *
      * @param maintainAspectRatio the new maintain aspect ratio
      */
-    public void setMaintainAspectRatio(boolean maintainAspectRatio)
-    {
+    public void setMaintainAspectRatio(boolean maintainAspectRatio) {
         this.maintainAspectRatio = maintainAspectRatio;
     }
 
@@ -215,8 +207,7 @@ public class LegendOptionData
      *
      * @return the dpi
      */
-    public int getDpi()
-    {
+    public int getDpi() {
         return dpi;
     }
 
@@ -225,8 +216,7 @@ public class LegendOptionData
      *
      * @param dpi the new dpi
      */
-    public void setDpi(int dpi)
-    {
+    public void setDpi(int dpi) {
         this.dpi = dpi;
     }
 
@@ -235,8 +225,7 @@ public class LegendOptionData
      *
      * @return the background colour
      */
-    public Color getBackgroundColour()
-    {
+    public Color getBackgroundColour() {
         return backgroundColour;
     }
 
@@ -245,8 +234,7 @@ public class LegendOptionData
      *
      * @param backgroundColour the new background colour
      */
-    public void setBackgroundColour(Color backgroundColour)
-    {
+    public void setBackgroundColour(Color backgroundColour) {
         this.backgroundColour = backgroundColour;
     }
 
@@ -255,8 +243,7 @@ public class LegendOptionData
      *
      * @param showLabels the new show labels
      */
-    public void setShowLabels(boolean showLabels)
-    {
+    public void setShowLabels(boolean showLabels) {
         this.showLabels = showLabels;
     }
 
@@ -265,8 +252,7 @@ public class LegendOptionData
      *
      * @return the image size
      */
-    public int getImageSize()
-    {
+    public int getImageSize() {
         return imageSize;
     }
 
@@ -275,8 +261,7 @@ public class LegendOptionData
      *
      * @param imageSize the new image size
      */
-    public void setImageSize(int imageSize)
-    {
+    public void setImageSize(int imageSize) {
         this.imageSize = imageSize;
     }
 
@@ -285,8 +270,7 @@ public class LegendOptionData
      *
      * @return true, if successful
      */
-    public boolean splitSymbolizers()
-    {
+    public boolean splitSymbolizers() {
         return splitSymbolizers;
     }
 
@@ -295,8 +279,7 @@ public class LegendOptionData
      *
      * @param splitSymbolizers the new split symbolizers
      */
-    public void setSplitSymbolizers(boolean splitSymbolizers)
-    {
+    public void setSplitSymbolizers(boolean splitSymbolizers) {
         this.splitSymbolizers = splitSymbolizers;
     }
 
@@ -461,8 +444,7 @@ public class LegendOptionData
      * @param elementName the legend option element
      */
     public void encodeXML(Document doc, Element root, String elementName) {
-        if((doc == null) || (root == null) || (elementName == null))
-        {
+        if ((doc == null) || (root == null) || (elementName == null)) {
             return;
         }
 
@@ -496,12 +478,13 @@ public class LegendOptionData
      * @param elementName the element name
      * @param value the value
      */
-    private void createElement(Document doc, Element parentElement, String elementName, boolean value) {
+    private void createElement(Document doc, Element parentElement, String elementName,
+            boolean value) {
         Element element = doc.createElement(elementName);
         element.appendChild(doc.createTextNode(Boolean.toString(value)));
 
         parentElement.appendChild(element);
-    }  
+    }
 
     /**
      * Creates the XML element for an integer value.
@@ -516,7 +499,7 @@ public class LegendOptionData
         element.appendChild(doc.createTextNode(Integer.toString(value)));
 
         parentElement.appendChild(element);
-    }  
+    }
 
     /**
      * Creates the XML element for a colour value.
@@ -526,12 +509,13 @@ public class LegendOptionData
      * @param elementName the element name
      * @param value the value
      */
-    private void createElement(Document doc, Element parentElement, String elementName, Color value) {
+    private void createElement(Document doc, Element parentElement, String elementName,
+            Color value) {
         Element element = doc.createElement(elementName);
         element.appendChild(doc.createTextNode(ColourUtils.fromColour(value)));
 
         parentElement.appendChild(element);
-    }  
+    }
 
     /**
      * Creates the XML element for a font value.
@@ -541,14 +525,15 @@ public class LegendOptionData
      * @param elementName the element name
      * @param value the value
      */
-    private void createElement(Document doc, Element parentElement, String elementName, Font value) {
+    private void createElement(Document doc, Element parentElement, String elementName,
+            Font value) {
         Element element = doc.createElement(elementName);
         element.setAttribute(FONT_SIZE, Integer.toString(value.getSize()));
         element.setAttribute(FONT_STYLE, Integer.toString(value.getStyle()));
         element.appendChild(doc.createTextNode(value.getName()));
 
         parentElement.appendChild(element);
-    }  
+    }
 
     /**
      * Decode the legend options from XML.
@@ -557,87 +542,57 @@ public class LegendOptionData
      * @param elementName the element name
      * @return the data source properties
      */
-    public static LegendOptionData decodeXML(Document document, String elementName)
-    {
+    public static LegendOptionData decodeXML(Document document, String elementName) {
         LegendOptionData legendOptionData = new LegendOptionData();
 
-        if((document != null) && (elementName != null))
-        {
+        if ((document != null) && (elementName != null)) {
             NodeList nodeList = document.getElementsByTagName(elementName);
-            if(nodeList.getLength() > 0)
-            {
+            if (nodeList.getLength() > 0) {
                 Node node = nodeList.item(0);
 
                 Node child = node.getFirstChild();
 
-                while(child != null)
-                {
-                    if(child.getNodeType() == Node.ELEMENT_NODE)
-                    {
+                while (child != null) {
+                    if (child.getNodeType() == Node.ELEMENT_NODE) {
                         String nodeName = child.getNodeName();
-                        if(nodeName.compareToIgnoreCase(IMAGE_WIDTH) == 0)
-                        {
+                        if (nodeName.compareToIgnoreCase(IMAGE_WIDTH) == 0) {
                             legendOptionData.setImageWidth(decodeIntElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(IMAGE_HEIGHT) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(IMAGE_HEIGHT) == 0) {
                             legendOptionData.setImageHeight(decodeIntElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(IMAGE_DPI) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(IMAGE_DPI) == 0) {
                             legendOptionData.setDpi(decodeIntElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(IMAGE_SIZE) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(IMAGE_SIZE) == 0) {
                             legendOptionData.setImageSize(decodeIntElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(MAINTAIN_ASPECT_RATIO) == 0)
-                        {
-                            legendOptionData.setMaintainAspectRatio(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(SHOW_LABELS) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(MAINTAIN_ASPECT_RATIO) == 0) {
+                            legendOptionData
+                                    .setMaintainAspectRatio(decodeBooleanElement(document, child));
+                        } else if (nodeName.compareToIgnoreCase(SHOW_LABELS) == 0) {
                             legendOptionData.setShowLabels(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(SHOW_TITLE) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(SHOW_TITLE) == 0) {
                             legendOptionData.setShowTitle(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(SPLIT_SYMBOLIZERS) == 0)
-                        {
-                            legendOptionData.setSplitSymbolizers(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(FONT_ANTI_ALIASING) == 0)
-                        {
-                            legendOptionData.setFontAntiAliasing(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(SHOW_BORDER) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(SPLIT_SYMBOLIZERS) == 0) {
+                            legendOptionData
+                                    .setSplitSymbolizers(decodeBooleanElement(document, child));
+                        } else if (nodeName.compareToIgnoreCase(FONT_ANTI_ALIASING) == 0) {
+                            legendOptionData
+                                    .setFontAntiAliasing(decodeBooleanElement(document, child));
+                        } else if (nodeName.compareToIgnoreCase(SHOW_BORDER) == 0) {
                             legendOptionData.setBorder(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(BAND_INFORMATION) == 0)
-                        {
-                            legendOptionData.setBandInformation(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(BACKGROUND_TRANSPARENT) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(BAND_INFORMATION) == 0) {
+                            legendOptionData
+                                    .setBandInformation(decodeBooleanElement(document, child));
+                        } else if (nodeName.compareToIgnoreCase(BACKGROUND_TRANSPARENT) == 0) {
                             legendOptionData.setTransparent(decodeBooleanElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(LABEL_FONT) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(LABEL_FONT) == 0) {
                             legendOptionData.setLabelFont(decodeFontElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(LABEL_FONT_COLOUR) == 0)
-                        {
-                            legendOptionData.setLabelFontColour(decodeColourElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(BORDER_COLOUR) == 0)
-                        {
+                        } else if (nodeName.compareToIgnoreCase(LABEL_FONT_COLOUR) == 0) {
+                            legendOptionData
+                                    .setLabelFontColour(decodeColourElement(document, child));
+                        } else if (nodeName.compareToIgnoreCase(BORDER_COLOUR) == 0) {
                             legendOptionData.setBorderColour(decodeColourElement(document, child));
-                        }
-                        else if(nodeName.compareToIgnoreCase(BACKGROUND_COLOUR) == 0)
-                        {
-                            legendOptionData.setBackgroundColour(decodeColourElement(document, child));
+                        } else if (nodeName.compareToIgnoreCase(BACKGROUND_COLOUR) == 0) {
+                            legendOptionData
+                                    .setBackgroundColour(decodeColourElement(document, child));
                         }
                     }
                     child = child.getNextSibling();

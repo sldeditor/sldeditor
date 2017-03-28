@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import javax.measure.unit.Unit;
 
 /**
  * The Class UnitsOfMeasure handles the units of measurement combo box items
+ * 
  * <p>Implemented as a singleton.
  * 
  * @author Robert Ward (SCISYS)
@@ -38,13 +40,12 @@ public class UnitsOfMeasure {
     private static UnitsOfMeasure instance = null;
 
     /** The unit map. */
-    private Map<String, Unit<Length> > unitMap = new HashMap<String, Unit<Length> >();
+    private Map<String, Unit<Length>> unitMap = new HashMap<String, Unit<Length>>();
 
     /**
      * Instantiates a new units of measure.
      */
-    private UnitsOfMeasure()
-    {
+    private UnitsOfMeasure() {
         unitMap.put("pixel", NonSI.PIXEL);
         unitMap.put("metre", SI.METRE);
         unitMap.put("foot", NonSI.FOOT);
@@ -55,10 +56,8 @@ public class UnitsOfMeasure {
      *
      * @return single instance of UnitsOfMeasure
      */
-    public static UnitsOfMeasure getInstance()
-    {
-        if(instance == null)
-        {
+    public static UnitsOfMeasure getInstance() {
+        if (instance == null) {
             instance = new UnitsOfMeasure();
         }
 
@@ -73,10 +72,8 @@ public class UnitsOfMeasure {
      */
     public String convert(Unit<Length> uom) {
         String uomString = "";
-        for(String key : unitMap.keySet())
-        {
-            if(unitMap.get(key) == uom)
-            {
+        for (String key : unitMap.keySet()) {
+            if (unitMap.get(key) == uom) {
                 return key;
             }
         }
@@ -92,8 +89,7 @@ public class UnitsOfMeasure {
     public Unit<Length> convert(String uomString) {
         Unit<Length> unit = null;
 
-        if(unitMap.containsKey(uomString))
-        {
+        if (unitMap.containsKey(uomString)) {
             unit = unitMap.get(uomString);
         }
 

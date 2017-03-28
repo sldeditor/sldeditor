@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.batchupdatefont;
 
 import java.util.ArrayList;
@@ -125,7 +126,8 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
         //
         Font font = extractFont();
 
-        // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
+        // Any changes made to the font details need to be reflected
+        // back to the FieldConfigFontPreview field
         fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
     }
 
@@ -136,9 +138,6 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
      */
     private Font extractFont() {
         Expression fontFamily = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_FAMILY);
-        Expression fontSize = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_SIZE);
-        Expression fontStyle = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_STYLE);
-        Expression fontWeight = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_WEIGHT);
 
         List<Expression> fontFamilyList = new ArrayList<Expression>();
         if (fontFamily != null) {
@@ -149,6 +148,11 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
 
         font.getFamily().clear();
         font.getFamily().addAll(fontFamilyList);
+
+        Expression fontSize = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_SIZE);
+        Expression fontStyle = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_STYLE);
+        Expression fontWeight = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_WEIGHT);
+
         font.setStyle(fontStyle);
         font.setWeight(fontWeight);
         font.setSize(fontSize);

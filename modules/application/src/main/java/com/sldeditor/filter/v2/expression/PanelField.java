@@ -41,24 +41,21 @@ public class PanelField {
      * @param nodeType the node type
      * @return the field
      */
-    public static FieldConfigBase getField(Class<?> classType,
-            String valueTextLocalisation, 
-            Class<?> nodeType)
-    {
+    public static FieldConfigBase getField(Class<?> classType, String valueTextLocalisation,
+            Class<?> nodeType) {
         FieldConfigBase fieldConfig = null;
 
-        RenderTransformValueInterface value = RenderTransformValueFactory.getInstance().getValue(nodeType);
-        
-        if(value != null)
-        {
+        RenderTransformValueInterface value = RenderTransformValueFactory.getInstance()
+                .getValue(nodeType);
+
+        if (value != null) {
             String valueText = Localisation.getString(classType, valueTextLocalisation);
             FieldIdEnum fieldId = FieldIdEnum.FUNCTION;
-            FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText, true);
-            
+            FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText,
+                    true);
+
             fieldConfig = value.getField(commonData);
-        }
-        else
-        {
+        } else {
             System.err.println("Unknown field type : " + nodeType);
         }
 

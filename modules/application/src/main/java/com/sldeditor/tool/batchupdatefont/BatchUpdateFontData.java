@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.tool.batchupdatefont;
 
 import java.util.ArrayList;
@@ -278,7 +279,42 @@ public class BatchUpdateFontData {
     }
 
     /**
-     * Update scales.
+     * Update font.
+     *
+     * @param fontData the font data
+     */
+    public void updateFont(Font fontData) {
+
+        if ((fontData != null) && (font != null)) {
+            if (!fontData.getFamily().isEmpty()) {
+                if (!(fontData.getFamily().equals(font.getFamily()))) {
+                    font.getFamily().clear();
+                    font.getFamily().addAll(fontData.getFamily());
+                }
+            }
+
+            if (fontData.getWeight() != null) {
+                if (!(fontData.getWeight().equals(font.getWeight()))) {
+                    font.setWeight(fontData.getWeight());
+                }
+            }
+
+            if (fontData.getStyle() != null) {
+                if (!(fontData.getStyle().equals(font.getStyle()))) {
+                    font.setStyle(fontData.getStyle());
+                }
+            }
+
+            if (fontData.getSize() != null) {
+                if (!(fontData.getSize().equals(font.getSize()))) {
+                    font.setSize(fontData.getSize());
+                }
+            }
+        }
+    }
+
+    /**
+     * Update font.
      *
      * @param sldWriter the sld writer
      * @return true, if successful
@@ -310,9 +346,11 @@ public class BatchUpdateFontData {
             SLDDataInterface current = SLDEditorFile.getInstance().getSLDData();
 
             if ((current != null) && (sldData != null)) {
-                if (((current.getSLDFile() == null) && (sldData.getSLDFile() == null)) ||
-                       ((current.getSLDFile() != null) && current.getSLDFile().equals(sldData.getSLDFile()))
-                        || ((current.getSLDURL() != null) && current.getSLDURL().equals(sldData.getSLDURL()))) {
+                if (((current.getSLDFile() == null) && (sldData.getSLDFile() == null))
+                        || ((current.getSLDFile() != null)
+                                && current.getSLDFile().equals(sldData.getSLDFile()))
+                        || ((current.getSLDURL() != null)
+                                && current.getSLDURL().equals(sldData.getSLDURL()))) {
                     Symbolizer currentSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer,
                             SelectedSymbol.getInstance().getSld());
                     if (currentSymbolizer != null) {
@@ -408,7 +446,7 @@ public class BatchUpdateFontData {
     }
 
     /**
-     * Checks if expression has changed from the original
+     * Checks if expression has changed from the original.
      *
      * @param original the original
      * @param exp the exp
@@ -494,42 +532,7 @@ public class BatchUpdateFontData {
     }
 
     /**
-     * Update font.
-     *
-     * @param fontData the font data
-     */
-    public void updateFont(Font fontData) {
-
-        if ((fontData != null) && (font != null)) {
-            if (!fontData.getFamily().isEmpty()) {
-                if (!(fontData.getFamily().equals(font.getFamily()))) {
-                    font.getFamily().clear();
-                    font.getFamily().addAll(fontData.getFamily());
-                }
-            }
-
-            if (fontData.getWeight() != null) {
-                if (!(fontData.getWeight().equals(font.getWeight()))) {
-                    font.setWeight(fontData.getWeight());
-                }
-            }
-
-            if (fontData.getStyle() != null) {
-                if (!(fontData.getStyle().equals(font.getStyle()))) {
-                    font.setStyle(fontData.getStyle());
-                }
-            }
-
-            if (fontData.getSize() != null) {
-                if (!(fontData.getSize().equals(font.getSize()))) {
-                    font.setSize(fontData.getSize());
-                }
-            }
-        }
-    }
-
-    /**
-     * Find out whether any data has changed
+     * Find out whether any data has changed.
      *
      * @return true, if any data has been changed
      */

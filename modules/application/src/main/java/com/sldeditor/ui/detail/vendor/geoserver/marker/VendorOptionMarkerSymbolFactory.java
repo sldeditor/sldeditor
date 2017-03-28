@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();
 
     /** The GeoServer vendor option for extshapes://. */
-    private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes = new VOGeoServerExtShapeSymbol();
+    private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes = 
+            new VOGeoServerExtShapeSymbol();
 
     /** The GeoServer vendor option for extshape://arrow. */
     private VOMarkerSymbolInterface vendorOptionGeoServerArrow = new VOGeoServerArrowSymbol();
@@ -122,18 +124,18 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
         return fieldStateList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
         List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
 
-        for(VOMarkerSymbolInterface vendorOption : list)
-        {
+        for (VOMarkerSymbolInterface vendorOption : list) {
             VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();
-            if(vendorOptionInfo != null)
-            {
+            if (vendorOptionInfo != null) {
                 vendorOptionInfoList.add(vendorOptionInfo);
             }
         }

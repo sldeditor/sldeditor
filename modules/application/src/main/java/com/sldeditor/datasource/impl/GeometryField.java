@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.sldeditor.datasource.impl;
 
 /**
@@ -12,15 +13,14 @@ public class GeometryField {
 
     /** The geometry field name. */
     private String geometryFieldName;
-    
+
     /** The Constant DEFAULT_GEOMETRY_FIELD_NAME. */
     private static final String DEFAULT_GEOMETRY_FIELD_NAME = "geom";
-    
+
     /**
      * Default constructor.
      */
-    public GeometryField()
-    {
+    public GeometryField() {
         reset();
     }
 

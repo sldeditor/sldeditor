@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
 import java.util.HashMap;
@@ -522,7 +523,8 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
             vendorOptionInfo = new VendorOptionInfo(
                     Localisation.getString(VOGeoServerLabellingUnderline.class,
                             "geoserver.label.underline.title"),
-                    this.getVendorOption(), Localisation.getString(VOGeoServerLabellingUnderline.class,
+                    this.getVendorOption(),
+                    Localisation.getString(VOGeoServerLabellingUnderline.class,
                             "geoserver.label.underline.description"));
         }
         return vendorOptionInfo;

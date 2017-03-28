@@ -42,18 +42,16 @@ public class DetermineRasterFormat {
      * @param selectionPanel the selection panel
      * @return the abstract grid format
      */
-    public static AbstractGridFormat choose(File rasterFile, ChooseRasterFormatInterface selectionPanel) {
-        if(rasterFile != null)
-        {
-            final Set<AbstractGridFormat> formats = GridFormatFinder.findFormats(rasterFile, GeoTools.getDefaultHints());
+    public static AbstractGridFormat choose(File rasterFile,
+            ChooseRasterFormatInterface selectionPanel) {
+        if (rasterFile != null) {
+            final Set<AbstractGridFormat> formats = GridFormatFinder.findFormats(rasterFile,
+                    GeoTools.getDefaultHints());
 
-            if(formats.size() > 1)
-            {
-                if(selectionPanel != null)
-                {
+            if (formats.size() > 1) {
+                if (selectionPanel != null) {
                     AbstractGridFormat selectedFormat = selectionPanel.showPanel(formats);
-                    if(selectedFormat != null)
-                    {
+                    if (selectedFormat != null) {
                         return selectedFormat;
                     }
                 }

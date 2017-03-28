@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.extension.filesystem.geoserver;
 
 import java.util.List;
@@ -30,8 +31,7 @@ import com.sldeditor.common.data.StyleWrapper;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface GeoServerReadProgressInterface
-{
+public interface GeoServerReadProgressInterface {
 
     /**
      * Start populating.
@@ -39,7 +39,7 @@ public interface GeoServerReadProgressInterface
      * @param connection the connection
      */
     void startPopulating(GeoServerConnection connection);
-    
+
     /**
      * Read styles complete.
      *
@@ -47,7 +47,8 @@ public interface GeoServerReadProgressInterface
      * @param styleMap the style map
      * @param partialRefresh the partial refresh
      */
-    void readStylesComplete(GeoServerConnection connection, Map<String, List<StyleWrapper>> styleMap, boolean partialRefresh);
+    void readStylesComplete(GeoServerConnection connection,
+            Map<String, List<StyleWrapper>> styleMap, boolean partialRefresh);
 
     /**
      * Read styles progress.
@@ -64,7 +65,8 @@ public interface GeoServerReadProgressInterface
      * @param connection the connection
      * @param layerMap the layer map
      */
-    void readLayersComplete(GeoServerConnection connection, Map<String, List<GeoServerLayer>> layerMap);
+    void readLayersComplete(GeoServerConnection connection,
+            Map<String, List<GeoServerLayer>> layerMap);
 
     /**
      * Read layers progress.

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.legend;
 
 import java.awt.BorderLayout;
@@ -49,12 +50,11 @@ import com.sldeditor.ui.legend.filechooser.ImageFilter;
 /**
  * Class to draw the legend image into.
  * 
- * Display legend image, allows image to be copied to the clipboard
+ * <p>Display legend image, allows image to be copied to the clipboard
  * 
  * @author Robert Ward (SCISYS)
  */
-public class LegendPanelImage extends JLabel
-{
+public class LegendPanelImage extends JLabel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -81,64 +81,52 @@ public class LegendPanelImage extends JLabel
 
         setLayout(new BorderLayout(0, 0));
 
-        JPopupMenu popupMenu = new JPopupMenu();
-
-        JMenuItem copyToClipboardMenuItem = new JMenuItem(Localisation.getString(LegendPanelImage.class, "LegendPanelImage.copyToClipboard"));
-        copyToClipboardMenuItem.addActionListener(new ActionListener()
-        {
+        JMenuItem copyToClipboardMenuItem = new JMenuItem(
+                Localisation.getString(LegendPanelImage.class, "LegendPanelImage.copyToClipboard"));
+        copyToClipboardMenuItem.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event)
-            {
-                if(imageIcon != null)
-                {
-                    try
-                    {
+            public void actionPerformed(ActionEvent event) {
+                if (imageIcon != null) {
+                    try {
                         Image image = imageIcon.getImage();
                         BufferedImage buffered = (BufferedImage) image;
 
-                        ImageSelection trans = new ImageSelection( buffered );
+                        ImageSelection trans = new ImageSelection(buffered);
                         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
-                        c.setContents( trans, null );
-                    }
-                    catch ( Exception e ) {
+                        c.setContents(trans, null);
+                    } catch (Exception e) {
                         ConsoleManager.getInstance().exception(LegendPanelImage.class, e);
                     }
                 }
             }
         });
 
-        JMenuItem saveAsMenuItem = new JMenuItem(Localisation.getString(LegendPanelImage.class, "common.saveas"));
-        saveAsMenuItem.addActionListener(new ActionListener()
-        {
+        JMenuItem saveAsMenuItem = new JMenuItem(
+                Localisation.getString(LegendPanelImage.class, "common.saveas"));
+        saveAsMenuItem.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event)
-            {
-                if(imageIcon != null)
-                {
+            public void actionPerformed(ActionEvent event) {
+                if (imageIcon != null) {
                     JFileChooser fc = new JFileChooser();
-                    try
-                    {
+                    try {
                         Image image = imageIcon.getImage();
 
                         List<FileFilter> fileterList = ImageFilter.getFilters();
 
-                        for(FileFilter filter : fileterList)
-                        {
+                        for (FileFilter filter : fileterList) {
                             fc.addChoosableFileFilter(filter);
                         }
 
                         int returnVal = fc.showSaveDialog(LegendPanelImage.this);
 
-                        if (returnVal == JFileChooser.APPROVE_OPTION)
-                        {
+                        if (returnVal == JFileChooser.APPROVE_OPTION) {
                             String extension = ImageFilter.defaultExtension();
                             FileFilter selectedFileFilter = fc.getFileFilter();
 
-                            if(selectedFileFilter != null)
-                            {
-                                if(selectedFileFilter instanceof ImageFilter)
-                                {
-                                    extension = ((ImageFilter) fc.getFileFilter()).getFileExtension();
+                            if (selectedFileFilter != null) {
+                                if (selectedFileFilter instanceof ImageFilter) {
+                                    extension = ((ImageFilter) fc.getFileFilter())
+                                            .getFileExtension();
                                 }
                             }
 
@@ -146,8 +134,7 @@ public class LegendPanelImage extends JLabel
 
                             String fullPath = fc.getSelectedFile().getCanonicalPath();
 
-                            if(!fullPath.endsWith(fullExtension))
-                            {
+                            if (!fullPath.endsWith(fullExtension)) {
                                 fullPath = fullPath + fullExtension;
                             }
 
@@ -155,41 +142,41 @@ public class LegendPanelImage extends JLabel
 
                             BufferedImage buffered = (BufferedImage) image;
 
-                            LegendManager.getInstance().saveLegendImage(buffered, extension, outputFile);
+                            LegendManager.getInstance().saveLegendImage(buffered, extension,
+                                    outputFile);
                         }
-                    }
-                    catch ( Exception e ) {
+                    } catch (Exception e) {
                         ConsoleManager.getInstance().exception(this, e);
                     }
                 }
             }
         });
 
-        final JCheckBoxMenuItem showFilenameMenuItem = new JCheckBoxMenuItem(Localisation.getString(LegendPanelImage.class, "LegendPanelImage.showFilename"));
+        final JCheckBoxMenuItem showFilenameMenuItem = new JCheckBoxMenuItem(
+                Localisation.getString(LegendPanelImage.class, "LegendPanelImage.showFilename"));
         showFilenameMenuItem.setSelected(showFilename);
-        showFilenameMenuItem.addActionListener(new ActionListener()
-        {
+        showFilenameMenuItem.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event)
-            {
+            public void actionPerformed(ActionEvent event) {
                 showFilename = showFilenameMenuItem.isSelected();
 
                 renderSymbol();
             }
         });
 
-        final JCheckBoxMenuItem showStyleNameMenuItem = new JCheckBoxMenuItem(Localisation.getString(LegendPanelImage.class, "LegendPanelImage.showStyleName"));
+        final JCheckBoxMenuItem showStyleNameMenuItem = new JCheckBoxMenuItem(
+                Localisation.getString(LegendPanelImage.class, "LegendPanelImage.showStyleName"));
         showStyleNameMenuItem.setSelected(showStyleName);
-        showStyleNameMenuItem.addActionListener(new ActionListener()
-        {
+        showStyleNameMenuItem.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event)
-            {
+            public void actionPerformed(ActionEvent event) {
                 showStyleName = showStyleNameMenuItem.isSelected();
 
                 renderSymbol();
             }
         });
+
+        JPopupMenu popupMenu = new JPopupMenu();
 
         popupMenu.add(showFilenameMenuItem);
         popupMenu.add(showStyleNameMenuItem);
@@ -203,30 +190,23 @@ public class LegendPanelImage extends JLabel
     /**
      * Render symbol.
      */
-    public void renderSymbol()
-    {
-        if(SelectedSymbol.getInstance().isValid())
-        {
+    public void renderSymbol() {
+        if (SelectedSymbol.getInstance().isValid()) {
             StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
 
-            if(sld != null)
-            {
+            if (sld != null) {
                 // Style name
                 String styleNameHeading = null;
 
-                if(showStyleName)
-                {
-                    if(!sld.layers().isEmpty())
-                    {
+                if (showStyleName) {
+                    if (!sld.layers().isEmpty()) {
                         StyledLayer styledLayer = sld.layers().get(0);
-                        if(styledLayer != null)
-                        {
+                        if (styledLayer != null) {
                             styleNameHeading = styledLayer.getName();
                         }
                     }
 
-                    if(styleNameHeading == null)
-                    {
+                    if (styleNameHeading == null) {
                         styleNameHeading = "";
                     }
                 }
@@ -234,37 +214,26 @@ public class LegendPanelImage extends JLabel
                 // Filename
                 String filename = null;
 
-                if(showFilename)
-                {
+                if (showFilename) {
                     filename = SelectedSymbol.getInstance().getFilename();
-                    if(filename == null)
-                    {
+                    if (filename == null) {
                         filename = "";
                     }
                 }
 
-                BufferedImage bImage = legend.createLegend(sld, 
-                        styleNameHeading, 
-                        filename);
+                BufferedImage bImage = legend.createLegend(sld, styleNameHeading, filename);
 
-                if(bImage != null)
-                {
+                if (bImage != null) {
                     imageIcon = new ImageIcon(bImage);
-                }
-                else
-                {
+                } else {
                     imageIcon = null;
                 }
 
                 this.setIcon(imageIcon);
-            }
-            else
-            {
+            } else {
                 this.setIcon(null);
             }
-        }
-        else
-        {
+        } else {
             this.setIcon(null);
         }
         repaint();

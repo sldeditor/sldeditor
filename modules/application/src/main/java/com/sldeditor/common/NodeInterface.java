@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.common;
 
 import java.awt.datatransfer.DataFlavor;
@@ -29,9 +30,8 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface NodeInterface
-{
-    
+public interface NodeInterface {
+
     /**
      * Gets the handler.
      *
@@ -45,7 +45,7 @@ public interface NodeInterface
      * @return the data flavour
      */
     DataFlavor getDataFlavour();
-    
+
     /**
      * Gets the destination text.
      *
