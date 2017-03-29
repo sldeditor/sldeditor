@@ -13,7 +13,7 @@
     <Group id="ANCHORPOINT" label="fillSymbol.anchorPoint"
         showLabel="true">
         <FieldConfigSlider id="ANCHOR_POINT_H"
-            label="fillSymbol.anchorPoint.x" defaultValue="0.0" />
+            label="fillSymbol.anchorPoint.x" defaultValue="0.5" />
         <FieldConfigSlider id="ANCHOR_POINT_V"
             label="fillSymbol.anchorPoint.y" defaultValue="0.5" />
     </Group>

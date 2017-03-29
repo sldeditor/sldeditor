@@ -59,9 +59,9 @@
             <Group id="DISPLACEMENT" label="text.placement.displacement"
                 showLabel="true">
                 <FieldConfigDouble id="DISPLACEMENT_X"
-                    label="text.placement.displacement.x" />
+                    label="text.placement.displacement.x" defaultValue="0.0" />
                 <FieldConfigDouble id="DISPLACEMENT_Y"
-                    label="text.placement.displacement.y" />
+                    label="text.placement.displacement.y" defaultValue="0.5" />
             </Group>
             <Group id="ROTATION" label="text.rotation" showLabel="true">
                 <FieldConfigDouble id="ANGLE"

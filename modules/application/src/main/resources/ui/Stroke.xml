@@ -56,7 +56,7 @@
     <Group id="STROKEANCHORPOINT" label="stroke.anchorPoint"
         showLabel="true">
         <FieldConfigSlider id="STROKE_SYMBOL_ANCHOR_POINT_H"
-            label="stroke.anchorPoint.x" defaultValue="0.0" />
+            label="stroke.anchorPoint.x" defaultValue="0.5" />
         <FieldConfigSlider id="STROKE_SYMBOL_ANCHOR_POINT_V"
             label="stroke.anchorPoint.y" defaultValue="0.5" />
     </Group>
