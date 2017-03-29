@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.ui.render;
 
 import static org.junit.Assert.assertTrue;
@@ -26,6 +27,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
 
 /**
  * The unit test for RuleRenderOptions.
+ * 
  * <p>{@link com.sldeditor.ui.render.RuleRenderOptions}
  *
  * @author Robert Ward (SCISYS)

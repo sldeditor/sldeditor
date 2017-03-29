@@ -16,19 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.undo;
 
 import com.sldeditor.common.undo.UndoStateInterface;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Class DummyUndo.
  *
+ * @author Robert Ward (SCISYS)
  */
-class DummyUndo implements UndoStateInterface
-{
+class DummyUndo implements UndoStateInterface {
+
+    /** The undo allowed. */
     public boolean undoAllowed = false;
+
+    /** The redo allowed. */
     public boolean redoAllowed = false;
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.common.undo.UndoStateInterface#updateUndoRedoState(boolean, boolean)
+     */
     @Override
     public void updateUndoRedoState(boolean undoAllowed, boolean redoAllowed) {
         this.undoAllowed = undoAllowed;

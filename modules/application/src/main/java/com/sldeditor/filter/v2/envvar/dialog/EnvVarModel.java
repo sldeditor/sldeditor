@@ -140,6 +140,8 @@ public class EnvVarModel extends DefaultTableModel {
             return envVar.getType();
         case COL_VALUE:
             return envVar.getValue();
+        default:
+            break;
         }
         return null;
     }

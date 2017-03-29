@@ -19,7 +19,9 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import javax.measure.quantity.Length;
 import javax.measure.unit.NonSI;
@@ -32,6 +34,7 @@ import com.sldeditor.ui.detail.UnitsOfMeasure;
 
 /**
  * The unit test for UnitsOfMeasure.
+ * 
  * <p>{@link com.sldeditor.ui.detail.UnitsOfMeasure}
  *
  * @author Robert Ward (SCISYS)

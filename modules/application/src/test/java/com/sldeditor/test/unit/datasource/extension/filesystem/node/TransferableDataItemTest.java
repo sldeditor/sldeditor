@@ -46,6 +46,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 
 /**
  * Unit test for TransferableDataItem class.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,7 +55,8 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 public class TransferableDataItemTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#TransferableDataItem()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#TransferableDataItem()}.
      */
     @Test
     public void testTransferableDataItem() {
@@ -83,10 +85,12 @@ public class TransferableDataItemTest {
                 Object data = dataItem.getTransferData(DataFlavourManager.FOLDER_DATAITEM_FLAVOR);
 
                 assertTrue(data instanceof TransferredData);
-                assertEquals(selectedData.size(), ((TransferredData)data).getDataListSize());
+                assertEquals(selectedData.size(), ((TransferredData) data).getDataListSize());
 
-                assertFalse(dataItem.isDataFlavorSupported(BuiltInDataFlavour.GEOSERVER_DATAITEM_FLAVOUR));
-                assertTrue(dataItem.isDataFlavorSupported(DataFlavourManager.FOLDER_DATAITEM_FLAVOR));
+                assertFalse(dataItem
+                        .isDataFlavorSupported(BuiltInDataFlavour.GEOSERVER_DATAITEM_FLAVOUR));
+                assertTrue(
+                        dataItem.isDataFlavorSupported(DataFlavourManager.FOLDER_DATAITEM_FLAVOR));
             } catch (UnsupportedFlavorException e) {
                 e.printStackTrace();
                 fail(e.getMessage());
@@ -104,12 +108,14 @@ public class TransferableDataItemTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#getTransferDataFlavors()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#getTransferDataFlavors()}.
      */
     @SuppressWarnings("deprecation")
     @Test
     public void testGetTransferDataFlavors() {
-        assertEquals(DataFlavourManager.getDataFlavourArray(), new TransferableDataItem(null).getTransferDataFlavors());
+        assertEquals(DataFlavourManager.getDataFlavourArray(),
+                new TransferableDataItem(null).getTransferDataFlavors());
     }
 
 }

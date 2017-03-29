@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test;
 
 import java.awt.event.WindowEvent;
@@ -199,7 +200,7 @@ public class SLDTestRunner {
     }
 
     /**
-     * Run the test
+     * Run the test.
      *
      * @param folder the folder
      * @param testConfig the test config
@@ -314,7 +315,8 @@ public class SLDTestRunner {
                                 for (Object xmlTestValueObj : testItem
                                         .getDisabledOrLiteralStringOrLiteralInt()) {
                                     if (xmlTestValueObj instanceof XMLSetMultiOptionGroup) {
-                                        XMLSetMultiOptionGroup testValue = (XMLSetMultiOptionGroup) xmlTestValueObj;
+                                        XMLSetMultiOptionGroup testValue =
+                                                (XMLSetMultiOptionGroup) xmlTestValueObj;
                                         GroupIdEnum groupId = testValue.getMultiOptionGroupId();
                                         String outputText = "Checking multioption group : "
                                                 + groupId;
@@ -376,7 +378,8 @@ public class SLDTestRunner {
                                                 fieldConfig);
 
                                         if (testValue instanceof XMLSetFieldLiteralBase) {
-                                            XMLSetFieldLiteralInterface testInterface = (XMLSetFieldLiteralInterface) testValue;
+                                            XMLSetFieldLiteralInterface testInterface =
+                                                    (XMLSetFieldLiteralInterface) testValue;
                                             testInterface.accept(fieldConfig, fieldId);
 
                                             if (!((XMLSetFieldLiteralBase) testValue)
@@ -391,7 +394,8 @@ public class SLDTestRunner {
                                                         actualResult);
                                             }
                                         } else if (testValue instanceof XMLSetFieldAttribute) {
-                                            XMLSetFieldLiteralInterface testInterface = (XMLSetFieldLiteralInterface) testValue;
+                                            XMLSetFieldLiteralInterface testInterface =
+                                                    (XMLSetFieldLiteralInterface) testValue;
                                             testInterface.accept(fieldConfig, fieldId);
 
                                             String sldContentString = sldEditor.getSLDString();
@@ -466,7 +470,8 @@ public class SLDTestRunner {
                                                 Assert.assertTrue(msg, condition);
                                             } else {
                                                 if (colourFieldsList.contains(fieldId)) {
-                                                    FieldConfigColour fieldColour = (FieldConfigColour) fieldConfig;
+                                                    FieldConfigColour fieldColour =
+                                                            (FieldConfigColour) fieldConfig;
 
                                                     expression = fieldColour.getColourExpression();
                                                 } else {
@@ -478,7 +483,8 @@ public class SLDTestRunner {
                                                         expression = ff.literal(string
                                                                 .replace(File.separatorChar, '/'));
                                                     } else if (fieldId == FieldIdEnum.FONT_FAMILY) {
-                                                        // Handle the case where a font is not available on all operating systems
+                                                        // Handle the case where a font is not 
+                                                        // available on all operating systems
                                                         String string = expression.toString();
 
                                                         if (string.compareToIgnoreCase(
@@ -512,7 +518,8 @@ public class SLDTestRunner {
                                                         } else if (literalValue
                                                                 .getClass() == String.class) {
                                                             if (fieldId == FieldIdEnum.FONT_FAMILY) {
-                                                                // Handle the case where a font is not available on all operating systems
+                                                                // Handle the case where a font is not 
+                                                                // available on all operating systems
                                                                 checkLiteralValue(outputText,
                                                                         expression, getFontForOS());
                                                             } else {

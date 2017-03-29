@@ -27,6 +27,7 @@ import com.sldeditor.datasource.example.impl.ExampleLineImpl;
 
 /**
  * Unit test for ExampleLineImpl class.
+ * 
  * <p>{@link com.sldeditor.datasource.example.impl.ExampleLineImpl}
  * 
  * @author Robert Ward (SCISYS)

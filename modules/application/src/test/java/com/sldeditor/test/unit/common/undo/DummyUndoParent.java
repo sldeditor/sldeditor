@@ -16,26 +16,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.test.unit.common.undo;
 
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Class DummyUndoParent.
  *
+ * @author Robert Ward (SCISYS)
  */
-class DummyUndoParent implements UndoActionInterface
-{
+class DummyUndoParent implements UndoActionInterface {
+    
+    /** The undo action. */
     public UndoInterface undoAction = null;
+
+    /** The redo action. */
     public UndoInterface redoAction = null;
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
+     */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
         undoAction = undoRedoObject;
         redoAction = null;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
+     */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
         undoAction = null;

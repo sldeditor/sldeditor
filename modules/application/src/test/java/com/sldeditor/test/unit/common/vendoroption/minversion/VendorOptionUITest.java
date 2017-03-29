@@ -1,3 +1,4 @@
+
 package com.sldeditor.test.unit.common.vendoroption.minversion;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
  * Unit test for VendorOptionUI.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.minversion.VendorOptionUI}
  * 
  * @author Robert Ward (SCISYS)
@@ -24,11 +26,12 @@ public class VendorOptionUITest {
             @Override
             public void getMinimumVersion(Object parentObj, Object sldObj,
                     List<VendorOptionPresent> vendorOptionsPresentList) {
-                
-            }});
-        
+
+            }
+        });
+
         testObj.createUI();
-        
+
         testObj.updatedSLD(null, null);
         testObj.vendorOptionsUpdated(null);
         testObj.populate(null);

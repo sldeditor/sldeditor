@@ -57,9 +57,9 @@ public class ComponentCellRenderer implements TreeCellRenderer {
         this.renderer = renderer;
     }
 
-    // This is the only TreeCellRenderer method.
-    // Compute the string to display, and pass it to the wrapped renderer
-    /*
+    /**
+     * This is the only TreeCellRenderer method.
+     * Compute the string to display, and pass it to the wrapped renderer
      * (non-Javadoc)
      * 
      * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int,
@@ -115,10 +115,10 @@ public class ComponentCellRenderer implements TreeCellRenderer {
 
     /**
      * Checks if tree node is leaf.
-     * <p>
-     * Is a leaf if the user object is one of the followinf:
-     * <p>
-     * <ul>
+     * 
+     * <p>Is a leaf if the user object is one of the following:
+     * 
+     * <p><ul>
      * <li>TextSymbolizer</li>
      * <li>RasterSymbolizer</li>
      * <li>Stroke</li>
@@ -137,7 +137,8 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     }
 
     /**
-     * Workout whether to show checkbox in the tree. Should only appear for PolygonSymbolizer fill and strokes
+     * Workout whether to show checkbox in the tree.
+     * Should only appear for PolygonSymbolizer fill and strokes
      *
      * @param parentUserObject the parent user object
      * @param userObject the user object

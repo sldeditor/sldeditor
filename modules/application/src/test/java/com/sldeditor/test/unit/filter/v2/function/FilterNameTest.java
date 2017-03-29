@@ -30,6 +30,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
 
 /**
  * Unit test for FilterName class.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.FilterName}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,7 +55,8 @@ public class FilterNameTest {
         assertTrue(filterName.compareTo(f.getFilterName()) == 0);
         assertEquals(returnType, f.getReturnType());
 
-        FilterNameParameter p1 = new FilterNameParameter("parameter 1", ExpressionTypeEnum.LITERAL, Integer.class);
+        FilterNameParameter p1 = new FilterNameParameter("parameter 1", 
+                ExpressionTypeEnum.LITERAL, Integer.class);
         f.addParameter(p1);
         assertEquals(1, f.getParameterList().size());
         assertEquals(null, f.getParameter(-1));

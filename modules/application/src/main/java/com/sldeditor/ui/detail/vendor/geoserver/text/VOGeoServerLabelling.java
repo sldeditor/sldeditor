@@ -115,7 +115,8 @@ public class VOGeoServerLabelling extends StandardPanel
     }
 
     /** The override map. */
-    private Map<FieldIdEnum, DefaultOverride> overrideMap = new HashMap<FieldIdEnum, DefaultOverride>();
+    private Map<FieldIdEnum, DefaultOverride> overrideMap =
+            new HashMap<FieldIdEnum, DefaultOverride>();
 
     /**
      * Constructor.
@@ -206,25 +207,30 @@ public class VOGeoServerLabelling extends StandardPanel
     }
 
     /**
-     * Gets the field data manager.
+     * Populate.
      *
-     * @return the field data manager
+     * @param polygonSymbolizer the polygon symbolizer
      */
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager() {
-        return this.fieldConfigManager;
+    public void populate(PolygonSymbolizer polygonSymbolizer) {
+        // Do nothing
     }
 
-    /**
-     * Populate.
-     *
-     * @param textSymbolizer the text symbolizer
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
      */
+    @Override
+    public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -237,6 +243,21 @@ public class VOGeoServerLabelling extends StandardPanel
         for (FieldIdEnum key : fieldMap.keySet()) {
             internalPopulate(options, key, fieldMap.get(key));
         }
+    }
+
+    /**
+     * Gets the field data manager.
+     *
+     * @return the field data manager
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
+     */
+    @Override
+    public GraphicPanelFieldManager getFieldDataManager() {
+        return this.fieldConfigManager;
     }
 
     /**
@@ -333,6 +354,25 @@ public class VOGeoServerLabelling extends StandardPanel
         } else {
             setDefaultValue(fieldId);
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
+     */
+    @Override
+    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
     }
 
     /**
@@ -548,35 +588,6 @@ public class VOGeoServerLabelling extends StandardPanel
         return true;
     }
 
-    /**
-     * Update symbol.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
-     */
-    @Override
-    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
-    }
-
-    /**
-     * Populate.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
-     */
-    @Override
-    public void populate(PolygonSymbolizer polygonSymbolizer) {
-        // Do nothing
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -585,26 +596,6 @@ public class VOGeoServerLabelling extends StandardPanel
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
-     */
-    @Override
-    public void populate(RasterSymbolizer rasterSymbolizer) {
-        // Do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
-     */
-    @Override
-    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
-        // Do nothing
     }
 
     /*

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.create.sld;
 
 import static org.junit.Assert.assertTrue;
@@ -51,7 +52,8 @@ public class NewPolygonSLDTest {
 
         NamedLayer namedLayer = (NamedLayer) styledLayer;
 
-        Symbolizer symbolizer = namedLayer.styles().get(0).featureTypeStyles().get(0).rules().get(0).symbolizers().get(0);
+        Symbolizer symbolizer = namedLayer.styles().get(0).featureTypeStyles().get(0).rules().get(0)
+                .symbolizers().get(0);
 
         assertTrue(symbolizer instanceof PolygonSymbolizer);
     }

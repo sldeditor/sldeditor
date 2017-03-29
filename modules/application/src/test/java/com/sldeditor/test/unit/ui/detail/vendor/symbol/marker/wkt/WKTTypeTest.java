@@ -29,6 +29,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 
 /**
  * The unit test for WKTType.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType}
  *
  * @author Robert Ward (SCISYS)

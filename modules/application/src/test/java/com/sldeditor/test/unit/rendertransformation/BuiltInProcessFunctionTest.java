@@ -46,8 +46,8 @@ import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
 
 /**
  * Unit test for BuiltInProcessFunction class.
- * <p>
- * {@link com.sldeditor.rendertransformation.BuiltInProcessFunction}
+ * 
+ * <p>{@link com.sldeditor.rendertransformation.BuiltInProcessFunction}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -78,12 +78,18 @@ public class BuiltInProcessFunctionTest {
 
                 ProcessFunctionParameterValue actualParameter = valueList.get(index);
 
-                assertTrue(functionName.getName(), expectedParameter.getName().compareTo(actualParameter.name) == 0);
-                assertEquals(functionName.getName(), expectedParameter.getType(), actualParameter.type);
-                assertTrue(functionName.getName(), expectedParameter.getType().getSimpleName().compareTo(actualParameter.dataType) == 0);
-                assertEquals(functionName.getName(), !expectedParameter.isRequired(), actualParameter.optional);
-                assertEquals(functionName.getName(), expectedParameter.getMinOccurs(), actualParameter.minOccurences);
-                assertEquals(functionName.getName(), expectedParameter.getMaxOccurs(), actualParameter.maxOccurences);
+                assertTrue(functionName.getName(),
+                        expectedParameter.getName().compareTo(actualParameter.name) == 0);
+                assertEquals(functionName.getName(), expectedParameter.getType(),
+                        actualParameter.type);
+                assertTrue(functionName.getName(), expectedParameter.getType().getSimpleName()
+                        .compareTo(actualParameter.dataType) == 0);
+                assertEquals(functionName.getName(), !expectedParameter.isRequired(),
+                        actualParameter.optional);
+                assertEquals(functionName.getName(), expectedParameter.getMinOccurs(),
+                        actualParameter.minOccurences);
+                assertEquals(functionName.getName(), expectedParameter.getMaxOccurs(),
+                        actualParameter.maxOccurences);
             }
         }
         System.out.println(String.format("Tested %d functions", functionNameList.size()));

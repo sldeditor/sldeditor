@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.colourmap;
 
 import java.awt.Color;
@@ -65,7 +66,8 @@ public class ColourTableCellRenderer extends DefaultTableCellRenderer {
             boolean hasFocus, int row, int column) {
         Color colour = colourMapModel.getColour(row);
 
-        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel label = (JLabel) super.getTableCellRendererComponent(table,
+                value, isSelected, hasFocus, row, column);
 
         label.setBackground(colour);
         label.setForeground(ColourUtils.getTextColour(colour));

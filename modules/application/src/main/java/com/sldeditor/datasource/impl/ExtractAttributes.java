@@ -108,73 +108,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         return super.copy(expression);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
-     */
-    public void visit(PointSymbolizer ps) {
-        PointSymbolizer copy = sf.getDefaultPointSymbolizer();
-
-        copy.setGeometry(copy(Point.class, ps.getGeometry()));
-
-        copy.setUnitOfMeasure(ps.getUnitOfMeasure());
-        copy.setGraphic(copy(ps.getGraphic()));
-        copy.getOptions().putAll(ps.getOptions());
-
-        if (STRICT) {
-            if (!copy.equals(ps)) {
-                throw new IllegalStateException("Was unable to duplicate provided Graphic:" + ps);
-            }
-        }
-        pages.push(copy);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
-     */
-    public void visit(LineSymbolizer line) {
-        LineSymbolizer copy = sf.getDefaultLineSymbolizer();
-
-        copy.setGeometry(copy(LineString.class, line.getGeometry()));
-
-        copy.setUnitOfMeasure(line.getUnitOfMeasure());
-        copy.setStroke(copy(line.getStroke()));
-        copy.getOptions().putAll(line.getOptions());
-        copy.setPerpendicularOffset(line.getPerpendicularOffset());
-
-        if (STRICT && !copy.equals(line)) {
-            throw new IllegalStateException(
-                    "Was unable to duplicate provided LineSymbolizer:" + line);
-        }
-        pages.push(copy);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
-     */
-    public void visit(PolygonSymbolizer poly) {
-        PolygonSymbolizer copy = sf.createPolygonSymbolizer();
-        copy.setFill(copy(poly.getFill()));
-
-        copy.setGeometry(copy(MultiPolygon.class, poly.getGeometry()));
-
-        copy.setUnitOfMeasure(poly.getUnitOfMeasure());
-        copy.setStroke(copy(poly.getStroke()));
-        copy.getOptions().putAll(poly.getOptions());
-
-        if (STRICT && !copy.equals(poly)) {
-            throw new IllegalStateException(
-                    "Was unable to duplicate provided PolygonSymbolizer:" + poly);
-        }
-        pages.push(copy);
-    }
-
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.Filter)
@@ -241,6 +175,70 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             extractAttribute(String.class, isLike.getExpression(), foundList1);
         }
         return super.copy(filter);
+    }
+
+    /** (non-Javadoc)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
+     */
+    public void visit(PointSymbolizer ps) {
+        PointSymbolizer copy = sf.getDefaultPointSymbolizer();
+
+        copy.setGeometry(copy(Point.class, ps.getGeometry()));
+
+        copy.setUnitOfMeasure(ps.getUnitOfMeasure());
+        copy.setGraphic(copy(ps.getGraphic()));
+        copy.getOptions().putAll(ps.getOptions());
+
+        if (STRICT) {
+            if (!copy.equals(ps)) {
+                throw new IllegalStateException("Was unable to duplicate provided Graphic:" + ps);
+            }
+        }
+        pages.push(copy);
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
+     */
+    public void visit(LineSymbolizer line) {
+        LineSymbolizer copy = sf.getDefaultLineSymbolizer();
+
+        copy.setGeometry(copy(LineString.class, line.getGeometry()));
+
+        copy.setUnitOfMeasure(line.getUnitOfMeasure());
+        copy.setStroke(copy(line.getStroke()));
+        copy.getOptions().putAll(line.getOptions());
+        copy.setPerpendicularOffset(line.getPerpendicularOffset());
+
+        if (STRICT && !copy.equals(line)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided LineSymbolizer:" + line);
+        }
+        pages.push(copy);
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
+     */
+    public void visit(PolygonSymbolizer poly) {
+        PolygonSymbolizer copy = sf.createPolygonSymbolizer();
+        copy.setFill(copy(poly.getFill()));
+
+        copy.setGeometry(copy(MultiPolygon.class, poly.getGeometry()));
+
+        copy.setUnitOfMeasure(poly.getUnitOfMeasure());
+        copy.setStroke(copy(poly.getStroke()));
+        copy.getOptions().putAll(poly.getOptions());
+
+        if (STRICT && !copy.equals(poly)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided PolygonSymbolizer:" + poly);
+        }
+        pages.push(copy);
     }
 
     /**
@@ -423,7 +421,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             visit(sld);
 
             // Check to see if any geometry fields have been added to processedFieldList
-            List<DataSourceAttributeData> fieldsToMoveToGeometryList = new ArrayList<DataSourceAttributeData>();
+            List<DataSourceAttributeData> fieldsToMoveToGeometryList =
+                    new ArrayList<DataSourceAttributeData>();
 
             for (DataSourceAttributeData dsAttribute : processedFieldList) {
                 if (dsAttribute.getType() == Geometry.class) {

@@ -50,6 +50,7 @@ import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 
 /**
  * The unit test for FieldConfigTransformation.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation}
  *
  * @author Robert Ward (SCISYS)
@@ -57,15 +58,20 @@ import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 public class FieldConfigTransformationTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#isEnabled()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#createUI()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#internal_setEnabled(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#isEnabled()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#createUI()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +90,9 @@ public class FieldConfigTransformationTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigTransformation field2 = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field2 = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         // Text field will not have been created
         expectedValue = true;
@@ -105,12 +113,15 @@ public class FieldConfigTransformationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -120,27 +131,31 @@ public class FieldConfigTransformationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateExpression(java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#getProcessFunction()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateExpression(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#generateExpression()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#getProcessFunction()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
 
-        class TestFieldConfigTransformation extends FieldConfigTransformation
-        {
-            public TestFieldConfigTransformation(FieldConfigCommonData commonData, String editButtonText, String clearButtonText) {
+        class TestFieldConfigTransformation extends FieldConfigTransformation {
+            public TestFieldConfigTransformation(FieldConfigCommonData commonData,
+                    String editButtonText, String clearButtonText) {
                 super(commonData, editButtonText, clearButtonText);
             }
 
-            public Expression callGenerateExpression()
-            {
+            public Expression callGenerateExpression() {
                 return generateExpression();
             }
         }
 
-        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        TestFieldConfigTransformation field = new TestFieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -157,36 +172,21 @@ public class FieldConfigTransformationTest {
         assertNull(actualExpression);
 
         // Create process function
-        String testData = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                "<StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
-                "<ogc:Function name=\"vec:PointStacker\">" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>data</ogc:Literal>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>cellSize</ogc:Literal>" +
-                "  <ogc:Literal>30</ogc:Literal>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>outputBBOX</ogc:Literal>" +
-                "  <ogc:Function name=\"env\">" +
-                "        <ogc:Literal>wms_bbox</ogc:Literal>" +
-                "  </ogc:Function>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                "  <ogc:Literal>outputWidth</ogc:Literal>" +
-                "  <ogc:Function name=\"env\">" +
-                "        <ogc:Literal>wms_width</ogc:Literal>" +
-                "  </ogc:Function>" +
-                "</ogc:Function>" +
-                "<ogc:Function name=\"parameter\">" +
-                " <ogc:Literal>outputHeight</ogc:Literal>" +
-                "  <ogc:Function name=\"env\">" +
-                "        <ogc:Literal>wms_height</ogc:Literal>" +
-                "  </ogc:Function>" +
-                " </ogc:Function>" +
-                "</ogc:Function>" +
-                "</StyledLayerDescriptor>";
+        String testData = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                + "<StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                + "<ogc:Function name=\"vec:PointStacker\">" + "<ogc:Function name=\"parameter\">"
+                + "  <ogc:Literal>data</ogc:Literal>" + "</ogc:Function>"
+                + "<ogc:Function name=\"parameter\">" + "  <ogc:Literal>cellSize</ogc:Literal>"
+                + "  <ogc:Literal>30</ogc:Literal>" + "</ogc:Function>"
+                + "<ogc:Function name=\"parameter\">" + "  <ogc:Literal>outputBBOX</ogc:Literal>"
+                + "  <ogc:Function name=\"env\">" + "        <ogc:Literal>wms_bbox</ogc:Literal>"
+                + "  </ogc:Function>" + "</ogc:Function>" + "<ogc:Function name=\"parameter\">"
+                + "  <ogc:Literal>outputWidth</ogc:Literal>" + "  <ogc:Function name=\"env\">"
+                + "        <ogc:Literal>wms_width</ogc:Literal>" + "  </ogc:Function>"
+                + "</ogc:Function>" + "<ogc:Function name=\"parameter\">"
+                + " <ogc:Literal>outputHeight</ogc:Literal>" + "  <ogc:Function name=\"env\">"
+                + "        <ogc:Literal>wms_height</ogc:Literal>" + "  </ogc:Function>"
+                + " </ogc:Function>" + "</ogc:Function>" + "</StyledLayerDescriptor>";
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
         ProcessFunction processFunction = null;
@@ -196,7 +196,8 @@ public class FieldConfigTransformationTest {
             Document doc = builder.parse(is);
             ExpressionDOMParser parser = new ExpressionDOMParser(
                     CommonFactoryFinder.getFilterFactory2(null));
-            processFunction = (ProcessFunction) parser.expression(doc.getDocumentElement().getFirstChild());
+            processFunction = (ProcessFunction) parser
+                    .expression(doc.getDocumentElement().getFirstChild());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -204,9 +205,9 @@ public class FieldConfigTransformationTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        field.populateExpression((ProcessFunction)null);
+        field.populateExpression((ProcessFunction) null);
         field.populateExpression(processFunction);
-        
+
         actualExpression = field.callGenerateExpression();
         String expectedValue3 = ParameterFunctionUtils.getString(processFunction);
         String string = actualExpression.toString();
@@ -215,14 +216,19 @@ public class FieldConfigTransformationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#revertToDefaultValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#setDefaultValue(java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#getStringValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#setDefaultValue(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#getStringValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         String expectedDefaultValue = "default value";
         field.setDefaultValue(expectedDefaultValue);
@@ -235,26 +241,31 @@ public class FieldConfigTransformationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(java.lang.String)}.
      */
     @Test
     public void testPopulateFieldString() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(org.geotools.process.function.ProcessFunction)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(org.geotools.process.function.ProcessFunction)}.
      */
     @Test
     public void testPopulateFieldProcessFunction() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test
     public void testSetTestValueFieldIdString() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         String expectedTestValue = "test value";
         field.setTestValue(FieldIdEnum.ANCHOR_POINT_V, expectedTestValue);
@@ -266,26 +277,28 @@ public class FieldConfigTransformationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigTransformation extends FieldConfigTransformation
-        {
+        class TestFieldConfigTransformation extends FieldConfigTransformation {
 
-            public TestFieldConfigTransformation(FieldConfigCommonData commonData, String editButtonText, String clearButtonText) {
+            public TestFieldConfigTransformation(FieldConfigCommonData commonData,
+                    String editButtonText, String clearButtonText) {
                 super(commonData, editButtonText, clearButtonText);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigTransformation field = new TestFieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        TestFieldConfigTransformation field = new TestFieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
         FieldConfigTransformation copy = (FieldConfigTransformation) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -296,25 +309,32 @@ public class FieldConfigTransformationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         field.attributeSelection("field");
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigTransformation field = new FieldConfigTransformation(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), "edit", "clear");
+        FieldConfigTransformation field = new FieldConfigTransformation(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                "edit", "clear");
 
         field.undoAction(null);
         field.redoAction(null);
@@ -330,15 +350,17 @@ public class FieldConfigTransformationTest {
         String expectedUndoTestValue = "undo value";
         String expectedRedoTestValue = "redo value";
 
-        UndoEvent undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, expectedUndoTestValue, expectedRedoTestValue);
+        UndoEvent undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, expectedUndoTestValue,
+                expectedRedoTestValue);
         field.undoAction(undoEvent);
         assertTrue(expectedUndoTestValue.compareTo(field.getStringValue()) == 0);
 
         field.redoAction(undoEvent);
         assertTrue(expectedRedoTestValue.compareTo(field.getStringValue()) == 0);
-        
+
         // Increase code coverage status
-        undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, Integer.valueOf(0), Double.valueOf(10.0));
+        undoEvent = new UndoEvent(null, FieldIdEnum.UNKNOWN, Integer.valueOf(0),
+                Double.valueOf(10.0));
         field.undoAction(undoEvent);
         field.redoAction(undoEvent);
     }

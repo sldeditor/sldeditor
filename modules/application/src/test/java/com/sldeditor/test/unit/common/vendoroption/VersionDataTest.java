@@ -16,9 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.vendoroption;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -26,6 +30,7 @@ import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Unit test for VersionData.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.VersionData}
  * 
  * @author Robert Ward (SCISYS)

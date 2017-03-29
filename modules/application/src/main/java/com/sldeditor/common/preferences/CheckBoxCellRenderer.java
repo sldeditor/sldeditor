@@ -61,7 +61,8 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
     /*
      * (non-Javadoc)
      * 
-     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
+     * java.lang.Object, boolean, boolean, int, int)
      */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -79,12 +80,9 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
      */
     @Override
     public Object getCellEditorValue() {
-        if (checkBox.isSelected() == true)
-        {
+        if (checkBox.isSelected() == true) {
             return Boolean.TRUE;
-        }
-        else
-        {
+        } else {
             return Boolean.FALSE;
         }
     }
@@ -92,13 +90,13 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
     /*
      * (non-Javadoc)
      * 
-     * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
+     * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable,
+     * java.lang.Object, boolean, int, int)
      */
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
             int row, int column) {
-        if (value == null)
-        {
+        if (value == null) {
             return checkBox;
         }
         checkBox.setSelected(((Boolean) value).booleanValue());

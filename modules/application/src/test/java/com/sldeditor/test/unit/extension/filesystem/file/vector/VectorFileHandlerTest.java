@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.file.vector;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +43,7 @@ import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 
 /**
  * Unit test for VectorFileHandler class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler}
  * 
  * @author Robert Ward (SCISYS)
@@ -76,7 +78,7 @@ public class VectorFileHandlerTest {
     /**
      * Single file
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -134,7 +136,7 @@ public class VectorFileHandlerTest {
     /**
      * Supply a folder name and retrieve all the sld files in it
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {

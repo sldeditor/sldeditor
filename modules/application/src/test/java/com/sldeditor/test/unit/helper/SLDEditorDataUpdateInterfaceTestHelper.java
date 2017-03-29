@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.helper;
 
 import com.sldeditor.common.SLDDataInterface;
@@ -28,20 +29,22 @@ public class SLDEditorDataUpdateInterfaceTestHelper implements SLDEditorDataUpda
 
     /** The method reached. */
     public boolean sldDataUpdated_methodReached = false;
-    
+
     /** The sld data. */
     public SLDDataInterface sldDataUpdated_sldData = null;
-    
+
     /** The data edited flag. */
     public boolean sldDataUpdated_dataEditedFlag = false;
 
-    public void reset()
-    {
+    /**
+     * Reset.
+     */
+    public void reset() {
         sldDataUpdated_methodReached = false;
         sldDataUpdated_sldData = null;
         sldDataUpdated_dataEditedFlag = false;
     }
-    
+
     /**
      * Sld data updated.
      *

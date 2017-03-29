@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem;
 
 import static org.junit.Assert.assertEquals;
@@ -61,6 +62,7 @@ import com.sldeditor.tool.ToolInterface;
 
 /**
  * Unit test for FileSystemExtension class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.FileSystemExtension}
  * 
  * @author Robert Ward (SCISYS)
@@ -71,8 +73,7 @@ public class FileSystemExtensionTest {
     /**
      * The Class DummyToolMgr.
      */
-    class DummyToolMgr implements ToolSelectionInterface
-    {
+    class DummyToolMgr implements ToolSelectionInterface {
         @Override
         public void setSelectedItems(List<NodeInterface> nodeTypeList,
                 List<SLDDataInterface> sldDataList) {
@@ -96,7 +97,9 @@ public class FileSystemExtensionTest {
         public void registerTool(Class<?> nodeType, ToolInterface toolToRegister) {
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.ToolSelectionInterface#isRecursiveFlag()
          */
         @Override
@@ -104,15 +107,21 @@ public class FileSystemExtensionTest {
             return false;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.ToolSelectionInterface#setRecursiveFlag(boolean)
          */
         @Override
         public void setRecursiveFlag(boolean recursiveFlag) {
         }
 
-        /* (non-Javadoc)
-         * @see com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.RecursiveUpdateInterface)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.
+         * RecursiveUpdateInterface)
          */
         @Override
         public void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate) {
@@ -122,8 +131,7 @@ public class FileSystemExtensionTest {
     /**
      * The Class DummyExtension.
      */
-    class DummyExtension implements FileSystemInterface
-    {
+    class DummyExtension implements FileSystemInterface {
 
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
@@ -180,8 +188,7 @@ public class FileSystemExtensionTest {
          */
         @Override
         public List<SLDDataInterface> open(URL url) {
-            if(url.toExternalForm().endsWith(".tst"))
-            {
+            if (url.toExternalForm().endsWith(".tst")) {
                 List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
                 return list;
             }
@@ -245,7 +252,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#initialise(com.sldeditor.common.LoadSLDInterface, com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#initialise(com.sldeditor.common.LoadSLDInterface, com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testInitialise() {
@@ -261,7 +269,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#setArguments(java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#setArguments(java.util.List)}.
      */
     @Test
     public void testSetArguments() {
@@ -336,7 +345,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#getExtensionArgPrefix()}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#getExtensionArgPrefix()}.
      */
     @Test
     public void testGetExtensionArgPrefix() {
@@ -368,7 +378,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#createMenus(javax.swing.JMenu)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#createMenus(javax.swing.JMenu)}.
      */
     @Test
     public void testCreateMenus() {
@@ -416,7 +427,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#open(java.net.URL)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#open(java.net.URL)}.
      */
     @Test
     public void testOpen() {
@@ -455,7 +467,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#save(com.sldeditor.common.SLDDataInterface)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#save(com.sldeditor.common.SLDDataInterface)}.
      */
     @Test
     public void testSave() {
@@ -474,7 +487,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List<String>)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List<String>)}.
      */
     @Test
     public void testUpdateForPreferences() {
@@ -485,7 +499,6 @@ public class FileSystemExtensionTest {
         fsExt.updateForPreferences(null, null);
 
         // Set up with 'save last folder view' set to false
-        List<String> actualArgList = new ArrayList<String>();
         PrefData prefData = new PrefData();
         String lastFolderViewed = null;
         prefData.setLastFolderViewed(lastFolderViewed);
@@ -493,6 +506,7 @@ public class FileSystemExtensionTest {
         prefData.setLastViewedKey(lastViewedKey);
         prefData.setSaveLastFolderView(false);
 
+        List<String> actualArgList = new ArrayList<String>();
         fsExt.updateForPreferences(prefData, actualArgList);
 
         assertTrue(actualArgList.isEmpty());
@@ -507,24 +521,18 @@ public class FileSystemExtensionTest {
         prefData.setLastFolderViewed(lastFolderViewed);
         fsExt.updateForPreferences(prefData, actualArgList);
         assertEquals(1, actualArgList.size());
-        String expected = String.format("%s.%s.%s=%s",
-                ExtensionFactory.EXTENSION_PREFIX,
-                fsExt.getExtensionArgPrefix(),
-                "folder",
-                lastFolderViewed);
+        String expected = String.format("%s.%s.%s=%s", ExtensionFactory.EXTENSION_PREFIX,
+                fsExt.getExtensionArgPrefix(), "folder", lastFolderViewed);
         assertEquals(expected, actualArgList.get(0));
-        
+
         // Set up with 'save last folder view' set to true but with GeoServer
         actualArgList.clear();
         lastViewedKey = PrefDataLastViewedEnum.GEOSERVER;
         prefData.setLastViewedKey(lastViewedKey);
         fsExt.updateForPreferences(prefData, actualArgList);
         assertEquals(1, actualArgList.size());
-        expected = String.format("%s.%s.%s=%s",
-                ExtensionFactory.EXTENSION_PREFIX,
-                fsExt.getExtensionArgPrefix(),
-                "geoserver",
-                lastFolderViewed);
+        expected = String.format("%s.%s.%s=%s", ExtensionFactory.EXTENSION_PREFIX,
+                fsExt.getExtensionArgPrefix(), "geoserver", lastFolderViewed);
         assertEquals(expected, actualArgList.get(0));
 
         // Try and replace existing argument
@@ -533,11 +541,8 @@ public class FileSystemExtensionTest {
         prefData.setLastFolderViewed(lastFolderViewed);
         fsExt.updateForPreferences(prefData, actualArgList);
         assertEquals(1, actualArgList.size());
-        expected = String.format("%s.%s.%s=%s",
-                ExtensionFactory.EXTENSION_PREFIX,
-                fsExt.getExtensionArgPrefix(),
-                "geoserver",
-                previous);
+        expected = String.format("%s.%s.%s=%s", ExtensionFactory.EXTENSION_PREFIX,
+                fsExt.getExtensionArgPrefix(), "geoserver", previous);
         assertEquals(expected, actualArgList.get(0));
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.connector.instance;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +35,7 @@ import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 
 /**
  * Unit test for DataSourceConnectorEmpty class.
+ * 
  * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty}
  * 
  * @author Robert Ward (SCISYS)

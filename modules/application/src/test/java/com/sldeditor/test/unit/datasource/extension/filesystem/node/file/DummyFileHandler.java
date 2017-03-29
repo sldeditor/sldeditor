@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.file;
 
 import java.io.File;
@@ -36,8 +37,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DummyFileHandler implements FileHandlerInterface
-{
+public class DummyFileHandler implements FileHandlerInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -120,12 +120,16 @@ public class DummyFileHandler implements FileHandlerInterface
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.
+     * lang.String, java.lang.String)
      */
     @Override
     public Icon getIcon(String path, String filename) {
         return null;
     }
-    
+
 }

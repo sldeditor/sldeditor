@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertFalse;
@@ -18,6 +19,7 @@ import com.sldeditor.datasource.impl.NamespaceHelper;
 
 /**
  * The unit test for NamespaceHelper.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.NamespaceHelper}
  *
  * @author Robert Ward (SCISYS)

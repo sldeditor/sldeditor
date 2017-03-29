@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.Dimension;
@@ -51,10 +52,10 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class FieldConfigBoundingBox wraps bounding box fields.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */

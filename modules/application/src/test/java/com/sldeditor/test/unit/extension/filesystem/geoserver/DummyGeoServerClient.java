@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.geoserver;
 
 import java.util.List;
@@ -27,13 +28,14 @@ import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterfa
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Class DummyGeoServerClient.
  *
+ * @author Robert Ward (SCISYS)
  */
 public class DummyGeoServerClient implements GeoServerClientInterface {
 
     private GeoServerConnection connection = null;
-    
+
     private static final String DEFAULT_WORKSPACE_NAME = "<Test Default Workspace>";
 
     @Override
@@ -53,8 +55,7 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
 
     @Override
     public boolean isDefaultWorkspace(String workspaceName) {
-        if(workspaceName != null)
-        {
+        if (workspaceName != null) {
             return (workspaceName.compareTo(DEFAULT_WORKSPACE_NAME) == 0);
         }
         return true;

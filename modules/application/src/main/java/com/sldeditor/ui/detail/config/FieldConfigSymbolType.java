@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.CardLayout;
@@ -47,25 +48,28 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * The Class FieldConfigSymbolType allows a user to select a symbol from a list. Depending on the symbol selected further field data can be configured
- * in the {@link #containingPanel}.
- * <p>
- * The field wraps:
+ * The Class FieldConfigSymbolType allows a user to select a symbol from a list. Depending on the
+ * symbol selected further field data can be configured in the {@link #containingPanel}.
+ * 
+ * <p>The field wraps:
  * <ul>
  * <li>a drop down GUI component ({@link com.sldeditor.ui.menucombobox.MenuComboBox})</li>
- * <li>an optional value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
+ * <li>an optional value/attribute/expression drop down,
+ * ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
  * </ul>
- * <p>
- * The {@link #containingPanel} is a CardLayout. Fields are added to the class using the {@link #addField} method. A field provides symbol types to be
- * added to the MenuComboBox and a panel to be displayed if the symbol type is selected.
- * <p>
- * The symbols present in the list depend on the symbolizer being edited and the vendor options allowed by the user.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * <p>
- * <img src="./doc-files/symboltypefield.png" />
+ * 
+ * <p>The {@link #containingPanel} is a CardLayout. Fields are added to the class using the
+ * {@link #addField} method. A field provides symbol types to be added to the MenuComboBox and a
+ * panel to be displayed if the symbol type is selected.
+ * 
+ * <p>The symbols present in the list depend on the symbolizer being edited and the vendor options
+ * allowed by the user.
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p><img src="./doc-files/symboltypefield.png" />
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -76,14 +80,15 @@ public class FieldConfigSymbolType extends FieldConfigBase
     private JPanel containingPanel = null;
 
     /** The vendor option map. */
-    private Map<Class<?>, VendorOptionVersion> vendorOptionMap = new HashMap<Class<?>, VendorOptionVersion>();
+    private Map<Class<?>, VendorOptionVersion> vendorOptionMap = 
+            new HashMap<Class<?>, VendorOptionVersion>();
 
     /**
      * The field configuration map.
-     * <p>
      * Key is panel id string the field appears on.
      */
-    private Map<Class<?>, FieldConfigBase> fieldConfigMap = new HashMap<Class<?>, FieldConfigBase>();
+    private Map<Class<?>, FieldConfigBase> fieldConfigMap =
+            new HashMap<Class<?>, FieldConfigBase>();
 
     /** The symbol selected listener. */
     private MultiOptionSelectedInterface symbolSelectedListener = null;
@@ -113,7 +118,6 @@ public class FieldConfigSymbolType extends FieldConfigBase
     public void createUI() {
         if (comboBox == null) {
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
             comboBox = new MenuComboBox(this);
             comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
@@ -121,6 +125,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
 
             // Register for changes in vendor option selections
             VendorOptionManager.getInstance().addVendorOptionListener(comboBox);
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
             fieldPanel.add(comboBox);
 
             if (!isValueOnly()) {
@@ -222,7 +227,8 @@ public class FieldConfigSymbolType extends FieldConfigBase
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -418,7 +424,9 @@ public class FieldConfigSymbolType extends FieldConfigBase
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.menucombobox.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor.ui.ValueComboBoxData)
+     * @see
+     * com.sldeditor.ui.menucombobox.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor
+     * .ui.ValueComboBoxData)
      */
     @Override
     public void optionSelected(ValueComboBoxData selectedData) {

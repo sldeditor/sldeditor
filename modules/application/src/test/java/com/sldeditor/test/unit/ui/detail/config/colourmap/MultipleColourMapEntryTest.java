@@ -36,15 +36,17 @@ import com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry;
 
 /**
  * The unit test for MultipleColourMapEntry.
- * <p>
- * {@link com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry}
  *
  * @author Robert Ward (SCISYS)
  */
 public class MultipleColourMapEntryTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry#parseList(java.util.List)}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry#parseList(java.util.List)}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry#getColourMapEntry()}.
      */
     @Test
@@ -55,7 +57,6 @@ public class MultipleColourMapEntryTest {
 
         assertNotNull(testObj.getColourMapEntry());
 
-        List<ColorMapEntry> expectedList = new ArrayList<ColorMapEntry>();
         ColorMapEntry c1 = new ColorMapEntryImpl();
         String expectedLabel = "abc";
         String expectedColour = "#123456";
@@ -66,6 +67,7 @@ public class MultipleColourMapEntryTest {
         c1.setColor(ff.literal(expectedColour));
         c1.setOpacity(ff.literal(expectedOpacity));
         c1.setQuantity(ff.literal(expectedQuantity));
+        List<ColorMapEntry> expectedList = new ArrayList<ColorMapEntry>();
         expectedList.add(c1);
 
         ColorMapEntry c2 = new ColorMapEntryImpl();

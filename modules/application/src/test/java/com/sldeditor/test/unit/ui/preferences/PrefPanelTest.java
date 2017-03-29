@@ -29,6 +29,7 @@ import com.sldeditor.ui.preferences.PrefPanel;
 
 /**
  * Unit test for PrefPanel class.
+ * 
  * <p>{@link com.sldeditor.ui.preferences.PrefPanel}
  * 
  * @author Robert Ward (SCISYS)
@@ -36,14 +37,12 @@ import com.sldeditor.ui.preferences.PrefPanel;
  */
 public class PrefPanelTest {
 
-    class TestPrefPanel extends PrefPanel
-    {
+    class TestPrefPanel extends PrefPanel {
 
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
-        TestPrefPanel()
-        {
+        TestPrefPanel() {
             super();
         }
 
@@ -54,7 +53,8 @@ public class PrefPanelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.preferences.PrefPanel#showDialog(com.sldeditor.common.preferences.PrefData)}.
+     * Test method for
+     * {@link com.sldeditor.ui.preferences.PrefPanel#showDialog(com.sldeditor.common.preferences.PrefData)}.
      */
     @Test
     public void testShowDialog() {

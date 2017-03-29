@@ -46,6 +46,7 @@ import net.opengis.wps10.impl.Wps10FactoryImpl;
 
 /**
  * Unit test for CustomProcessFunction class.
+ * 
  * <p>{@link com.sldeditor.rendertransformation.CustomProcessFunction}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,7 +55,8 @@ import net.opengis.wps10.impl.Wps10FactoryImpl;
 public class CustomProcessFunctionTest {
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.CustomProcessFunction#extractParameters(net.opengis.wps10.ProcessDescriptionType)}.
+     * Test method for
+     * {@link com.sldeditor.rendertransformation.CustomProcessFunction#extractParameters(net.opengis.wps10.ProcessDescriptionType)}.
      */
     @Test
     public void testExtractParameters() {
@@ -67,9 +69,11 @@ public class CustomProcessFunctionTest {
         value = createProcessDescription("xs:boolean", "true", 1, 1);
         assertEquals("true", value.objectValue.getExpression().toString());
         value = createProcessDescription("xs:double", "3.141", 1, 2);
-        assertTrue(Math.abs(Double.valueOf("3.141") - Double.valueOf(value.objectValue.getExpression().toString())) < 0.001);
+        assertTrue(Math.abs(Double.valueOf("3.141")
+                - Double.valueOf(value.objectValue.getExpression().toString())) < 0.001);
         value = createProcessDescription("xs:float", "1.234", 0, 1);
-        assertTrue(Math.abs(Float.valueOf("1.234") - Float.valueOf(value.objectValue.getExpression().toString())) < 0.001);
+        assertTrue(Math.abs(Float.valueOf("1.234")
+                - Float.valueOf(value.objectValue.getExpression().toString())) < 0.001);
         value = createProcessDescription("xs:long", "9876", 1, 1);
         assertEquals("9876", value.objectValue.getExpression().toString());
         value = createProcessDescription("xs:xxx", "string", 1, 1);
@@ -86,20 +90,18 @@ public class CustomProcessFunctionTest {
      * @return the process function parameter value
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private ProcessFunctionParameterValue createProcessDescription(String type, String defaultValue, int minOccurs, int maxOccurs) {
+    private ProcessFunctionParameterValue createProcessDescription(String type, String defaultValue,
+            int minOccurs, int maxOccurs) {
         ProcessDescriptionType process = Wps10FactoryImpl.init().createProcessDescriptionType();
 
         CodeType codeType = Ows11FactoryImpl.init().createCodeType();
         codeType.setValue("JTS:area");
         process.setIdentifier(codeType);
 
-        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
-
-        EList dataInputList = dataInputs.getInput();
-        InputDescriptionType inputDescription = Wps10FactoryImpl.init().createInputDescriptionType();
-
         CodeType codeType2 = Ows11FactoryImpl.init().createCodeType();
         codeType2.setValue("dummyParameter");
+        InputDescriptionType inputDescription = Wps10FactoryImpl.init()
+                .createInputDescriptionType();
         inputDescription.setIdentifier(codeType2);
         inputDescription.setMinOccurs(BigInteger.valueOf(minOccurs));
         inputDescription.setMaxOccurs(BigInteger.valueOf(maxOccurs));
@@ -109,6 +111,9 @@ public class CustomProcessFunctionTest {
         literal.setDefaultValue(defaultValue);
         literal.setDataType(domainType);
         inputDescription.setLiteralData(literal);
+        
+        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
+        EList dataInputList = dataInputs.getInput();
         dataInputList.add(inputDescription);
         process.setDataInputs(dataInputs);
 
@@ -135,17 +140,14 @@ public class CustomProcessFunctionTest {
         codeType.setValue("JTS:area");
         process.setIdentifier(codeType);
 
-        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
-
-        EList dataInputList = dataInputs.getInput();
-        InputDescriptionType inputDescription = Wps10FactoryImpl.init().createInputDescriptionType();
+        InputDescriptionType inputDescription = Wps10FactoryImpl.init()
+                .createInputDescriptionType();
 
         CodeType codeType2 = Ows11FactoryImpl.init().createCodeType();
         codeType2.setValue("dummyParameter");
         inputDescription.setIdentifier(codeType2);
         inputDescription.setMinOccurs(BigInteger.valueOf(1));
         inputDescription.setMaxOccurs(BigInteger.valueOf(1));
-        LiteralInputType literal = Wps10FactoryImpl.init().createLiteralInputType();
         AllowedValuesType allowedValues = Ows11FactoryImpl.init().createAllowedValuesType();
         EList allowedValueList = allowedValues.getValue();
         ValueType item1 = Ows11FactoryImpl.init().createValueType();
@@ -157,8 +159,13 @@ public class CustomProcessFunctionTest {
         ValueType item3 = Ows11FactoryImpl.init().createValueType();
         item1.setValue("item 3");
         allowedValueList.add(item3);
+        LiteralInputType literal = Wps10FactoryImpl.init().createLiteralInputType();
         literal.setAllowedValues(allowedValues);
         inputDescription.setLiteralData(literal);
+        
+        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
+
+        EList dataInputList = dataInputs.getInput();
         dataInputList.add(inputDescription);
         process.setDataInputs(dataInputs);
 
@@ -184,16 +191,17 @@ public class CustomProcessFunctionTest {
         codeType.setValue("JTS:area");
         process.setIdentifier(codeType);
 
-        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
-
-        EList dataInputList = dataInputs.getInput();
-        InputDescriptionType inputDescription = Wps10FactoryImpl.init().createInputDescriptionType();
+        InputDescriptionType inputDescription = Wps10FactoryImpl.init()
+                .createInputDescriptionType();
 
         CodeType codeType2 = Ows11FactoryImpl.init().createCodeType();
         codeType2.setValue("dummyParameter");
         inputDescription.setIdentifier(codeType2);
         inputDescription.setMinOccurs(BigInteger.valueOf(1));
         inputDescription.setMaxOccurs(BigInteger.valueOf(1));
+        
+        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
+        EList dataInputList = dataInputs.getInput();
         dataInputList.add(inputDescription);
         process.setDataInputs(dataInputs);
 
@@ -210,7 +218,8 @@ public class CustomProcessFunctionTest {
         assertEquals(1, value.maxOccurences);
         assertTrue(value.dataType.compareTo("BBOX") == 0);
 
-        SupportedComplexDataInputType complex = Wps10FactoryImpl.init().createSupportedComplexDataInputType();
+        SupportedComplexDataInputType complex = Wps10FactoryImpl.init()
+                .createSupportedComplexDataInputType();
         inputDescription.setComplexData(complex);
         inputDescription.setBoundingBoxData(null);
 

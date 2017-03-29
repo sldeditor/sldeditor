@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 
 import java.awt.Component;
@@ -58,10 +59,11 @@ import com.sldeditor.ui.widgets.ExternalGraphicFilter;
  * @author Robert Ward (SCISYS)
  */
 public class ExternalGraphicDetails extends StandardPanel implements PopulateDetailsInterface,
-UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = "symbol/marker/external/PanelConfig_ExternalGraphicSymbol.xml";
+    private static final String PANEL_CONFIG =
+            "symbol/marker/external/PanelConfig_ExternalGraphicSymbol.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -116,7 +118,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -184,6 +187,7 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
             url = new URL(path);
             isFile = false;
         } catch (MalformedURLException e) {
+            // Do nothing
         }
 
         if (!isFile && RelativePath.hasHost(url)) {
@@ -322,7 +326,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
+     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.
+     * UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
@@ -346,7 +351,8 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
+     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.
+     * UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
@@ -412,12 +418,11 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
      * @param url the url
      */
     protected void userSelectedFileURL(URL url) {
-        if(url != null)
-        {
+        if (url != null) {
             externalURL = url;
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
-                    FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            UndoManager.getInstance().addUndoEvent(
+                    new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
             oldValueObj = externalURL;
 
             lastURLValue = RelativePath.convert(externalURL, useRelativePaths);
@@ -450,8 +455,11 @@ UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
         super.setEnabled(enabled);
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

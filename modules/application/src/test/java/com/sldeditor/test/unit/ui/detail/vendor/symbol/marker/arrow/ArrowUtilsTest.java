@@ -31,8 +31,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils;
 /**
  * The unit test for ArrowUtils.
  * 
- * <p>
- * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils}
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils}
  *
  * @author Robert Ward (SCISYS)
  */

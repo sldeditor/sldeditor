@@ -34,6 +34,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 
 /**
  * The unit test for WKTPointModel.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel}
  *
  * @author Robert Ward (SCISYS)
@@ -41,9 +42,12 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 public class WKTPointModelTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#WKTPointModel()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getColumnName(int)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getColumnCount()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#WKTPointModel()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getColumnName(int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getColumnCount()}.
      */
     @Test
     public void testWKTPointModel() {
@@ -55,13 +59,19 @@ public class WKTPointModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getValueAt(int, int)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#isCellEditable(int, int)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#setValueAt(java.lang.Object, int, int)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getRowCount()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#removePoint(int)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#addNewPoint()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#clear()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getValueAt(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#isCellEditable(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#setValueAt(java.lang.Object, int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#getRowCount()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#removePoint(int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#addNewPoint()}. Test
+     * method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#clear()}.
      */
     @Test
     public void testGetValueAt() {
@@ -79,8 +89,8 @@ public class WKTPointModelTest {
         assertNull(model.getValueAt(0, -1));
         assertNull(model.getValueAt(0, 5));
 
-        assertTrue(Math.abs(((Double)model.getValueAt(0, 0)).doubleValue() - 0.0) < 0.001);
-        assertTrue(Math.abs(((Double)model.getValueAt(0, 1)).doubleValue() - 0.0) < 0.001);
+        assertTrue(Math.abs(((Double) model.getValueAt(0, 0)).doubleValue() - 0.0) < 0.001);
+        assertTrue(Math.abs(((Double) model.getValueAt(0, 1)).doubleValue() - 0.0) < 0.001);
 
         model.setValueAt(null, -1, 0);
         model.setValueAt(null, 5, 0);
@@ -90,13 +100,15 @@ public class WKTPointModelTest {
         Double expectedValue = 42.0;
         // Expecting a double as a string, so should be ignored
         model.setValueAt(expectedValue, 0, 0);
-        assertTrue(Math.abs(((Double)model.getValueAt(0, 0)).doubleValue() - 0.0) < 0.001);
+        assertTrue(Math.abs(((Double) model.getValueAt(0, 0)).doubleValue() - 0.0) < 0.001);
 
         // Double as a string, should be valid
         model.setValueAt(String.valueOf(expectedValue), 0, 0);
-        assertTrue(Math.abs(((Double)model.getValueAt(0, 0)).doubleValue() - expectedValue.doubleValue()) < 0.001);
+        assertTrue(Math.abs(((Double) model.getValueAt(0, 0)).doubleValue()
+                - expectedValue.doubleValue()) < 0.001);
         model.setValueAt(String.valueOf(expectedValue), 0, 1);
-        assertTrue(Math.abs(((Double)model.getValueAt(0, 1)).doubleValue() - expectedValue.doubleValue()) < 0.001);
+        assertTrue(Math.abs(((Double) model.getValueAt(0, 1)).doubleValue()
+                - expectedValue.doubleValue()) < 0.001);
 
         model.removePoint(-1);
         assertEquals(1, model.getRowCount());
@@ -114,8 +126,10 @@ public class WKTPointModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#setWKTType(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#populate(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#setWKTType(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel#populate(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList)}.
      */
     @Test
     public void testPopulateWKTSegmentList() {
@@ -132,7 +146,7 @@ public class WKTPointModelTest {
 
         WKTPointModel model = new WKTPointModel();
 
-        WKTType wktType = new WKTType("name", false, 5, "", false, false); 
+        WKTType wktType = new WKTType("name", false, 5, "", false, false);
         model.setWKTType(wktType);
         model.populate(null);
         assertTrue(model.getRowCount() == 0);

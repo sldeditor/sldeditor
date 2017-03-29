@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.tool.ysld;
 
 import static org.junit.Assert.assertFalse;
@@ -58,6 +59,7 @@ import com.sldeditor.tool.ysld.YSLDTool;
 
 /**
  * The unit test for YSLDTool.
+ * 
  * <p>{@link com.sldeditor.tool.ysld.YSLDTool}
  *
  * @author Robert Ward (SCISYS)
@@ -87,18 +89,15 @@ public class YSLDToolTest {
         ToolButton toSLD = null;
         ToolButton toYSLD = null;
 
-        for(Component c : panel.getComponents())
-        {
-            if(c instanceof ToolButton)
-            {
+        for (Component c : panel.getComponents()) {
+            if (c instanceof ToolButton) {
                 ToolButton button = (ToolButton) c;
                 String toolTipText = button.getToolTipText();
-                if(toolTipText.compareTo(Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD")) == 0)
-                {
+                if (toolTipText.compareTo(
+                        Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD")) == 0) {
                     toSLD = button;
-                }
-                else if(toolTipText.compareTo(Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD")) == 0)
-                {
+                } else if (toolTipText.compareTo(
+                        Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD")) == 0) {
                     toYSLD = button;
                 }
             }
@@ -174,7 +173,7 @@ public class YSLDToolTest {
         String filename = sldFile.getAbsolutePath();
         int index = filename.lastIndexOf('.');
         filename = filename.substring(0, index);
-        
+
         File sld = new File(filename + ".sld");
         sld.delete();
         File ysld = new File(filename + ".ysld");
@@ -182,7 +181,7 @@ public class YSLDToolTest {
     }
 
     /**
-     * Test get tool name
+     * Test get tool name.
      */
     @Test
     public void testGetToolName() {
@@ -193,7 +192,7 @@ public class YSLDToolTest {
     }
 
     /**
-     * Test which file types the tool supports
+     * Test which file types the tool supports.
      */
     @Test
     public void testSupports() {
@@ -265,7 +264,7 @@ public class YSLDToolTest {
      * @return the file
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private static File stream2file (InputStream in, String suffix) throws IOException {
+    private static File stream2file(InputStream in, String suffix) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, suffix);
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
@@ -279,30 +278,27 @@ public class YSLDToolTest {
      * @param testfile the testfile
      * @return the SLD data file
      */
-    private static SLDData getSLDDataFile(String testfile)
-    {
+    private static SLDData getSLDDataFile(String testfile) {
         SLDData sldData = null;
 
         InputStream inputStream = YSLDToolTest.class.getResourceAsStream(testfile);
 
-        if(inputStream == null)
-        {
+        if (inputStream == null) {
             Assert.assertNotNull("Failed to find test file : " + testfile, inputStream);
-        }
-        else
-        {
+        } else {
             File f = null;
             try {
                 String fileExtension = ExternalFilenames.getFileExtension(testfile);
-                f = stream2file(inputStream, ExternalFilenames.addFileExtensionSeparator(fileExtension));
+                f = stream2file(inputStream,
+                        ExternalFilenames.addFileExtensionSeparator(fileExtension));
                 String sldContents = readFile(f.getAbsolutePath());
 
-                if(fileExtension.compareTo("ysld") == 0)
-                {
+                if (fileExtension.compareTo("ysld") == 0) {
                     StyledLayerDescriptor sld = Ysld.parse(sldContents);
 
                     // Convert YSLD to SLD string
-                    SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
+                    SLDWriterInterface sldWriter = SLDWriterFactory
+                            .createWriter(SLDOutputFormatEnum.SLD);
 
                     sldContents = sldWriter.encodeSLD(null, sld);
                 }

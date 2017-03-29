@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.watcher;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +39,7 @@ import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
 
 /**
  * Unit test for FileSystemWatcher.
+ * 
  * <p>{@link com.sldeditor.common.watcher.FileSystemWatcher}
  * 
  * @author Robert Ward (SCISYS)
@@ -46,7 +48,8 @@ import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
 public class FileSystemWatcherTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.watcher.FileSystemWatcher#addWatch(com.sldeditor.common.watcher.FileWatcherUpdateInterface, java.io.File)}.
+     * Test method for
+     * {@link com.sldeditor.common.watcher.FileSystemWatcher#addWatch(com.sldeditor.common.watcher.FileWatcherUpdateInterface, java.io.File)}.
      */
     @Test
     @Ignore
@@ -82,7 +85,8 @@ public class FileSystemWatcherTest {
                 String message = "Del " + f.toString();
                 resultList.add(message);
                 System.out.println(message);
-            }}, tempFolder);
+            }
+        }, tempFolder);
 
         File tmpFile = null;
         try {

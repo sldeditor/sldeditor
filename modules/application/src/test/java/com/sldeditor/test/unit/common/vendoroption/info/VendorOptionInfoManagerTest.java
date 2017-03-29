@@ -36,8 +36,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
  * Unit test for VendorOptionInfoModel.
- * <p>
- * {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager}
+ * 
+ * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager}
  * 
  * @author Robert Ward (SCISYS)
  *

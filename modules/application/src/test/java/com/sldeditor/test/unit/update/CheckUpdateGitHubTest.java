@@ -37,6 +37,7 @@ import com.sldeditor.update.UpdateData;
 
 /**
  * The unit test for CheckUpdateGitHub.
+ * 
  * <p>{@link com.sldeditor.update.CheckUpdateGitHub}
  *
  * @author Robert Ward (SCISYS)
@@ -46,14 +47,12 @@ public class CheckUpdateGitHubTest {
     /**
      * The Class TestCheckUpdateGitHub.
      */
-    class TestCheckUpdateGitHub extends CheckUpdateGitHub
-    {
+    class TestCheckUpdateGitHub extends CheckUpdateGitHub {
 
         /**
          * Instantiates a new test check update git hub.
          */
-        TestCheckUpdateGitHub()
-        {
+        TestCheckUpdateGitHub() {
             super();
         }
 
@@ -63,8 +62,7 @@ public class CheckUpdateGitHubTest {
          * @param json the json
          * @return the update data
          */
-        public UpdateData testCheck(String json)
-        {
+        public UpdateData testCheck(String json) {
             return check(json);
         }
 
@@ -74,8 +72,7 @@ public class CheckUpdateGitHubTest {
          * @param url the url
          * @return the string
          */
-        public String testReadDataFromURL(String url)
-        {
+        public String testReadDataFromURL(String url) {
             return readDataFromURL(url);
         }
     }
@@ -99,7 +96,8 @@ public class CheckUpdateGitHubTest {
 
         String testFile = "/update/github.json";
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(CheckUpdateGitHubTest.class.getResourceAsStream(testFile)));
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(CheckUpdateGitHubTest.class.getResourceAsStream(testFile)));
         StringBuilder out = new StringBuilder();
         String line;
         try {

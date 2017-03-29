@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype;
 
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * The base class FieldState provides functionality to support methods needed for fields that appear in the FieldConfigSymbolType field.
+ * The base class FieldState provides functionality to support methods needed
+ * for fields that appear in the FieldConfigSymbolType field.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -244,7 +246,7 @@ public abstract class FieldState extends FieldConfigBase {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    abstract public void getMinimumVersion(Object parentObj, Object sldObj,
+    public abstract void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList);
 
     /**
@@ -286,6 +288,6 @@ public abstract class FieldState extends FieldConfigBase {
      *
      * @return the vendor option info
      */
-    abstract public VendorOptionInfo getVendorOptionInfo();
+    public abstract VendorOptionInfo getVendorOptionInfo();
 
 }

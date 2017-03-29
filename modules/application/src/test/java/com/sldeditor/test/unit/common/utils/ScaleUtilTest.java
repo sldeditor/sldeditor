@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +34,7 @@ import com.sldeditor.common.utils.ScaleUtil;
 
 /**
  * Unit test for ScaleUtil class.
+ * 
  * <p>{@link com.sldeditor.common.utils.ScaleUtil}
  * 
  * @author Robert Ward (SCISYS)
@@ -59,8 +61,7 @@ public class ScaleUtilTest {
      * @param expectedValue the expected value
      * @return the expected value
      */
-    private static String getExpectedValue(String expectedValue)
-    {
+    private static String getExpectedValue(String expectedValue) {
         DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance();
         DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
         char sep = symbols.getGroupingSeparator();

@@ -145,7 +145,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface {
     }
 
     /**
-     * Creates a SingleCDockable object
+     * Creates a SingleCDockable object.
      *
      * @param title the title
      * @param panel the panel

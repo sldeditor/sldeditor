@@ -261,8 +261,6 @@ public class PointFillDetails extends StandardPanel
         Expression opacity = fieldConfigVisitor.getExpression(FieldIdEnum.OVERALL_OPACITY);
         Expression size = fieldConfigVisitor.getExpression(FieldIdEnum.SIZE);
         Expression rotation = fieldConfigVisitor.getExpression(FieldIdEnum.ANGLE);
-        Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.GAP);
-        Expression initialGap = fieldConfigVisitor.getExpression(FieldIdEnum.INITIAL_GAP);
 
         //
         // Anchor point
@@ -274,7 +272,8 @@ public class PointFillDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
 
-            // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
+            // Ignore the anchor point if it is the same as the default
+            // so it doesn't appear in the SLD
             if (DetailsUtilities.isSame(AnchorPoint.DEFAULT, anchor)) {
                 anchor = null;
             }
@@ -290,7 +289,8 @@ public class PointFillDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
-            // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
+            // Ignore the displacement if it is the same as the default so 
+            // it doesn't appear in the SLD
             if (DetailsUtilities.isSame(Displacement.DEFAULT, displacement)) {
                 displacement = null;
             }
@@ -304,6 +304,9 @@ public class PointFillDetails extends StandardPanel
 
         Graphic graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor,
                 displacement);
+
+        Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.GAP);
+        Expression initialGap = fieldConfigVisitor.getExpression(FieldIdEnum.INITIAL_GAP);
 
         graphic.setInitialGap(initialGap);
         graphic.setGap(gap);

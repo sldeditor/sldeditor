@@ -48,46 +48,77 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ChangeListener;
 
 /**
- * Character Map #4 - Display Characters and Copy to System Clipboard Written by: Keith Fenske, http://www.psc-consulting.ca/fenske/ Monday, 19 May
- * 2008 Java class name: CharMap4 Copyright (c) 2008 by Keith Fenske. Released under GNU Public License.
+ * Character Map #4 - Display Characters and Copy to System Clipboard
+ * Written by: Keith Fenske, http://www.psc-consulting.ca/fenske/
+ * Monday, 19 May 2008
+ * Java class name: CharMap4
+ * Copyright (c) 2008 by Keith Fenske.  Released under GNU Public License.
  * 
- * This is a Java 5.0 graphical (GUI) application to display Unicode characters or glyphs in text fonts, and copy those characters to the system
- * clipboard. Its major purpose is as a visual accessory for word processors such as Microsoft Word. The "character map" utility that comes with
- * Windows suffers from several problems. This Java application can be resized, for text and the program window, which is important in many languages.
- * Features are limited to make the application faster and simpler to use. A single click adds a character to the sample text, and the sample text is
- * automatically copied to the system clipboard on each click.
+ * This is a Java 5.0 graphical (GUI) application to display Unicode characters
+ * or glyphs in text fonts, and copy those characters to the system clipboard.
+ * Its major purpose is as a visual accessory for word processors such as
+ * Microsoft Word.  The "character map" utility that comes with Windows suffers
+ * from several problems.  This Java application can be resized, for text and
+ * the program window, which is important in many languages.  Features are
+ * limited to make the application faster and simpler to use.  A single click
+ * adds a character to the sample text, and the sample text is automatically
+ * copied to the system clipboard on each click.
  *
- * You may choose the font to be displayed and the size of the characters or glyphs. (Glyphs are bits and pieces that a font combines to produce the
- * characters you see. In most cases, one character maps to one glyph.) You may edit the sample text, erase it with the "Clear" button, or copy it to
- * the system clipboard with the "Copy All" button. Paste the text into your word processor in the normal manner, which is usually a Control-V key
- * combination. Editing the sample text and pressing the Enter key also copies to the clipboard. Specific characters can be copied from the sample
- * text by selection and with the usual Control-C combination. More characters are available via the scroll bar on the right. A description is shown
- * in the "caption" field when characters have a particular name or meaning. Common readings or sounds are given for Chinese, Japanese, and Korean
- * characters. Cantonese is prefixed with "C", Japanese "Kun" with "J", Korean with "K", Mandarin with "M", and Sino-Japanese "On" with "S". An
- * English translation of CJK character definitions would have been more amusing but less practical.
+ * You may choose the font to be displayed and the size of the characters or
+ * glyphs.  (Glyphs are bits and pieces that a font combines to produce the
+ * characters you see.  In most cases, one character maps to one glyph.)  You
+ * may edit the sample text, erase it with the "Clear" button, or copy it to the
+ * system clipboard with the "Copy All" button.  Paste the text into your word
+ * processor in the normal manner, which is usually a Control-V key combination.
+ * Editing the sample text and pressing the Enter key also copies to the
+ * clipboard.  Specific characters can be copied from the sample text by
+ * selection and with the usual Control-C combination.  More characters are
+ * available via the scroll bar on the right.  A description is shown in the
+ * "caption" field when characters have a particular name or meaning.  Common
+ * readings or sounds are given for Chinese, Japanese, and Korean characters.
+ * Cantonese is prefixed with "C", Japanese "Kun" with "J", Korean with "K",
+ * Mandarin with "M", and Sino-Japanese "On" with "S".  An English translation
+ * of CJK character definitions would have been more amusing but less practical.
  * 
- * Keyboard shortcuts are provided to mimic the scroll bar: the Control-Home key combination goes to the very first character, Control-End goes to the
- * last character, Page Down and Page Up scroll one screen at a time, and the arrow keys scroll one line at a time. You need to combine the End and
- * Home keys with the Control (Ctrl) key when the sample text has keyboard focus. The F1 key is the only helpful undocumented feature.
+ * Keyboard shortcuts are provided to mimic the scroll bar: the Control-Home key
+ * combination goes to the very first character, Control-End goes to the last
+ * character, Page Down and Page Up scroll one screen at a time, and the arrow
+ * keys scroll one line at a time.  You need to combine the End and Home keys
+ * with the Control (Ctrl) key when the sample text has keyboard focus.  The F1
+ * key is the only helpful undocumented feature.
  *
- * GNU General Public License (GPL) -------------------------------- CharMap4 is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License or (at your option) any later
- * version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * GNU General Public License (GPL)
+ * --------------------------------
+ * CharMap4 is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License or (at your option) any later
+ * version.  This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY, without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
  * 
- * You should have received a copy of the GNU General Public License along with this program. If not, see the http://www.gnu.org/licenses/ web page.
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see the http://www.gnu.org/licenses/ web page.
  * 
- * Restrictions and Limitations ---------------------------- Which fonts will work with this program depends upon the operating system and version of
- * the Java run-time environment. Java 5.0 on Windows 2000/XP will show installed TrueType fonts, that is, fonts that have been added with the Control
- * Panel, Fonts icon. (Temporary fonts are not shown if opened with the Windows Font Viewer by double clicking on a font file name.) If you think this
- * program is not working correctly on your computer, then "Lucida Console" is a good font for testing the spacing and positioning, because its glyphs
- * are tightly packed. Version 4 of CharMap supports extended Unicode (up to 1,114,112 characters) and is noticeably slower than version 3, which only
- * supports the standard range of 65,536 characters. Version 4 also tends to run out of memory for very large fonts; see the -Xmx option on the Java
+ * Restrictions and Limitations
+ * ----------------------------
+ * Which fonts will work with this program depends upon the operating system and
+ * version of the Java run-time environment.  Java 5.0 on Windows 2000/XP will
+ * show installed TrueType fonts, that is, fonts that have been added with the
+ * Control Panel, Fonts icon.  (Temporary fonts are not shown if opened with the
+ * Windows Font Viewer by double clicking on a font file name.)  If you think
+ * this program is not working correctly on your computer, then "Lucida Console"
+ * is a good font for testing the spacing and positioning, because its glyphs
+ * are tightly packed.  Version 4 of CharMap supports extended Unicode (up to
+ * 1,114,112 characters) and is noticeably slower than version 3, which only
+ * supports the standard range of 65,536 characters.  Version 4 also tends to
+ * run out of memory for very large fonts; see the -Xmx option on the Java
  * command line.
  * 
- * This program contains character data from the Unicode Consortium; please visit their web site at http://www.unicode.org/ for more information.
- * Korean character names were converted from Korean standards document KS X 1001:2002 with the title "Hangeul Syllables in Unicode 4.0" and dated 25
- * March 2004.
+ * This program contains character data from the Unicode Consortium; please
+ * visit their web site at http://www.unicode.org/ for more information.  Korean
+ * character names were converted from Korean standards document KS X 1001:2002
+ * with the title "Hangeul Syllables in Unicode 4.0" and dated 25 March 2004.
  */
 public class CharMap4 extends JDialog {
 
@@ -319,7 +350,8 @@ public class CharMap4 extends JDialog {
         selectedCharField = new JTextField();
         selectedCharField.addActionListener(userActions);
         selectedCharField.setEditable(false);
-        selectedCharField.setFont(new Font(SYSTEM_FONT, Font.PLAIN, 14)); // apply new font to sample text
+        selectedCharField.setFont(new Font(SYSTEM_FONT, Font.PLAIN, 14)); // apply new font to
+                                                                          // sample text
         selectedCharField.setMargin(new Insets(1, 5, 2, 5)); // top, left, bottom, right
         panel4.add(selectedCharField, BorderLayout.CENTER); // put sample in center
 
@@ -456,7 +488,8 @@ public class CharMap4 extends JDialog {
     /**
      * Copy text.
      * 
-     * Copy all sample text to the system clipboard. Remember the current caret position (selection) and restore that afterwards.
+     * Copy all sample text to the system clipboard. Remember the current caret position (selection)
+     * and restore that afterwards.
      */
     public void copyText() {
         int end, start; // text positions for caret and/or selection
@@ -494,15 +527,18 @@ public class CharMap4 extends JDialog {
         if (caption == null) // was there a defined caption string?
         {
             /*
-             * No caption string has been defined for this character. Use the name of the Unicode "block" or range instead, as obtained from the file:
+             * No caption string has been defined for this character. Use the name of the Unicode
+             * "block" or range instead, as obtained from the file:
              * 
              * http://www.unicode.org/Public/UNIDATA/Blocks.txt
              *
-             * Block names differ slightly from the "First" and "Last" names found in the UNIDATA/UnicodeData.txt file. Whatever you may think of the
-             * block names, they are the official punctuation and spelling.
+             * Block names differ slightly from the "First" and "Last" names found in the
+             * UNIDATA/UnicodeData.txt file. Whatever you may think of the block names, they are the
+             * official punctuation and spelling.
              * 
-             * The following piece of code (except for the first line) is mechanically generated from UNIDATA/Blocks.txt by the unpublished
-             * CharMapParse1 Java application. Do not edit this code manually.
+             * The following piece of code (except for the first line) is mechanically generated
+             * from UNIDATA/Blocks.txt by the unpublished CharMapParse1 Java application. Do not
+             * edit this code manually.
              * 
              * Last updated from the 2011-06-15 UNIDATA/Blocks.txt file (6.1.0).
              */
@@ -983,8 +1019,8 @@ public class CharMap4 extends JDialog {
     /**
      * Caption put.
      * 
-     * Save a mouse caption (string) corresponding to a character value. Do not include a character number in the caption; that is added by
-     * captionGet().
+     * Save a mouse caption (string) corresponding to a character value. Do not include a character
+     * number in the caption; that is added by captionGet().
      *
      * @param value the value
      * @param text the text
@@ -996,8 +1032,9 @@ public class CharMap4 extends JDialog {
     /**
      * Char to string.
      *
-     * Convert an integer character number to a standard Java string (that is, encode the character as UTF-16 text). This isolates one of the code
-     * differences between Java 1.4 and Java 5.0 inside a single common method.
+     * Convert an integer character number to a standard Java string (that is, encode the character
+     * as UTF-16 text). This isolates one of the code differences between Java 1.4 and Java 5.0
+     * inside a single common method.
      * 
      * @param value the value
      * @return the string
@@ -1009,21 +1046,26 @@ public class CharMap4 extends JDialog {
     /**
      * loadConfig() method
      *
-     * Load configuration data from a text file in the current working directory, which is usually the same folder as the program's *.class files.
-     * Should we encounter an error, then print a message, but continue normal execution. None of the file data is critical to the operation of this
-     * program.
+     * Load configuration data from a text file in the current working directory, which is usually
+     * the same folder as the program's *.class files. Should we encounter an error, then print a
+     * message, but continue normal execution. None of the file data is critical to the operation of
+     * this program.
      * 
-     * Please see the following web sources for the most recent Unicode mapping tables for regular characters:
-     * http://www.unicode.org/Public/UNIDATA/UCD.html http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
+     * Please see the following web sources for the most recent Unicode mapping tables for regular
+     * characters: http://www.unicode.org/Public/UNIDATA/UCD.html
+     * http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
      * 
      * The best source for information about Chinese-Japanese-Korean ideographs is:
      * 
-     * http://www.unicode.org/Public/UNIDATA/Unihan.html http://www.unicode.org/Public/UNIDATA/Unihan.txt
+     * http://www.unicode.org/Public/UNIDATA/Unihan.html
+     * http://www.unicode.org/Public/UNIDATA/Unihan.txt
      * 
      * Names for the Korean Hangul syllables can be found in:
      * 
-     * http://www.unicode.org/Public/UNIDATA/HangulSyllableType.txt http://www.unicode.org/Public/UNIDATA/Jamo.txt
-     * http://www.iana.org/assignments/idn/kr-korean.html (best raw data file) http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP949.TXT
+     * http://www.unicode.org/Public/UNIDATA/HangulSyllableType.txt
+     * http://www.unicode.org/Public/UNIDATA/Jamo.txt
+     * http://www.iana.org/assignments/idn/kr-korean.html (best raw data file)
+     * http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP949.TXT
      */
     public void loadConfig() {
         byte[] array; // an array for exactly one byte
@@ -1133,12 +1175,15 @@ public class CharMap4 extends JDialog {
         captionPut(0x007E, "Tilde");
 
         /*
-         * Windows has a pre-defined way of entering non-keyboard characters up to 0xFF or decimal 255: hold down the Alt key and press exactly four
-         * digits from 0000 to 0255 on the numeric keypad with NumLock on. This will use the system's default character set encoding. (Three digits
-         * are interpreted with an older MS-DOS character set.) The Alt+nnnn numbers are helpful, but since they vary from locale to locale, they must
-         * be re-generated here, and can not be fixed as part of the regular caption strings. Dingbat fonts that use the C1 control region (0x80 to
-         * 0x9F) may not receive correct Alt+ numbers for that region. This is unavoidable because the C1 control region has shift codes for many
-         * double-byte character sets.
+         * Windows has a pre-defined way of entering non-keyboard characters up to 0xFF or decimal
+         * 255: hold down the Alt key and press exactly four digits from 0000 to 0255 on the numeric
+         * keypad with NumLock on. This will use the system's default character set encoding. (Three
+         * digits are interpreted with an older MS-DOS character set.) The Alt+nnnn numbers are
+         * helpful, but since they vary from locale to locale, they must be re-generated here, and
+         * can not be fixed as part of the regular caption strings. Dingbat fonts that use the C1
+         * control region (0x80 to 0x9F) may not receive correct Alt+ numbers for that region. This
+         * is unavoidable because the C1 control region has shift codes for many double-byte
+         * character sets.
          */
 
         if (isMswinFlag()) // only if running on Microsoft Windows
@@ -1190,7 +1235,8 @@ public class CharMap4 extends JDialog {
     /**
      * Sets the font name.
      * 
-     * The caller gives us a preferred font name for display text. We use that font if it's available. Otherwise, we default to the local system font.
+     * The caller gives us a preferred font name for display text. We use that font if it's
+     * available. Otherwise, we default to the local system font.
      *
      * @param text the new font name
      */
@@ -1213,8 +1259,8 @@ public class CharMap4 extends JDialog {
     /**
      * Sets the point size.
      * 
-     * The caller gives us a preferred point size for display text, as a string. We use that size if it's available. Otherwise, we default to our
-     * initial size.
+     * The caller gives us a preferred point size for display text, as a string. We use that size if
+     * it's available. Otherwise, we default to our initial size.
      *
      * @param text the new point size
      */
@@ -1286,7 +1332,8 @@ public class CharMap4 extends JDialog {
     /**
      * User button.
      * 
-     * This method is called by our action listener actionPerformed() to process buttons, in the context of the main CharMap4 class.
+     * This method is called by our action listener actionPerformed() to process buttons, in the
+     * context of the main CharMap4 class.
      *
      * @param event the event
      */
@@ -1304,14 +1351,20 @@ public class CharMap4 extends JDialog {
 
         else // fault in program logic, not by user
         {
-            System.err.println("Error in userButton(): unknown ActionEvent: " + event); // should never happen, so write on console
+            System.err.println("Error in userButton(): unknown ActionEvent: " + event); // should
+                                                                                        // never
+                                                                                        // happen,
+                                                                                        // so write
+                                                                                        // on
+                                                                                        // console
         }
     }
 
     /**
      * User key.
      * 
-     * The caller gives us a command string for a keyboard action. The only actions currently defined are to mimic the scroll bar or menu items.
+     * The caller gives us a command string for a keyboard action. The only actions currently
+     * defined are to mimic the scroll bar or menu items.
      *
      * @param command the command
      */
@@ -1332,14 +1385,18 @@ public class CharMap4 extends JDialog {
                     .setValue(getGridScroll().getValue() - getGridScroll().getBlockIncrement());
         } else // fault in program logic, not by user
         {
-            System.err.println("Error in userKey(): unknown command: " + command); // should never happen, so write on console
+            System.err.println("Error in userKey(): unknown command: " + command); // should never
+                                                                                   // happen, so
+                                                                                   // write on
+                                                                                   // console
         }
     }
 
     /**
      * Winalt notation.
      * 
-     * Given an integer, return the Windows "Alt+nnnn" notation for that character number. Valid range is only from 0032 to 0255 decimal.
+     * Given an integer, return the Windows "Alt+nnnn" notation for that character number. Valid
+     * range is only from 0032 to 0255 decimal.
      *
      * @param value the value
      * @return the string

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.file;
 
 import static org.junit.Assert.assertEquals;
@@ -41,6 +42,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 
 /**
  * Unit test for FileTreeNode class.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,11 +56,11 @@ public class FileTreeNodeTest {
     @Ignore
     @Test
     public void test() {
-        Map<String, FileHandlerInterface> fileHandlerMap = new LinkedHashMap<String, FileHandlerInterface>();
+        Map<String, FileHandlerInterface> fileHandlerMap = 
+                new LinkedHashMap<String, FileHandlerInterface>();
 
         FileHandlerInterface fileHandler = new DummyFileHandler();
-        for(String fileExtension : fileHandler.getFileExtensionList())
-        {
+        for (String fileExtension : fileHandler.getFileExtensionList()) {
             fileHandlerMap.put(fileExtension, fileHandler);
         }
 

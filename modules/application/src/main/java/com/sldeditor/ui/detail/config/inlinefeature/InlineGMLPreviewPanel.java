@@ -47,26 +47,24 @@ public class InlineGMLPreviewPanel extends JPanel {
     /** The parent obj. */
     @SuppressWarnings("unused")
     private InlineFeatureUpdateInterface parentObj = null;
-    
+
     /**
      * Instantiates a new inline GML preview panel.
      *
      * @param parentObj the parent obj
      * @param noOfRows the no of rows
      */
-    public InlineGMLPreviewPanel(InlineFeatureUpdateInterface parentObj, int noOfRows)
-    {
+    public InlineGMLPreviewPanel(InlineFeatureUpdateInterface parentObj, int noOfRows) {
         this.parentObj = parentObj;
         createUI(noOfRows);
     }
-    
+
     /**
      * Creates the UI.
      *
      * @param noOfRows the no of rows
      */
-    private void createUI(int noOfRows)
-    {
+    private void createUI(int noOfRows) {
         setLayout(new BorderLayout());
 
         int xPos = 0;

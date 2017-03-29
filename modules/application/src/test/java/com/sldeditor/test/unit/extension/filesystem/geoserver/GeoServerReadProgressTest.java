@@ -16,9 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.geoserver;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +38,7 @@ import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
 
 /**
  * Unit test for GeoServerReadProgress class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress}
  * 
  * @author Robert Ward (SCISYS)
@@ -97,8 +100,10 @@ public class GeoServerReadProgressTest {
         progress.readStylesProgress(connection, 4, 3);
         assertFalse(complete.completed);
 
-        Map<String, List<GeoServerLayer>> completedLayersMap = new HashMap<String, List<GeoServerLayer>>();
-        Map<String, List<StyleWrapper>> completedStyleMap = new HashMap<String, List<StyleWrapper>>();
+        Map<String, List<GeoServerLayer>> completedLayersMap =
+                new HashMap<String, List<GeoServerLayer>>();
+        Map<String, List<StyleWrapper>> completedStyleMap =
+                new HashMap<String, List<StyleWrapper>>();
 
         progress.readLayersComplete(connection, completedLayersMap);
         progress.readStylesComplete(connection, completedStyleMap, false);

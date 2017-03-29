@@ -179,23 +179,25 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
                     .decodeXML(document, SLDEditorFileHandler.DATASOURCE_ELEMENT);
             List<VersionData> vendorOptionList = extractVendorOptionData(document,
                     SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
-            List<EnvVar> envVarList = extractEnvironmentVariables(document,
-                    SLDEditorFileHandler.ENVVAR_ELEMENT);
-            LegendOptionData legendOption = LegendOptionData.decodeXML(document,
-                    SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
 
             File f = new File(sldFile);
             String sldContents = readFile(f, Charset.defaultCharset());
-            List<DataSourceAttributeData> fieldList = null;
 
             sldData = new SLDData(new StyleWrapper(sldFile), sldContents);
             sldData.setDataSourceProperties(dataSourceProperties);
             sldData.setVendorOptionList(vendorOptionList);
+            List<DataSourceAttributeData> fieldList = null;
             sldData.setFieldList(fieldList);
             sldData.setSLDFile(f);
             sldData.setReadOnly(false);
             sldData.setSldEditorFile(file);
+
+            List<EnvVar> envVarList = extractEnvironmentVariables(document,
+                    SLDEditorFileHandler.ENVVAR_ELEMENT);
             sldData.setEnvVarList(envVarList);
+
+            LegendOptionData legendOption = LegendOptionData.decodeXML(document,
+                    SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
             sldData.setLegendOptions(legendOption);
         } catch (ParserConfigurationException e) {
             ConsoleManager.getInstance().exception(this, e);

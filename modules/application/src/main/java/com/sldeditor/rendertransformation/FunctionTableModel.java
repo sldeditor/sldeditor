@@ -47,7 +47,8 @@ public class FunctionTableModel extends AbstractTableModel {
     /**
      * The Constant PARAMETER.
      * 
-     * @TODO Should be ParameterFunction.NAME.getName() but ParameterFunction is not publicly accessible
+     * @TODO Should be ParameterFunction.NAME.getName() but
+     *     ParameterFunction is not publicly accessible.
      */
     private static final String PARAMETER = "parameter";
 
@@ -73,7 +74,8 @@ public class FunctionTableModel extends AbstractTableModel {
     private List<String> columnList = new ArrayList<String>();
 
     /** The value list. */
-    private List<ProcessFunctionParameterValue> valueList = new ArrayList<ProcessFunctionParameterValue>();
+    private List<ProcessFunctionParameterValue> valueList = 
+            new ArrayList<ProcessFunctionParameterValue>();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
@@ -139,6 +141,7 @@ public class FunctionTableModel extends AbstractTableModel {
                     return expression.toString();
                 }
             }
+            break;
         default:
             break;
         }
@@ -342,7 +345,7 @@ public class FunctionTableModel extends AbstractTableModel {
     }
 
     /**
-     * Update value, sets optional fields to be included
+     * Update value, sets optional fields to be included.
      *
      * @param expression the expression
      * @param row the row

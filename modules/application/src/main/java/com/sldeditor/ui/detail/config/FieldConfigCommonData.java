@@ -37,15 +37,22 @@ public class FieldConfigCommonData {
     /** The label. */
     private String label;
 
-    /** The value only flag: <ul> <li>true - do not display a value/attribute/expression drop down list</li> <li>false- display a value/attribute/expression drop down list</li> </ul>. */
-    private boolean valueOnly = false;;
+    /**
+     * The value only flag:
+     * <ul>
+     * <li>true - do not display a value/attribute/expression drop down list</li>
+     * <li>false- display a value/attribute/expression drop down list</li>
+     * </ul>
+     * .
+     */
+    private boolean valueOnly = false;
 
     /** The raster symbol. */
     private boolean rasterSymbol = false;
 
     /** The optional field checkbox. */
     private boolean optionalField = false;
-    
+
     /**
      * Instantiates a new field config common data.
      *
@@ -94,7 +101,8 @@ public class FieldConfigCommonData {
      * @param label the label
      * @param valueOnly the value only
      */
-    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly) {
+    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label,
+            boolean valueOnly) {
         super();
         this.panelId = panelId;
         this.id = id;
@@ -108,8 +116,7 @@ public class FieldConfigCommonData {
      * @param commonData the common data
      */
     public FieldConfigCommonData(FieldConfigCommonData commonData) {
-        if(commonData != null)
-        {
+        if (commonData != null) {
             this.panelId = commonData.panelId;
             this.id = commonData.id;
             this.label = commonData.label;

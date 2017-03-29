@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -37,6 +38,7 @@ import com.sldeditor.common.utils.OSValidator;
 
 /**
  * Unit test for ExternalFilenames class.
+ * 
  * <p>{@link com.sldeditor.common.utils.ExternalFilenames}
  * 
  * @author Robert Ward (SCISYS)
@@ -44,13 +46,14 @@ import com.sldeditor.common.utils.OSValidator;
 public class ExternalFilenamesTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#getFile(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#getFile(java.lang.String)}.
      */
     @Test
     public void testGetFile() {
         assertNull(ExternalFilenames.getFile(null, null));
 
-        SLDData sldData = new SLDData(new StyleWrapper("workspace","style"), "contents");
+        SLDData sldData = new SLDData(new StyleWrapper("workspace", "style"), "contents");
         File tempSLDFile = null;
         try {
             tempSLDFile = File.createTempFile(getClass().getSimpleName(), ".sld");
@@ -69,10 +72,11 @@ public class ExternalFilenamesTest {
 
         // The graphics file is relative to the sld file so add the parent folder
         // of the sld file
-        String absolutePath = ExternalFilenames.getFile(sldData, expectedGraphicsFile).getAbsolutePath();
+        String absolutePath = ExternalFilenames.getFile(sldData, expectedGraphicsFile)
+                .getAbsolutePath();
         assertEquals(tempSLDFile.getParent() + File.separator + expectedGraphicsFile, absolutePath);
 
-        // Now a graphics file with an absolute file path 
+        // Now a graphics file with an absolute file path
         File absolutePathGraphicsFile = null;
         try {
             absolutePathGraphicsFile = File.createTempFile(getClass().getSimpleName(), ".png");
@@ -81,24 +85,28 @@ public class ExternalFilenamesTest {
             fail("Couldn't create temp test file");
         }
 
-        String actualResult = ExternalFilenames.getFile(sldData, absolutePathGraphicsFile.getAbsolutePath()).getAbsolutePath();
+        String actualResult = ExternalFilenames
+                .getFile(sldData, absolutePathGraphicsFile.getAbsolutePath()).getAbsolutePath();
         String expectedResult = absolutePathGraphicsFile.getAbsolutePath();
         assertEquals(expectedResult, actualResult);
 
         // Now try a URL
         try {
-            String absolutePathGraphicsFileURL = absolutePathGraphicsFile.toURI().toURL().toString();
-            actualResult = ExternalFilenames.getFile(sldData, absolutePathGraphicsFileURL).getAbsolutePath();
+            String absolutePathGraphicsFileURL = absolutePathGraphicsFile.toURI().toURL()
+                    .toString();
+            actualResult = ExternalFilenames.getFile(sldData, absolutePathGraphicsFileURL)
+                    .getAbsolutePath();
 
             String s = OSValidator.isWindows() ? "file:/" : "file:";
 
-            expectedResult = new File(absolutePathGraphicsFileURL.substring(s.length())).getAbsolutePath();
+            expectedResult = new File(absolutePathGraphicsFileURL.substring(s.length()))
+                    .getAbsolutePath();
         } catch (MalformedURLException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
         assertEquals(expectedResult, actualResult);
-        
+
         tempSLDFile.delete();
         absolutePathGraphicsFile.delete();
     }
@@ -110,7 +118,7 @@ public class ExternalFilenamesTest {
     public void testGetText() {
         assertNull(ExternalFilenames.getText(null, null));
 
-        SLDData sldData = new SLDData(new StyleWrapper("workspace","style"), "contents");
+        SLDData sldData = new SLDData(new StyleWrapper("workspace", "style"), "contents");
         File tempSLDFile = null;
         try {
             tempSLDFile = File.createTempFile(getClass().getSimpleName(), ".sld");
@@ -142,9 +150,9 @@ public class ExternalFilenamesTest {
         String actualFilename2 = new File(expectedFilename).getAbsolutePath();
         File file2 = new File(actualFilename2);
 
-        try
-        {
-            assertEquals(actualFilename2, ExternalFilenames.getText(sldData, file2.toURI().toURL()));
+        try {
+            assertEquals(actualFilename2,
+                    ExternalFilenames.getText(sldData, file2.toURI().toURL()));
         } catch (MalformedURLException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -154,7 +162,8 @@ public class ExternalFilenamesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#getFileExtension(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#getFileExtension(java.lang.String)}.
      */
     @Test
     public void testGetFileExtension() {
@@ -167,7 +176,8 @@ public class ExternalFilenamesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#getImageFormat(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#getImageFormat(java.lang.String)}.
      */
     @Test
     public void testGetImageFormat() {
@@ -179,34 +189,31 @@ public class ExternalFilenamesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#addFileExtensionSeparator(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#addFileExtensionSeparator(java.lang.String)}.
      */
     @Test
-    public void testAddFileExtensionSeparator()
-    {
+    public void testAddFileExtensionSeparator() {
         String testValue = "abcxyz";
         String actual = ExternalFilenames.addFileExtensionSeparator(testValue);
 
-        assertEquals("." + testValue , actual);
+        assertEquals("." + testValue, actual);
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#convertURLToFile(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#convertURLToFile(java.lang.String)}.
      */
     @Test
-    public void testConvertURLToFile_String()
-    {
-        assertEquals("", ExternalFilenames.convertURLToFile((String)null));
+    public void testConvertURLToFile_String() {
+        assertEquals("", ExternalFilenames.convertURLToFile((String) null));
         String prefix;
 
         String testFilenameValue = "";
-        if(OSValidator.isWindows())
-        {
+        if (OSValidator.isWindows()) {
             testFilenameValue = "C:/tmp/test.txt";
             prefix = "file:/";
-        }
-        else
-        {
+        } else {
             testFilenameValue = "/tmp/test.txt";
             prefix = "file:";
         }
@@ -221,30 +228,25 @@ public class ExternalFilenamesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#convertURLToFile(java.net.URL)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#convertURLToFile(java.net.URL)}.
      */
     @Test
-    public void testConvertURLToFile_URL()
-    {
-        assertEquals("", ExternalFilenames.convertURLToFile((URL)null));
+    public void testConvertURLToFile_URL() {
+        assertEquals("", ExternalFilenames.convertURLToFile((URL) null));
         String prefix;
 
         String testFilenameStringValue = null;
-        if(OSValidator.isWindows())
-        {
+        if (OSValidator.isWindows()) {
             testFilenameStringValue = "C:/tmp/test.txt";
             prefix = "file:/";
-        }
-        else
-        {
+        } else {
             testFilenameStringValue = "/tmp/test.txt";
             prefix = "file:";
         }
 
-
         URL testFilenameValue = null;
-        try
-        {
+        try {
             testFilenameValue = new URL(prefix + testFilenameStringValue);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -255,7 +257,8 @@ public class ExternalFilenamesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ExternalFilenames#createSLDFilename(java.io.File)}.
+     * Test method for
+     * {@link com.sldeditor.common.utils.ExternalFilenames#createSLDFilename(java.io.File)}.
      */
     @Test
     public void testCreateSLDFilename() {

@@ -32,8 +32,8 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 
 /**
  * Unit test for DatabaseConnectionTool class.
- * <p>
- * {@link com.sldeditor.test.unit.tool.databaseconnection.DatabaseConnectionTool}
+ * 
+ * <p>{@link com.sldeditor.test.unit.tool.databaseconnection.DatabaseConnectionTool}
  * 
  * @author Robert Ward (SCISYS)
  *

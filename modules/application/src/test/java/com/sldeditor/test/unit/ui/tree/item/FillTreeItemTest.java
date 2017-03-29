@@ -34,6 +34,7 @@ import com.sldeditor.ui.tree.item.FillTreeItem;
 
 /**
  * The unit test for FillTreeItem.
+ * 
  * <p>{@link com.sldeditor.ui.tree.item.FillTreeItem}
  *
  * @author Robert Ward (SCISYS)

@@ -45,6 +45,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for RasterSymbolizerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.RasterSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -85,8 +86,10 @@ public class RasterSymbolizerDetailsTest {
         RasterSymbolizer symbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory.contrastEnhancement(ff.literal(.5), "ramp");
-        SelectedChannelType greyChannel = styleFactory.createSelectedChannelType("grey", contrastEnhancement);
+        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory
+                .contrastEnhancement(ff.literal(.5), "ramp");
+        SelectedChannelType greyChannel = styleFactory.createSelectedChannelType("grey",
+                contrastEnhancement);
         symbolizer.setChannelSelection(styleFactory.channelSelection(greyChannel));
         String expectedNameValue = "symbolizer test value";
         symbolizer.setName(expectedNameValue);
@@ -146,19 +149,23 @@ public class RasterSymbolizerDetailsTest {
         String expectedRuleValue = "rule test value";
         rule.setName(expectedRuleValue);
 
-        RasterSymbolizer symbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory.contrastEnhancement(ff.literal(.5), "ramp");
-        SelectedChannelType redChannel = styleFactory.createSelectedChannelType("red", contrastEnhancement);
-        SelectedChannelType greenChannel = styleFactory.createSelectedChannelType("green", contrastEnhancement);
-        SelectedChannelType blueChannel = styleFactory.createSelectedChannelType("blue", contrastEnhancement);
+        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory
+                .contrastEnhancement(ff.literal(.5), "ramp");
+        SelectedChannelType redChannel = styleFactory.createSelectedChannelType("red",
+                contrastEnhancement);
+        SelectedChannelType greenChannel = styleFactory.createSelectedChannelType("green",
+                contrastEnhancement);
+        SelectedChannelType blueChannel = styleFactory.createSelectedChannelType("blue",
+                contrastEnhancement);
 
         SelectedChannelType[] channels = new SelectedChannelType[3];
         channels[0] = redChannel;
         channels[1] = greenChannel;
         channels[2] = blueChannel;
 
+        RasterSymbolizer symbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
         symbolizer.setChannelSelection(styleFactory.createChannelSelection(channels));
         String expectedNameValue = "symbolizer test value";
         symbolizer.setName(expectedNameValue);

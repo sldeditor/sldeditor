@@ -1,6 +1,8 @@
 /**
  * 
  */
+
+
 package com.sldeditor.test.unit.ui.detail.config;
 
 import static org.junit.Assert.assertEquals;
@@ -44,8 +46,8 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigGeometryField.
- * <p>
- * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.config.FieldConfigGeometryField}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -59,7 +61,8 @@ public class FieldConfigGeometryFieldTest {
         private static final String GEOMETRY_FIELD = "Geometry_1";
 
         /** The listener list. */
-        private List<DataSourceUpdatedInterface> listenerList = new ArrayList<DataSourceUpdatedInterface>();
+        private List<DataSourceUpdatedInterface> listenerList =
+                new ArrayList<DataSourceUpdatedInterface>();
 
         /**
          * Adds the listener.
@@ -258,7 +261,8 @@ public class FieldConfigGeometryFieldTest {
         /*
          * (non-Javadoc)
          * 
-         * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
+         * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String,
+         * java.lang.Class)
          */
         @Override
         public void updateFieldType(String fieldName, Class<?> dataType) {
@@ -276,8 +280,9 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#internal_setEnabled(boolean)}. Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#isEnabled()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#internal_setEnabled(boolean)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
@@ -301,7 +306,8 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
@@ -316,11 +322,16 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#generateExpression()}. Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateExpression(java.lang.Object)}. Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateField(java.lang.String)}. Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#getStringValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#generateExpression()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateExpression(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#populateField(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
@@ -371,7 +382,9 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#revertToDefaultValue()}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#revertToDefaultValue()}. Test
+     * method for
      * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#setDefaultValue(java.lang.String)}.
      */
     @Test
@@ -398,7 +411,8 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -427,8 +441,11 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#undoAction(com.sldeditor.common.undo.UndoInterface)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#redoAction(com.sldeditor.common.undo.UndoInterface)}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)}.
      */
     @Test
@@ -466,7 +483,8 @@ public class FieldConfigGeometryFieldTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {

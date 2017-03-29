@@ -39,26 +39,27 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 
 /**
- * Class that contains the supported data flavours, which allow the dragging and dropping of nodes within the file system tree.
+ * Class that contains the supported data flavours, which allow the
+ * dragging and dropping of nodes within the file system tree.
  * 
  * @author Robert Ward (SCISYS)
  */
 public class DataFlavourManager {
 
     /** The Constant GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR. */
-    final public static SLDDataFlavour GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR = new SLDDataFlavour(
+    public static final SLDDataFlavour GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR = new SLDDataFlavour(
             GeoServerWorkspaceNode.class, GeoServerWorkspaceNode.class.getName());
 
     /** The Constant GEOSERVER_HEADING_STYLE_FLAVOUR. */
-    final public static SLDDataFlavour GEOSERVER_HEADING_STYLE_FLAVOUR = new SLDDataFlavour(
+    public static final SLDDataFlavour GEOSERVER_HEADING_STYLE_FLAVOUR = new SLDDataFlavour(
             GeoServerStyleHeadingNode.class, GeoServerStyleHeadingNode.class.getName());
 
     /** The Constant GEOSERVER_HEADING_LAYER_FLAVOUR. */
-    final public static SLDDataFlavour GEOSERVER_HEADING_LAYER_FLAVOUR = new SLDDataFlavour(
+    public static final SLDDataFlavour GEOSERVER_HEADING_LAYER_FLAVOUR = new SLDDataFlavour(
             GeoServerLayerHeadingNode.class, GeoServerLayerHeadingNode.class.getName());
 
     /** The Constant FOLDER_DATAITEM_FLAVOR. */
-    final public static SLDDataFlavour FOLDER_DATAITEM_FLAVOR = new SLDDataFlavour(
+    public static final SLDDataFlavour FOLDER_DATAITEM_FLAVOR = new SLDDataFlavour(
             FileTreeNode.class, "Folder");
 
     /** The data flavour array. */
@@ -175,7 +176,8 @@ public class DataFlavourManager {
             return false;
         }
 
-        Map<NodeInterface, List<SLDDataInterface>> map = new LinkedHashMap<NodeInterface, List<SLDDataInterface>>();
+        Map<NodeInterface, List<SLDDataInterface>> map = 
+                new LinkedHashMap<NodeInterface, List<SLDDataInterface>>();
 
         for (int index = 0; index < transferredData.getDataListSize(); index++) {
             NodeInterface nodeToTransfer = (NodeInterface) transferredData.getTreePath(index)

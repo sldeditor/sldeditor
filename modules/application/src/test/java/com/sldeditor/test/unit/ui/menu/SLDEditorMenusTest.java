@@ -39,8 +39,8 @@ import com.sldeditor.ui.menu.SLDEditorMenus;
 
 /**
  * The unit test for SLDEditorMenus.
- * <p>
- * {@link com.sldeditor.ui.menu.SLDEditorMenus}
+ * 
+ * <p>{@link com.sldeditor.ui.menu.SLDEditorMenus}
  *
  * @author Robert Ward (SCISYS)
  */

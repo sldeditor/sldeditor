@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.transform;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,8 +31,8 @@ import com.sldeditor.common.console.ConsoleManager;
 /**
  * The Class ParameterFunctionUtils.
  * 
- * @TODO Isolated functionality to provide a workaround to the org.geotools.process.function.ParameterFunction
- * class not having public scope.
+ * @TODO Isolated functionality to provide a workaround to the
+ *       org.geotools.process.function.ParameterFunction class not having public scope.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -43,9 +44,9 @@ public class ParameterFunctionUtils {
     /**
      * Gets the expression list.
      * 
-     * @TODO This gets round the issue where the org.geotools.process.function.ParameterFunction does not
-     * have a public accessor.  Using reflection and changing the accessibility flag we can read the
-     * process function data.
+     * @TODO This gets round the issue where the org.geotools.process.function.ParameterFunction
+     *       does not have a public accessor. Using reflection and changing the accessibility flag
+     *       we can read the process function data.
      *
      * @param parameter the parameter
      * @return the expression list
@@ -54,24 +55,19 @@ public class ParameterFunctionUtils {
     public static List<Expression> getExpressionList(Expression parameter) {
         List<Expression> parameterList = null;
 
-        for(Method method : parameter.getClass().getMethods())
-        {
-            if(method.getName().compareTo("getParameters") == 0)
-            {
+        for (Method method : parameter.getClass().getMethods()) {
+            if (method.getName().compareTo("getParameters") == 0) {
                 try {
                     method.setAccessible(true);
                     Object[] args = null;
                     parameterList = (List<Expression>) method.invoke(parameter, args);
 
                     return parameterList;
-                }
-                catch (IllegalAccessException e) {
+                } catch (IllegalAccessException e) {
                     ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
-                }
-                catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
-                }
-                catch (InvocationTargetException e) {
+                } catch (InvocationTargetException e) {
                     ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
                 }
             }
@@ -80,52 +76,41 @@ public class ParameterFunctionUtils {
     }
 
     /**
-     * Gets the process function data as a string.
-     * Each parameter is on a new line.
+     * Gets the process function data as a string. Each parameter is on a new line.
      *
      * @param processFunction the process function
      * @return the string
      */
     public static String getString(ProcessFunction processFunction) {
         StringBuilder sb = new StringBuilder();
-        if(processFunction != null)
-        {
+        if (processFunction != null) {
             sb.append(processFunction.getFunctionName().toString());
             sb.append("(");
             int count = 0;
-            for(Expression expression : processFunction.getParameters())
-            {
-                if(count > 0)
-                {
+            for (Expression expression : processFunction.getParameters()) {
+                if (count > 0) {
                     sb.append(", ");
                 }
                 sb.append("\n  ");
                 List<Expression> subParameterList = getExpressionList(expression);
 
-                if(!subParameterList.isEmpty())
-                {
-                    if(subParameterList.size() == 1)
-                    {
+                if (!subParameterList.isEmpty()) {
+                    if (subParameterList.size() == 1) {
                         sb.append(subParameterList.get(0).toString());
                         sb.append(PARAMETER_NOT_SET);
-                    }
-                    else if(subParameterList.size() == 2)
-                    {
+                    } else if (subParameterList.size() == 2) {
                         sb.append(subParameterList.get(0).toString());
                         sb.append(":");
                         Expression expression2 = subParameterList.get(1);
-                        if(expression2 != null)
-                        {
+                        if (expression2 != null) {
                             sb.append(expression2.toString());
-                        }
-                        else
-                        {
+                        } else {
                             sb.append(PARAMETER_NOT_SET);
                         }
                     }
                 }
 
-                count ++;
+                count++;
             }
             sb.append("\n)");
         }

@@ -29,6 +29,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.FieldConfigMarke
 
 /**
  * The unit test for FieldConfigMarkerExtShape.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.FieldConfigMarkerExtShape}
  *
  * @author Robert Ward (SCISYS)
@@ -36,13 +37,16 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.FieldConfigMarke
 public class FieldConfigMarkerExtShapeTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.FieldConfigMarkerExtShape#FieldConfigMarkerExtShape(com.sldeditor.ui.detail.config.FieldConfigCommonData, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.FieldConfigMarkerExtShape#FieldConfigMarkerExtShape(com.sldeditor.ui.detail.config.FieldConfigCommonData, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testFieldConfigMarkerShape() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigMarkerExtShape field = new FieldConfigMarkerExtShape(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarkerExtShape field = new FieldConfigMarkerExtShape(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNotNull(field);
     }

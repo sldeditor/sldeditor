@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.vendor.geoserver.fill;
 
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionFillFactory implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
+public class VendorOptionFillFactory
+        implements VendorOptionFactoryInterface, VendorOptionUpdateInterface {
 
     /** The vendor option GeoServer random fill. */
     private VOGeoServerRandomFill vendorOptionGeoServerRandomFill = null;
@@ -56,8 +58,7 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
      *
      * @param panelId the panel id
      */
-    public VendorOptionFillFactory(Class<?> panelId)
-    {
+    public VendorOptionFillFactory(Class<?> panelId) {
         vendorOptionGeoServerRandomFill = new VOGeoServerRandomFill(panelId);
 
         vendorOptionList.add(vendorOptionGeoServerRandomFill);
@@ -73,9 +74,27 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
      * @return the vendor options
      */
     @Override
-    public List<VendorOptionInterface> getVendorOptionList()
-    {
+    public List<VendorOptionInterface> getVendorOptionList() {
         return vendorOptionList;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.
+     * String)
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList(String className) {
+        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption.getClass().getName().compareTo(className) == 0) {
+                matchingList.add(vendorOption);
+            }
+        }
+        return matchingList;
     }
 
     /**
@@ -83,73 +102,10 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
      *
      * @param polygonSymbolizer the polygon symbolizer
      */
-    public void populate(PolygonSymbolizer polygonSymbolizer)
-    {
-        for(VendorOptionInterface extension : vendorOptionList)
-        {
+    public void populate(PolygonSymbolizer polygonSymbolizer) {
+        for (VendorOptionInterface extension : vendorOptionList) {
             extension.populate(polygonSymbolizer);
         }
-    }
-
-    /**
-     * Update symbol but only if allowed to by the vendor options configuration.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    public void updateSymbol(PolygonSymbolizer polygonSymbolizer)
-    {
-        for(VendorOptionInterface extension : vendorOptionList)
-        {
-            boolean displayVendorOption = VendorOptionManager.getInstance().isAllowed(vendorOptionVersionList, extension.getVendorOption());
-
-            if(displayVendorOption)
-            {
-                extension.updateSymbol(polygonSymbolizer);
-            }
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
-     */
-    @Override
-    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList)
-    {
-        this.vendorOptionVersionList = vendorOptionVersionsList;
-    }
-
-    /**
-     * Gets the field data manager.
-     *
-     * @param fieldConfigManager the field config manager
-     */
-    public void getFieldDataManager(GraphicPanelFieldManager fieldConfigManager)
-    {
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            if(vendorOption != null)
-            {
-                PopulateDetailsInterface populateInterface = (PopulateDetailsInterface)vendorOption;
-                fieldConfigManager.add(populateInterface.getFieldDataManager());
-            }
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
-     */
-    @Override
-    public List<VendorOptionInterface> getVendorOptionList(String className) {
-        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
-
-        for(VendorOptionInterface vendorOption : vendorOptionList)
-        {
-            if(vendorOption.getClass().getName().compareTo(className) == 0)
-            {
-                matchingList.add(vendorOption);
-            }
-        }
-        return matchingList;
     }
 
     /**
@@ -161,18 +117,61 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
         // No vendor options
     }
 
-    /* (non-Javadoc)
+    /**
+     * Update symbol but only if allowed to by the vendor options configuration.
+     *
+     * @param polygonSymbolizer the polygon symbolizer
+     */
+    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
+        for (VendorOptionInterface extension : vendorOptionList) {
+            boolean displayVendorOption = VendorOptionManager.getInstance()
+                    .isAllowed(vendorOptionVersionList, extension.getVendorOption());
+
+            if (displayVendorOption) {
+                extension.updateSymbol(polygonSymbolizer);
+            }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.
+     * util.List)
+     */
+    @Override
+    public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
+        this.vendorOptionVersionList = vendorOptionVersionsList;
+    }
+
+    /**
+     * Gets the field data manager.
+     *
+     * @param fieldConfigManager the field config manager
+     */
+    public void getFieldDataManager(GraphicPanelFieldManager fieldConfigManager) {
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption != null) {
+                PopulateDetailsInterface populateInterface =
+                        (PopulateDetailsInterface) vendorOption;
+                fieldConfigManager.add(populateInterface.getFieldDataManager());
+            }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
         List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
 
-        for(VendorOptionInterface vo : vendorOptionList)
-        {
+        for (VendorOptionInterface vo : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vo.getVendorOptionInfo();
-            if(vendorOptionInfo != null)
-            {
+            if (vendorOptionInfo != null) {
                 vendorOptionInfoList.add(vendorOptionInfo);
             }
         }
@@ -188,8 +187,7 @@ public class VendorOptionFillFactory implements VendorOptionFactoryInterface, Ve
      */
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        for(VendorOptionInterface vo : vendorOptionList)
-        {
+        for (VendorOptionInterface vo : vendorOptionList) {
             vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }
     }

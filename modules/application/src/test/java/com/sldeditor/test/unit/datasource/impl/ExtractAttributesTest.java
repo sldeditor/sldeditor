@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -36,9 +37,9 @@ import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.ExtractAttributes;
 
-
 /**
  * Unit test for ExtractAttributes class.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.ExtractAttributes}
  * 
  * @author Robert Ward (SCISYS)
@@ -50,7 +51,8 @@ public class ExtractAttributesTest {
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
      */
     @Test
     public void testAddDefaultFields() {
@@ -67,11 +69,9 @@ public class ExtractAttributesTest {
 
         // Not assuming fields are in the same order
         int count = 0;
-        for(DataSourceAttributeData dataSourceField : actualFieldnameList)
-        {
-            if(expectedFieldList.contains(dataSourceField.getName()))
-            {
-                count ++;
+        for (DataSourceAttributeData dataSourceField : actualFieldnameList) {
+            if (expectedFieldList.contains(dataSourceField.getName())) {
+                count++;
             }
         }
         assertTrue(expectedFieldList.size() == count);
@@ -84,14 +84,12 @@ public class ExtractAttributesTest {
     /**
      * Test sld symbol contains non-default geometry field.
      * 
-     * Test method for {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     * {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
      */
     @Test
     public void testNonStandardGeometryField() {
 
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
-
-        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
 
         ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(SLDUtils.createSLDFromString(dummy.getSLDData()));
@@ -105,20 +103,19 @@ public class ExtractAttributesTest {
         // Check geometry fields extracted ok
         List<String> actualGeometryFields = extract.getGeometryFields();
         assertEquals(1, actualGeometryFields.size());
+        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
         assertTrue(expectedGeometryFieldName.compareTo(actualGeometryFields.get(0)) == 0);
     }
 
     /**
      * Test sld symbol contains non-default geometry field and non-standard xml namespace.
      * 
-     * Test method for {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     * {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
      */
     @Test
     public void testNonStandardGeometryNamespace() {
 
         DummyInternalSLDFile3 dummy = new DummyInternalSLDFile3();
-
-        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
 
         ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(SLDUtils.createSLDFromString(dummy.getSLDData()));
@@ -130,11 +127,9 @@ public class ExtractAttributesTest {
 
         // Not assuming fields are in the same order
         int count = 0;
-        for(DataSourceAttributeData dataSourceField : actualFieldnameList)
-        {
-            if(expectedFieldList.contains(dataSourceField.getName()))
-            {
-                count ++;
+        for (DataSourceAttributeData dataSourceField : actualFieldnameList) {
+            if (expectedFieldList.contains(dataSourceField.getName())) {
+                count++;
             }
         }
         assertTrue(expectedFieldList.size() == count);
@@ -142,6 +137,7 @@ public class ExtractAttributesTest {
         // Check geometry fields extracted ok
         List<String> actualGeometryFields = extract.getGeometryFields();
         assertEquals(1, actualGeometryFields.size());
+        String expectedGeometryFieldName = dummy.getExpectedGeometryFieldList().get(0);
         assertTrue(expectedGeometryFieldName.compareTo(actualGeometryFields.get(0)) == 0);
     }
 
@@ -149,8 +145,7 @@ public class ExtractAttributesTest {
      * Test filter.
      */
     @Test
-    public void testFilter()
-    {
+    public void testFilter() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
@@ -164,7 +159,7 @@ public class ExtractAttributesTest {
         ruleList.add(rule);
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(1, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -180,7 +175,7 @@ public class ExtractAttributesTest {
         ruleList.add(rule);
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         actualFieldnameList = extract.getFields();
         assertEquals(2, actualFieldnameList.size());
         dataSourceField = actualFieldnameList.get(0);
@@ -188,8 +183,7 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testNotFilter()
-    {
+    public void testNotFilter() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
@@ -205,7 +199,7 @@ public class ExtractAttributesTest {
         ruleList.add(rule);
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(1, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -213,24 +207,24 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testMultiComparatorFilter()
-    {
+    public void testMultiComparatorFilter() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
-        ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try with something complex
-        Filter filter = ff.and(ff.greater(ff.literal(42), ff.property("int")), ff.less(ff.literal(12), ff.property("abc")));
+        Filter filter = ff.and(ff.greater(ff.literal(42), ff.property("int")),
+                ff.less(ff.literal(12), ff.property("abc")));
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
+        ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(2, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -238,14 +232,12 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testBinaryTemporalFilter()
-    {
+    public void testBinaryTemporalFilter() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
-        ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try begins
@@ -253,9 +245,10 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
+        ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(1, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -263,14 +256,12 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testIsNull()
-    {
+    public void testIsNull() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
-        ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try isNull
@@ -278,9 +269,10 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
+        ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(1, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -288,14 +280,12 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testIsLike()
-    {
+    public void testIsLike() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
-        ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try isLike
@@ -303,9 +293,10 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
+        ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(1, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -313,14 +304,12 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testIsBetween()
-    {
+    public void testIsBetween() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
-        ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try isBetween
@@ -328,9 +317,10 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
+        ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<DataSourceAttributeData> actualFieldnameList = extract.getFields();
         assertEquals(1, actualFieldnameList.size());
         DataSourceAttributeData dataSourceField = actualFieldnameList.get(0);
@@ -338,14 +328,12 @@ public class ExtractAttributesTest {
     }
 
     @Test
-    public void testBinarySpatialOperator()
-    {
+    public void testBinarySpatialOperator() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
 
         StyledLayerDescriptor sld = createTestSLD(dummy);
         List<Rule> ruleList = getRuleList(sld);
 
-        ExtractAttributes extract = new ExtractAttributes();
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try bbox
@@ -354,9 +342,10 @@ public class ExtractAttributesTest {
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);
+        ExtractAttributes extract = new ExtractAttributes();
         extract.extractDefaultFields(sld);
 
-        // Check fields extracted ok 
+        // Check fields extracted ok
         List<String> actualGeometryFields = extract.getGeometryFields();
         assertEquals(1, actualGeometryFields.size());
         assertEquals(expectedGeometryFieldName, actualGeometryFields.get(0));

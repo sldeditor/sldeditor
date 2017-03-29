@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
@@ -23,35 +24,34 @@ package com.sldeditor.ui.detail.config.base.defaults;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DefaultInteger extends DefaultBase
-{
+public class DefaultInteger extends DefaultBase {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
-    public boolean accepts(String defaultValue)
-    {
+    public boolean accepts(String defaultValue) {
         boolean accept = false;
-        try
-        {
-            Integer.valueOf(defaultValue); // Don't care about the return type as long as it is valid
+        try {
+            // Don't care about the return type as long as it is valid
+            Integer.valueOf(defaultValue);
             accept = true;
-        }
-        catch(NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             // This means it is not an integer
         }
-        
+
         return accept;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override
-    public Object getValue(String defaultValue)
-    {
+    public Object getValue(String defaultValue) {
         return Integer.valueOf(defaultValue);
     }
 

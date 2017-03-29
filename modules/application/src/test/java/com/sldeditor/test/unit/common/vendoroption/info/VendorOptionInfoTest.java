@@ -19,6 +19,7 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 
 /**
  * Unit test for VendorOptionInfo.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfo}
  * 
  * @author Robert Ward (SCISYS)
@@ -36,11 +37,6 @@ public class VendorOptionInfoTest {
     @Test
     public void testVendorOptionInfo() {
         String name = "name";
-        VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
-        VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
-
-        VendorOptionVersion versionData = new VendorOptionVersion(GeoServerVendorOption.class,
-                versionDataMin, versionDataMax);
         String description = "test description";
         VendorOptionInfo info = new VendorOptionInfo(name, null, description);
 
@@ -49,6 +45,10 @@ public class VendorOptionInfoTest {
         assertNull(info.getVersionData());
         assertEquals("", info.getVersionString());
 
+        VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
+        VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
+        VendorOptionVersion versionData = new VendorOptionVersion(GeoServerVendorOption.class,
+                versionDataMin, versionDataMax);
         VendorOptionInfo info2 = new VendorOptionInfo(name, versionData, description);
         assertEquals("GeoServer 2.4.1-2.8.3", info2.getVersionString());
 

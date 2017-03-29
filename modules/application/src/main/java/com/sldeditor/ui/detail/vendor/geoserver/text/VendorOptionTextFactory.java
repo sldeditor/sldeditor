@@ -87,6 +87,23 @@ public class VendorOptionTextFactory
         return vendorOptionList;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
+     */
+    @Override
+    public List<VendorOptionInterface> getVendorOptionList(String className) {
+        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+
+        for (VendorOptionInterface vendorOption : vendorOptionList) {
+            if (vendorOption.getClass().getName().compareTo(className) == 0) {
+                matchingList.add(vendorOption);
+            }
+        }
+        return matchingList;
+    }
+
     /**
      * Populate.
      *
@@ -137,23 +154,6 @@ public class VendorOptionTextFactory
                 fieldConfigManager.add(populateInterface.getFieldDataManager());
             }
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
-     */
-    @Override
-    public List<VendorOptionInterface> getVendorOptionList(String className) {
-        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
-
-        for (VendorOptionInterface vendorOption : vendorOptionList) {
-            if (vendorOption.getClass().getName().compareTo(className) == 0) {
-                matchingList.add(vendorOption);
-            }
-        }
-        return matchingList;
     }
 
     /*

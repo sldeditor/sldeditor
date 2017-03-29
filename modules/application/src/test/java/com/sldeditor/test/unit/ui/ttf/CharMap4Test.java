@@ -29,8 +29,8 @@ import com.sldeditor.ui.ttf.CharMap4;
 
 /**
  * The unit test for CharMap4.
- * <p>
- * {@link com.sldeditor.ui.ttf.CharMap4}
+ * 
+ * <p>{@link com.sldeditor.ui.ttf.CharMap4}
  *
  * @author Robert Ward (SCISYS)
  */

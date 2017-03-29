@@ -43,13 +43,13 @@ import com.sldeditor.filter.v2.function.temporal.TOverlaps;
 
 /**
  * Unit test for the following classes:
- * <p>{@link com.sldeditor.filter.v2.function.property.IsBetween}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsLessThan}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsBetween}.
+ * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
+ * {@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsLessThan}.
+ * {@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -60,7 +60,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.After}.
+     * {@link com.sldeditor.filter.v2.function.temporal.After}.
      */
     @Test
     public void testAfter() {
@@ -69,7 +69,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.Before}.
+     * {@link com.sldeditor.filter.v2.function.temporal.Before}.
      */
     @Test
     public void testBefore() {
@@ -78,7 +78,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.Beyond}.
+     * {@link com.sldeditor.filter.v2.function.temporal.Beyond}.
      */
     @Test
     public void testBeyond() {
@@ -109,7 +109,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.During}.
+     * {@link com.sldeditor.filter.v2.function.temporal.During}.
      */
     @Test
     public void testDuring() {
@@ -118,7 +118,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.TContains}.
+     * {@link com.sldeditor.filter.v2.function.temporal.TContains}.
      */
     @Test
     public void testTContains() {
@@ -127,7 +127,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.TEquals}.
+     * {@link com.sldeditor.filter.v2.function.temporal.TEquals}.
      */
     @Test
     public void testTEquals() {
@@ -136,7 +136,7 @@ public class TemporalTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.temporal.TOverlaps}.
+     * {@link com.sldeditor.filter.v2.function.temporal.TOverlaps}.
      */
     @Test
     public void testTOverlaps() {
@@ -153,7 +153,8 @@ public class TemporalTests {
         assertNotNull(objUnderTest.createFilter());
         assertNull(objUnderTest.createLogicFilter(null));
 
-        BinaryTemporalOperatorImpl filter = (BinaryTemporalOperatorImpl)objUnderTest.createFilter(null);
+        BinaryTemporalOperatorImpl filter =
+                (BinaryTemporalOperatorImpl)objUnderTest.createFilter(null);
         assertNull(filter.getExpression1());
         assertNull(filter.getExpression2());
 

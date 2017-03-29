@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -46,6 +47,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
  * Unit test for DataSourceInfo.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.DataSourceInfo}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,7 +56,8 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 public class DataSourceInfoTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getGeometryType()}.
      */
     @Test
@@ -72,8 +75,9 @@ public class DataSourceInfoTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#setTypeName(java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getTypeName()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setTypeName(java.lang.String)}. Test
+     * method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getTypeName()}.
      */
     @Test
     public void testSetTypeName() {
@@ -88,8 +92,9 @@ public class DataSourceInfoTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getDataStore()}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#setDataStore(org.geotools.data.DataStore)}.
+     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getDataStore()}. Test
+     * method for
+     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setDataStore(org.geotools.data.DataStore)}.
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#unloadDataStore()}.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -98,7 +103,7 @@ public class DataSourceInfoTest {
         File file = new File("example.shp");
         Map map = new HashMap();
         try {
-            map.put( "url", file.toURI().toURL() );
+            map.put("url", file.toURI().toURL());
         } catch (MalformedURLException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -129,10 +134,11 @@ public class DataSourceInfoTest {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testGetFeatures() {
-        URL url = SLDEditorFile.class.getClassLoader().getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url = SLDEditorFile.class.getClassLoader()
+                .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
-        map.put( "url", url );
+        map.put("url", url);
         DataStore dataStore;
         try {
             dataStore = DataStoreFinder.getDataStore(map);
@@ -143,13 +149,13 @@ public class DataSourceInfoTest {
             dsInfo.setTypeName(typeName);
             SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
             SimpleFeatureType schema = source.getSchema();
-            
+
             assertNull(dsInfo.getFeatures());
             dsInfo.setSchema(schema);
 
             assertNull(dsInfo.getFeatures());
             dsInfo.setDataStore(dataStore);
-            
+
             assertTrue(dsInfo.getFeatures() != null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -163,10 +169,11 @@ public class DataSourceInfoTest {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testGetFeatureCollection() {
-        URL url = SLDEditorFile.class.getClassLoader().getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url = SLDEditorFile.class.getClassLoader()
+                .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
-        map.put( "url", url );
+        map.put("url", url);
         DataStore dataStore;
         try {
             dataStore = DataStoreFinder.getDataStore(map);
@@ -177,7 +184,7 @@ public class DataSourceInfoTest {
             dsInfo.setTypeName(typeName);
             SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
             SimpleFeatureType schema = source.getSchema();
-            
+
             assertNull(dsInfo.getGeometryFieldName());
             dsInfo.setSchema(schema);
 
@@ -189,17 +196,18 @@ public class DataSourceInfoTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getFeatureStore()}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#setSchema(org.opengis.feature.type.FeatureType)}.
+     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getFeatureStore()}. Test
+     * method for
+     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setSchema(org.opengis.feature.type.FeatureType)}.
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testGetFeatureStore() {
-        URL url = SLDEditorFile.class.getClassLoader().getResource("point/sld/shp/sld_cookbook_point.shp");
-
+        URL url = SLDEditorFile.class.getClassLoader()
+                .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
-        map.put( "url", url );
+        map.put("url", url);
         DataStore dataStore;
         try {
             dataStore = DataStoreFinder.getDataStore(map);
@@ -211,7 +219,7 @@ public class DataSourceInfoTest {
             SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
             SimpleFeatureType schema = source.getSchema();
             dsInfo.setSchema(schema);
-            
+
             assertNull(dsInfo.getFeatureStore());
             dsInfo.setDataStore(dataStore);
 
@@ -225,15 +233,17 @@ public class DataSourceInfoTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getPropertyDescriptorList()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceInfo#getPropertyDescriptorList()}.
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testGetPropertyDescriptorList() {
-        URL url = SLDEditorFile.class.getClassLoader().getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url = SLDEditorFile.class.getClassLoader()
+                .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
-        map.put( "url", url );
+        map.put("url", url);
         DataStore dataStore;
         try {
             dataStore = DataStoreFinder.getDataStore(map);
@@ -244,7 +254,7 @@ public class DataSourceInfoTest {
             dsInfo.setTypeName(typeName);
             SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
             SimpleFeatureType schema = source.getSchema();
-            
+
             assertNull(dsInfo.getPropertyDescriptorList());
             dsInfo.setSchema(schema);
 
@@ -263,10 +273,11 @@ public class DataSourceInfoTest {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testGetGeometryFieldName() {
-        URL url = SLDEditorFile.class.getClassLoader().getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url = SLDEditorFile.class.getClassLoader()
+                .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
-        map.put( "url", url );
+        map.put("url", url);
         DataStore dataStore;
         try {
             dataStore = DataStoreFinder.getDataStore(map);
@@ -277,7 +288,7 @@ public class DataSourceInfoTest {
             dsInfo.setTypeName(typeName);
             SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
             SimpleFeatureType schema = source.getSchema();
-            
+
             assertNull(dsInfo.getGeometryFieldName());
             dsInfo.setSchema(schema);
 

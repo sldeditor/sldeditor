@@ -60,7 +60,8 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
     private JPanel editPanel;
 
     /** The colour ramp map cache. */
-    private Map<String, ColourRampPanelInterface> colourRampMapCache = new HashMap<String, ColourRampPanelInterface>();
+    private Map<String, ColourRampPanelInterface> colourRampMapCache =
+            new HashMap<String, ColourRampPanelInterface>();
 
     /** The model. */
     private ColourMapModel colourMapModel = null;

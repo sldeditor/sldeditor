@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.util.Date;
@@ -34,7 +35,8 @@ import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
- * The Interface FieldConfigValuePopulateInterface, part of a visitor pattern for populating data in fields.
+ * The Interface FieldConfigValuePopulateInterface, part of a 
+ * visitor pattern for populating data in fields.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -132,6 +134,14 @@ public interface FieldConfigValuePopulateInterface {
     public void populateField(UserLayer value);
 
     /**
+     * Populate range.
+     *
+     * @param value the value
+     */
+    @SuppressWarnings("rawtypes")
+    void populateField(Range value);
+
+    /**
      * Gets the double value.
      *
      * @return the double value
@@ -201,12 +211,4 @@ public interface FieldConfigValuePopulateInterface {
      */
     @SuppressWarnings("rawtypes")
     Range getRange();
-
-    /**
-     * Populate range.
-     *
-     * @param value the value
-     */
-    @SuppressWarnings("rawtypes")
-    void populateField(Range value);
 }

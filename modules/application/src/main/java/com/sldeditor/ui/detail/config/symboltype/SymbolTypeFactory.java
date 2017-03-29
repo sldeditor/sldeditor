@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype;
 
 import java.util.ArrayList;
@@ -55,7 +56,8 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * A factory for creating FieldConfig objects that appear in {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType}.
+ * A factory for creating FieldConfig objects that appear in
+ * {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType}.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -103,7 +105,6 @@ public class SymbolTypeFactory {
             ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
         this.selectionComboBox = symbolSelectionField;
 
-        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory = new VendorOptionMarkerSymbolFactory();
         markerField = new FieldConfigMarker(
                 new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
                 fillFieldConfig, strokeFieldConfig, symbolSelectionField);
@@ -118,6 +119,8 @@ public class SymbolTypeFactory {
         symbolTypeFieldList.add(externalImageField);
         symbolTypeFieldList.add(ttfField);
 
+        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory =
+                new VendorOptionMarkerSymbolFactory();
         List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory
                 .getVendorOptionMarkerSymbols(panelId, fillFieldConfig, strokeFieldConfig,
                         symbolSelectionField);
@@ -130,7 +133,6 @@ public class SymbolTypeFactory {
         SOLID_FILL_VALUE = FieldConfigMarker.getSolidFillValue();
         NO_FILL_VALUE = FieldConfigMarker.getNoFillValue();
     }
-
 
     /**
      * Populate polygon fill details.
@@ -197,7 +199,8 @@ public class SymbolTypeFactory {
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
         /**
-         * Populate symbol type list. Given a panel details class iterate over all the field panels asking them to populate the symbol type list.
+         * Populate symbol type list. Given a panel details class iterate over all the field panels
+         * asking them to populate the symbol type list.
          */
         for (FieldState panel : symbolTypeFieldList) {
             panel.populateSymbolList(basePanel.getClass(), combinedSymbolList);

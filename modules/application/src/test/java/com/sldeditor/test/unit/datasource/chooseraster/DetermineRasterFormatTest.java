@@ -36,6 +36,7 @@ import com.sldeditor.test.unit.ui.tree.SLDTreeTest;
 
 /**
  * The unit test for DetermineRasterFormat.
+ * 
  * <p>{@link com.sldeditor.datasource.chooseraster.DetermineRasterFormat}
  *
  * @author Robert Ward (SCISYS)
@@ -43,7 +44,8 @@ import com.sldeditor.test.unit.ui.tree.SLDTreeTest;
 public class DetermineRasterFormatTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.chooseraster.DetermineRasterFormat#choose(java.io.File, com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.chooseraster.DetermineRasterFormat#choose(java.io.File, com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface)}.
      */
     @Test
     public void testChoose() {
@@ -65,7 +67,8 @@ public class DetermineRasterFormatTest {
                 WorldImageFormat wif = new WorldImageFormat();
 
                 return wif;
-            }});
+            }
+        });
 
         assertTrue(WorldImageFormat.class == gridFormat.getClass());
     }

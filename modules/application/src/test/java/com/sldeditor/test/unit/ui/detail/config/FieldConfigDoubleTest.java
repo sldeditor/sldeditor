@@ -36,6 +36,7 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 
 /**
  * The unit test for FieldConfigDouble.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigDouble}
  *
  * @author Robert Ward (SCISYS)
@@ -43,15 +44,17 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 public class FieldConfigDoubleTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#isEnabled()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createUI(javax.swing.Box)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#internal_setEnabled(boolean)}. Test
+     * method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#isEnabled()}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createUI(javax.swing.Box)}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -70,7 +73,8 @@ public class FieldConfigDoubleTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigDouble field2 = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field2 = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -95,7 +99,8 @@ public class FieldConfigDoubleTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -107,16 +112,21 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#populateField(java.lang.Double)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setTestValue(com.sldeditor.ui.detail.config.FieldId, double)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#generateExpression()}. Test method
+     * for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#populateField(java.lang.Double)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setTestValue(com.sldeditor.ui.detail.config.FieldId, double)}.
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#getDoubleValue()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         double expectedValue = 1.0;
         field.populateField(expectedValue);
@@ -164,20 +174,22 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#revertToDefaultValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setDefaultValue(double)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#revertToDefaultValue()}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#setDefaultValue(double)}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
-        Double expectedDefaultValue = 42.19;
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - 0.0) < 0.001);
 
         field.createUI();
         field.createUI();
+        Double expectedDefaultValue = 42.19;
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - expectedDefaultValue) < 0.001);
@@ -185,25 +197,25 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigDouble extends FieldConfigDouble
-        {
+        class TestFieldConfigDouble extends FieldConfigDouble {
             public TestFieldConfigDouble(FieldConfigCommonData commonData) {
                 super(commonData);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigDouble field = new TestFieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigDouble field = new TestFieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigDouble copy = (FieldConfigDouble) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -214,12 +226,14 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         field.createUI();
@@ -231,13 +245,16 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.undoAction(null);
         field.redoAction(null);
@@ -264,12 +281,14 @@ public class FieldConfigDoubleTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDouble#testSetConfig(double, double, double, double)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDouble#testSetConfig(double, double, double, double)}.
      */
     @Test
     public void testSetConfig() {
         boolean valueOnly = true;
-        FieldConfigDouble field = new FieldConfigDouble(new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDouble field = new FieldConfigDouble(
+                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.createUI();
         double minValue = 10.0;

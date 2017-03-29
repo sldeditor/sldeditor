@@ -33,6 +33,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList;
 
 /**
  * The unit test for WKTSegmentList.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList}
  *
  * @author Robert Ward (SCISYS)
@@ -51,9 +52,6 @@ public class WKTSegmentListTest {
         WKTSegmentList segmentList = new WKTSegmentList();
 
         DirectPosition pos1 = new DirectPosition2D(1.0, 1.0);
-        DirectPosition pos2 = new DirectPosition2D(2.0, 2.0);
-        DirectPosition pos3 = new DirectPosition2D(3.0, 3.0);
-        DirectPosition pos4 = new DirectPosition2D(4.0, 4.0);
         segmentList.addPoint(new WKTPoint(pos1));
 
         String actualValue = segmentList.getWKTString();
@@ -61,6 +59,9 @@ public class WKTSegmentListTest {
 
         List<WKTPoint> ptList = new ArrayList<WKTPoint>();
         ptList.add(new WKTPoint(pos1));
+        DirectPosition pos2 = new DirectPosition2D(2.0, 2.0);
+        DirectPosition pos3 = new DirectPosition2D(3.0, 3.0);
+        DirectPosition pos4 = new DirectPosition2D(4.0, 4.0);
         ptList.add(new WKTPoint(pos2));
         ptList.add(new WKTPoint(pos3));
         ptList.add(new WKTPoint(pos4));

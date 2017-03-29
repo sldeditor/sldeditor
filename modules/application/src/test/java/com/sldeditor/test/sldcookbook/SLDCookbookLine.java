@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.sldcookbook;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,11 +33,16 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDCookbookLine
-{
+public class SLDCookbookLine {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     *
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException the interrupted exception
+     */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -48,86 +54,72 @@ public class SLDCookbookLine
     }
 
     @Test
-    public void line_simpleline()
-    {
+    public void line_simpleline() {
         test.runTest("line", "line_simpleline.xml");
     }
 
     @Test
-    public void line_attributebasedline()
-    {
+    public void line_attributebasedline() {
         test.runTest("line", "line_attributebasedline.xml");
     }
 
     @Test
-    public void line_dashdot()
-    {
+    public void line_dashdot() {
         test.runTest("line", "line_dashdot.xml");
     }
 
     @Test
-    public void line_dashedline()
-    {
+    public void line_dashedline() {
         test.runTest("line", "line_dashedline.xml");
     }
 
     @Test
-    public void line_dashspace()
-    {
+    public void line_dashspace() {
         test.runTest("line", "line_dashspace.xml");
     }
 
     @Test
-    public void line_labelfollowingline()
-    {
+    public void line_labelfollowingline() {
         test.runTest("line", "line_labelfollowingline.xml");
     }
 
     @Test
-    public void line_linewithborder()
-    {
+    public void line_linewithborder() {
         test.runTest("line", "line_linewithborder.xml");
     }
 
     @Test
-    public void line_linewithdefaultlabel()
-    {
+    public void line_linewithdefaultlabel() {
         test.runTest("line", "line_linewithdefaultlabel.xml");
     }
 
     @Test
-    public void line_optimizedlabel()
-    {
+    public void line_optimizedlabel() {
         test.runTest("line", "line_optimizedlabel.xml");
     }
 
     @Test
-    public void line_optimizedstyledlabel()
-    {
+    public void line_optimizedstyledlabel() {
         test.runTest("line", "line_optimizedstyledlabel.xml");
     }
 
     @Test
-    public void line_railroad()
-    {
+    public void line_railroad() {
         test.runTest("line", "line_railroad.xml");
     }
 
     @Test
-    public void line_zoombasedline()
-    {
+    public void line_zoombasedline() {
         test.runTest("line", "line_zoombasedline.xml");
     }
 
     @Test
-    public void line_external()
-    {
+    public void line_external() {
         test.runTest("line", "line_external.xml");
     }
 
     @Test
-    public void line_wkt()
-    {
+    public void line_wkt() {
         test.runTest("line", "line_wkt.xml");
     }
 }

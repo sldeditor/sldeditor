@@ -36,7 +36,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
 /**
  * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
  * 
- * Only sets the <WellKnownName> string, no extra fields needed.
+ * <p>Only sets the &gt;WellKnownName&lt; string, no extra fields needed.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -59,8 +59,7 @@ public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class,
-     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
@@ -96,7 +95,8 @@ public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
     public VendorOptionInfo getVendorOptionInfo() {
         VendorOptionInfo info = new VendorOptionInfo("shape://",
                 emptyDetails.getVendorOptionVersion(),
-                Localisation.getString(VOGeoServerShapeSymbol.class, "VOGeoServerShapeSymbol.description"));
+                Localisation.getString(VOGeoServerShapeSymbol.class,
+                        "VOGeoServerShapeSymbol.description"));
 
         return info;
     }

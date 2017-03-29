@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.util.ArrayList;
@@ -40,10 +41,10 @@ import com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
- * The Class ReadMapUnits reads a XML configuration of map unit field configuration
- * structures and instantiates and populates the relevant objects.
- * <p>
- * Configuration files exist at src/main/resources/ui/*
+ * The Class ReadMapUnits reads a XML configuration of map unit field configuration structures and
+ * instantiates and populates the relevant objects.
+ * 
+ * <p>Configuration files exist at src/main/resources/ui/*
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -55,12 +56,10 @@ public class ReadMapUnits implements PanelConfigInterface {
     /** The panel title. */
     private String panelTitle;
 
-
     /**
-     * Default constructor
+     * Default constructor.
      */
-    public ReadMapUnits()
-    {
+    public ReadMapUnits() {
         // Force it so that standard fields are always loaded
         Localisation.preload(ReadPanelConfig.class);
     }
@@ -73,18 +72,17 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @param fieldConfigMapUnits the field config map units
      * @return true, if successful
      */
-    public boolean read(Class<?> panelId, String resourceString, FieldConfigMapUnits fieldConfigMapUnits)
-    {
-        MapUnits mapUnits = (MapUnits) ParseXML.parseUIFile(resourceString, SCHEMA_RESOURCE, MapUnits.class);
+    public boolean read(Class<?> panelId, String resourceString,
+            FieldConfigMapUnits fieldConfigMapUnits) {
+        MapUnits mapUnits = (MapUnits) ParseXML.parseUIFile(resourceString, SCHEMA_RESOURCE,
+                MapUnits.class);
 
-        if(mapUnits == null)
-        {
+        if (mapUnits == null) {
             return false;
         }
 
         Class<?> localisationClass = ReadPanelConfig.class;
-        if(mapUnits.getLocalisation() != null)
-        {
+        if (mapUnits.getLocalisation() != null) {
             try {
                 localisationClass = Class.forName(mapUnits.getLocalisation());
             } catch (ClassNotFoundException e) {
@@ -93,20 +91,20 @@ public class ReadMapUnits implements PanelConfigInterface {
         }
 
         XMLFieldConfigData xmlFieldConfig = mapUnits.getFieldConfigEnum();
-        if(xmlFieldConfig instanceof XMLFieldConfigEnum)
-        {
+        if (xmlFieldConfig instanceof XMLFieldConfigEnum) {
             String defaultValue = xmlFieldConfig.getDefault();
 
-            XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum)xmlFieldConfig).getValueList();
+            XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum) xmlFieldConfig)
+                    .getValueList();
 
-            List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId, valueList);
+            List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId,
+                    valueList);
 
             fieldConfigMapUnits.addConfig(configList);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);
 
-            if(defaultValueObj != null)
-            {
+            if (defaultValueObj != null) {
                 fieldConfigMapUnits.setDefaultValue(defaultValueObj);
             }
         }
@@ -122,14 +120,10 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @return the localised text
      */
     private static String getLocalisedText(Class<?> localisationClass, String text) {
-        if(text == null)
-        {
+        if (text == null) {
             return null;
-        }
-        else
-        {
-            if(text.startsWith("*"))
-            {
+        } else {
+            if (text.startsWith("*")) {
                 return Localisation.getString(ReadPanelConfig.class, text.substring(1));
             }
             return Localisation.getString(localisationClass, text);
@@ -144,12 +138,11 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @param valueList the xml value obj
      * @return the list
      */
-    private List<SymbolTypeConfig> readValueListConfig(Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValueList valueList)
-    {
+    private List<SymbolTypeConfig> readValueListConfig(Class<?> localisationClass, Class<?> panelId,
+            XMLFieldConfigEnumValueList valueList) {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
 
-        for(XMLFieldConfigEnumValue valueObj : valueList.getValue())
-        {
+        for (XMLFieldConfigEnumValue valueObj : valueList.getValue()) {
             SymbolTypeConfig config = parseSymbolTypeConfig(localisationClass, panelId, valueObj);
             configList.add(config);
         }
@@ -165,29 +158,27 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @param valueObj the value obj
      * @return the symbol type config
      */
-    public static SymbolTypeConfig parseSymbolTypeConfig(Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValue valueObj) {
+    public static SymbolTypeConfig parseSymbolTypeConfig(Class<?> localisationClass,
+            Class<?> panelId, XMLFieldConfigEnumValue valueObj) {
         SymbolTypeConfig config = new SymbolTypeConfig(panelId);
 
         String groupName = valueObj.getGroupName();
         boolean isSeparateGroup = valueObj.isSeparateGroup();
 
-        if(groupName != null)
-        {
+        if (groupName != null) {
             config.setGroupName(groupName);
         }
         config.setSeparateGroup(isSeparateGroup);
 
-        for(XMLFieldConfigEnumValueItem itemObj : valueObj.getItem())
-        {
-            config.addOption(itemObj.getId(), getLocalisedText(localisationClass, itemObj.getLabel()));
+        for (XMLFieldConfigEnumValueItem itemObj : valueObj.getItem()) {
+            config.addOption(itemObj.getId(),
+                    getLocalisedText(localisationClass, itemObj.getLabel()));
         }
 
         FieldList fieldList = valueObj.getFieldList();
 
-        if(fieldList != null)
-        {
-            for(XMLFieldConfigEnumValueField field : fieldList.getField())
-            {
+        if (fieldList != null) {
+            for (XMLFieldConfigEnumValueField field : fieldList.getField()) {
                 config.addField(field.getId(), field.isEnabled());
             }
         }
@@ -200,8 +191,7 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @return the vendor option version
      */
     @Override
-    public VendorOptionVersion getVendorOptionVersion()
-    {
+    public VendorOptionVersion getVendorOptionVersion() {
         return null;
     }
 
@@ -211,8 +201,7 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @return the group list
      */
     @Override
-    public List<GroupConfigInterface> getGroupList()
-    {
+    public List<GroupConfigInterface> getGroupList() {
         return null;
     }
 

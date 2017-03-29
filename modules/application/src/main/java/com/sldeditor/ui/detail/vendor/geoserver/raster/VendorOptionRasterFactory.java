@@ -72,15 +72,20 @@ public class VendorOptionRasterFactory
      * @param parentPanel the parent panel
      */
     public VendorOptionRasterFactory(Class<?> panelId, RasterSymbolizerDetails parentPanel) {
-        vendorOptionGeoServerContrastEnhancementNormalizeRed = new VOGeoServerContrastEnhancementNormalizeRed(
+        vendorOptionGeoServerContrastEnhancementNormalizeRed = 
+                new VOGeoServerContrastEnhancementNormalizeRed(
                 panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeGreen = new VOGeoServerContrastEnhancementNormalizeGreen(
+        vendorOptionGeoServerContrastEnhancementNormalizeGreen =
+                new VOGeoServerContrastEnhancementNormalizeGreen(
                 panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeBlue = new VOGeoServerContrastEnhancementNormalizeBlue(
+        vendorOptionGeoServerContrastEnhancementNormalizeBlue =
+                new VOGeoServerContrastEnhancementNormalizeBlue(
                 panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeGrey = new VOGeoServerContrastEnhancementNormalizeGrey(
+        vendorOptionGeoServerContrastEnhancementNormalizeGrey = 
+                new VOGeoServerContrastEnhancementNormalizeGrey(
                 panelId, parentPanel);
-        vendorOptionGeoServerContrastEnhancementNormalizeOverall = new VOGeoServerContrastEnhancementNormalizeOverall(
+        vendorOptionGeoServerContrastEnhancementNormalizeOverall = 
+                new VOGeoServerContrastEnhancementNormalizeOverall(
                 panelId, parentPanel);
 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeRed);
@@ -133,7 +138,9 @@ public class VendorOptionRasterFactory
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     * @see
+     * com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.
+     * util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
@@ -157,7 +164,9 @@ public class VendorOptionRasterFactory
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
+     * @see
+     * com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.
+     * String)
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {

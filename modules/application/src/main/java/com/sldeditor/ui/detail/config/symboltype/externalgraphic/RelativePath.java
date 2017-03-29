@@ -59,11 +59,13 @@ public class RelativePath {
      * @return true, if successful
      */
     private static boolean testPathWin(String path, int prefixLen) {
-        if (prefixLen == 3)
+        if (prefixLen == 3) {
             return true;
+        }
         File f = new File(path);
-        if ((prefixLen == 2) && (f.getPath().charAt(0) == '/'))
+        if ((prefixLen == 2) && (f.getPath().charAt(0) == '/')) {
             return true;
+        }
         return false;
     }
 
@@ -157,12 +159,9 @@ public class RelativePath {
         Path filePath = Paths.get(file.getAbsolutePath());
         Path folderPath = Paths.get(folder.getAbsolutePath());
         Path path = null;
-        try
-        {
+        try {
             path = folderPath.relativize(filePath);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             path = filePath;
         }
 

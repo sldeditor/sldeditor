@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base;
 
 import java.awt.BorderLayout;
@@ -45,8 +46,8 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
  * The Class GroupConfig represents the configuration for a group of fields.
- * <p>
- * An optional check box can be configured to enable/disable all the fields in the group.
+ * 
+ * <p>An optional check box can be configured to enable/disable all the fields in the group.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -92,7 +93,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @return the id
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#getId()
      */
     @Override
@@ -114,7 +117,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @return the label
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#getLabel()
      */
     @Override
@@ -136,7 +141,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @return true, if is show label
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#isShowLabel()
      */
     @Override
@@ -200,16 +207,14 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
 
         this.parentBox = box;
 
-        if(isShowLabel())
-        {
+        if (isShowLabel()) {
             Component separator = createSeparator();
             componentList.add(createSeparator());
             box.add(separator);
 
             Component component;
 
-            if(isOptional())
-            {
+            if (isOptional()) {
                 final UndoActionInterface parentObj = this;
 
                 groupCheckbox = new JCheckBox(getLabel());
@@ -224,17 +229,15 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
                         Boolean oldValueObj = Boolean.valueOf(!isSelected);
                         Boolean newValueObj = Boolean.valueOf(isSelected);
 
-                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, "Group : " + getId(), oldValueObj, newValueObj));
+                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
+                                "Group : " + getId(), oldValueObj, newValueObj));
 
-                        if(parent != null)
-                        {
+                        if (parent != null) {
                             parent.dataChanged(FieldIdEnum.UNKNOWN);
                         }
                     }
                 });
-            }
-            else
-            {
+            } else {
                 groupTitle = new JLabel(getLabel());
                 groupTitle.setBounds(0, 0, FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
                 groupTitle.setOpaque(true);
@@ -268,7 +271,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
 
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
 
-        p.add(separator,  BorderLayout.CENTER);
+        p.add(separator, BorderLayout.CENTER);
         Dimension size = new Dimension(FULL_WIDTH, 5);
 
         p.setPreferredSize(size);
@@ -280,14 +283,15 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @param enable the enable
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#enable(boolean)
      */
     @Override
     public void enable(boolean enable) {
 
-        if(groupCheckbox != null)
-        {
+        if (groupCheckbox != null) {
             groupCheckbox.setSelected(enable);
         }
         enableSubGroups(enable);
@@ -300,17 +304,14 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @param enabled the enabled
      */
-    private void enableSubGroups(boolean enabled)
-    {
-        for(FieldConfigBase field : getFieldConfigList())
-        {
+    private void enableSubGroups(boolean enabled) {
+        for (FieldConfigBase field : getFieldConfigList()) {
             CurrentFieldState fieldState = field.getFieldState();
             fieldState.setGroupSelected(enabled);
             field.setFieldState(fieldState);
         }
 
-        for(GroupConfigInterface subGroup : subGroupList)
-        {
+        for (GroupConfigInterface subGroup : subGroupList) {
             subGroup.enable(enabled);
         }
     }
@@ -320,14 +321,15 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      *
      * @return true, if is panel enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#isPanelEnabled()
      */
     @Override
     public boolean isPanelEnabled() {
         boolean checkBox = true;
-        if(groupCheckbox != null)
-        {
+        if (groupCheckbox != null) {
             checkBox = groupCheckbox.isSelected();
         }
 
@@ -358,11 +360,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if(groupCheckbox != null)
-        {
-            Boolean oldValue = (Boolean)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if (groupCheckbox != null) {
+            Boolean oldValue = (Boolean) undoRedoObject.getOldValue();
 
             groupCheckbox.setSelected(oldValue.booleanValue());
             enableSubGroups(oldValue.booleanValue());
@@ -375,11 +375,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
      * @param undoRedoObject the undo/redo object
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if(groupCheckbox != null)
-        {
-            Boolean newValue = (Boolean)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if (groupCheckbox != null) {
+            Boolean newValue = (Boolean) undoRedoObject.getNewValue();
 
             groupCheckbox.setSelected(newValue.booleanValue());
             enableSubGroups(newValue.booleanValue());
@@ -389,10 +387,8 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     /**
      * Removes the components from ui.
      */
-    public void removeFromUI()
-    {
-        for(Component component : componentList)
-        {
+    public void removeFromUI() {
+        for (Component component : componentList) {
             this.parentBox.remove(component);
         }
 
@@ -408,7 +404,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
         return componentList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -416,15 +414,16 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
         return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#setGroupStateOverride(boolean)
      */
     @Override
     public void setGroupStateOverride(boolean enabled) {
         groupEnabled = enabled;
 
-        for(FieldConfigBase field : getFieldConfigList())
-        {
+        for (FieldConfigBase field : getFieldConfigList()) {
             CurrentFieldState fieldState = field.getFieldState();
             fieldState.setGroupEnabled(groupEnabled);
             fieldState.setFieldEnabled(groupEnabled);
@@ -440,29 +439,24 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     private void setValueGroupState() {
         boolean isSelected = true;
 
-        if(isShowLabel())
-        {
-            if(isOptional())
-            {
+        if (isShowLabel()) {
+            if (isOptional()) {
                 groupCheckbox.setEnabled(groupEnabled);
                 isSelected = groupCheckbox.isSelected();
-            }
-            else
-            {
+            } else {
                 groupTitle.setEnabled(groupEnabled);
             }
         }
 
-        for(FieldConfigBase field : getFieldConfigList())
-        {
+        for (FieldConfigBase field : getFieldConfigList()) {
             CurrentFieldState fieldState = field.getFieldState();
             fieldState.setGroupSelected(isSelected);
             field.setFieldState(fieldState);
         }
 
-        //        for(GroupConfigInterface subGroup : subGroupList)
-        //        {
-        //            subGroup.setValueGroupState();
-        //        }
+        // for(GroupConfigInterface subGroup : subGroupList)
+        // {
+        // subGroup.setValueGroupState();
+        // }
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.inlinefeature;
 
 import javax.swing.JTabbedPane;
@@ -37,11 +38,12 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigInlineFeature wraps a text field GUI component allowing the configuration of inline features
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigInlineFeature wraps a text field GUI component
+ * allowing the configuration of inline features
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -86,9 +88,6 @@ public class FieldConfigInlineFeature extends FieldConfigBase
     @Override
     public void createUI() {
         if (inlineGML == null) {
-            int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
-                    getLabel());
 
             inlineGML = new InlineGMLPreviewPanel(this, NO_OF_ROWS);
             inlineFeature = new InlineFeaturePanel(this, NO_OF_ROWS);
@@ -105,6 +104,10 @@ public class FieldConfigInlineFeature extends FieldConfigBase
                             "FieldConfigInlineFeature.gml.tooltip"));
             tabbedPane.setBounds(0, 0, inlineGML.getWidth(), inlineGML.getHeight());
 
+            int xPos = getXPos();
+            FieldPanel fieldPanel = createFieldPanel(xPos, 
+                    BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
+                    getLabel());
             fieldPanel.add(tabbedPane);
         }
     }

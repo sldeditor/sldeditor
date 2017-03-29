@@ -35,6 +35,7 @@ import com.sldeditor.update.UpdateData;
 
 /**
  * The unit test for CheckUpdate.
+ * 
  * <p>{@link com.sldeditor.update.CheckUpdate}
  *
  * @author Robert Ward (SCISYS)
@@ -44,18 +45,22 @@ public class CheckUpdateTest {
     /**
      * The Class TestCheckUpdateClient.
      */
-    class TestCheckUpdateClient implements CheckUpdateClientInterface
-    {
-        /* (non-Javadoc)
+    class TestCheckUpdateClient implements CheckUpdateClientInterface {
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.update.CheckUpdateClientInterface#getLatest()
          */
         @Override
         public UpdateData getLatest() {
-            UpdateData data = new UpdateData(VersionData.decode(CheckUpdate.class, "0.5.0"), "Some description");
+            UpdateData data = new UpdateData(VersionData.decode(CheckUpdate.class, "0.5.0"),
+                    "Some description");
             return data;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.update.CheckUpdateClientInterface#getDownloadURL()
          */
         @Override
@@ -63,7 +68,9 @@ public class CheckUpdateTest {
             return null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.update.CheckUpdateClientInterface#isDestinationReached()
          */
         @Override
@@ -73,8 +80,8 @@ public class CheckUpdateTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.update.CheckUpdate#getLatestData()}.
-     * Test method for {@link com.sldeditor.update.CheckUpdate#shouldUpdate(java.lang.String)}.
+     * Test method for {@link com.sldeditor.update.CheckUpdate#getLatestData()}. Test method for
+     * {@link com.sldeditor.update.CheckUpdate#shouldUpdate(java.lang.String)}.
      */
     @Test
     public void testGetLatestData() {

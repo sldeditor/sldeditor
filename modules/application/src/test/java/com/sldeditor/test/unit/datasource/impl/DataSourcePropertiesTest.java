@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +43,7 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
  * Unit test for DataSourceProperties.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.DataSourceProperties}
  * 
  * @author Robert Ward (SCISYS)

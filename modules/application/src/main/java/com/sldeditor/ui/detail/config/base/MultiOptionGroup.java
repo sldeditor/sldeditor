@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base;
 
 import java.awt.BorderLayout;
@@ -49,10 +50,11 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class MultiOptionGroup represents the configuration for a drop down list and a panel
- * displayed below it when a item is selected.  The panels are different for each drop down list
+ * displayed below it when a item is selected. The panels are different for each drop down list
  * option.
- * <p>The group of fields to be displayed and the drop down label used to display it are configured
- * as an {@link OptionGroup}
+ * 
+ * <p>The group of fields to be displayed and the drop down label used to display it
+ * are configured as an {@link OptionGroup}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -166,8 +168,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param group the group
      */
     public void addGroup(OptionGroup group) {
-        if(group != null)
-        {
+        if (group != null) {
             this.optionMap.put(group.getId().toString(), group);
             this.optionList.add(group);
         }
@@ -181,10 +182,8 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param parent the parent
      * @param panelId the panel id
      */
-    public void createUI(GraphicPanelFieldManager fieldConfigManager,
-            Box box, 
-            UpdateSymbolInterface parent, 
-            Class<?> panelId) {
+    public void createUI(GraphicPanelFieldManager fieldConfigManager, Box box,
+            UpdateSymbolInterface parent, Class<?> panelId) {
         final UndoActionInterface parentObj = this;
         this.fieldConfigManager = fieldConfigManager;
         this.parentBox = box;
@@ -196,30 +195,27 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
         fieldPanel = new FieldPanel(0, "", BasePanel.WIDGET_HEIGHT * 2, false, null);
         // Set up title
-        if(isOptional())
-        {
+        if (isOptional()) {
             groupTitleCheckbox = new JCheckBox(getLabel());
-            groupTitleCheckbox.setBounds(x, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
+            groupTitleCheckbox.setBounds(x, 0, BasePanel.WIDGET_EXTENDED_WIDTH,
+                    BasePanel.WIDGET_HEIGHT);
             groupTitleCheckbox.setOpaque(true);
             fieldPanel.add(groupTitleCheckbox);
             multiOptionGroupEnabled = false;
 
-            groupTitleCheckbox.addActionListener(new ActionListener(){
+            groupTitleCheckbox.addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     enable(groupTitleCheckbox.isSelected());
-                    if(parent != null)
-                    {
-                        if(!Controller.getInstance().isPopulating())
-                        {
+                    if (parent != null) {
+                        if (!Controller.getInstance().isPopulating()) {
                             parent.dataChanged(FieldIdEnum.UNKNOWN);
                         }
                     }
-                }});
-        }
-        else
-        {
+                }
+            });
+        } else {
             JLabel groupTitle = new JLabel(getLabel());
             groupTitle.setBounds(x, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
             groupTitle.setOpaque(true);
@@ -229,23 +225,22 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         // Set up options in the drop down
         List<ValueComboBoxData> valueComboDataMap = new ArrayList<ValueComboBoxData>();
 
-        for(OptionGroup optionGroup : optionList)
-        {
-            valueComboDataMap.add(new ValueComboBoxData(optionGroup.getId().toString(), optionGroup.getLabel(), panelId));
+        for (OptionGroup optionGroup : optionList) {
+            valueComboDataMap.add(new ValueComboBoxData(optionGroup.getId().toString(),
+                    optionGroup.getLabel(), panelId));
         }
 
         comboBox = new ValueComboBox();
         comboBox.initialiseSingle(valueComboDataMap);
-        comboBox.setBounds(BasePanel.WIDGET_X_START, BasePanel.WIDGET_HEIGHT, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        comboBox.setBounds(BasePanel.WIDGET_X_START, BasePanel.WIDGET_HEIGHT,
+                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(comboBox);
         comboBox.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 optionSelected(parentBox, fieldConfigManager, fieldPanel, parentObj);
-                if(parent != null)
-                {
-                    if(!Controller.getInstance().isPopulating())
-                    {
+                if (parent != null) {
+                    if (!Controller.getInstance().isPopulating()) {
                         parent.dataChanged(FieldIdEnum.UNKNOWN);
                     }
                 }
@@ -263,14 +258,13 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param panel the panel
      * @param parentObj the parent obj
      */
-    private void optionSelected(Box box, GraphicPanelFieldManager fieldConfigManager, FieldPanel panel, UndoActionInterface parentObj)
-    {
+    private void optionSelected(Box box, GraphicPanelFieldManager fieldConfigManager,
+            FieldPanel panel, UndoActionInterface parentObj) {
         if ((comboBox != null) && (comboBox.getSelectedItem() != null)) {
 
             ValueComboBoxData value = comboBox.getSelectedValue();
 
-            if(value != null)
-            {
+            if (value != null) {
                 // Remove the fields from the previous selection
                 removeOptionFields(box, fieldConfigManager);
 
@@ -287,12 +281,12 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                 box.add(optionPanel, index + 1);
                 Object newValueObj = value.getKey();
 
-                if((oldValueObj == null) && (comboBox.getItemCount() > 0))
-                {
+                if ((oldValueObj == null) && (comboBox.getItemCount() > 0)) {
                     oldValueObj = comboBox.getFirstItem().getKey();
                 }
 
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj, "Multi option : " + getId(), oldValueObj, newValueObj));
+                UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
+                        "Multi option : " + getId(), oldValueObj, newValueObj));
 
                 oldValueObj = newValueObj;
                 box.revalidate();
@@ -307,19 +301,14 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param optionBox the option box
      * @param groupConfigList the group config list
      */
-    private void populateOptionGroup(GraphicPanelFieldManager fieldConfigManager,
-            Box optionBox,
-            List<GroupConfigInterface> groupConfigList)
-    {
-        for(GroupConfigInterface groupConfigI : groupConfigList)
-        {
+    private void populateOptionGroup(GraphicPanelFieldManager fieldConfigManager, Box optionBox,
+            List<GroupConfigInterface> groupConfigList) {
+        for (GroupConfigInterface groupConfigI : groupConfigList) {
             groupConfigI.createTitle(optionBox, null);
-            if(groupConfigI instanceof GroupConfig)
-            {
+            if (groupConfigI instanceof GroupConfig) {
                 GroupConfig groupConfig = (GroupConfig) groupConfigI;
 
-                for(FieldConfigBase field : groupConfig.getFieldConfigList())
-                {
+                for (FieldConfigBase field : groupConfig.getFieldConfigList()) {
                     field.createUI();
                     field.revertToDefaultValue();
                     FieldPanel component = field.getPanel();
@@ -327,21 +316,19 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                     fieldConfigManager.addField(field);
                     optionFieldList.add(field);
 
-                    if(field instanceof FieldConfigVendorOption)
-                    {
-                        ((FieldConfigVendorOption)field).addToOptionBox(optionBox);
+                    if (field instanceof FieldConfigVendorOption) {
+                        ((FieldConfigVendorOption) field).addToOptionBox(optionBox);
                     }
                 }
 
                 populateOptionGroup(fieldConfigManager, optionBox, groupConfig.getSubGroupList());
-            }
-            else if(groupConfigI instanceof MultiOptionGroup)
-            {
+            } else if (groupConfigI instanceof MultiOptionGroup) {
                 MultiOptionGroup multiOptionGroupConfig = (MultiOptionGroup) groupConfigI;
 
                 fieldConfigManager.addMultiOptionGroup(multiOptionGroupConfig);
 
-                multiOptionGroupConfig.createUI(fieldConfigManager, optionBox, parent, this.panelId);
+                multiOptionGroupConfig.createUI(fieldConfigManager, optionBox, parent,
+                        this.panelId);
             }
         }
     }
@@ -352,14 +339,11 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param box the box
      * @param fieldConfigManager the field config manager
      */
-    private void removeOptionFields(Box box, GraphicPanelFieldManager fieldConfigManager)
-    {
-        if(optionPanel != null)
-        {
+    private void removeOptionFields(Box box, GraphicPanelFieldManager fieldConfigManager) {
+        if (optionPanel != null) {
             box.remove(optionPanel);
 
-            for(FieldConfigBase field : optionFieldList)
-            {
+            for (FieldConfigBase field : optionFieldList) {
                 fieldConfigManager.removeField(field);
             }
             optionFieldList.clear();
@@ -377,13 +361,10 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param panel the panel
      * @return the int
      */
-    private int findOptionPanel(Box box, FieldPanel panel)
-    {
+    private int findOptionPanel(Box box, FieldPanel panel) {
         int index;
-        for(index = 0; index < box.getComponentCount(); index ++)
-        {
-            if(box.getComponent(index) == panel)
-            {
+        for (index = 0; index < box.getComponentCount(); index++) {
+            if (box.getComponent(index) == panel) {
                 return index;
             }
         }
@@ -396,7 +377,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param textPanel the text panel
      * @param parent the parent
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#createTitle(javax.swing.Box)
      */
     @Override
@@ -408,32 +391,28 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @param enable the enable
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#enable(boolean)
      */
     @Override
     public void enable(boolean enable) {
         multiOptionGroupEnabled = enable;
-        if(groupTitleCheckbox != null)
-        {
+        if (groupTitleCheckbox != null) {
             groupTitleCheckbox.setSelected(enable);
         }
-        if(comboBox != null)
-        {
+        if (comboBox != null) {
             comboBox.setEnabled(enable);
         }
 
-        if(enable)
-        {
+        if (enable) {
             optionSelected(parentBox, fieldConfigManager, fieldPanel, this);
-        }
-        else
-        {
+        } else {
             removeOptionFields(parentBox, fieldConfigManager);
         }
 
-        for(FieldConfigBase fieldConfig : optionFieldList)
-        {
+        for (FieldConfigBase fieldConfig : optionFieldList) {
             fieldConfig.setEnabled(enable);
         }
     }
@@ -444,8 +423,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @param option the new option
      */
     public void setOption(GroupIdEnum option) {
-        if(option == GroupIdEnum.UNKNOWN)
-        {
+        if (option == GroupIdEnum.UNKNOWN) {
             option = optionList.get(0).getId();
         }
         comboBox.setSelectValueKey(option.toString());
@@ -457,7 +435,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @return true, if is panel enabled
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#isPanelEnabled()
      */
     @Override
@@ -471,8 +451,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @return the selected option group
      */
     public OptionGroup getSelectedOptionGroup() {
-        if(comboBox == null)
-        {
+        if (comboBox == null) {
             return null;
         }
 
@@ -487,15 +466,15 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void undoAction(UndoInterface undoRedoObject)
-    {
-        if(comboBox != null)
-        {
-            String oldValue = (String)undoRedoObject.getOldValue();
+    public void undoAction(UndoInterface undoRedoObject) {
+        if (comboBox != null) {
+            String oldValue = (String) undoRedoObject.getOldValue();
 
             comboBox.setSelectValueKey(oldValue);
         }
@@ -506,15 +485,15 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @param undoRedoObject the undo redo object
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
-    public void redoAction(UndoInterface undoRedoObject)
-    {
-        if(comboBox != null)
-        {
-            String newValue = (String)undoRedoObject.getNewValue();
+    public void redoAction(UndoInterface undoRedoObject) {
+        if (comboBox != null) {
+            String newValue = (String) undoRedoObject.getNewValue();
 
             comboBox.setSelectValueKey(newValue);
         }
@@ -525,7 +504,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @return the id
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#getId()
      */
     @Override
@@ -538,7 +519,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @return the label
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#getLabel()
      */
     @Override
@@ -551,7 +534,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      *
      * @return true, if is show label
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#isShowLabel()
      */
     @Override
@@ -576,7 +561,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         // Does nothing
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -584,15 +571,16 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         return String.format("%s : (%s) %s", getClass().getName(), getId().toString(), getLabel());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#setGroupStateOverride(boolean)
      */
     @Override
     public void setGroupStateOverride(boolean disable) {
         boolean enabled = false;
 
-        if(!groupStateOverrideDisable)
-        {
+        if (!groupStateOverrideDisable) {
             enabled = groupEnabled;
         }
 

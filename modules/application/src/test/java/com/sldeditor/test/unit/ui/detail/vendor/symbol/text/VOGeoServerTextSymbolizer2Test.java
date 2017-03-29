@@ -47,8 +47,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2;
 
 /**
  * The unit test for VOGeoServerTextSymbolizer2.
- * <p>
- * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -96,7 +96,8 @@ public class VOGeoServerTextSymbolizer2Test {
         // Try with external graphic
         graphic = styleFactory.createDefaultGraphic();
         try {
-            graphic.graphicalSymbols().add(styleFactory.createExternalGraphic(new File("test.png").toURI().toURL(), "png"));
+            graphic.graphicalSymbols().add(styleFactory
+                    .createExternalGraphic(new File("test.png").toURI().toURL(), "png"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -113,7 +114,8 @@ public class VOGeoServerTextSymbolizer2Test {
 
         // Find minimum version with no textSymbolizer2 values set
         vendorOptionsPresentList.clear();
-        testObj.getMinimumVersion(null, styleFactory.createTextSymbolizer(), vendorOptionsPresentList);
+        testObj.getMinimumVersion(null, styleFactory.createTextSymbolizer(),
+                vendorOptionsPresentList);
         assertEquals(0, vendorOptionsPresentList.size());
         
         // Get the code coverage values up

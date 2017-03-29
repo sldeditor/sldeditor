@@ -27,6 +27,7 @@ import com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem;
 
 /**
  * The unit test for StyledLayerDescriptorTreeItem.
+ * 
  * <p>{@link com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem}
  *
  * @author Robert Ward (SCISYS)

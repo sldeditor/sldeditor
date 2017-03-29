@@ -39,7 +39,8 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
- * The Class StandardPanel responsible for populating/extracting standard data - name, description, unit of measure.
+ * The Class StandardPanel responsible for populating/extracting
+ * standard data - name, description, unit of measure.
  * 
  * @author Robert Ward (SCISYS)
  */

@@ -32,8 +32,8 @@ import com.sldeditor.rendertransformation.RenderTransformationDialog;
 
 /**
  * Unit test for RenderTransformationDialog class.
- * <p>
- * {@link com.sldeditor.rendertransformation.RenderTransformationDialog}
+ * 
+ * <p>{@link com.sldeditor.rendertransformation.RenderTransformationDialog}
  * 
  * @author Robert Ward (SCISYS)
  *

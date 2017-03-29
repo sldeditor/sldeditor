@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.attribute;
 
 import static org.junit.Assert.assertEquals;
@@ -44,7 +45,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName, expectedType, expectedValue);
+        DataSourceAttributeData dsa =
+                new DataSourceAttributeData(expectedName, expectedType, expectedValue);
 
         assertTrue(expectedName.compareTo(dsa.getName()) == 0);
         assertEquals(expectedType, dsa.getType());
@@ -60,7 +62,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName, expectedType, expectedValue);
+        DataSourceAttributeData dsa =
+                new DataSourceAttributeData(expectedName, expectedType, expectedValue);
 
         DataSourceAttributeData cloneDsa = dsa.clone();
 
@@ -78,7 +81,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName, expectedType, expectedValue);
+        DataSourceAttributeData dsa =
+                new DataSourceAttributeData(expectedName, expectedType, expectedValue);
 
         DataSourceAttributeData copyDsa = new DataSourceAttributeData(dsa);
 
@@ -96,7 +100,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName1, expectedType, expectedValue);
+        DataSourceAttributeData dsa =
+                new DataSourceAttributeData(expectedName1, expectedType, expectedValue);
 
         String expectedName2 = "updated test name";
         dsa.setName(expectedName2);
@@ -112,7 +117,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType1 = Integer.class;
         Object expectedValue = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName, expectedType1, expectedValue);
+        DataSourceAttributeData dsa =
+                new DataSourceAttributeData(expectedName, expectedType1, expectedValue);
 
         Class<?> expectedType2 = Float.class;
         dsa.setType(expectedType2);
@@ -129,7 +135,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType = Integer.class;
         Object expectedValue1 = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa = new DataSourceAttributeData(expectedName, expectedType, expectedValue1);
+        DataSourceAttributeData dsa =
+                new DataSourceAttributeData(expectedName, expectedType, expectedValue1);
 
         Object expectedValue2 = Integer.valueOf(69);
         dsa.setValue(expectedValue2);
@@ -142,27 +149,36 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType1 = Integer.class;
         Object expectedValue1 = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa1 = new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
-        DataSourceAttributeData dsa3 = new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
-
-        String expectedName2 = "test name2";
-        Class<?> expectedType2 = Double.class;
-        Object expectedValue2 = Integer.valueOf(24);
-
-        DataSourceAttributeData dsa2 = new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
+        DataSourceAttributeData dsa1 = new DataSourceAttributeData(expectedName1, expectedType1,
+                expectedValue1);
+        DataSourceAttributeData dsa3 =
+                new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
 
         assertEquals(dsa1, dsa1);
         assertEquals(dsa1, dsa3);
         assertEquals(dsa1.hashCode(), dsa1.hashCode());
         assertFalse(dsa1.equals(null));
+
+        String expectedName2 = "test name2";
+        Class<?> expectedType2 = Double.class;
+        Object expectedValue2 = Integer.valueOf(24);
+
+        DataSourceAttributeData dsa2 = 
+                new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
         assertFalse(dsa1.equals(dsa2));
-        assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType2, expectedValue1)));
+        DataSourceAttributeData obj1 = 
+                new DataSourceAttributeData(expectedName1, expectedType2, expectedValue1);
+        assertFalse(dsa1.equals(obj1));
         assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, null, expectedValue1)));
         assertFalse(dsa1.equals(new DataSourceAttributeData(null, expectedType1, expectedValue1)));
-        assertTrue(dsa1.equals(new DataSourceAttributeData(expectedName1, expectedType1, expectedValue2)));
+        DataSourceAttributeData obj2 =
+                new DataSourceAttributeData(expectedName1, expectedType1, expectedValue2);
+        assertTrue(dsa1.equals(obj2));
         assertFalse(new DataSourceAttributeData(null, expectedType1, expectedValue1).equals(dsa1));
         assertFalse(new DataSourceAttributeData(expectedName1, null, expectedValue1).equals(dsa1));
         assertTrue(new DataSourceAttributeData(expectedName1, expectedType1, null).equals(dsa1));
-        assertFalse(new DataSourceAttributeData(null, expectedType1, expectedValue1).equals("wrong class"));
+        DataSourceAttributeData obj3 =
+                new DataSourceAttributeData(null, expectedType1, expectedValue1);
+        assertFalse(obj3.equals("wrong class"));
     }
 }

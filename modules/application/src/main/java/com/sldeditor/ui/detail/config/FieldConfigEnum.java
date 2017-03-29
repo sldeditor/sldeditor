@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.event.ActionEvent;
@@ -41,12 +42,12 @@ import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
- * The Class FieldConfigEnum wraps a drop down GUI component and an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigEnum wraps a drop down GUI component and an 
+ * optional value/attribute/expression drop down,
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -62,7 +63,8 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     private Map<String, ValueComboBoxData> comboDataMap = new HashMap<String, ValueComboBoxData>();
 
     /** The field map. */
-    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap = new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
+    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap = 
+            new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
 
     /** The default value. */
     private String defaultValue = "";
@@ -114,9 +116,6 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
         if (comboBox == null) {
             final UndoActionInterface parentObj = this;
 
-            int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
-
             List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
             for (String key : keyList) {
@@ -127,12 +126,15 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                 defaultValue = dataList.get(0).getKey();
             }
 
+            int xPos = getXPos();
             comboBox = new ValueComboBox();
             comboBox.initialiseSingle(dataList);
             comboBox.setBounds(
                     xPos + BasePanel.WIDGET_X_START, 0, isValueOnly()
                             ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
+
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
             fieldPanel.add(comboBox);
 
             if (!isValueOnly()) {

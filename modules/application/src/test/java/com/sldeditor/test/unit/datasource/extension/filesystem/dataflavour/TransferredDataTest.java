@@ -31,6 +31,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData
 
 /**
  * Unit test for TransferredData class.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData}
  * 
  * @author Robert Ward (SCISYS)

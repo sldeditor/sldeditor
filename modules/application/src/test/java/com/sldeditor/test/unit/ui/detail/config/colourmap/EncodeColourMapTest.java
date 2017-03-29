@@ -36,6 +36,7 @@ import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 
 /**
  * The unit test for EncodeColourMap.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap}
  *
  * @author Robert Ward (SCISYS)
@@ -71,11 +72,11 @@ public class EncodeColourMapTest {
     public void testEncodeColorMap() {
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
-        ColorMap expectedValue = new ColorMapImpl();
         ColorMapEntryImpl entry1 = new ColorMapEntryImpl();
         entry1.setColor(ff.literal(COLOUR_1));
         entry1.setOpacity(ff.literal(OPACITY_1));
         entry1.setQuantity(ff.literal(QUANTITY_1));
+        ColorMap expectedValue = new ColorMapImpl();
         expectedValue.addColorMapEntry(entry1);
         ColorMapEntryImpl entry2 = new ColorMapEntryImpl();
         entry2.setColor(ff.literal(COLOUR_2));
@@ -84,11 +85,11 @@ public class EncodeColourMapTest {
         entry2.setQuantity(ff.literal(QUANTITY_2));
         expectedValue.addColorMapEntry(entry2);
 
-        List<XMLColourMapEntry> xmlList = new ArrayList<XMLColourMapEntry>();
         XMLColourMapEntry xml1 = new XMLColourMapEntry();
         xml1.setColour(COLOUR_1);
         xml1.setOpacity(OPACITY_1);
         xml1.setQuantity(42);
+        List<XMLColourMapEntry> xmlList = new ArrayList<XMLColourMapEntry>();
         xmlList.add(xml1);
 
         XMLColourMapEntry xml2 = new XMLColourMapEntry();

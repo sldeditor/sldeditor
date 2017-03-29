@@ -36,8 +36,8 @@ import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 
 /**
  * The unit test for RelativePath.
- * <p>
- * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath}
  *
  * @author Robert Ward (SCISYS)
  */

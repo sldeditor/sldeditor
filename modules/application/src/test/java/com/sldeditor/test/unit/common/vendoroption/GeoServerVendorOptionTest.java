@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.vendoroption;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +30,7 @@ import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Unit test for GeoServerVendorOption.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.GeoServerVendorOption}
  * 
  * @author Robert Ward (SCISYS)

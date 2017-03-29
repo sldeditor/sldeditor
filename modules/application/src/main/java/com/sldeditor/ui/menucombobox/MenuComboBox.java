@@ -177,7 +177,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
      * The listener interface for receiving menuItem events. 
      * The class that is interested in processing a menuItem event implements this interface,
      * and the object created with that class is registered with 
-     * a component using the component's <code>addMenuItemListener<code> method. When the
+     * a component using the component's addMenuItemListener method. When the
      * menuItem event occurs, that object's appropriate method is invoked.
      *
      * @see MenuItemEvent
@@ -232,7 +232,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
         preferredSize = size;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see javax.swing.JComponent#getPreferredSize()
@@ -376,7 +376,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
             setFocusPainted(true);
         }
 
-        /*
+        /**
          * (non-Javadoc)
          * 
          * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)

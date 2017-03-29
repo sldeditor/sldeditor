@@ -41,8 +41,8 @@ import com.sldeditor.filter.v2.function.misc.IsNull;
 
 /**
  * Unit test for the following classes:
- * <p>{@link com.sldeditor.filter.v2.function.misc.IsLike}
- * <p>{@link com.sldeditor.filter.v2.function.misc.IsNull}
+ * {@link com.sldeditor.filter.v2.function.misc.IsLike}
+ * {@link com.sldeditor.filter.v2.function.misc.IsNull}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -52,9 +52,7 @@ public class MiscTests {
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.misc.IsLike}.
-     *
-     * @param objUnderTest the obj under test
+     * {@link com.sldeditor.filter.v2.function.misc.IsLike}.
      */
     @Test
     public void testIsLikeClass() {
@@ -93,9 +91,7 @@ public class MiscTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.misc.IsNull}.
-     *
-     * @param objUnderTest the obj under test
+     * {@link com.sldeditor.filter.v2.function.misc.IsNull}.
      */
     @Test
     public void testIsNullClass() {

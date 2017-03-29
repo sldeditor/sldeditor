@@ -41,8 +41,8 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 
 /**
  * Unit test for DatabaseInput class.
- * <p>
- * {@link com.sldeditor.extension.filesystem.database.DatabaseInput}
+ * 
+ * <p>{@link com.sldeditor.extension.filesystem.database.DatabaseInput}
  * 
  * @author Robert Ward (SCISYS)
  *

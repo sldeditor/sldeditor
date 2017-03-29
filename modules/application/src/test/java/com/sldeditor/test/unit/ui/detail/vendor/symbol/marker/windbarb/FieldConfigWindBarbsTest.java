@@ -51,6 +51,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindB
 
 /**
  * The unit test for FieldConfigWindBarbs.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs}
  *
  * @author Robert Ward (SCISYS)
@@ -58,14 +59,18 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindB
 public class FieldConfigWindBarbsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isEnabled()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#internal_setEnabled(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +89,9 @@ public class FieldConfigWindBarbsTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field2 = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -103,12 +110,15 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -119,22 +129,27 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#generateExpression()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        field.setTestValue(null, (String)null);
-        field.populateExpression((Double)null);
+        field.setTestValue(null, (String) null);
+        field.populateExpression((Double) null);
         assertNull(field.getStringValue());
 
         // Create ui
         field.createUI();
-        field.populateExpression((Double)null);
+        field.populateExpression((Double) null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
 
@@ -145,12 +160,15 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.revertToDefaultValue();
 
@@ -159,47 +177,53 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isASingleValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isASingleValue()}.
      */
     @Test
     public void testIsASingleValue() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertFalse(field.isASingleValue());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#justSelected()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#justSelected()}.
      */
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.justSelected();
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigWindBarbs extends FieldConfigWindBarbs
-        {
+        class TestFieldConfigWindBarbs extends FieldConfigWindBarbs {
             public TestFieldConfigWindBarbs(FieldConfigCommonData commonData) {
-                super(commonData,null,null,null);
+                super(commonData, null, null, null);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigWindBarbs field = new TestFieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        TestFieldConfigWindBarbs field = new TestFieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigWindBarbs copy = (FieldConfigWindBarbs) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -210,41 +234,52 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.attributeSelection("field");
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getVendorOption()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getVendorOption()}.
      */
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
+        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(),
+                field.getVendorOption());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getSymbolClass()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getSymbolClass()}.
      */
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testSetValue() {
@@ -252,7 +287,9 @@ public class FieldConfigWindBarbsTest {
 
         GraphicPanelFieldManager fieldConfigManager = null;
 
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setValue(null, null, null, null, null);
         field.setValue(null, fieldConfigManager, null, null, null);
@@ -271,10 +308,8 @@ public class FieldConfigWindBarbsTest {
             e.printStackTrace();
         }
         try {
-            if((f != null) && (f.toURI() != null))
-            {
-                if(f.toURI().toURL() != null)
-                {
+            if ((f != null) && (f.toURI() != null)) {
+                if (f.toURI().toURL() != null) {
                     filename = f.toURI().toURL().toString();
                 }
             }
@@ -282,54 +317,61 @@ public class FieldConfigWindBarbsTest {
             e.printStackTrace();
         }
 
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
+        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
+                .createExternalGraphic(filename, "png");
         field.setValue(null, fieldConfigManager, null, null, externalGraphic);
 
-        if(f != null)
-        {
+        if (f != null) {
             f.delete();
         }
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
      */
     @Test
     public void testGetValue() {
-        StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
         field.createUI();
         assertNull(field.getStringValue());
 
         GraphicPanelFieldManager fieldConfigManager = null;
         Expression symbolType = null;
-        List<GraphicalSymbol> actualValue = field.getValue(fieldConfigManager, symbolType, false, false);
+        List<GraphicalSymbol> actualValue = field.getValue(fieldConfigManager, symbolType, false,
+                false);
 
         assertTrue(actualValue.isEmpty());
 
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         String actualMarkerSymbol = "solid";
+        StyleBuilder styleBuilder = new StyleBuilder();
         symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         // Try without setting any fields
@@ -337,54 +379,68 @@ public class FieldConfigWindBarbsTest {
         assertNotNull(actualValue);
         assertEquals(1, actualValue.size());
         Mark actualSymbol = (Mark) actualValue.get(0);
-        assertTrue(actualSymbol.getWellKnownName().toString().compareTo("windbarbs://default(0)[m/s]") == 0);
+        assertTrue(actualSymbol.getWellKnownName().toString()
+                .compareTo("windbarbs://default(0)[m/s]") == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getFill(null, null));
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getBasePanel()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getBasePanel()}.
      */
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getBasePanel());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(4, field.getFieldList(null).size());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#accept(org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#accept(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertFalse(field.accept(null));
 
         StyleBuilder styleBuilder = new StyleBuilder();
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic("test.tmp", "png");
+        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
+                .createExternalGraphic("test.tmp", "png");
         assertFalse(field.accept(externalGraphic));
 
         Mark marker1 = styleBuilder.createMark("triangle");
@@ -395,23 +451,29 @@ public class FieldConfigWindBarbsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
      */
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setUpdateSymbolListener(null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getConfigField()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#getConfigField()}.
      */
     @Test
     public void testGetConfigField() {
         boolean valueOnly = true;
-        FieldConfigWindBarbs field = new FieldConfigWindBarbs(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),null,null,null);
+        FieldConfigWindBarbs field = new FieldConfigWindBarbs(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(field, field.getConfigField());
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base.defaults;
 
 import java.lang.reflect.Field;
@@ -29,43 +30,42 @@ import org.geotools.styling.TextSymbolizer;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DefaultTextSymbols extends DefaultBase
-{
+public class DefaultTextSymbols extends DefaultBase {
 
     /** The Constant EXPECTED_PREFIX. */
     private static final String EXPECTED_PREFIX = "org.geotools.styling.TextSymbolizer2";
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /** The expected interface. */
     private static Class<?> expectedInterface = null;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
-    public boolean accepts(String defaultValue)
-    {
-        if(defaultValue.startsWith(EXPECTED_PREFIX))
-        {
+    public boolean accepts(String defaultValue) {
+        if (defaultValue.startsWith(EXPECTED_PREFIX)) {
             return true;
         }
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override
-    public Object getValue(String defaultValue)
-    {
-        if(defaultValue.startsWith(EXPECTED_PREFIX))
-        {
+    public Object getValue(String defaultValue) {
+        if (defaultValue.startsWith(EXPECTED_PREFIX)) {
             int index = defaultValue.lastIndexOf(".");
 
-            if((index < 0) || (index >= defaultValue.length()))
-            {
+            if ((index < 0) || (index >= defaultValue.length())) {
                 return null;
             }
 
@@ -82,51 +82,37 @@ public class DefaultTextSymbols extends DefaultBase
      * @param fieldName the field name
      * @return the default value
      */
-    private static Object getDefaultValue(String fieldName)
-    {
+    private static Object getDefaultValue(String fieldName) {
         // Instantiate the interface once and then cache it
-        if(expectedInterface == null)
-        {
+        if (expectedInterface == null) {
             TextSymbolizer textObj = styleFactory.createTextSymbolizer();
             Class<?>[] interfaceArray = textObj.getClass().getInterfaces();
 
-            for(Class<?> interfaceObj : interfaceArray)
-            {
-                if(interfaceObj.getTypeName().compareTo(EXPECTED_PREFIX) == 0)
-                {
+            for (Class<?> interfaceObj : interfaceArray) {
+                if (interfaceObj.getTypeName().compareTo(EXPECTED_PREFIX) == 0) {
                     expectedInterface = interfaceObj;
                     break;
                 }
             }
         }
-        
-        if(expectedInterface != null)
-        {
-            try
-            {
+
+        if (expectedInterface != null) {
+            try {
                 Field f = expectedInterface.getField(fieldName);
                 Object obj = f.get(expectedInterface);
 
                 return obj;
-            }
-            catch (NoSuchFieldException e)
-            {
+            } catch (NoSuchFieldException e) {
                 e.printStackTrace();
-            }
-            catch (SecurityException e)
-            {
+            } catch (SecurityException e) {
                 e.printStackTrace();
-            }
-            catch (IllegalArgumentException e)
-            {
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
-            }
-            catch (IllegalAccessException e)
-            {
+            } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        
+
         return null;
     }
 }

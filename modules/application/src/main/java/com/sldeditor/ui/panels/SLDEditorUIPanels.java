@@ -76,10 +76,12 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     private NoSymbolUI noSymbolUI;
 
     /** The ui symbol map. */
-    private Map<String, SymbolPanelInterface> uiSymbolMap = new HashMap<String, SymbolPanelInterface>();
+    private Map<String, SymbolPanelInterface> uiSymbolMap = 
+            new HashMap<String, SymbolPanelInterface>();
 
     /** The ui legend map. */
-    private Map<String, SymbolPanelInterface> uiLegendMap = new HashMap<String, SymbolPanelInterface>();
+    private Map<String, SymbolPanelInterface> uiLegendMap =
+            new HashMap<String, SymbolPanelInterface>();
 
     /** The panel data tab. */
     private JPanel panelDataTab = null;

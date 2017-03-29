@@ -35,7 +35,7 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
  */
 public class DataSourceConnectorFactory {
     /** The data connector map. */
-    private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap = 
+    private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap =
             new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
 
     /** The no data source. */
@@ -99,15 +99,6 @@ public class DataSourceConnectorFactory {
     }
 
     /**
-     * Gets the no data source.
-     *
-     * @return the no data source
-     */
-    public static DataSourcePropertiesInterface getNoDataSource() {
-        return new DataSourceProperties(noDataSource);
-    }
-
-    /**
      * Gets the data source properties.
      *
      * @param propertyMap the property map
@@ -125,6 +116,15 @@ public class DataSourceConnectorFactory {
             }
         }
         return null;
+    }
+
+    /**
+     * Gets the no data source.
+     *
+     * @return the no data source
+     */
+    public static DataSourcePropertiesInterface getNoDataSource() {
+        return new DataSourceProperties(noDataSource);
     }
 
     /**

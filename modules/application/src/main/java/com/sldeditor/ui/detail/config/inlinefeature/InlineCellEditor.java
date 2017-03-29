@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.Geometry;
  *
  * @author Robert Ward (SCISYS)
  */
-public class InlineCellEditor extends AbstractCellEditor  implements TableCellEditor {
+public class InlineCellEditor extends AbstractCellEditor implements TableCellEditor {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -53,12 +53,13 @@ public class InlineCellEditor extends AbstractCellEditor  implements TableCellEd
      *
      * @param model the model
      */
-    public InlineCellEditor(InLineFeatureModel model)
-    {
+    public InlineCellEditor(InLineFeatureModel model) {
         this.model = model;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.CellEditor#getCellEditorValue()
      */
     @Override
@@ -66,34 +67,33 @@ public class InlineCellEditor extends AbstractCellEditor  implements TableCellEd
         return this.textField.getText();
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable,
+     * java.lang.Object, boolean, int, int)
      */
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
             int row, int column) {
 
-        if((model != null) && column == model.getGeometryFieldIndex())
-        {
+        if ((model != null) && column == model.getGeometryFieldIndex()) {
             WKTDialog wktDialog = new WKTDialog();
 
             String geometryString = null;
             Object obj = model.getValueAt(row, column);
-            if(obj != null)
-            {
+            if (obj != null) {
                 geometryString = (String) obj.toString();
             }
 
-            if(wktDialog.showDialog(geometryString))
-            {
+            if (wktDialog.showDialog(geometryString)) {
                 String crsCode = model.getSelectedCRSCode();
-                Geometry geometry = WKTConversion.convertToGeometry(wktDialog.getWKTString(), crsCode);
+                Geometry geometry = WKTConversion.convertToGeometry(wktDialog.getWKTString(),
+                        crsCode);
 
                 model.updateGeometry(row, geometry);
             }
-        }
-        else
-        {
+        } else {
             this.textField.setFont(table.getFont());
             this.textField.setText(value.toString());
             return this.textField;
@@ -101,7 +101,9 @@ public class InlineCellEditor extends AbstractCellEditor  implements TableCellEd
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.AbstractCellEditor#isCellEditable(java.util.EventObject)
      */
     @Override

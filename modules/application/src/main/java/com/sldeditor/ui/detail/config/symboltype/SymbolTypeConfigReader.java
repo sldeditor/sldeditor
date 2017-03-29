@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype;
 
 import java.util.ArrayList;
@@ -53,17 +54,15 @@ public class SymbolTypeConfigReader {
      * @return true, if successful
      */
     public static boolean readConfig(Class<?> panelId, String fullResourceName,
-            Map<Class<?>, List<SymbolTypeConfig> > fieldEnableMap)
-    {
-        XMLSymbolTypeConfig symbolTypeConfig = (XMLSymbolTypeConfig) ParseXML.parseUIFile(fullResourceName, SCHEMA_RESOURCE, XMLSymbolTypeConfig.class);
+            Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+        XMLSymbolTypeConfig symbolTypeConfig = (XMLSymbolTypeConfig) ParseXML
+                .parseUIFile(fullResourceName, SCHEMA_RESOURCE, XMLSymbolTypeConfig.class);
 
-        if(symbolTypeConfig == null)
-        {
+        if (symbolTypeConfig == null) {
             return false;
         }
 
-        for(XMLPanelDetails xmlPanelDetails : symbolTypeConfig.getPanel())
-        {
+        for (XMLPanelDetails xmlPanelDetails : symbolTypeConfig.getPanel()) {
             String symbolizerClassName = xmlPanelDetails.getType();
             logger.debug("Symbolizer : " + symbolizerClassName);
 
@@ -73,7 +72,7 @@ public class SymbolTypeConfigReader {
                 List<SymbolTypeConfig> configList = readSymbolizerConfig(panelId, xmlPanelDetails);
 
                 fieldEnableMap.put(symbolizerClass, configList);
-                
+
             } catch (ClassNotFoundException e) {
                 ConsoleManager.getInstance().exception(SymbolTypeConfigReader.class, e);
                 return false;
@@ -89,13 +88,14 @@ public class SymbolTypeConfigReader {
      * @param xmlPanelDetails the xml panel details
      * @return the symbol type config
      */
-    private static List<SymbolTypeConfig> readSymbolizerConfig(Class<?> panelId, XMLPanelDetails xmlPanelDetails)
-    {
+    private static List<SymbolTypeConfig> readSymbolizerConfig(Class<?> panelId,
+            XMLPanelDetails xmlPanelDetails) {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
 
         for (XMLFieldConfigEnumValue value : xmlPanelDetails.getValue()) {
 
-            SymbolTypeConfig config = ReadPanelConfig.parseSymbolTypeConfig(SymbolTypeConfig.class, panelId, value);
+            SymbolTypeConfig config = ReadPanelConfig.parseSymbolTypeConfig(SymbolTypeConfig.class,
+                    panelId, value);
 
             configList.add(config);
         }

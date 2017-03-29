@@ -54,6 +54,7 @@ import com.sldeditor.filter.v2.function.temporal.After;
 
 /**
  * Unit test for FilterNode class.
+ * 
  * <p>{@link com.sldeditor.filter.v2.expression.FilterNode}
  * 
  * @author Robert Ward (SCISYS)
@@ -62,18 +63,19 @@ import com.sldeditor.filter.v2.function.temporal.After;
 public class FilterNodeTest {
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#FilterNode()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#toString()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#getFilter()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#getType()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#setType(java.lang.Class)}.
+     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#FilterNode()}. Test
+     * method for {@link com.sldeditor.filter.v2.expression.FilterNode#toString()}. Test method for
+     * {@link com.sldeditor.filter.v2.expression.FilterNode#getFilter()}. Test method for
+     * {@link com.sldeditor.filter.v2.expression.FilterNode#getType()}. Test method for
+     * {@link com.sldeditor.filter.v2.expression.FilterNode#setType(java.lang.Class)}.
      */
     @Test
     public void testFilterNode() {
         FilterNode node = new FilterNode();
         assertNull(node.getFilter());
 
-        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet")) == 0);
+        assertTrue(node.toString().compareTo(
+                Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet")) == 0);
 
         Class<?> type = Double.class;
         node.setType(type);
@@ -81,7 +83,8 @@ public class FilterNodeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#setFilter(org.opengis.filter.Filter, com.sldeditor.filter.v2.function.FilterConfigInterface)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.FilterNode#setFilter(org.opengis.filter.Filter, com.sldeditor.filter.v2.function.FilterConfigInterface)}.
      */
     @Test
     public void testSetFilter() {
@@ -91,15 +94,16 @@ public class FilterNodeTest {
 
         // BinaryComparisonAbstract
         Filter filter = ff.greaterOrEqual(ff.literal(45), ff.literal(23));
-        FilterConfigInterface filterConfig = new IsGreaterThan();
         node.setFilter(filter, null);
         node.addFilter();
 
         String actual = node.toString();
-        String expected = "Filter : " + Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet");
+        String expected = "Filter : "
+                + Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet");
         assertTrue(actual.compareTo(expected) == 0);
         assertEquals(filter, node.getFilter());
 
+        FilterConfigInterface filterConfig = new IsGreaterThan();
         node.setFilter(filter, filterConfig);
 
         assertEquals(filterConfig, node.getFilterConfig());
@@ -116,14 +120,15 @@ public class FilterNodeTest {
         assertTrue(actual.compareTo(expected) == 0);
 
         // BinarySpatialOperator
-        Hints hints = new Hints( Hints.CRS, DefaultGeographicCRS.WGS84 );
+        Hints hints = new Hints(Hints.CRS, DefaultGeographicCRS.WGS84);
 
         PositionFactory positionFactory = GeometryFactoryFinder.getPositionFactory(hints);
         GeometryFactory geometryFactory = GeometryFactoryFinder.getGeometryFactory(hints);
         PrimitiveFactory primitiveFactory = GeometryFactoryFinder.getPrimitiveFactory(hints);
         AggregateFactory aggregateFactory = GeometryFactoryFinder.getAggregateFactory(hints);
 
-        WKTParser wktParser = new WKTParser(geometryFactory, primitiveFactory, positionFactory, aggregateFactory);
+        WKTParser wktParser = new WKTParser(geometryFactory, primitiveFactory, positionFactory,
+                aggregateFactory);
         Geometry geometry = null;
         try {
             geometry = wktParser.parse("POINT( 48.44 -123.37)");
@@ -163,7 +168,8 @@ public class FilterNodeTest {
         assertTrue(actual.compareTo(expected) == 0);
 
         // Logic filter
-        filter = ff.and(ff.after(ff.literal(12), ff.literal(312)), ff.between(ff.literal(25), ff.literal(5), ff.literal(50)));
+        filter = ff.and(ff.after(ff.literal(12), ff.literal(312)),
+                ff.between(ff.literal(25), ff.literal(5), ff.literal(50)));
         filterConfig = new And();
         node.setFilter(filter, filterConfig);
         expected = "Filter : And";
@@ -174,7 +180,8 @@ public class FilterNodeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#setName(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.FilterNode#setName(java.lang.String)}.
      */
     @Test
     public void testSetName() {
@@ -183,7 +190,8 @@ public class FilterNodeTest {
 
         String name = "filtername";
         node.setName(name);
-        String expected = name + " : " + Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet");
+        String expected = name + " : "
+                + Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet");
         assertTrue(node.toString().compareTo(expected) == 0);
     }
 }

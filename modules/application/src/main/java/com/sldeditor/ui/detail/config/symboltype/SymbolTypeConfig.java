@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype;
 
 import java.util.ArrayList;
@@ -31,13 +32,16 @@ import com.sldeditor.ui.detail.FieldEnableState;
 
 /**
  * The Class SymbolTypeConfig contains all the configuration for a symbol type.
- * <p>
- * A symbol type config consists of one or more option names which all have the same field enable state.
- * <p>
- * For example:
+ * 
+ * <p>A symbol type config consists of one or more option 
+ * names which all have the same field enable state.
+ * 
+ * <p>For example:
  * <ul>
- * <li>One SymbolTypeConfig could have an option name of None which if selected could disable all fields.</li>
- * <li>Another SymbolTypeConfigcould have several option names e.g. Solid, Cross, which if selected could enable all fields.<l/i>
+ * <li>One SymbolTypeConfig could have an option name of None which
+ *  if selected could disable all fields.</li>
+ * <li>Another SymbolTypeConfigcould have several option names
+ *  e.g. Solid, Cross, which if selected could enable all fields.</li>
  * </ul>
  * 
  * @author Robert Ward (SCISYS)
@@ -47,7 +51,8 @@ public class SymbolTypeConfig {
     /** The group name. */
     private String groupName = Localisation.getString(SymbolTypeConfig.class, "common.notSet");
 
-    /** Flag indicating whether this set of symbol types appears as a separate menu group in the symbol type drop down. */
+    /** Flag indicating whether this set of symbol types appears
+     * as a separate menu group in the symbol type drop down. */
     private boolean isSeparateGroup = false;
 
     /** The key order list. */
@@ -86,7 +91,8 @@ public class SymbolTypeConfig {
     }
 
     /**
-     * Gets the optimised field map, contains only the fields that should be enabled when the option is selected.
+     * Gets the optimised field map, contains only the fields that
+     * should be enabled when the option is selected.
      *
      * @param fieldEnableState the field enable state
      * @param panelName the panel name
@@ -115,12 +121,14 @@ public class SymbolTypeConfig {
     }
 
     /**
-     * Gets the field map, regardless of whether the field is enabled or disabled when the option is selected.
+     * Gets the field map, regardless of whether the field is
+     * enabled or disabled when the option is selected.
      *
      * @return the field map
      */
     public Map<Class<?>, Map<FieldIdEnum, Boolean>> getFieldMap() {
-        Map<Class<?>, Map<FieldIdEnum, Boolean>> map = new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
+        Map<Class<?>, Map<FieldIdEnum, Boolean>> map =
+                new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
 
         Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
 

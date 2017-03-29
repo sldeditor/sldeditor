@@ -30,6 +30,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
 
 /**
  * The unit test for WKTPoint.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint}
  *
  * @author Robert Ward (SCISYS)

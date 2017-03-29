@@ -301,10 +301,6 @@ public class RasterSymbolizerDetails extends StandardPanel
      */
     private void updateSymbol() {
 
-        StandardData standardData = getStandardData();
-
-        Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_OPACITY);
-
         // Contrast enhancement
         Expression gammaValueExpression = fieldConfigVisitor
                 .getExpression(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE);
@@ -334,9 +330,6 @@ public class RasterSymbolizerDetails extends StandardPanel
                 .getComboBox(FieldIdEnum.RASTER_COLOURMAP_TYPE);
 
         colorMap.setType(Integer.valueOf(colourMapType.getKey()));
-
-        // Geometry field
-        Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
         // Channel selection
         ChannelSelection channelSelection = null;
@@ -409,6 +402,13 @@ public class RasterSymbolizerDetails extends StandardPanel
         }
         Symbolizer symbolizer = null;
 
+        StandardData standardData = getStandardData();
+
+        Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_OPACITY);
+
+        // Geometry field
+        Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
+
         RasterSymbolizer rasterSymbolizer = (RasterSymbolizer) getStyleFactory().rasterSymbolizer(
                 standardData.name, geometryField, standardData.description, standardData.unit,
                 opacityExpression, channelSelection, overlapBehavior, colorMap, contrastEnhancement,
@@ -453,7 +453,8 @@ public class RasterSymbolizerDetails extends StandardPanel
                 GroupConfigInterface constrastMethodGroup = getGroup(contrastMethod);
                 if (constrastMethodGroup != null) {
                     String method = null;
-                    MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
+                    MultiOptionGroup constrastMethodGroup2 =
+                            (MultiOptionGroup) constrastMethodGroup;
                     OptionGroup selectedOption = constrastMethodGroup2.getSelectedOptionGroup();
                     if (selectedOption != null) {
                         method = selectedOption.getLabel();

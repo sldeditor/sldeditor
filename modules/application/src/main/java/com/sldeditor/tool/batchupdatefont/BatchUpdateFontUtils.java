@@ -36,7 +36,8 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
 
 /**
- * Class given an SLD file will convert it to a list of ScaleSLDData objects describing the scales at which rules are displayed.
+ * Class given an SLD file will convert it to a list of ScaleSLDData
+ * objects describing the scales at which rules are displayed.
  */
 public class BatchUpdateFontUtils {
 

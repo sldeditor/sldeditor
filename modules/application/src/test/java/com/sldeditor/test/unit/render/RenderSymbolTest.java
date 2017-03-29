@@ -38,6 +38,7 @@ import com.sldeditor.render.RenderSymbol;
 
 /**
  * Unit test for RenderSymbol class.
+ * 
  * <p>{@link com.sldeditor.render.RenderSymbol}
  * 
  * @author Robert Ward (SCISYS)
@@ -56,9 +57,8 @@ public class RenderSymbolTest {
 
         StyledLayer styledLayer = sld.layers().get(0);
 
-        if(styledLayer instanceof NamedLayerImpl)
-        {
-            NamedLayerImpl namedLayerImpl = (NamedLayerImpl)styledLayer;
+        if (styledLayer instanceof NamedLayerImpl) {
+            NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
             Style expectedStyle = namedLayerImpl.styles().get(0);
 
@@ -69,11 +69,13 @@ public class RenderSymbolTest {
             assertEquals(expectedStyle.getName(), actualStyle.getName());
 
             Rule expectedRule = expectedStyle.featureTypeStyles().get(0).rules().get(1);
-            SelectedSymbol.getInstance().setFeatureTypeStyle(expectedStyle.featureTypeStyles().get(0));
+            SelectedSymbol.getInstance()
+                    .setFeatureTypeStyle(expectedStyle.featureTypeStyles().get(0));
             SelectedSymbol.getInstance().setRule(expectedRule);
             actualStyle = symbol.getRenderStyle(SelectedSymbol.getInstance());
             assertNull(actualStyle.featureTypeStyles().get(0).rules().get(0).getFilter());
-            assertEquals(expectedRule.getName(), actualStyle.featureTypeStyles().get(0).rules().get(0).getName());
+            assertEquals(expectedRule.getName(),
+                    actualStyle.featureTypeStyles().get(0).rules().get(0).getName());
         }
     }
 
@@ -82,118 +84,69 @@ public class RenderSymbolTest {
      *
      * @return the styled layer descriptor
      */
-    private StyledLayerDescriptor createSLD()
-    {
-        String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                "<StyledLayerDescriptor version=\"1.0.0\" " +
-                "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" " +
-                "    xmlns=\"http://www.opengis.net/sld\" " +
-                "    xmlns:ogc=\"http://www.opengis.net/ogc\" " +
-                "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" " +
-                "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" +
-                "  <NamedLayer>" +
-                "    <Name>Attribute-based point</Name>" +
-                "    <UserStyle>" +
-                "      <Title>GeoServer SLD Cook Book: Attribute-based point</Title>" +
-                "      <FeatureTypeStyle>" +
-                "        <Rule>" +
-                "          <Name>SmallPop</Name>" +
-                "          <Title>1 to 50000</Title>" +
-                "          <ogc:Filter>" +
-                "            <ogc:PropertyIsLessThan>" +
-                "              <ogc:PropertyName>pop</ogc:PropertyName>" +
-                "              <ogc:Literal>50000</ogc:Literal>" +
-                "            </ogc:PropertyIsLessThan>" +
-                "          </ogc:Filter>" +
-                "          <PointSymbolizer>" +
-                "            <Graphic>" +
-                "              <Mark>" +
-                "                <WellKnownName>star</WellKnownName>" +
-                "                <Fill>" +
-                "                  <CssParameter name=\"fill\">#0033CC</CssParameter>" +
-                "                </Fill>" +
-                "              </Mark>" +
-                "              <Rotation>" +
-                "                <ogc:PropertyName>angle</ogc:PropertyName>" +
-                "              </Rotation>" +
-                "              <Size>" +
-                "                <ogc:PropertyName>size</ogc:PropertyName>" +
-                "              </Size>" +
-                "            </Graphic>" +
-                "          </PointSymbolizer>" +
-                "        </Rule>" +
-                "        <Rule>" +
-                "          <Name>MediumPop</Name>" +
-                "          <Title>50000 to 500000</Title>" +
-                "          <ogc:Filter>" +
-                "            <ogc:PropertyIsLessThan>" +
-                "              <ogc:PropertyName>pop</ogc:PropertyName>" +
-                "              <ogc:Literal>500000</ogc:Literal>" +
-                "            </ogc:PropertyIsLessThan>" +
-                "          </ogc:Filter>" +
-                "          <PointSymbolizer>" +
-                "            <Graphic>" +
-                "              <Mark>" +
-                "                <WellKnownName>star</WellKnownName>" +
-                "                <Fill>" +
-                "                  <CssParameter name=\"fill\">#0033CC</CssParameter>" +
-                "                </Fill>" +
-                "              </Mark>" +
-                "              <Rotation>" +
-                "                <ogc:PropertyName>angle</ogc:PropertyName>" +
-                "              </Rotation>" +
-                "              <Size>" +
-                "                <ogc:PropertyName>size</ogc:PropertyName>" +
-                "              </Size>" +
-                "            </Graphic>" +
-                "          </PointSymbolizer>" +
-                "          <PointSymbolizer>" +
-                "            <Graphic>" +
-                "              <Mark>" +
-                "                <WellKnownName>circle</WellKnownName>" +
-                "                <Fill>" +
-                "                  <CssParameter name=\"fill\">#123456</CssParameter>" +
-                "                </Fill>" +
-                "              </Mark>" +
-                "              <Rotation>" +
-                "                <ogc:PropertyName>angle</ogc:PropertyName>" +
-                "              </Rotation>" +
-                "              <Size>" +
-                "                <ogc:PropertyName>size</ogc:PropertyName>" +
-                "              </Size>" +
-                "            </Graphic>" +
-                "          </PointSymbolizer>" +
-                "        </Rule>" +
-                "        <Rule>" +
-                "          <Name>LargePop</Name>" +
-                "          <Title>500000 to 900000</Title>" +
-                "          <ogc:Filter>" +
-                "            <ogc:PropertyIsLessThan>" +
-                "              <ogc:PropertyName>pop</ogc:PropertyName>" +
-                "              <ogc:Literal>900000</ogc:Literal>" +
-                "            </ogc:PropertyIsLessThan>" +
-                "          </ogc:Filter>" +
-                "          <PointSymbolizer>" +
-                "            <Graphic>" +
-                "              <Mark>" +
-                "                <WellKnownName>star</WellKnownName>" +
-                "                <Fill>" +
-                "                  <CssParameter name=\"fill\">#0033CC</CssParameter>" +
-                "                </Fill>" +
-                "              </Mark>" +
-                "              <Rotation>" +
-                "                <ogc:PropertyName>angle</ogc:PropertyName>" +
-                "              </Rotation>" +
-                "              <Size>" +
-                "                <ogc:PropertyName>size</ogc:PropertyName>" +
-                "              </Size>" +
-                "            </Graphic>" +
-                "          </PointSymbolizer>" +
-                "        </Rule>" +
-                "      </FeatureTypeStyle>" +
-                "    </UserStyle>" +
-                "  </NamedLayer>" +
-                "</StyledLayerDescriptor>";
+    private StyledLayerDescriptor createSLD() {
+        String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                + "<StyledLayerDescriptor version=\"1.0.0\" "
+                + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
+                + "    xmlns=\"http://www.opengis.net/sld\" "
+                + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
+                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" + "  <NamedLayer>"
+                + "    <Name>Attribute-based point</Name>" + "    <UserStyle>"
+                + "      <Title>GeoServer SLD Cook Book: Attribute-based point</Title>"
+                + "      <FeatureTypeStyle>" + "        <Rule>" + "          <Name>SmallPop</Name>"
+                + "          <Title>1 to 50000</Title>" + "          <ogc:Filter>"
+                + "            <ogc:PropertyIsLessThan>"
+                + "              <ogc:PropertyName>pop</ogc:PropertyName>"
+                + "              <ogc:Literal>50000</ogc:Literal>"
+                + "            </ogc:PropertyIsLessThan>" + "          </ogc:Filter>"
+                + "          <PointSymbolizer>" + "            <Graphic>" + "              <Mark>"
+                + "                <WellKnownName>star</WellKnownName>" + "                <Fill>"
+                + "                  <CssParameter name=\"fill\">#0033CC</CssParameter>"
+                + "                </Fill>" + "              </Mark>" + "              <Rotation>"
+                + "                <ogc:PropertyName>angle</ogc:PropertyName>"
+                + "              </Rotation>" + "              <Size>"
+                + "                <ogc:PropertyName>size</ogc:PropertyName>"
+                + "              </Size>" + "            </Graphic>"
+                + "          </PointSymbolizer>" + "        </Rule>" + "        <Rule>"
+                + "          <Name>MediumPop</Name>" + "          <Title>50000 to 500000</Title>"
+                + "          <ogc:Filter>" + "            <ogc:PropertyIsLessThan>"
+                + "              <ogc:PropertyName>pop</ogc:PropertyName>"
+                + "              <ogc:Literal>500000</ogc:Literal>"
+                + "            </ogc:PropertyIsLessThan>" + "          </ogc:Filter>"
+                + "          <PointSymbolizer>" + "            <Graphic>" + "              <Mark>"
+                + "                <WellKnownName>star</WellKnownName>" + "                <Fill>"
+                + "                  <CssParameter name=\"fill\">#0033CC</CssParameter>"
+                + "                </Fill>" + "              </Mark>" + "              <Rotation>"
+                + "                <ogc:PropertyName>angle</ogc:PropertyName>"
+                + "              </Rotation>" + "              <Size>"
+                + "                <ogc:PropertyName>size</ogc:PropertyName>"
+                + "              </Size>" + "            </Graphic>"
+                + "          </PointSymbolizer>" + "          <PointSymbolizer>"
+                + "            <Graphic>" + "              <Mark>"
+                + "                <WellKnownName>circle</WellKnownName>" + "                <Fill>"
+                + "                  <CssParameter name=\"fill\">#123456</CssParameter>"
+                + "                </Fill>" + "              </Mark>" + "              <Rotation>"
+                + "                <ogc:PropertyName>angle</ogc:PropertyName>"
+                + "              </Rotation>" + "              <Size>"
+                + "                <ogc:PropertyName>size</ogc:PropertyName>"
+                + "              </Size>" + "            </Graphic>"
+                + "          </PointSymbolizer>" + "        </Rule>" + "        <Rule>"
+                + "          <Name>LargePop</Name>" + "          <Title>500000 to 900000</Title>"
+                + "          <ogc:Filter>" + "            <ogc:PropertyIsLessThan>"
+                + "              <ogc:PropertyName>pop</ogc:PropertyName>"
+                + "              <ogc:Literal>900000</ogc:Literal>"
+                + "            </ogc:PropertyIsLessThan>" + "          </ogc:Filter>"
+                + "          <PointSymbolizer>" + "            <Graphic>" + "              <Mark>"
+                + "                <WellKnownName>star</WellKnownName>" + "                <Fill>"
+                + "                  <CssParameter name=\"fill\">#0033CC</CssParameter>"
+                + "                </Fill>" + "              </Mark>" + "              <Rotation>"
+                + "                <ogc:PropertyName>angle</ogc:PropertyName>"
+                + "              </Rotation>" + "              <Size>"
+                + "                <ogc:PropertyName>size</ogc:PropertyName>"
+                + "              </Size>" + "            </Graphic>"
+                + "          </PointSymbolizer>" + "        </Rule>" + "      </FeatureTypeStyle>"
+                + "    </UserStyle>" + "  </NamedLayer>" + "</StyledLayerDescriptor>";
 
         SLDData sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
         sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());

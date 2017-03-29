@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.font;
 
 import javax.swing.JScrollPane;
@@ -36,10 +37,10 @@ import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
  * The Class FieldConfigFontPreview wraps a text field GUI component showing a font preview.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -91,7 +92,6 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
             int xPos = getXPos();
             int height = getRowY(sampleTextLines);
             int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
-            FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel());
 
             textField = new JTextArea();
             textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
@@ -101,6 +101,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
             textField.setRows(sampleTextLines);
             JScrollPane scrollPane = new JScrollPane(textField);
             scrollPane.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
+            FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel());
             fieldPanel.add(scrollPane);
         }
     }

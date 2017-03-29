@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 
 import static org.junit.Assert.assertEquals;
@@ -32,13 +33,15 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWor
  * Unit test for GeoServerWorkspaceNode class.
  * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode}
+ * 
  * @author Robert Ward (SCISYS)
  *
  */
 public class GeoServerWorkspaceNodeTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode#GeoServerStyleNode(com.sldeditor.common.filesystem.FileSystemInterface)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode#GeoServerStyleNode(com.sldeditor.common.filesystem.FileSystemInterface)}.
      */
     @Test
     public void testGeoServerLayerNode() {
@@ -50,12 +53,14 @@ public class GeoServerWorkspaceNodeTest {
 
         String workspaceName = "workspace";
 
-        GeoServerWorkspaceNode node = new GeoServerWorkspaceNode(fileHandler, connection, workspaceName, true);
+        GeoServerWorkspaceNode node = new GeoServerWorkspaceNode(fileHandler, connection,
+                workspaceName, true);
 
         assertEquals(fileHandler, node.getHandler());
         assertEquals(connection, node.getConnection());
         assertEquals(workspaceName, node.getWorkspaceName());
-        assertEquals(DataFlavourManager.GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR, node.getDataFlavour());
+        assertEquals(DataFlavourManager.GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR,
+                node.getDataFlavour());
 
         assertNull(node.getDestinationText());
     }

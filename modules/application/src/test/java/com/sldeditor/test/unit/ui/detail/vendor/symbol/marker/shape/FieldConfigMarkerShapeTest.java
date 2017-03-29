@@ -29,6 +29,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.FieldConfigMarkerSh
 
 /**
  * The unit test for FieldConfigMarkerShape.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.shape.FieldConfigMarkerShape}
  *
  * @author Robert Ward (SCISYS)
@@ -36,13 +37,16 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.FieldConfigMarkerSh
 public class FieldConfigMarkerShapeTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.shape.FieldConfigMarkerShape#FieldConfigMarkerShape(com.sldeditor.ui.detail.config.FieldConfigCommonData, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.shape.FieldConfigMarkerShape#FieldConfigMarkerShape(com.sldeditor.ui.detail.config.FieldConfigCommonData, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testFieldConfigMarkerShape() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigMarkerShape field = new FieldConfigMarkerShape(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarkerShape field = new FieldConfigMarkerShape(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNotNull(field);
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -46,14 +47,14 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
  * Unit test for CreateInternalDataSource.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.CreateInternalDataSource}
  * 
  * @author Robert Ward (SCISYS)
  */
 public class CreateInternalDataSourceTest {
 
-    class TestCreateInternalDataSource extends CreateInternalDataSource
-    {
+    class TestCreateInternalDataSource extends CreateInternalDataSource {
 
         /**
          * Call determine geometry type.
@@ -65,8 +66,10 @@ public class CreateInternalDataSourceTest {
         }
 
     }
+
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.CreateInternalDataSource#connect(com.sldeditor.datasource.SLDEditorFileInterface)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.CreateInternalDataSource#connect(com.sldeditor.datasource.SLDEditorFileInterface)}.
      */
     @Test
     public void testConnect() {
@@ -80,7 +83,7 @@ public class CreateInternalDataSourceTest {
         assertNull(dsInfo.getDataStore());
         assertNull(dsInfo.getTypeName());
 
-        SLDEditorFileInterface sldEditor = new DummyInternalSLDFile(); 
+        SLDEditorFileInterface sldEditor = new DummyInternalSLDFile();
         dataSourceInfoList = ds.connect(null, null, sldEditor);
         dsInfo = dataSourceInfoList.get(0);
 
@@ -90,14 +93,15 @@ public class CreateInternalDataSourceTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.CreateInternalDataSource#determineGeometryType(StyledLayerDescriptor)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.CreateInternalDataSource#determineGeometryType(StyledLayerDescriptor)}.
      */
     @Test
     public void testDetermineGeometryType() {
         TestCreateInternalDataSource ds = new TestCreateInternalDataSource();
 
         assertEquals(GeometryTypeEnum.UNKNOWN, ds.callDetermineGeometryType(null));
-        
+
         // Create StyledLayerDescriptor
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
@@ -136,7 +140,7 @@ public class CreateInternalDataSourceTest {
         PointSymbolizer point = DefaultSymbols.createDefaultPointSymbolizer();
         rule.symbolizers().add(point);
         assertEquals(GeometryTypeEnum.POINT, ds.callDetermineGeometryType(sld));
-        
+
         // Add line to point
         rule.symbolizers().add(line);
         assertEquals(GeometryTypeEnum.LINE, ds.callDetermineGeometryType(sld));

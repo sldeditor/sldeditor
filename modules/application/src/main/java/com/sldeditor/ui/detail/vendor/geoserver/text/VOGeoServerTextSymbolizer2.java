@@ -155,21 +155,6 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
     }
 
     /**
-     * Populate.
-     *
-     * @param selectedSymbol the selected symbol
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
-     */
-    @Override
-    public void populate(SelectedSymbol selectedSymbol) {
-        // Do nothing
-    }
-
-    /**
      * Gets the field data manager.
      *
      * @return the field data manager
@@ -184,118 +169,29 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
         return this.fieldConfigManager;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
     /**
-     * Populate.
+     * Update symbol.
      *
-     * @param textSymbolizer the text symbolizer
+     * @param polygonSymbolizer the polygon symbolizer
      */
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.TextSymbolizer)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
      */
     @Override
-    public void populate(TextSymbolizer textSymbolizer) {
-        if (textSymbolizer instanceof TextSymbolizer2) {
-            TextSymbolizer2 textSymbol2 = (TextSymbolizer2) textSymbolizer;
-
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION,
-                    textSymbol2.getFeatureDescription());
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET,
-                    textSymbol2.getSnippet());
-
-            OtherText otherText = textSymbol2.getOtherText();
-            String target = null;
-            Expression text = null;
-
-            if (otherText != null) {
-                target = otherText.getTarget();
-                text = otherText.getText();
-            }
-
-            GroupConfigInterface group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT);
-            if (group != null) {
-                group.enable(otherText != null);
-            }
-            fieldConfigVisitor.populateTextField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET,
-                    target);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT, text);
-
-            Graphic graphic = textSymbol2.getGraphic();
-
-            boolean enableFill = false;
-            boolean enableStroke = false;
-
-            if (graphic == null) {
-                graphic = getStyleFactory().createDefaultGraphic();
-                graphic.setSize(getFilterFactory().literal(10.0));
-                Mark mark = getStyleFactory().createMark();
-                graphic.graphicalSymbols().add(mark);
-            }
-
-            Expression fillColour = getFilterFactory().literal(DefaultSymbols.defaultColour());
-            Expression fillOpacity = getFilterFactory()
-                    .literal(DefaultSymbols.defaultColourOpacity());
-            Expression strokeColour = getFilterFactory().literal(DefaultSymbols.defaultColour());
-            Expression strokeOpacity = getFilterFactory()
-                    .literal(DefaultSymbols.defaultColourOpacity());
-            Expression strokeLineWidth = null;
-
-            List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
-
-            if (!graphicalSymbolList.isEmpty()) {
-                GraphicalSymbol symbol = graphicalSymbolList.get(0);
-                symbolTypeFactory.setValue(TextSymbolizer2.class, this.fieldConfigManager, graphic,
-                        symbol);
-
-                if (symbol instanceof Mark) {
-                    Mark mark = (Mark) symbol;
-                    Fill fill = mark.getFill();
-                    if (fill != null) {
-                        enableFill = true;
-                        fillColour = fill.getColor();
-                        fillOpacity = fill.getOpacity();
-                    }
-                    Stroke stroke = mark.getStroke();
-                    if (stroke != null) {
-                        enableStroke = true;
-                        strokeColour = stroke.getColor();
-                        strokeOpacity = stroke.getOpacity();
-                        strokeLineWidth = stroke.getWidth();
-                    }
-                }
-            }
-            Expression expSize = graphic.getSize();
-            Expression expRotation = graphic.getRotation();
-
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE, expSize);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE, expRotation);
-
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
-                    fillColour);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
-                    fillOpacity);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,
-                    strokeColour);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
-                    strokeOpacity);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH,
-                    strokeLineWidth);
-
-            GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
-            if (fillGroup != null) {
-                fillGroup.enable(enableFill);
-            }
-            GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
-            if (strokeGroup != null) {
-                group.enable(enableStroke);
-            }
-
-            group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
-            if (group != null) {
-                group.enable(textSymbol2.getGraphic() != null);
-            }
-        }
+    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
+        // Do nothing
     }
 
     /**
@@ -433,21 +329,6 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
     }
 
     /**
-     * Update symbol.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
-     */
-    @Override
-    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
-        // Do nothing
-    }
-
-    /**
      * Populate.
      *
      * @param polygonSymbolizer the polygon symbolizer
@@ -462,14 +343,19 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
         // Do nothing
     }
 
+    /**
+     * Populate.
+     *
+     * @param selectedSymbol the selected symbol
+     */
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
-    public void preLoadSymbol() {
-        setAllDefaultValues();
+    public void populate(SelectedSymbol selectedSymbol) {
+        // Do nothing
     }
 
     /*
@@ -482,14 +368,128 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
         // Do nothing
     }
 
+    /**
+     * Populate.
+     *
+     * @param textSymbolizer the text symbolizer
+     */
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.TextSymbolizer)
      */
     @Override
-    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
-        // Do nothing
+    public void populate(TextSymbolizer textSymbolizer) {
+        if (textSymbolizer instanceof TextSymbolizer2) {
+            TextSymbolizer2 textSymbol2 = (TextSymbolizer2) textSymbolizer;
+
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION,
+                    textSymbol2.getFeatureDescription());
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET,
+                    textSymbol2.getSnippet());
+
+            OtherText otherText = textSymbol2.getOtherText();
+            String target = null;
+            Expression text = null;
+
+            if (otherText != null) {
+                target = otherText.getTarget();
+                text = otherText.getText();
+            }
+
+            GroupConfigInterface group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT);
+            if (group != null) {
+                group.enable(otherText != null);
+            }
+            fieldConfigVisitor.populateTextField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET,
+                    target);
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT, text);
+
+            Graphic graphic = textSymbol2.getGraphic();
+
+            boolean enableFill = false;
+            boolean enableStroke = false;
+
+            if (graphic == null) {
+                graphic = getStyleFactory().createDefaultGraphic();
+                graphic.setSize(getFilterFactory().literal(10.0));
+                Mark mark = getStyleFactory().createMark();
+                graphic.graphicalSymbols().add(mark);
+            }
+
+            Expression fillColour = getFilterFactory().literal(DefaultSymbols.defaultColour());
+            Expression fillOpacity = getFilterFactory()
+                    .literal(DefaultSymbols.defaultColourOpacity());
+            Expression strokeColour = getFilterFactory().literal(DefaultSymbols.defaultColour());
+            Expression strokeOpacity = getFilterFactory()
+                    .literal(DefaultSymbols.defaultColourOpacity());
+            Expression strokeLineWidth = null;
+
+            List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
+
+            if (!graphicalSymbolList.isEmpty()) {
+                GraphicalSymbol symbol = graphicalSymbolList.get(0);
+                symbolTypeFactory.setValue(TextSymbolizer2.class, this.fieldConfigManager, graphic,
+                        symbol);
+
+                if (symbol instanceof Mark) {
+                    Mark mark = (Mark) symbol;
+                    Fill fill = mark.getFill();
+                    if (fill != null) {
+                        enableFill = true;
+                        fillColour = fill.getColor();
+                        fillOpacity = fill.getOpacity();
+                    }
+                    Stroke stroke = mark.getStroke();
+                    if (stroke != null) {
+                        enableStroke = true;
+                        strokeColour = stroke.getColor();
+                        strokeOpacity = stroke.getOpacity();
+                        strokeLineWidth = stroke.getWidth();
+                    }
+                }
+            }
+            Expression expSize = graphic.getSize();
+            Expression expRotation = graphic.getRotation();
+
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE, expSize);
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE, expRotation);
+
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
+                    fillColour);
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
+                    fillOpacity);
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,
+                    strokeColour);
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
+                    strokeOpacity);
+            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH,
+                    strokeLineWidth);
+
+            GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
+            if (fillGroup != null) {
+                fillGroup.enable(enableFill);
+            }
+            GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
+            if (strokeGroup != null) {
+                group.enable(enableStroke);
+            }
+
+            group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
+            if (group != null) {
+                group.enable(textSymbol2.getGraphic() != null);
+            }
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     */
+    @Override
+    public void preLoadSymbol() {
+        setAllDefaultValues();
     }
 
     /*

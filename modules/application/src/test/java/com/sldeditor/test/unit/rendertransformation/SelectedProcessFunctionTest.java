@@ -46,6 +46,7 @@ import net.opengis.wps10.impl.Wps10FactoryImpl;
 
 /**
  * Unit test for SelectedProcessFunction class.
+ * 
  * <p>{@link com.sldeditor.rendertransformation.SelectedProcessFunction}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,13 +55,11 @@ import net.opengis.wps10.impl.Wps10FactoryImpl;
 public class SelectedProcessFunctionTest {
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.SelectedProcessFunction#setBuiltInProcessFunction(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
+     * Test method for
+     * {@link com.sldeditor.rendertransformation.SelectedProcessFunction#setBuiltInProcessFunction(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
      */
     @Test
     public void testSetBuiltInProcessFunction() {
-        ProcessFunctionFactory processFunctionFactory = new ProcessFunctionFactory();
-        List<FunctionName> functionNameList = processFunctionFactory.getFunctionNames();
-        FunctionName functionName = functionNameList.get(0);
 
         SelectedProcessFunction obj = new SelectedProcessFunction();
         assertTrue(obj.isBuiltInSelected());
@@ -68,6 +67,9 @@ public class SelectedProcessFunctionTest {
         assertNull(obj.getFunctionName());
         assertEquals(0, obj.getRowCount());
 
+        ProcessFunctionFactory processFunctionFactory = new ProcessFunctionFactory();
+        List<FunctionName> functionNameList = processFunctionFactory.getFunctionNames();
+        FunctionName functionName = functionNameList.get(0);
         obj.setBuiltInProcessFunction(functionName, null);
         assertTrue(obj.isBuiltInSelected());
         assertTrue(obj.getFunctionName().getLocalPart().compareTo(functionName.getName()) == 0);
@@ -76,7 +78,8 @@ public class SelectedProcessFunctionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.SelectedProcessFunction#setSelectedCustomFunction(net.opengis.wps10.ProcessDescriptionType)}.
+     * Test method for
+     * {@link com.sldeditor.rendertransformation.SelectedProcessFunction#setSelectedCustomFunction(net.opengis.wps10.ProcessDescriptionType)}.
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
@@ -88,10 +91,9 @@ public class SelectedProcessFunctionTest {
         codeType.setValue(expectedFunctionName);
         process.setIdentifier(codeType);
 
-        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
 
-        EList dataInputList = dataInputs.getInput();
-        InputDescriptionType inputDescription = Wps10FactoryImpl.init().createInputDescriptionType();
+        InputDescriptionType inputDescription = Wps10FactoryImpl.init()
+                .createInputDescriptionType();
 
         CodeType codeType2 = Ows11FactoryImpl.init().createCodeType();
         codeType2.setValue("dummyParameter");
@@ -104,6 +106,8 @@ public class SelectedProcessFunctionTest {
         literal.setDefaultValue("1234");
         literal.setDataType(domainType);
         inputDescription.setLiteralData(literal);
+        DataInputsType dataInputs = Wps10FactoryImpl.init().createDataInputsType();
+        EList dataInputList = dataInputs.getInput();
         dataInputList.add(inputDescription);
         process.setDataInputs(dataInputs);
         LanguageStringType title = Ows11FactoryImpl.init().createLanguageStringType();
@@ -125,7 +129,8 @@ public class SelectedProcessFunctionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.SelectedProcessFunction#extractLocalFunctionName(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.rendertransformation.SelectedProcessFunction#extractLocalFunctionName(java.lang.String)}.
      */
     @Test
     public void testExtractLocalFunctionName() {

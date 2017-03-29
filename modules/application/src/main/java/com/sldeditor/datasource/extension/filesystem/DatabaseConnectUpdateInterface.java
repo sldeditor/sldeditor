@@ -24,7 +24,8 @@ import java.util.List;
 import com.sldeditor.common.data.DatabaseConnection;
 
 /**
- * The Interface DatabaseConnectUpdateInterface allows information about database connections to be transferred.
+ * The Interface DatabaseConnectUpdateInterface allows information
+ * about database connections to be transferred.
  * 
  * @author Robert Ward (SCISYS)
  */

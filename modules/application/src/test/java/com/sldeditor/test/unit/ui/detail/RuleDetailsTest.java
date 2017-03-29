@@ -39,6 +39,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for RuleDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.RuleDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -92,7 +93,8 @@ public class RuleDetailsTest {
         GraphicPanelFieldManager fieldDataManager = panel.getFieldDataManager();
         assertNotNull(fieldDataManager);
         
-        FieldConfigString filterField = (FieldConfigString) fieldDataManager.get(FieldIdEnum.FILTER);
+        FieldConfigString filterField = (FieldConfigString) fieldDataManager
+                .get(FieldIdEnum.FILTER);
         String filterString = "STATE_ABBR >= 'B' AND STATE_ABBR <= 'O'";
         filterField.populateField(filterString);
 

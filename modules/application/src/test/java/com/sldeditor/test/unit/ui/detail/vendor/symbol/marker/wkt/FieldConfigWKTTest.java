@@ -53,15 +53,17 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT;
 
 /**
  * The unit test for FieldConfigWKT.
- * <p>
- * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT}
  *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigWKTTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#internal_setEnabled(boolean)}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#internal_setEnabled(boolean)}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#isEnabled()}.
      */
     @Test
@@ -110,7 +112,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
@@ -128,7 +131,9 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#generateExpression()}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#generateExpression()}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
      * Test method for
      * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
@@ -159,7 +164,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
@@ -176,7 +182,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#justSelected()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#justSelected()}.
      */
     @Test
     public void testJustSelected() {
@@ -219,7 +226,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
@@ -233,7 +241,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getVendorOption()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getVendorOption()}.
      */
     @Test
     public void testGetVendorOption() {
@@ -247,7 +256,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getSymbolClass()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getSymbolClass()}.
      */
     @Test
     public void testGetSymbolClass() {
@@ -304,19 +314,19 @@ public class FieldConfigWKTTest {
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(
                 new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
                 new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         field.setValue(null, fieldConfigManager, null, null, marker2);
@@ -354,7 +364,6 @@ public class FieldConfigWKTTest {
      */
     @Test
     public void testGetValue() {
-        StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
         FieldConfigWKT field = new FieldConfigWKT(
@@ -373,6 +382,7 @@ public class FieldConfigWKTTest {
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         String actualMarkerSymbol = "solid";
+        StyleBuilder styleBuilder = new StyleBuilder();
         symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
@@ -381,19 +391,19 @@ public class FieldConfigWKTTest {
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(
                 new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
                 new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         // Try without setting any fields
@@ -442,7 +452,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#populateSymbolList(java.lang.Class, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#populateSymbolList(java.lang.Class, java.util.List)}.
      */
     @Test
     public void testPopulateSymbolList() {
@@ -463,7 +474,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getBasePanel()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#getBasePanel()}.
      */
     @Test
     public void testGetBasePanel() {
@@ -498,7 +510,8 @@ public class FieldConfigWKTTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#accept(org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.FieldConfigWKT#accept(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testAccept() {

@@ -134,8 +134,7 @@ public class DataSourceConnectorEmpty implements DataSourceConnectorInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
+     * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
     public Map<String, Object> getConnectionProperties(

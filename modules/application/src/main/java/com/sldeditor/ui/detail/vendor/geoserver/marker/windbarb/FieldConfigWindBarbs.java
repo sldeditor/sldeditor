@@ -55,7 +55,8 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigWindBarbs is a GeoServer vendor option to display wind barbs, weather symbols.
+ * The Class FieldConfigWindBarbs is a GeoServer vendor option to
+ * display wind barbs, weather symbols.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -416,9 +417,10 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     }
 
     /**
-     * Method called when the field has been selected from a combo box and may need to be initialised
+     * Method called when the field has been selected from a combo 
+     * box and may need to be initialised
      * 
-     * Will be be overridden if necessary.
+     * <p>Will be be overridden if necessary.
      */
     public void justSelected() {
         setCachedExpression(generateExpression());

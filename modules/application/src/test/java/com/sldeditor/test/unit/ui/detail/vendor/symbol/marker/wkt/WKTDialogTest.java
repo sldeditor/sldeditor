@@ -31,28 +31,26 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 
 /**
  * The unit test for WKTDialog.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog}
  *
  * @author Robert Ward (SCISYS)
  */
 public class WKTDialogTest {
 
-    class TestWKTDialog extends WKTDialog
-    {
-        
+    class TestWKTDialog extends WKTDialog {
+
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
-        public TestWKTDialog()
-        {
+        public TestWKTDialog() {
             super();
         }
-        
-        public void testShow(String text)
-        {
+
+        public void testShow(String text) {
             populate(text);
         }
-        
+
         /**
          * Geometry type updated.
          */
@@ -105,8 +103,7 @@ public class WKTDialogTest {
         /**
          * Removes the multi shape.
          */
-        public void testRemoveMultiShape()
-        {
+        public void testRemoveMultiShape() {
             removeMultiShape();
         }
 
@@ -115,24 +112,25 @@ public class WKTDialogTest {
          *
          * @param geometryType the geometry type
          */
-        public void testSetGeometryType(WKTType geometryType)
-        {
+        public void testSetGeometryType(WKTType geometryType) {
             setGeometryType(geometryType);
         }
     }
+
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog#WKTDialog()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog#WKTDialog()}.
      */
     @Test
     public void testWKTDialog() {
         TestWKTDialog dlg = new TestWKTDialog();
-        
+
         dlg.testShow("wkt://LINESTRING (30 10, 10 30, 40 40)");
-        
+
         String actual = dlg.getWKTString();
 
         assertNotNull(actual);
-        
+
         List<WKTType> list = WKTConversion.getWKTTypeData();
         dlg.testSetGeometryType(list.get(0));
         dlg.testAddSegment();
@@ -140,7 +138,7 @@ public class WKTDialogTest {
         dlg.testRemovePoint();
         dlg.testRemoveSegment();
         dlg.testReload();
-        
+
         dlg.testShow("wkt://MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30 10))");
         dlg.testAddMultiShape();
         dlg.testRemoveMultiShape();

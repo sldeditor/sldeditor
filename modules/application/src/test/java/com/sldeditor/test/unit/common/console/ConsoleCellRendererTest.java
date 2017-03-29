@@ -33,8 +33,8 @@ import com.sldeditor.common.console.ConsoleDataEnum;
 
 /**
  * The unit test for ConsoleCellRenderer.
- * <p>
- * {@link com.sldeditor.common.console.ConsoleCellRenderer}
+ * 
+ * <p>{@link com.sldeditor.common.console.ConsoleCellRenderer}
  *
  * @author Robert Ward (SCISYS)
  */

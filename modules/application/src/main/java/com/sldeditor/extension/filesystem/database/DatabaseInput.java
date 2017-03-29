@@ -411,8 +411,7 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#addNewConnection(com.sldeditor.common.data.DatabaseConnection)
+     * @see com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface#addNewConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void addNewConnection(DatabaseConnection newConnectionDetails) {
@@ -484,7 +483,8 @@ public class DatabaseInput implements FileSystemInterface, DatabaseConnectUpdate
             return;
         }
 
-        List<DefaultMutableTreeNode> overallNodesToRefresh = new ArrayList<DefaultMutableTreeNode>();
+        List<DefaultMutableTreeNode> overallNodesToRefresh =
+                new ArrayList<DefaultMutableTreeNode>();
         String overallNodeName = null;
         for (DatabaseConnection connection : connectionList) {
             logger.debug("Deleting connection : " + connection.getConnectionName());

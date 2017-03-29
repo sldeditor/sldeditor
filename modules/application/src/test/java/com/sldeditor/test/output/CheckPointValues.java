@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.output;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,11 +33,16 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class CheckPointValues
-{
+public class CheckPointValues {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     *
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException the interrupted exception
+     */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -48,32 +54,27 @@ public class CheckPointValues
     }
 
     @Test
-    public void point_outputTestCommon()
-    {
+    public void point_outputTestCommon() {
         test.runTest("output", "point_outputTestCommon.xml");
     }
 
     @Test
-    public void point_outputTestExternalGraphic()
-    {
+    public void point_outputTestExternalGraphic() {
         test.runTest("output", "point_outputTestExternalGraphic.xml");
     }
 
     @Test
-    public void point_outputTestTTF()
-    {
+    public void point_outputTestTTF() {
         test.runTest("output", "point_outputTestTTF.xml");
     }
 
     @Test
-    public void point_outputTestWKT()
-    {
+    public void point_outputTestWKT() {
         test.runTest("output", "point_outputTestWKT.xml");
     }
 
     @Test
-    public void point_outputTestWindBarbs()
-    {
+    public void point_outputTestWindBarbs() {
         test.runTest("output", "point_outputTestWindbarbs.xml");
     }
 }

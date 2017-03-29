@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.Color;
@@ -38,14 +39,13 @@ import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigColour wraps a button GUI component displaying the current colour and an optional value/attribute/expression drop down,
+ * The Class FieldConfigColour wraps a button GUI component displaying the current 
+ * colour and an optional value/attribute/expression drop down,
  * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Clicking on the button displays the standard Java colour selection dialog.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */

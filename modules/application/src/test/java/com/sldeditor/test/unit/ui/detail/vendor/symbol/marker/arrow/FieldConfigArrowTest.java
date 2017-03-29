@@ -53,6 +53,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow;
 
 /**
  * The unit test for FieldConfigArrow.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow}
  *
  * @author Robert Ward (SCISYS)
@@ -60,14 +61,18 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow;
 public class FieldConfigArrowTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#isEnabled()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#internal_setEnabled(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -86,7 +91,9 @@ public class FieldConfigArrowTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigArrow field2 = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field2 = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -105,12 +112,15 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -121,22 +131,27 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#generateExpression()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        field.populateExpression((Double)null);
-        field.populateField((String)null);
+        field.populateExpression((Double) null);
+        field.populateField((String) null);
         assertNull(field.getStringValue());
 
         // Create ui
         field.createUI();
-        field.populateExpression((Double)null);
+        field.populateExpression((Double) null);
         String expectedValue = "string value";
         field.populateExpression(expectedValue);
         assertFalse(expectedValue.compareTo(field.getStringValue()) == 0);
@@ -149,12 +164,15 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.revertToDefaultValue();
 
@@ -164,37 +182,40 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#justSelected()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#justSelected()}.
      */
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.justSelected();
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigArrow extends FieldConfigArrow
-        {
+        class TestFieldConfigArrow extends FieldConfigArrow {
 
             public TestFieldConfigArrow(FieldConfigCommonData commonData) {
-                super(commonData, null,null,null);
+                super(commonData, null, null, null);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigArrow field = new TestFieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        TestFieldConfigArrow field = new TestFieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigArrow copy = (FieldConfigArrow) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -205,41 +226,52 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.attributeSelection("field");
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getVendorOption()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getVendorOption()}.
      */
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
+        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(),
+                field.getVendorOption());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getSymbolClass()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getSymbolClass()}.
      */
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testSetValue() {
@@ -250,7 +282,9 @@ public class FieldConfigArrowTest {
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setValue(null, null, null, null, null);
         field.setValue(null, fieldConfigManager, null, null, null);
@@ -261,28 +295,32 @@ public class FieldConfigArrowTest {
         field.setValue(null, null, null, null, marker1);
         field.setValue(null, fieldConfigManager, null, null, marker1);
 
-        Mark marker2 = styleBuilder.createMark("wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", styleBuilder.createFill(), styleBuilder.createStroke());
+        Mark marker2 = styleBuilder.createMark("wkt://POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))",
+                styleBuilder.createFill(), styleBuilder.createStroke());
 
         field.setValue(null, null, null, null, marker2);
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         field.setValue(null, fieldConfigManager, null, null, marker2);
@@ -295,10 +333,8 @@ public class FieldConfigArrowTest {
             e.printStackTrace();
         }
         try {
-            if((f != null) && (f.toURI() != null))
-            {
-                if(f.toURI().toURL() != null)
-                {
+            if ((f != null) && (f.toURI() != null)) {
+                if (f.toURI().toURL() != null) {
                     filename = f.toURI().toURL().toString();
                 }
             }
@@ -307,54 +343,61 @@ public class FieldConfigArrowTest {
         }
 
         // Try unsupported symbol
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic(filename, "png");
+        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
+                .createExternalGraphic(filename, "png");
         field.setValue(null, fieldConfigManager, null, null, externalGraphic);
 
-        if(f != null)
-        {
+        if (f != null) {
             f.delete();
         }
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
      */
     @Test
     public void testGetValue() {
-        StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getStringValue());
 
         GraphicPanelFieldManager fieldConfigManager = null;
         Expression symbolType = null;
-        List<GraphicalSymbol> actualValue = field.getValue(fieldConfigManager, symbolType, false, false);
+        List<GraphicalSymbol> actualValue = field.getValue(fieldConfigManager, symbolType, false,
+                false);
 
         assertTrue(actualValue.isEmpty());
 
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         String actualMarkerSymbol = "solid";
+        StyleBuilder styleBuilder = new StyleBuilder();
         symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         // Try without setting any fields
@@ -363,9 +406,14 @@ public class FieldConfigArrowTest {
         assertEquals(0, actualValue.size());
 
         // Try with symbol type of solid
-        ColourFieldConfig fillFieldConfig = new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.SYMBOL_TYPE);
-        ColourFieldConfig strokeFieldConfig = new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.SYMBOL_TYPE);
-        FieldConfigArrow field2 = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillFieldConfig,strokeFieldConfig,null);
+        ColourFieldConfig fillFieldConfig = new ColourFieldConfig(GroupIdEnum.FILLCOLOUR,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY, FieldIdEnum.SYMBOL_TYPE);
+        ColourFieldConfig strokeFieldConfig = new ColourFieldConfig(GroupIdEnum.STROKECOLOUR,
+                FieldIdEnum.STROKE_FILL_COLOUR, FieldIdEnum.POINT_STROKE_OPACITY,
+                FieldIdEnum.SYMBOL_TYPE);
+        FieldConfigArrow field2 = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillFieldConfig, strokeFieldConfig, null);
 
         actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
         assertNotNull(actualValue);
@@ -396,59 +444,73 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#populateSymbolList(java.lang.Class, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#populateSymbolList(java.lang.Class, java.util.List)}.
      */
     @Test
     public void testPopulateSymbolList() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getFill(null, null));
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getBasePanel()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getBasePanel()}.
      */
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getBasePanel());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#populateFieldOverrideMap(java.lang.Class, com.sldeditor.ui.detail.FieldEnableState)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#populateFieldOverrideMap(java.lang.Class, com.sldeditor.ui.detail.FieldEnableState)}.
      */
     @Test
     public void testPopulateFieldOverrideMap() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(4, field.getFieldList(null).size());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#accept(org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#accept(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertFalse(field.accept(null));
 
@@ -462,12 +524,15 @@ public class FieldConfigArrowTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.FieldConfigArrow#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
      */
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigArrow field = new FieldConfigArrow(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null,null,null);
+        FieldConfigArrow field = new FieldConfigArrow(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setUpdateSymbolListener(null);
     }

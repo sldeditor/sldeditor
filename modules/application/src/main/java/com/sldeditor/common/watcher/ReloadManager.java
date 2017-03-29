@@ -83,7 +83,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      *
      * @return single instance of ReloadManager
      */
-    public synchronized static ReloadManager getInstance() {
+    public static synchronized ReloadManager getInstance() {
         if (instance == null) {
             instance = new ReloadManager();
         }

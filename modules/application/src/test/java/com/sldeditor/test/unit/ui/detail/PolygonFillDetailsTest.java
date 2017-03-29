@@ -28,6 +28,7 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 
 /**
  * The unit test for PolygonFillDetailsTest.
+ * 
  * <p>{@link com.sldeditor.ui.detail.PolygonFillDetailsTest}
  *
  * @author Robert Ward (SCISYS)
@@ -80,7 +81,8 @@ public class PolygonFillDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
+        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager
+                .get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 

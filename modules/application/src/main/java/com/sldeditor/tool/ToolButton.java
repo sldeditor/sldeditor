@@ -29,7 +29,8 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ParseXML;
 
 /**
- * The Class ToolButton, overloads a JButton but allows the button text to set as a tooltip and the resource string as the button icon.
+ * The Class ToolButton, overloads a JButton but allows the button text to
+ * set as a tooltip and the resource string as the button icon.
  *
  * @author Robert Ward (SCISYS)
  */

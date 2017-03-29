@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import org.opengis.filter.expression.Expression;
@@ -31,12 +32,12 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.IntegerSpinner;
 
 /**
- * The Class FieldConfigInteger wraps a spinner GUI component and an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigInteger wraps a spinner GUI component and an
+ * optional value/attribute/expression drop down,
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */

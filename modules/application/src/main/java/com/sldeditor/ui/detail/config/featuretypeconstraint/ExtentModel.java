@@ -70,7 +70,8 @@ public class ExtentModel extends AbstractTableModel {
     private FeatureTypeConstraintModelUpdateInterface parentObj = null;
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
+            .getStyleFactory();
 
     /**
      * Instantiates a new feature type constraint model.
@@ -80,14 +81,21 @@ public class ExtentModel extends AbstractTableModel {
     public ExtentModel(FeatureTypeConstraintModelUpdateInterface parent) {
         this.parentObj = parent;
 
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.name"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.minX"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.minY"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.maxX"));
-        columnList.add(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.maxY"));
+        columnList.add(Localisation.getString(FieldConfigBase.class,
+                "FeatureTypeConstraintExtentModel.name"));
+        columnList.add(Localisation.getString(FieldConfigBase.class,
+                "FeatureTypeConstraintExtentModel.minX"));
+        columnList.add(Localisation.getString(FieldConfigBase.class,
+                "FeatureTypeConstraintExtentModel.minY"));
+        columnList.add(Localisation.getString(FieldConfigBase.class,
+                "FeatureTypeConstraintExtentModel.maxX"));
+        columnList.add(Localisation.getString(FieldConfigBase.class,
+                "FeatureTypeConstraintExtentModel.maxY"));
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -95,7 +103,9 @@ public class ExtentModel extends AbstractTableModel {
         return extentList.size();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -114,18 +124,18 @@ public class ExtentModel extends AbstractTableModel {
         return columnList.get(column);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if((rowIndex < 0) || (rowIndex >= getRowCount()))
-        {
+        if ((rowIndex < 0) || (rowIndex >= getRowCount())) {
             return null;
         }
 
-        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
-        {
+        if ((columnIndex < 0) || (columnIndex >= getColumnCount())) {
             return null;
         }
 
@@ -133,33 +143,27 @@ public class ExtentModel extends AbstractTableModel {
 
         String[] components = extent.getValue().split(" ");
 
-        if(components != null)
-        {
-            switch(columnIndex)
-            {
+        if (components != null) {
+            switch (columnIndex) {
             case COL_NAME:
                 return extent.getName();
             case COL_MINX:
-                if(components.length > 0)
-                {
+                if (components.length > 0) {
                     return components[0];
                 }
                 break;
             case COL_MINY:
-                if(components.length > 1)
-                {
+                if (components.length > 1) {
                     return components[1];
                 }
                 break;
             case COL_MAXX:
-                if(components.length > 2)
-                {
+                if (components.length > 2) {
                     return components[2];
                 }
                 break;
             case COL_MAXY:
-                if(components.length > 3)
-                {
+                if (components.length > 3) {
                     return components[3];
                 }
                 break;
@@ -181,8 +185,7 @@ public class ExtentModel extends AbstractTableModel {
 
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.extentUpdated();
         }
     }
@@ -194,22 +197,20 @@ public class ExtentModel extends AbstractTableModel {
      * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
-        if((minSelectionIndex < 0) || (maxSelectionIndex < minSelectionIndex) || (maxSelectionIndex >= extentList.size()))
-        {
+        if ((minSelectionIndex < 0) || (maxSelectionIndex < minSelectionIndex)
+                || (maxSelectionIndex >= extentList.size())) {
             return;
         }
 
         int index = maxSelectionIndex;
 
-        while(index >= minSelectionIndex)
-        {
+        while (index >= minSelectionIndex) {
             extentList.remove(index);
-            index --;
+            index--;
         }
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.extentUpdated();
         }
     }
@@ -235,28 +236,22 @@ public class ExtentModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if((rowIndex < 0) || (rowIndex >= getRowCount()))
-        {
+        if ((rowIndex < 0) || (rowIndex >= getRowCount())) {
             return;
         }
 
-        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
-        {
+        if ((columnIndex < 0) || (columnIndex >= getColumnCount())) {
             return;
         }
 
         Extent extent = extentList.get(rowIndex);
 
-        if(columnIndex == COL_NAME)
-        {
+        if (columnIndex == COL_NAME) {
             extent.setName((String) aValue);
-        }
-        else
-        {
+        } else {
             String[] components = extent.getValue().split(" ");
 
-            if(components.length != 4)
-            {
+            if (components.length != 4) {
                 components = new String[4];
                 components[0] = "0";
                 components[1] = "0";
@@ -266,11 +261,9 @@ public class ExtentModel extends AbstractTableModel {
 
             Double value = 0.0;
 
-            try
-            {
-                value = Double.valueOf((String)aValue);
-                switch(columnIndex)
-                {
+            try {
+                value = Double.valueOf((String) aValue);
+                switch (columnIndex) {
                 case COL_MINX:
                     components[0] = value.toString();
                     break;
@@ -286,20 +279,18 @@ public class ExtentModel extends AbstractTableModel {
                 default:
                     break;
                 }
-            }
-            catch(NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 // Ignore
             }
 
-            String encodedExtent = String.format("%s %s %s %s", components[0], components[1], components[2], components[3]);
+            String encodedExtent = String.format("%s %s %s %s", components[0], components[1],
+                    components[2], components[3]);
 
             extent.setValue(encodedExtent);
         }
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.extentUpdated();
         }
     }
@@ -312,10 +303,8 @@ public class ExtentModel extends AbstractTableModel {
     public void populate(Extent[] extentArray) {
         this.extentList.clear();
 
-        if(extentArray != null)
-        {
-            for(Extent extent : extentArray)
-            {
+        if (extentArray != null) {
+            for (Extent extent : extentArray) {
                 Extent newExtent = styleFactory.createExtent(extent.getName(), extent.getValue());
 
                 this.extentList.add(newExtent);
@@ -339,22 +328,19 @@ public class ExtentModel extends AbstractTableModel {
      * @param ftc the feature type constraint to update
      */
     public void updateExtent(FeatureTypeConstraint ftc) {
-        if(ftc == null)
-        {
+        if (ftc == null) {
             return;
         }
 
-        if(!extentList.isEmpty())
-        {
+        if (!extentList.isEmpty()) {
             Extent[] extentArray = new Extent[extentList.size()];
             int index = 0;
-            for(Extent extent : extentList)
-            {
+            for (Extent extent : extentList) {
                 Extent newExtent = styleFactory.createExtent(extent.getName(), extent.getValue());
 
                 extentArray[index] = newExtent;
 
-                index ++;
+                index++;
             }
 
             ftc.setExtents(extentArray);

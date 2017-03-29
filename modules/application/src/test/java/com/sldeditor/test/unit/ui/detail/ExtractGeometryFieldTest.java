@@ -35,6 +35,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for ExtractGeometryField.
+ * 
  * <p>{@link com.sldeditor.ui.detail.ExtractGeometryField}
  *
  * @author Robert Ward (SCISYS)
@@ -52,7 +53,8 @@ public class ExtractGeometryFieldTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(Geometry.class);
 
-        FieldConfigGeometry geometryField = new FieldConfigGeometry(new FieldConfigCommonData(Geometry.class, fieldId, "label", true), "button");
+        FieldConfigGeometry geometryField = new FieldConfigGeometry(
+                new FieldConfigCommonData(Geometry.class, fieldId, "label", true), "button");
         geometryField.createUI();
         fieldConfigManager.add(fieldId, geometryField);
 

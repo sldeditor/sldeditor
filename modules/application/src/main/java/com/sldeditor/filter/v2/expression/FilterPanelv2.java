@@ -544,6 +544,7 @@ public class FilterPanelv2 extends JDialog
             try {
                 filterString = CQL.toCQL(overallFilter);
             } catch (Exception e) {
+                // Do nothing
             }
         }
         return filterString;

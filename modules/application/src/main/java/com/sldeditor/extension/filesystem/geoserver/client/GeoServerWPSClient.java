@@ -64,7 +64,8 @@ import net.opengis.wps10.impl.ProcessBriefTypeImpl;
 public class GeoServerWPSClient implements GeoServerWPSClientInterface {
 
     /** The Constant WPS_REQUEST_GET_CAPABILITIES. */
-    private static final String WPS_REQUEST_GET_CAPABILITIES = "/ows?service=WPS&request=GetCapabilities";
+    private static final String WPS_REQUEST_GET_CAPABILITIES =
+            "/ows?service=WPS&request=GetCapabilities";
 
     /** The vector geometry type array. */
     private static String[] vectorGeometryTypeArray = { "text/xml; subtype=wfs-collection/1.0",
@@ -121,9 +122,12 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                 ProcessBriefTypeImpl process = (ProcessBriefTypeImpl) processObj;
                 String functionIdentifier = process.getIdentifier().getValue();
 
-                // create a WebProcessingService as shown above, then do a full describeprocess on my process
+                // create a WebProcessingService as shown above,
+                // then do a full describeprocess on my process
                 DescribeProcessRequest descRequest = wps.createDescribeProcessRequest();
-                descRequest.setIdentifier(functionIdentifier); // describe the double addition process
+                
+                // describe the double addition process
+                descRequest.setIdentifier(functionIdentifier); 
 
                 // send the request and get the ProcessDescriptionType bean to create a WPSFactory
                 DescribeProcessResponse descResponse = wps.issueRequest(descRequest);

@@ -39,10 +39,9 @@ import com.sldeditor.filter.v2.function.logic.Not;
 import com.sldeditor.filter.v2.function.logic.Or;
 
 /**
- * Unit test for the following classes:
- * <p>{@link com.sldeditor.filter.v2.function.logic.And}
- * <p>{@link com.sldeditor.filter.v2.function.logic.Or}
- * <p>{@link com.sldeditor.filter.v2.function.logic.Not}
+ * Unit test for the following classes: {@link com.sldeditor.filter.v2.function.logic.And}
+ * {@link com.sldeditor.filter.v2.function.logic.Or}
+ * {@link com.sldeditor.filter.v2.function.logic.Not}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -50,7 +49,7 @@ import com.sldeditor.filter.v2.function.logic.Or;
 public class LogicTests {
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.logic.And}.
+     * {@link com.sldeditor.filter.v2.function.logic.And}.
      */
     @Test
     public void testAnd() {
@@ -58,7 +57,7 @@ public class LogicTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.logic.Or}.
+     * {@link com.sldeditor.filter.v2.function.logic.Or}.
      */
     @Test
     public void testOr() {
@@ -66,7 +65,7 @@ public class LogicTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.logic.Not}.
+     * {@link com.sldeditor.filter.v2.function.logic.Not}.
      */
     @Test
     public void testNot() {
@@ -97,8 +96,7 @@ public class LogicTests {
 
         filter = (LogicFilterImpl) objUnderTest.createLogicFilter(filterList);
 
-        if(noOFExpectedFilters > 1)
-        {
+        if (noOFExpectedFilters > 1) {
             assertEquals(0, filter.getChildren().size());
             try {
                 filterList.add(CQL.toFilter("filter2 >= 5"));

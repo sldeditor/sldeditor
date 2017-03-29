@@ -32,6 +32,7 @@ import com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState;
 
 /**
  * The unit test for SLDTreeSymbolizerButtonState.
+ * 
  * <p>{@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState}
  *
  * @author Robert Ward (SCISYS)

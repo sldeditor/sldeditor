@@ -139,21 +139,6 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     }
 
     /**
-     * Gets the field data manager.
-     *
-     * @return the field data manager
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
-     */
-    @Override
-    public GraphicPanelFieldManager getFieldDataManager() {
-        return this.fieldConfigManager;
-    }
-
-    /**
      * Populate.
      *
      * @param textSymbolizer the text symbolizer
@@ -170,6 +155,46 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
         for (FieldIdEnum key : fieldMap.keySet()) {
             internalPopulate(options, key, fieldMap.get(key));
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /**
+     * Populate.
+     *
+     * @param polygonSymbolizer the polygon symbolizer
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
+     */
+    @Override
+    public void populate(PolygonSymbolizer polygonSymbolizer) {
+        // Do nothing
+    }
+
+    /**
+     * Gets the field data manager.
+     *
+     * @return the field data manager
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
+     */
+    @Override
+    public GraphicPanelFieldManager getFieldDataManager() {
+        return this.fieldConfigManager;
     }
 
     /**
@@ -265,6 +290,30 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
         } else {
             setDefaultValue(fieldId);
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /**
+     * Update symbol.
+     *
+     * @param polygonSymbolizer the polygon symbolizer
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
+     */
+    @Override
+    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
     }
 
     /**
@@ -443,35 +492,6 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
         return true;
     }
 
-    /**
-     * Update symbol.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
-     */
-    @Override
-    public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
-    }
-
-    /**
-     * Populate.
-     *
-     * @param polygonSymbolizer the polygon symbolizer
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
-     */
-    @Override
-    public void populate(PolygonSymbolizer polygonSymbolizer) {
-        // Do nothing
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -480,26 +500,6 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     @Override
     public void preLoadSymbol() {
         setAllDefaultValues();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
-     */
-    @Override
-    public void populate(RasterSymbolizer rasterSymbolizer) {
-        // Do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
-     */
-    @Override
-    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
-        // Do nothing
     }
 
     /*

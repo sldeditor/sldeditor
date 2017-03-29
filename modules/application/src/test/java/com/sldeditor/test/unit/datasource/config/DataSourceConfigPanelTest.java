@@ -27,6 +27,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
  * Unit test for DataSourceConfigPanel class.
+ * 
  * <p>{@link com.sldeditor.datasource.config.DataSourceConfigPanel}
  * 
  * @author Robert Ward (SCISYS)
@@ -34,14 +35,12 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
  */
 public class DataSourceConfigPanelTest {
 
-    class TestDataSourceConfigPanel extends DataSourceConfigPanel
-    {
+    class TestDataSourceConfigPanel extends DataSourceConfigPanel {
 
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
-        
-        public TestDataSourceConfigPanel()
-        {
+
+        public TestDataSourceConfigPanel() {
             super();
         }
 
@@ -61,13 +60,15 @@ public class DataSourceConfigPanelTest {
             super.cancelData();
         }
     }
+
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceConfigPanel#DataSourceConfigPanel()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.config.DataSourceConfigPanel#DataSourceConfigPanel()}.
      */
     @Test
     public void testDataSourceConfigPanel() {
         TestDataSourceConfigPanel testObj = new TestDataSourceConfigPanel();
-        
+
         testObj.dataSourceAboutToUnloaded(null);
         testObj.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
         testObj.testAddNewField();

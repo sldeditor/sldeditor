@@ -40,6 +40,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for LineSymbolizerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.LineSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)

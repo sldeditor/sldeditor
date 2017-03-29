@@ -31,6 +31,7 @@ import com.sldeditor.ui.tree.SLDTreeItemWrapper;
 
 /**
  * The unit test for SLDTreeItemWrapper.
+ * 
  * <p>{@link com.sldeditor.ui.tree.SLDTreeItemWrapper}
  *
  * @author Robert Ward (SCISYS)
@@ -38,7 +39,8 @@ import com.sldeditor.ui.tree.SLDTreeItemWrapper;
 public class SLDTreeItemWrapperTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeItemWrapper#SLDTreeItemWrapper(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTreeItemWrapper#SLDTreeItemWrapper(java.lang.Object)}.
      */
     @Test
     public void testSLDTreeItemWrapper() {
@@ -49,9 +51,12 @@ public class SLDTreeItemWrapperTest {
         assertTrue(testObj1.equals(testObj1));
         assertTrue(testObj1.equals(testObj2));
 
-        // Try with 2 different text symbolizers instances but the same contents, hash codes should be different
-        String testObj3 = SLDTreeItemWrapper.generateKey(DefaultSymbols.createDefaultTextSymbolizer());
-        String testObj4 = SLDTreeItemWrapper.generateKey(DefaultSymbols.createDefaultTextSymbolizer());
+        // Try with 2 different text symbolizers instances but the same contents, hash codes should
+        // be different
+        String testObj3 = SLDTreeItemWrapper
+                .generateKey(DefaultSymbols.createDefaultTextSymbolizer());
+        String testObj4 = SLDTreeItemWrapper
+                .generateKey(DefaultSymbols.createDefaultTextSymbolizer());
 
         assertTrue(testObj3.equals(testObj3));
         assertFalse(testObj3.equals(testObj4));

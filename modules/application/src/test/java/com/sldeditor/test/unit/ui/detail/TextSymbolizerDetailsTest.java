@@ -40,6 +40,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for TextSymbolizerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.TextSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)

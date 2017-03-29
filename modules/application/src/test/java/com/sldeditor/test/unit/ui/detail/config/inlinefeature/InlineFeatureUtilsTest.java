@@ -43,92 +43,58 @@ import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 
 /**
  * The unit test for InlineFeatureUtils.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils}
  *
  * @author Robert Ward (SCISYS)
  */
 public class InlineFeatureUtilsTest {
 
-    private static String testInline1a = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"+
-            "<sld:UserLayer>" +
-            "<sld:Name>Inline</sld:Name>" +
-            "<sld:InlineFeature>" +
-            "   <FeatureCollection>" +
-            "      <gml:featureMember>" +
-            "        <feature>" +
-            "          <geometryProperty>" +
-            "            <gml:Polygon>" +
-            "               <gml:outerBoundaryIs>" +
-            "                  <gml:LinearRing>" +
-            "                     <gml:coordinates>" +
-            "     -127.0,51.0 -110.0,51.0 -110.0,41.0 -127.0,41.0 -127.0,51.0" +
-            "                     </gml:coordinates>" +
-            "                  </gml:LinearRing>" +
-            "               </gml:outerBoundaryIs>" +
-            "            </gml:Polygon>" +
-            "          </geometryProperty>" +
-            "          <title>Pacific NW </title>" +
-            "        </feature>" +
-            "      </gml:featureMember>" +
-            "   </FeatureCollection>" +
-            "</sld:InlineFeature>" +
-            "</sld:UserLayer>" + 
-            "</sld:StyledLayerDescriptor>";
+    private static String testInline1a = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"
+            + "<sld:UserLayer>" + "<sld:Name>Inline</sld:Name>" + "<sld:InlineFeature>"
+            + "   <FeatureCollection>" + "      <gml:featureMember>" + "        <feature>"
+            + "          <geometryProperty>" + "            <gml:Polygon>"
+            + "               <gml:outerBoundaryIs>" + "                  <gml:LinearRing>"
+            + "                     <gml:coordinates>"
+            + "     -127.0,51.0 -110.0,51.0 -110.0,41.0 -127.0,41.0 -127.0,51.0"
+            + "                     </gml:coordinates>" + "                  </gml:LinearRing>"
+            + "               </gml:outerBoundaryIs>" + "            </gml:Polygon>"
+            + "          </geometryProperty>" + "          <title>Pacific NW </title>"
+            + "        </feature>" + "      </gml:featureMember>" + "   </FeatureCollection>"
+            + "</sld:InlineFeature>" + "</sld:UserLayer>" + "</sld:StyledLayerDescriptor>";
 
-    private static String testInline1b = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"+
-            "<sld:UserLayer>" +
-            "<sld:Name>Inline</sld:Name>" +
-            "<sld:InlineFeature>" +
-            "   <FeatureCollection>" +
-            "      <gml:featureMember>" +
-            "         <polygonProperty>" +
-            "         <gml:Polygon>" +
-            "            <gml:outerBoundaryIs>" +
-            "               <gml:LinearRing>" +
-            "                  <gml:coordinates>240167.78347885,869905.5610437" +
-            "                     249317.75340551,869905.5610437 249317.75340551,879026.25071433" +
-            "                     240167.78347885,879026.25071433" +
-            "                  240167.78347885,869905.5610437</gml:coordinates>" +
-            "               </gml:LinearRing>" +
-            "            </gml:outerBoundaryIs>" +
-            "         </gml:Polygon>" +
-            "         </polygonProperty>" +
-            "      </gml:featureMember>" +
-            "   </FeatureCollection>" +
-            "</sld:InlineFeature>" +
-            "</sld:UserLayer>" + 
-            "</sld:StyledLayerDescriptor>";
+    private static String testInline1b = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"
+            + "<sld:UserLayer>" + "<sld:Name>Inline</sld:Name>" + "<sld:InlineFeature>"
+            + "   <FeatureCollection>" + "      <gml:featureMember>" + "         <polygonProperty>"
+            + "         <gml:Polygon>" + "            <gml:outerBoundaryIs>"
+            + "               <gml:LinearRing>"
+            + "                  <gml:coordinates>240167.78347885,869905.5610437"
+            + "                     249317.75340551,869905.5610437 249317.75340551,879026.25071433"
+            + "                     240167.78347885,879026.25071433"
+            + "                  240167.78347885,869905.5610437</gml:coordinates>"
+            + "               </gml:LinearRing>" + "            </gml:outerBoundaryIs>"
+            + "         </gml:Polygon>" + "         </polygonProperty>"
+            + "      </gml:featureMember>" + "   </FeatureCollection>" + "</sld:InlineFeature>"
+            + "</sld:UserLayer>" + "</sld:StyledLayerDescriptor>";
 
-    private static String testInline2 = "   <FeatureCollection>" +
-            "      <gml:featureMember>" +
-            "        <feature>" +
-            "          <geometryProperty>" +
-            "            <gml:Polygon>" +
-            "               <gml:outerBoundaryIs>" +
-            "                  <gml:LinearRing>" +
-            "                     <gml:coordinates>" +
-            "     -127.0,51.0 -110.0,51.0 -110.0,41.0 -127.0,41.0 -127.0,51.0" +
-            "                     </gml:coordinates>" +
-            "                  </gml:LinearRing>" +
-            "               </gml:outerBoundaryIs>" +
-            "            </gml:Polygon>" +
-            "          </geometryProperty>" +
-            "          <title>Pacific NW </title>" +
-            "        </feature>" +
-            "      </gml:featureMember>" +
-            "   </FeatureCollection>";
+    private static String testInline2 = "   <FeatureCollection>" + "      <gml:featureMember>"
+            + "        <feature>" + "          <geometryProperty>" + "            <gml:Polygon>"
+            + "               <gml:outerBoundaryIs>" + "                  <gml:LinearRing>"
+            + "                     <gml:coordinates>"
+            + "     -127.0,51.0 -110.0,51.0 -110.0,41.0 -127.0,41.0 -127.0,51.0"
+            + "                     </gml:coordinates>" + "                  </gml:LinearRing>"
+            + "               </gml:outerBoundaryIs>" + "            </gml:Polygon>"
+            + "          </geometryProperty>" + "          <title>Pacific NW </title>"
+            + "        </feature>" + "      </gml:featureMember>" + "   </FeatureCollection>";
 
-    private static String testNoInline = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"+
-            "<sld:UserLayer>" +
-            "<sld:Name>Inline</sld:Name>" +
-            "</sld:UserLayer>" + 
-            "<sld:NamedLayer>" +
-            "<sld:Name>NamedLayer</sld:Name>" +
-            "</sld:NamedLayer>" + 
-            "</sld:StyledLayerDescriptor>";
+    private static String testNoInline = "<sld:StyledLayerDescriptor xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:sld=\"http://www.opengis.net/sld\" version=\"1.0.0\">"
+            + "<sld:UserLayer>" + "<sld:Name>Inline</sld:Name>" + "</sld:UserLayer>"
+            + "<sld:NamedLayer>" + "<sld:Name>NamedLayer</sld:Name>" + "</sld:NamedLayer>"
+            + "</sld:StyledLayerDescriptor>";
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#getInlineFeaturesText(org.geotools.styling.UserLayer)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#getInlineFeaturesText(org.geotools.styling.UserLayer)}.
      */
     @Test
     public void testGetInlineFeaturesText() {
@@ -157,7 +123,8 @@ public class InlineFeatureUtilsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#setInlineFeatures(org.geotools.styling.UserLayer, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#setInlineFeatures(org.geotools.styling.UserLayer, java.lang.String)}.
      */
     @Test
     public void testSetInlineFeatures() {
@@ -174,7 +141,8 @@ public class InlineFeatureUtilsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#containsInLineFeatures(org.geotools.styling.StyledLayerDescriptor)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#containsInLineFeatures(org.geotools.styling.StyledLayerDescriptor)}.
      */
     @Test
     public void testContainsInLineFeatures() {
@@ -192,7 +160,8 @@ public class InlineFeatureUtilsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#extractUserLayers(org.geotools.styling.StyledLayerDescriptor)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#extractUserLayers(org.geotools.styling.StyledLayerDescriptor)}.
      */
     @Test
     public void testExtractUserLayers() {
@@ -210,7 +179,8 @@ public class InlineFeatureUtilsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#determineGeometryType(org.opengis.feature.type.GeometryDescriptor, org.geotools.data.simple.SimpleFeatureCollection)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#determineGeometryType(org.opengis.feature.type.GeometryDescriptor, org.geotools.data.simple.SimpleFeatureCollection)}.
      */
     @Test
     public void testDetermineGeometryType() {
@@ -220,32 +190,41 @@ public class InlineFeatureUtilsTest {
 
         UserLayer userLayer1 = (UserLayer) sld.layers().get(0);
 
-        GeometryDescriptor geometryDescriptor = userLayer1.getInlineFeatureType().getGeometryDescriptor();
+        GeometryDescriptor geometryDescriptor = userLayer1.getInlineFeatureType()
+                .getGeometryDescriptor();
         String typeName = userLayer1.getInlineFeatureType().getTypeName();
         SimpleFeatureCollection simpleFeatureCollection = null;
         try {
-            simpleFeatureCollection = userLayer1.getInlineFeatureDatastore().getFeatureSource(typeName).getFeatures();
+            simpleFeatureCollection = userLayer1.getInlineFeatureDatastore()
+                    .getFeatureSource(typeName).getFeatures();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        assertEquals(GeometryTypeEnum.UNKNOWN, InlineFeatureUtils.determineGeometryType(null, null));
-        assertEquals(GeometryTypeEnum.UNKNOWN, InlineFeatureUtils.determineGeometryType(geometryDescriptor, null));
+        assertEquals(GeometryTypeEnum.UNKNOWN,
+                InlineFeatureUtils.determineGeometryType(null, null));
+        assertEquals(GeometryTypeEnum.UNKNOWN,
+                InlineFeatureUtils.determineGeometryType(geometryDescriptor, null));
 
-        assertEquals(GeometryTypeEnum.POLYGON, InlineFeatureUtils.determineGeometryType(geometryDescriptor, simpleFeatureCollection));
+        assertEquals(GeometryTypeEnum.POLYGON, InlineFeatureUtils
+                .determineGeometryType(geometryDescriptor, simpleFeatureCollection));
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#combineGeometryType(List<GeometryTypeEnum>)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#combineGeometryType(List<GeometryTypeEnum>)}.
      */
     @Test
     public void testCombineGeometryType() {
         assertEquals(GeometryTypeEnum.UNKNOWN, InlineFeatureUtils.combineGeometryType(null));
-        
-        List<GeometryTypeEnum> geometryFeatures = Arrays.asList(GeometryTypeEnum.POINT);
-        assertEquals(GeometryTypeEnum.POINT, InlineFeatureUtils.combineGeometryType(geometryFeatures));
 
-        geometryFeatures = Arrays.asList(GeometryTypeEnum.LINE, GeometryTypeEnum.POINT, GeometryTypeEnum.POLYGON);
-        assertEquals(GeometryTypeEnum.LINE, InlineFeatureUtils.combineGeometryType(geometryFeatures));
+        List<GeometryTypeEnum> geometryFeatures = Arrays.asList(GeometryTypeEnum.POINT);
+        assertEquals(GeometryTypeEnum.POINT,
+                InlineFeatureUtils.combineGeometryType(geometryFeatures));
+
+        geometryFeatures = Arrays.asList(GeometryTypeEnum.LINE, GeometryTypeEnum.POINT,
+                GeometryTypeEnum.POLYGON);
+        assertEquals(GeometryTypeEnum.LINE,
+                InlineFeatureUtils.combineGeometryType(geometryFeatures));
     }
 }

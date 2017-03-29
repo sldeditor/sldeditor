@@ -29,6 +29,7 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnector;
 
 /**
  * Unit test for DatabaseConnector class.
+ * 
  * <p>{@link com.sldeditor.tool.dbconnectionlist.DatabaseConnector}
  * 
  * @author Robert Ward (SCISYS)

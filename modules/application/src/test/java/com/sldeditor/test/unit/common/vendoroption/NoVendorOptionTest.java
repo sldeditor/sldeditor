@@ -16,9 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.vendoroption;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -26,6 +28,7 @@ import com.sldeditor.common.vendoroption.NoVendorOption;
 
 /**
  * Unit test for NoVendorOption.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.NoVendorOption}
  * 
  * @author Robert Ward (SCISYS)
@@ -39,7 +42,7 @@ public class NoVendorOptionTest {
     @Test
     public void testGetName() {
         NoVendorOption vendorOption = new NoVendorOption();
-        
+
         assertEquals("Strict SLD", vendorOption.getName());
     }
 
@@ -49,7 +52,7 @@ public class NoVendorOptionTest {
     @Test
     public void testGetVersionStringList() {
         NoVendorOption vendorOption = new NoVendorOption();
-        
+
         assertNull(vendorOption.getVersionStringList());
     }
 

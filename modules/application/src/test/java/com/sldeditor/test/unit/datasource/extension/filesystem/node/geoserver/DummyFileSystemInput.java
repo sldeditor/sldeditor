@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 
 import java.awt.event.MouseEvent;
@@ -34,14 +36,11 @@ import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 
 /**
- * @author Robert Ward (SCISYS)
- *
- */
-/**
  * The Class DummyFileSystemInput.
+ *
+ * @author Robert Ward (SCISYS)
  */
-public class DummyFileSystemInput implements FileSystemInterface
-{
+public class DummyFileSystemInput implements FileSystemInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;

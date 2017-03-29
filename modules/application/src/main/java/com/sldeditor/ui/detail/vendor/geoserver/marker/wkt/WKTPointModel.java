@@ -149,13 +149,6 @@ public class WKTPointModel extends AbstractTableModel {
     }
 
     /**
-     * Sets the value at.
-     *
-     * @param value the value
-     * @param row the row
-     * @param col the col
-     */
-    /*
      * (non-Javadoc)
      * 
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)

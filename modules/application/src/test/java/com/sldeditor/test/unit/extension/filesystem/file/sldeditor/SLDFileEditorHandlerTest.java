@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.file.sldeditor;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +43,7 @@ import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 
 /**
  * Unit test for SLDEditorFileHandler class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler}
  * 
  * @author Robert Ward (SCISYS)
@@ -109,8 +111,10 @@ public class SLDFileEditorHandlerTest {
 
             assertEquals(1, actualSldDataList.size());
 
-            FileTreeNode editorFileTreeNode = new FileTreeNode(sldEditorFile.getParentFile(), sldEditorFile.getName());
-            List<SLDDataInterface> actualSldDataList2 = editorFileHandler2.getSLDContents(editorFileTreeNode);
+            FileTreeNode editorFileTreeNode = new FileTreeNode(sldEditorFile.getParentFile(),
+                    sldEditorFile.getName());
+            List<SLDDataInterface> actualSldDataList2 = editorFileHandler2
+                    .getSLDContents(editorFileTreeNode);
             assertEquals(1, actualSldDataList2.size());
 
             sldEditorFile.delete();

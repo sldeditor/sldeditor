@@ -27,11 +27,11 @@ import org.geotools.styling.ColorMapEntry;
 import com.sldeditor.common.xml.ui.XMLColourMapEntry;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Class EncodeColourMap.
  *
+ * @author Robert Ward (SCISYS)
  */
 public class EncodeColourMap {
-
 
     /** The Constant SEPARATOR. */
     private static final String SEPARATOR = ";";
@@ -49,8 +49,7 @@ public class EncodeColourMap {
 
         StringBuilder sb = new StringBuilder();
 
-        for(ColorMapEntry entry : colourMap.getColorMapEntries())
-        {
+        for (ColorMapEntry entry : colourMap.getColorMapEntries()) {
             sb.append((entry.getLabel() == null) ? "" : entry.getLabel());
             sb.append(SEPARATOR);
             sb.append(entry.getColor());
@@ -73,8 +72,7 @@ public class EncodeColourMap {
     public static String encode(List<XMLColourMapEntry> colourMap) {
         StringBuilder sb = new StringBuilder();
 
-        for(XMLColourMapEntry entry : colourMap)
-        {
+        for (XMLColourMapEntry entry : colourMap) {
             sb.append((entry.getLabel() == null) ? "" : entry.getLabel());
             sb.append(SEPARATOR);
             sb.append(entry.getColour());

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import java.util.ArrayList;
@@ -39,46 +40,40 @@ import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 public class DummyInternalSLDFile2 implements SLDEditorFileInterface {
 
     private SLDDataInterface sldData = null;
-    
+
     private StyledLayerDescriptor sld = null;
-    
+
     private List<String> expectedFieldList = new ArrayList<String>();
-    
+
     private List<String> expectedGeometryFieldList = new ArrayList<String>();
 
-    public DummyInternalSLDFile2()
-    {
-        String sldContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-        "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">" +
-        "  <sld:NamedLayer>" +
-        "    <sld:Name>Simple polygon</sld:Name>" +
-        "    <sld:UserStyle>" +
-        "      <sld:Name>Default Styler</sld:Name>" +
-        "      <sld:Title>SLD Cook Book: Simple polygon</sld:Title>" +
-        "      <sld:FeatureTypeStyle>" +
-        "        <sld:Name>name</sld:Name>" +
-        "        <sld:Rule>" +
-        "          <sld:PolygonSymbolizer>" +
-        "            <sld:Geometry>" +
-        "              <ogc:PropertyName>qwerty</ogc:PropertyName>" +
-        "            </sld:Geometry>" +
-        "            <sld:Fill>" +
-        "              <sld:CssParameter name=\"fill\">#000080</sld:CssParameter>" +
-        "            </sld:Fill>" +
-        "          </sld:PolygonSymbolizer>" +
-        "        </sld:Rule>" +
-        "      </sld:FeatureTypeStyle>" +
-        "    </sld:UserStyle>" +
-        "  </sld:NamedLayer>" +
-        "</sld:StyledLayerDescriptor>";
+    /**
+     * Instantiates a new dummy internal SLD file 2.
+     */
+    public DummyInternalSLDFile2() {
+        String sldContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                + "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">"
+                + "  <sld:NamedLayer>" + "    <sld:Name>Simple polygon</sld:Name>"
+                + "    <sld:UserStyle>" + "      <sld:Name>Default Styler</sld:Name>"
+                + "      <sld:Title>SLD Cook Book: Simple polygon</sld:Title>"
+                + "      <sld:FeatureTypeStyle>" + "        <sld:Name>name</sld:Name>"
+                + "        <sld:Rule>" + "          <sld:PolygonSymbolizer>"
+                + "            <sld:Geometry>"
+                + "              <ogc:PropertyName>qwerty</ogc:PropertyName>"
+                + "            </sld:Geometry>" + "            <sld:Fill>"
+                + "              <sld:CssParameter name=\"fill\">#000080</sld:CssParameter>"
+                + "            </sld:Fill>" + "          </sld:PolygonSymbolizer>"
+                + "        </sld:Rule>" + "      </sld:FeatureTypeStyle>" + "    </sld:UserStyle>"
+                + "  </sld:NamedLayer>" + "</sld:StyledLayerDescriptor>";
 
         sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
         sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
-        
+
         sld = SLDUtils.createSLDFromString(sldData);
-        
+
         expectedGeometryFieldList.add("qwerty");
     }
+
     /**
      * Gets the SLD data.
      *
@@ -109,8 +104,7 @@ public class DummyInternalSLDFile2 implements SLDEditorFileInterface {
         return sld;
     }
 
-    public List<String> getExpectedFieldList()
-    {
+    public List<String> getExpectedFieldList() {
         return expectedFieldList;
     }
 

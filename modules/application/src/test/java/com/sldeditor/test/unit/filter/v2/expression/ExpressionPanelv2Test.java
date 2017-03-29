@@ -19,7 +19,8 @@
 
 package com.sldeditor.test.unit.filter.v2.expression;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -33,8 +34,8 @@ import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 
 /**
  * Unit test for ExpressionPanelv2 class.
- * <p>
- * {@link com.sldeditor.filter.v2.expression.ExpressionPanelv2}
+ * 
+ * <p>{@link com.sldeditor.filter.v2.expression.ExpressionPanelv2}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -47,7 +48,9 @@ public class ExpressionPanelv2Test {
         private static final long serialVersionUID = 1L;
 
         /**
-         * @param vendorOptionList
+         * Instantiates a new test expression panelv 2.
+         *
+         * @param vendorOptionList the vendor option list
          */
         public TestExpressionPanelv2(List<VersionData> vendorOptionList) {
             super(vendorOptionList);
@@ -67,7 +70,6 @@ public class ExpressionPanelv2Test {
      */
     @Test
     public void testExpressionPanelv2() {
-        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
         TestExpressionPanelv2 testObj = new TestExpressionPanelv2(null);
 
@@ -78,6 +80,7 @@ public class ExpressionPanelv2Test {
 
         testObj.testShowExpressionDialog(null, null);
 
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
         Expression expectedExpression = ff.add(ff.property("field"), ff.literal(42));
         testObj.populate(expectedExpression);
         testObj.testShowExpressionDialog(Integer.class, expectedExpression);

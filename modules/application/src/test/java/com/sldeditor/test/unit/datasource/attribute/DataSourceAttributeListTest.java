@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.attribute;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +31,7 @@ import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 
 /**
  * Unit test for DataSourceAttributeList class.
+ * 
  * <p>{@link com.sldeditor.datasource.attribute.DataSourceAttributeList}
  * 
  * @author Robert Ward (SCISYS)
@@ -38,18 +40,21 @@ import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 public class DataSourceAttributeListTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.DataSourceAttributeList#DataSourceAttributeList()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.attribute.DataSourceAttributeList#DataSourceAttributeList()}.
      */
     @Test
     public void testDataSourceAttributeList() {
-        DataSourceAttributeList dsaList = new DataSourceAttributeList();
 
-        List<DataSourceAttributeData> expectedAttributeList = new ArrayList<DataSourceAttributeData>();
-        expectedAttributeList.add(new DataSourceAttributeData("field 1", String.class, "test value"));
+        List<DataSourceAttributeData> expectedAttributeList = 
+                new ArrayList<DataSourceAttributeData>();
+        expectedAttributeList
+                .add(new DataSourceAttributeData("field 1", String.class, "test value"));
         expectedAttributeList.add(new DataSourceAttributeData("field 2", Double.class, 42.0));
         expectedAttributeList.add(new DataSourceAttributeData("field 3", Integer.class, 22));
         expectedAttributeList.add(new DataSourceAttributeData("field 4", Long.class, 454));
 
+        DataSourceAttributeList dsaList = new DataSourceAttributeList();
         dsaList.setData(expectedAttributeList);
 
         assertEquals(expectedAttributeList, dsaList.getData());

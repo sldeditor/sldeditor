@@ -29,6 +29,7 @@ import com.sldeditor.ui.detail.ColourFieldConfig;
 
 /**
  * The unit test for ColourFieldConfig.
+ * 
  * <p>{@link com.sldeditor.ui.detail.ColourFieldConfig}
  *
  * @author Robert Ward (SCISYS)
@@ -47,7 +48,8 @@ public class ColourFieldConfigTest {
         FieldIdEnum strokeFillColour = FieldIdEnum.STROKE_FILL_COLOUR;
         FieldIdEnum strokeFillOpacity = FieldIdEnum.OVERALL_OPACITY;
         FieldIdEnum strokeFillWidth = FieldIdEnum.STROKE_FILL_WIDTH;
-        ColourFieldConfig config = new ColourFieldConfig(groupId, strokeFillColour, strokeFillOpacity, strokeFillWidth);
+        ColourFieldConfig config = new ColourFieldConfig(groupId, strokeFillColour,
+                strokeFillOpacity, strokeFillWidth);
 
         assertEquals(groupId, config.getGroup());
         assertEquals(strokeFillColour, config.getColour());

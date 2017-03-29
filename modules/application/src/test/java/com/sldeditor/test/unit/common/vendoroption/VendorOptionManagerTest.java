@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.vendoroption;
 
 import static org.junit.Assert.assertEquals;
@@ -56,8 +57,8 @@ import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
  * Unit test for VendorOptionManager.
- * <p>
- * {@link com.sldeditor.common.vendoroption.VendorOptionManager}
+ * 
+ * <p>{@link com.sldeditor.common.vendoroption.VendorOptionManager}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -205,10 +206,6 @@ public class VendorOptionManagerTest {
         // Now try with some real values
         VersionData noVO = VersionData
                 .getDecodedString("com.sldeditor.common.vendoroption.NoVendorOption@Latest");
-        VersionData geoServerVOMin = VersionData
-                .getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.4.2");
-        VersionData geoServerVOMax = VersionData
-                .getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.9.0");
 
         VendorOptionVersion noVOV = new VendorOptionVersion(NoVendorOption.class, noVO);
         actualValue = VendorOptionManager.getInstance().getTitle(noVOV);
@@ -219,6 +216,10 @@ public class VendorOptionManagerTest {
 
         assertTrue(expectedValue1.toString().compareTo(actualValue) == 0);
 
+        VersionData geoServerVOMin = VersionData
+                .getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.4.2");
+        VersionData geoServerVOMax = VersionData
+                .getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.9.0");
         VendorOptionVersion geoServerVOV = new VendorOptionVersion(GeoServerVendorOption.class,
                 geoServerVOMin, geoServerVOMax);
         actualValue = VendorOptionManager.getInstance().getTitle(geoServerVOV);
@@ -255,7 +256,8 @@ public class VendorOptionManagerTest {
         assertEquals(1, obj.vendorOptionVersionsList.size());
         assertEquals(actualPrefVO, obj.vendorOptionVersionsList.get(0));
 
-        // No SLD Editor file, SLD contains PointSymboloer with vendor option so it should use the SLD vendor option
+        // No SLD Editor file, SLD contains PointSymboliser with vendor
+        // option so it should use the SLD vendor option
         obj.vendorOptionVersionsList.clear();
         sld = DefaultSymbols.createNewSLD();
         SelectedSymbol.getInstance().createNewSLD(sld);

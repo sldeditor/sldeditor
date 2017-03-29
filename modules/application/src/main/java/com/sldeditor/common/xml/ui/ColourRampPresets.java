@@ -16,9 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * 
- *                     Provides colour ramp definitions
- *                 
+ *  Provides colour ramp definitions
  * 
  * <p>Java class for anonymous complex type.
  * 

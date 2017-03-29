@@ -31,6 +31,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlav
 
 /**
  * Unit test for BuiltInDataFlavour.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour}
  * @author Robert Ward (SCISYS)
  *

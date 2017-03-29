@@ -44,6 +44,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigInlineFeature.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature}
  *
  * @author Robert Ward (SCISYS)
@@ -51,12 +52,15 @@ import com.vividsolutions.jts.geom.Geometry;
 public class FieldConfigInlineFeatureTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#isEnabled()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#internal_setEnabled(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -76,11 +80,13 @@ public class FieldConfigInlineFeatureTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -92,15 +98,21 @@ public class FieldConfigInlineFeatureTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#populateExpression(java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#populateField(java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#getStringValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#generateExpression()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#populateExpression(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#populateField(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
         String testValue = null;
         field.populate(null);
         field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
@@ -127,20 +139,23 @@ public class FieldConfigInlineFeatureTest {
         // The fids are different
         assertTrue(expectedValue2.compareTo(actualValue) != 0);
 
-        field.populateExpression((String)null);
-        field.populateExpression((Integer)null);
+        field.populateExpression((String) null);
+        field.populateExpression((Integer) null);
         String expectedValue3 = "test inline value3";
         field.populateExpression(expectedValue3);
         Controller.getInstance().setPopulating(false);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#revertToDefaultValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setDefaultValue(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#setDefaultValue(java.lang.String)}.
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -157,23 +172,23 @@ public class FieldConfigInlineFeatureTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
-        class TestFieldConfigInlineFeature extends FieldConfigInlineFeature
-        {
+        class TestFieldConfigInlineFeature extends FieldConfigInlineFeature {
             public TestFieldConfigInlineFeature(FieldConfigCommonData commonData) {
                 super(commonData);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigInlineFeature field = new TestFieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "", true));
+        TestFieldConfigInlineFeature field = new TestFieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "", true));
         FieldConfigInlineFeature copy = (FieldConfigInlineFeature) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -184,23 +199,28 @@ public class FieldConfigInlineFeatureTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigInlineFeature field = new FieldConfigInlineFeature(new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+        FieldConfigInlineFeature field = new FieldConfigInlineFeature(
+                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -229,9 +249,11 @@ public class FieldConfigInlineFeatureTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(42.0), Integer.valueOf(11)));
+        field.undoAction(
+                new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(42.0), Integer.valueOf(11)));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(454.0), Integer.valueOf(69)));
+        field.redoAction(
+                new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(454.0), Integer.valueOf(69)));
     }
 
 }

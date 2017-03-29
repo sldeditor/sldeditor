@@ -26,6 +26,7 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfoModel;
 
 /**
  * Unit test for VendorOptionInfoModel.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel}
  * 
  * @author Robert Ward (SCISYS)
@@ -77,7 +78,8 @@ public class VendorOptionInfoModelTest {
         vendorOptionInfoList.add(info);
         String name2 = "name2";
         String description2 = "test description2";
-        VendorOptionVersion versionData2 = VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
+        VendorOptionVersion versionData2 =
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
         vendorOptionInfoList.add(new VendorOptionInfo(name2, versionData2, description2));
 
         VersionData versionDataMin3 = VersionData.decode(getClass(), "2.8.1");

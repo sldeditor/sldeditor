@@ -36,6 +36,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for WKTConversion.
+ * 
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion}
  *
  * @author Robert Ward (SCISYS)

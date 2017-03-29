@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
@@ -23,46 +24,44 @@ package com.sldeditor.ui.detail.config.base.defaults;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DefaultBoolean extends DefaultBase
-{
+public class DefaultBoolean extends DefaultBase {
 
     /** The true string. */
     private static String TRUE_STRING = "true";
-    
+
     /** The false string. */
     private static String FALSE_STRING = "false";
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
-    public boolean accepts(String defaultValue)
-    {
-        if(defaultValue == null)
-        {
+    public boolean accepts(String defaultValue) {
+        if (defaultValue == null) {
             return false;
         }
-        
-        if((defaultValue.compareToIgnoreCase(TRUE_STRING) == 0) ||
-                        (defaultValue.compareToIgnoreCase(FALSE_STRING) == 0))
-        {
+
+        if ((defaultValue.compareToIgnoreCase(TRUE_STRING) == 0)
+                || (defaultValue.compareToIgnoreCase(FALSE_STRING) == 0)) {
             return true;
         }
-        
+
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override
-    public Object getValue(String defaultValue)
-    {
-        if(defaultValue.compareToIgnoreCase(TRUE_STRING) == 0)
-        {
+    public Object getValue(String defaultValue) {
+        if (defaultValue.compareToIgnoreCase(TRUE_STRING) == 0) {
             return Boolean.TRUE;
         }
-        
+
         return Boolean.FALSE;
     }
 

@@ -190,7 +190,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
     }
 
     /**
-     * 
+     * Select format.
      */
     protected void selectFormat() {
         String selectedFormat = formatListComponent.getSelectedValue();

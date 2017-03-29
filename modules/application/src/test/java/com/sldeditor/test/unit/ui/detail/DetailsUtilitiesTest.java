@@ -34,6 +34,7 @@ import com.sldeditor.ui.detail.DetailsUtilities;
 
 /**
  * The unit test for DetailsUtilities.
+ * 
  * <p>{@link com.sldeditor.ui.detail.DetailsUtilities}
  *
  * @author Robert Ward (SCISYS)

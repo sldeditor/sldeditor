@@ -43,6 +43,7 @@ import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 
 /**
  * Unit test for ExpressionNode class.
+ * 
  * <p>{@link com.sldeditor.filter.v2.expression.ExpressionNode}
  * 
  * @author Robert Ward (SCISYS)
@@ -52,14 +53,15 @@ public class ExpressionNodeTest {
 
     /**
      * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#ExpressionNode()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#toString()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#isValueOnly()}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#setValueOnly(boolean)}.
+     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#toString()}. Test
+     * method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#isValueOnly()}. Test
+     * method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#setValueOnly(boolean)}.
      */
     @Test
     public void testExpressionNode() {
         ExpressionNode node = new ExpressionNode();
-        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet")) == 0);
+        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class,
+                "ExpressionPanelv2.expressionNotSet")) == 0);
 
         Class<?> type = String.class;
         node.setType(type);
@@ -78,7 +80,8 @@ public class ExpressionNodeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#setExpression(org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.ExpressionNode#setExpression(org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testSetExpression() {
@@ -89,7 +92,8 @@ public class ExpressionNodeTest {
         String expressionString = "Literalexpression";
         Expression literal = ff.literal(expressionString);
         node.setExpression(literal);
-        String expected = Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.literal") + " " + expressionString;
+        String expected = Localisation.getField(ExpressionPanelv2.class,
+                "ExpressionPanelv2.literal") + " " + expressionString;
         String actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
 
@@ -97,14 +101,16 @@ public class ExpressionNodeTest {
         String propertyName = "testproperty";
         Expression attribute = ff.property(propertyName);
         node.setExpression(attribute);
-        expected = Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.attribute") + " [" + attribute + "]";
+        expected = Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.attribute")
+                + " [" + attribute + "]";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
 
         // Test attribute expression
         literal = ff.literal(ff.property(propertyName));
         node.setExpression(literal);
-        expected = Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.attribute") + " [" + attribute + "]";
+        expected = Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.attribute")
+                + " [" + attribute + "]";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
 
@@ -139,7 +145,8 @@ public class ExpressionNodeTest {
         assertTrue(actual.compareTo(expected) == 0);
 
         // Test environment function
-        EnvFunction envExpression = (EnvFunction) ff.function("env", ff.literal("foo"), ff.literal(0));
+        EnvFunction envExpression = (EnvFunction) ff.function("env", ff.literal("foo"),
+                ff.literal(0));
         node.setExpression(envExpression);
         expected = "env([foo], [0])";
         actual = node.toString();
@@ -147,37 +154,46 @@ public class ExpressionNodeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#setName(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.ExpressionNode#setName(java.lang.String)}.
      */
     @Test
     public void testSetName() {
         String expectedName = "test";
-        
+
         ExpressionNode node = new ExpressionNode();
-        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet")) == 0);
+        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class,
+                "ExpressionPanelv2.expressionNotSet")) == 0);
         node.setName(expectedName);
-        assertTrue(node.toString().compareTo(expectedName + " : " + Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet")) == 0);
+        assertTrue(node.toString().compareTo(expectedName + " : " + Localisation
+                .getString(ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet")) == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#setExpressionType(com.sldeditor.filter.v2.expression.ExpressionTypeEnum)}.
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#getExpressionType()}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.ExpressionNode#setExpressionType(com.sldeditor.filter.v2.expression.ExpressionTypeEnum)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.ExpressionNode#getExpressionType()}.
      */
     @Test
     public void testSetExpressionType() {
         ExpressionNode node = new ExpressionNode();
-        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet")) == 0);
+        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class,
+                "ExpressionPanelv2.expressionNotSet")) == 0);
         node.setExpressionType(ExpressionTypeEnum.LITERAL);
         assertEquals(ExpressionTypeEnum.LITERAL, node.getExpressionType());
-        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.literalNotSet")) == 0);
+        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class,
+                "ExpressionPanelv2.literalNotSet")) == 0);
         node.setExpressionType(ExpressionTypeEnum.PROPERTY);
         assertEquals(ExpressionTypeEnum.PROPERTY, node.getExpressionType());
-        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.propertyNotSet")) == 0);
+        assertTrue(node.toString().compareTo(Localisation.getString(ExpressionPanelv2.class,
+                "ExpressionPanelv2.propertyNotSet")) == 0);
         assertNull(node.getExpression());
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionNode#setEnvMgr(com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.ExpressionNode#setEnvMgr(com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface)}.
      */
     @Test
     public void testSetEnvMgr() {

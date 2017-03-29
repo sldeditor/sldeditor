@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.file.ysld;
 
 import static org.junit.Assert.assertEquals;
@@ -43,6 +44,7 @@ import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 
 /**
  * Unit test for YSLDFileHandler class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.file.sld.YSLDFileHandler}
  * 
  * @author Robert Ward (SCISYS)
@@ -128,7 +130,7 @@ public class YSLDFileHandlerTest {
     /**
      * Check SLD name
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {
@@ -144,7 +146,7 @@ public class YSLDFileHandlerTest {
     /**
      * Supply a folder name and retrieve all the ysld files in it
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFolder() {
@@ -173,8 +175,7 @@ public class YSLDFileHandlerTest {
             List<String> expectedLayerNameList = Arrays.asList("point_simplepoint.ysld");
             assertEquals(expectedLayerNameList.size(), sldDataList.size());
 
-            for(SLDDataInterface sldData : sldDataList)
-            {
+            for (SLDDataInterface sldData : sldDataList) {
                 assertTrue(expectedLayerNameList.contains(sldData.getLayerName()));
             }
         } catch (SecurityException e) {

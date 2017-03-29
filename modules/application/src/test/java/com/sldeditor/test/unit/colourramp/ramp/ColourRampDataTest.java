@@ -31,6 +31,7 @@ import com.sldeditor.colourramp.ramp.ColourRampData;
 
 /**
  * Unit test for ColourRampData class.
+ * 
  * <p>{@link com.sldeditor.colourramp.ramp.ColourRampData}
  * 
  * @author Robert Ward (SCISYS)

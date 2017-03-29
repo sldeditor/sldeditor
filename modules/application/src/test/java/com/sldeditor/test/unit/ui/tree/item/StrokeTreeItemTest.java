@@ -34,6 +34,7 @@ import com.sldeditor.ui.tree.item.StrokeTreeItem;
 
 /**
  * The unit test for StrokeTreeItem.
+ * 
  * <p>{@link com.sldeditor.ui.tree.item.StrokeTreeItem}
  *
  * @author Robert Ward (SCISYS)

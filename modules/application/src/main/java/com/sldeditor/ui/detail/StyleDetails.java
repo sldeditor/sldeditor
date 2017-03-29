@@ -108,7 +108,8 @@ public class StyleDetails extends StandardPanel
 
             Style existingStyle = SelectedSymbol.getInstance().getStyle();
             if (existingStyle != null) {
-                List<org.opengis.style.FeatureTypeStyle> newFTSList = new ArrayList<org.opengis.style.FeatureTypeStyle>();
+                List<org.opengis.style.FeatureTypeStyle> newFTSList =
+                        new ArrayList<org.opengis.style.FeatureTypeStyle>();
                 for (org.opengis.style.FeatureTypeStyle fts : existingStyle.featureTypeStyles()) {
                     newFTSList.add(fts);
                 }

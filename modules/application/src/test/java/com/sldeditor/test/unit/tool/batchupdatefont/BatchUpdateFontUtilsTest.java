@@ -43,8 +43,8 @@ import com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils;
 
 /**
  * The unit test for BatchUpdateFontData.
- * <p>
- * {@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils}
+ * 
+ * <p>{@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -55,7 +55,6 @@ public class BatchUpdateFontUtilsTest {
      */
     @Test
     public void testContainsFonts() {
-        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
 
         StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
         SelectedSymbol.getInstance().createNewSLD(sld);
@@ -81,6 +80,7 @@ public class BatchUpdateFontUtilsTest {
         fts.rules().add(rule);
         sld.layers().add(namedLayer);
 
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
         String sldContents = sldWriter.encodeSLD(null, sld);
 
         SLDData sldData = new SLDData(new StyleWrapper("workspace", "layer.sld"), sldContents);

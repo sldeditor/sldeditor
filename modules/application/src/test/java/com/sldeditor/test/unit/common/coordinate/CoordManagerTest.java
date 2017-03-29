@@ -35,6 +35,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * Unit test for CoordManager class.
+ * 
  * <p>{@link com.sldeditor.common.coordinate.CoordManager}
  * 
  * @author Robert Ward (SCISYS)
@@ -47,8 +48,9 @@ public class CoordManagerTest {
      * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getCRSList()}.
      * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getCRSCode(org.opengis.referencing.crs.CoordinateReferenceSystem)}.
      * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getWGS84()}.
-     * @throws FactoryException 
-     * @throws NoSuchAuthorityCodeException 
+     *
+     * @throws NoSuchAuthorityCodeException the no such authority code exception
+     * @throws FactoryException the factory exception
      */
     @Test
     public void testGetInstance() throws NoSuchAuthorityCodeException, FactoryException {
