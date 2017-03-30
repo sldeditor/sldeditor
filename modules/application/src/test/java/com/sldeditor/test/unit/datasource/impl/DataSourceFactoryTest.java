@@ -140,9 +140,11 @@ public class DataSourceFactoryTest {
         }
 
         @Override
+        //CHECKSTYLE:OFF
         public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
             return null;
         }
+        //CHECKSTYLE:ON
 
         @Override
         public void updateUserLayers() {

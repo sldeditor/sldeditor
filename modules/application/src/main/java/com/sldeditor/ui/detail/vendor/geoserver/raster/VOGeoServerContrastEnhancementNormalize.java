@@ -49,8 +49,8 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
- * Class to handle the getting and setting of GeoServer raster contrast 
- * enhancement normalize vendor option data.
+ * Class to handle the getting and setting of GeoServer raster contrast enhancement normalize vendor
+ * option data.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -132,28 +132,15 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldId)
+     * @see
+     * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
+     * FieldId)
      */
     @Override
     public void dataChanged(FieldIdEnum changedField) {
         if (parentObj != null) {
             parentObj.dataChanged(changedField);
         }
-    }
-
-    /**
-     * Populate.
-     *
-     * @param selectedSymbol the selected symbol
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
-     */
-    @Override
-    public void populate(SelectedSymbol selectedSymbol) {
-        // Do nothing
     }
 
     /**
@@ -169,21 +156,6 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     @Override
     public GraphicPanelFieldManager getFieldDataManager() {
         return this.fieldConfigManager;
-    }
-
-    /**
-     * Populate.
-     *
-     * @param textSymbolizer the text symbolizer
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.TextSymbolizer)
-     */
-    @Override
-    public void populate(TextSymbolizer textSymbolizer) {
-        // Do nothing
     }
 
     /**
@@ -209,7 +181,9 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.ui.iface.UpdateSymbolInterface)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
+     * ui.iface.UpdateSymbolInterface)
      */
     @Override
     public void setParentPanel(UpdateSymbolInterface parent) {
@@ -249,10 +223,70 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.PolygonSymbolizer)
      */
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
+        // Do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.TextSymbolizer)
+     */
+    @Override
+    public void updateSymbol(TextSymbolizer textSymbolizer) {
+        // Do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.RasterSymbolizer)
+     */
+    @Override
+    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+
+        if (parentPanel != null) {
+            GroupConfigInterface group = parentPanel.getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
+            if (group != null) {
+                if (group.isPanelEnabled()) {
+                    MultiOptionGroup contrastEnhancementGroup = (MultiOptionGroup) group;
+                    ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
+
+                    OptionGroup selectedOption = contrastEnhancementGroup.getSelectedOptionGroup();
+
+                    ContrastEnhancement contrastEnhancement = getContrastEnhancement(
+                            selectedOption.getId(), channelSelection);
+
+                    if (contrastEnhancement != null) {
+                        extractNormalizeVendorOption(contrastEnhancement);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate.
+     *
+     * @param selectedSymbol the selected symbol
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * selectedsymbol.SelectedSymbol)
+     */
+    @Override
+    public void populate(SelectedSymbol selectedSymbol) {
         // Do nothing
     }
 
@@ -264,37 +298,38 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * PolygonSymbolizer)
      */
     @Override
     public void populate(PolygonSymbolizer polygonSymbolizer) {
         // Do nothing
     }
 
+    /**
+     * Populate.
+     *
+     * @param textSymbolizer the text symbolizer
+     */
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * TextSymbolizer)
      */
     @Override
-    public void preLoadSymbol() {
-        setAllDefaultValues();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.TextSymbolizer)
-     */
-    @Override
-    public void updateSymbol(TextSymbolizer textSymbolizer) {
+    public void populate(TextSymbolizer textSymbolizer) {
         // Do nothing
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * RasterSymbolizer)
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
@@ -332,35 +367,16 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                 }
             }
         }
-
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
-    public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
-
-        if (parentPanel != null) {
-            GroupConfigInterface group = parentPanel.getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
-            if (group != null) {
-                if (group.isPanelEnabled()) {
-                    MultiOptionGroup contrastEnhancementGroup = (MultiOptionGroup) group;
-                    ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
-
-                    OptionGroup selectedOption = contrastEnhancementGroup.getSelectedOptionGroup();
-
-                    ContrastEnhancement contrastEnhancement = getContrastEnhancement(
-                            selectedOption.getId(), channelSelection);
-
-                    if (contrastEnhancement != null) {
-                        extractNormalizeVendorOption(contrastEnhancement);
-                    }
-                }
-            }
-        }
+    public void preLoadSymbol() {
+        setAllDefaultValues();
     }
 
     /**
@@ -435,7 +451,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

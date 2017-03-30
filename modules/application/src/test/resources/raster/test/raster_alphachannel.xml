@@ -26,11 +26,13 @@
             <Symbolizer index="0"/>
         </Setup>
         <FieldTests>
-            <LiteralString value="1" field="RASTER_COLOURMAP_TYPE"/> <!-- Ramp key = 1 -->
-			<ColourMapEntries field="RASTER_COLOURMAP">
-				<Entry label="" colour="#008000" opacity="1.0" quantity="70"/>
-				<Entry label="" colour="#008000" opacity="0.0" quantity="256"/>
-			</ColourMapEntries>
+            <LiteralString value="1" field="RASTER_COLOURMAP_TYPE" /> <!-- Ramp key = 1 -->
+            <ColourMapEntries field="RASTER_COLOURMAP">
+                <Entry label="" colour="#008000" opacity="1.0"
+                    quantity="70" />
+                <Entry label="" colour="#008000" opacity="0.0"
+                    quantity="256" />
+            </ColourMapEntries>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>

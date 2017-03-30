@@ -51,6 +51,7 @@ public class ExamplePolygonImplIOM implements ExamplePolygonInterface {
     @Override
     public Polygon getPolygon() {
         if (polygon == null) {
+            //CHECKSTYLE:OFF
             double[][] rawLocations = new double[][] { { -4.652710, 54.069059 },
                     { -4.634857, 54.075506 }, { -4.629364, 54.059388 }, { -4.600525, 54.087590 },
                     { -4.574432, 54.102892 }, { -4.548340, 54.103697 }, { -4.522247, 54.124626 },
@@ -65,6 +66,7 @@ public class ExamplePolygonImplIOM implements ExamplePolygonInterface {
                     { -4.783173, 54.101281 }, { -4.777679, 54.086784 }, { -4.822998, 54.049714 },
                     { -4.737854, 54.066642 }, { -4.709015, 54.082757 }, { -4.682922, 54.062612 },
                     { -4.652710, 54.069059 }, };
+                    //CHECKSTYLE:ON
 
             GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 

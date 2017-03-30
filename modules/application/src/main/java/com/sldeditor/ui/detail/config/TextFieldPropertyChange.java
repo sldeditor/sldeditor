@@ -75,13 +75,16 @@ public class TextFieldPropertyChange extends JTextField {
         @Override
         public void replace(int offset, int length, String text, AttributeSet attrs)
                 throws BadLocationException {
+            //CHECKSTYLE:OFF
             String oldValue = TextFieldPropertyChange.this.getText();
+            //CHECKSTYLE:ON
             this.ignoreEvents = true;
             super.replace(offset, length, text, attrs);
             this.ignoreEvents = false;
             String newValue = TextFieldPropertyChange.this.getText();
-            if (!oldValue.equals(newValue))
+            if (!oldValue.equals(newValue)) {
                 TextFieldPropertyChange.this.firePropertyChange(TEXT_PROPERTY, oldValue, newValue);
+            }
         }
 
         /*
@@ -94,8 +97,9 @@ public class TextFieldPropertyChange extends JTextField {
             String oldValue = TextFieldPropertyChange.this.getText();
             super.remove(offs, len);
             String newValue = TextFieldPropertyChange.this.getText();
-            if (!ignoreEvents && !oldValue.equals(newValue))
+            if (!ignoreEvents && !oldValue.equals(newValue)) {
                 TextFieldPropertyChange.this.firePropertyChange(TEXT_PROPERTY, oldValue, newValue);
+            }
         }
     }
 }

@@ -210,8 +210,12 @@ public class FieldConfigVendorOptionTest {
         RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
         VendorOptionRasterFactory vendorOptionRasterFactory = new VendorOptionRasterFactory(
                 getClass(), panel);
+
+        //CHECKSTYLE:OFF
         List<VendorOptionInterface> veList = vendorOptionRasterFactory.getVendorOptionList(
                 "com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeOverall");
+        //CHECKSTYLE:ON
+
         for (VendorOptionInterface extension : veList) {
             extension.setParentPanel(panel);
         }

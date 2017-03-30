@@ -366,8 +366,10 @@ public class SLDTreeTools {
         DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         Object obj = lastNode.getUserObject();
 
+        //CHECKSTYLE:OFF
         Object oldValueObj = 
                 sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
+        //CHECKSTYLE:ON
 
         if (obj instanceof NamedLayer) {
             SelectedSymbol.getInstance().removeUserNamedLayer((NamedLayer) obj);
@@ -958,8 +960,10 @@ public class SLDTreeTools {
         int direction = moveUp ? -1 : 1;
 
         // Store current state of the SLD before the move
+        //CHECKSTYLE:OFF
         Object oldValueObj =
                 sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
+        //CHECKSTYLE:ON
 
         if (obj instanceof StyledLayer) {
             StyledLayerDescriptor sld = (StyledLayerDescriptor) parentObj;

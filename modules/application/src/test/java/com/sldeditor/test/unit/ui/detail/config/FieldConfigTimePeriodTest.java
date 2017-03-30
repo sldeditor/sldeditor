@@ -271,14 +271,18 @@ public class FieldConfigTimePeriodTest {
         String timePeriod1 = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
         TimePeriod period1 = new TimePeriod();
         period1.decode(timePeriod1);
+        //CHECKSTYLE:OFF
         String expectedPeriod1 = period1.getString();
+        //CHECKSTYLE:ON
 
         field.populateField(period1);
 
         String timePeriod2 = "P 1 D 32 M 9 S / 08-07-2016T09:42:06Z";
         TimePeriod period2 = new TimePeriod();
         period2.decode(timePeriod2);
+        //CHECKSTYLE:OFF
         String expectedPeriod2 = period2.getString();
+        //CHECKSTYLE:ON
 
         field.populateField(period2);
 

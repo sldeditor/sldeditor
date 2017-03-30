@@ -47,6 +47,7 @@ import com.vividsolutions.jts.geom.Polygon;
  */
 public class DataSourceAttributeModel extends AbstractTableModel {
 
+    //CHECKSTYLE:OFF
     /** The array of geometry names. */
     private static final String[] GEOMETRY_NAME = { "Geometry (Point)", "Geometry (Multi-Point)",
             "Geometry (Line)", "Geometry (Multi-Line)", "Geometry (Polygon)",
@@ -57,6 +58,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     private static final  Class<?>[] CLASSTYPE = { Point.class, MultiPoint.class, LineString.class,
             MultiLineString.class, Polygon.class, MultiPolygon.class, String.class, Integer.class,
             Long.class, Double.class, Float.class, Short.class, Date.class };
+    //CHECKSTYLE:ON
 
     /** The type map. */
     private Map<Class<?>, String> typeMap = new HashMap<Class<?>, String>();

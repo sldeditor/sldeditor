@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.property;
 
 import static org.junit.Assert.assertEquals;
@@ -35,14 +36,16 @@ import com.sldeditor.common.property.PropertyManager;
 
 /**
  * Unit test for PropertyManager.
+ * 
  * <p>{@link com.sldeditor.common.property.PropertyManager}
-
+ * 
  * @author Robert Ward (SCISYS)
  */
 public class PropertyManagerTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.lang.String)}.
      */
     @Test
     public void testUpdateValueString() {
@@ -63,7 +66,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, boolean)}.
      */
     @Test
     public void testUpdateValueStringBoolean() {
@@ -114,19 +118,18 @@ public class PropertyManagerTest {
         boolean booleanValue = true;
         propertyManager.updateValue(booleanKey, booleanValue);
 
-        String stringListKey = "string list key";
         List<String> stringList = new ArrayList<String>();
         stringList.add("item 1");
         stringList.add("item 2");
         stringList.add("item 3");
+        String stringListKey = "string list key";
         propertyManager.updateValue(stringListKey, stringList);
 
         String stringMultipleKey = "multiple string key";
         int index = 0;
-        for(String value : stringList)
-        {
+        for (String value : stringList) {
             propertyManager.updateValue(stringMultipleKey, index, value);
-            index ++;
+            index++;
         }
 
         PropertyManager testPropertyManager = new PropertyManager();
@@ -152,7 +155,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#getDoubleValue(java.lang.String, double)}.
+     * Test method for
+     * {@link com.sldeditor.common.property.PropertyManager#getDoubleValue(java.lang.String, double)}.
      */
     @Test
     public void testGetDoubleValue() {
@@ -178,18 +182,19 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.util.List)}.
      */
     @Test
     public void testUpdateValueStringListOfString() {
         PropertyManager propertyManager = new PropertyManager();
         propertyManager.setPropertyFile(null);
-        String stringKey = "test string list key";
         List<String> stringList = new ArrayList<String>();
         stringList.add("item 1");
         stringList.add("item 2");
         stringList.add("item 3");
 
+        String stringKey = "test string list key";
         propertyManager.updateValue(stringKey, stringList);
 
         List<String> actualStringResult = propertyManager.getStringListValue(stringKey);
@@ -202,7 +207,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, int, java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, int, java.lang.String)}.
      */
     @Test
     public void testUpdateValueStringIntString() {
@@ -215,10 +221,9 @@ public class PropertyManagerTest {
         stringList.add("item 3");
 
         int index = 0;
-        for(String value : stringList)
-        {
+        for (String value : stringList) {
             propertyManager.updateValue(stringKey, index, value);
-            index ++;
+            index++;
         }
 
         List<String> actualStringResult = propertyManager.getMultipleValues(stringKey);
@@ -231,7 +236,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.awt.Color)}.
+     * Test method for
+     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.awt.Color)}.
      */
     @Test
     public void testUpdateValueStringColor() {

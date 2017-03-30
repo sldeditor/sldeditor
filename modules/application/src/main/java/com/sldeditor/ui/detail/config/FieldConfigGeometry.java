@@ -131,9 +131,11 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
 
                     public void actionPerformed(ActionEvent e) {
                         if (buttonPressedListenerList != null) {
+                            //CHECKSTYLE:OFF
                             for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
                                 listener.buttonPressed(buttonExternal);
                             }
+                            //CHECKSTYLE:ON
                         }
                     }
                 });

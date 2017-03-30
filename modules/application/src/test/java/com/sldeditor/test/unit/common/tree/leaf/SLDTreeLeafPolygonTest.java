@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.tree.leaf;
 
 import static org.junit.Assert.assertEquals;
@@ -32,6 +33,7 @@ import com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon;
 
 /**
  * The unit test for SLDTreeLeafPolygon
+ * 
  * <p>{@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon}
  * 
  * @author Robert Ward (SCISYS)

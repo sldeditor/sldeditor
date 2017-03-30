@@ -667,7 +667,9 @@ public class DataSourceImpl implements DataSourceInterface {
      * @see com.sldeditor.datasource.DataSourceInterface#getUserLayerFeatureSource()
      */
     @Override
+    //CHECKSTYLE:OFF
     public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+        //CHECKSTYLE:ON
         Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map =
                 new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
 

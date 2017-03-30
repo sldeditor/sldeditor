@@ -41,8 +41,10 @@ import com.vividsolutions.jts.geom.Point;
 public class FunctionNameFilterRaster implements FunctionNameFilterInterface {
 
     /** The allowed geometry types. */
+    //CHECKSTYLE:OFF
     private static Class<?>[] allowedGeometryTypes = { Geometry.class, LineString.class,
             Point.class, MultiPoint.class, LinearRing.class, Object.class };
+    //CHECKSTYLE:ON
 
     /** The allowed geometry type list. */
     private List<Class<?>> allowedGeometryTypeList = Arrays.asList(allowedGeometryTypes);

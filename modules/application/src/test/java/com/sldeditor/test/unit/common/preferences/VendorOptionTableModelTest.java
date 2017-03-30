@@ -40,6 +40,7 @@ import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
 
 /**
  * Unit test for VendorOptionTableModel.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel}
  * 
  * @author Robert Ward (SCISYS)
@@ -47,18 +48,24 @@ import com.sldeditor.common.vendoroption.selection.VendorOptionTableModel;
 public class VendorOptionTableModelTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnCount()}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnName(int)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnClass(int)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#isCellEditable(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnCount()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnName(int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getColumnClass(int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#isCellEditable(int, int)}.
      */
     @Test
     public void testGetColumnCount() {
         VendorOptionTableModel model = new VendorOptionTableModel(null, null);
 
         assertEquals(2, model.getColumnCount());
-        assertEquals(Localisation.getString(VendorOptionTableModel.class, "VendorOptionTableModel.vendor"), model.getColumnName(0));
-        assertEquals(Localisation.getString(VendorOptionTableModel.class, "VendorOptionTableModel.selected"), model.getColumnName(1));
+        assertEquals(Localisation.getString(VendorOptionTableModel.class,
+                "VendorOptionTableModel.vendor"), model.getColumnName(0));
+        assertEquals(Localisation.getString(VendorOptionTableModel.class,
+                "VendorOptionTableModel.selected"), model.getColumnName(1));
 
         assertEquals(String.class, model.getColumnClass(1));
         assertEquals(Object.class, model.getColumnClass(0));
@@ -70,13 +77,17 @@ public class VendorOptionTableModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getValueAt(int, int)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getRowCount()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getValueAt(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getRowCount()}.
      */
     @Test
     public void testGetValueAt() {
-        Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<VendorOptionTypeInterface, String>();
-        VendorOptionTypeInterface vendorOption = VendorOptionManager.getInstance().getClass(GeoServerVendorOption.class);
+        Map<VendorOptionTypeInterface, String> options =
+                new LinkedHashMap<VendorOptionTypeInterface, String>();
+        VendorOptionTypeInterface vendorOption = VendorOptionManager.getInstance()
+                .getClass(GeoServerVendorOption.class);
 
         options.put(vendorOption, vendorOption.getName());
 
@@ -95,13 +106,17 @@ public class VendorOptionTableModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setValueAt(java.lang.Object, int, int)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setSelectedVersion(com.sldeditor.common.vendoroption.VersionData, int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setValueAt(java.lang.Object, int, int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setSelectedVersion(com.sldeditor.common.vendoroption.VersionData, int)}.
      */
     @Test
     public void testSetValueAtObjectIntInt() {
-        Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<VendorOptionTypeInterface, String>();
-        VendorOptionTypeInterface vendorOption = VendorOptionManager.getInstance().getClass(GeoServerVendorOption.class);
+        Map<VendorOptionTypeInterface, String> options =
+                new LinkedHashMap<VendorOptionTypeInterface, String>();
+        VendorOptionTypeInterface vendorOption = VendorOptionManager.getInstance()
+                .getClass(GeoServerVendorOption.class);
 
         options.put(vendorOption, vendorOption.getName());
 
@@ -138,14 +153,19 @@ public class VendorOptionTableModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getVendorOption(int)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setSelectedVendorOptionVersions(java.util.List)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getVendorOptionVersionList()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getVendorOption(int)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#setSelectedVendorOptionVersions(java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionTableModel#getVendorOptionVersionList()}.
      */
     @Test
     public void testGetVendorOption() {
-        Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<VendorOptionTypeInterface, String>();
-        VendorOptionTypeInterface vendorOption = VendorOptionManager.getInstance().getClass(GeoServerVendorOption.class);
+        Map<VendorOptionTypeInterface, String> options =
+                new LinkedHashMap<VendorOptionTypeInterface, String>();
+        VendorOptionTypeInterface vendorOption = VendorOptionManager.getInstance()
+                .getClass(GeoServerVendorOption.class);
 
         options.put(vendorOption, vendorOption.getName());
 
@@ -160,7 +180,8 @@ public class VendorOptionTableModelTest {
         // Valid call to getVendorOption
         List<VersionData> actualList = model.getVendorOption(0);
         assertEquals(vendorOption.getVersionList().size(), actualList.size());
-        assertEquals(Localisation.getString(VendorOptionTableModel.class, "common.notSet"), actualList.get(0).getVersionString());
+        assertEquals(Localisation.getString(VendorOptionTableModel.class, "common.notSet"),
+                actualList.get(0).getVersionString());
 
         model.setSelectedVendorOptionVersions(null);
 
@@ -171,7 +192,8 @@ public class VendorOptionTableModelTest {
 
         actualList = model.getVendorOptionVersionList();
         assertEquals(2, actualList.size());
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData(), actualList.get(0));
+        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData(),
+                actualList.get(0));
         assertEquals(expectedVersionData.getVersionString(), actualList.get(1).getVersionString());
 
         // Try with unknown
@@ -182,7 +204,8 @@ public class VendorOptionTableModelTest {
 
         actualList = model.getVendorOptionVersionList();
         assertEquals(1, actualList.size());
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData(), actualList.get(0));
+        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData(),
+                actualList.get(0));
     }
 
 }

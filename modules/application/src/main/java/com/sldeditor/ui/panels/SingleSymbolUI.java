@@ -42,7 +42,8 @@ import com.sldeditor.ui.tree.SLDTreeManager;
 import com.sldeditor.ui.tree.SLDTreeTools;
 
 /**
- * The Class SingleSymbolUI, coordinates creating all the necessary SLD symbol panels to view/edit a single SLD file.
+ * The Class SingleSymbolUI, coordinates creating all the necessary
+ * SLD symbol panels to view/edit a single SLD file.
  * 
  * @author Robert Ward (SCISYS)
  */

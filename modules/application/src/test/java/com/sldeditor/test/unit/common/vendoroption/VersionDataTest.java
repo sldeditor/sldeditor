@@ -103,12 +103,14 @@ public class VersionDataTest {
         VersionData versionData1 = VersionData.decode(getClass(), "1.2.3");
         VersionData versionData2 = VersionData.decode(getClass(), "1.2.3");
         VersionData versionData3 = VersionData.decode(getClass(), "1.2");
+        //CHECKSTYLE:OFF
         VersionData versionData4 = VersionData.decode(getClass(), "8.2.3");
         VersionData versionData5 = VersionData.decode(getClass(), "8.2.2");
         VersionData versionData6 = VersionData.decode(getClass(), "8.2.4");
         VersionData versionData7 = VersionData.decode(getClass(), "8.1.2");
         VersionData versionData8 = VersionData.decode(getClass(), "8.3.4");
         VersionData versionData9 = VersionData.decode(getClass(), "8.3.4-SNAPSHOT");
+        //CHECKSTYLE:ON
 
         assertTrue(versionData1.compareTo(versionData2) == 0);
         assertTrue(versionData1.equals(versionData2));
@@ -190,10 +192,12 @@ public class VersionDataTest {
         VersionData versionData1 = VersionData.decode(getClass(), "1.2");
         VersionData versionData2 = VersionData.decode(getClass(), "2.4.0");
         VersionData versionData3 = VersionData.decode(getClass(), "2.4.1");
+        //CHECKSTYLE:OFF
         VersionData versionData4 = VersionData.decode(getClass(), "2.5.1");
         VersionData versionData5 = VersionData.decode(getClass(), "2.8.3");
         VersionData versionData6 = VersionData.decode(getClass(), "2.8.4");
         VersionData versionData7 = VersionData.getNotSetVersion(getClass());
+        //CHECKSTYLE:ON
 
         assertFalse(versionData1.inRange(versionDataMin, versionDataMax));
         assertFalse(versionData2.inRange(versionDataMin, versionDataMax));

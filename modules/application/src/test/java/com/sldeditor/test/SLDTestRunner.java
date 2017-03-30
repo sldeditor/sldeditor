@@ -431,6 +431,7 @@ public class SLDTestRunner {
                                                 } else if (testValue instanceof XMLFieldAttribute) {
                                                     expectedValue = ((XMLFieldAttribute) testValue)
                                                             .getAttribute();
+                                                    //CHECKSTYLE:OFF
                                                 } else if (testValue instanceof XMLFieldExpression) {
                                                     expectedValue = ((XMLFieldExpression) testValue)
                                                             .getExpression();
@@ -438,6 +439,7 @@ public class SLDTestRunner {
                                                     expectedValue = EncodeColourMap
                                                             .encode(((XMLColourMapEntries) testValue)
                                                                     .getEntry());
+                                                    //CHECKSTYLE:ON
                                                 } else {
                                                     Assert.fail(fieldId + " has unsupported type "
                                                             + testValue.getClass().getName());
@@ -490,10 +492,12 @@ public class SLDTestRunner {
                                                         if (string.compareToIgnoreCase(
                                                                 DEFAULT_FONT) != 0) {
                                                             expression = ff.literal(getFontForOS());
+                                                            //CHECKSTYLE:OFF
                                                             System.out.println(
                                                                     "Updated font family to test for : "
                                                                             + expression
                                                                                     .toString());
+                                                            //CHECKSTYLE:ON
                                                         }
                                                     } else if (fieldId == FieldIdEnum.TTF_SYMBOL) {
                                                         expression = processTTFField(
@@ -517,9 +521,11 @@ public class SLDTestRunner {
                                                                     (Integer) literalValue);
                                                         } else if (literalValue
                                                                 .getClass() == String.class) {
+                                                            //CHECKSTYLE:OFF
                                                             if (fieldId == FieldIdEnum.FONT_FAMILY) {
                                                                 // Handle the case where a font is not 
                                                                 // available on all operating systems
+                                                                //CHECKSTYLE:ON
                                                                 checkLiteralValue(outputText,
                                                                         expression, getFontForOS());
                                                             } else {

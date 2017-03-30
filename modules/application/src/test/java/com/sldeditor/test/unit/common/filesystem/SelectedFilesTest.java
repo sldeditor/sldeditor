@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.filesystem;
 
 import static org.junit.Assert.assertTrue;
@@ -31,6 +32,7 @@ import com.sldeditor.common.filesystem.SelectedFiles;
 
 /**
  * The unit test for SelectedFiles.
+ * 
  * <p>{@link com.sldeditor.common.filesystem.SelectedFiles}
  *
  * @author Robert Ward (SCISYS)
@@ -47,16 +49,15 @@ public class SelectedFilesTest {
 
         selectedFiles.setDataSource(true);
         assertTrue(selectedFiles.isDataSource());
-        
+
         selectedFiles.setIsFolder(true);
         assertTrue(selectedFiles.isFolder());
-        
-        
+
         List<SLDDataInterface> actualSldData = new ArrayList<SLDDataInterface>();
         actualSldData.add(new SLDData(null, "test1"));
         actualSldData.add(new SLDData(null, "test2"));
         actualSldData.add(new SLDData(null, "test3"));
-        
+
         selectedFiles.setSldData(actualSldData);
         assertTrue(selectedFiles.getSldData().size() == actualSldData.size());
     }

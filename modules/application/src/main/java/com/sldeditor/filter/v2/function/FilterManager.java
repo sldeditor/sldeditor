@@ -181,6 +181,7 @@ public class FilterManager implements FilterNameInterface {
             logger.debug(className.getName());
         }
 
+        //CHECKSTYLE:OFF
         Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
                 Long.class };
         Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
@@ -200,6 +201,7 @@ public class FilterManager implements FilterNameInterface {
         Class<?>[] allowedUnitTypes = { Unit.class };
         Class<?>[] allowedComparableTypes = { Number.class, Double.class, Float.class,
                 Integer.class, Long.class, Date.class, String.class, Boolean.class };
+        //CHECKSTYLE:ON
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
         populateAllowedTypes(Double.class, allowedDoubleTypes);

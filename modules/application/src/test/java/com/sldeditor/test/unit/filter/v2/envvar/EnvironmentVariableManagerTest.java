@@ -93,7 +93,9 @@ public class EnvironmentVariableManagerTest {
         EnvironmentVariableManager.getInstance().addEnvVarUpdatedListener(listener);
 
         List<EnvVar> envVarList = EnvironmentVariableManager.getInstance().getEnvVarList();
+        //CHECKSTYLE:OFF
         int preloadedCount = envVarList.size();
+        //CHECKSTYLE:ON
 
         EnvVar actualValue1 = EnvironmentVariableManager.getInstance()
                 .addNewEnvVar("testAddNewEnvVar1", String.class, "testvalue1");
@@ -154,7 +156,9 @@ public class EnvironmentVariableManagerTest {
         EnvVarNotification listener = new EnvVarNotification();
         EnvironmentVariableManager.getInstance().addEnvVarUpdatedListener(listener);
         List<EnvVar> envVarList = EnvironmentVariableManager.getInstance().getEnvVarList();
+        //CHECKSTYLE:OFF
         int preloadedCount = envVarList.size();
+        //CHECKSTYLE:ON
 
         assertFalse(listener.hasBeenNotified());
         EnvironmentVariableManager.getInstance().update(null);

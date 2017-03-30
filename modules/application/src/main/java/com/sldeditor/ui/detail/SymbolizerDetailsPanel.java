@@ -267,7 +267,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     }
 
     /**
-     * Method called before symbol loaded
+     * Method called before symbol loaded.
      */
     public void preLoadSymbol() {
         for (String key : panelMap.keySet()) {

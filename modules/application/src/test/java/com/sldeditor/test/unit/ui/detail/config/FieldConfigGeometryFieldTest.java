@@ -250,7 +250,9 @@ public class FieldConfigGeometryFieldTest {
         }
 
         @Override
+        //CHECKSTYLE:OFF
         public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+            //CHECKSTYLE:ON
             return null;
         }
 

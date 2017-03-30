@@ -377,7 +377,9 @@ public class FieldConfigGeometryField extends FieldConfigBase
     private void populateAttributeComboBox() {
         if (attributeComboBox != null) {
             setPopulatingComboBox(true);
+            //CHECKSTYLE:OFF
             Object selectedItem = model.getSelectedItem();
+            //CHECKSTYLE:ON
             model.removeAllElements();
             model.addElement("");
 

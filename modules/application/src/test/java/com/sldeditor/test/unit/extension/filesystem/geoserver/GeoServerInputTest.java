@@ -319,13 +319,17 @@ public class GeoServerInputTest {
 
         Map<String, List<StyleWrapper>> expectedStyleMap =
                 new HashMap<String, List<StyleWrapper>>();
+        //CHECKSTYLE:OFF
         StyleWrapper[] styleWrappers = { new StyleWrapper("workspace", "style1"),
                 new StyleWrapper("workspace", "style2") };
+        //CHECKSTYLE:ON
         expectedStyleMap.put("style1", Arrays.asList(styleWrappers));
         Map<String, List<GeoServerLayer>> expectedLayerMap = 
                 new HashMap<String, List<GeoServerLayer>>();
+        //CHECKSTYLE:OFF
         GeoServerLayer[] geoServerLayers = { new GeoServerLayer("workspace", "style1"),
                 new GeoServerLayer("workspace", "style2") };
+        //CHECKSTYLE:ON
         expectedLayerMap.put("style1", Arrays.asList(geoServerLayers));
 
         input.populateComplete(connection1, expectedStyleMap, expectedLayerMap);
@@ -355,8 +359,10 @@ public class GeoServerInputTest {
         // Try with null objects
         input.updateLayerStyle(null);
 
+        //CHECKSTYLE:OFF
         GeoServerLayer[] geoServerLayers = { new GeoServerLayer("workspace", "style1"),
                 new GeoServerLayer("workspace", "style2") };
+        //CHECKSTYLE:ON
         List<GeoServerLayer> layerList = Arrays.asList(geoServerLayers);
         StyleWrapper updatedStyle = new StyleWrapper("workspace", "layer1");
 
@@ -434,13 +440,19 @@ public class GeoServerInputTest {
         input.deleteConnections(null);
 
         // Populate some styles
-        Map<String, List<StyleWrapper>> expectedStyleMap = new HashMap<String, List<StyleWrapper>>();
+        Map<String, List<StyleWrapper>> expectedStyleMap =
+                new HashMap<String, List<StyleWrapper>>();
+        //CHECKSTYLE:OFF
         StyleWrapper[] styleWrappers = { new StyleWrapper("workspace", "style1"),
                 new StyleWrapper("workspace", "style2") };
+        //CHECKSTYLE:ON
         expectedStyleMap.put("style1", Arrays.asList(styleWrappers));
-        Map<String, List<GeoServerLayer>> expectedLayerMap = new HashMap<String, List<GeoServerLayer>>();
+        Map<String, List<GeoServerLayer>> expectedLayerMap = 
+                new HashMap<String, List<GeoServerLayer>>();
+        //CHECKSTYLE:OFF
         GeoServerLayer[] geoServerLayers = { new GeoServerLayer("workspace", "style1"),
                 new GeoServerLayer("workspace", "style2") };
+        //CHECKSTYLE:ON
         expectedLayerMap.put("style1", Arrays.asList(geoServerLayers));
 
         input.populateComplete(connection1, expectedStyleMap, expectedLayerMap);
@@ -501,7 +513,8 @@ public class GeoServerInputTest {
                 "test workspace", false);
 
         // Create test data
-        Map<NodeInterface, List<SLDDataInterface>> copyDataMap = new HashMap<NodeInterface, List<SLDDataInterface>>();
+        Map<NodeInterface, List<SLDDataInterface>> copyDataMap =
+                new HashMap<NodeInterface, List<SLDDataInterface>>();
         List<SLDDataInterface> sldToCopyList = new ArrayList<SLDDataInterface>();
         StyleWrapper styleWrapper = new StyleWrapper("workspace", "layer1");
 
@@ -552,8 +565,11 @@ public class GeoServerInputTest {
         assertFalse(input.copyNodes(null, null));
 
         // Try with valid parameters
-        GeoServerWorkspaceNode workspaceTreeNode = new GeoServerWorkspaceNode(input, connection1,
+        //CHECKSTYLE:OFF
+        GeoServerWorkspaceNode workspaceTreeNode =
+                new GeoServerWorkspaceNode(input, connection1,
                 "test workspace", false);
+        //CHECKSTYLE:ON
 
         // Create test data
         List<SLDDataInterface> sldToDeleteList = new ArrayList<SLDDataInterface>();

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.data;
 
 import static org.junit.Assert.assertEquals;
@@ -55,8 +56,8 @@ import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 
 /**
  * The unit test for SLDUtils.
- * <p>
- * {@link com.sldeditor.common.data.SLDUtils}
+ * 
+ * <p>{@link com.sldeditor.common.data.SLDUtils}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -202,7 +203,8 @@ public class SLDUtilsTest {
         Symbolizer actualSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer, sldCopy);
 
         assertNotNull(actualSymbolizer);
-        assertEquals(symbolizer.getLabel().toString(), ((TextSymbolizer) actualSymbolizer).getLabel().toString());
+        assertEquals(symbolizer.getLabel().toString(),
+                ((TextSymbolizer) actualSymbolizer).getLabel().toString());
 
         actualSymbolizer = SLDUtils.findSymbolizer(sld, null, sldCopy);
         assertNull(actualSymbolizer);

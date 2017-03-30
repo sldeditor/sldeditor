@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.preferences;
 
 import static org.junit.Assert.assertEquals;
@@ -48,8 +49,8 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Unit test for PrefManager.
- * <p>
- * {@link com.sldeditor.common.preferences.PrefManager}
+ * 
+ * <p>{@link com.sldeditor.common.preferences.PrefManager}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -57,16 +58,6 @@ public class PrefManagerTest {
 
     class DummyPropertyManager implements PropertyManagerInterface {
         public Map<String, String> fieldValueMap = new HashMap<String, String>();
-
-        @Override
-        public void updateValue(String key, String value) {
-            fieldValueMap.put(key, value);
-        }
-
-        @Override
-        public void updateValue(String key, boolean value) {
-            fieldValueMap.put(key, String.valueOf(value));
-        }
 
         @Override
         public void readConfig() {
@@ -149,6 +140,16 @@ public class PrefManagerTest {
         }
 
         @Override
+        public void updateValue(String key, String value) {
+            fieldValueMap.put(key, value);
+        }
+
+        @Override
+        public void updateValue(String key, boolean value) {
+            fieldValueMap.put(key, String.valueOf(value));
+        }
+
+        @Override
         public void updateValue(String key, List<String> stringList) {
             StringBuilder sb = new StringBuilder();
 
@@ -167,11 +168,6 @@ public class PrefManagerTest {
             String updatedKey = String.format("%s%s%d", key, '.', count);
 
             updateValue(updatedKey, value);
-        }
-
-        @Override
-        public List<String> getMultipleValues(String key) {
-            return null;
         }
 
         @Override
@@ -212,6 +208,11 @@ public class PrefManagerTest {
          */
         @Override
         public void setPropertyFile(File configPropertiesFile) {
+        }
+
+        @Override
+        public List<String> getMultipleValues(String key) {
+            return null;
         }
     }
 

@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SldEditor_test testsldfile="polygon/sld/polygon_labelhalo.sld">
-	<VendorOption>
-		<ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption</ClassType>
-		<Version>2.4.1</Version>
-	</VendorOption>
-	<PanelTests>
-		<Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
-			<FeatureTypeStyle index="0" />
-			<Layer index="0" />
-			<Rule index="0" />
-			<Style index="0" />
-			<Symbolizer index="1" />
-		</Setup>
-		<FieldTests>
-			<!-- Point placement -->
-			<SetMultiOptionGroup multiOptionGroupId="PLACEMENT"
-				option="POINTPLACEMENT" />
-			<SetGroup groupId="ANCHORPOINT" enable="true" />
+    <VendorOption>
+        <ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption</ClassType>
+        <Version>2.4.1</Version>
+    </VendorOption>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
+            <FeatureTypeStyle index="0" />
+            <Layer index="0" />
+            <Rule index="0" />
+            <Style index="0" />
+            <Symbolizer index="1" />
+        </Setup>
+        <FieldTests>
+            <!-- Point placement -->
+            <SetMultiOptionGroup multiOptionGroupId="PLACEMENT"
+                option="POINTPLACEMENT" />
+            <SetGroup groupId="ANCHORPOINT" enable="true" />
 
-			<SetLiteralDouble value="0.18" field="ANCHOR_POINT_V" />
-			<SetLiteralDouble value="0.61" field="ANCHOR_POINT_H" />
+            <SetLiteralDouble value="0.18" field="ANCHOR_POINT_V" />
+            <SetLiteralDouble value="0.61" field="ANCHOR_POINT_H" />
 
-			<SetLiteralDouble value="0.42" field="DISPLACEMENT_X" />
-			<SetLiteralDouble value="0.09" field="DISPLACEMENT_Y" />
+            <SetLiteralDouble value="0.42" field="DISPLACEMENT_X" />
+            <SetLiteralDouble value="0.09" field="DISPLACEMENT_Y" />
 
-			<SetGroup groupId="ROTATION" enable="true" />
-			<SetLiteralDouble value="125.6" field="ANGLE" />
+            <SetGroup groupId="ROTATION" enable="true" />
+            <SetLiteralDouble value="125.6" field="ANGLE" />
 
-			<!-- Line placement -->
-			<SetMultiOptionGroup multiOptionGroupId="PLACEMENT"
-				option="LINEPLACEMENT" />
-			<SetLiteralDouble value="1.2" field="PERPENDICULAR_OFFSET" />
-			<!-- 
-			<SetLiteralDouble value="3.4" field="INITIAL_GAP" />
-			<SetLiteralDouble value="5.6" field="GAP" />
-			<SetLiteralBool value="true" field="REPEATED" />
-			<SetLiteralBool value="true" field="ALIGN" />
-			<SetLiteralBool value="true" field="GENERALISED_LINE" />
-			-->
-		</FieldTests>
-	</PanelTests>
+            <!-- Line placement -->
+            <SetMultiOptionGroup multiOptionGroupId="PLACEMENT"
+                option="LINEPLACEMENT" />
+            <SetLiteralDouble value="1.2"
+                field="PERPENDICULAR_OFFSET" />
+            <!-- <SetLiteralDouble value="3.4" field="INITIAL_GAP" /> <SetLiteralDouble 
+                value="5.6" field="GAP" /> <SetLiteralBool value="true" field="REPEATED" 
+                /> <SetLiteralBool value="true" field="ALIGN" /> <SetLiteralBool value="true" 
+                field="GENERALISED_LINE" /> -->
+        </FieldTests>
+    </PanelTests>
 </SldEditor_test>

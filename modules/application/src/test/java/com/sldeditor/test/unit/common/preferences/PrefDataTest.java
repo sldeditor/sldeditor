@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.preferences;
 
 import static org.junit.Assert.assertEquals;
@@ -35,6 +36,7 @@ import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Unit test for PrefData.
+ * 
  * <p>{@link com.sldeditor.common.preferences.PrefData}
  * 
  * @author Robert Ward (SCISYS)

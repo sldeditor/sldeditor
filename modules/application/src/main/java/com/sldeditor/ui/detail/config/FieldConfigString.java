@@ -136,9 +136,11 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
                     public void actionPerformed(ActionEvent e) {
                         if (buttonPressedListenerList != null) {
+                            //CHECKSTYLE:OFF
                             for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
                                 listener.buttonPressed(buttonExternal);
                             }
+                            //CHECKSTYLE:ON
                         }
                     }
                 });

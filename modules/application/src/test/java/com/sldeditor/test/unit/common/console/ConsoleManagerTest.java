@@ -72,12 +72,12 @@ public class ConsoleManagerTest {
      * Have to write all the messages to a file and then check them all. If you do it individually
      * there is no guarantee log4j has written the log files and flushing doesn't seem to work.
      * 
-     * Test method for:
+     * <p>Test method for:
      * {@link com.sldeditor.common.console.ConsoleManager#error(java.lang.Object, java.lang.String)}.
      * {@link com.sldeditor.common.console.ConsoleManager#warn(java.lang.Object, java.lang.String)}.
      * {@link com.sldeditor.common.console.ConsoleManager#information(java.lang.Object, java.lang.String)}.
      * {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Object, java.lang.String)}.
-     * {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Class<?>, java.lang.String)}.
+     * {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Class, java.lang.String)}.
      */
     @Test
     public void testWarnErrorInfoException() {

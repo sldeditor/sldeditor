@@ -116,7 +116,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     private FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
     /** The user feature list. */
+    //CHECKSTYLE:OFF
     private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> userLayerFeatureListMap = null;
+    //CHECKSTYLE:ON
 
     /** The map pane. */
     private SLDMapPane mapPane = null;
@@ -338,6 +340,16 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         labelCache.clear();
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.datasource.RenderSymbolInterface#renderSymbol()
+     */
+    @Override
+    public void renderSymbol() {
+        this.internalRenderStyle();
+    }
+
     /**
      * Render symbol.
      *
@@ -464,8 +476,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         if (userLayerFeatureListMap != null) {
             for (UserLayer userLayer : userLayerFeatureListMap.keySet()) {
                 try {
-                    FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = userLayerFeatureListMap
-                            .get(userLayer);
+                    FeatureSource<SimpleFeatureType, SimpleFeature> featureSource =
+                            userLayerFeatureListMap.get(userLayer);
 
                     if (featureSource != null) {
                         refEnvList.add(convertToWGS84(featureSource.getFeatures().getBounds()));
@@ -583,16 +595,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     @Override
     public void addSLDOutputListener(SLDOutputInterface sldOutput) {
         // Do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.datasource.RenderSymbolInterface#renderSymbol()
-     */
-    @Override
-    public void renderSymbol() {
-        this.internalRenderStyle();
     }
 
     /*

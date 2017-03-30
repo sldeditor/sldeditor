@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SldEditor_test testsldfile="polygon/sld/polygon_labelhalo.sld">
-	<PanelTests>
-		<Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
-			<Layer index="0" />
-		</Setup>
-		<FieldTests>
-			<SetLiteralString value="New Text Label Halo" field="NAME" />
-		</FieldTests>
-	</PanelTests>
-	<PanelTests>
-		<Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
-			<Layer index="0" />
-			<Style index="0" />
-		</Setup>
-		<FieldTests>
-			<SetLiteralString value="New Style : Text Label Halo"
-				field="TITLE" />
-		</FieldTests>
-	</PanelTests>
-	<PanelTests>
-		<Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
-			<FeatureTypeStyle index="0" />
-			<Layer index="0" />
-			<Rule index="0" />
-			<Style index="0" />
-			<Symbolizer index="1" />
-		</Setup>
-		<FieldTests>
-			<SetAttribute attribute="name" field="LABEL" />
-			<SetLiteralString value="test name value" field="LABEL" />
-			<SetLiteralString value="#654321" field="FILL_COLOUR" />
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.NamedLayerDetails">
+            <Layer index="0" />
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="New Text Label Halo"
+                field="NAME" />
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.StyleDetails">
+            <Layer index="0" />
+            <Style index="0" />
+        </Setup>
+        <FieldTests>
+            <SetLiteralString value="New Style : Text Label Halo"
+                field="TITLE" />
+        </FieldTests>
+    </PanelTests>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
+            <FeatureTypeStyle index="0" />
+            <Layer index="0" />
+            <Rule index="0" />
+            <Style index="0" />
+            <Symbolizer index="1" />
+        </Setup>
+        <FieldTests>
+            <SetAttribute attribute="name" field="LABEL" />
+            <SetLiteralString value="test name value"
+                field="LABEL" />
+            <SetLiteralString value="#654321" field="FILL_COLOUR" />
 
-			<!-- Font not created in sld until all font attributes are specified -->
-			<!-- Set all font attributes -->
-            <SetGroup groupId="FONT" enable="true"/>
-			<SetLiteralString value="Arial" field="FONT_FAMILY" ignoreCheck="true" />
-			<SetLiteralString value="italic" field="FONT_STYLE" ignoreCheck="true" />
-			<SetLiteralString value="bold" field="FONT_WEIGHT"  ignoreCheck="true" />
-			<SetLiteralInt value="24" field="FONT_SIZE" ignoreCheck="true" />
+            <!-- Font not created in sld until all font attributes are specified -->
+            <!-- Set all font attributes -->
+            <SetGroup groupId="FONT" enable="true" />
+            <SetLiteralString value="Arial" field="FONT_FAMILY"
+                ignoreCheck="true" />
+            <SetLiteralString value="italic" field="FONT_STYLE"
+                ignoreCheck="true" />
+            <SetLiteralString value="bold" field="FONT_WEIGHT"
+                ignoreCheck="true" />
+            <SetLiteralInt value="24" field="FONT_SIZE"
+                ignoreCheck="true" />
 
-			<!-- Check font attributes -->
-			<LiteralString value="Arial" field="FONT_FAMILY" />
-			<LiteralString value="italic" field="FONT_STYLE" />
-			<LiteralString value="bold" field="FONT_WEIGHT" />
-			<LiteralInt value="24" field="FONT_SIZE" />
+            <!-- Check font attributes -->
+            <LiteralString value="Arial" field="FONT_FAMILY" />
+            <LiteralString value="italic" field="FONT_STYLE" />
+            <LiteralString value="bold" field="FONT_WEIGHT" />
+            <LiteralInt value="24" field="FONT_SIZE" />
 
-			<!--  Halo -->
-			<SetLiteralDouble value="5.0" field="HALO_RADIUS" />
-			<SetLiteralString value="#112233" field="HALO_COLOUR" />
-		</FieldTests>
-	</PanelTests>
+            <!-- Halo -->
+            <SetLiteralDouble value="5.0" field="HALO_RADIUS" />
+            <SetLiteralString value="#112233" field="HALO_COLOUR" />
+        </FieldTests>
+    </PanelTests>
 </SldEditor_test>

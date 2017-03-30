@@ -530,8 +530,10 @@ public class FieldConfigWKTTest {
         Mark marker1 = styleBuilder.createMark("star");
         assertFalse(field.accept(marker1));
 
+        //CHECKSTYLE:OFF
         Mark marker2 = styleBuilder.createMark(
                 "wkt://MULTILINESTRING((-0.25 -0.25, -0.125 -0.25), (0.125 -0.25, 0.25 -0.25), (-0.25 0.25, -0.125 0.25), (0.125 0.25, 0.25 0.25))");
+        //CHECKSTYLE:ON
         assertTrue(field.accept(marker2));
     }
 

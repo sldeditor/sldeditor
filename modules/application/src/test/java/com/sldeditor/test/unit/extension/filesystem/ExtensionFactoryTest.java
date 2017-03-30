@@ -76,8 +76,10 @@ public class ExtensionFactoryTest {
 
         ExtensionInterface extension = extensionList.get(0);
 
+        //CHECKSTYLE:OFF
         String[] args = { "-extension.file.folder=D:\\GitHub\\SLDEditor\\slddata",
                 "-extension.zzz" };
+        //CHECKSTYLE:ON
         List<String> extensionArgList = ExtensionFactory.getArgumentList(args);
 
         List<String> extensionSpecificArgumentList = ExtensionFactory.getArguments(extension,

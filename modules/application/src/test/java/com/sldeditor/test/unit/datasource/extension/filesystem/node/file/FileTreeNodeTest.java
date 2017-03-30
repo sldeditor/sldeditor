@@ -88,7 +88,9 @@ public class FileTreeNodeTest {
             assertEquals(name, node.getName());
             assertEquals(DataFlavourManager.FOLDER_DATAITEM_FLAVOR, node.getDataFlavour());
 
+            //CHECKSTYLE:OFF
             File tmpFile1 = File.createTempFile("sldeditor", ".abc", folder);
+            //CHECKSTYLE:ON
 
             Thread.sleep(1000);
 

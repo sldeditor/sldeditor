@@ -220,7 +220,9 @@ public class GeoServerClientTest {
 
         assertTrue(progress.hasFinished());
 
+        //CHECKSTYLE:OFF
         int actualNoOfStyles = progress.styleTotal;
+        //CHECKSTYLE:ON
 
         // Retrieve style
         StyleWrapper styleWrapper = new StyleWrapper(client.getDefaultWorkspaceName(), "point");

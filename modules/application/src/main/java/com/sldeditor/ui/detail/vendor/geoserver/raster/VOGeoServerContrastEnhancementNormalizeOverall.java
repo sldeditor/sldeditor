@@ -58,14 +58,27 @@ public class VOGeoServerContrastEnhancementNormalizeOverall
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
      * GroupIdEnum, org.geotools.styling.ChannelSelection)
      */
     @Override
     protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
             ChannelSelection channelSelection) {
         // Does nothing
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.
+     * RasterSymbolizer)
+     */
+    @Override
+    protected ContrastEnhancement getContrastEnhancement(RasterSymbolizer rasterSymbolizer) {
+        if (rasterSymbolizer != null) {
+            return rasterSymbolizer.getContrastEnhancement();
+        }
         return null;
     }
 
@@ -84,20 +97,6 @@ public class VOGeoServerContrastEnhancementNormalizeOverall
                 extractNormalizeVendorOption(contrastEnhancement);
             }
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.
-     * RasterSymbolizer)
-     */
-    @Override
-    protected ContrastEnhancement getContrastEnhancement(RasterSymbolizer rasterSymbolizer) {
-        if (rasterSymbolizer != null) {
-            return rasterSymbolizer.getContrastEnhancement();
-        }
-        return null;
     }
 
 }

@@ -28,10 +28,10 @@
         <FieldTests>
             <LiteralDouble value="0.5" field="RASTER_CONTRAST_GAMMAVALUE"/>
             <LiteralString value="1" field="RASTER_COLOURMAP_TYPE"/> <!-- Ramp key = 1 -->
-			<ColourMapEntries field="RASTER_COLOURMAP">
-				<Entry label="" colour="#008000" opacity="1.0" quantity="70"/>
-				<Entry label="" colour="#663333" opacity="1.0" quantity="256"/>
-			</ColourMapEntries>
+            <ColourMapEntries field="RASTER_COLOURMAP">
+                <Entry label="" colour="#008000" opacity="1.0" quantity="70" />
+                <Entry label="" colour="#663333" opacity="1.0" quantity="256" />
+            </ColourMapEntries>
         </FieldTests>
     </PanelTests>
 </SldEditor_test>

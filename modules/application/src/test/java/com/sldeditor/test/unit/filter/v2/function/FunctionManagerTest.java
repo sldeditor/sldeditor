@@ -59,8 +59,10 @@ public class FunctionManagerTest {
         DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
         List<FunctionName> functionNameList = functionFactory.getFunctionNames();
 
+        //CHECKSTYLE:OFF
         Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
                 Long.class, Object.class };
+        //CHECKSTYLE:ON
         List<Class<?>> allowedNumberTypesList = Arrays.asList(allowedNumberTypes);
 
         int count = 0;

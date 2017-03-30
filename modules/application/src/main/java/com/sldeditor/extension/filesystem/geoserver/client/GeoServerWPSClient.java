@@ -68,9 +68,11 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
             "/ows?service=WPS&request=GetCapabilities";
 
     /** The vector geometry type array. */
+    //CHECKSTYLE:OFF
     private static String[] vectorGeometryTypeArray = { "text/xml; subtype=wfs-collection/1.0",
             "text/xml; subtype=wfs-collection/1.1", "application/wfs-collection-1.0",
             "application/wfs-collection-1.1" };
+    //CHECKSTYLE:ON
 
     /** The vector geometry type list. */
     private static List<String> vectorGeometryTypeList = Arrays.asList(vectorGeometryTypeArray);

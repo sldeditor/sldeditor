@@ -145,7 +145,9 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
     private void populateAttributeComboBox() {
         if (attributeComboBox != null) {
             setPopulatingComboBox(true);
+            //CHECKSTYLE:OFF
             Object selectedItem = model.getSelectedItem();
+            //CHECKSTYLE:ON
             model.removeAllElements();
             model.addElement("");
 

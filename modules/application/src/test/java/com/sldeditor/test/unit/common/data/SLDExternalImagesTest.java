@@ -61,6 +61,7 @@ import com.sldeditor.common.output.impl.SLDWriterImpl;
 
 /**
  * The unit test for SLDExternalImages.
+ * 
  * <p>{@link com.sldeditor.common.data.SLDExternalImages}
  * 
  * @author Robert Ward (SCISYS)
@@ -68,7 +69,8 @@ import com.sldeditor.common.output.impl.SLDWriterImpl;
 public class SLDExternalImagesTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SLDExternalImages#getExternalImages(java.net.URL, org.geotools.styling.StyledLayerDescriptor)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SLDExternalImages#getExternalImages(java.net.URL, org.geotools.styling.StyledLayerDescriptor)}.
      */
     @Test
     public void testGetExternalImagesPolygon() {
@@ -95,7 +97,8 @@ public class SLDExternalImagesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SLDExternalImages#getExternalImages(java.net.URL, org.geotools.styling.StyledLayerDescriptor)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SLDExternalImages#getExternalImages(java.net.URL, org.geotools.styling.StyledLayerDescriptor)}.
      */
     @Test
     public void testGetExternalImagesLine() {
@@ -122,11 +125,11 @@ public class SLDExternalImagesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SLDExternalImages#getExternalImages(java.net.URL, org.geotools.styling.StyledLayerDescriptor)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SLDExternalImages#getExternalImages(java.net.URL, org.geotools.styling.StyledLayerDescriptor)}.
      */
     @Test
     public void testGetExternalImagesPoint() {
-        SLDWriterImpl writer = new SLDWriterImpl();
 
         File f = new File("D:/temp/test.png");
         URL url = null;
@@ -145,6 +148,7 @@ public class SLDExternalImagesTest {
 
         imageList = SLDExternalImages.getExternalImages(resourceLocator, pointSLD);
 
+        SLDWriterImpl writer = new SLDWriterImpl();
         String result = writer.encodeSLD(resourceLocator, pointSLD);
         assertTrue(checkResult(f, result, 1));
 
@@ -173,15 +177,14 @@ public class SLDExternalImagesTest {
             assertEquals(expectedNoOfExternalGraphics, nodeList.getLength());
 
             int noFound = 0;
-            for(int index = 0; index < nodeList.getLength(); index ++)
-            {
+            for (int index = 0; index < nodeList.getLength(); index++) {
                 Element node = (Element) nodeList.item(index);
 
                 String href = node.getAttribute("xlink:href");
 
                 assertTrue(f.getName().compareTo(href) == 0);
 
-                noFound ++;
+                noFound++;
             }
 
             assertEquals(noFound, expectedNoOfExternalGraphics);
@@ -236,7 +239,8 @@ public class SLDExternalImagesTest {
 
         polygon.setFill(fill);
 
-        Stroke stroke = styleFactory.createStroke(null, null, null, null, null, null, null, graphicFill2, graphicStroke);
+        Stroke stroke = styleFactory.createStroke(null, null, null, null, null, null, null,
+                graphicFill2, graphicStroke);
         polygon.setStroke(stroke);
 
         return sld;
@@ -293,7 +297,8 @@ public class SLDExternalImagesTest {
         Graphic graphicFill = createGraphic(url, styleFactory);
         Graphic graphicStroke = createGraphic(url, styleFactory);
 
-        Stroke stroke = styleFactory.createStroke(null, null, null, null, null, null, null, graphicFill, graphicStroke);
+        Stroke stroke = styleFactory.createStroke(null, null, null, null, null, null, null,
+                graphicFill, graphicStroke);
         line.setStroke(stroke);
 
         return sld;

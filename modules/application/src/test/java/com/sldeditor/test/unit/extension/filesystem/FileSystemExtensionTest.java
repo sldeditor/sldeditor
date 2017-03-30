@@ -488,7 +488,7 @@ public class FileSystemExtensionTest {
 
     /**
      * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List<String>)}.
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List String)}.
      */
     @Test
     public void testUpdateForPreferences() {
@@ -536,7 +536,9 @@ public class FileSystemExtensionTest {
         assertEquals(expected, actualArgList.get(0));
 
         // Try and replace existing argument
+        //CHECKSTYLE:OFF
         String previous = lastFolderViewed;
+        //CHECKSTYLE:ON
         lastFolderViewed = "new folder";
         prefData.setLastFolderViewed(lastFolderViewed);
         fsExt.updateForPreferences(prefData, actualArgList);

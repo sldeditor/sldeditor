@@ -70,7 +70,8 @@ import com.sldeditor.ui.tree.UpdateTreeStructureInterface;
 public class SLDTreeTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)} using null values.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)} using null
+     * values.
      */
     @Test
     public void testSLDTreeNull() {
@@ -89,9 +90,9 @@ public class SLDTreeTest {
         StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
         SelectedSymbol.getInstance().setSld(sld);
-        
+
         tree1.populateSLD();
-        
+
         // Nothing selected at this stage
         tree1.leafSelected();
         PopulateDetailsInterface panel = tree1.getSelectedSymbolPanel();
@@ -101,18 +102,19 @@ public class SLDTreeTest {
         tree1.selectFirstSymbol();
 
         tree1.leafSelected();
-        
+
         panel = tree1.getSelectedSymbolPanel();
         assertNull(panel);
     }
 
     /**
      * Test method for {@link com.sldeditor.ui.tree.SLDTree#SLDTree(java.util.List)} using values.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#addSymbolSelectedListener(com.sldeditor.ui.iface.SymbolizerSelectedInterface)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectFirstSymbol()}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectTreeItem(com.sldeditor.TreeSelectionData)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#getSelectedSymbolPanel()}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#leafSelected()}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#addSymbolSelectedListener(com.sldeditor.ui.iface.SymbolizerSelectedInterface)}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTree#selectFirstSymbol()}. Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#selectTreeItem(com.sldeditor.TreeSelectionData)}. Test
+     * method for {@link com.sldeditor.ui.tree.SLDTree#getSelectedSymbolPanel()}. Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#leafSelected()}.
      */
     @Test
     public void testSLDTree() {
@@ -254,8 +256,7 @@ public class SLDTreeTest {
      * @param fileName the file name
      * @return the string
      */
-    private static String readFile(String fileName) 
-    {
+    private static String readFile(String fileName) {
         StringBuilder sb = new StringBuilder();
 
         BufferedReader br = null;
@@ -264,7 +265,7 @@ public class SLDTreeTest {
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
-        
+
         org.junit.Assert.assertNotNull("Failed to read test file : " + fileName, br);
 
         try {
@@ -300,7 +301,8 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#valueChanged(javax.swing.event.TreeSelectionEvent)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#valueChanged(javax.swing.event.TreeSelectionEvent)}.
      */
     @Test
     public void testValueChanged() {
@@ -319,7 +321,8 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#updateNode(java.lang.Object, java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#updateNode(java.lang.Object, java.lang.Object)}.
      */
     @Test
     public void testUpdateNode() {
@@ -328,7 +331,8 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)}.
      */
     @Test
     public void testDataSourceLoaded() {
@@ -337,7 +341,8 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#undoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
@@ -348,7 +353,8 @@ public class SLDTreeTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTree#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.SLDTree#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testRedoAction() {

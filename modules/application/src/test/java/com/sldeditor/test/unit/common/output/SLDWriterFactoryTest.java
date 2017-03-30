@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.output;
 
 import static org.junit.Assert.assertNotNull;
@@ -27,6 +28,7 @@ import com.sldeditor.common.output.impl.SLDWriterFactory;
 
 /**
  * The unit test for SLDWriterFactory.
+ * 
  * <p>{@link com.sldeditor.common.output.impl.SLDWriterFactory}
  *
  * @author Robert Ward (SCISYS)

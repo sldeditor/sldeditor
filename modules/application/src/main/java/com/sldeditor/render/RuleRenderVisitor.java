@@ -206,7 +206,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @param style the style
      */
+    //CHECKSTYLE:OFF
     @SuppressWarnings("deprecation")
+    //CHECKSTYLE:ON
     @Override
     public void visit(Style style) {
         Style copy = null;
@@ -375,7 +377,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
      * RasterSymbolizer)
      */
+    //CHECKSTYLE:OFF
     public void visit(RasterSymbolizer raster) {
+        //CHECKSTYLE:ON
         RasterSymbolizer copy = sf.createRasterSymbolizer();
         copy.setChannelSelection(copy(raster.getChannelSelection()));
         copy.setColorMap(copy(raster.getColorMap()));

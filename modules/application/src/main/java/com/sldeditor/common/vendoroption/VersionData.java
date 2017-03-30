@@ -258,7 +258,8 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     }
 
     /**
-     * Checks to see if this object is in the version range. Returns false if either supplied version is null.
+     * Checks to see if this object is in the version range.
+     * Returns false if either supplied version is null.
      *
      * @param minimumVersion the minimum version
      * @param maximumVersion the maximum version

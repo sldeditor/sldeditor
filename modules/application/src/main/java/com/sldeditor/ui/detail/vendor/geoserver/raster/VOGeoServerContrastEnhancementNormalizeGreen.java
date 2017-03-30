@@ -60,8 +60,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
+     * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
      * GroupIdEnum, org.geotools.styling.ChannelSelection)
      */
     @Override

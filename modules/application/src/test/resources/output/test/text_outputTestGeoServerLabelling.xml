@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SldEditor_test testsldfile="polygon/sld/polygon_labelhalo.sld">
-	<VendorOption>
-		<ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption</ClassType>
-		<Version>2.4.1</Version>
-	</VendorOption>
-	<PanelTests>
-		<Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
-			<FeatureTypeStyle index="0" />
-			<Layer index="0" />
-			<Rule index="0" />
-			<Style index="0" />
-			<Symbolizer index="1" />
-		</Setup>
-		<FieldTests>
-			<!-- Note these values should all be non-default so that they appear in the sld -->
-			<SetLiteralBool value="false" field="LABEL_ALLOW_OVERRUNS" />
-			<SetLiteralInt value="3" field="LABEL_AUTO_WRAP" />
-			<SetLiteralBool value="false" field="LABEL_CONFLICT_RESOLUTION" />
-			<SetLiteralBool value="true" field="LABEL_FOLLOW_LINE" />
-			<SetLiteralBool value="false" field="LABEL_FORCE_LEFT_TO_RIGHT" />
-			<SetLiteralDouble value="3.4" field="LABEL_GOODNESS_OF_FIT" />
-			<SetLiteralInt value="6" field="LABEL_GRAPHIC_MARGIN" />
-			<SetLiteralString value="proportional" field="LABEL_GRAPHIC_RESIZE" />
-			<SetLiteralBool value="true" field="LABEL_GROUP" />
-			<SetLiteralBool value="true" field="LABEL_LABEL_ALL_GROUP" />
-			<SetLiteralInt value="7" field="LABEL_LABEL_REPEAT" />
-			<SetLiteralDouble value="76.0" field="LABEL_MAX_ANGLE_DELTA" />
-			<SetLiteralInt value="9" field="LABEL_MAX_DISPLACEMENT" />
-			<SetLiteralInt value="11" field="LABEL_MIN_GROUP_DISTANCE" />
-			<SetLiteralBool value="true" field="LABEL_PARTIALS" />
-			<SetLiteralString value="mbr" field="LABEL_POLYGONALIGN" />
-			<SetLiteralInt value="5" field="LABEL_SPACE_AROUND" />
-		</FieldTests>
-	</PanelTests>
+    <VendorOption>
+        <ClassType>com.sldeditor.common.vendoroption.GeoServerVendorOption
+        </ClassType>
+        <Version>2.4.1</Version>
+    </VendorOption>
+    <PanelTests>
+        <Setup expectedPanel="com.sldeditor.ui.detail.TextSymbolizerDetails">
+            <FeatureTypeStyle index="0" />
+            <Layer index="0" />
+            <Rule index="0" />
+            <Style index="0" />
+            <Symbolizer index="1" />
+        </Setup>
+        <FieldTests>
+            <!-- Note these values should all be non-default so that they 
+                appear in the sld -->
+            <SetLiteralBool value="false" field="LABEL_ALLOW_OVERRUNS" />
+            <SetLiteralInt value="3" field="LABEL_AUTO_WRAP" />
+            <SetLiteralBool value="false"
+                field="LABEL_CONFLICT_RESOLUTION" />
+            <SetLiteralBool value="true" field="LABEL_FOLLOW_LINE" />
+            <SetLiteralBool value="false"
+                field="LABEL_FORCE_LEFT_TO_RIGHT" />
+            <SetLiteralDouble value="3.4"
+                field="LABEL_GOODNESS_OF_FIT" />
+            <SetLiteralInt value="6" field="LABEL_GRAPHIC_MARGIN" />
+            <SetLiteralString value="proportional"
+                field="LABEL_GRAPHIC_RESIZE" />
+            <SetLiteralBool value="true" field="LABEL_GROUP" />
+            <SetLiteralBool value="true" field="LABEL_LABEL_ALL_GROUP" />
+            <SetLiteralInt value="7" field="LABEL_LABEL_REPEAT" />
+            <SetLiteralDouble value="76.0"
+                field="LABEL_MAX_ANGLE_DELTA" />
+            <SetLiteralInt value="9" field="LABEL_MAX_DISPLACEMENT" />
+            <SetLiteralInt value="11"
+                field="LABEL_MIN_GROUP_DISTANCE" />
+            <SetLiteralBool value="true" field="LABEL_PARTIALS" />
+            <SetLiteralString value="mbr"
+                field="LABEL_POLYGONALIGN" />
+            <SetLiteralInt value="5" field="LABEL_SPACE_AROUND" />
+        </FieldTests>
+    </PanelTests>
 </SldEditor_test>

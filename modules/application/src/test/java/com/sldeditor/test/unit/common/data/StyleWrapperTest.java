@@ -29,6 +29,7 @@ import com.sldeditor.common.data.StyleWrapper;
 
 /**
  * The unit test for StyleWrapper.
+ * 
  * <p>{@link com.sldeditor.common.data.StyleWrapper}
  *
  * @author Robert Ward (SCISYS)

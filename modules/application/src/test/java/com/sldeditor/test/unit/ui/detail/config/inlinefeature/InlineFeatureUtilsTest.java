@@ -211,8 +211,9 @@ public class InlineFeatureUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#combineGeometryType(List<GeometryTypeEnum>)}.
+     * Test method for.
+     * {@link com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils#combineGeometryType()}.
+     * 
      */
     @Test
     public void testCombineGeometryType() {
