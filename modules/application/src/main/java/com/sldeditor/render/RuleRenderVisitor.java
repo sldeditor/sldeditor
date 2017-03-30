@@ -371,11 +371,8 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         return copy;
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
-     * RasterSymbolizer)
+    /* (non-Javadoc)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.RasterSymbolizer)
      */
     //CHECKSTYLE:OFF
     public void visit(RasterSymbolizer raster) {

@@ -194,10 +194,8 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         return false;
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.common.DataSourcePropertiesInterface)
      */
     @Override
     public Map<String, Object> getConnectionProperties(
