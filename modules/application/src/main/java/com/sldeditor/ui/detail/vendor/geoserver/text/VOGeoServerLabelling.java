@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
@@ -231,6 +232,14 @@ public class VOGeoServerLabelling extends StandardPanel
         // Do nothing
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void populate(FeatureTypeStyle featureTypeStyle) {
+        // Do nothing
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -372,6 +381,14 @@ public class VOGeoServerLabelling extends StandardPanel
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         // Do nothing
     }
 

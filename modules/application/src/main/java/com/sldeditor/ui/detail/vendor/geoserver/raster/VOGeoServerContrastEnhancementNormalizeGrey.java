@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
 
@@ -98,6 +99,24 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void populate(FeatureTypeStyle featureTypeStyle) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

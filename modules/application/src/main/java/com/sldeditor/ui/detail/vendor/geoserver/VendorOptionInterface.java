@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver;
 
 import java.util.List;
 
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
@@ -66,6 +67,12 @@ public interface VendorOptionInterface {
      */
     public void populate(RasterSymbolizer rasterSymbolizer);
 
+    /**
+     * Populate.
+     *
+     * @param featureTypeStyle the feature type style
+     */
+    public void populate(FeatureTypeStyle featureTypeStyle);
 
     /**
      * Update symbol for a polygon symbolizer.
@@ -87,6 +94,13 @@ public interface VendorOptionInterface {
      * @param rasterSymbolizer the raster symbolizer
      */
     public void updateSymbol(RasterSymbolizer rasterSymbolizer);
+
+    /**
+     * Update symbol.
+     *
+     * @param featureTypeStyle the feature type style
+     */
+    public void updateSymbol(FeatureTypeStyle featureTypeStyle);
 
     /**
      * Gets the panel.

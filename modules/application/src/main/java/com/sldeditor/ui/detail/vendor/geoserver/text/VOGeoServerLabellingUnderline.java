@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
@@ -164,6 +165,14 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void populate(FeatureTypeStyle featureTypeStyle) {
         // Do nothing
     }
 
@@ -314,6 +323,7 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
      */
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
+        // Do nothing
     }
 
     /**
@@ -333,6 +343,14 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
         for (FieldIdEnum key : fieldMap.keySet()) {
             internalUpdateSymbol(options, key, fieldMap.get(key));
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
+        // Do nothing
     }
 
     /**

@@ -29,6 +29,8 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VendorOptionFTSFactory;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
@@ -43,6 +45,9 @@ public class FeatureTypeStyleDetails extends StandardPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The vendor option feature type style factory. */
+    private VendorOptionFTSFactory vendorOptionFTSFactory = null;
+
     /**
      * Constructor.
      */
@@ -56,7 +61,27 @@ public class FeatureTypeStyleDetails extends StandardPanel
      * Creates the ui.
      */
     private void createUI() {
-        readConfigFile(null, getClass(), this, "FeatureTypeStyles.xml");
+        
+        createVendorOptionPanel();
+
+        readConfigFile(vendorOptionFTSFactory, getClass(), this, "FeatureTypeStyles.xml");
+    }
+
+    /**
+     * Creates the vendor option panel.
+     *
+     * @return the detail panel
+     */
+    private void createVendorOptionPanel() {
+
+        vendorOptionFTSFactory = new VendorOptionFTSFactory(getClass());
+
+        List<VendorOptionInterface> veList = vendorOptionFTSFactory.getVendorOptionList();
+        if (veList != null) {
+            for (VendorOptionInterface extension : veList) {
+                extension.setParentPanel(this);
+            }
+        }
     }
 
     /**
@@ -67,7 +92,8 @@ public class FeatureTypeStyleDetails extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -79,6 +105,10 @@ public class FeatureTypeStyleDetails extends StandardPanel
             if (featureTypeStyle != null) {
                 fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION,
                         featureTypeStyle.getTransformation());
+            }
+
+            if (vendorOptionFTSFactory != null) {
+                vendorOptionFTSFactory.populate(featureTypeStyle);
             }
         }
     }
@@ -122,6 +152,10 @@ public class FeatureTypeStyleDetails extends StandardPanel
 
                 if (transformation != null) {
                     fts.setTransformation(transformation);
+                }
+
+                if (vendorOptionFTSFactory != null) {
+                    vendorOptionFTSFactory.updateSymbol(fts);
                 }
 
                 SelectedSymbol.getInstance().replaceFeatureTypeStyle(fts);
@@ -174,7 +208,8 @@ public class FeatureTypeStyleDetails extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

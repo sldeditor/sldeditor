@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.TextSymbolizer;
@@ -74,10 +75,13 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /** The parent panel. */
     private RasterSymbolizerDetails parentPanel = null;
 
+    /** The algorithm field id. */
     private FieldIdEnum algorithmFieldId;
 
+    /** The min value field id. */
     private FieldIdEnum minValueFieldId;
 
+    /** The max value field id. */
     private FieldIdEnum maxValueFieldId;
 
     /**
@@ -86,6 +90,9 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      * @param panelId the panel id
      * @param resourceFile the resource file
      * @param parentPanel the parent panel
+     * @param algorithmFieldId the algorithm field id
+     * @param minValueFieldId the min value field id
+     * @param maxValueFieldId the max value field id
      */
     protected VOGeoServerContrastEnhancementNormalize(Class<?> panelId, String resourceFile,
             RasterSymbolizerDetails parentPanel, FieldIdEnum algorithmFieldId,
@@ -232,6 +239,14 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
         // Do nothing
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
+        // Do nothing
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -304,6 +319,14 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     @Override
     public void populate(PolygonSymbolizer polygonSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void populate(FeatureTypeStyle featureTypeStyle) {
         // Do nothing
     }
 

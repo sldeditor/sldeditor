@@ -216,6 +216,10 @@
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT" />
+
+            <xs:enumeration value="VO_FTS_COMPOSITE" />
+            <xs:enumeration value="VO_FTS_COMPOSITE_OPTION" />
+            <xs:enumeration value="VO_FTS_COMPOSITE_OPACITY" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

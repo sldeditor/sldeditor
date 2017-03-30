@@ -25,6 +25,7 @@ import java.util.Map;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Displacement;
 import org.geotools.styling.ExternalGraphic;
+import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
 import org.geotools.styling.Mark;
@@ -176,6 +177,14 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         // Do nothing
     }
 
@@ -365,6 +374,14 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+     */
+    @Override
+    public void populate(FeatureTypeStyle featureTypeStyle) {
         // Do nothing
     }
 
