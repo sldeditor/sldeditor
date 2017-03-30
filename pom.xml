@@ -56,6 +56,10 @@
         <app.name>SLDEditor</app.name>
         <sldeditor.dest.folder>../../bin</sldeditor.dest.folder>
 
+        <!-- Jacoco coverage -->
+        <jacoco.version>0.7.9</jacoco.version>
+
+        <!-- CheckStyle -->
         <checkstyle.config.location>build/checkstyle/sldeditor_checkstyle.xml</checkstyle.config.location>
         <checkstyle.suppressions.location>build/checkstyle/sldeditor_checkstyle_suppressions.xml</checkstyle.suppressions.location>
         <checkstyle.console.output>true</checkstyle.console.output>
@@ -231,13 +235,11 @@
                         <source>1.8</source>
                         <!-- Shuts off non-error and non-warning messages. -->
                         <quiet>true</quiet>
-                        <!-- The maximum Java heap size to be used to run 
-                            javadoc. -->
+                        <!-- The maximum Java heap size to be used to run javadoc. -->
                         <maxmemory>${javadoc.maxHeapSize}</maxmemory>
                         <!-- Specifies the encoding name of the source files. -->
                         <encoding>UTF-8</encoding>
-                        <!-- Set an additional parameter for the command 
-                            line. -->
+                        <!-- Set an additional parameter for the command line. -->
                         <additionalparam>-keywords</additionalparam>
                         <additionalparam>-Xdoclint:none</additionalparam>
                         <breakiterator>true</breakiterator>
