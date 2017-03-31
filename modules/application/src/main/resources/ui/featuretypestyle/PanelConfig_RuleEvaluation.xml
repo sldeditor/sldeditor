@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.4.0"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSRuleEvaluation">
+    <Group id="VO_FTS_RULE_EVALUATION" label="geoserver.ruleevaluation"
+        showLabel="true" option="true">
+       <FieldConfigEnum id="VO_FTS_RULE_EVALUATION_OPTION"
+            label="geoserver.ruleevaluation.option" valueOnly="true" default="none">
+            <ValueList>
+                <Value>
+                    <Item id="all" label="All" />
+                    <Item id="first" label="First" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+    </Group>
+</PanelConfig>

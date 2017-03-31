@@ -33,7 +33,7 @@
                     <Item id="color-burn" label="Colour-burn" />
                     <Item id="hard-light" label="Hard-light" />
                     <Item id="soft-light" label="Soft-light" />
-                    <Item id="difference" label="Eifference" />
+                    <Item id="difference" label="Difference" />
                     <Item id="exclusion" label="Exclusion" />
                 </Value>
             </ValueList>

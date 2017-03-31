@@ -223,6 +223,9 @@
 
             <xs:enumeration value="VO_FTS_COMPOSITE_BASE" />
             <xs:enumeration value="VO_FTS_COMPOSITE_BASE_BOOL" />
+
+            <xs:enumeration value="VO_FTS_RULE_EVALUATION" />
+            <xs:enumeration value="VO_FTS_RULE_EVALUATION_OPTION" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

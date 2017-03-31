@@ -144,6 +144,7 @@
 
             <xs:enumeration value="VO_FTS_COMPOSITE_BASE" />
 
+            <xs:enumeration value="VO_FTS_RULE_EVALUATION" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

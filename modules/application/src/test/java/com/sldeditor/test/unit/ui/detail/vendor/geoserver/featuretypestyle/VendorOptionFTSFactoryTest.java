@@ -50,7 +50,7 @@ public class VendorOptionFTSFactoryTest {
     public void testVendorOptionFTSFactory() {
         VendorOptionFTSFactory obj = new VendorOptionFTSFactory(FeatureTypeStyleDetails.class);
 
-        int expectedNoOfVO = 2;
+        int expectedNoOfVO = 3;
         assertEquals(expectedNoOfVO, obj.getVendorOptionList().size());
 
         List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<VendorOptionPresent>();
