@@ -188,6 +188,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_OPACITY"/&gt;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_BASE"/&gt;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_BASE_BOOL"/&gt;
+ *     &lt;enumeration value="VO_FTS_RULE_EVALUATION"/&gt;
+ *     &lt;enumeration value="VO_FTS_RULE_EVALUATION_OPTION"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -364,7 +366,9 @@ public enum FieldIdEnum {
     VO_FTS_COMPOSITE_OPTION,
     VO_FTS_COMPOSITE_OPACITY,
     VO_FTS_COMPOSITE_BASE,
-    VO_FTS_COMPOSITE_BASE_BOOL;
+    VO_FTS_COMPOSITE_BASE_BOOL,
+    VO_FTS_RULE_EVALUATION,
+    VO_FTS_RULE_EVALUATION_OPTION;
 
     public String value() {
         return name();

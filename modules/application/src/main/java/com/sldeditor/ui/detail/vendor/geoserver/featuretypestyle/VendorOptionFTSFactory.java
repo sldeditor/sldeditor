@@ -49,6 +49,9 @@ public class VendorOptionFTSFactory
     /** The vendor option geo server composite base. */
     private VOGeoServerFTSCompositeBase vendorOptionGeoServerCompositeBase = null;
 
+    /** The vendor option geo server rule evaluation. */
+    private VOGeoServerFTSRuleEvaluation vendorOptionGeoServerRuleEvaluation = null;
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -56,7 +59,7 @@ public class VendorOptionFTSFactory
     private List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
 
     /**
-     * Instantiates a new vendor option text factory.
+     * Instantiates a new vendor option feature type style factory.
      *
      * @param panelId the panel id
      */
@@ -66,6 +69,9 @@ public class VendorOptionFTSFactory
 
         vendorOptionGeoServerCompositeBase = new VOGeoServerFTSCompositeBase(panelId);
         vendorOptionList.add(vendorOptionGeoServerCompositeBase);
+
+        vendorOptionGeoServerRuleEvaluation = new VOGeoServerFTSRuleEvaluation(panelId);
+        vendorOptionList.add(vendorOptionGeoServerRuleEvaluation);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);

@@ -41,23 +41,23 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
-import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase;
+import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSRuleEvaluation;
 
 /**
- * The Class VOGeoServerFTSCompositeBaseTest.
+ * The Class VOGeoServerFTSRuleEvaluationTest.
  *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerFTSCompositeBaseTest {
+public class VOGeoServerFTSRuleEvaluationTest {
 
     /**
      * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase#VOGeoServerFTSCompositeBase(java.lang.Class)}.
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSRuleEvaluationTest#VOGeoServerFTSRuleEvaluationTest(java.lang.Class)}.
      */
     @Test
-    public void testVOGeoServerFTSCompositeBase() {
+    public void testVOGeoServerFTSRuleEvaluation() {
         Class<FeatureTypeStyleDetails> panelId = FeatureTypeStyleDetails.class;
-        VOGeoServerFTSCompositeBase obj = new VOGeoServerFTSCompositeBase(panelId);
+        VOGeoServerFTSRuleEvaluation obj = new VOGeoServerFTSRuleEvaluation(panelId);
         assertEquals(panelId, obj.getPanelId());
 
         assertNotNull(obj.getFieldDataManager());
@@ -70,7 +70,7 @@ public class VOGeoServerFTSCompositeBaseTest {
         VendorOptionVersion vendorOption = obj.getVendorOption();
         assertEquals(GeoServerVendorOption.class, vendorOption.getClassType());
         String actualVersionString = vendorOption.getEarliest().getVersionString();
-        String expectedVersionString = "2.7.0";
+        String expectedVersionString = "2.4.0";
         assertEquals(expectedVersionString, actualVersionString);
 
         obj.setParentPanel(null);
@@ -87,34 +87,34 @@ public class VOGeoServerFTSCompositeBaseTest {
         obj.getMinimumVersion(null, fts, vendorOptionsPresentList);
         assertEquals(0, vendorOptionsPresentList.size());
 
-        // Valid string
-        String expectedValue = "true";
-        fts.getOptions().put(FeatureTypeStyle.COMPOSITE_BASE, expectedValue);
+        // Valid string - first
+        String expectedValue = "first";
+        fts.getOptions().put(FeatureTypeStyle.KEY_EVALUATION_MODE, expectedValue);
         obj.getMinimumVersion(null, fts, vendorOptionsPresentList);
         assertEquals(1, vendorOptionsPresentList.size());
 
         obj.populate(fts);
         obj.updateSymbol(fts);
-        String actualValue = fts.getOptions().get(FeatureTypeStyle.COMPOSITE_BASE);
+        String actualValue = fts.getOptions().get(FeatureTypeStyle.KEY_EVALUATION_MODE);
         assertEquals(actualValue, expectedValue);
 
-        // No opacity
-        expectedValue = "false";
-        fts.getOptions().put(FeatureTypeStyle.COMPOSITE_BASE, expectedValue);
+        // Valid string - all
+        expectedValue = "all";
+        fts.getOptions().put(FeatureTypeStyle.KEY_EVALUATION_MODE, expectedValue);
 
         obj.populate(fts);
         obj.updateSymbol(fts);
-        actualValue = fts.getOptions().get(FeatureTypeStyle.COMPOSITE_BASE);
+        actualValue = fts.getOptions().get(FeatureTypeStyle.KEY_EVALUATION_MODE);
         assertEquals(actualValue, expectedValue);
 
         // Invalid string
         expectedValue = "invalid";
-        fts.getOptions().put(FeatureTypeStyle.COMPOSITE_BASE, expectedValue);
+        fts.getOptions().put(FeatureTypeStyle.KEY_EVALUATION_MODE, expectedValue);
 
         obj.populate(fts);
         obj.updateSymbol(fts);
-        actualValue = fts.getOptions().get(FeatureTypeStyle.COMPOSITE_BASE);
-        assertEquals("false", actualValue);
+        actualValue = fts.getOptions().get(FeatureTypeStyle.KEY_EVALUATION_MODE);
+        assertEquals("all", actualValue);
 
         // Increase code coverage
         obj.populate((PolygonSymbolizer) null);
@@ -124,7 +124,7 @@ public class VOGeoServerFTSCompositeBaseTest {
         obj.populate((TextSymbolizer) null);
         obj.updateSymbol((TextSymbolizer) null);
         obj.populate((SelectedSymbol) null);
-        obj.dataChanged(FieldIdEnum.VO_FTS_COMPOSITE_BASE_BOOL);
+        obj.dataChanged(FieldIdEnum.VO_FTS_RULE_EVALUATION_OPTION);
     }
 
 }
