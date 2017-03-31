@@ -55,8 +55,8 @@ import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Class that represents data sources for an SLD symbol. Provides functionality to read
- * and update its schema. Handles the following:
+ * Class that represents data sources for an SLD symbol. Provides functionality to read and update
+ * its schema. Handles the following:
  * 
  * <p>- example data
  * 
@@ -382,7 +382,9 @@ public class DataSourceImpl implements DataSourceInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.datasource.DataSourceInterface#updateAttributes(com.sldeditor.render.iface.RenderAttributeDataInterface)
+     * @see
+     * com.sldeditor.datasource.DataSourceInterface#updateAttributes(com.sldeditor.render.iface.
+     * RenderAttributeDataInterface)
      */
     @Override
     public void readAttributes(DataSourceAttributeListInterface attributeData) {
@@ -522,7 +524,8 @@ public class DataSourceImpl implements DataSourceInterface {
      * Notify data source loaded.
      */
     private void notifyDataSourceLoaded() {
-        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<DataSourceUpdatedInterface>(
+        List<DataSourceUpdatedInterface> copyListenerList = 
+                new ArrayList<DataSourceUpdatedInterface>(
                 listenerList);
         GeometryTypeEnum geometryType = getGeometryType();
         for (DataSourceUpdatedInterface listener : copyListenerList) {
@@ -536,7 +539,8 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param dataStore the data store to be unloaded
      */
     private void notifyDataSourceAboutToUnloaded(DataStore dataStore) {
-        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<DataSourceUpdatedInterface>(
+        List<DataSourceUpdatedInterface> copyListenerList =
+                new ArrayList<DataSourceUpdatedInterface>(
                 listenerList);
         for (DataSourceUpdatedInterface listener : copyListenerList) {
             listener.dataSourceAboutToUnloaded(dataStore);
@@ -581,7 +585,8 @@ public class DataSourceImpl implements DataSourceInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.datasource.DataSourceInterface#updateFields(com.sldeditor.render.iface.RenderAttributeDataInterface)
+     * @see com.sldeditor.datasource.DataSourceInterface#updateFields(com.sldeditor.render.iface.
+     * RenderAttributeDataInterface)
      */
     @Override
     public void updateFields(DataSourceAttributeListInterface attributeData) {
@@ -662,8 +667,11 @@ public class DataSourceImpl implements DataSourceInterface {
      * @see com.sldeditor.datasource.DataSourceInterface#getUserLayerFeatureSource()
      */
     @Override
+    //CHECKSTYLE:OFF
     public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
-        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map = new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
+        //CHECKSTYLE:ON
+        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map =
+                new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
 
         for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
             FeatureSource<SimpleFeatureType, SimpleFeature> features = dsInfo.getFeatures();
@@ -687,7 +695,8 @@ public class DataSourceImpl implements DataSourceInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
+     * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String,
+     * java.lang.Class)
      */
     @Override
     public void updateFieldType(String fieldName, Class<?> dataType) {

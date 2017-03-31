@@ -512,7 +512,8 @@ public class FieldConfigWKT extends FieldState implements WKTUpdateInterface {
     }
 
     /**
-     * Method called when the field has been selected from a combo box and may need to be initialised.
+     * Method called when the field has been selected from a combo box 
+     * and may need to be initialised.
      */
     @Override
     public void justSelected() {

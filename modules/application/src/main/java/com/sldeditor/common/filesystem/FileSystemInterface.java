@@ -77,7 +77,7 @@ public interface FileSystemInterface extends Serializable {
     SelectedFiles getSLDContents(NodeInterface node);
 
     /**
-     * Open url
+     * Open url.
      *
      * @param url the url
      * @return the list
@@ -93,7 +93,7 @@ public interface FileSystemInterface extends Serializable {
     boolean save(SLDDataInterface sldData);
 
     /**
-     * Gets the node types list
+     * Gets the node types list.
      *
      * @return the node types
      */
@@ -118,7 +118,7 @@ public interface FileSystemInterface extends Serializable {
     void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList);
 
     /**
-     * Gets the text representation of the destination node
+     * Gets the text representation of the destination node.
      *
      * @param destinationTreeNode the destination tree node
      * @return the destination text

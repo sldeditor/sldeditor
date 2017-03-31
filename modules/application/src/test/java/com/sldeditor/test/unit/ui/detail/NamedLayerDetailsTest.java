@@ -35,6 +35,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for NamedLayerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.NamedLayerDetails}
  *
  * @author Robert Ward (SCISYS)

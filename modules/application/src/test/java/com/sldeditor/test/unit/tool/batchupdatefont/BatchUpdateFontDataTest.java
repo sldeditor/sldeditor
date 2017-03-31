@@ -40,8 +40,8 @@ import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
 
 /**
  * The unit test for BatchUpdateFontData.
- * <p>
- * {@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontData}
+ * 
+ * <p>{@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontData}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -122,7 +122,8 @@ public class BatchUpdateFontDataTest {
         String originalFontStyle = "normal";
         String originalFontWeight = "normal";
         int originalFontSize = 24;
-        Font font = styleFactory.createFont(ff.literal(originalFontname), ff.literal(originalFontStyle),
+        Font font = styleFactory.createFont(ff.literal(originalFontname),
+                ff.literal(originalFontStyle),
                 ff.literal(originalFontWeight), ff.literal(originalFontSize));
         testObj.setFont(font);
         assertTrue(testObj.isFontNameSet());
@@ -136,7 +137,8 @@ public class BatchUpdateFontDataTest {
         assertFalse(testObj.anyChanges());
 
         // Update with a different copy of the same font - no changes
-        Font unchangedFont = styleFactory.createFont(ff.literal(originalFontname), ff.literal(originalFontStyle),
+        Font unchangedFont = styleFactory.createFont(ff.literal(originalFontname), 
+                ff.literal(originalFontStyle),
                 ff.literal(originalFontWeight), ff.literal(originalFontSize));
 
         testObj.updateFont(unchangedFont);
@@ -170,7 +172,8 @@ public class BatchUpdateFontDataTest {
         // Increment font size
         int expectedIncreaseFontSize = 5;
         testObj.updateFontSize(expectedIncreaseFontSize);
-        assertEquals(testObj.getFontSize(), String.valueOf(expectedFontSize + expectedIncreaseFontSize));
+        assertEquals(testObj.getFontSize(),
+                String.valueOf(expectedFontSize + expectedIncreaseFontSize));
 
         // Decrease font size
         expectedIncreaseFontSize *= -1;

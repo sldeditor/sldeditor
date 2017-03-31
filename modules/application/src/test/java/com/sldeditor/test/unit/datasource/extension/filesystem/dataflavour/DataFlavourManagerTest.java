@@ -19,7 +19,8 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.dataflavour;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.datatransfer.DataFlavor;
 
@@ -30,6 +31,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourMana
 
 /**
  * Unit test for DataFlavourManager class.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager}
  * 
  * @author Robert Ward (SCISYS)
@@ -38,7 +40,8 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourMana
 public class DataFlavourManagerTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#getDataFlavourArray()}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#getDataFlavourArray()}.
      */
     @Test
     public void testGetDataFlavourArray() {
@@ -48,22 +51,31 @@ public class DataFlavourManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#isSupported(java.awt.datatransfer.DataFlavor, java.awt.datatransfer.DataFlavor)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#isSupported(java.awt.datatransfer.DataFlavor, java.awt.datatransfer.DataFlavor)}.
      */
     @Test
     public void testIsSupported() {
-        assertTrue(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR, DataFlavourManager.FOLDER_DATAITEM_FLAVOR));
-        assertFalse(DataFlavourManager.isSupported(DataFlavourManager.FOLDER_DATAITEM_FLAVOR, BuiltInDataFlavour.FILE_DATAITEM_FLAVOR));
+        assertTrue(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR,
+                DataFlavourManager.FOLDER_DATAITEM_FLAVOR));
+        assertFalse(DataFlavourManager.isSupported(DataFlavourManager.FOLDER_DATAITEM_FLAVOR,
+                BuiltInDataFlavour.FILE_DATAITEM_FLAVOR));
 
-        assertTrue(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR, DataFlavourManager.GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR));
-        assertTrue(DataFlavourManager.isSupported(BuiltInDataFlavour.GEOSERVER_STYLE_DATAITEM_FLAVOUR, DataFlavourManager.GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR));
+        assertTrue(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR,
+                DataFlavourManager.GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR));
+        assertTrue(
+                DataFlavourManager.isSupported(BuiltInDataFlavour.GEOSERVER_STYLE_DATAITEM_FLAVOUR,
+                        DataFlavourManager.GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR));
 
-        assertFalse(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR, BuiltInDataFlavour.GEOSERVER_STYLE_DATAITEM_FLAVOUR));
-        assertFalse(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR, BuiltInDataFlavour.GEOSERVER_OVERALL_DATAITEM_FLAVOUR));
+        assertFalse(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR,
+                BuiltInDataFlavour.GEOSERVER_STYLE_DATAITEM_FLAVOUR));
+        assertFalse(DataFlavourManager.isSupported(BuiltInDataFlavour.FILE_DATAITEM_FLAVOR,
+                BuiltInDataFlavour.GEOSERVER_OVERALL_DATAITEM_FLAVOUR));
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#copy(javax.swing.tree.DefaultTreeModel, com.sldeditor.common.NodeInterface, com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#copy(javax.swing.tree.DefaultTreeModel, com.sldeditor.common.NodeInterface, com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData)}.
      */
     @Test
     public void testCopy() {
@@ -71,7 +83,8 @@ public class DataFlavourManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#deleteNodes(javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#deleteNodes(javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData)}.
      */
     @Test
     public void testDeleteNodes() {
@@ -79,7 +92,8 @@ public class DataFlavourManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#displayMessages(com.sldeditor.common.NodeInterface, com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData, int)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager#displayMessages(com.sldeditor.common.NodeInterface, com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData, int)}.
      */
     @Test
     public void testDisplayMessages() {

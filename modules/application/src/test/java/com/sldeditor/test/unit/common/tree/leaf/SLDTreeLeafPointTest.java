@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.tree.leaf;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +39,7 @@ import com.sldeditor.common.tree.leaf.SLDTreeLeafPoint;
 
 /**
  * The unit test for SLDTreeLeafPoint
+ * 
  * <p>{@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint}
  * 
  * @author Robert Ward (SCISYS)
@@ -55,7 +57,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#hasFill(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#hasFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasFill() {
@@ -72,7 +75,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#hasStroke(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#hasStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasStroke() {
@@ -86,7 +90,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#getFill(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#getFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetFill() {
@@ -99,19 +104,15 @@ public class SLDTreeLeafPointTest {
         Fill expectedFill = null;
         Graphic graphic = pointSymbolizer.getGraphic();
 
-        if(graphic != null)
-        {
+        if (graphic != null) {
             List<GraphicalSymbol> symbolList = graphic.graphicalSymbols();
 
-            if((symbolList != null) && !symbolList.isEmpty())
-            {
+            if ((symbolList != null) && !symbolList.isEmpty()) {
                 GraphicalSymbol obj = symbolList.get(0);
 
-                if(obj != null)
-                {
-                    if(obj instanceof MarkImpl)
-                    {
-                        MarkImpl mark = (MarkImpl)obj;
+                if (obj != null) {
+                    if (obj instanceof MarkImpl) {
+                        MarkImpl mark = (MarkImpl) obj;
 
                         expectedFill = mark.getFill();
                     }
@@ -123,7 +124,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#getStroke(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#getStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetStroke() {
@@ -136,7 +138,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#removeStroke(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#removeStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveStroke() {
@@ -149,7 +152,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#createStroke(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#createStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateStroke() {
@@ -162,7 +166,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#createFill(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#createFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateFill() {
@@ -176,7 +181,8 @@ public class SLDTreeLeafPointTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#removeFill(org.opengis.style.Symbolizer)}.
+     * Test method for
+     * {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPoint#removeFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveFill() {

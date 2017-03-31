@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.create;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +35,7 @@ import com.sldeditor.create.NewSLDPanel;
 /**
  * The Class NewSLDPanelTest.
  * 
- * Set to @Ignore currently because it takes focus away from the user when the unit test is run
+ * <p>Set to @Ignore currently because it takes focus away from the user when the unit test is run
  *
  * @author Robert Ward (SCISYS)
  */
@@ -44,16 +45,14 @@ public class NewSLDPanelTest {
     /**
      * The Class TestNewSLDPanel.
      */
-    class TestNewSLDPanel extends NewSLDPanel
-    {
+    class TestNewSLDPanel extends NewSLDPanel {
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
         /**
          * Instantiates a new test new sld panel.
          */
-        public TestNewSLDPanel()
-        {
+        public TestNewSLDPanel() {
             super();
         }
 
@@ -62,8 +61,7 @@ public class NewSLDPanelTest {
          *
          * @param index the new data
          */
-        public void setData(int index)
-        {
+        public void setData(int index) {
             comboBoxNewSLD.setSelectedIndex(index);
         }
 
@@ -72,25 +70,23 @@ public class NewSLDPanelTest {
          *
          * @return the data
          */
-        public ComboBoxModel<String> getData()
-        {
+        public ComboBoxModel<String> getData() {
             return comboBoxNewSLD.getModel();
         }
 
         /**
          * Ok button.
          */
-        public void okButton()
-        {
+        public void okButton() {
             Thread one = new Thread() {
                 public void run() {
                     try {
                         Thread.sleep(1000);
                         okButtonPressed();
-                    } catch(InterruptedException v) {
+                    } catch (InterruptedException v) {
                         System.out.println(v);
                     }
-                }  
+                }
             };
 
             one.start();
@@ -99,17 +95,16 @@ public class NewSLDPanelTest {
         /**
          * Cancel button.
          */
-        public void cancelButton()
-        {
+        public void cancelButton() {
             Thread one = new Thread() {
                 public void run() {
                     try {
                         Thread.sleep(1000);
                         cancelButtonPressed();
-                    } catch(InterruptedException v) {
+                    } catch (InterruptedException v) {
                         System.out.println(v);
                     }
-                }  
+                }
             };
 
             one.start();
@@ -129,8 +124,7 @@ public class NewSLDPanelTest {
         panel.cancelButton();
         assertNull(panel.showDialog(null));
 
-        for(int index = 0; index < panel.getData().getSize(); index ++)
-        {
+        for (int index = 0; index < panel.getData().getSize(); index++) {
             panel.setData(index);
             panel.okButton();
             List<SLDDataInterface> sldData = panel.showDialog(null);

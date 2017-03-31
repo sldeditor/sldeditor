@@ -16,23 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.undo;
 
 import com.sldeditor.common.PopulatingInterface;
 
 /**
- * @author Robert Ward (SCISYS)
+ * The Class DummyPopulating.
  *
+ * @author Robert Ward (SCISYS)
  */
-class DummyPopulating implements PopulatingInterface
-{
+class DummyPopulating implements PopulatingInterface {
+    
+    /** The populating. */
     private boolean populating = false;
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.PopulatingInterface#isPopulating()
+     */
     @Override
     public boolean isPopulating() {
         return populating;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.PopulatingInterface#setPopulating(boolean)
+     */
     @Override
     public void setPopulating(boolean populating) {
         this.populating = populating;

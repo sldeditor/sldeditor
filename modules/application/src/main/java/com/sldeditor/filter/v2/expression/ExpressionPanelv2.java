@@ -551,6 +551,16 @@ public class ExpressionPanelv2 extends JDialog
     public void populate(String expressionString) {
     }
 
+    /**
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
+     */
+    @Override
+    public void populate(Expression storedExpression) {
+        this.expression = storedExpression;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -602,13 +612,4 @@ public class ExpressionPanelv2 extends JDialog
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
-     */
-    @Override
-    public void populate(Expression storedExpression) {
-        this.expression = storedExpression;
-    }
 }

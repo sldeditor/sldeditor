@@ -51,15 +51,17 @@ import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFile
 
 /**
  * The unit test for FieldConfigFilename.
- * <p>
- * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename}
  *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFilenameTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#internal_setEnabled(boolean)}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#internal_setEnabled(boolean)}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#isEnabled()}.
      */
     @Test
@@ -109,7 +111,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
@@ -127,10 +130,13 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#generateExpression()}. Test method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#generateExpression()}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateField(java.lang.String)}. Test
-     * method for
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateField(java.lang.String)}.
+     * Test method for
      * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
      */
     @Test
@@ -177,7 +183,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
@@ -193,7 +200,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#justSelected()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#justSelected()}.
      */
     @Test
     public void testJustSelected() {
@@ -236,7 +244,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
@@ -250,7 +259,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getVendorOption()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getVendorOption()}.
      */
     @Test
     public void testGetVendorOption() {
@@ -264,7 +274,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getSymbolClass()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getSymbolClass()}.
      */
     @Test
     public void testGetSymbolClass() {
@@ -368,20 +379,20 @@ public class FieldConfigFilenameTest {
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(FieldIdEnum.UNKNOWN, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField = new FieldConfigSlider(
                 new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
                 new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         field.createUI();
@@ -395,7 +406,8 @@ public class FieldConfigFilenameTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getBasePanel()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#getBasePanel()}.
      */
     @Test
     public void testGetBasePanel() {

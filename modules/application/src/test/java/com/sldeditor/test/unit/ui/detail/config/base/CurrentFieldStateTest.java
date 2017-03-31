@@ -28,6 +28,7 @@ import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 
 /**
  * The unit test for CurrentFieldState.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.base.CurrentFieldState}
  *
  * @author Robert Ward (SCISYS)

@@ -37,6 +37,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for StyleDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.StyleDetails}
  *
  * @author Robert Ward (SCISYS)

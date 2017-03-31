@@ -21,4 +21,7 @@
     <Group id="GENERAL" showLabel="false">
         <FieldConfigTransformation id="TRANSFORMATION" label="featurestyle.general.transformation" editButtonText="featurestyle.general.transformation.edit" clearButtonText="featurestyle.general.transformation.clear" />
     </Group>
+    <Group id="VO_FTS" showLabel="false">
+        <FieldConfigVendorOption id="VO_FTS_COMPOSITE" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSComposite"/>
+    </Group>
 </PanelConfig>

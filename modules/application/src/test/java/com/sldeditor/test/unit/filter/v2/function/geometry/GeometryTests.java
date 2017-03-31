@@ -45,15 +45,25 @@ import com.sldeditor.filter.v2.function.geometry.Within;
 
 /**
  * Unit test for the following classes:
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.BBox}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Contains}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Crosses}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Disjoint}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.DWithin}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Equals}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Intersects}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Overlaps}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Touches}.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.geometry.Within}.
  * 
  * @author Robert Ward (SCISYS)
@@ -64,7 +74,7 @@ public class GeometryTests {
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.BBox}.
+     * {@link com.sldeditor.filter.v2.function.geometry.BBox}.
      */
     @Test
     public void testBBox() {
@@ -72,7 +82,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Contains}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Contains}.
      */
     @Test
     public void testContains() {
@@ -80,7 +90,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Crosses}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Crosses}.
      */
     @Test
     public void testCrosses() {
@@ -88,7 +98,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Disjoint}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Disjoint}.
      */
     @Test
     public void testDisjoint() {
@@ -96,7 +106,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.DWithin}.
+     * {@link com.sldeditor.filter.v2.function.geometry.DWithin}.
      */
     @Test
     public void testDWithin() {
@@ -104,7 +114,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Equals}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Equals}.
      */
     @Test
     public void testEquals() {
@@ -112,7 +122,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Intersects}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Intersects}.
      */
     @Test
     public void testIntersects() {
@@ -120,7 +130,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Overlaps}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Overlaps}.
      */
     @Test
     public void testOverlaps() {
@@ -128,7 +138,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Touches}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Touches}.
      */
     @Test
     public void testTouches() {
@@ -136,7 +146,7 @@ public class GeometryTests {
     }
 
     /**
-     * <p>{@link com.sldeditor.filter.v2.function.geometry.Within}.
+     * {@link com.sldeditor.filter.v2.function.geometry.Within}.
      */
     @Test
     public void testWithin() {

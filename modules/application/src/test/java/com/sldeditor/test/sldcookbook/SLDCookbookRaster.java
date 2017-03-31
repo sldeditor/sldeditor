@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.sldcookbook;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,11 +33,16 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDCookbookRaster
-{
+public class SLDCookbookRaster {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     *
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException the interrupted exception
+     */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -48,38 +54,32 @@ public class SLDCookbookRaster
     }
 
     @Test
-    public void raster_alphachannel()
-    {
+    public void raster_alphachannel() {
         test.runTest("raster", "raster_alphachannel.xml");
     }
 
     @Test
-    public void raster_brightnessandcontrast()
-    {
+    public void raster_brightnessandcontrast() {
         test.runTest("raster", "raster_brightnessandcontrast.xml");
     }
 
     @Test
-    public void raster_discretecolours()
-    {
+    public void raster_discretecolours() {
         test.runTest("raster", "raster_discretecolours.xml");
     }
 
     @Test
-    public void raster_manycolourgradient()
-    {
+    public void raster_manycolourgradient() {
         test.runTest("raster", "raster_manycolourgradient.xml");
     }
 
     @Test
-    public void raster_transparentgradient()
-    {
+    public void raster_transparentgradient() {
         test.runTest("raster", "raster_transparentgradient.xml");
     }
 
     @Test
-    public void raster_twocolourgradient()
-    {
+    public void raster_twocolourgradient() {
         test.runTest("raster", "raster_twocolourgradient.xml");
     }
 }

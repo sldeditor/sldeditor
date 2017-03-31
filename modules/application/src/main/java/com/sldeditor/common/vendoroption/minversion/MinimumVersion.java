@@ -170,7 +170,8 @@ public class MinimumVersion {
     }
 
     /**
-     * Find latest version data between the vendor option version read from the symbol and the user default.
+     * Find latest version data between the vendor option version read 
+     * from the symbol and the user default.
      *
      * @param earliestReadFromSymbol the earliest read from symbol
      * @param userDefaultVendorOptionList the user default vendor option

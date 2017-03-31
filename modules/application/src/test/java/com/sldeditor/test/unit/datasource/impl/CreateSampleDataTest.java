@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +35,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Unit test for CreateSampleData.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.CreateSampleData}
  * 
  * @author Robert Ward (SCISYS)
@@ -47,26 +49,25 @@ public class CreateSampleDataTest {
     @Test
     public void testGetDataStore() {
 
-        CreateSampleData sampleData = new CreateSampleData();
-
         SimpleFeatureTypeBuilder b = new SimpleFeatureTypeBuilder();
 
         String typeName = "test type name";
-        b.setName( typeName );
+        b.setName(typeName);
 
         String namespace = null;
         b.setNamespaceURI(namespace);
 
-        //add a geometry property
-        b.setCRS( DefaultGeographicCRS.WGS84 ); // set crs first
+        // add a geometry property
+        b.setCRS(DefaultGeographicCRS.WGS84); // set crs first
 
-        b.add( "the_geom", Polygon.class );
+        b.add("the_geom", Polygon.class);
 
-        b.setDefaultGeometry( "the_geom" );
+        b.setDefaultGeometry("the_geom");
 
         // Build the feature type
         SimpleFeatureType schema = b.buildFeatureType();
 
+        CreateSampleData sampleData = new CreateSampleData();
         sampleData.create(null, null);
         sampleData.create(schema, null);
 
@@ -77,22 +78,32 @@ public class CreateSampleDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.CreateSampleData#getFieldTypeValue(int, org.opengis.feature.type.Name, java.lang.Class)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.CreateSampleData#getFieldTypeValue(int, org.opengis.feature.type.Name, java.lang.Class)}.
      */
     @Test
     public void testGetFieldTypeValue() {
         String expectedFieldName = "String field";
-        assertEquals(expectedFieldName, CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, null));
-        assertEquals(Long.valueOf(1), CreateSampleData.getFieldTypeValue(1, expectedFieldName, Long.class, null));
-        assertEquals(Short.valueOf((short)2), CreateSampleData.getFieldTypeValue(2, expectedFieldName, Short.class, null));
-        assertEquals(Integer.valueOf(3), CreateSampleData.getFieldTypeValue(3, expectedFieldName, Integer.class, null));
-        assertEquals(Float.valueOf(4), CreateSampleData.getFieldTypeValue(4, expectedFieldName, Float.class, null));
-        assertEquals(Double.valueOf(5), CreateSampleData.getFieldTypeValue(5, expectedFieldName, Double.class, null));
-        assertNull(CreateSampleData.getFieldTypeValue(6, expectedFieldName, SimpleFeatureType.class, null));
+        assertEquals(expectedFieldName,
+                CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, null));
+        assertEquals(Long.valueOf(1),
+                CreateSampleData.getFieldTypeValue(1, expectedFieldName, Long.class, null));
+        assertEquals(Short.valueOf((short) 2),
+                CreateSampleData.getFieldTypeValue(2, expectedFieldName, Short.class, null));
+        assertEquals(Integer.valueOf(3),
+                CreateSampleData.getFieldTypeValue(3, expectedFieldName, Integer.class, null));
+        assertEquals(Float.valueOf(4),
+                CreateSampleData.getFieldTypeValue(4, expectedFieldName, Float.class, null));
+        assertEquals(Double.valueOf(5),
+                CreateSampleData.getFieldTypeValue(5, expectedFieldName, Double.class, null));
+        assertNull(CreateSampleData.getFieldTypeValue(6, expectedFieldName, SimpleFeatureType.class,
+                null));
 
         String expectedStringValue = "test";
-        assertEquals(expectedStringValue, CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, expectedStringValue));
-        assertEquals(expectedFieldName, CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, ""));
+        assertEquals(expectedStringValue, CreateSampleData.getFieldTypeValue(0, expectedFieldName,
+                String.class, expectedStringValue));
+        assertEquals(expectedFieldName,
+                CreateSampleData.getFieldTypeValue(0, expectedFieldName, String.class, ""));
         assertEquals("empty", CreateSampleData.getFieldTypeValue(0, null, String.class, ""));
     }
 

@@ -40,6 +40,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for PolygonSymbolizerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.PolygonSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)

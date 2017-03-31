@@ -183,6 +183,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT"/&gt;
+ *     &lt;enumeration value="VO_FTS_COMPOSITE"/&gt;
+ *     &lt;enumeration value="VO_FTS_COMPOSITE_OPTION"/&gt;
+ *     &lt;enumeration value="VO_FTS_COMPOSITE_OPACITY"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -354,7 +357,10 @@ public enum FieldIdEnum {
     VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
     VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH,
     VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET,
-    VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT;
+    VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT,
+    VO_FTS_COMPOSITE,
+    VO_FTS_COMPOSITE_OPTION,
+    VO_FTS_COMPOSITE_OPACITY;
 
     public String value() {
         return name();

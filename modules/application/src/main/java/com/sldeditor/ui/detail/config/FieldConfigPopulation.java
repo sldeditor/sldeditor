@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.util.HashMap;
@@ -45,8 +46,9 @@ public class FieldConfigPopulation {
     /** The field config manager. */
     private GraphicPanelFieldManager fieldConfigManager = null;
 
-    /**  The map to hold the original values of a text field. */
-    private Map<FieldConfigValuePopulateInterface, String> valueMap = new HashMap<FieldConfigValuePopulateInterface, String>();
+    /** The map to hold the original values of a text field. */
+    private Map<FieldConfigValuePopulateInterface, String> valueMap =
+            new HashMap<FieldConfigValuePopulateInterface, String>();
 
     /** The tree data updated flag. */
     private boolean treeDataUpdated = false;
@@ -67,19 +69,15 @@ public class FieldConfigPopulation {
      * @param value the value
      */
     public void populateBooleanField(FieldIdEnum fieldId, Boolean value) {
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
 
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if(value != null)
-        {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-        }
-        else
-        {
+        if (value != null) {
+            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+        } else {
             fieldConfig.revertToDefaultValue();
         }
     }
@@ -91,20 +89,15 @@ public class FieldConfigPopulation {
      * @param value the value
      */
     public void populateComboBoxField(FieldIdEnum fieldId, String value) {
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if(fieldConfig != null)
-        {
-            if(value != null)
-            {
-                ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-            }
-            else
-            {
+        if (fieldConfig != null) {
+            if (value != null) {
+                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+            } else {
                 fieldConfig.revertToDefaultValue();
             }
         }
@@ -116,15 +109,12 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param colour the colour
      */
-    public void populateColourField(FieldIdEnum fieldId, Expression colour)
-    {
-        if(fieldConfigManager == null)
-        {
+    public void populateColourField(FieldIdEnum fieldId, Expression colour) {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.populateExpression(colour);
         }
     }
@@ -136,13 +126,11 @@ public class FieldConfigPopulation {
      * @param colourMap the colour map
      */
     public void populateColourMapField(FieldIdEnum fieldId, ColorMap colourMap) {
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.populateField(colourMap);
         }
     }
@@ -153,14 +141,13 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param ftcList the ftc list
      */
-    public void populateFieldTypeConstraint(FieldIdEnum fieldId, List<FeatureTypeConstraint> ftcList) {
-        if(fieldConfigManager == null)
-        {
+    public void populateFieldTypeConstraint(FieldIdEnum fieldId,
+            List<FeatureTypeConstraint> ftcList) {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.populateField(ftcList);
         }
     }
@@ -172,13 +159,11 @@ public class FieldConfigPopulation {
      * @param font the colour map
      */
     public void populateFontField(FieldIdEnum fieldId, Font font) {
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.populateField(font);
         }
     }
@@ -189,21 +174,18 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param value the value
      */
-    public void populateTextField(FieldIdEnum fieldId, String value)
-    {
-        if(fieldConfigManager == null)
-        {
+    public void populateTextField(FieldIdEnum fieldId, String value) {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
+        if (fieldConfig != null) {
+            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
             storeOriginalData(fieldConfig);
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(this, String.format("populateTextField - %s : %s", Localisation.getString(StandardPanel.class, "StandardPanel.unknownField") , fieldId));
+        } else {
+            ConsoleManager.getInstance().error(this, String.format("populateTextField - %s : %s",
+                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
+                    fieldId));
         }
     }
 
@@ -213,20 +195,17 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param value the user layer
      */
-    public void populateUserLayer(FieldIdEnum fieldId, UserLayer value)
-    {
-        if(fieldConfigManager == null)
-        {
+    public void populateUserLayer(FieldIdEnum fieldId, UserLayer value) {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(this, String.format("populateUserLayer - %s : %s", Localisation.getString(StandardPanel.class, "StandardPanel.unknownField") , fieldId));
+        if (fieldConfig != null) {
+            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+        } else {
+            ConsoleManager.getInstance().error(this, String.format("populateUserLayer - %s : %s",
+                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
+                    fieldId));
         }
     }
 
@@ -237,18 +216,14 @@ public class FieldConfigPopulation {
      * @param value the value
      */
     public void populateDoubleField(FieldIdEnum fieldId, Double value) {
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if(value != null)
-        {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-        }
-        else
-        {
+        if (value != null) {
+            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+        } else {
             fieldConfig.revertToDefaultValue();
         }
     }
@@ -260,18 +235,14 @@ public class FieldConfigPopulation {
      * @param value the value
      */
     public void populateIntegerField(FieldIdEnum fieldId, Integer value) {
-        if(fieldConfigManager == null)
-        {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if(value != null)
-        {
-            ((FieldConfigValuePopulateInterface)fieldConfig).populateField(value);
-        }
-        else
-        {
+        if (value != null) {
+            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+        } else {
             fieldConfig.revertToDefaultValue();
         }
     }
@@ -282,20 +253,17 @@ public class FieldConfigPopulation {
      * @param fieldId the field
      * @param value the value
      */
-    public void populateField(FieldIdEnum fieldId, Expression value)
-    {
-        if(fieldConfigManager == null)
-        {
+    public void populateField(FieldIdEnum fieldId, Expression value) {
+        if (fieldConfigManager == null) {
             return;
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-        if(fieldConfig != null)
-        {
+        if (fieldConfig != null) {
             fieldConfig.populate(value);
-        }
-        else
-        {
-            ConsoleManager.getInstance().error(this, String.format("populateField - %s : %s", Localisation.getString(StandardPanel.class, "StandardPanel.unknownField") , fieldId));
+        } else {
+            ConsoleManager.getInstance().error(this, String.format("populateField - %s : %s",
+                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
+                    fieldId));
         }
     }
 
@@ -306,13 +274,10 @@ public class FieldConfigPopulation {
      * @return the expression
      */
     public Expression getExpression(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-            if(fieldConfig != null)
-            {
-                if(fieldConfig.isEnabled())
-                {
+            if (fieldConfig != null) {
+                if (fieldConfig.isEnabled()) {
                     return fieldConfig.getExpression();
                 }
             }
@@ -327,12 +292,10 @@ public class FieldConfigPopulation {
      * @return the boolean
      */
     public boolean getBoolean(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 return fieldConfig.getBooleanValue();
             }
         }
@@ -346,12 +309,10 @@ public class FieldConfigPopulation {
      * @return the integer
      */
     public int getInteger(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 return fieldConfig.getIntValue();
             }
         }
@@ -365,12 +326,10 @@ public class FieldConfigPopulation {
      * @return the double
      */
     public double getDouble(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 return fieldConfig.getDoubleValue();
             }
         }
@@ -384,12 +343,10 @@ public class FieldConfigPopulation {
      * @return the text
      */
     public String getText(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 compareOriginalData(fieldConfig);
 
                 return fieldConfig.getStringValue();
@@ -399,18 +356,16 @@ public class FieldConfigPopulation {
     }
 
     /**
-     * Gets the list of feature type constraints
+     * Gets the list of feature type constraints.
      *
      * @param fieldId the field id
      * @return the list of feature type constraints
      */
     public List<FeatureTypeConstraint> getFeatureTypeConstraint(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 return fieldConfig.getFeatureTypeConstraint();
             }
         }
@@ -424,12 +379,10 @@ public class FieldConfigPopulation {
      * @return the combo box
      */
     public ValueComboBoxData getComboBox(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 return fieldConfig.getEnumValue();
             }
         }
@@ -443,12 +396,10 @@ public class FieldConfigPopulation {
      * @return the colour map
      */
     public ColorMap getColourMap(FieldIdEnum fieldId) {
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             FieldConfigValuePopulateInterface fieldConfig = fieldConfigManager.get(fieldId);
 
-            if(fieldConfig != null)
-            {
+            if (fieldConfig != null) {
                 return fieldConfig.getColourMap();
             }
         }
@@ -470,16 +421,13 @@ public class FieldConfigPopulation {
      * @param field the field configuration string
      */
     private void compareOriginalData(FieldConfigValuePopulateInterface field) {
-        if(field != null)
-        {
+        if (field != null) {
             String nextText = field.getStringValue();
 
             String originalText = valueMap.get(field);
 
-            if(originalText != null)
-            {
-                if(originalText.compareTo(nextText) != 0)
-                {
+            if (originalText != null) {
+                if (originalText.compareTo(nextText) != 0) {
                     treeDataUpdated = true;
                 }
             }
@@ -510,8 +458,7 @@ public class FieldConfigPopulation {
      */
     public FieldConfigBase getFieldConfig(FieldIdEnum fieldId) {
         FieldConfigBase fieldConfig = null;
-        if(fieldConfigManager != null)
-        {
+        if (fieldConfigManager != null) {
             fieldConfig = fieldConfigManager.get(fieldId);
         }
         return (FieldConfigBase) fieldConfig;

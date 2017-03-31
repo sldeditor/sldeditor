@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.transform;
 
 import java.awt.event.ActionEvent;
@@ -41,12 +42,13 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigTransformation wraps a text field GUI component and an optional value/attribute/expression drop down,
+ * The Class FieldConfigTransformation wraps a text field GUI component and 
+ * an optional value/attribute/expression drop down,
  * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -102,8 +104,6 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
             final UndoActionInterface parentObj = this;
 
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
-                    getLabel());
 
             int width = BasePanel.FIELD_PANEL_WIDTH - xPos - 20;
             int height = BasePanel.WIDGET_HEIGHT * (NO_OF_ROWS - 1);
@@ -115,6 +115,8 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
             scroll.setBounds(xPos, BasePanel.WIDGET_HEIGHT, width, height);
             scroll.setAutoscrolls(true);
 
+            FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
+                    getLabel());
             fieldPanel.add(scroll);
 
             //
@@ -289,6 +291,46 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     }
 
     /**
+     * Populate process function field.
+     *
+     * @param value the value
+     */
+    @Override
+    public void populateField(ProcessFunction value) {
+        processFunction = value;
+
+        if (textField != null) {
+            textField.setText(ParameterFunctionUtils.getString(processFunction));
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+
+            oldValueObj = value;
+
+            valueUpdated();
+        }
+    }
+
+    /**
+     * Populate field.
+     *
+     * @param value the value
+     */
+    @Override
+    public void populateField(String value) {
+        if (textField != null) {
+            textField.setText(value);
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+
+            oldValueObj = value;
+
+            valueUpdated();
+        }
+    }
+
+    /**
      * Sets the default value.
      *
      * @param defaultValue the new default value
@@ -358,25 +400,6 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     }
 
     /**
-     * Populate field.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(String value) {
-        if (textField != null) {
-            textField.setText(value);
-
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-            oldValueObj = value;
-
-            valueUpdated();
-        }
-    }
-
-    /**
      * Creates a copy of the field.
      *
      * @param fieldConfigBase the field config base
@@ -402,27 +425,6 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     public void setVisible(boolean visible) {
         if (textField != null) {
             textField.setVisible(visible);
-        }
-    }
-
-    /**
-     * Populate process function field
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(ProcessFunction value) {
-        processFunction = value;
-
-        if (textField != null) {
-            textField.setText(ParameterFunctionUtils.getString(processFunction));
-
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-            oldValueObj = value;
-
-            valueUpdated();
         }
     }
 

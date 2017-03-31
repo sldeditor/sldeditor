@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base.defaults;
 
 import java.util.ArrayList;
@@ -28,8 +29,7 @@ import com.sldeditor.common.console.ConsoleManager;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class ConfigDefaultFactory
-{
+public class ConfigDefaultFactory {
 
     /** The default list. */
     private static List<DefaultBase> defaultList = new ArrayList<DefaultBase>();
@@ -40,21 +40,17 @@ public class ConfigDefaultFactory
      * @param defaultValue the default value
      * @return the boolean
      */
-    public static Boolean getBoolean(String defaultValue)
-    {
+    public static Boolean getBoolean(String defaultValue) {
         DefaultBase obj = getObject(defaultValue);
 
-        if(obj != null)
-        {
+        if (obj != null) {
             Object value = obj.getValue(defaultValue);
 
-            try
-            {
-                return (Boolean)value;
-            }
-            catch(ClassCastException e)
-            {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class, "Incorrect type configured for : " + defaultValue + " expecting Boolean");
+            try {
+                return (Boolean) value;
+            } catch (ClassCastException e) {
+                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
+                        "Incorrect type configured for : " + defaultValue + " expecting Boolean");
             }
         }
 
@@ -67,21 +63,17 @@ public class ConfigDefaultFactory
      * @param defaultValue the default value
      * @return the integer
      */
-    public static Integer getInteger(String defaultValue)
-    {
+    public static Integer getInteger(String defaultValue) {
         DefaultBase obj = getObject(defaultValue);
 
-        if(obj != null)
-        {
+        if (obj != null) {
             Object value = obj.getValue(defaultValue);
 
-            try
-            {
-                return (Integer)value;
-            }
-            catch(ClassCastException e)
-            {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class, "Incorrect type configured for : " + defaultValue+ " expecting Integer");
+            try {
+                return (Integer) value;
+            } catch (ClassCastException e) {
+                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
+                        "Incorrect type configured for : " + defaultValue + " expecting Integer");
             }
         }
 
@@ -94,21 +86,17 @@ public class ConfigDefaultFactory
      * @param defaultValue the default value
      * @return the double
      */
-    public static Double getDouble(String defaultValue)
-    {
+    public static Double getDouble(String defaultValue) {
         DefaultBase obj = getObject(defaultValue);
 
-        if(obj != null)
-        {
+        if (obj != null) {
             Object value = obj.getValue(defaultValue);
 
-            try
-            {
-                return (Double)value;
-            }
-            catch(ClassCastException e)
-            {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class, "Incorrect type configured for : " + defaultValue+ " expecting Double");
+            try {
+                return (Double) value;
+            } catch (ClassCastException e) {
+                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
+                        "Incorrect type configured for : " + defaultValue + " expecting Double");
             }
 
         }
@@ -122,21 +110,17 @@ public class ConfigDefaultFactory
      * @param defaultValue the default value
      * @return the string
      */
-    public static String getString(String defaultValue)
-    {
+    public static String getString(String defaultValue) {
         DefaultBase obj = getObject(defaultValue);
 
-        if(obj != null)
-        {
+        if (obj != null) {
             Object value = obj.getValue(defaultValue);
 
-            try
-            {
-                return (String)value;
-            }
-            catch(ClassCastException e)
-            {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class, "Incorrect type configured for : " + defaultValue + " expecting String");
+            try {
+                return (String) value;
+            } catch (ClassCastException e) {
+                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
+                        "Incorrect type configured for : " + defaultValue + " expecting String");
             }
         }
 
@@ -149,10 +133,8 @@ public class ConfigDefaultFactory
      * @param defaultValue the default value
      * @return the object
      */
-    private static DefaultBase getObject(String defaultValue)
-    {
-        if(defaultList.isEmpty())
-        {
+    private static DefaultBase getObject(String defaultValue) {
+        if (defaultList.isEmpty()) {
             defaultList.add(new DefaultInteger());
             defaultList.add(new DefaultDouble());
             defaultList.add(new DefaultBoolean());
@@ -162,12 +144,9 @@ public class ConfigDefaultFactory
             defaultList.add(new DefaultDefault());
         }
 
-        if(defaultValue != null)
-        {
-            for(DefaultBase defObj : defaultList)
-            {
-                if(defObj.accepts(defaultValue))
-                {
+        if (defaultValue != null) {
+            for (DefaultBase defObj : defaultList) {
+                if (defObj.accepts(defaultValue)) {
                     return defObj;
                 }
             }

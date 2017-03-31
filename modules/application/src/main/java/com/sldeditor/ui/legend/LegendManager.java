@@ -121,8 +121,6 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
             String filename, boolean separateSymbolizers) {
         Map<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 
-        GetLegendGraphicRequest request = new GetLegendGraphicRequest();
-
         //
         // Set legend options
         //
@@ -140,6 +138,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
             legendOptionData = new LegendOptionData();
         }
 
+        GetLegendGraphicRequest request = new GetLegendGraphicRequest();
         request.setWidth(legendOptionData.getImageWidth());
         request.setHeight(legendOptionData.getImageHeight());
         request.setTransparent(legendOptionData.isTransparent());

@@ -89,7 +89,8 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -222,9 +223,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
     @Override
     public void buttonPressed(Component buttonExternal) {
         WKTDialog dlg = new WKTDialog();
-        if (dlg.showDialog(fieldConfigVisitor.getText(FieldIdEnum.WKT)))
-            ;
-        {
+        if (dlg.showDialog(fieldConfigVisitor.getText(FieldIdEnum.WKT))) {
             String wktString = dlg.getWKTString();
 
             fieldConfigVisitor.populateTextField(FieldIdEnum.WKT, wktString);
@@ -269,7 +268,8 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

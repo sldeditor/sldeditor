@@ -82,8 +82,7 @@ public class MultipleColourMapEntry {
     public ColorMapEntry getColourMapEntry() {
         ColorMapEntry entry = new ColorMapEntryImpl();
 
-        if(firstEntry != null)
-        {
+        if (firstEntry != null) {
             entry.setLabel(labelMultipleValue ? firstEntry.getLabel() : null);
             entry.setOpacity(opacityMultipleValue ? firstEntry.getOpacity() : null);
             entry.setQuantity(quantityMultipleValue ? firstEntry.getQuantity() : null);

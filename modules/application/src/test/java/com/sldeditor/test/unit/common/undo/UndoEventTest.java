@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.undo;
 
 import static org.junit.Assert.assertEquals;
@@ -28,6 +29,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Unit test for UndoEvent class.
+ * 
  * <p>{@link com.sldeditor.common.undo.UndoEvent}
  * 
  * @author Robert Ward (SCISYS)

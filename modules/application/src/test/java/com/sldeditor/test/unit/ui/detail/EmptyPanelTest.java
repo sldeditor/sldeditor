@@ -19,7 +19,8 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -27,6 +28,7 @@ import com.sldeditor.ui.detail.EmptyPanel;
 
 /**
  * The unit test for EmptyPanel.
+ * 
  * <p>{@link com.sldeditor.ui.detail.EmptyPanel}
  *
  * @author Robert Ward (SCISYS)

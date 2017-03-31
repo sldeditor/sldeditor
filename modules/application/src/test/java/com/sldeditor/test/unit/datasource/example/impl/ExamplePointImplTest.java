@@ -27,6 +27,7 @@ import com.sldeditor.datasource.example.impl.ExamplePointImpl;
 
 /**
  * Unit test for ExamplePointImpl class.
+ * 
  * <p>{@link com.sldeditor.datasource.example.impl.ExamplePointImpl}
  * 
  * @author Robert Ward (SCISYS)

@@ -46,6 +46,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Unit test for PanelField class.
+ * 
  * <p>{@link com.sldeditor.filter.v2.expression.PanelField}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,12 +55,13 @@ import com.vividsolutions.jts.geom.Geometry;
 public class PanelFieldTest {
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.PanelField#getField(java.lang.Class, java.lang.String, java.lang.Class, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.expression.PanelField#getField(java.lang.Class, java.lang.String, java.lang.Class, java.util.List)}.
      */
     @Test
     public void testGetField() {
         Class<?> classType = ExpressionPanelv2.class;
-        String valueTextLocalisation = "ExpressionSubPanel.value"; 
+        String valueTextLocalisation = "ExpressionSubPanel.value";
 
         Map<Class<?>, Class<?>> expectedValueMap = new HashMap<Class<?>, Class<?>>();
         expectedValueMap.put(Float.class, FieldConfigDouble.class);
@@ -73,9 +75,9 @@ public class PanelFieldTest {
         expectedValueMap.put(Double.class, FieldConfigDouble.class);
         expectedValueMap.put(Unit.class, FieldConfigMapUnits.class);
 
-        for(Class<?> nodeType : expectedValueMap.keySet())
-        {
-            FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, nodeType);
+        for (Class<?> nodeType : expectedValueMap.keySet()) {
+            FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation,
+                    nodeType);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -84,7 +86,8 @@ public class PanelFieldTest {
 
         // Special case
         // Number.class
-        FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
+        FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation,
+                Number.class);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype.ttf;
 
 import java.awt.BorderLayout;
@@ -57,15 +58,16 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigTTF wraps a text field GUI component and an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * A button when clicked on displays a dialog ({@link com.sldeditor.ui.ttf.CharMap4}) that allows the user to select a character from a TrueType font.
- * When the character is selected the encoded string is written to the text field.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigTTF wraps a text field GUI component and an optional
+ * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * 
+ * <p>A button when clicked on displays a dialog ({@link com.sldeditor.ui.ttf.CharMap4}) that allows
+ * the user to select a character from a TrueType font. When the character is selected the encoded
+ * string is written to the text field.
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -80,8 +82,12 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     /** The ttf panel. */
     private TTFDetails ttfPanel = null;
 
-    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/ttf/SymbolTypeFieldState_TTF.xml";
+    /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field
+     * states for the different symbol types.
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
+            "symbol/marker/ttf/SymbolTypeFieldState_TTF.xml";
 
     /**
      * Instantiates a new field config string.
@@ -445,7 +451,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     }
 
     /**
-     * Method called when the field has been selected from a combo box and may need to be initialised.
+     * Method called when the field has been selected from a combo box and may need to be
+     * initialised.
      */
     @Override
     public void justSelected() {
@@ -537,7 +544,9 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
+     * @see
+     * com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(
+     * java.util.Map)
      */
     @Override
     protected void populateVendorOptionFieldMap(
@@ -558,7 +567,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

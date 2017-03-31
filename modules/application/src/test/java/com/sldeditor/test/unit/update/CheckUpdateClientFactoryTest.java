@@ -19,7 +19,8 @@
 
 package com.sldeditor.test.unit.update;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -27,6 +28,7 @@ import com.sldeditor.update.CheckUpdateClientFactory;
 
 /**
  * The unit test for CheckUpdateClientFactory.
+ * 
  * <p>{@link com.sldeditor.update.CheckUpdateClientFactory}
  *
  * @author Robert Ward (SCISYS)

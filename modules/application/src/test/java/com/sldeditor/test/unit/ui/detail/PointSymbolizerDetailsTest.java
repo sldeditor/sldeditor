@@ -40,6 +40,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for PointSymbolizerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.PointSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -108,7 +109,8 @@ public class PointSymbolizerDetailsTest {
 
         panel.dataChanged(null);
 
-        FieldConfigString descriptionField = (FieldConfigString) fieldDataManager.get(FieldIdEnum.DESCRIPTION);
+        FieldConfigString descriptionField = (FieldConfigString) fieldDataManager
+                .get(FieldIdEnum.DESCRIPTION);
         assertNull(descriptionField);
         assertTrue(panel.isDataPresent());
 

@@ -157,7 +157,6 @@ public class FilterSubPanel extends JPanel {
      * @return the j panel
      */
     private JPanel createAddRemoveFilterPanel() {
-        JPanel panel = new JPanel();
 
         btnAddFilter = new JButton(
                 Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.addFilter"));
@@ -174,6 +173,7 @@ public class FilterSubPanel extends JPanel {
                 updateButtonState(false);
             }
         });
+        JPanel panel = new JPanel();
         panel.add(btnAddFilter);
 
         btnRemoveFilter = new JButton(
@@ -204,7 +204,6 @@ public class FilterSubPanel extends JPanel {
      * @return the j panel
      */
     private JPanel createApplyRevertPanel() {
-        JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.apply"));
         btnApply.setEnabled(false);
@@ -220,6 +219,7 @@ public class FilterSubPanel extends JPanel {
                 updateButtonState(false);
             }
         });
+        JPanel panel = new JPanel();
         panel.add(btnApply);
 
         btnRevert = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.revert"));

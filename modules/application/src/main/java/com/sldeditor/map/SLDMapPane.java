@@ -97,7 +97,7 @@ public class SLDMapPane extends AbstractMapPane {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public void setMapContent(MapContent content) {

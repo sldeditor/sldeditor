@@ -56,16 +56,22 @@ import com.vividsolutions.jts.io.WKTReader;
  */
 public class WKTConversion {
 
+    /** The Constant WKT_MULTIPOINT. */
     private static final String WKT_MULTIPOINT = "MULTIPOINT";
 
+    /** The Constant WKT_POINT. */
     private static final String WKT_POINT = "POINT";
 
+    /** The Constant WKT_LINESTRING. */
     private static final String WKT_LINESTRING = "LINESTRING";
 
+    /** The Constant WKT_POLYGON. */
     private static final String WKT_POLYGON = "POLYGON";
 
+    /** The Constant WKT_MULTILINESTRING. */
     private static final String WKT_MULTILINESTRING = "MULTILINESTRING";
 
+    /** The Constant WKT_MULTIPOLYGON. */
     private static final String WKT_MULTIPOLYGON = "MULTIPOLYGON";
 
     /** The Constant WKT_PREFIX. */
@@ -94,7 +100,7 @@ public class WKTConversion {
     }
 
     /**
-     * Gets the WKTType object for the given name
+     * Gets the WKTType object for the given name.
      *
      * @param geometryType the geometry type
      * @return the WKT type

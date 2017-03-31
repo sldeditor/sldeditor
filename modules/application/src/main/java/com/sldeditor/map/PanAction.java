@@ -20,6 +20,7 @@
  * local PanTool class
  * 
  */
+
 package com.sldeditor.map;
 
 import java.awt.event.ActionEvent;

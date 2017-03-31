@@ -159,7 +159,8 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
                     populateFeatureClasses(connection, databaseNode);
 
                     if (treeModel != null) {
-                        treeModel.reload(databaseNode); // this notifies the listeners and changes the GUI
+                        // this notifies the listeners and changes the GUI
+                        treeModel.reload(databaseNode);
                     }
                 }
 

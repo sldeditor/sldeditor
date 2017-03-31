@@ -38,8 +38,8 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 
 /**
  * The unit test for FieldConfigRange.
- * <p>
- * {@link com.sldeditor.ui.detail.config.FieldConfigRange}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.config.FieldConfigRange}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -129,7 +129,6 @@ public class FieldConfigRangeTest {
                 new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly),
                 org.jaitools.numeric.Range.class);
         field.createUI();
-        Range expectedDefaultValue = Range.create(0.0, true, 1.0, true);
 
         Range expectedValue = Range.create(3.0, false, 11.0, false);
         field.populateField(expectedValue);
@@ -143,6 +142,8 @@ public class FieldConfigRangeTest {
 
         field.populateExpression(null);
         actualValueJAITools = field.getRange();
+        Range expectedDefaultValue = Range.create(0.0, true, 1.0, true);
+
         assertTrue(Math.abs(actualValueJAITools.getMin().doubleValue()
                 - expectedDefaultValue.getMin().doubleValue()) < 0.001);
         assertEquals(actualValueJAITools.isMinIncluded(), expectedDefaultValue.isMinIncluded());
@@ -381,5 +382,5 @@ public class FieldConfigRangeTest {
                 - minValue) < 0.001);
         assertTrue(Math.abs(actualValue.getMax().doubleValue()
                 - minValue) < 0.001);
-}
+    }
 }

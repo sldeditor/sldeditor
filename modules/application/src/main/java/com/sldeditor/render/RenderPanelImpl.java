@@ -246,6 +246,37 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
     /**
      * Render symbol.
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.marker.iface.RenderSymbolInterface#renderSymbol()
+     */
+    @Override
+    public void renderSymbol() {
+
+        validSymbol = SelectedSymbol.getInstance().isValid();
+
+        if (validSymbol) {
+            StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
+            SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+
+            if (sld != null) {
+                for (SLDOutputInterface sldOutput : sldOutputList) {
+                    sldOutput.updatedSLD(sldData, sld);
+                }
+
+                renderSymbol((Style) renderSymbol.getRenderStyle(SelectedSymbol.getInstance()));
+            } else {
+                renderSymbol(null);
+            }
+        } else {
+            repaint();
+        }
+    }
+
+    /**
+     * Render symbol.
      *
      * @param style the style
      */
@@ -508,36 +539,6 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         }
     }
 
-    /**
-     * Render symbol.
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.marker.iface.RenderSymbolInterface#renderSymbol()
-     */
-    @Override
-    public void renderSymbol() {
-
-        validSymbol = SelectedSymbol.getInstance().isValid();
-
-        if (validSymbol) {
-            StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
-            SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
-
-            if (sld != null) {
-                for (SLDOutputInterface sldOutput : sldOutputList) {
-                    sldOutput.updatedSLD(sldData, sld);
-                }
-
-                renderSymbol((Style) renderSymbol.getRenderStyle(SelectedSymbol.getInstance()));
-            } else {
-                renderSymbol(null);
-            }
-        } else {
-            repaint();
-        }
-    }
 
     /**
      * Adds the sld output listener.

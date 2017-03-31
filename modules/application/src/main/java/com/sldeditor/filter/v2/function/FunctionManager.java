@@ -121,6 +121,7 @@ public class FunctionManager implements FunctionNameInterface {
             logger.debug(className.getName());
         }
 
+        //CHECKSTYLE:OFF
         Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
                 Long.class, Object.class };
         Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
@@ -143,6 +144,7 @@ public class FunctionManager implements FunctionNameInterface {
                 Long.class, Boolean.class, String.class, Date.class, Geometry.class,
                 LineString.class, Point.class, MultiPoint.class, LinearRing.class,
                 RangedClassifier.class, Classifier.class, ReferencedEnvelope.class, Object.class };
+        //CHECKSTYLE:ON
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
         populateAllowedTypes(Double.class, allowedDoubleTypes);
@@ -169,7 +171,8 @@ public class FunctionManager implements FunctionNameInterface {
     }
 
     /**
-     * Gets the function name list for the given parameter type A expectedType of null returns all functions.
+     * Gets the function name list for the given parameter type A
+     * expectedType of null returns all functions.
      *
      * @param expectedType the expected type, restrict functions with this return type
      * @param functionNameFilterList the function name filter list
@@ -241,6 +244,31 @@ public class FunctionManager implements FunctionNameInterface {
     }
 
     /**
+     * Creates the expression.
+     *
+     * @param functionName the function name
+     * @param argumentList the argument list
+     * @return the expression
+     */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.filter.v2.function.FunctionNameInterface#createExpression(org.opengis.filter.capability.FunctionName, java.util.List)
+     */
+    @Override
+    public Expression createExpression(FunctionName functionName, List<Expression> argumentList) {
+        if (functionName == null) {
+            return null;
+        }
+
+        Literal fallback = null;
+        Function function = functionFactory.function(functionName.getFunctionName(), argumentList,
+                fallback);
+
+        return function;
+    }
+
+    /**
      * Gets the function type.
      *
      * @param functionName the function name
@@ -274,28 +302,4 @@ public class FunctionManager implements FunctionNameInterface {
         return function;
     }
 
-    /**
-     * Creates the expression.
-     *
-     * @param functionName the function name
-     * @param argumentList the argument list
-     * @return the expression
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.filter.v2.function.FunctionNameInterface#createExpression(org.opengis.filter.capability.FunctionName, java.util.List)
-     */
-    @Override
-    public Expression createExpression(FunctionName functionName, List<Expression> argumentList) {
-        if (functionName == null) {
-            return null;
-        }
-
-        Literal fallback = null;
-        Function function = functionFactory.function(functionName.getFunctionName(), argumentList,
-                fallback);
-
-        return function;
-    }
 }

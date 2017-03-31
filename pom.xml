@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!-- =========================================================== -->
@@ -12,7 +13,7 @@
     <packaging>pom</packaging>
 
     <prerequisites>
-       <maven>3.0.5</maven>
+        <maven>3.0.5</maven>
     </prerequisites>
 
     <!-- =========================================================== -->
@@ -49,11 +50,19 @@
 
         <app.main.class>com.sldeditor.SLDEditor</app.main.class>
         <app.version.file>src/main/java/com/sldeditor/generated/Version</app.version.file>
-        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version> 
+        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
 
         <app.name>SLDEditor</app.name>
         <sldeditor.dest.folder>../../bin</sldeditor.dest.folder>
+
+        <!-- Jacoco coverage -->
+        <jacoco.version>0.7.9</jacoco.version>
+
+        <!-- CheckStyle -->
+        <checkstyle.config.location>build/checkstyle/sldeditor_checkstyle.xml</checkstyle.config.location>
+        <checkstyle.suppressions.location>build/checkstyle/sldeditor_checkstyle_suppressions.xml</checkstyle.suppressions.location>
+        <checkstyle.console.output>true</checkstyle.console.output>
     </properties>
 
     <!-- =========================================================== -->
@@ -108,7 +117,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore/>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>
@@ -167,6 +176,28 @@
         </profile>
     </profiles>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <failOnViolation>true</failOnViolation>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
         <sourceDirectory>src/main</sourceDirectory>
         <plugins>
@@ -181,7 +212,7 @@
                     <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
                 </configuration>
             </plugin>
-          </plugins>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -204,13 +235,11 @@
                         <source>1.8</source>
                         <!-- Shuts off non-error and non-warning messages. -->
                         <quiet>true</quiet>
-                        <!-- The maximum Java heap size to be used to run 
-                            javadoc. -->
+                        <!-- The maximum Java heap size to be used to run javadoc. -->
                         <maxmemory>${javadoc.maxHeapSize}</maxmemory>
                         <!-- Specifies the encoding name of the source files. -->
                         <encoding>UTF-8</encoding>
-                        <!-- Set an additional parameter for the command 
-                            line. -->
+                        <!-- Set an additional parameter for the command line. -->
                         <additionalparam>-keywords</additionalparam>
                         <additionalparam>-Xdoclint:none</additionalparam>
                         <breakiterator>true</breakiterator>
@@ -251,6 +280,18 @@
                             </fileset>
                         </filesets>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.17</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>7.6.1</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>

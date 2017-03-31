@@ -76,8 +76,10 @@ public class SLDFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
-     * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
+     * @see
+     * com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.
+     * input.FileSystemInterface, javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
     public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
@@ -89,7 +91,9 @@ public class SLDFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
+     * @see
+     * com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.
+     * input.NodeInterface)
      */
     @Override
     public List<SLDDataInterface> getSLDContents(NodeInterface node) {
@@ -154,7 +158,7 @@ public class SLDFileHandler implements FileHandlerInterface {
     }
 
     /**
-     * Walk the file system tree
+     * Walk the file system tree.
      *
      * @param root the root
      * @param list the list
@@ -163,8 +167,9 @@ public class SLDFileHandler implements FileHandlerInterface {
     private void walk(File root, List<SLDDataInterface> list, boolean recurse) {
         File[] fileList = root.listFiles();
 
-        if (fileList == null)
+        if (fileList == null) {
             return;
+        }
 
         for (File f : fileList) {
             if (f.isDirectory() && recurse) {
@@ -200,7 +205,8 @@ public class SLDFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
+     * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.
+     * SLDDataInterface)
      */
     @Override
     public boolean save(SLDDataInterface sldData) {
@@ -228,7 +234,9 @@ public class SLDFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
+     * @see
+     * com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.
+     * SLDDataInterface)
      */
     @Override
     public String getSLDName(SLDDataInterface sldData) {
@@ -253,7 +261,9 @@ public class SLDFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     * @see
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.
+     * lang.String, java.lang.String)
      */
     @Override
     public Icon getIcon(String path, String filename) {

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
@@ -52,6 +53,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
  * Unit test for DataSourceFactory.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.DataSourceFactory}
  * 
  * @author Robert Ward (SCISYS)
@@ -59,8 +61,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
  */
 public class DataSourceFactoryTest {
 
-    class DummyDataSource implements DataSourceInterface
-    {
+    class DummyDataSource implements DataSourceInterface {
         public GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
         @Override
@@ -68,7 +69,8 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void connect(String typeName, SLDEditorFileInterface editorFile, List<CheckAttributeInterface> checkList) {
+        public void connect(String typeName, SLDEditorFileInterface editorFile,
+                List<CheckAttributeInterface> checkList) {
         }
 
         @Override
@@ -138,22 +140,29 @@ public class DataSourceFactoryTest {
         }
 
         @Override
+        //CHECKSTYLE:OFF
         public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
             return null;
         }
+        //CHECKSTYLE:ON
 
         @Override
         public void updateUserLayers() {
         }
 
-        /* (non-Javadoc)
-         * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String,
+         * java.lang.Class)
          */
         @Override
         public void updateFieldType(String fieldName, Class<?> dataType) {
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.datasource.DataSourceInterface#getGeometryFieldName()
          */
         @Override
@@ -163,7 +172,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#createDataSource(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createDataSource(java.lang.String)}.
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#getDataSource()}.
      */
     @Test
@@ -175,7 +185,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#createExamplePolygon(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createExamplePolygon(java.lang.String)}.
      */
     @Test
     public void testCreateExamplePolygon() {
@@ -185,7 +196,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#createExampleLine(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createExampleLine(java.lang.Object)}.
      */
     @Test
     public void testCreateExampleLine() {
@@ -195,7 +207,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#createExamplePoint(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createExamplePoint(java.lang.Object)}.
      */
     @Test
     public void testCreateExamplePoint() {

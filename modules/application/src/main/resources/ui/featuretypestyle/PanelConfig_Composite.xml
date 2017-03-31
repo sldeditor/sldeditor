@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.7.0"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSComposite">
+    <Group id="VO_FTS_COMPOSITE" label="geoserver.composite"
+        showLabel="true" option="true">
+        <FieldConfigEnum id="VO_FTS_COMPOSITE_OPTION"
+            label="geoserver.composite.option" valueOnly="true" default="none">
+            <ValueList>
+                <Value>
+                    <!-- Is one of the <a href="http://www.w3.org/TR/compositing-1/">SVG 
+                        composition operations</a>, in particular, copy, destination, source-over, 
+                        destination-over, source-in, destination-in, source-out, destination-out, 
+                        source-atop, destination-atop, xor, multiply, screen, overlay, darken, lighten, 
+                        color-dodge, color-burn, hard-light, soft-light, difference, exclusion -->
+                    <Item id="copy" label="Copy" />
+                    <Item id="destination" label="Destination" />
+                    <Item id="source-over" label="Source-over" />
+                    <Item id="destination-over" label="Destination-over" />
+                    <Item id="source-in" label="Source-in" />
+                    <Item id="destination-in" label="Destination-in" />
+                    <Item id="source-out" label="Source-out" />
+                    <Item id="destination-out" label="Destination-out" />
+                    <Item id="source-atop" label="Source-atop" />
+                    <Item id="destination-atop" label="Destination-atop" />
+                    <Item id="xor" label="Xor" />
+                    <Item id="multiply" label="Multiply" />
+                    <Item id="screen" label="Screen" />
+                    <Item id="overlay" label="Overlay" />
+                    <Item id="darken" label="Darken" />
+                    <Item id="lighten" label="Lighten" />
+                    <Item id="color-dodge" label="Colour-dodge" />
+                    <Item id="color-burn" label="Colour-burn" />
+                    <Item id="hard-light" label="Hard-light" />
+                    <Item id="soft-light" label="Soft-light" />
+                    <Item id="difference" label="Eifference" />
+                    <Item id="exclusion" label="Exclusion" />
+                </Value>
+            </ValueList>
+        </FieldConfigEnum>
+        <FieldConfigSlider id="VO_FTS_COMPOSITE_OPACITY"
+            label="geoserver.composite.opacity" defaultValue="1.0" valueOnly="true" />
+    </Group>
+</PanelConfig>

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.output;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,11 +33,16 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class CheckTextValues
-{
+public class CheckTextValues {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     *
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException the interrupted exception
+     */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -48,20 +54,17 @@ public class CheckTextValues
     }
 
     @Test
-    public void text_outputTestCommon()
-    {
+    public void text_outputTestCommon() {
         test.runTest("output", "text_outputTestCommon.xml");
     }
 
     @Test
-    public void text_outputTestLabelPlacement()
-    {
+    public void text_outputTestLabelPlacement() {
         test.runTest("output", "text_outputTestLabelPlacement.xml");
     }
 
     @Test
-    public void text_outputTestGeoServerLabelling()
-    {
+    public void text_outputTestGeoServerLabelling() {
         test.runTest("output", "text_outputTestGeoServerLabelling.xml");
     }
 }

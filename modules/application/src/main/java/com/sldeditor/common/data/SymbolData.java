@@ -71,8 +71,7 @@ public class SymbolData {
     /**
      * Constructor.
      */
-    public SymbolData()
-    {
+    public SymbolData() {
         resetData();
     }
 
@@ -221,7 +220,7 @@ public class SymbolData {
      * Increment selected symbolizer index.
      */
     public void incrementSelectedSymbolizerIndex() {
-        this.selectedSymbolizerIndex ++;
+        this.selectedSymbolizerIndex++;
     }
 
     /**
@@ -244,7 +243,7 @@ public class SymbolData {
      * Increment selected feature type style index.
      */
     public void incrementSelectedFTSIndex() {
-        this.selectedFTSIndex ++;
+        this.selectedFTSIndex++;
     }
 
     /**
@@ -267,7 +266,7 @@ public class SymbolData {
      * Increment selected rule index.
      */
     public void incrementSelectedRuleIndex() {
-        this.selectedRuleIndex ++;
+        this.selectedRuleIndex++;
     }
 
     /**
@@ -290,7 +289,7 @@ public class SymbolData {
      * Increment selected styled layer index.
      */
     public void incrementSelectedStyledLayerIndex() {
-        this.selectedStyledLayerIndex ++;
+        this.selectedStyledLayerIndex++;
     }
 
     /**
@@ -313,7 +312,7 @@ public class SymbolData {
      * Increment selected style index.
      */
     public void incrementSelectedStyleIndex() {
-        this.selectedStyleIndex ++;
+        this.selectedStyleIndex++;
     }
 
     /**

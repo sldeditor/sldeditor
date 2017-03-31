@@ -50,8 +50,7 @@ public class SelectedFiles {
     /**
      * Instantiates a new selected files.
      */
-    public SelectedFiles()
-    {
+    public SelectedFiles() {
     }
 
     /**

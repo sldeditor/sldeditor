@@ -197,4 +197,4 @@ public class WKTType {
         }
         return true;
     }
-};
+}

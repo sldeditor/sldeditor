@@ -19,7 +19,8 @@
 
 package com.sldeditor.test.unit.common.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -29,6 +30,7 @@ import com.sldeditor.common.data.StyleWrapper;
 
 /**
  * The unit test for GeoServerLayer.
+ * 
  * <p>{@link com.sldeditor.common.data.GeoServerLayer}
  *
  * @author Robert Ward (SCISYS)

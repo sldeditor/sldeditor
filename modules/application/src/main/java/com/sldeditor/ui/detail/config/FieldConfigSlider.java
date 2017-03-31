@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import javax.swing.JSlider;
@@ -33,14 +34,13 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigSlider wraps a slider GUI component and an optional value/attribute/expression drop down,
+ * The Class FieldConfigSlider wraps a slider GUI component and an optional
+ * value/attribute/expression drop down,
  * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Values between 0.0 and 1.0.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */

@@ -91,12 +91,13 @@ public class InLineFeatureModel extends AbstractTableModel {
      *
      * @param parent the parent
      */
-    public InLineFeatureModel(InlineFeatureUpdateInterface parent)
-    {
+    public InLineFeatureModel(InlineFeatureUpdateInterface parent) {
         this.parentObj = parent;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -112,51 +113,47 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public String getColumnName(int column) {
-        if((column < 0) || (column >= columnList.size()))
-        {
+        if ((column < 0) || (column >= columnList.size())) {
             return null;
         }
         return columnList.get(column);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
     public int getRowCount() {
-        if(featureCollection != null)
-        {
+        if (featureCollection != null) {
             return featureCollection.size();
         }
         return 0;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
     public Object getValueAt(int row, int column) {
-        if((row < 0) || (row >= getRowCount()))
-        {
+        if ((row < 0) || (row >= getRowCount())) {
             return null;
         }
 
-        if((column < 0) || (column >= getColumnCount()))
-        {
+        if ((column < 0) || (column >= getColumnCount())) {
             return null;
         }
 
         SimpleFeature feature = getFeature(row);
 
-        if(feature != null)
-        {
-            if(column == geometryFieldIndex)
-            {
+        if (feature != null) {
+            if (column == geometryFieldIndex) {
                 Object defaultGeometry = feature.getDefaultGeometry();
                 return defaultGeometry;
-            }
-            else
-            {
+            } else {
                 Object attributeData = feature.getAttribute(column);
                 return attributeData;
             }
@@ -171,18 +168,15 @@ public class InLineFeatureModel extends AbstractTableModel {
      * @return the feature
      */
     private SimpleFeature getFeature(int row) {
-        if(featureCollection != null)
-        {
-            if(row != lastRow)
-            {
+        if (featureCollection != null) {
+            if (row != lastRow) {
                 SimpleFeatureIterator iterator = featureCollection.features();
 
                 SimpleFeature feature = iterator.next();
                 int index = 0;
-                while(iterator.hasNext() && (index < row))
-                {
+                while (iterator.hasNext() && (index < row)) {
                     feature = iterator.next();
-                    index ++;
+                    index++;
                 }
 
                 lastRow = row;
@@ -205,34 +199,30 @@ public class InLineFeatureModel extends AbstractTableModel {
 
         columnList.clear();
 
-        if(userLayer != null)
-        {
-            if(userLayer.getInlineFeatureType() != null)
-            {
+        if (userLayer != null) {
+            if (userLayer.getInlineFeatureType() != null) {
                 String typeName = userLayer.getInlineFeatureType().getTypeName();
                 try {
-                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
-                    if(featureSource != null)
-                    {
+                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
+                            .getFeatureSource(typeName);
+                    if (featureSource != null) {
                         featureCollection = featureSource.getFeatures();
                     }
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
                 }
 
-                if(featureCollection != null)
-                {
+                if (featureCollection != null) {
                     // Populate field names
-                    List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
+                    List<AttributeDescriptor> descriptorList = featureCollection.getSchema()
+                            .getAttributeDescriptors();
                     int index = 0;
-                    for(AttributeDescriptor descriptor : descriptorList)
-                    {
-                        if(descriptor instanceof GeometryDescriptorImpl)
-                        {
+                    for (AttributeDescriptor descriptor : descriptorList) {
+                        if (descriptor instanceof GeometryDescriptorImpl) {
                             geometryFieldIndex = index;
                         }
                         columnList.add(descriptor.getLocalName());
-                        index ++;
+                        index++;
                     }
                 }
             }
@@ -244,10 +234,8 @@ public class InLineFeatureModel extends AbstractTableModel {
         // Set up the editor to handle editing the table cells
         InlineCellEditor editor = new InlineCellEditor(this);
 
-        if(featureTable != null)
-        {
-            if(featureTable.getColumnModel().getColumnCount() > 0)
-            {
+        if (featureTable != null) {
+            if (featureTable.getColumnModel().getColumnCount() > 0) {
                 TableColumn column = featureTable.getColumnModel().getColumn(0);
                 column.setCellEditor(editor);
                 featureTable.setCellEditor(editor);
@@ -285,32 +273,25 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if((rowIndex < 0) || (rowIndex >= getRowCount()))
-        {
+        if ((rowIndex < 0) || (rowIndex >= getRowCount())) {
             return;
         }
 
-        if((columnIndex < 0) || (columnIndex >= getColumnCount()))
-        {
+        if ((columnIndex < 0) || (columnIndex >= getColumnCount())) {
             return;
         }
 
         SimpleFeature feature = getFeature(rowIndex);
 
-        if(feature != null)
-        {
-            if(columnIndex == getGeometryFieldIndex())
-            {
+        if (feature != null) {
+            if (columnIndex == getGeometryFieldIndex()) {
                 feature.setAttribute(columnIndex, aValue);
-            }
-            else
-            {
+            } else {
                 feature.setAttribute(columnIndex, aValue);
             }
         }
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.inlineFeatureUpdated();
         }
     }
@@ -337,8 +318,7 @@ public class InLineFeatureModel extends AbstractTableModel {
      * Adds the new column.
      */
     public void addNewColumn() {
-        if(featureCollection != null)
-        {
+        if (featureCollection != null) {
             String attributeName = getUniqueAttributeName();
 
             columnList.add(attributeName);
@@ -352,42 +332,43 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             String typeName = userLayer.getInlineFeatureType().getTypeName();
             try {
-                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
+                        .getFeatureSource(typeName);
 
-                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType);
 
                 ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 
                 SimpleFeatureIterator it = featureSource.getFeatures().features();
-                try { 
-                    while (it.hasNext()) { 
-                        SimpleFeature sf = it.next(); 
-                        sfb.addAll(sf.getAttributes()); 
-                        sfb.add(new String("")); 
-                        featureList.add(sfb.buildFeature(null)); 
-                    } 
-                } finally { 
-                    it.close(); 
-                } 
+                try {
+                    while (it.hasNext()) {
+                        SimpleFeature sf = it.next();
+                        sfb.addAll(sf.getAttributes());
+                        sfb.add(new String(""));
+                        featureList.add(sfb.buildFeature(null));
+                    }
+                } finally {
+                    it.close();
+                }
 
-                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
-                DataStore dataStore = DataUtilities.dataStore( collection );
+                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType,
+                        featureList);
 
                 featureCollection = collection;
                 cachedFeature = null;
                 lastRow = -1;
+                DataStore dataStore = DataUtilities.dataStore(collection);
                 userLayer.setInlineFeatureDatastore(dataStore);
                 userLayer.setInlineFeatureType(newFeatureType);
 
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
-            } 
+            }
 
             this.fireTableStructureChanged();
             this.fireTableDataChanged();
 
-            if(parentObj != null)
-            {
+            if (parentObj != null) {
                 parentObj.inlineFeatureUpdated();
             }
         }
@@ -402,25 +383,21 @@ public class InLineFeatureModel extends AbstractTableModel {
         String newColumnName = "";
         List<String> columnNameList = new ArrayList<String>();
 
-        List<AttributeDescriptor> descriptorList = featureCollection.getSchema().getAttributeDescriptors();
+        List<AttributeDescriptor> descriptorList = featureCollection.getSchema()
+                .getAttributeDescriptors();
 
-        for(AttributeDescriptor attribute : descriptorList)
-        {
+        for (AttributeDescriptor attribute : descriptorList) {
             columnNameList.add(attribute.getLocalName());
         }
 
         int colIndex = descriptorList.size() + 1;
         boolean found = false;
-        while(!found)
-        {
+        while (!found) {
             newColumnName = String.format("attr%02d", colIndex);
 
-            if(columnNameList.contains(newColumnName))
-            {
-                colIndex ++;
-            }
-            else
-            {
+            if (columnNameList.contains(newColumnName)) {
+                colIndex++;
+            } else {
                 return newColumnName;
             }
         }
@@ -435,13 +412,11 @@ public class InLineFeatureModel extends AbstractTableModel {
     public List<String> getColumnNames() {
         List<String> columnNames = new ArrayList<String>();
         int index = 0;
-        for(String columnName : columnList)
-        {
-            if(index != geometryFieldIndex)
-            {
+        for (String columnName : columnList) {
+            if (index != geometryFieldIndex) {
                 columnNames.add(columnName);
             }
-            index ++;
+            index++;
         }
         return columnNames;
     }
@@ -452,10 +427,8 @@ public class InLineFeatureModel extends AbstractTableModel {
      * @param columnName the column name
      */
     public void removeColumn(String columnName) {
-        if(featureCollection != null)
-        {
-            if(columnList.contains(columnName))
-            {
+        if (featureCollection != null) {
+            if (columnList.contains(columnName)) {
                 columnList.remove(columnName);
 
                 // Find field name to remote
@@ -466,55 +439,54 @@ public class InLineFeatureModel extends AbstractTableModel {
                 SimpleFeatureType newFeatureType = featureTypeBuilder.buildFeatureType();
 
                 int attributeToRemoveIndex = 0;
-                for(AttributeDescriptor descriptor : newFeatureType.getAttributeDescriptors())
-                {
-                    if(descriptor.getLocalName().compareTo(columnName) == 0)
-                    {
+                for (AttributeDescriptor descriptor : newFeatureType.getAttributeDescriptors()) {
+                    if (descriptor.getLocalName().compareTo(columnName) == 0) {
                         break;
                     }
-                    attributeToRemoveIndex ++;
+                    attributeToRemoveIndex++;
                 }
 
                 String typeName = userLayer.getInlineFeatureType().getTypeName();
                 try {
-                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
+                            .getFeatureSource(typeName);
 
-                    SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+                    SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType);
 
                     ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 
                     SimpleFeatureIterator it = featureSource.getFeatures().features();
                     try {
-                        while (it.hasNext()) { 
+                        while (it.hasNext()) {
                             SimpleFeature sf = it.next();
                             List<Object> attributes = sf.getAttributes();
                             attributes.remove(attributeToRemoveIndex);
 
-                            sfb.addAll(attributes); 
-                            featureList.add(sfb.buildFeature(null)); 
-                        } 
-                    } finally { 
-                        it.close(); 
-                    } 
+                            sfb.addAll(attributes);
+                            featureList.add(sfb.buildFeature(null));
+                        }
+                    } finally {
+                        it.close();
+                    }
 
-                    SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
-                    DataStore dataStore = DataUtilities.dataStore( collection );
+                    SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType,
+                            featureList);
 
                     featureCollection = collection;
                     cachedFeature = null;
                     lastRow = -1;
+                    DataStore dataStore = DataUtilities.dataStore(collection);
                     userLayer.setInlineFeatureDatastore(dataStore);
                     userLayer.setInlineFeatureType(newFeatureType);
 
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                } 
+                }
 
                 this.fireTableStructureChanged();
                 this.fireTableDataChanged();
 
-                if(parentObj != null)
-                {
+                if (parentObj != null) {
                     parentObj.inlineFeatureUpdated();
                 }
             }
@@ -527,40 +499,42 @@ public class InLineFeatureModel extends AbstractTableModel {
      * @param selectedValue the selected value
      */
     public void updateCRS(ValueComboBoxData selectedValue) {
-        if(selectedValue != null)
-        {
+        if (selectedValue != null) {
             String crsCode = selectedValue.getKey();
 
             CoordinateReferenceSystem newCRS = CoordManager.getInstance().getCRS(crsCode);
 
-            SimpleFeatureType newFeatureType = SimpleFeatureTypeBuilder.retype(featureCollection.getSchema(), newCRS);
+            SimpleFeatureType newFeatureType = SimpleFeatureTypeBuilder
+                    .retype(featureCollection.getSchema(), newCRS);
 
             String typeName = userLayer.getInlineFeatureType().getTypeName();
             try {
-                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
+                        .getFeatureSource(typeName);
 
-                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType); 
+                SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType);
 
                 ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 
                 SimpleFeatureIterator it = featureSource.getFeatures().features();
-                try { 
-                    while (it.hasNext()) { 
-                        SimpleFeature sf = it.next(); 
+                try {
+                    while (it.hasNext()) {
+                        SimpleFeature sf = it.next();
                         List<Object> attributeValueList = sf.getAttributes();
                         sfb.addAll(attributeValueList);
-                        featureList.add(sfb.buildFeature(null)); 
-                    } 
-                } finally { 
-                    it.close(); 
-                } 
+                        featureList.add(sfb.buildFeature(null));
+                    }
+                } finally {
+                    it.close();
+                }
 
-                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType, featureList);
-                DataStore dataStore = DataUtilities.dataStore( collection );
+                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType,
+                        featureList);
 
                 featureCollection = collection;
                 cachedFeature = null;
                 lastRow = -1;
+                DataStore dataStore = DataUtilities.dataStore(collection);
                 userLayer.setInlineFeatureDatastore(dataStore);
                 userLayer.setInlineFeatureType(newFeatureType);
 
@@ -571,8 +545,7 @@ public class InLineFeatureModel extends AbstractTableModel {
             this.fireTableStructureChanged();
             this.fireTableDataChanged();
 
-            if(parentObj != null)
-            {
+            if (parentObj != null) {
                 parentObj.inlineFeatureUpdated();
             }
         }
@@ -596,46 +569,48 @@ public class InLineFeatureModel extends AbstractTableModel {
 
         String typeName = userLayer.getInlineFeatureType().getTypeName();
         try {
-            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
+                    .getFeatureSource(typeName);
 
-            SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType); 
+            SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType);
 
             ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 
             SimpleFeatureIterator it = featureSource.getFeatures().features();
-            try { 
-                while (it.hasNext()) { 
-                    SimpleFeature sf = it.next(); 
+            try {
+                while (it.hasNext()) {
+                    SimpleFeature sf = it.next();
                     List<Object> attributeValueList = sf.getAttributes();
                     sfb.addAll(attributeValueList);
-                    featureList.add(sfb.buildFeature(null)); 
+                    featureList.add(sfb.buildFeature(null));
                 }
                 // Add new feature
                 String wktString = "wkt://POINT(0 0)";
-                Geometry geometry = WKTConversion.convertToGeometry(wktString, getSelectedCRSCode());
+                Geometry geometry = WKTConversion.convertToGeometry(wktString,
+                        getSelectedCRSCode());
                 sfb.add(geometry);
-                featureList.add(sfb.buildFeature(null)); 
-            } finally { 
-                it.close(); 
-            } 
+                featureList.add(sfb.buildFeature(null));
+            } finally {
+                it.close();
+            }
 
-            SimpleFeatureCollection collection = new ListFeatureCollection(featureType, featureList);
-            DataStore dataStore = DataUtilities.dataStore( collection );
+            SimpleFeatureCollection collection = new ListFeatureCollection(featureType,
+                    featureList);
 
             featureCollection = collection;
             cachedFeature = null;
             lastRow = -1;
+            DataStore dataStore = DataUtilities.dataStore(collection);
             userLayer.setInlineFeatureDatastore(dataStore);
 
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        } 
+        }
 
         this.fireTableStructureChanged();
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.inlineFeatureUpdated();
         }
     }
@@ -646,8 +621,7 @@ public class InLineFeatureModel extends AbstractTableModel {
      * @param selectedRow the selected row
      */
     public void removeFeature(int selectedRow) {
-        if((selectedRow < 0) || (selectedRow >= getRowCount()))
-        {
+        if ((selectedRow < 0) || (selectedRow >= getRowCount())) {
             return;
         }
 
@@ -655,47 +629,47 @@ public class InLineFeatureModel extends AbstractTableModel {
 
         String typeName = userLayer.getInlineFeatureType().getTypeName();
         try {
-            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
+            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
+                    .getFeatureSource(typeName);
 
-            SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType); 
+            SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType);
 
             ArrayList<SimpleFeature> featureList = new ArrayList<SimpleFeature>();
 
             SimpleFeatureIterator it = featureSource.getFeatures().features();
             try {
                 int index = 0;
-                while (it.hasNext()) { 
+                while (it.hasNext()) {
                     SimpleFeature sf = it.next();
 
-                    if(index != selectedRow)
-                    {
+                    if (index != selectedRow) {
                         List<Object> attributeValueList = sf.getAttributes();
                         sfb.addAll(attributeValueList);
                         featureList.add(sfb.buildFeature(null));
                     }
-                    index ++;
+                    index++;
                 }
-            } finally { 
-                it.close(); 
-            } 
+            } finally {
+                it.close();
+            }
 
-            SimpleFeatureCollection collection = new ListFeatureCollection(featureType, featureList);
-            DataStore dataStore = DataUtilities.dataStore( collection );
+            SimpleFeatureCollection collection = new ListFeatureCollection(featureType,
+                    featureList);
 
             featureCollection = collection;
             cachedFeature = null;
             lastRow = -1;
+            DataStore dataStore = DataUtilities.dataStore(collection);
             userLayer.setInlineFeatureDatastore(dataStore);
 
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        } 
+        }
 
         this.fireTableStructureChanged();
         this.fireTableDataChanged();
 
-        if(parentObj != null)
-        {
+        if (parentObj != null) {
             parentObj.inlineFeatureUpdated();
         }
     }
@@ -718,10 +692,8 @@ public class InLineFeatureModel extends AbstractTableModel {
      */
     public String getSelectedCRSCode() {
         String crsCode = null;
-        if(crsComboBox != null)
-        {
-            if(crsComboBox.getSelectedValue() != null)
-            {
+        if (crsComboBox != null) {
+            if (crsComboBox.getSelectedValue() != null) {
                 crsCode = crsComboBox.getSelectedValue().getKey();
             }
         }

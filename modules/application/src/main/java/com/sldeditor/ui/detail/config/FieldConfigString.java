@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.event.ActionEvent;
@@ -39,12 +40,12 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigString wraps a text field GUI component and an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigString wraps a text field GUI component and an
+ * optional value/attribute/expression drop down,
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -135,9 +136,11 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
                     public void actionPerformed(ActionEvent e) {
                         if (buttonPressedListenerList != null) {
+                            //CHECKSTYLE:OFF
                             for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
                                 listener.buttonPressed(buttonExternal);
                             }
+                            //CHECKSTYLE:ON
                         }
                     }
                 });

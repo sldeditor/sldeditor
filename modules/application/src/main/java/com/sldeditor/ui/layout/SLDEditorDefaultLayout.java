@@ -67,8 +67,6 @@ public class SLDEditorDefaultLayout implements UILayoutInterface {
         }
         JPanel appPanel = application.getAppPanel();
 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-
         appPanel.setLayout(new BorderLayout(0, 0));
 
         // Console
@@ -92,6 +90,7 @@ public class SLDEditorDefaultLayout implements UILayoutInterface {
         JComponent legendPanel = uiMgr.getLegendData();
         JComponent dataPanel = uiMgr.getSLDSymbolData();
 
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.addTab(Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol"),
                 null, dataPanel,
                 Localisation.getString(SLDEditorDefaultLayout.class, "panels.symbol.tooltip"));

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +30,7 @@ import com.sldeditor.extension.ExtensionInterface;
 
 /**
  * Unit test for ExtensionFactory class.
+ * 
  * <p>{@link com.sldeditor.extension.ExtensionFactory}
  * 
  * @author Robert Ward (SCISYS)
@@ -47,23 +49,25 @@ public class ExtensionFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.ExtensionFactory#getArguments(com.sldeditor.extension.ExtensionInterface, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.extension.ExtensionFactory#getArguments(com.sldeditor.extension.ExtensionInterface, java.util.List)}.
      */
     @Test
     public void testGetArguments() {
-        String[] argList1 = {"-ext=Ignored"};
+        String[] argList1 = { "-ext=Ignored" };
         List<String> actualList = ExtensionFactory.getArgumentList(argList1);
-        
+
         assertEquals(0, actualList.size());
 
-        String[] argList2 = {"-extension.file.folder=D:\\GitHub\\SLDEditor\\slddata"};
+        String[] argList2 = { "-extension.file.folder=D:\\GitHub\\SLDEditor\\slddata" };
         actualList = ExtensionFactory.getArgumentList(argList2);
-        
+
         assertEquals(1, actualList.size());
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.ExtensionFactory#getArgumentList(java.lang.String[])}.
+     * Test method for
+     * {@link com.sldeditor.extension.ExtensionFactory#getArgumentList(java.lang.String[])}.
      */
     @Test
     public void testGetArgumentList() {
@@ -71,11 +75,15 @@ public class ExtensionFactoryTest {
         assertEquals(1, extensionList.size());
 
         ExtensionInterface extension = extensionList.get(0);
-        
-        String[] args = {"-extension.file.folder=D:\\GitHub\\SLDEditor\\slddata", "-extension.zzz"};
+
+        //CHECKSTYLE:OFF
+        String[] args = { "-extension.file.folder=D:\\GitHub\\SLDEditor\\slddata",
+                "-extension.zzz" };
+        //CHECKSTYLE:ON
         List<String> extensionArgList = ExtensionFactory.getArgumentList(args);
-        
-        List<String> extensionSpecificArgumentList = ExtensionFactory.getArguments(extension, extensionArgList);
+
+        List<String> extensionSpecificArgumentList = ExtensionFactory.getArguments(extension,
+                extensionArgList);
 
         assertEquals(1, extensionSpecificArgumentList.size());
         assertEquals("folder=D:\\GitHub\\SLDEditor\\slddata", extensionSpecificArgumentList.get(0));

@@ -42,7 +42,8 @@ import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
 
 /**
  * Unit test for FunctionManager class.
- * <p>{@link com.sldeditor.filter.v2.function.FunctionManager}
+ * 
+ * <p>s{@link com.sldeditor.filter.v2.function.FunctionManager}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -50,29 +51,33 @@ import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
 public class FunctionManagerTest {
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FunctionManager#getFunctionNameList(java.lang.Class)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FunctionManager#getFunctionNameList(java.lang.Class)}.
      */
     @Test
     public void testGetFunctionNameList() {
         DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
         List<FunctionName> functionNameList = functionFactory.getFunctionNames();
 
-        Class<?>[] allowedNumberTypes = {Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class};
+        //CHECKSTYLE:OFF
+        Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
+                Long.class, Object.class };
+        //CHECKSTYLE:ON
         List<Class<?>> allowedNumberTypesList = Arrays.asList(allowedNumberTypes);
 
         int count = 0;
-        for(FunctionName functionName : functionNameList)
-        {
+        for (FunctionName functionName : functionNameList) {
             Class<?> type = functionName.getReturn().getType();
-            if(allowedNumberTypesList.contains(type))
-            {
-                count ++;
+            if (allowedNumberTypesList.contains(type)) {
+                count++;
             }
         }
-        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = 
+                new ArrayList<FunctionNameFilterInterface>();
         functionNameFilterList.add(new FunctionNameFilterAll());
 
-        List<FunctionName> actualList = FunctionManager.getInstance().getFunctionNameList(Number.class, functionNameFilterList);
+        List<FunctionName> actualList = FunctionManager.getInstance()
+                .getFunctionNameList(Number.class, functionNameFilterList);
 
         assertEquals(count, actualList.size());
 
@@ -81,12 +86,14 @@ public class FunctionManagerTest {
         assertEquals(functionNameList.size(), actualList.size());
 
         // Try with non-matching class
-        actualList = FunctionManager.getInstance().getFunctionNameList(FunctionManagerTest.class, functionNameFilterList);
+        actualList = FunctionManager.getInstance().getFunctionNameList(FunctionManagerTest.class,
+                functionNameFilterList);
         assertTrue(actualList.isEmpty());
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FunctionManager#createExpression(org.opengis.filter.capability.FunctionName)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FunctionManager#createExpression(org.opengis.filter.capability.FunctionName)}.
      */
     @Test
     public void testCreateExpression() {
@@ -99,33 +106,36 @@ public class FunctionManagerTest {
         functionName = functionNameList.get(0);
         expression = FunctionManager.getInstance().createExpression(functionName);
         assertNotNull(expression);
-        FunctionExpression funcExpression = (FunctionExpression)expression;
+        FunctionExpression funcExpression = (FunctionExpression) expression;
         assertTrue(functionName.getName().compareTo(funcExpression.getName()) == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FunctionManager#getFunctionType(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FunctionManager#getFunctionType(java.lang.String)}.
      */
     @Test
     public void testGetFunctionType() {
         Class<?> returnType = FunctionManager.getInstance().getFunctionType(null);
         assertNull(returnType);
 
-        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList =
+                new ArrayList<FunctionNameFilterInterface>();
         FunctionNameFilterAll allFilter = new FunctionNameFilterAll();
         allFilter.accept(null);
         functionNameFilterList.add(allFilter);
 
-        List<FunctionName> functionNameList = FunctionManager.getInstance().getFunctionNameList(null, null);
-        for(FunctionName functionName : functionNameList)
-        {
+        List<FunctionName> functionNameList = FunctionManager.getInstance()
+                .getFunctionNameList(null, null);
+        for (FunctionName functionName : functionNameList) {
             returnType = FunctionManager.getInstance().getFunctionType(functionName.getName());
             assertEquals(functionName.getName(), functionName.getReturn().getType(), returnType);
         }
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FunctionManager#getFunctionNameList(java.lang.Class)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FunctionManager#getFunctionNameList(java.lang.Class)}.
      * Testing FunctionNameFilterRaster
      */
     @Test
@@ -133,28 +143,21 @@ public class FunctionManagerTest {
         Class<?> returnType = FunctionManager.getInstance().getFunctionType(null);
         assertNull(returnType);
 
-        List<FunctionName> functionNameList = FunctionManager.getInstance().getFunctionNameList(Object.class, null);
+        List<FunctionName> functionNameList = FunctionManager.getInstance()
+                .getFunctionNameList(Object.class, null);
         FunctionName propertyFunction = null;
         FunctionName idFunction = null;
         FunctionName areaFunction = null;
         FunctionName ceilFunction = null;
 
-        for(FunctionName functionName : functionNameList)
-        {
-            if(functionName.getName().compareTo("property") == 0)
-            {
+        for (FunctionName functionName : functionNameList) {
+            if (functionName.getName().compareTo("property") == 0) {
                 propertyFunction = functionName;
-            }
-            else if(functionName.getName().compareTo("id") == 0)
-            {
+            } else if (functionName.getName().compareTo("id") == 0) {
                 idFunction = functionName;
-            }
-            else if(functionName.getName().compareTo("Area") == 0)
-            {
+            } else if (functionName.getName().compareTo("Area") == 0) {
                 areaFunction = functionName;
-            }
-            else if(functionName.getName().compareTo("ceil") == 0)
-            {
+            } else if (functionName.getName().compareTo("ceil") == 0) {
                 ceilFunction = functionName;
             }
         }
@@ -164,12 +167,14 @@ public class FunctionManagerTest {
         assertNotNull(ceilFunction);
         assertNotNull(idFunction);
 
-        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = 
+                new ArrayList<FunctionNameFilterInterface>();
         FunctionNameFilterRaster rasterFilter = new FunctionNameFilterRaster();
         rasterFilter.accept(null);
         functionNameFilterList.add(rasterFilter);
 
-        List<FunctionName> rasterFunctionNameList = FunctionManager.getInstance().getFunctionNameList(Object.class, functionNameFilterList);
+        List<FunctionName> rasterFunctionNameList = FunctionManager.getInstance()
+                .getFunctionNameList(Object.class, functionNameFilterList);
 
         assertFalse(rasterFunctionNameList.contains(propertyFunction));
         assertFalse(rasterFunctionNameList.contains(areaFunction));

@@ -33,15 +33,16 @@ import com.sldeditor.ui.detail.config.colourmap.ColourMapData;
 
 /**
  * The unit test for ColourMapData.
- * <p>
- * {@link com.sldeditor.ui.detail.config.colourmap.ColourMapData}
+ * 
+ * <p>{@link com.sldeditor.ui.detail.config.colourmap.ColourMapData}
  *
  * @author Robert Ward (SCISYS)
  */
 public class ColourMapDataTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.ColourMapData#ColourMapData()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.colourmap.ColourMapData#ColourMapData()}.
      */
     @Test
     public void testColourMapData() {
@@ -67,7 +68,7 @@ public class ColourMapDataTest {
         Expression nextQuantity = actual.getNextQuantity();
         int iValue = Double.valueOf(nextQuantity.toString()).intValue();
         assertTrue(iValue == (expectedQuantity + 1));
-        
+
         // Test getNextQuantity with a function expression set
         Divide divide = ff.divide(ff.literal(10.0), ff.literal(2.0));
 

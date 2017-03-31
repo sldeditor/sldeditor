@@ -37,7 +37,7 @@ public class ExtractGeometryField {
     }
 
     /**
-     * Check if geometry field name is valid
+     * Check if geometry field name is valid.
      *
      * @param geometryField the geometry field expression
      * @return true, if valid

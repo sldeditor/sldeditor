@@ -92,8 +92,6 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     public void visit(Rule rule) {
         Rule copy = null;
 
-        Filter filterCopy = null;
-
         Symbolizer[] symsCopy = null;
 
         if (!displayOverall) {
@@ -124,6 +122,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         copy.setDescription(descCopy);
         copy.setLegendGraphic(legendCopy);
         copy.setName(rule.getName());
+        Filter filterCopy = null;
         copy.setFilter(filterCopy);
         copy.setElseFilter(rule.isElseFilter());
         // Do not copy the min and max scales
@@ -142,7 +141,8 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     /*
      * (non-Javadoc)
      * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.FeatureTypeStyle)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
+     * FeatureTypeStyle)
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -206,7 +206,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @param style the style
      */
+    //CHECKSTYLE:OFF
     @SuppressWarnings("deprecation")
+    //CHECKSTYLE:ON
     @Override
     public void visit(Style style) {
         Style copy = null;
@@ -245,7 +247,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         pages.push(copy);
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
@@ -267,7 +269,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         pages.push(copy);
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
@@ -289,7 +291,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         pages.push(copy);
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
@@ -311,7 +313,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         pages.push(copy);
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.TextSymbolizer)
@@ -351,14 +353,15 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     }
 
     /**
-     * Method exists in DuplicatingStyleVisitor but is marked private
+     * Method exists in DuplicatingStyleVisitor but is marked private.
      *
      * @param otherText the other text
      * @return the other text
      */
     private OtherText copy(OtherText otherText) {
-        if (otherText == null)
+        if (otherText == null) {
             return null;
+        }
 
         // TODO: add methods to the factory to create OtherText instances
         // sf.createOtherText();
@@ -368,12 +371,12 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         return copy;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.RasterSymbolizer)
      */
+    //CHECKSTYLE:OFF
     public void visit(RasterSymbolizer raster) {
+        //CHECKSTYLE:ON
         RasterSymbolizer copy = sf.createRasterSymbolizer();
         copy.setChannelSelection(copy(raster.getChannelSelection()));
         copy.setColorMap(copy(raster.getColorMap()));

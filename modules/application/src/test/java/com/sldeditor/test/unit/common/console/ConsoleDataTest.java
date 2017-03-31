@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.common.console;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -28,6 +28,7 @@ import com.sldeditor.common.console.ConsoleDataEnum;
 
 /**
  * The unit test for ConsoleData.
+ * 
  * <p>{@link com.sldeditor.common.console.ConsoleData}
  *
  * @author Robert Ward (SCISYS)

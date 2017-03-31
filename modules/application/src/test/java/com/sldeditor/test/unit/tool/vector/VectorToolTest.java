@@ -96,8 +96,8 @@ import com.sldeditor.ui.menu.SLDEditorMenus;
 
 /**
  * Unit test for VectorTool class.
- * <p>
- * {@link com.sldeditor.tool.vector.VectorTool}
+ * 
+ * <p>{@link com.sldeditor.tool.vector.VectorTool}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -121,6 +121,9 @@ public class VectorToolTest {
         clearDown();
     }
 
+    /**
+     * Clean up.
+     */
     @AfterClass
     public static void cleanUp() {
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
@@ -574,8 +577,9 @@ public class VectorToolTest {
      */
     private void purgeDirectory(File dir) {
         for (File file : dir.listFiles()) {
-            if (file.isDirectory())
+            if (file.isDirectory()) {
                 purgeDirectory(file);
+            }
             file.delete();
         }
     }
@@ -727,21 +731,19 @@ public class VectorToolTest {
     public void testSupports() {
 
         try {
-            VectorTool vectorTool = new VectorTool(null);
             FileTreeNode vectorTreeNode = new FileTreeNode(new File("/test"),
                     "sld_cookbook_polygon.shp");
             vectorTreeNode.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
             FileTreeNode rasterTreeNode = new FileTreeNode(new File("/test"),
                     "sld_cookbook_polygon.tif");
             rasterTreeNode.setFileCategory(FileTreeNodeTypeEnum.RASTER);
-            DatabaseFeatureClassNode databaseFeatureClassNode = new DatabaseFeatureClassNode(null,
-                    null, "db fc");
             List<Class<?>> uniqueNodeTypeList = new ArrayList<Class<?>>();
             List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
             List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
 
             // Try vector file
             nodeTypeList.add(vectorTreeNode);
+            VectorTool vectorTool = new VectorTool(null);
             assertTrue(vectorTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try raster file
@@ -751,6 +753,8 @@ public class VectorToolTest {
 
             // Try database feature class
             nodeTypeList.clear();
+            DatabaseFeatureClassNode databaseFeatureClassNode = new DatabaseFeatureClassNode(null,
+                    null, "db fc");
             nodeTypeList.add(databaseFeatureClassNode);
             assertTrue(vectorTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 

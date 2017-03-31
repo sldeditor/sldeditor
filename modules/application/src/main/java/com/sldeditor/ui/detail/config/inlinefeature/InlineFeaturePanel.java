@@ -102,8 +102,7 @@ public class InlineFeaturePanel extends JPanel {
      * @param parent the parent
      * @param noOfRows the no of rows
      */
-    public InlineFeaturePanel(InlineFeatureUpdateInterface parent, int noOfRows)
-    {
+    public InlineFeaturePanel(InlineFeatureUpdateInterface parent, int noOfRows) {
         model = new InLineFeatureModel(parent);
 
         createUI(noOfRows);
@@ -129,7 +128,6 @@ public class InlineFeaturePanel extends JPanel {
         add(topPanel, BorderLayout.NORTH);
 
         // Feature table panel
-        JPanel tablePanel = new JPanel();
         featureTable = new JTable(model);
         featureTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         featureTable.setColumnSelectionAllowed(true);
@@ -141,8 +139,7 @@ public class InlineFeaturePanel extends JPanel {
         ListSelectionModel selectionModel = featureTable.getSelectionModel();
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                if(!e.getValueIsAdjusting())
-                {
+                if (!e.getValueIsAdjusting()) {
                     removeFeatureButton.setEnabled(true);
                 }
             }
@@ -151,6 +148,7 @@ public class InlineFeaturePanel extends JPanel {
         JScrollPane scrollPanel = new JScrollPane(featureTable);
         scrollPanel.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
 
+        JPanel tablePanel = new JPanel();
         tablePanel.add(scrollPanel);
         add(tablePanel, BorderLayout.CENTER);
 
@@ -160,11 +158,12 @@ public class InlineFeaturePanel extends JPanel {
 
         // Feature panel
         JPanel addFeaturePanel = new JPanel();
-        addFeaturePanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(FieldConfigBase.class, "InlineFeature.features")));
+        addFeaturePanel.setBorder(BorderFactory.createTitledBorder(
+                Localisation.getString(FieldConfigBase.class, "InlineFeature.features")));
 
-        JButton addButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.addfeature"));
-        addButton.addActionListener(new ActionListener()
-        {
+        JButton addButton = new JButton(
+                Localisation.getString(FieldConfigBase.class, "InlineFeature.addfeature"));
+        addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.addNewFeature();
@@ -173,10 +172,10 @@ public class InlineFeaturePanel extends JPanel {
         });
         addFeaturePanel.add(addButton);
 
-        removeFeatureButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.removefeature"));
+        removeFeatureButton = new JButton(
+                Localisation.getString(FieldConfigBase.class, "InlineFeature.removefeature"));
         removeFeatureButton.setEnabled(false);
-        removeFeatureButton.addActionListener(new ActionListener()
-        {
+        removeFeatureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = featureTable.getSelectedRow();
@@ -190,11 +189,12 @@ public class InlineFeaturePanel extends JPanel {
 
         // Attribute panel
         JPanel attributePanel = new JPanel();
-        attributePanel.setBorder(BorderFactory.createTitledBorder(Localisation.getString(FieldConfigBase.class, "InlineFeature.attributes")));
+        attributePanel.setBorder(BorderFactory.createTitledBorder(
+                Localisation.getString(FieldConfigBase.class, "InlineFeature.attributes")));
 
-        JButton addColumnButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.addattribute"));
-        addColumnButton.addActionListener(new ActionListener()
-        {
+        JButton addColumnButton = new JButton(
+                Localisation.getString(FieldConfigBase.class, "InlineFeature.addattribute"));
+        addColumnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.addNewColumn();
@@ -202,33 +202,29 @@ public class InlineFeaturePanel extends JPanel {
         });
         attributePanel.add(addColumnButton);
 
-        JButton removeColumnButton = new JButton(Localisation.getString(FieldConfigBase.class, "InlineFeature.removeattribute"));
+        JButton removeColumnButton = new JButton(
+                Localisation.getString(FieldConfigBase.class, "InlineFeature.removeattribute"));
         ArrowIcon arrow = new ArrowIcon(SwingConstants.SOUTH, true);
         removeColumnButton.setIcon(arrow);
         removeColumnButton.setHorizontalTextPosition(AbstractButton.LEFT);
-        removeColumnButton.addActionListener(new ActionListener()
-        {
+        removeColumnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JPopupMenu popupMenu = new JPopupMenu();
 
                 List<String> columnNames = model.getColumnNames();
 
-                for(String columnName : columnNames)
-                {
+                for (String columnName : columnNames) {
                     JMenuItem menuItem = new JMenuItem(columnName);
-                    menuItem.addActionListener(new ActionListener()
-                    {
-                        public void actionPerformed(ActionEvent event)
-                        {
+                    menuItem.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent event) {
                             model.removeColumn(columnName);
                         }
                     });
                     popupMenu.add(menuItem);
                 }
 
-                if(e != null)
-                {
+                if (e != null) {
                     popupMenu.show(removeColumnButton,
                             removeColumnButton.getX() - removeColumnButton.getWidth(),
                             removeColumnButton.getY());
@@ -244,12 +240,10 @@ public class InlineFeaturePanel extends JPanel {
         // Set up the column header editing
         //
         columnHeader = featureTable.getTableHeader();
-        columnHeader.addMouseListener(new MouseAdapter(){
+        columnHeader.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent event)
-            {
-                if (event.getClickCount() == 2)
-                {
+            public void mouseClicked(MouseEvent event) {
+                if (event.getClickCount() == 2) {
                     editColumnAt(event.getPoint());
                 }
             }
@@ -257,9 +251,8 @@ public class InlineFeaturePanel extends JPanel {
 
         columnTextField = new JTextField();
         columnTextField.setBorder(null);
-        columnTextField.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e)
-            {
+        columnTextField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 renameColumn();
             }
         });
@@ -287,16 +280,17 @@ public class InlineFeaturePanel extends JPanel {
         List<ValueComboBoxData> crsDataList = CoordManager.getInstance().getCRSList();
         crsComboBox = new ValueComboBox();
         crsComboBox.initialiseSingle(crsDataList);
-        crsComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT);
+        crsComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         parentPanel.add(crsComboBox);
-        crsComboBox.addActionListener(new ActionListener(){
+        crsComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!isPopulating())
-                {
+                if (!isPopulating()) {
                     model.updateCRS(crsComboBox.getSelectedValue());
                 }
-            }});
+            }
+        });
         return crsComboBox;
     }
 
@@ -306,8 +300,7 @@ public class InlineFeaturePanel extends JPanel {
      * @param row the row
      * @return the row y
      */
-    private static int getRowY(int row)
-    {
+    private static int getRowY(int row) {
         return BasePanel.WIDGET_HEIGHT * row;
     }
 
@@ -316,15 +309,13 @@ public class InlineFeaturePanel extends JPanel {
      *
      * @param userLayer the user layer
      */
-    public void setInlineFeatures(UserLayer userLayer)
-    {
-        if(userLayer != null)
-        {
+    public void setInlineFeatures(UserLayer userLayer) {
+        if (userLayer != null) {
             String crsCode = "";
             SimpleFeatureType inlineFeatureType = userLayer.getInlineFeatureType();
-            if(inlineFeatureType != null)
-            {
-                crsCode = CoordManager.getInstance().getCRSCode(inlineFeatureType.getCoordinateReferenceSystem());
+            if (inlineFeatureType != null) {
+                crsCode = CoordManager.getInstance()
+                        .getCRSCode(inlineFeatureType.getCoordinateReferenceSystem());
             }
 
             setPopulating(true);
@@ -348,8 +339,7 @@ public class InlineFeaturePanel extends JPanel {
      *
      * @return true, if is populating
      */
-    private boolean isPopulating()
-    {
+    private boolean isPopulating() {
         return this.populatingFlag;
     }
 
@@ -358,12 +348,10 @@ public class InlineFeaturePanel extends JPanel {
      *
      * @param p the point at which the mouse was clicked
      */
-    private void editColumnAt(Point p)
-    {
+    private void editColumnAt(Point p) {
         int columnIndex = columnHeader.columnAtPoint(p);
 
-        if((columnIndex != -1) && (columnIndex != model.getGeometryFieldIndex()))
-        {
+        if ((columnIndex != -1) && (columnIndex != model.getGeometryFieldIndex())) {
             tableColumn = columnHeader.getColumnModel().getColumn(columnIndex);
             Rectangle columnRectangle = columnHeader.getHeaderRect(columnIndex);
 
@@ -380,8 +368,7 @@ public class InlineFeaturePanel extends JPanel {
     /**
      * Rename column.
      */
-    private void renameColumn()
-    {
+    private void renameColumn() {
         tableColumn.setHeaderValue(columnTextField.getText());
         renamePopup.setVisible(false);
         columnHeader.repaint();

@@ -37,6 +37,7 @@ import com.sldeditor.common.utils.ColourUtils;
 
 /**
  * Unit test for ColourRamp class.
+ * 
  * <p>{@link com.sldeditor.colourramp.ColourRamp}
  * 
  * @author Robert Ward (SCISYS)
@@ -72,7 +73,7 @@ public class ColourRampTest {
         ImageIcon icon2 = ramp.getImageIcon(true);
         assertNotNull(icon2);
 
-        FilterFactory ff = CommonFactoryFinder.getFilterFactory( null );
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
         ColourRampData data = new ColourRampData();
         Expression expectedMinValue = ff.literal(1);
         Expression expectedMaxValue = ff.literal(10);

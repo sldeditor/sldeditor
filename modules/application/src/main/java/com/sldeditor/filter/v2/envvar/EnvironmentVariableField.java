@@ -245,7 +245,9 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
     }
 
     /**
-     * @param fieldType
+     * Sets the data type.
+     *
+     * @param fieldType the new data type
      */
     public void setDataType(Class<?> fieldType) {
         envVarMap.clear();

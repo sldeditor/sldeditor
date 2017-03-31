@@ -59,6 +59,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
  * The unit test for FieldConfigMarker.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker}
  *
  * @author Robert Ward (SCISYS)
@@ -66,14 +67,18 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 public class FieldConfigMarkerTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#isEnabled()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#internal_setEnabled(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -92,7 +97,9 @@ public class FieldConfigMarkerTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigMarker field2 = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field2 = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -111,12 +118,15 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -127,26 +137,33 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#generateExpression()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#generateExpression()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getStringValue());
 
-        field.populateExpression((String)null);
+        field.populateExpression((String) null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#revertToDefaultValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.revertToDefaultValue();
 
@@ -154,32 +171,29 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigMarker extends FieldConfigMarker
-        {
+        class TestFieldConfigMarker extends FieldConfigMarker {
 
             public TestFieldConfigMarker(FieldConfigCommonData commonData,
-                    ColourFieldConfig fillFieldConfig,
-                    ColourFieldConfig strokeFieldConfig,
+                    ColourFieldConfig fillFieldConfig, ColourFieldConfig strokeFieldConfig,
                     FieldIdEnum symbolSelectionField) {
-                super(commonData,
-                        fillFieldConfig, 
-                        strokeFieldConfig,
-                        symbolSelectionField);
+                super(commonData, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigMarker field = new TestFieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        TestFieldConfigMarker field = new TestFieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
         FieldConfigMarker copy = (FieldConfigMarker) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -190,56 +204,73 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.attributeSelection("field");
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getVendorOption()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getVendorOption()}.
      */
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(), field.getVendorOption());
+        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(),
+                field.getVendorOption());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getSymbolClass()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getSymbolClass()}.
      */
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(MarkImpl.class, field.getSymbolClass());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateSymbolList(java.lang.Class, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateSymbolList(java.lang.Class, java.util.List)}.
      */
     @Test
     public void testPopulateSymbolList() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFill() {
         // Test it with null values
         boolean valueOnly = true;
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
+                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
+                FieldIdEnum.STROKE_FILL_WIDTH);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, null);
 
         assertNull(field.getStringValue());
 
@@ -260,27 +291,33 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
 
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field2 = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, symbolSelectionFieldId);
+        FieldConfigMarker field2 = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, symbolSelectionFieldId);
         actualValue = field2.getFill(graphicFill, fieldConfigManager);
         assertNotNull(actualValue);
-        LiteralExpressionImpl literalExpressionImpl = (LiteralExpressionImpl)actualValue.getColor();
+        LiteralExpressionImpl literalExpressionImpl = (LiteralExpressionImpl) actualValue
+                .getColor();
         String actualColourString = literalExpressionImpl.toString();
         assertTrue(actualColourString.compareTo(expectedColourValue) == 0);
 
@@ -293,122 +330,157 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getBasePanel()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getBasePanel()}.
      */
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getBasePanel());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setSolidFill(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setSolidFill(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testSetSolidFill() {
-        boolean valueOnly = true;
 
         Class<?> panelId = PointFillDetails.class;
-        GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
+        GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
+                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
+                FieldIdEnum.STROKE_FILL_WIDTH);
+
+        boolean valueOnly = true;
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, null);
 
         field.setSolidFill(null, null, null);
         field.setSolidFill(fieldConfigManager, null, null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateFieldOverrideMap(java.lang.Class, com.sldeditor.ui.detail.FieldEnableState)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateFieldOverrideMap(java.lang.Class, com.sldeditor.ui.detail.FieldEnableState)}.
      */
     @Test
     public void testPopulateFieldOverrideMap() {
-        boolean valueOnly = true;
-
-        Class<?> panelId = PointFillDetails.class;
-        GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+
+        Class<?> panelId = PointFillDetails.class;
+
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
+        GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
+                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
+                FieldIdEnum.STROKE_FILL_WIDTH);
+
+        boolean valueOnly = true;
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, null);
 
         field.populateFieldOverrideMap(String.class, null);
         field.populateFieldOverrideMap(PointSymbolizerDetails.class, null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFieldList() {
-        boolean valueOnly = true;
 
         Class<?> panelId = PointFillDetails.class;
-        GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
+        GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
+        boolean valueOnly = true;
+
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
+                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
+                FieldIdEnum.STROKE_FILL_WIDTH);
+
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, null);
 
         assertTrue(field.getFieldList(null).isEmpty());
         Map<FieldIdEnum, FieldConfigBase> actualFieldList = field.getFieldList(fieldConfigManager);
@@ -417,17 +489,21 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#accept(org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#accept(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertFalse(field.accept(null));
 
         StyleBuilder styleBuilder = new StyleBuilder();
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder.createExternalGraphic("test.tmp", "png");
+        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
+                .createExternalGraphic("test.tmp", "png");
         assertFalse(field.accept(externalGraphic));
 
         Mark marker = styleBuilder.createMark("triangle");
@@ -450,51 +526,64 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
      */
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         field.setUpdateSymbolListener(null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getConfigField()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getConfigField()}.
      */
     @Test
     public void testGetConfigField() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertEquals(field, field.getConfigField());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getColourExpression()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getColourExpression()}.
      */
     @Test
     public void testGetColourExpression() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getColourExpression());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getFillColourOpacity()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getFillColourOpacity()}.
      */
     @Test
     public void testGetFillColourOpacity() {
         boolean valueOnly = true;
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), null, null, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                null, null, null);
 
         assertNull(field.getFillColourOpacity());
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getSolidFillValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getSolidFillValue()}.
      */
     @Test
     public void testGetSolidFillValue() {
@@ -502,7 +591,8 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getNoFillValue()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getNoFillValue()}.
      */
     @Test
     public void testGetNoFillValue() {
@@ -510,11 +600,11 @@ public class FieldConfigMarkerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testSetValue() {
-        boolean valueOnly = true;
 
         GraphicPanelFieldManager fieldConfigManager = null;
 
@@ -522,79 +612,100 @@ public class FieldConfigMarkerTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
-        FieldConfigMarker field2 = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
+        boolean valueOnly = true;
 
-        field2.setValue(null, null, null, null,null);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
+                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
+                FieldIdEnum.STROKE_FILL_WIDTH);
+
+        FieldConfigMarker field2 = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, null);
+
+        field2.setValue(null, null, null, null, null);
         field2.setValue(null, fieldConfigManager, null, null, null);
 
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("star");
-        field2.setValue(null, null, null, null,marker);
-        field2.setValue(null, fieldConfigManager, null, null,marker);
+        field2.setValue(null, null, null, null, marker);
+        field2.setValue(null, fieldConfigManager, null, null, marker);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
      */
     @Test
     public void testGetValue() {
-        StyleBuilder styleBuilder = new StyleBuilder();
         // Test it with null values
         boolean valueOnly = true;
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
+                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
+                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
+                FieldIdEnum.STROKE_FILL_WIDTH);
 
-        FieldConfigMarker field = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, null);
+        FieldConfigMarker field = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, null);
 
         assertNull(field.getStringValue());
 
         GraphicPanelFieldManager fieldConfigManager = null;
         Expression symbolType = null;
-        List<GraphicalSymbol> actualValue = field.getValue(fieldConfigManager, symbolType, false, false);
+        List<GraphicalSymbol> actualValue = field.getValue(fieldConfigManager, symbolType, false,
+                false);
 
         assertNull(actualValue);
 
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         String actualMarkerSymbol = "solid";
+        StyleBuilder styleBuilder = new StyleBuilder();
         symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField = new FieldConfigColour(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
-        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         double expectedOpacityValue = 0.72;
-        FieldConfigSlider opacityField = new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigSlider opacityField = new FieldConfigSlider(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
-        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
-        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigBase symbolSelectionField = new FieldConfigSymbolType(
+                new FieldConfigCommonData(panelId, colourFieldId, "", false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
+        FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
+        FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
 
         // Try without setting any fields
@@ -605,7 +716,9 @@ public class FieldConfigMarkerTest {
         assertNull(actualSymbol.getWellKnownName());
 
         // Try with symbol type of solid
-        FieldConfigMarker field2 = new FieldConfigMarker(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly), fillConfig, strokeConfig, symbolSelectionFieldId);
+        FieldConfigMarker field2 = new FieldConfigMarker(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                fillConfig, strokeConfig, symbolSelectionFieldId);
 
         actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
         assertNotNull(actualValue);

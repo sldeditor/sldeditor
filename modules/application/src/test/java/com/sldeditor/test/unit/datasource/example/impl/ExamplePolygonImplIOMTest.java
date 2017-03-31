@@ -27,6 +27,7 @@ import com.sldeditor.datasource.example.impl.ExamplePolygonImplIOM;
 
 /**
  * Unit test for ExamplePolygonImplIOM class.
+ * 
  * <p>{@link com.sldeditor.datasource.example.impl.ExamplePolygonImplIOM}
  * 
  * @author Robert Ward (SCISYS)

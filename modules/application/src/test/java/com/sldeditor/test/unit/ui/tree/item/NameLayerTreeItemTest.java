@@ -31,6 +31,7 @@ import com.sldeditor.ui.tree.item.NameLayerTreeItem;
 
 /**
  * The unit test for NameLayerTreeItem.
+ * 
  * <p>{@link com.sldeditor.ui.tree.item.NameLayerTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -38,13 +39,15 @@ import com.sldeditor.ui.tree.item.NameLayerTreeItem;
 public class NameLayerTreeItemTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.NameLayerTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.item.NameLayerTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
         NameLayerTreeItem item = new NameLayerTreeItem();
         String actualValue = item.getTreeString(null, null);
-        String expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer"), "");
+        String expectedValue = String.format("%s : %s",
+                Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
@@ -55,12 +58,14 @@ public class NameLayerTreeItemTest {
         String expectedName = "test name";
         namedLayer.setName(expectedName);
         actualValue = item.getTreeString(null, namedLayer);
-        expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer"), expectedName);
+        expectedValue = String.format("%s : %s",
+                Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.NameLayerTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.item.NameLayerTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {

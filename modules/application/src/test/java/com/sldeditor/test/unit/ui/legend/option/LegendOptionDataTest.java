@@ -39,6 +39,7 @@ import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
  * The unit test for LegendOptionData.
+ * 
  * <p>{@link com.sldeditor.ui.legend.option.LegendOptionData}
  *
  * @author Robert Ward (SCISYS)

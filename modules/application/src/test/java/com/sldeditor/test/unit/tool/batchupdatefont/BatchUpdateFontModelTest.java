@@ -55,8 +55,8 @@ import com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel;
 
 /**
  * The unit test for BatchUpdateFontData.
- * <p>
- * {@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel}
+ * 
+ * <p>{@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -67,15 +67,6 @@ public class BatchUpdateFontModelTest {
      */
     @Test
     public void testLoadData() {
-        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
-        BatchUpdateFontModel model = new BatchUpdateFontModel();
-
-        List<BatchUpdateFontData> dataList = new ArrayList<BatchUpdateFontData>();
-
-        File testFile = new File("test.sld");
-        String expectedWorkspace = "workspace";
-        String expectedStyle = "layer.sld";
-        StyleWrapper styleWrapper = new StyleWrapper(expectedWorkspace, expectedStyle);
 
         StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
@@ -103,9 +94,15 @@ public class BatchUpdateFontModelTest {
         Font font = styleFactory.createFont(ff.literal("abc"), ff.literal("normal"),
                 ff.literal("normal"), ff.literal(10));
         symbolizer.setFont(font);
+        
+        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
         String sldContents = sldWriter.encodeSLD(null, sld);
 
+        String expectedWorkspace = "workspace";
+        String expectedStyle = "layer.sld";
+        StyleWrapper styleWrapper = new StyleWrapper(expectedWorkspace, expectedStyle);
         SLDData data = new SLDData(styleWrapper, sldContents);
+        File testFile = new File("test.sld");
         data.setSLDFile(testFile);
         SLDEditorFile.getInstance().setSldFile(testFile);
         SLDEditorFile.getInstance().setSLDData(data);
@@ -120,7 +117,9 @@ public class BatchUpdateFontModelTest {
         testObj.setSymbolizer(symbolizer);
         testObj.setFont(font);
 
+        List<BatchUpdateFontData> dataList = new ArrayList<BatchUpdateFontData>();
         dataList.add(testObj);
+        BatchUpdateFontModel model = new BatchUpdateFontModel();
         model.loadData(dataList);
 
         for (int col = 0; col < model.getColumnCount(); col++) {

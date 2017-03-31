@@ -55,15 +55,16 @@ import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 
 /**
  * The unit test for SelectedSymbol.
+ * 
  * <p>{@link com.sldeditor.common.data.SelectedSymbol}
  *
  * @author Robert Ward (SCISYS)
  */
 public class SelectedSymbolTest {
 
-    class DummySLDTreeUpdated implements SLDTreeUpdatedInterface
-    {
+    class DummySLDTreeUpdated implements SLDTreeUpdatedInterface {
         public Object objectOld = null;
+
         public Object objectNew = null;
 
         @Override
@@ -89,12 +90,14 @@ public class SelectedSymbolTest {
         SelectedSymbol.destroyInstance();
         SelectedSymbol instance = SelectedSymbol.getInstance();
 
+        //CHECKSTYLE:OFF
         Rule rule = DefaultSymbols.createNewRule();
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
         Style style = DefaultSymbols.createNewStyle();
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
         StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
         PolygonSymbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
+        //CHECKSTYLE:ON
 
         instance.createNewSLD(sld);
 
@@ -181,7 +184,8 @@ public class SelectedSymbolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SelectedSymbol#getSymbolList(org.opengis.style.GraphicalSymbol)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SelectedSymbol#getSymbolList(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testGetSymbolList() {
@@ -208,12 +212,14 @@ public class SelectedSymbolTest {
         SelectedSymbol.destroyInstance();
         SelectedSymbol instance = SelectedSymbol.getInstance();
 
+        //CHECKSTYLE:OFF
         Rule rule = DefaultSymbols.createNewRule();
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
         Style style = DefaultSymbols.createNewStyle();
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
         StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
         PolygonSymbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
+        //CHECKSTYLE:ON
 
         instance.createNewSLD(sld);
 
@@ -267,14 +273,16 @@ public class SelectedSymbolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SelectedSymbol#setTreeUpdateListener(com.sldeditor.common.data.SLDTreeUpdatedInterface)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SelectedSymbol#setTreeUpdateListener(com.sldeditor.common.data.SLDTreeUpdatedInterface)}.
      */
     @Test
     public void testSetTreeUpdateListener() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SelectedSymbol#removeRule(org.geotools.styling.Rule)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SelectedSymbol#removeRule(org.geotools.styling.Rule)}.
      */
     @Test
     public void testReplacment() {
@@ -346,7 +354,8 @@ public class SelectedSymbolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.SelectedSymbol#removeFeatureTypeStyle(org.geotools.styling.FeatureTypeStyle)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.SelectedSymbol#removeFeatureTypeStyle(org.geotools.styling.FeatureTypeStyle)}.
      */
     @Test
     public void testRemove() {
@@ -419,7 +428,7 @@ public class SelectedSymbolTest {
         instance.removeFeatureTypeStyle(fts1);
         assertEquals(0, ftsList.size());
 
-        List<Style> styleList = ((NamedLayer)instance.getStyledLayer()).styles();
+        List<Style> styleList = ((NamedLayer) instance.getStyledLayer()).styles();
         assertEquals(3, styleList.size());
         instance.removeStyle(style3);
         assertEquals(2, styleList.size());
@@ -458,8 +467,7 @@ public class SelectedSymbolTest {
     }
 
     @Test
-    public void testIsRasterSymbol()
-    {
+    public void testIsRasterSymbol() {
         SelectedSymbol.destroyInstance();
         SelectedSymbol instance = SelectedSymbol.getInstance();
 
@@ -472,7 +480,7 @@ public class SelectedSymbolTest {
         // No selection made
         assertFalse(instance.isRasterSymbol());
 
-        Style style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+        Style style = ((NamedLayer) sld.layers().get(0)).styles().get(0);
 
         instance.setStyle(style);
         assertFalse(instance.isRasterSymbol());
@@ -489,7 +497,7 @@ public class SelectedSymbolTest {
         // No selection made
         assertFalse(instance.isRasterSymbol());
 
-        style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+        style = ((NamedLayer) sld.layers().get(0)).styles().get(0);
 
         instance.setStyle(style);
         assertFalse(instance.isRasterSymbol());
@@ -506,7 +514,7 @@ public class SelectedSymbolTest {
         // No selection made
         assertFalse(instance.isRasterSymbol());
 
-        style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+        style = ((NamedLayer) sld.layers().get(0)).styles().get(0);
 
         instance.setStyle(style);
         assertFalse(instance.isRasterSymbol());
@@ -523,15 +531,14 @@ public class SelectedSymbolTest {
         // No selection made
         assertFalse(instance.isRasterSymbol());
 
-        style = ((NamedLayer)sld.layers().get(0)).styles().get(0);
+        style = ((NamedLayer) sld.layers().get(0)).styles().get(0);
 
         instance.setStyle(style);
         assertTrue(instance.isRasterSymbol());
     }
 
     @Test
-    public void testRemoveRasterImageOutline()
-    {
+    public void testRemoveRasterImageOutline() {
         SelectedSymbol.destroyInstance();
         SelectedSymbol instance = SelectedSymbol.getInstance();
 
@@ -550,28 +557,23 @@ public class SelectedSymbolTest {
      * @param symbolizer the symbolizer
      * @return the graphic
      */
-    private Graphic getGraphic(Symbolizer symbolizer) { 
-        Graphic graphic = null; 
- 
-        if(symbolizer instanceof PointSymbolizerImpl) 
-        { 
-            PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer; 
-            graphic = pointSymbolizer.getGraphic(); 
-        } 
-        else if(symbolizer instanceof PolygonSymbolizerImpl) 
-        { 
-            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer; 
-            if(polygonSymbolizer != null) 
-            { 
-                Fill fill = polygonSymbolizer.getFill(); 
- 
-                if(fill != null) 
-                { 
-                    graphic = fill.getGraphicFill(); 
-                } 
-            } 
-        } 
- 
-        return graphic; 
-    } 
+    private Graphic getGraphic(Symbolizer symbolizer) {
+        Graphic graphic = null;
+
+        if (symbolizer instanceof PointSymbolizerImpl) {
+            PointSymbolizer pointSymbolizer = (PointSymbolizer) symbolizer;
+            graphic = pointSymbolizer.getGraphic();
+        } else if (symbolizer instanceof PolygonSymbolizerImpl) {
+            PolygonSymbolizer polygonSymbolizer = (PolygonSymbolizer) symbolizer;
+            if (polygonSymbolizer != null) {
+                Fill fill = polygonSymbolizer.getFill();
+
+                if (fill != null) {
+                    graphic = fill.getGraphicFill();
+                }
+            }
+        }
+
+        return graphic;
+    }
 }

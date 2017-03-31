@@ -37,6 +37,7 @@ import com.sldeditor.ui.detail.TextSymbolizerDetails;
 
 /**
  * Unit test for TreeSelectionData class.
+ * 
  * <p>{@link com.sldeditor.TreeSelectionData}
  * 
  * @author Robert Ward (SCISYS)

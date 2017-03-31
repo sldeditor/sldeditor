@@ -36,14 +36,14 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The unit test for InLineFeatureModel.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.inlinefeature.InLineFeatureModel}
  *
  * @author Robert Ward (SCISYS)
  */
 public class InLineFeatureModelTest {
 
-    class DummyInlineFeatureUpdated implements InlineFeatureUpdateInterface
-    {
+    class DummyInlineFeatureUpdated implements InlineFeatureUpdateInterface {
         private boolean inlineFeatureUpdatedCalled = false;
 
         @Override
@@ -51,8 +51,7 @@ public class InLineFeatureModelTest {
             inlineFeatureUpdatedCalled = true;
         }
 
-        public boolean hasInlineFeatureUpdatedCalled()
-        {
+        public boolean hasInlineFeatureUpdatedCalled() {
             boolean tmp = inlineFeatureUpdatedCalled;
             inlineFeatureUpdatedCalled = false;
 
@@ -252,14 +251,17 @@ public class InLineFeatureModelTest {
 
         model.updateCRS(null);
 
-        assertNull(userLayer.getInlineFeatureType().getGeometryDescriptor().getCoordinateReferenceSystem());
+        assertNull(userLayer.getInlineFeatureType().getGeometryDescriptor()
+                .getCoordinateReferenceSystem());
 
-        ValueComboBoxData expectedCRS = new ValueComboBoxData("EPSG:2000", "Test CRS", VendorOptionManager.getInstance().getDefaultVendorOptionVersion());
+        ValueComboBoxData expectedCRS = new ValueComboBoxData("EPSG:2000", "Test CRS",
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersion());
         assertFalse(listener.hasInlineFeatureUpdatedCalled());
         model.updateCRS(expectedCRS);
         assertTrue(listener.hasInlineFeatureUpdatedCalled());
 
-        String newCRSCode = userLayer.getInlineFeatureType().getGeometryDescriptor().getCoordinateReferenceSystem().getCoordinateSystem().getName().getCode();
+        String newCRSCode = userLayer.getInlineFeatureType().getGeometryDescriptor()
+                .getCoordinateReferenceSystem().getCoordinateSystem().getName().getCode();
 
         assertNotNull(newCRSCode);
     }

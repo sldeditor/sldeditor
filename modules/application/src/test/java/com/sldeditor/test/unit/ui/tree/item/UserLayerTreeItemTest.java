@@ -31,6 +31,7 @@ import com.sldeditor.ui.tree.item.UserLayerTreeItem;
 
 /**
  * The unit test for UserLayerTreeItem.
+ * 
  * <p>{@link com.sldeditor.ui.tree.item.UserLayerTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -38,15 +39,17 @@ import com.sldeditor.ui.tree.item.UserLayerTreeItem;
 public class UserLayerTreeItemTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.UserLayerTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.item.UserLayerTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
         UserLayerTreeItem item = new UserLayerTreeItem();
         String actualValue = item.getTreeString(null, null);
-        String expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.userlayer"), "");
+        String expectedValue = String.format("%s : %s",
+                Localisation.getString(SLDTreeTools.class, "TreeItem.userlayer"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
-        
+
         UserLayer userLayer = DefaultSymbols.createNewUserLayer();
 
         actualValue = item.getTreeString(null, userLayer);
@@ -55,12 +58,14 @@ public class UserLayerTreeItemTest {
         String expectedName = "test name";
         userLayer.setName(expectedName);
         actualValue = item.getTreeString(null, userLayer);
-        expectedValue = String.format("%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.userlayer"), expectedName);
+        expectedValue = String.format("%s : %s",
+                Localisation.getString(SLDTreeTools.class, "TreeItem.userlayer"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.UserLayerTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.ui.tree.item.UserLayerTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {

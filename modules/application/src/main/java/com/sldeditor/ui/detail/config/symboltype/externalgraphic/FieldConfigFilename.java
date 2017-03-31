@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 
 import java.awt.BorderLayout;
@@ -50,16 +51,16 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigFilename wraps a text field GUI component and an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * A button when clicked on displays a file dialog, the full path is written to the text field.
- * <p>
- * The field allows external images e.g. png, jpg, svg to be specified.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigFilename wraps a text field GUI component and an optional
+ * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ * 
+ * <p>A button when clicked on displays a file dialog, the full path is written to the text field.
+ * 
+ * <p>The field allows external images e.g. png, jpg, svg to be specified.
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -74,8 +75,12 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /** The external graphic panel. */
     private ExternalGraphicDetails externalGraphicPanel = null;
 
-    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field states for the different symbol types. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/external/SymbolTypeFieldState_Filename.xml";
+    /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field
+     * states for the different symbol types.
+     */
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
+            "symbol/marker/external/SymbolTypeFieldState_Filename.xml";
 
     /**
      * Instantiates a new field config string.
@@ -122,7 +127,8 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -424,7 +430,8 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     }
 
     /**
-     * Method called when the field has been selected from a combo box and may need to be initialised.
+     * Method called when the field has been selected from a combo box and may need to be
+     * initialised.
      */
     @Override
     public void justSelected() {
@@ -478,7 +485,9 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
+     * @see
+     * com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(
+     * java.util.Map)
      */
     @Override
     protected void populateVendorOptionFieldMap(
@@ -499,7 +508,8 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

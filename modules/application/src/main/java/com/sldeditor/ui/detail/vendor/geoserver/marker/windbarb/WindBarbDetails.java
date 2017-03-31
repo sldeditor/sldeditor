@@ -162,9 +162,6 @@ public class WindBarbDetails extends StandardPanel
                 return;
             }
 
-            String windSpeedUnits = wellKnownName.substring(startUnitsOpenBracket + 1,
-                    endUnitsOpenBracket);
-
             Expression windSpeedExpression = null;
             if (AttributeUtils.isAttribute(windSpeed)) {
                 String propertyName = AttributeUtils.extract(windSpeed);
@@ -179,6 +176,10 @@ public class WindBarbDetails extends StandardPanel
             fieldConfigVisitor.populateField(FieldIdEnum.WINDBARB_WINDSPEED, windSpeedExpression);
             fieldConfigVisitor.populateBooleanField(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE,
                     isNorthernHemisphere);
+            
+            String windSpeedUnits = wellKnownName.substring(startUnitsOpenBracket + 1,
+                    endUnitsOpenBracket);
+
             fieldConfigVisitor.populateComboBoxField(FieldIdEnum.WINDBARB_WINDSPEED_UNITS,
                     windSpeedUnits);
         }

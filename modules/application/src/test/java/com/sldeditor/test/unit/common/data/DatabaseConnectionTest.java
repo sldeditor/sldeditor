@@ -41,15 +41,16 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 
 /**
  * The unit test for DatabaseConnection.
- * <p>
- * {@link com.sldeditor.common.data.DatabaseConnection}
+ * 
+ * <p>{@link com.sldeditor.common.data.DatabaseConnection}
  *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseConnectionTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#DatabaseConnection(com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.DatabaseConnection#DatabaseConnection(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
     public void testDatabaseConnection() {
@@ -62,12 +63,13 @@ public class DatabaseConnectionTest {
         boolean expectedSupportsDuplication = false;
 
         DatabaseConnection test = new DatabaseConnection(param, expectedDatabaseTypeLabel,
-                expectedSupportsDuplication, expectedDetailList, new DatabaseConnectionName(){
+                expectedSupportsDuplication, expectedDetailList, new DatabaseConnectionName() {
 
                     @Override
                     public String getConnectionName(String duplicatePrefix, int noOfDuplicates,
                             Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionTest.class, "common.notSet");
+                        String connectionName = Localisation.getString(DatabaseConnectionTest.class,
+                                "common.notSet");
                         String databaseName = properties.get(GeoPkgDataStoreFactory.DATABASE.key);
                         if (databaseName != null) {
                             File f = new File(databaseName);
@@ -80,7 +82,8 @@ public class DatabaseConnectionTest {
                             connectionName = duplicatePrefix + connectionName;
                         }
                         return connectionName;
-                    }});
+                    }
+                });
 
         Map<String, String> connectionDataMap = new HashMap<String, String>();
         connectionDataMap.put(GeoPkgDataStoreFactory.DATABASE.key, "test datatbase");
@@ -94,8 +97,10 @@ public class DatabaseConnectionTest {
         assertEquals(1, test.getExpectedKeys().size());
         assertEquals(GeoPkgDataStoreFactory.DATABASE.key, test.getExpectedKeys().get(0));
         assertEquals(test.getDatabaseType(), param.sample);
-        assertEquals(test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DATABASE.key), connectionDataMap.get(GeoPkgDataStoreFactory.DATABASE.key));
-        assertEquals(test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DBTYPE.key), GeoPkgDataStoreFactory.DBTYPE.sample);
+        assertEquals(test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DATABASE.key),
+                connectionDataMap.get(GeoPkgDataStoreFactory.DATABASE.key));
+        assertEquals(test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DBTYPE.key),
+                GeoPkgDataStoreFactory.DBTYPE.sample);
 
         String expectedUserName = "test user";
         test.setUserName(expectedUserName);
@@ -127,7 +132,8 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#decodeString(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.DatabaseConnection#decodeString(java.lang.String)}.
      */
     @Test
     public void testDecodeString() {
@@ -141,14 +147,16 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#compareTo(com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.DatabaseConnection#compareTo(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
     public void testCompareTo() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#update(com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.DatabaseConnection#update(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
     public void testUpdate() {
@@ -169,7 +177,8 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#setConnectionDataMap(java.util.Map)}.
+     * Test method for
+     * {@link com.sldeditor.common.data.DatabaseConnection#setConnectionDataMap(java.util.Map)}.
      */
     @Test
     public void testSetConnectionDataMap() {
@@ -183,7 +192,8 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#getDatabaseConnectionName()}.
+     * Test method for
+     * {@link com.sldeditor.common.data.DatabaseConnection#getDatabaseConnectionName()}.
      */
     @Test
     public void testGetDatabaseConnectionName() {

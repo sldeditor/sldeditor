@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.font;
 
 import java.awt.GraphicsEnvironment;
@@ -43,10 +44,10 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class FieldConfigFont wraps a button and text field that allows the selection of a font.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -91,9 +92,6 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         if (comboBox == null) {
             final UndoActionInterface parentObj = this;
 
-            int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
-
             populateFontFamilyList();
 
             if (!fontFamilyList.isEmpty()) {
@@ -102,9 +100,11 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
 
             comboBox = new ValueComboBox();
             comboBox.initialiseSingle(fontFamilyList);
+            int xPos = getXPos();
             comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
 
+            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
             fieldPanel.add(comboBox);
             comboBox.setSelectValueKey(defaultValue);
 
@@ -278,6 +278,19 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     }
 
     /**
+     * Populate field.
+     *
+     * @param value the value
+     */
+    @Override
+    public void populateField(Font value) {
+
+        if (setFont(value)) {
+            valueUpdated();
+        }
+    }
+
+    /**
      * Sets the default value.
      *
      * @param defaultValue the new default value
@@ -355,19 +368,6 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     public void setTestValue(FieldIdEnum fieldId, String testValue) {
         if (comboBox != null) {
             comboBox.setSelectValueKey(testValue);
-        }
-    }
-
-    /**
-     * Populate field.
-     *
-     * @param value the value
-     */
-    @Override
-    public void populateField(Font value) {
-
-        if (setFont(value)) {
-            valueUpdated();
         }
     }
 

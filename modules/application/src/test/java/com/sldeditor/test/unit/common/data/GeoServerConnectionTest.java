@@ -31,6 +31,7 @@ import com.sldeditor.common.data.GeoServerConnection;
 
 /**
  * The unit test for GeoServerConnection.
+ * 
  * <p>{@link com.sldeditor.common.data.GeoServerConnection}
  *
  * @author Robert Ward (SCISYS)
@@ -113,7 +114,9 @@ public class GeoServerConnectionTest {
      */
     @Test
     public void testCompareTo() {
+        //CHECKSTYLE:OFF
         GeoServerConnection connection1 = getTestData();
+        //CHECKSTYLE:ON
 
         GeoServerConnection connection2 = new GeoServerConnection();
         connection2.setConnectionName(connectionName);

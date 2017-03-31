@@ -34,7 +34,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
 /**
  * Class to handle the getting and setting of GeoServer windbarb symbol vendor option data.
  * 
- * Sets the <WellKnownName> string, extra fields needed.
+ * <p>Sets the &gt;WellKnownName&lt; string, extra fields needed.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -45,8 +45,7 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
     /**
      * Instantiates a new VOGeoServerWindbarbSymbol.
      */
-    public VOGeoServerWindbarbSymbol()
-    {
+    public VOGeoServerWindbarbSymbol() {
     }
 
     /* (non-Javadoc)

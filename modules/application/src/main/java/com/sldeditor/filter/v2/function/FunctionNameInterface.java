@@ -52,6 +52,15 @@ public interface FunctionNameInterface {
     Expression createExpression(FunctionName functionName);
 
     /**
+     * Creates the expression.
+     *
+     * @param function the function
+     * @param argumentList the argument list
+     * @return the expression
+     */
+    Expression createExpression(FunctionName function, List<Expression> argumentList);
+
+    /**
      * Gets the function type for the given function name.
      *
      * @param functionName the function name
@@ -66,14 +75,5 @@ public interface FunctionNameInterface {
      * @return the function
      */
     FunctionName getFunction(String functionName);
-
-    /**
-     * Creates the expression.
-     *
-     * @param function the function
-     * @param argumentList the argument list
-     * @return the expression
-     */
-    Expression createExpression(FunctionName function, List<Expression> argumentList);
 
 }

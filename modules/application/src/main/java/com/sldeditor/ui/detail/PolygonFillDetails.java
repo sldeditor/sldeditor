@@ -337,7 +337,8 @@ public class PolygonFillDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
                     fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
 
-            // Ignore the anchor point if it is the same as the default so it doesn't appear in the SLD
+            // Ignore the anchor point if it is the same as the
+            // default so it doesn't appear in the SLD
             if (DetailsUtilities.isSame(defaultAnchorPoint, anchorPoint)) {
                 anchorPoint = null;
             }
@@ -354,7 +355,8 @@ public class PolygonFillDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
-            // Ignore the displacement if it is the same as the default so it doesn't appear in the SLD
+            // Ignore the displacement if it is the same as the default so
+            // it doesn't appear in the SLD
             if (DetailsUtilities.isSame(defaultDisplacement, displacement)) {
                 displacement = null;
             }

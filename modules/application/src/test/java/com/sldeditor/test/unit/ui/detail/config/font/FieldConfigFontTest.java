@@ -40,6 +40,7 @@ import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 
 /**
  * The unit test for FieldConfigFont.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.font.FieldConfigFont}
  *
  * @author Robert Ward (SCISYS)
@@ -47,17 +48,20 @@ import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 public class FieldConfigFontTest {
 
     /** The font families. */
-    private String[] fontFamilies = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    private String[] fontFamilies = GraphicsEnvironment.getLocalGraphicsEnvironment()
+            .getAvailableFontFamilyNames();
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#internal_setEnabled(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#internal_setEnabled(boolean)}.
      * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -77,7 +81,8 @@ public class FieldConfigFontTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigFont field2 = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field2 = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -97,12 +102,14 @@ public class FieldConfigFontTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#setVisible(boolean)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -113,22 +120,27 @@ public class FieldConfigFontTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#generateExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#populateField(org.geotools.styling.Font)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#getFont()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#generateExpression()}. Test method
+     * for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#populateField(org.geotools.styling.Font)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#getFont()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
      * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
-        field.setTestValue(FieldIdEnum.UNKNOWN, (String)null);
-        field.populateField((String)null);
-        field.populateField((Font)null);
-        field.populateExpression((Font)null);
+        field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
+        field.populateField((String) null);
+        field.populateField((Font) null);
+        field.populateExpression((Font) null);
 
         String expectedValue = fontFamilies[0];
         field.createUI();
@@ -149,20 +161,23 @@ public class FieldConfigFontTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#revertToDefaultValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#setDefaultValue(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#revertToDefaultValue()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#setDefaultValue(java.lang.String)}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
-        String expectedDefaultValue = fontFamilies[2];
         field.revertToDefaultValue();
         String actualValue = field.getStringValue();
         assertNull(actualValue);
 
         field.createUI();
+        String expectedDefaultValue = fontFamilies[2];
         field.setDefaultValue(expectedDefaultValue);
         field.revertToDefaultValue();
         actualValue = field.getStringValue();
@@ -170,26 +185,26 @@ public class FieldConfigFontTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigFont extends FieldConfigFont
-        {
+        class TestFieldConfigFont extends FieldConfigFont {
 
             public TestFieldConfigFont(FieldConfigCommonData commonData) {
                 super(commonData);
             }
 
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase)
-            {
+            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
         }
 
-        TestFieldConfigFont field = new TestFieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        TestFieldConfigFont field = new TestFieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigFont copy = (FieldConfigFont) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -200,25 +215,30 @@ public class FieldConfigFontTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#attributeSelection(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         field.attributeSelection("field");
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigFont field = new FieldConfigFont(new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        FieldConfigFont field = new FieldConfigFont(
+                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
 
         String expectedDefaultValue1 = fontFamilies[0];
         field.createUI();
@@ -241,9 +261,11 @@ public class FieldConfigFontTest {
 
         // Increase the code coverage
         field.undoAction(null);
-        field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(1.0), Double.valueOf(2.0)));
+        field.undoAction(
+                new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(1.0), Double.valueOf(2.0)));
         field.redoAction(null);
-        field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(1.0), Double.valueOf(2.0)));
+        field.redoAction(
+                new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(1.0), Double.valueOf(2.0)));
     }
 
 }

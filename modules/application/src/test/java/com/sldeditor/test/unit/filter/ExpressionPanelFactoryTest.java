@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.filter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -27,6 +27,7 @@ import com.sldeditor.filter.ExpressionPanelFactory;
 
 /**
  * Unit test for ExpressionPanelFactory class.
+ * 
  * <p>{@link com.sldeditor.filter.ExpressionPanelFactory}
  * 
  * @author Robert Ward (SCISYS)

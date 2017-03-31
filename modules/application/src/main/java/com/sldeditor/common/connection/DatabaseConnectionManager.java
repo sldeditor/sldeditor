@@ -115,10 +115,8 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         }
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.common.connection.DatabaseReadProgressInterface#getConnection(java.lang.String)
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getConnection(java.lang.String)
      */
     @Override
     public DatabaseConnection getConnection(String connectionDataName) {
@@ -134,8 +132,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     }
 
     /**
-     * (non-Javadoc)
-     * 
+     * (non-Javadoc).
+     *
+     * @param progress the progress
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface)
      */
     public void readPropertyFile(DatabaseReadProgressInterface progress) {

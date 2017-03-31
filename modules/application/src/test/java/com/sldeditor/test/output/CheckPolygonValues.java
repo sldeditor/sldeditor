@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.output;
 
 import org.junit.BeforeClass;
@@ -28,25 +29,25 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class CheckPolygonValues
-{
+public class CheckPolygonValues {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     */
     @BeforeClass
     public static void setUpOnce() {
         test = new SLDTestRunner();
     }
-    
+
     @Test
-    public void polygon_outputTestCommon()
-    {
+    public void polygon_outputTestCommon() {
         test.runTest("output", "polygon_outputTestCommon.xml");
     }
 
     @Test
-    public void polygon_outputTestGeoServerRandomFill()
-    {
+    public void polygon_outputTestGeoServerRandomFill() {
         test.runTest("output", "polygon_outputTestGeoServerRandomFill.xml");
     }
 }

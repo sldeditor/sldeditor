@@ -25,8 +25,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 /**
- * The Class TextFieldPropertyChange, informs parent panel via propertyChange
- * mechanism as soon as text changes.
+ * The Class TextFieldPropertyChange, informs parent panel via propertyChange mechanism as soon as
+ * text changes.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -66,20 +66,30 @@ public class TextFieldPropertyChange extends JTextField {
         /** The ignore events flag. */
         private boolean ignoreEvents = false;
 
-        /* (non-Javadoc)
-         * @see javax.swing.text.AbstractDocument#replace(int, int, java.lang.String, javax.swing.text.AttributeSet)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see javax.swing.text.AbstractDocument#replace(int, int, java.lang.String,
+         * javax.swing.text.AttributeSet)
          */
         @Override
-        public void replace(int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        public void replace(int offset, int length, String text, AttributeSet attrs)
+                throws BadLocationException {
+            //CHECKSTYLE:OFF
             String oldValue = TextFieldPropertyChange.this.getText();
+            //CHECKSTYLE:ON
             this.ignoreEvents = true;
             super.replace(offset, length, text, attrs);
             this.ignoreEvents = false;
             String newValue = TextFieldPropertyChange.this.getText();
-            if (!oldValue.equals(newValue)) TextFieldPropertyChange.this.firePropertyChange(TEXT_PROPERTY, oldValue, newValue);
+            if (!oldValue.equals(newValue)) {
+                TextFieldPropertyChange.this.firePropertyChange(TEXT_PROPERTY, oldValue, newValue);
+            }
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see javax.swing.text.AbstractDocument#remove(int, int)
          */
         @Override
@@ -87,7 +97,9 @@ public class TextFieldPropertyChange extends JTextField {
             String oldValue = TextFieldPropertyChange.this.getText();
             super.remove(offs, len);
             String newValue = TextFieldPropertyChange.this.getText();
-            if (!ignoreEvents && !oldValue.equals(newValue)) TextFieldPropertyChange.this.firePropertyChange(TEXT_PROPERTY, oldValue, newValue);
+            if (!ignoreEvents && !oldValue.equals(newValue)) {
+                TextFieldPropertyChange.this.firePropertyChange(TEXT_PROPERTY, oldValue, newValue);
+            }
         }
     }
 }

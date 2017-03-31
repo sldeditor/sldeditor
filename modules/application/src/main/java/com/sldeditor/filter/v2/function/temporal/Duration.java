@@ -119,10 +119,12 @@ public class Duration {
             // Assume duration
             List<String> outputList = extractDurationValues(string.substring(1));
 
+            //CHECKSTYLE:OFF
             boolean hasTime = (outputList.size() >= 2) && (outputList.get(0).endsWith(YEAR_SUFFIX)
                     && (outputList.get(1).endsWith(HOUR_SUFFIX)
                             || outputList.get(1).endsWith(MINUTE_SUFFIX)
                             || outputList.get(1).endsWith(SECOND_SUFFIX)));
+            //CHECKSTYLE:ON
 
             year = extractValue(outputList, YEAR_SUFFIX);
             month = extractValue(outputList, MONTH_SUFFIX);
@@ -136,12 +138,14 @@ public class Duration {
 
             setDuration(year, month, day, hour, minute, second);
         } else if (string.startsWith(DURATION_TIME_PREFIX)) {
+            //CHECKSTYLE:OFF
             int year = 0;
             int month = 0;
             int day = 0;
             int hour = 0;
             int minute = 0;
             int second = 0;
+            //CHECKSTYLE:ON
 
             // Assume duration
             List<String> outputList = extractDurationValues(string);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.Dimension;
@@ -56,12 +57,13 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
- * The Class FieldConfigTimePeriod wraps a time period picker GUI component and an optional value/attribute/expression drop down,
+ * The Class FieldConfigTimePeriod wraps a time period picker GUI component and an
+ *  optional value/attribute/expression drop down,
  * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -198,11 +200,10 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     private void createUIPanel(FieldPanel fieldPanel, TimePeriodPanel panelData, int index,
             String title) {
-        int row = 0;
         panelData.panel = new JPanel();
         panelData.panel.setLayout(null);
 
-        int xPos = getXPos();
+        int row = 0;
 
         panelData.dateRadioButton = new JRadioButton();
         panelData.dateRadioButton.setBounds(2, getRowY(row), 20, BasePanel.WIDGET_HEIGHT);
@@ -218,6 +219,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
 
         JDatePanelImpl datePanel = new JDatePanelImpl(panelData.dateModel);
         panelData.datePicker = new JDatePickerImpl(datePanel);
+        int xPos = getXPos();
         panelData.datePicker.setBounds(xPos + BasePanel.WIDGET_X_START, getRowY(row),
                 BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(panelData.datePicker);
@@ -257,7 +259,6 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         // Date
         //
         row++;
-        int spinnerWidth = (int) (BasePanel.WIDGET_STANDARD_WIDTH * 0.4);
 
         panelData.durationRadioButton = new JRadioButton();
         panelData.durationRadioButton.setBounds(2, getRowY(row), 20, BasePanel.WIDGET_HEIGHT);
@@ -299,6 +300,8 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
 
         panelData.yearSpinner = new JSpinner();
         x = x + 40;
+
+        int spinnerWidth = (int) (BasePanel.WIDGET_STANDARD_WIDTH * 0.4);
         panelData.yearSpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(panelData.yearSpinner);
         panelData.yearSpinner.addChangeListener(new ChangeListener() {

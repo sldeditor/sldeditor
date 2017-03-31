@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.output;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,11 +33,16 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class CheckLineValues
-{
+public class CheckLineValues {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     *
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException the interrupted exception
+     */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -48,14 +54,12 @@ public class CheckLineValues
     }
 
     @Test
-    public void line_outputTestCommon()
-    {
+    public void line_outputTestCommon() {
         test.runTest("output", "line_outputTestCommon.xml");
     }
 
     @Test
-    public void line_outputTestSymbol()
-    {
+    public void line_outputTestSymbol() {
         test.runTest("output", "line_outputTestSymbol.xml");
     }
 }

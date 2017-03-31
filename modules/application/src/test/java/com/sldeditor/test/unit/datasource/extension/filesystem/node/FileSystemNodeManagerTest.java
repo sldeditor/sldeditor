@@ -16,15 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Unit test for FileSystemNodeManager.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager}
  * 
  * @author Robert Ward (SCISYS)

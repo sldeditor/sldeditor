@@ -35,6 +35,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 
 /**
  * The unit test for UserLayerDetails.
+ * 
  * <p>{@link com.sldeditor.ui.detail.UserLayerDetails}
  *
  * @author Robert Ward (SCISYS)

@@ -146,6 +146,7 @@ public class RuleDetails extends StandardPanel
                     try {
                         filterString = CQL.toCQL(originalFilter);
                     } catch (Exception e) {
+                        // Do nothing
                     }
                 }
                 fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);
@@ -207,7 +208,8 @@ public class RuleDetails extends StandardPanel
             if (existingRule != null) {
                 List<org.geotools.styling.Symbolizer> symbolizerList = existingRule.symbolizers();
 
-                org.geotools.styling.Symbolizer[] symbolizerArray = new org.geotools.styling.Symbolizer[symbolizerList
+                org.geotools.styling.Symbolizer[] symbolizerArray =
+                        new org.geotools.styling.Symbolizer[symbolizerList
                         .size()];
                 int index = 0;
                 for (org.geotools.styling.Symbolizer symbolizer : symbolizerList) {

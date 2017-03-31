@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.file.raster;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +43,7 @@ import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
 
 /**
  * Unit test for RasterFileHandler class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.file.raster.RasterFileHandler}
  * 
  * @author Robert Ward (SCISYS)
@@ -54,7 +56,8 @@ public class RasterFileHandlerTest {
      */
     @Test
     public void testGetFileExtension() {
-        assertEquals(Arrays.asList("tif", "jpg", "gif", "tiff"), new RasterFileHandler().getFileExtensionList());
+        assertEquals(Arrays.asList("tif", "jpg", "gif", "tiff"), 
+                new RasterFileHandler().getFileExtensionList());
     }
 
     /**
@@ -76,7 +79,7 @@ public class RasterFileHandlerTest {
     /**
      * Single file
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.raster.RasterFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.raster.RasterFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -134,7 +137,7 @@ public class RasterFileHandlerTest {
     /**
      * Supply a folder name and retrieve all the sld files in it
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.raster.RasterFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.raster.RasterFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {

@@ -102,7 +102,8 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     private SymbolizerSelectedInterface displayPanel = null;
 
     /** The node map. */
-    private Map<String, DefaultMutableTreeNode> nodeMap = new HashMap<String, DefaultMutableTreeNode>();
+    private Map<String, DefaultMutableTreeNode> nodeMap =
+            new HashMap<String, DefaultMutableTreeNode>();
 
     /** The object to render the selected symbol. */
     private List<RenderSymbolInterface> renderList = null;
@@ -151,7 +152,9 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
         JPanel panelSymbolMarkerTree = new JPanel();
         add(panelSymbolMarkerTree);
 
+        //CHECKSTYLE:OFF
         JScrollPane scrollpane = new JScrollPane();
+        //CHECKSTYLE:ON
 
         rootNode = new DefaultMutableTreeNode("SLD");
         treeModel = new DefaultTreeModel(rootNode);
@@ -212,7 +215,7 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
     }
 
     /**
-     * Reset the tree structure
+     * Reset the tree structure.
      */
     private void reset() {
         rootNode.removeAllChildren(); // This removes all nodes
@@ -314,43 +317,8 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                                             }
 
                                             if (symbolizer instanceof RasterSymbolizer) {
-                                                // Handle the image outline symbolizer for raster symbols
-                                                Symbolizer outlineSymbolizer = ((RasterSymbolizer) symbolizer)
-                                                        .getImageOutline();
-
-                                                if (outlineSymbolizer instanceof LineSymbolizer) {
-                                                    LineSymbolizer outlineLineSymbolizer = (LineSymbolizer) outlineSymbolizer;
-                                                    if (outlineLineSymbolizer != null) {
-                                                        DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(
-                                                                symbolizerTreeNode,
-                                                                outlineLineSymbolizer, true);
-
-                                                        addObject(symbolizerImageOutlineLineNode,
-                                                                SLDTreeLeafFactory.getInstance()
-                                                                        .getStroke(
-                                                                                outlineLineSymbolizer),
-                                                                true);
-                                                    }
-                                                } else if (outlineSymbolizer instanceof PolygonSymbolizer) {
-                                                    PolygonSymbolizer outlinePolygonSymbolizer = (PolygonSymbolizer) outlineSymbolizer;
-
-                                                    if (outlinePolygonSymbolizer != null) {
-                                                        DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(
-                                                                symbolizerTreeNode,
-                                                                outlinePolygonSymbolizer, true);
-
-                                                        addObject(symbolizerImageOutlinePolygonNode,
-                                                                SLDTreeLeafFactory.getInstance()
-                                                                        .getFill(
-                                                                                outlinePolygonSymbolizer),
-                                                                true);
-                                                        addObject(symbolizerImageOutlinePolygonNode,
-                                                                SLDTreeLeafFactory.getInstance()
-                                                                        .getStroke(
-                                                                                outlinePolygonSymbolizer),
-                                                                true);
-                                                    }
-                                                }
+                                                handleRasterSymbolizer(symbolizer,
+                                                        symbolizerTreeNode);
                                             }
                                         }
                                     }
@@ -359,6 +327,51 @@ public class SLDTree extends JPanel implements TreeSelectionListener, SLDTreeUpd
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Handle raster symbolizer.
+     *
+     * @param symbolizer the symbolizer
+     * @param symbolizerTreeNode the symbolizer tree node
+     */
+    private void handleRasterSymbolizer(Symbolizer symbolizer,
+            DefaultMutableTreeNode symbolizerTreeNode) {
+        // Handle the image outline symbolizer for raster symbols
+        Symbolizer outlineSymbolizer = ((RasterSymbolizer) symbolizer)
+                .getImageOutline();
+
+        if (outlineSymbolizer instanceof LineSymbolizer) {
+            LineSymbolizer outlineLineSymbolizer = (LineSymbolizer) outlineSymbolizer;
+            if (outlineLineSymbolizer != null) {
+                DefaultMutableTreeNode symbolizerImageOutlineLineNode = addObject(
+                        symbolizerTreeNode,
+                        outlineLineSymbolizer, true);
+
+                addObject(symbolizerImageOutlineLineNode,
+                        SLDTreeLeafFactory.getInstance()
+                                .getStroke(outlineLineSymbolizer),
+                        true);
+            }
+        } else if (outlineSymbolizer instanceof PolygonSymbolizer) {
+            PolygonSymbolizer outlinePolygonSymbolizer = (PolygonSymbolizer) outlineSymbolizer;
+
+            if (outlinePolygonSymbolizer != null) {
+                DefaultMutableTreeNode symbolizerImageOutlinePolygonNode = addObject(
+                        symbolizerTreeNode,
+                        outlinePolygonSymbolizer, true);
+
+                addObject(symbolizerImageOutlinePolygonNode,
+                        SLDTreeLeafFactory.getInstance()
+                                .getFill(outlinePolygonSymbolizer),
+                        true);
+                addObject(symbolizerImageOutlinePolygonNode,
+                        SLDTreeLeafFactory.getInstance()
+                                .getStroke(
+                                        outlinePolygonSymbolizer),
+                        true);
             }
         }
     }

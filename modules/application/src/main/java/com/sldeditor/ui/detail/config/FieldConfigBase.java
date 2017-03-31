@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.Component;
@@ -48,10 +49,10 @@ import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
  * The Class FieldConfigBase is the base class for all derived FieldConfigxxx classes.
- * <p>
- * Fields are identified by the id field.
- * <p>
- * Handles the following common tasks:
+ * 
+ * <p>Fields are identified by the id field.
+ * 
+ * <p>Handles the following common tasks:
  * <ul>
  * <li>value/attribute/expression drop down list, ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
  * <li>setting/getting of values via Expression</li>
@@ -85,7 +86,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The update symbol listener list, called when a value changes. */
-    private List<UpdateSymbolInterface> updateSymbolListenerList = new ArrayList<UpdateSymbolInterface>();
+    private List<UpdateSymbolInterface> updateSymbolListenerList =
+            new ArrayList<UpdateSymbolInterface>();
 
     /** The style factory. */
     private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
@@ -490,9 +492,10 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
     }
 
     /**
-     * Method called when the field has been selected from a combo box and may need to be initialised
+     * Method called when the field has been selected from a 
+     * combo box and may need to be initialised
      * 
-     * Will be be overridden if necessary.
+     * <p>Will be be overridden if necessary.
      */
     public void justSelected() {
     }

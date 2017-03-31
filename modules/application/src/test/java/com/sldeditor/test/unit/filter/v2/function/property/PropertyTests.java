@@ -42,13 +42,13 @@ import com.sldeditor.filter.v2.function.property.IsNotEqualTo;
 
 /**
  * Unit test for the following classes:
- * <p>{@link com.sldeditor.filter.v2.function.property.IsBetween}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsLessThan}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
- * <p>{@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsBetween}.
+ * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
+ * {@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsLessThan}.
+ * {@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
+ * {@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -59,7 +59,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
+     * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
      */
     @Test
     public void testIsEqualTo() {
@@ -68,7 +68,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
+     * {@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
      */
     @Test
     public void testIsGreaterThan() {
@@ -77,7 +77,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
+     * {@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
      */
     @Test
     public void testIsGreaterThanEqualTo() {
@@ -86,7 +86,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsLessThan}.
+     * {@link com.sldeditor.filter.v2.function.property.IsLessThan}.
      */
     @Test
     public void testIsLessThan() {
@@ -95,7 +95,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
+     * {@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
      */
     @Test
     public void testIsLessThanEqualTo() {
@@ -104,7 +104,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
+     * {@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
      */
     @Test
     public void testIsNotEqualTo() {
@@ -113,7 +113,7 @@ public class PropertyTests {
 
     /**
      * Unit test for the following class:
-     * <p>{@link com.sldeditor.filter.v2.function.property.IsBetween}.
+     * {@link com.sldeditor.filter.v2.function.property.IsBetween}.
      */
     @Test
     public void testIsBetween() {

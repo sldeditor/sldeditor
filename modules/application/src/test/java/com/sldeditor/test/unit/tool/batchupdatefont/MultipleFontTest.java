@@ -36,8 +36,8 @@ import com.sldeditor.tool.batchupdatefont.MultipleFont;
 
 /**
  * The unit test for MultipleFont.
- * <p>
- * {@link com.sldeditor.tool.batchupdatefont.MultipleFont}
+ * 
+ * <p>{@link com.sldeditor.tool.batchupdatefont.MultipleFont}
  *
  * @author Robert Ward (SCISYS)
  */

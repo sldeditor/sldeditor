@@ -99,6 +99,21 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         dataSourceFieldPanel.add(table, BorderLayout.NORTH);
     }
 
+    /**
+     * Display property map.
+     *
+     * @param propertyMap the property map
+     */
+    private void displayPropertyMap(Map<String, Object> propertyMap) {
+        reset();
+        for (String key : propertyMap.keySet()) {
+            if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
+                model.addRow(new String[] { key, propertyMap.get(key).toString() });
+            }
+        }
+        model.fireTableDataChanged();
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -114,21 +129,6 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
         displayPropertyMap(propertyMap);
         return true;
-    }
-
-    /**
-     * Display property map.
-     *
-     * @param propertyMap the property map
-     */
-    private void displayPropertyMap(Map<String, Object> propertyMap) {
-        reset();
-        for (String key : propertyMap.keySet()) {
-            if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
-                model.addRow(new String[] { key, propertyMap.get(key).toString() });
-            }
-        }
-        model.fireTableDataChanged();
     }
 
     /*
@@ -194,11 +194,8 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.sldeditor.datasource.connector.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.datasource.impl.DataSourceProperties)
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.DataSourceConnectorInterface#getConnectionProperties(com.sldeditor.common.DataSourcePropertiesInterface)
      */
     @Override
     public Map<String, Object> getConnectionProperties(

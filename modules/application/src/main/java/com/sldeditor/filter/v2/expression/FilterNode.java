@@ -219,7 +219,8 @@ public class FilterNode extends DefaultMutableTreeNode {
                 setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression2(),
                         filterName.getParameter(1));
 
-                // Gets round the problem with PropertyIsGreaterThan which has no matchCase parameter
+                // Gets round the problem with PropertyIsGreaterThan
+                // which has no matchCase parameter
                 if (filterName.getParameterList().size() > 2) {
                     setExpressionParameter(
                             ff.literal(((BinaryComparisonAbstract) filter).isMatchingCase()),

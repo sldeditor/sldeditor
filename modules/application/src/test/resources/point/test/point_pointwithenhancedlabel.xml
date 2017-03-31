@@ -51,7 +51,7 @@
             <LiteralString value="normal" field="FONT_STYLE"/>
             <LiteralString value="normal" field="FONT_WEIGHT"/>
             <LiteralString value="#0F0000" field="FILL_COLOUR"/>
-			
+
             <LiteralString value="feature description" field="VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION"/>
             <LiteralString value="snippet" field="VO_TEXTSYMBOLIZER_2_SNIPPET"/>
             <LiteralString value="target" field="VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET"/>

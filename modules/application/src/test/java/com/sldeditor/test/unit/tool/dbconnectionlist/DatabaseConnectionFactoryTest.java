@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.tool.dbconnectionlist;
 
 import static org.junit.Assert.assertFalse;
@@ -35,6 +36,7 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 
 /**
  * Unit test for DatabaseConnectionFactory class.
+ * 
  * <p>{@link com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory}
  * 
  * @author Robert Ward (SCISYS)

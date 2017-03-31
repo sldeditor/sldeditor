@@ -249,15 +249,7 @@ public class TextSymbolizerDetails extends StandardPanel
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
 
-            StandardData standardData = getStandardData();
-
-            Expression label = fieldConfigVisitor.getExpression(FieldIdEnum.LABEL);
             Expression haloRadius = fieldConfigVisitor.getExpression(FieldIdEnum.HALO_RADIUS);
-
-            Expression geometryField = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
-
-            String geometryFieldName = null;
-            Expression defaultGeometryField = getFilterFactory().property(geometryFieldName);
 
             // Label placement
             LabelPlacement labelPlacement = null;
@@ -360,8 +352,16 @@ public class TextSymbolizerDetails extends StandardPanel
             //
             Font font = extractFont();
 
-            // Any changes made to the font details need to be reflected back to the FieldConfigFontPreview field
+            // Any changes made to the font details need to be reflected
+            // back to the FieldConfigFontPreview field
             fieldConfigVisitor.populateFontField(FieldIdEnum.FONT_PREVIEW, font);
+
+            StandardData standardData = getStandardData();
+            Expression label = fieldConfigVisitor.getExpression(FieldIdEnum.LABEL);
+            Expression geometryField = fieldConfigVisitor.getExpression(FieldIdEnum.GEOMETRY);
+
+            String geometryFieldName = null;
+            Expression defaultGeometryField = getFilterFactory().property(geometryFieldName);
 
             TextSymbolizer textSymbolizer = (TextSymbolizer) getStyleFactory().textSymbolizer(
                     standardData.name, defaultGeometryField, standardData.description,

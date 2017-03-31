@@ -82,7 +82,8 @@ public class AttributeSelection extends JPanel
     private JComboBox<String> attributeChooserComboBox;
 
     /** The listener list. */
-    private List<ExpressionUpdateInterface> listenerList = new ArrayList<ExpressionUpdateInterface>();
+    private List<ExpressionUpdateInterface> listenerList =
+            new ArrayList<ExpressionUpdateInterface>();
 
     /** The value panel. */
     private ValueSubPanel valuePanel;

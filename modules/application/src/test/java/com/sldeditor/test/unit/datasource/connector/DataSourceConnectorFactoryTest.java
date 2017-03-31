@@ -35,6 +35,7 @@ import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 
 /**
  * Unit test for DataSourceConnectorFactory class.
+ * 
  * <p>{@link com.sldeditor.datasource.connector.DataSourceConnectorFactory}
  * 
  * @author Robert Ward (SCISYS)
@@ -48,7 +49,8 @@ public class DataSourceConnectorFactoryTest {
     @Test
     public void testGetDataSourceConnectorList() {
 
-        Map<Class<?>, DataSourceConnectorInterface> actual = DataSourceConnectorFactory.getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> actual = DataSourceConnectorFactory
+                .getDataSourceConnectorList();
 
         assertFalse(actual.isEmpty());
     }
@@ -59,7 +61,8 @@ public class DataSourceConnectorFactoryTest {
     @Test
     public void testGetDataSourcePropertiesString() {
 
-        DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties("filename.shp");
+        DataSourcePropertiesInterface dsp = 
+                DataSourceConnectorFactory.getDataSourceProperties("filename.shp");
 
         assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
     }
@@ -82,7 +85,8 @@ public class DataSourceConnectorFactoryTest {
         Map<String, Object> propertyMap = new HashMap<String,Object>();
 
         propertyMap.put("url", "filename.shp");
-        DataSourcePropertiesInterface dsp = DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
+        DataSourcePropertiesInterface dsp =
+                DataSourceConnectorFactory.getDataSourceProperties(propertyMap);
 
         assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
 
@@ -107,7 +111,8 @@ public class DataSourceConnectorFactoryTest {
     public void testGetFileExtension() {
         String extension = "shp";
 
-        assertEquals(extension, DataSourceConnectorFactory.getFileExtension("testfilename." + extension));
+        assertEquals(extension, 
+                DataSourceConnectorFactory.getFileExtension("testfilename." + extension));
     }
 
 }

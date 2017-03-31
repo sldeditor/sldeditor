@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.file.sld;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +43,7 @@ import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 
 /**
  * Unit test for SLDFileHandler class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler}
  * 
  * @author Robert Ward (SCISYS)
@@ -68,7 +70,7 @@ public class SLDFileHandlerTest {
     /**
      * Single file
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -118,7 +120,7 @@ public class SLDFileHandlerTest {
     /**
      * Supply a folder name and retrieve all the sld files in it
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFolder() {
@@ -144,16 +146,16 @@ public class SLDFileHandlerTest {
 
             List<SLDDataInterface> sldDataList = handler.getSLDContents(fileTreeNode);
 
-            List<String> expectedLayerNameList = Arrays.asList("point_attribute.sld", "point_pointasgraphic.sld",
-                    "point_pointasgraphichttp.sld",
+            List<String> expectedLayerNameList = Arrays.asList("point_attribute.sld",
+                    "point_pointasgraphic.sld", "point_pointasgraphichttp.sld",
                     "point_pointwithdefaultlabel.sld", "point_pointwithrotatedlabel.sld",
-                    "point_pointwithstyledlabel.sld","point_rotatedsquare.sld",
+                    "point_pointwithstyledlabel.sld", "point_rotatedsquare.sld",
                     "point_simplepoint.sld", "point_simplepointwithstroke.sld",
-                    "point_transparenttriangle.sld", "point_zoom.sld", "point_wkt.sld", "point_pointwithenhancedlabel.sld");
+                    "point_transparenttriangle.sld", "point_zoom.sld", "point_wkt.sld",
+                    "point_pointwithenhancedlabel.sld");
             assertEquals(expectedLayerNameList.size(), sldDataList.size());
 
-            for(SLDDataInterface sldData : sldDataList)
-            {
+            for (SLDDataInterface sldData : sldDataList) {
                 assertTrue(expectedLayerNameList.contains(sldData.getLayerName()));
             }
         } catch (SecurityException e) {
@@ -168,7 +170,7 @@ public class SLDFileHandlerTest {
     /**
      * Check SLD name
      * 
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {

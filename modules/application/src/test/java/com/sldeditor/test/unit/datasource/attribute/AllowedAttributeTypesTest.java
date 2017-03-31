@@ -19,7 +19,9 @@
 
 package com.sldeditor.test.unit.datasource.attribute;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -27,6 +29,7 @@ import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
 
 /**
  * Unit test for AllowedAttributeTypes class.
+ * 
  * <p>{@link com.sldeditor.datasource.attribute.AllowedAttributeTypes}
  * 
  * @author Robert Ward (SCISYS)

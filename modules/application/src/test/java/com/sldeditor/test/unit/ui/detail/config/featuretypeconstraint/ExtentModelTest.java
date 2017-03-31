@@ -41,14 +41,14 @@ import com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstrain
 
 /**
  * The unit test for ExtentModel.
+ * 
  * <p>{@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel}
  *
  * @author Robert Ward (SCISYS)
  */
 public class ExtentModelTest {
 
-    class TestModelUpdate implements FeatureTypeConstraintModelUpdateInterface
-    {
+    class TestModelUpdate implements FeatureTypeConstraintModelUpdateInterface {
         private boolean extentUpdated = false;
 
         @Override
@@ -60,8 +60,7 @@ public class ExtentModelTest {
             extentUpdated = true;
         }
 
-        public boolean hasExtentUpdatedBeenCalled()
-        {
+        public boolean hasExtentUpdatedBeenCalled() {
             boolean tmp = extentUpdated;
             extentUpdated = false;
             return tmp;
@@ -69,7 +68,8 @@ public class ExtentModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#isCellEditable(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#isCellEditable(int, int)}.
      */
     @Test
     public void testIsCellEditable() {
@@ -79,7 +79,8 @@ public class ExtentModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getColumnCount()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getColumnCount()}.
      */
     @Test
     public void testGetColumnCount() {
@@ -89,20 +90,26 @@ public class ExtentModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getColumnName(int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getColumnName(int)}.
      */
     @Test
     public void testGetColumnNameInt() {
         ExtentModel model = new ExtentModel(null);
 
-        assertTrue(model.getColumnName(0).compareTo(Localisation.getString(FieldConfigBase.class, "FeatureTypeConstraintExtentModel.name")) == 0);
+        assertTrue(model.getColumnName(0).compareTo(Localisation.getString(FieldConfigBase.class,
+                "FeatureTypeConstraintExtentModel.name")) == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getValueAt(int, int)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getRowCount()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#addNewEntry()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#setValueAt(java.lang.Object, int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getValueAt(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getRowCount()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#addNewEntry()}. Test
+     * method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#setValueAt(java.lang.Object, int, int)}.
      */
     @Test
     public void testGetValueAt() {
@@ -117,15 +124,14 @@ public class ExtentModelTest {
         assertTrue(testUpdate.hasExtentUpdatedBeenCalled());
         assertEquals(1, model.getRowCount());
 
-        String expectedValue1 = "New Extent";
-        String expectedValue2 = "0";
-
         assertNull(model.getValueAt(-1, 0));
         assertNull(model.getValueAt(99, 0));
         assertNull(model.getValueAt(0, -1));
         assertNull(model.getValueAt(0, 99));
 
         String actualValue = (String) model.getValueAt(0, 0);
+        String expectedValue1 = "New Extent";
+        String expectedValue2 = "0";
         assertTrue(expectedValue1.compareTo(actualValue) == 0);
         actualValue = (String) model.getValueAt(0, 1);
         assertTrue(expectedValue2.compareTo(actualValue) == 0);
@@ -159,9 +165,12 @@ public class ExtentModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getExtentList()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#removeEntries(int, int)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#populate(org.geotools.styling.Extent[])}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#getExtentList()}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#removeEntries(int, int)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#populate(org.geotools.styling.Extent[])}.
      */
     @Test
     public void testGetExtentList() {
@@ -202,7 +211,8 @@ public class ExtentModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#updateExtent(org.geotools.styling.FeatureTypeConstraint)}.
+     * Test method for
+     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.ExtentModel#updateExtent(org.geotools.styling.FeatureTypeConstraint)}.
      */
     @Test
     public void testUpdateExtent() {
@@ -217,7 +227,8 @@ public class ExtentModelTest {
         extentArray[1] = styleFactory.createExtent("extent 2", "2 2 2 2");
         model.populate(extentArray);
 
-        FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint("feature type name", Filter.INCLUDE, null);
+        FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint("feature type name",
+                Filter.INCLUDE, null);
 
         model.updateExtent(null);
         model.updateExtent(ftc);

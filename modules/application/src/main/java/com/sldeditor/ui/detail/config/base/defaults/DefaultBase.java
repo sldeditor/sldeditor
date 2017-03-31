@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
@@ -23,11 +24,10 @@ package com.sldeditor.ui.detail.config.base.defaults;
  * 
  * @author Robert Ward (SCISYS)
  */
-public abstract class DefaultBase
-{
+public abstract class DefaultBase {
 
     /**
-     * Checks to see if the object can accepts the supplied value
+     * Checks to see if the object can accepts the supplied value.
      *
      * @param defaultValue the default value
      * @return true, if successful
@@ -35,7 +35,7 @@ public abstract class DefaultBase
     public abstract boolean accepts(String defaultValue);
 
     /**
-     * Gets the value from the string
+     * Gets the value from the string.
      *
      * @param defaultValue the default value
      * @return the value

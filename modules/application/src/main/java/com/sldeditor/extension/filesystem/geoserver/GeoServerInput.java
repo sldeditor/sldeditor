@@ -102,7 +102,7 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
     private transient GeoServerReadProgress progress = new GeoServerReadProgress(this, this);
 
     /** The logger. */
-    private transient static Logger logger = Logger.getLogger(GeoServerInput.class.getName());
+    private static transient Logger logger = Logger.getLogger(GeoServerInput.class.getName());
 
     /** The GeoServer root node. */
     private transient GeoServerOverallNode geoServerRootNode;
@@ -291,8 +291,8 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
      */
     private void populateGeoServerConnections(JMenu uploadToGeoServerMenu) {
         if (uploadToGeoServerMenu != null) {
-            Map<GeoServerConnection, GeoServerClientInterface> connectionMap = GeoServerConnectionManager
-                    .getInstance().getConnectionMap();
+            Map<GeoServerConnection, GeoServerClientInterface> connectionMap =
+                    GeoServerConnectionManager.getInstance().getConnectionMap();
 
             if (connectionMap.isEmpty()) {
                 JMenuItem noGeoServerMenuItem = new JMenuItem(Localisation
@@ -825,7 +825,8 @@ public class GeoServerInput implements FileSystemInterface, GeoServerConnectUpda
         }
 
         if (nodeToTransfer instanceof GeoServerWorkspaceNode) {
-            Map<GeoServerClientInterface, String> connectionsToRefreshMap = new HashMap<GeoServerClientInterface, String>();
+            Map<GeoServerClientInterface, String> connectionsToRefreshMap =
+                    new HashMap<GeoServerClientInterface, String>();
 
             for (SLDDataInterface sldData : sldDataList) {
                 GeoServerClientInterface client = GeoServerConnectionManager.getInstance()

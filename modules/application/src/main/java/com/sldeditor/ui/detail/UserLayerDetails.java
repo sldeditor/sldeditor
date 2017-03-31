@@ -195,7 +195,8 @@ public class UserLayerDetails extends StandardPanel
             }
             SelectedSymbol.getInstance().replaceStyledLayer(userLayer);
 
-            // Update inline data sources if the inline data changed, reduces creation of datasources
+            // Update inline data sources if the inline data changed,
+            // reduces creation of datasources
             if (changedField != null) {
                 if (changedField == FieldIdEnum.INLINE_FEATURE) {
                     DataSourceInterface dataSource = DataSourceFactory.getDataSource();

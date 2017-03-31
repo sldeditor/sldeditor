@@ -19,7 +19,9 @@
 
 package com.sldeditor.test.unit.ui.attribute;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -27,6 +29,7 @@ import com.sldeditor.ui.attribute.AttributeUtils;
 
 /**
  * The unit test for AttributeUtils.
+ * 
  * <p>{@link com.sldeditor.ui.attribute.AttributeUtils}
  *
  * @author Robert Ward (SCISYS)

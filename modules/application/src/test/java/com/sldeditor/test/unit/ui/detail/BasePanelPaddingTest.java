@@ -32,6 +32,7 @@ import com.sldeditor.ui.detail.BasePanelPadding;
 
 /**
  * The unit test for BasePanelPadding.
+ * 
  * <p>{@link com.sldeditor.ui.detail.BasePanelPadding}
  *
  * @author Robert Ward (SCISYS)

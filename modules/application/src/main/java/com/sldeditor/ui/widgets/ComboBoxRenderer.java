@@ -45,6 +45,8 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 
     /**
      * Gets the list cell renderer component.
+     * This method finds the image and text corresponding to the selected value and 
+     * returns the label, set up to display the text and image.
      *
      * @param list the list
      * @param value the value
@@ -52,9 +54,6 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
      * @param isSelected the is selected
      * @param cellHasFocus the cell has focus
      * @return the list cell renderer component
-     */
-    /*
-     * This method finds the image and text corresponding to the selected value and returns the label, set up to display the text and image.
      */
     public Component getListCellRendererComponent(JList list, Object value, int index,
             boolean isSelected, boolean cellHasFocus) {

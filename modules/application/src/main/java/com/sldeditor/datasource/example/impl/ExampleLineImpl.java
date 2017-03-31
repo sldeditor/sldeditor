@@ -50,6 +50,7 @@ public class ExampleLineImpl implements ExampleLineInterface {
     @Override
     public LineString getLine() {
         if (line == null) {
+            //CHECKSTYLE:OFF
             double[][] rawLocations = new double[][] { { -123.167725, 48.502048 },
                     { -123.464355, 48.297812 }, { -124.738770, 48.603858 },
                     { -125.189209, 48.828566 }, { -125.112305, 48.951366 },
@@ -66,6 +67,7 @@ public class ExampleLineImpl implements ExampleLineInterface {
                     { -128.364258, 50.652943 }, { -128.342285, 50.792047 },
                     { -128.100586, 50.882243 }, { -127.858887, 50.944584 },
                     { -127.518311, 50.798991 }, { -127.221680, 50.639010 } };
+                    //CHECKSTYLE:ON
             GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 
             Coordinate[] coords = new Coordinate[rawLocations.length];

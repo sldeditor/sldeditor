@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertTrue;
@@ -11,6 +12,7 @@ import com.sldeditor.datasource.impl.GeometryField;
 
 /**
  * The unit test for GeometryField.
+ * 
  * <p>{@link com.sldeditor.datasource.impl.GeometryField}
  *
  * @author Robert Ward (SCISYS)

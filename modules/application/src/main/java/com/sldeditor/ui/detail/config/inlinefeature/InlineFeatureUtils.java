@@ -52,26 +52,53 @@ import com.sldeditor.datasource.impl.GeometryTypeMapping;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Utility methods to read/write inline features as GML
+ * Utility methods to read/write inline features as GML.
  * 
  * @author Robert Ward (SCISYS)
  *
  */
 public class InlineFeatureUtils {
 
+    /** The Constant GML_NAMESPACE_PREFIX. */
     private static final String GML_NAMESPACE_PREFIX = "gml:";
+
+    /** The Constant SLD_INLINE_FEATURE_START. */
     private static final String SLD_INLINE_FEATURE_START = "<sld:InlineFeature>";
+
+    /** The Constant SLD_INLINE_FEATURE_END. */
     private static final String SLD_INLINE_FEATURE_END = "</sld:InlineFeature>";
+
+    /** The Constant GML_FEATURE_FID_END. */
     private static final String GML_FEATURE_FID_END = "</gml:_Feature>";
+
+    /** The Constant FEATURE_FID_WITHOUT_PREFIX_END. */
     private static final String FEATURE_FID_WITHOUT_PREFIX_END = "</:_Feature>";
+
+    /** The Constant GML_FEATURE_FID. */
     private static final String GML_FEATURE_FID = "<gml:_Feature fid";
+
+    /** The Constant FEATURE_FID_WITHOUT_PREFIX. */
     private static final String FEATURE_FID_WITHOUT_PREFIX = "<_Feature fid";
+
+    /** The Constant SLD_ROOT_ELEMENT_END. */
     private static final String SLD_ROOT_ELEMENT_END = "</sld:StyledLayerDescriptor>";
+
+    /** The Constant SLD_USER_LAYER_END. */
     private static final String SLD_USER_LAYER_END = "</sld:UserLayer>";
+
+    /** The Constant SLD_USER_LAYER_START. */
     private static final String SLD_USER_LAYER_START = "<sld:UserLayer>";
+
+    /** The Constant SLD_ROOT_ELEMENT. */
     private static final String SLD_ROOT_ELEMENT = "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">";
+
+    /** The Constant XML_HEADER. */
     private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+
+    /** The Constant GML_START. */
     private static final String GML_START = "<FeatureCollection>";
+
+    /** The Constant GML_END. */
     private static final String GML_END = "</FeatureCollection>";
 
     /**
@@ -80,22 +107,18 @@ public class InlineFeatureUtils {
      * @param userLayer the user layer
      * @return the inline features text
      */
-    public static String getInlineFeaturesText(UserLayer userLayer)
-    {
-        if(userLayer == null)
-        {
+    public static String getInlineFeaturesText(UserLayer userLayer) {
+        if (userLayer == null) {
             return "";
         }
 
         // Handle the case where there is a featurecollection but no features
-        if(userLayer.getInlineFeatureDatastore() != null)
-        {
+        if (userLayer.getInlineFeatureDatastore() != null) {
             String typeName = userLayer.getInlineFeatureType().getTypeName();
             SimpleFeatureSource featureSource;
             try {
                 featureSource = userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
-                if(featureSource.getFeatures().isEmpty())
-                {
+                if (featureSource.getFeatures().isEmpty()) {
                     return "";
                 }
             } catch (IOException e) {
@@ -121,8 +144,7 @@ public class InlineFeatureUtils {
         String userLayerXML = stringWriter.toString();
 
         // Check to see if there are any inline features
-        if(!userLayerXML.contains(SLD_INLINE_FEATURE_START))
-        {
+        if (!userLayerXML.contains(SLD_INLINE_FEATURE_START)) {
             return "";
         }
 
@@ -130,30 +152,25 @@ public class InlineFeatureUtils {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         int index = beginIndex - 1;
-        while(index > 0)
-        {
-            if(userLayerXML.charAt(index) != ' ')
-            {
+        while (index > 0) {
+            if (userLayerXML.charAt(index) != ' ') {
                 break;
-            }
-            else
-            {
+            } else {
                 sb.append(" ");
-                index --;
+                index--;
             }
         }
 
         int endIndex = userLayerXML.lastIndexOf(GML_END) + GML_END.length();
 
-        if(beginIndex < 0)
-        {
+        if (beginIndex < 0) {
             beginIndex = 0;
         }
         String extract = userLayerXML.substring(beginIndex, endIndex);
 
         extract = extract.replace(sb.toString(), "\n");
 
-        return(extract);
+        return (extract);
     }
 
     /**
@@ -163,18 +180,15 @@ public class InlineFeatureUtils {
      * @param inlineFeatures the inline features
      */
     public static void setInlineFeatures(UserLayer userLayer, String inlineFeatures) {
-        if(userLayer == null)
-        {
+        if (userLayer == null) {
             return;
         }
 
-        if(inlineFeatures == null)
-        {
+        if (inlineFeatures == null) {
             return;
         }
 
-        try
-        {
+        try {
             StringBuilder sb = new StringBuilder();
 
             // To extract inline features need to find the XML Node, so fake an XML document
@@ -191,7 +205,8 @@ public class InlineFeatureUtils {
 
             // The hack, put the gml namespace prefix back otherwise the XML parsing fails
             inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX, GML_FEATURE_FID);
-            inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END, GML_FEATURE_FID_END);
+            inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END,
+                    GML_FEATURE_FID_END);
 
             // Remove empty namespace prefixes
             inlineFeatures = inlineFeatures.replace("<:", "<");
@@ -219,8 +234,7 @@ public class InlineFeatureUtils {
             } catch (Exception e) {
                 ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
             }
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
         } catch (SAXException e) {
             ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
@@ -235,18 +249,13 @@ public class InlineFeatureUtils {
      * @param sld the sld
      * @return true, if sld contains inline features
      */
-    public static boolean containsInLineFeatures(StyledLayerDescriptor sld)
-    {
-        if(sld != null)
-        {
-            for(StyledLayer layer : sld.layers())
-            {
-                if(layer instanceof UserLayer)
-                {
+    public static boolean containsInLineFeatures(StyledLayerDescriptor sld) {
+        if (sld != null) {
+            for (StyledLayer layer : sld.layers()) {
+                if (layer instanceof UserLayer) {
                     UserLayer userLayer = (UserLayer) layer;
 
-                    if(userLayer.getInlineFeatureDatastore() != null)
-                    {
+                    if (userLayer.getInlineFeatureDatastore() != null) {
                         return true;
                     }
                 }
@@ -261,16 +270,12 @@ public class InlineFeatureUtils {
      * @param sld the sld
      * @return the list of user layers
      */
-    public static List<UserLayer> extractUserLayers(StyledLayerDescriptor sld)
-    {
+    public static List<UserLayer> extractUserLayers(StyledLayerDescriptor sld) {
         List<UserLayer> userLayerList = new ArrayList<UserLayer>();
 
-        if(sld != null)
-        {
-            for(StyledLayer layer : sld.layers())
-            {
-                if(layer instanceof UserLayer)
-                {
+        if (sld != null) {
+            for (StyledLayer layer : sld.layers()) {
+                if (layer instanceof UserLayer) {
                     UserLayer userLayer = (UserLayer) layer;
 
                     userLayerList.add(userLayer);
@@ -290,45 +295,38 @@ public class InlineFeatureUtils {
     public static GeometryTypeEnum determineGeometryType(GeometryDescriptor geometryDescriptor,
             SimpleFeatureCollection simpleFeatureCollection) {
 
-        if(geometryDescriptor == null)
-        {
+        if (geometryDescriptor == null) {
             return GeometryTypeEnum.UNKNOWN;
         }
 
-        if(simpleFeatureCollection == null)
-        {
+        if (simpleFeatureCollection == null) {
             return GeometryTypeEnum.UNKNOWN;
         }
 
         Class<?> bindingType = geometryDescriptor.getType().getBinding();
 
-        if(bindingType == Geometry.class)
-        {
+        if (bindingType == Geometry.class) {
             Name geometryName = geometryDescriptor.getName();
             SimpleFeatureIterator iterator = simpleFeatureCollection.features();
 
             List<GeometryTypeEnum> geometryFeatures = new ArrayList<GeometryTypeEnum>();
 
-            while(iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 SimpleFeature feature = iterator.next();
 
                 Object value = feature.getAttribute(geometryName);
 
-                if(value != null)
-                {
-                    GeometryTypeEnum geometryType = GeometryTypeMapping.getGeometryType(value.getClass());
+                if (value != null) {
+                    GeometryTypeEnum geometryType = GeometryTypeMapping
+                            .getGeometryType(value.getClass());
 
-                    if(!geometryFeatures.contains(geometryType))
-                    {
+                    if (!geometryFeatures.contains(geometryType)) {
                         geometryFeatures.add(geometryType);
                     }
                 }
             }
-            return(combineGeometryType(geometryFeatures));
-        }
-        else
-        {
+            return (combineGeometryType(geometryFeatures));
+        } else {
             return GeometryTypeMapping.getGeometryType(bindingType);
         }
     }
@@ -340,14 +338,10 @@ public class InlineFeatureUtils {
      * @return the geometry type enum
      */
     public static GeometryTypeEnum combineGeometryType(List<GeometryTypeEnum> geometryFeatures) {
-        if(geometryFeatures != null)
-        {
-            if(geometryFeatures.size() == 1)
-            {
+        if (geometryFeatures != null) {
+            if (geometryFeatures.size() == 1) {
                 return geometryFeatures.get(0);
-            }
-            else
-            {
+            } else {
                 return geometryFeatures.get(0);
             }
         }

@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
 package com.sldeditor.test.sldcookbook;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,11 +34,16 @@ import com.sldeditor.test.SLDTestRunner;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class SLDCookbookPoint
-{
+public class SLDCookbookPoint {
     /** The test. */
     private static SLDTestRunner test = null;
 
+    /**
+     * Sets the up once.
+     *
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException the interrupted exception
+     */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(new Runnable() {
@@ -48,74 +55,62 @@ public class SLDCookbookPoint
     }
 
     @Test
-    public void point_simplepoint()
-    {
+    public void point_simplepoint() {
         test.runTest("point", "point_simplepoint.xml");
     }
 
     @Test
-    public void point_simplepointwithstroke()
-    {
+    public void point_simplepointwithstroke() {
         test.runTest("point", "point_simplepointwithstroke.xml");
     }
 
     @Test
-    public void point_transparenttriangle()
-    {
+    public void point_transparenttriangle() {
         test.runTest("point", "point_transparenttriangle.xml");
     }
 
     @Test
-    public void point_pointwithrotatedlabel()
-    {
+    public void point_pointwithrotatedlabel() {
         test.runTest("point", "point_pointwithrotatedlabel.xml");
     }
 
     @Test
-    public void point_pointwithstyledlabel()
-    {
+    public void point_pointwithstyledlabel() {
         test.runTest("point", "point_pointwithstyledlabel.xml");
     }
 
     @Test
-    public void point_pointasgraphic()
-    {
+    public void point_pointasgraphic() {
         test.runTest("point", "point_pointasgraphic.xml");
     }
 
     @Test
-    public void point_pointasgraphichttp()
-    {
+    public void point_pointasgraphichttp() {
         test.runTest("point", "point_pointasgraphichttp.xml");
     }
 
     @Test
-    public void point_rotatedsquare()
-    {
+    public void point_rotatedsquare() {
         test.runTest("point", "point_rotatedsquare.xml");
     }
 
     @Test
-    public void point_attribute()
-    {
+    public void point_attribute() {
         test.runTest("point", "point_attribute.xml");
     }
 
     @Test
-    public void point_zoom()
-    {
+    public void point_zoom() {
         test.runTest("point", "point_zoom.xml");
     }
 
     @Test
-    public void point_wkt()
-    {
+    public void point_wkt() {
         test.runTest("point", "point_wkt.xml");
     }
 
     @Test
-    public void point_pointwithenhancedlabel()
-    {
+    public void point_pointwithenhancedlabel() {
         test.runTest("point", "point_pointwithenhancedlabel.xml");
     }
 }

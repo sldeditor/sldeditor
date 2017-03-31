@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.connector.instance;
 
 import static org.junit.Assert.assertEquals;
@@ -34,8 +35,8 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 
 /**
  * Unit test for DataSourceConnector class.
- * <p>
- * {@link com.sldeditor.datasource.connector.instance.DataSourceConnector}
+ * 
+ * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnector}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -134,8 +135,6 @@ public class DataSourceConnectorTest {
 
         assertNull(dsc.getConnectionProperties(null));
 
-        DataSourcePropertiesInterface dataSource = new DataSourceProperties(dsc);
-
         Map<String, Object> expectedPropertyMap = new HashMap<String, Object>();
         expectedPropertyMap.put("server", "localhost");
         expectedPropertyMap.put("port", "5432");
@@ -143,6 +142,7 @@ public class DataSourceConnectorTest {
         expectedPropertyMap.put("user", "testuser");
         expectedPropertyMap.put("password", "pasword123");
 
+        DataSourcePropertiesInterface dataSource = new DataSourceProperties(dsc);
         dataSource.setPropertyMap(expectedPropertyMap);
         assertEquals(expectedPropertyMap, dsc.getConnectionProperties(dataSource));
     }

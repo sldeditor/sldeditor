@@ -31,6 +31,7 @@ import com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour;
 
 /**
  * Unit test for SLDDataFlavour class.
+ * 
  * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour}
  * 
  * @author Robert Ward (SCISYS)
@@ -57,10 +58,6 @@ public class SLDDataFlavourTest {
             fail(e.getMessage());
         }
 
-        SLDDataFlavour actual3 = new SLDDataFlavour(mimeType, humanPresentableName);
-        SLDDataFlavour actual3a = new SLDDataFlavour(mimeType, humanPresentableName);
-        SLDDataFlavour actual3b = new SLDDataFlavour(mimeType, "different");
-
         SLDDataFlavour actual4 = null;
         SLDDataFlavour actual4a = null;
         try {
@@ -80,6 +77,11 @@ public class SLDDataFlavourTest {
         assertFalse(actual1.equals(actual2));
         assertTrue(actual5.equals(actual6));
         assertTrue(actual4a.equals(actual4));
+
+        SLDDataFlavour actual3 = new SLDDataFlavour(mimeType, humanPresentableName);
+        SLDDataFlavour actual3a = new SLDDataFlavour(mimeType, humanPresentableName);
+        SLDDataFlavour actual3b = new SLDDataFlavour(mimeType, "different");
+
         assertTrue(actual3a.equals(actual3));
         assertFalse(actual3b.equals(actual3));
     }

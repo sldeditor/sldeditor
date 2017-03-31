@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem.file;
 
 import static org.junit.Assert.assertEquals;
@@ -49,6 +50,7 @@ import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 
 /**
  * Unit test for FileSystemInput class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput}
  * 
  * @author Robert Ward (SCISYS)
@@ -57,7 +59,8 @@ import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 public class FileSystemInputTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput(com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput(com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testFileSystemInput() {
@@ -66,8 +69,7 @@ public class FileSystemInputTest {
         FSTree tree = new FSTree();
 
         DefaultMutableTreeNode rootNode;
-        try
-        {
+        try {
             rootNode = new DefaultMutableTreeNode("Root");
 
             DefaultTreeModel model = new DefaultTreeModel(rootNode);
@@ -91,7 +93,8 @@ public class FileSystemInputTest {
 
             FileTreeNode fileTreeNode = new FileTreeNode(parent, "point_attribute.sld");
 
-            List<SLDDataInterface> sldDataContentsList = input.getSLDContents(fileTreeNode).getSldData();
+            List<SLDDataInterface> sldDataContentsList = input.getSLDContents(fileTreeNode)
+                    .getSldData();
             assertEquals(1, sldDataContentsList.size());
 
             // Changes where the file is to be saved to
@@ -105,9 +108,7 @@ public class FileSystemInputTest {
             assertTrue(input.save(sldData));
 
             saveFile.delete();
-        }
-        catch (SecurityException e)
-        {
+        } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());
         } catch (FileNotFoundException e) {
@@ -120,7 +121,8 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.FileSystemInput#treeExpanded(java.lang.Object)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#treeExpanded(java.lang.Object)}.
      */
     @Test
     public void testTreeExpanded() {
@@ -128,7 +130,8 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.FileSystemInput#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)}.
      */
     @Test
     public void testRightMouseButton() {
@@ -136,7 +139,8 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.FileSystemInput#getNodeTypes()}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#getNodeTypes()}.
      */
     @Test
     public void testGetNodeTypes() {
@@ -146,7 +150,8 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.FileSystemInput#copyNodes(com.sldeditor.common.NodeInterface, java.util.Map)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#copyNodes(com.sldeditor.common.NodeInterface, java.util.Map)}.
      */
     @Test
     public void testCopyNodes() {
@@ -162,9 +167,11 @@ public class FileSystemInputTest {
             Path tempFolder = Files.createTempDirectory(getClass().getSimpleName());
 
             File tempFolderFile = tempFolder.toFile();
-            FileTreeNode destinationTreeNode = new FileTreeNode(tempFolderFile.getParentFile(), tempFolderFile.getName());
+            FileTreeNode destinationTreeNode = new FileTreeNode(tempFolderFile.getParentFile(),
+                    tempFolderFile.getName());
 
-            Map<NodeInterface, List<SLDDataInterface>> copyDataMap = new HashMap<NodeInterface, List<SLDDataInterface>>();
+            Map<NodeInterface, List<SLDDataInterface>> copyDataMap =
+                    new HashMap<NodeInterface, List<SLDDataInterface>>();
 
             copyDataMap.put(destinationTreeNode, sldDataList);
             assertTrue(input.copyNodes(destinationTreeNode, copyDataMap));

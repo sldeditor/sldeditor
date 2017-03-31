@@ -67,8 +67,8 @@ public class ExternalGraphicFilter extends FileFilter {
         return ext;
     }
 
-    // Accept all directories and all gif, jpg, tiff, or png files.
-    /*
+    /**
+     * Accept all directories and all gif, jpg, tiff, or png files.
      * (non-Javadoc)
      * 
      * @see javax.swing.filechooser.FileFilter#accept(java.io.File)

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.property;
 
 import static org.junit.Assert.assertTrue;
@@ -27,6 +28,7 @@ import com.sldeditor.common.property.PropertyManagerInterface;
 
 /**
  * Unit test for PropertyManagerFactory.
+ * 
  * <p>{@link com.sldeditor.common.property.PropertyManagerFactory}
  * 
  * @author Robert Ward (SCISYS)

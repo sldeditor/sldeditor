@@ -113,7 +113,8 @@ import javax.swing.event.ChangeListener;
 /**
  * CharMap4Grid class
  * 
- * This class draws the character grid and listens for mouse and scroll events. Keyboard events are handled by the main class and mimic the scroll
+ * <p>This class draws the character grid and listens for mouse and scroll events.
+ * Keyboard events are handled by the main class and mimic the scroll
  * bar.
  */
 class CharMap4Grid extends JPanel
@@ -358,7 +359,8 @@ class CharMap4Grid extends JPanel
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
     public void mouseExited(MouseEvent event) {
-        /* not used */ }
+        /* not used */
+    }
 
     /*
      * (non-Javadoc)

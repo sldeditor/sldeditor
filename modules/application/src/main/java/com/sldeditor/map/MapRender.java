@@ -116,7 +116,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     private FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
     /** The user feature list. */
+    //CHECKSTYLE:OFF
     private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> userLayerFeatureListMap = null;
+    //CHECKSTYLE:ON
 
     /** The map pane. */
     private SLDMapPane mapPane = null;
@@ -146,7 +148,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     public static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
 
     /** The Constant TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME. */
-    private static final String TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME = "ToolbarStickyDataSourceButton";
+    private static final String TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME = 
+            "ToolbarStickyDataSourceButton";
 
     /** The click to zoom factor, 1 wheel click is 10% zoom. */
     private final double clickToZoom = 0.1;
@@ -178,12 +181,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
         JPanel mapRenderPanel = new JPanel();
 
-        JPanel noDataSource = noDataSourcePanel();
-
         mapPanel = new JPanel();
         CardLayout cardLayout = new CardLayout();
         mapPanel.setLayout(cardLayout);
         mapPanel.add(mapRenderPanel, MAP_PANEL);
+
+        JPanel noDataSource = noDataSourcePanel();
         mapPanel.add(noDataSource, NOMAP_PANEL);
 
         this.add(mapPanel, BorderLayout.CENTER);
@@ -220,11 +223,11 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         toolBar.setFloatable(false);
 
         JButton btn;
-        ButtonGroup cursorToolGrp = new ButtonGroup();
 
         btn = new JButton(new NoToolAction(mapPane));
         btn.setName(TOOLBAR_POINTER_BUTTON_NAME);
         toolBar.add(btn);
+        ButtonGroup cursorToolGrp = new ButtonGroup();
         cursorToolGrp.add(btn);
 
         btn = new JButton(new ZoomInAction(mapPane));
@@ -290,8 +293,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             wmsEnvVarValues.setImageWidth(mapPane.getWidth());
             wmsEnvVarValues.setImageHeight(mapPane.getHeight());
 
-            StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
-
             MapContent mapContent = mapPane.getMapContent();
             if (mapContent == null) {
                 mapContent = new MapContent();
@@ -305,6 +306,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
             mapPane.getRenderer().setRendererHints(hints);
 
             // Add the layers back with the updated style
+            StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
             if (sld != null) {
                 List<StyledLayer> styledLayerList = sld.layers();
 
@@ -336,6 +338,16 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
      */
     private void clearLabelCache() {
         labelCache.clear();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.datasource.RenderSymbolInterface#renderSymbol()
+     */
+    @Override
+    public void renderSymbol() {
+        this.internalRenderStyle();
     }
 
     /**
@@ -464,8 +476,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         if (userLayerFeatureListMap != null) {
             for (UserLayer userLayer : userLayerFeatureListMap.keySet()) {
                 try {
-                    FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = userLayerFeatureListMap
-                            .get(userLayer);
+                    FeatureSource<SimpleFeatureType, SimpleFeature> featureSource =
+                            userLayerFeatureListMap.get(userLayer);
 
                     if (featureSource != null) {
                         refEnvList.add(convertToWGS84(featureSource.getFeatures().getBounds()));
@@ -583,16 +595,6 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     @Override
     public void addSLDOutputListener(SLDOutputInterface sldOutput) {
         // Do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.sldeditor.datasource.RenderSymbolInterface#renderSymbol()
-     */
-    @Override
-    public void renderSymbol() {
-        this.internalRenderStyle();
     }
 
     /*

@@ -38,8 +38,7 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
     /**
      * Instantiates a new empty panel.
      */
-    public EmptyPanel()
-    {
+    public EmptyPanel() {
         super(EmptyPanel.class);
     }
 
@@ -48,8 +47,11 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
      *
      * @param pointSymbol the point symbol
      */
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol pointSymbol) {
@@ -61,12 +63,13 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
      *
      * @return the field data manager
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
-    public GraphicPanelFieldManager getFieldDataManager()
-    {
+    public GraphicPanelFieldManager getFieldDataManager() {
         return null;
     }
 
@@ -75,16 +78,19 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
      *
      * @return true, if is data present
      */
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
-    public boolean isDataPresent()
-    {
+    public boolean isDataPresent() {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -92,8 +98,11 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

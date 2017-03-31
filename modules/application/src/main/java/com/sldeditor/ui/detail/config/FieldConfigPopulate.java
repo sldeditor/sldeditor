@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.util.Date;
@@ -37,12 +38,15 @@ import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
- * The Class FieldConfigPopulate is a base class for all derived FieldConfigxxx classes.<p>
- * All FieldConfigValuePopulateInterface, TestValueVisitor interface methods grouped into this class.
+ * The Class FieldConfigPopulate is a base class for all derived FieldConfigxxx classes.
+ * 
+ * <p>All FieldConfigValuePopulateInterface, TestValueVisitor interface methods grouped into this
+ * class.
  * 
  * @author Robert Ward (SCISYS)
  */
-public abstract class FieldConfigPopulate extends FieldConfigCommonData implements FieldConfigValuePopulateInterface, TestValueVisitor {
+public abstract class FieldConfigPopulate extends FieldConfigCommonData
+        implements FieldConfigValuePopulateInterface, TestValueVisitor {
 
     /**
      * Instantiates a new field data types.
@@ -52,6 +56,13 @@ public abstract class FieldConfigPopulate extends FieldConfigCommonData implemen
     public FieldConfigPopulate(FieldConfigCommonData commonData) {
         super(commonData);
     }
+
+    /**
+     * Populate.
+     *
+     * @param expression the expression
+     */
+    public abstract void populate(Expression expression);
 
     /**
      * Populate string field, overridden if necessary.
@@ -264,13 +275,6 @@ public abstract class FieldConfigPopulate extends FieldConfigCommonData implemen
     public void setTestValue(FieldIdEnum fieldId, List<FeatureTypeConstraint> testValue) {
         // Do nothing
     }
-
-    /**
-     * Populate.
-     *
-     * @param expression the expression
-     */
-    abstract public void populate(Expression expression);
 
     /**
      * Sets the test expression value.

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
@@ -23,24 +24,25 @@ package com.sldeditor.ui.detail.config.base.defaults;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class DefaultDefault extends DefaultBase
-{
+public class DefaultDefault extends DefaultBase {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
-    public boolean accepts(String defaultValue)
-    {
+    public boolean accepts(String defaultValue) {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override
-    public Object getValue(String defaultValue)
-    {
+    public Object getValue(String defaultValue) {
         return defaultValue;
     }
 

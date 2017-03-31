@@ -221,7 +221,8 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
                     populateLayers(connection, geoServerNode);
 
                     if (treeModel != null) {
-                        treeModel.reload(geoServerNode); // this notifies the listeners and changes the GUI
+                        // this notifies the listeners and changes the GUI
+                        treeModel.reload(geoServerNode);
                     }
                 }
 
@@ -346,7 +347,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     }
 
     /**
-     * Get the child node of a parent
+     * Get the child node of a parent.
      *
      * @param parentNode the parent node
      * @param nodeTitlePrefix the node title prefix
@@ -408,8 +409,7 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sldeditor.extension.input.geoserver.GeoServerInputInterface#readStylesProgress(com.sldeditor.extension.input.geoserver.GeoServerConnection,
+     * @see com.sldeditor.extension.input.geoserver.GeoServerInputInterface#readStylesProgress(com.sldeditor.extension.input.geoserver.GeoServerConnection,
      * int, int)
      */
     @Override

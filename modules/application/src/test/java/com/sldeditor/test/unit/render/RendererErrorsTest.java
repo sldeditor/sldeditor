@@ -28,6 +28,7 @@ import com.sldeditor.render.RendererErrors;
 
 /**
  * Unit test for RendererErrors class.
+ * 
  * <p>{@link com.sldeditor.render.RendererErrors}
  * 
  * @author Robert Ward (SCISYS)

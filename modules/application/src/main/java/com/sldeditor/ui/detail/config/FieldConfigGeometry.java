@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.event.ActionEvent;
@@ -41,10 +42,10 @@ import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class FieldConfigGeometry wraps a text field that allows the entry of geometry.
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -130,9 +131,11 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
 
                     public void actionPerformed(ActionEvent e) {
                         if (buttonPressedListenerList != null) {
+                            //CHECKSTYLE:OFF
                             for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
                                 listener.buttonPressed(buttonExternal);
                             }
+                            //CHECKSTYLE:ON
                         }
                     }
                 });
@@ -159,7 +162,8 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {

@@ -37,7 +37,8 @@ import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 public class FieldConfigMarkerShape extends FieldConfigMarker {
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = "symbol/marker/shape/SymbolTypeFieldState_Shape.xml";
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
+            "symbol/marker/shape/SymbolTypeFieldState_Shape.xml";
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;

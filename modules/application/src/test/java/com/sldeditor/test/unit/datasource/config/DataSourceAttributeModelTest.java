@@ -35,6 +35,7 @@ import com.sldeditor.datasource.config.DataSourceAttributeModel;
 
 /**
  * Unit test for DataSourceAttributeModel class.
+ * 
  * <p>{@link com.sldeditor.datasource.config.DataSourceAttributeModel}
  * 
  * @author Robert Ward (SCISYS)
@@ -76,12 +77,14 @@ public class DataSourceAttributeModelTest {
         Class<?> expectedType1 = Integer.class;
         Object expectedValue1 = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa1 = new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
+        DataSourceAttributeData dsa1 =
+                new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
 
         String expectedName2 = "test name2";
         Class<?> expectedType2 = Integer.class;
         Object expectedValue2 = Integer.valueOf(53);
-        DataSourceAttributeData dsa2 = new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
+        DataSourceAttributeData dsa2 =
+                new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
 
         List<DataSourceAttributeData> attributeList = new ArrayList<DataSourceAttributeData>();
         attributeList.add(dsa1);
@@ -108,9 +111,6 @@ public class DataSourceAttributeModelTest {
         assertEquals(expectedValue2, model.getValueAt(1, 2));
 
         // Check set value at
-        String expectedName3 = "test name3";
-        Class<?> expectedType3 = String.class;
-        Object expectedValue3 = String.valueOf(42);
 
         // Set Value At - illegal values
         model.setValueAt(null, 0, 9);
@@ -119,11 +119,15 @@ public class DataSourceAttributeModelTest {
         model.setValueAt(null, attributeList.size(), 0);
 
         // Set Value At - legal values
+        String expectedName3 = "test name3";
+        Class<?> expectedType3 = String.class;
+
         model.setValueAt(expectedName3, 0, 0);
         assertTrue(expectedName3.compareTo(((String)model.getValueAt(0, 0))) == 0);
         model.setValueAt(expectedType3.getSimpleName(), 1, 1);
         actualType = (String)model.getValueAt(1, 1);
         assertTrue(expectedType3.getSimpleName().compareTo(actualType) == 0);
+        Object expectedValue3 = String.valueOf(42);
         model.setValueAt(expectedValue3, 1, 2);
         assertEquals(expectedValue3, model.getValueAt(1, 2));
 

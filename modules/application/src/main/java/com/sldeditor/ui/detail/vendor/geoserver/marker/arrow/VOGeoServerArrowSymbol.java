@@ -34,7 +34,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
 /**
  * Class to handle the getting and setting of GeoServer marker arrow shape vendor option data.
  * 
- * Sets the <WellKnownName> string, extra fields needed.
+ * <p>Sets the &gt;WellKnownName&lt; string, extra fields needed.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -52,8 +52,7 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class,
-     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
     public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,

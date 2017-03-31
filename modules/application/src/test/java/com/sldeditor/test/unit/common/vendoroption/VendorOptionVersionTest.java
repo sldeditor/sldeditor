@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.common.vendoroption;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +30,7 @@ import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * Unit test for VendorOptionVersion.
+ * 
  * <p>{@link com.sldeditor.common.vendoroption.VendorOptionVersion}
  * 
  * @author Robert Ward (SCISYS)
@@ -44,7 +46,8 @@ public class VendorOptionVersionTest {
         VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
         VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
 
-        VendorOptionVersion vo = new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
+        VendorOptionVersion vo = 
+                new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
 
         assertEquals(versionDataMax, vo.getLatest());
     }
@@ -69,7 +72,8 @@ public class VendorOptionVersionTest {
         VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
         VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
 
-        VendorOptionVersion vo = new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
+        VendorOptionVersion vo =
+                new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
         
         assertFalse(vo.isAllowed(null));
         assertFalse(vo.isAllowed(VersionData.decode(getClass(), "1.8.3")));
@@ -88,7 +92,8 @@ public class VendorOptionVersionTest {
         VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
         VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
 
-        VendorOptionVersion vo = new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
+        VendorOptionVersion vo = 
+                new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
         String actualString = vo.toString();
         
         VendorOptionVersion decoded = VendorOptionVersion.fromString(actualString);

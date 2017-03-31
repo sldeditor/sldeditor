@@ -34,6 +34,7 @@ import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 
 /**
  * The unit test for SymbolData.
+ * 
  * <p>{@link com.sldeditor.common.data.SymbolData}
  *
  * @author Robert Ward (SCISYS)
@@ -92,9 +93,11 @@ public class SymbolDataTest {
         assertEquals(newSymbolData.getRule(), symbolData.getRule());
         assertEquals(newSymbolData.getSelectedFTSIndex(), symbolData.getSelectedFTSIndex());
         assertEquals(newSymbolData.getSelectedRuleIndex(), symbolData.getSelectedRuleIndex());
-        assertEquals(newSymbolData.getSelectedStyledLayerIndex(), symbolData.getSelectedStyledLayerIndex());
+        assertEquals(newSymbolData.getSelectedStyledLayerIndex(),
+                symbolData.getSelectedStyledLayerIndex());
         assertEquals(newSymbolData.getSelectedStyleIndex(), symbolData.getSelectedStyleIndex());
-        assertEquals(newSymbolData.getSelectedSymbolizerIndex(), symbolData.getSelectedSymbolizerIndex());
+        assertEquals(newSymbolData.getSelectedSymbolizerIndex(),
+                symbolData.getSelectedSymbolizerIndex());
     }
 
     @Test

@@ -36,6 +36,7 @@ import com.sldeditor.common.watcher.ReloadManager;
 
 /**
  * Unit test for ReloadManager.
+ * 
  * <p>{@link com.sldeditor.common.watcher.ReloadManager}
  * 
  * @author Robert Ward (SCISYS)
@@ -44,33 +45,41 @@ import com.sldeditor.common.watcher.ReloadManager;
 @Ignore
 public class ReloadManagerTest {
 
-    class DummyCallback implements LoadSLDInterface
-    {
+    class DummyCallback implements LoadSLDInterface {
         public int reloadCallbackCalled = 0;
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.LoadSLDInterface#emptySLD()
          */
         @Override
         public void emptySLD() {
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.LoadSLDInterface#preLoad()
          */
         @Override
         public void preLoad() {
         }
 
-        /* (non-Javadoc)
-         * @see com.sldeditor.common.LoadSLDInterface#loadSLDString(com.sldeditor.common.filesystem.SelectedFiles)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see com.sldeditor.common.LoadSLDInterface#loadSLDString(com.sldeditor.common.filesystem.
+         * SelectedFiles)
          */
         @Override
         public boolean loadSLDString(SelectedFiles selectedFiles) {
             return false;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.LoadSLDInterface#readSLDFile(java.io.File)
          */
         @Override
@@ -78,21 +87,28 @@ public class ReloadManagerTest {
             return null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see com.sldeditor.common.LoadSLDInterface#reloadSLDFile()
          */
         @Override
         public void reloadSLDFile() {
-            reloadCallbackCalled ++;
+            reloadCallbackCalled++;
         }
 
     }
+
     /**
-     * Test method for {@link com.sldeditor.common.watcher.ReloadManager#fileAdded(java.nio.file.Path)}.
-     * Test method for {@link com.sldeditor.common.watcher.ReloadManager#fileModified(java.nio.file.Path)}.
-     * Test method for {@link com.sldeditor.common.watcher.ReloadManager#fileDeleted(java.nio.file.Path)}.
-     * Test method for {@link com.sldeditor.common.watcher.ReloadManager#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)}.
-     * Test method for {@link com.sldeditor.common.watcher.ReloadManager#addListener(com.sldeditor.common.LoadSLDInterface)}.
+     * Test method for
+     * {@link com.sldeditor.common.watcher.ReloadManager#fileAdded(java.nio.file.Path)}. Test method
+     * for {@link com.sldeditor.common.watcher.ReloadManager#fileModified(java.nio.file.Path)}. Test
+     * method for
+     * {@link com.sldeditor.common.watcher.ReloadManager#fileDeleted(java.nio.file.Path)}. Test
+     * method for
+     * {@link com.sldeditor.common.watcher.ReloadManager#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)}.
+     * Test method for
+     * {@link com.sldeditor.common.watcher.ReloadManager#addListener(com.sldeditor.common.LoadSLDInterface)}.
      */
     @Test
     public void testReloadFile() {
@@ -159,15 +175,14 @@ public class ReloadManagerTest {
         SLDData sldData = new SLDData(new StyleWrapper(), "");
         ReloadManager.getInstance().sldDataUpdated(sldData, true);
 
-        File expectedFile = new File("/tmp/testFile.sld");
-        Path path = expectedFile.toPath();
-
         DummyCallback callback = new DummyCallback();
         ReloadManager.getInstance().addListener(callback);
 
         assertEquals(0, callback.reloadCallbackCalled);
 
         // Set loaded file - should match
+        File expectedFile = new File("/tmp/testFile.sld");
+        Path path = expectedFile.toPath();
         sldData.setSLDFile(expectedFile);
         ReloadManager.getInstance().sldDataUpdated(sldData, true);
 

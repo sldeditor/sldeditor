@@ -31,14 +31,14 @@ import com.sldeditor.ui.legend.option.LegendOptionData;
 
 /**
  * The unit test for SLDData.
+ * 
  * <p>{@link com.sldeditor.common.data.SLDData}
  *
  * @author Robert Ward (SCISYS)
  */
 public class SLDDataTest {
 
-    class DummyDataSourceProperties implements DataSourcePropertiesInterface
-    {
+    class DummyDataSourceProperties implements DataSourcePropertiesInterface {
 
         @Override
         public Map<String, Object> getConnectionProperties() {
@@ -253,7 +253,7 @@ public class SLDDataTest {
     }
 
     /**
-     * Test original format
+     * Test original format.
      */
     @Test
     public void testOriginalFormat() {
@@ -266,7 +266,7 @@ public class SLDDataTest {
     }
 
     /**
-     * Test resource locator
+     * Test resource locator.
      */
     @Test
     public void testResourceLocator() {
@@ -288,7 +288,7 @@ public class SLDDataTest {
     }
 
     /**
-     * Test legend options
+     * Test legend options.
      */
     @Test
     public void testLegendOptions() {

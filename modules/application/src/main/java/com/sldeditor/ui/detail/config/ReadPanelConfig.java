@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.util.ArrayList;
@@ -78,9 +79,10 @@ import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
- * The Class ReadPanelConfig reads a XML configuration of field configuration structures and instantiates and populates the relevant objects.
- * <p>
- * Configuration files exist at src/main/resources/ui/*
+ * The Class ReadPanelConfig reads a XML configuration of field configuration structures and
+ * instantiates and populates the relevant objects.
+ * 
+ * <p>Configuration files exist at src/main/resources/ui/*
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -182,7 +184,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
         multiOptionGroupConfig.setId(xmlMultiGroupObj.getId());
         multiOptionGroupConfig
-        .setLabel(getLocalisedText(localisationClass, xmlMultiGroupObj.getLabel()));
+                .setLabel(getLocalisedText(localisationClass, xmlMultiGroupObj.getLabel()));
         multiOptionGroupConfig.setShowLabel(xmlMultiGroupObj.isShowLabel());
         multiOptionGroupConfig.setOptional(xmlMultiGroupObj.isOption());
 
@@ -259,6 +261,16 @@ public class ReadPanelConfig implements PanelConfigInterface {
     }
 
     /**
+     * Gets the vendor option version read from the configuration.
+     *
+     * @return the vendor option version
+     */
+    @Override
+    public VendorOptionVersion getVendorOptionVersion() {
+        return vendorOptionVersion;
+    }
+
+    /**
      * Parses the group if fields.
      *
      * @param localisationClass the localisation class
@@ -271,7 +283,8 @@ public class ReadPanelConfig implements PanelConfigInterface {
         GroupConfig groupConfig = new GroupConfig();
 
         groupConfig.setId(xmlGroupObj.getId());
-        groupConfig.setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
+        groupConfig
+                .setLabel(groupTitle(getLocalisedText(localisationClass, xmlGroupObj.getLabel())));
         groupConfig.setShowLabel(xmlGroupObj.isShowLabel());
         groupConfig.setOptional(xmlGroupObj.isOption());
 
@@ -303,7 +316,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
                     ConsoleManager.getInstance().error(this,
                             Localisation.getField(FieldConfigBase.class,
                                     "FieldConfigVendorOption.missingVendorOptionClass")
-                            + vendorOption.getClazz());
+                                    + vendorOption.getClazz());
                 }
 
                 FieldConfigVendorOption placeHolder = new FieldConfigVendorOption(commonData,
@@ -398,7 +411,8 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
             groupConfig.addField(fontPreviewConfig);
         } else if (xmlFieldConfig instanceof XMLFieldConfigTransformation) {
-            XMLFieldConfigTransformation xmlTransformationFieldConfig = (XMLFieldConfigTransformation) xmlFieldConfig;
+            XMLFieldConfigTransformation xmlTransformationFieldConfig =
+                    (XMLFieldConfigTransformation) xmlFieldConfig;
 
             FieldConfigTransformation transformationConfig = new FieldConfigTransformation(
                     commonData,
@@ -546,12 +560,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
      * @param xmlVendorOption the xml vendor option
      * @return the version data
      */
-    public static VersionData decodeVersionData(XMLVendorOption xmlVendorOption)
-    {
-        VersionData versionData = VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
+    public static VersionData decodeVersionData(XMLVendorOption xmlVendorOption) {
+        VersionData versionData = VendorOptionManager.getInstance()
+                .getDefaultVendorOptionVersionData();
 
-        if(xmlVendorOption != null)
-        {
+        if (xmlVendorOption != null) {
             try {
                 String vendorOptionClassName = xmlVendorOption.getClassType().trim();
                 Class<?> vendorOptionClass = Class.forName(vendorOptionClassName);
@@ -599,16 +612,6 @@ public class ReadPanelConfig implements PanelConfigInterface {
             }
         }
         return config;
-    }
-
-    /**
-     * Gets the vendor option version read from the configuration.
-     *
-     * @return the vendor option version
-     */
-    @Override
-    public VendorOptionVersion getVendorOptionVersion() {
-        return vendorOptionVersion;
     }
 
     /**

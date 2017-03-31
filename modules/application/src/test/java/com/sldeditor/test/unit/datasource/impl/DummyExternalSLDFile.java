@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.datasource.impl;
 
 import java.net.URL;
@@ -46,6 +47,9 @@ public class DummyExternalSLDFile implements SLDEditorFileInterface {
 
     private List<String> expectedFieldList = new ArrayList<String>();
 
+    /**
+     * Instantiates a new dummy external SLD file.
+     */
     public DummyExternalSLDFile() {
         String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
                 + "<StyledLayerDescriptor version=\"1.0.0\" "

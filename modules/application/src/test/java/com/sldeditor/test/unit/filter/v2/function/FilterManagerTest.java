@@ -61,6 +61,7 @@ import com.vividsolutions.jts.geom.LineString;
 
 /**
  * Unit test for FilterManager class.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.FilterManager}
  * 
  * @author Robert Ward (SCISYS)
@@ -69,7 +70,7 @@ import com.vividsolutions.jts.geom.LineString;
 public class FilterManagerTest {
 
     /** The type map. */
-    private static Map<Class<?>, Class<?> > typeMap = new HashMap<Class<?>, Class<?>>();
+    private static Map<Class<?>, Class<?>> typeMap = new HashMap<Class<?>, Class<?>>();
 
     /**
      * Sets the up class.
@@ -99,13 +100,15 @@ public class FilterManagerTest {
      */
     @Test
     public void testGetInstance() {
-        List<FilterConfigInterface> filterConfigList = FilterManager.getInstance().getFilterConfigList();
+        List<FilterConfigInterface> filterConfigList = FilterManager.getInstance()
+                .getFilterConfigList();
 
         assertEquals(29, filterConfigList.size());
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterManager#createExpression(org.opengis.filter.capability.FunctionName)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FilterManager#createExpression(org.opengis.filter.capability.FunctionName)}.
      */
     @Test
     public void testCreateExpression() {
@@ -119,12 +122,13 @@ public class FilterManagerTest {
         functionName = functionNameList.get(0);
         expression = FilterManager.getInstance().createExpression(functionName);
         assertNotNull(expression);
-        FunctionExpression funcExpression = (FunctionExpression)expression;
+        FunctionExpression funcExpression = (FunctionExpression) expression;
         assertTrue(functionName.getName().compareTo(funcExpression.getName()) == 0);
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterManager#convertParameters(java.lang.Class, com.sldeditor.ui.detail.config.FieldId, org.opengis.filter.capability.FunctionName)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FilterManager#convertParameters(java.lang.Class, com.sldeditor.ui.detail.config.FieldId, org.opengis.filter.capability.FunctionName)}.
      */
     @Test
     public void testConvertParameters() {
@@ -133,24 +137,23 @@ public class FilterManagerTest {
 
         // Try with empty parameters
         Class<?> panelId = null;
-        List<GroupConfigInterface> list = FilterManager.getInstance().convertParameters(panelId, null);
+        List<GroupConfigInterface> list = FilterManager.getInstance().convertParameters(panelId,
+                null);
         assertTrue(list.isEmpty());
 
         // Find a known function
-        for(FunctionName functionName : functionNameList)
-        {
+        for (FunctionName functionName : functionNameList) {
             list = FilterManager.getInstance().convertParameters(panelId, functionName);
             System.out.println(functionName.getName());
             assertEquals(1, list.size());
             GroupConfig groupConfig = (GroupConfig) list.get(0);
-            String prototype = groupConfig.getLabel();
             List<FieldConfigBase> fieldList = groupConfig.getFieldConfigList();
 
-            assertEquals(functionName.getName(), fieldList.size(), Math.abs(functionName.getArgumentCount()));
+            assertEquals(functionName.getName(), fieldList.size(),
+                    Math.abs(functionName.getArgumentCount()));
 
             List<String> argList = new ArrayList<String>();
-            for(int fieldIndex = 0; fieldIndex < fieldList.size(); fieldIndex ++)
-            {
+            for (int fieldIndex = 0; fieldIndex < fieldList.size(); fieldIndex++) {
                 checkFieldType(fieldIndex, fieldList, functionName, argList);
             }
 
@@ -158,16 +161,15 @@ public class FilterManagerTest {
             sb.append(functionName.getName());
             sb.append("(");
 
-            for(int index = 0; index < argList.size(); index ++)
-            {
-                if(index > 0)
-                {
+            for (int index = 0; index < argList.size(); index++) {
+                if (index > 0) {
                     sb.append(", ");
                 }
                 sb.append(argList.get(index));
             }
             sb.append(")");
 
+            String prototype = groupConfig.getLabel();
             assertNotNull(functionName.getName(), prototype);
             assertNotNull(functionName.getName(), sb.toString());
             assertTrue(prototype.compareTo(sb.toString()) == 0);
@@ -182,9 +184,10 @@ public class FilterManagerTest {
      * @param functionName the function name
      * @param argList the arg list
      */
-    private void checkFieldType(int fieldIndex, List<FieldConfigBase> fieldList, FunctionName functionName, List<String> argList)
-    {
-        int adjustedIndex = (fieldIndex >= functionName.getArgumentNames().size()) ? functionName.getArgumentNames().size() - 1 : fieldIndex;
+    private void checkFieldType(int fieldIndex, List<FieldConfigBase> fieldList,
+            FunctionName functionName, List<String> argList) {
+        int adjustedIndex = (fieldIndex >= functionName.getArgumentNames().size())
+                ? functionName.getArgumentNames().size() - 1 : fieldIndex;
         String label = functionName.getArgumentNames().get(adjustedIndex);
 
         String debugMessage = String.format("%s/%d %s", functionName.getName(), fieldIndex, label);
@@ -200,41 +203,46 @@ public class FilterManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterManager#getFunctionType(java.lang.String)}.
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterManager#getFilterConfig(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FilterManager#getFunctionType(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FilterManager#getFilterConfig(java.lang.String)}.
      */
     @Test
     public void testGetFunctionType() {
-        List<FilterConfigInterface> filterConfigList = FilterManager.getInstance().getFilterConfigList();
+        List<FilterConfigInterface> filterConfigList = FilterManager.getInstance()
+                .getFilterConfigList();
 
         Class<?> returnType = FilterManager.getInstance().getFunctionType(null);
         assertNull(returnType);
 
         // Find a known function
-        for(FilterConfigInterface filterConfig : filterConfigList)
-        {
+        for (FilterConfigInterface filterConfig : filterConfigList) {
             FilterName filterName = filterConfig.getFilterConfiguration();
             returnType = FilterManager.getInstance().getFunctionType(filterName.getFilterName());
             assertEquals(filterName.getFilterName(), filterName.getReturnType(), returnType);
 
-            FilterConfigInterface actualFilterConfig = FilterManager.getInstance().getFilterConfig(filterName.getFilterName());
+            FilterConfigInterface actualFilterConfig = FilterManager.getInstance()
+                    .getFilterConfig(filterName.getFilterName());
 
             assertEquals(filterConfig.getClass(), actualFilterConfig.getClass());
         }
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterManager#getFilterConfig(org.opengis.filter.Filter)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.FilterManager#getFilterConfig(org.opengis.filter.Filter)}.
      */
     @Test
     public void testGetFilterConfigFilter() {
-        assertNull(FilterManager.getInstance().getFilterConfig((Filter)null));
+        assertNull(FilterManager.getInstance().getFilterConfig((Filter) null));
 
-        List<FilterConfigInterface> filterConfigList = FilterManager.getInstance().getFilterConfigList();
-        for(FilterConfigInterface filterConfig : filterConfigList)
-        {
+        List<FilterConfigInterface> filterConfigList = FilterManager.getInstance()
+                .getFilterConfigList();
+        for (FilterConfigInterface filterConfig : filterConfigList) {
             Filter filter = filterConfig.createFilter();
-            FilterConfigInterface actualFilterConfig = FilterManager.getInstance().getFilterConfig(filter);
+            FilterConfigInterface actualFilterConfig = FilterManager.getInstance()
+                    .getFilterConfig(filter);
 
             assertEquals(filterConfig.getClass(), actualFilterConfig.getClass());
         }

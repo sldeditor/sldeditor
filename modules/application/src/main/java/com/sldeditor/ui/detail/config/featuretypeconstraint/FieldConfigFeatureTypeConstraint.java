@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config.featuretypeconstraint;
 
 import java.awt.event.ActionEvent;
@@ -47,11 +48,12 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigFeatureTypeConstraint wraps a table GUI component and allows feature type constraints to be configured
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigFeatureTypeConstraint wraps a table GUI component 
+ * and allows feature type constraints to be configured.
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -133,7 +135,6 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
      * @param fieldPanel the field panel
      */
     private void createExtentTable(int xPos, int startRows, int noOfRows, FieldPanel fieldPanel) {
-        int maxNoOfRows = startRows + noOfRows;
         extentTable = new JTable(extentModel);
         extentTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -152,6 +153,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
                 BasePanel.WIDGET_HEIGHT * (noOfRows - 2));
         fieldPanel.add(scrollPanel);
 
+        int maxNoOfRows = startRows + noOfRows;
         int buttonY = getRowY(maxNoOfRows - 2);
         //
         // Add button

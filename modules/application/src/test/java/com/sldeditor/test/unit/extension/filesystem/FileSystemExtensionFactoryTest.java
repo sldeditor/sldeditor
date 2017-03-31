@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.extension.filesystem;
 
 import static org.junit.Assert.assertEquals;
@@ -41,6 +42,7 @@ import com.sldeditor.extension.filesystem.FileSystemExtensionFactory;
 
 /**
  * Unit test for FileSystemExtensionFactory class.
+ * 
  * <p>{@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory}
  * 
  * @author Robert Ward (SCISYS)
@@ -51,8 +53,7 @@ public class FileSystemExtensionFactoryTest {
     /**
      * The Class DummyExtension.
      */
-    class DummyExtension implements FileSystemInterface
-    {
+    class DummyExtension implements FileSystemInterface {
 
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
@@ -109,8 +110,7 @@ public class FileSystemExtensionFactoryTest {
          */
         @Override
         public List<SLDDataInterface> open(URL url) {
-            if(url.toExternalForm().endsWith(".tst"))
-            {
+            if (url.toExternalForm().endsWith(".tst")) {
                 List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
                 return list;
             }
@@ -174,8 +174,10 @@ public class FileSystemExtensionFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory#override(java.util.List)}.
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory#getFileExtensionList(com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory#override(java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory#getFileExtensionList(com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testGetFileExtensionList() {
@@ -183,7 +185,8 @@ public class FileSystemExtensionFactoryTest {
         FileSystemExtensionFactory.override(null);
 
         // Should return the default
-        List<FileSystemInterface> fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
+        List<FileSystemInterface> fileExtensionList = FileSystemExtensionFactory
+                .getFileExtensionList(null);
         assertEquals(3, fileExtensionList.size());
 
         List<FileSystemInterface> extList = new ArrayList<FileSystemInterface>();

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.ui.detail.config;
 
 import java.awt.Dimension;
@@ -40,12 +41,12 @@ import com.sldeditor.ui.widgets.DecimalSpinner;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigRange wraps a spinner GUI component and an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * <p>
- * Supports undo/redo functionality.
- * <p>
- * Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * The Class FieldConfigRange wraps a spinner GUI component and an optional
+ * value/attribute/expression drop down,
+ * 
+ * <p>Supports undo/redo functionality.
+ * 
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -164,12 +165,13 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
 
         rangeConfig.includedCheckBox = new JCheckBox(
                 Localisation.getString(FieldConfigBase.class, "FieldConfigRange.included"));
-        rangeConfig.includedCheckBox.addActionListener(new ActionListener(){
+        rangeConfig.includedCheckBox.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 uiInteraction(parentObj);
-            }});
+            }
+        });
         rangeConfig.includedCheckBox.setBounds(
                 rangeConfig.spinner.getX() + rangeConfig.spinner.getWidth() + 5, y,
                 BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -191,7 +193,8 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -552,8 +555,8 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         Range newValueObj = getRangeValues();
 
         if (oldValueObj != previousValue) {
-            UndoManager.getInstance().addUndoEvent(
-                    new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
         }
         valueUpdated();
     }

@@ -34,12 +34,11 @@ import javax.swing.plaf.ColorUIResource;
  * @author Robert Ward (SCISYS)
  */
 /**
- * A TreeCellRenderer displays each node of a tree. The default renderer displays
- * arbitrary Object nodes by calling their toString() method. The Component.toString()
- * method returns long strings with extraneous information. Therefore, we use this
- * "wrapper" implementation of TreeCellRenderer
- * to convert nodes from Component objects to useful String values before passing
- * those String values on to the default renderer.
+ * A TreeCellRenderer displays each node of a tree. The default renderer displays arbitrary Object
+ * nodes by calling their toString() method. The Component.toString() method returns long strings
+ * with extraneous information. Therefore, we use this "wrapper" implementation of TreeCellRenderer
+ * to convert nodes from Component objects to useful String values before passing those String
+ * values on to the default renderer.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -61,18 +60,19 @@ public class TreeLabel extends JLabel {
     public TreeLabel() {
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see javax.swing.JComponent#setBackground(java.awt.Color)
      */
     public void setBackground(Color color) {
-        if (color instanceof ColorUIResource)
+        if (color instanceof ColorUIResource) {
             color = null;
+        }
         super.setBackground(color);
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see javax.swing.JComponent#paint(java.awt.Graphics)
@@ -103,7 +103,7 @@ public class TreeLabel extends JLabel {
         super.paint(g);
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
      * @see javax.swing.JComponent#getPreferredSize()
@@ -133,4 +133,4 @@ public class TreeLabel extends JLabel {
     public void setFocus(boolean hasFocus) {
         this.hasFocus = hasFocus;
     }
-};
+}

@@ -29,6 +29,7 @@ import com.sldeditor.filter.v2.function.temporal.Duration;
 
 /**
  * Unit test for Duration class.
+ * 
  * <p>{@link com.sldeditor.filter.v2.function.temporal.Duration}
  * 
  * @author Robert Ward (SCISYS)
@@ -47,21 +48,22 @@ public class DurationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#Duration(java.lang.String)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#Duration(java.lang.String)}.
      */
     @Test
     public void testDurationString() {
-        test("P10D",0,0,10,0,0,0, null);
-        test("P1Y2M3D",1,2,3,0,0,0, null);
-        test("P1Y2M",1,2,0,0,0,0, null);
-        test("P1Y2M3D4H5M6S",1,2,3,4,5,6, null);
-        test("P1Y6S",1,0,0,0,0,6, null);
-        test("P1Y0H6M",1,0,0,0,6,0, null);
-        test("P1Y6H",1,0,0,6,0,0, null);
-        test("T1H6M",0,0,0,1,6,0, null);
-        test("P1M6M",0,1,0,0,0,0, "P1M"); // This is not valid
-        test("T10H",0,0,0,10,0,0, null);
-        
+        test("P10D", 0, 0, 10, 0, 0, 0, null);
+        test("P1Y2M3D", 1, 2, 3, 0, 0, 0, null);
+        test("P1Y2M", 1, 2, 0, 0, 0, 0, null);
+        test("P1Y2M3D4H5M6S", 1, 2, 3, 4, 5, 6, null);
+        test("P1Y6S", 1, 0, 0, 0, 0, 6, null);
+        test("P1Y0H6M", 1, 0, 0, 0, 6, 0, null);
+        test("P1Y6H", 1, 0, 0, 6, 0, 0, null);
+        test("T1H6M", 0, 0, 0, 1, 6, 0, null);
+        test("P1M6M", 0, 1, 0, 0, 0, 0, "P1M"); // This is not valid
+        test("T10H", 0, 0, 0, 10, 0, 0, null);
+
         String dateString = "20-09-2016T17:42:27Z";
         Duration duration = new Duration(dateString);
         assertTrue(duration.isDate());
@@ -70,7 +72,8 @@ public class DurationTest {
         assertTrue(dateString, dateString.compareTo(actual) == 0);
     }
 
-    private void test(String durationString, int year, int month, int days, int hours, int mins, int sec, String alternative) {
+    private void test(String durationString, int year, int month, int days, int hours, int mins,
+            int sec, String alternative) {
         Duration duration = new Duration(durationString);
         assertEquals(durationString, year, duration.getDurationYears());
         assertEquals(durationString, month, duration.getDurationMonths());
@@ -87,14 +90,16 @@ public class DurationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#setDate(java.util.Date)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#setDate(java.util.Date)}.
      */
     @Test
     public void testSetDate() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#setDuration(int, int, int, int, int, int)}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#setDuration(int, int, int, int, int, int)}.
      */
     @Test
     public void testSetDuration() {
@@ -115,14 +120,16 @@ public class DurationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationYears()}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationYears()}.
      */
     @Test
     public void testGetDurationYears() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationMonths()}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationMonths()}.
      */
     @Test
     public void testGetDurationMonths() {
@@ -136,21 +143,24 @@ public class DurationTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationHours()}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationHours()}.
      */
     @Test
     public void testGetDurationHours() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationMinutes()}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationMinutes()}.
      */
     @Test
     public void testGetDurationMinutes() {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationSeconds()}.
+     * Test method for
+     * {@link com.sldeditor.filter.v2.function.temporal.Duration#getDurationSeconds()}.
      */
     @Test
     public void testGetDurationSeconds() {
