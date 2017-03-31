@@ -46,6 +46,9 @@ public class VendorOptionFTSFactory
     /** The vendor option geo server composite. */
     private VOGeoServerFTSComposite vendorOptionGeoServerComposite = null;
 
+    /** The vendor option geo server composite base. */
+    private VOGeoServerFTSCompositeBase vendorOptionGeoServerCompositeBase = null;
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -60,6 +63,9 @@ public class VendorOptionFTSFactory
     public VendorOptionFTSFactory(Class<?> panelId) {
         vendorOptionGeoServerComposite = new VOGeoServerFTSComposite(panelId);
         vendorOptionList.add(vendorOptionGeoServerComposite);
+
+        vendorOptionGeoServerCompositeBase = new VOGeoServerFTSCompositeBase(panelId);
+        vendorOptionList.add(vendorOptionGeoServerCompositeBase);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);

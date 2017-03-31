@@ -36,26 +36,24 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
-import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
- * Class to handle the getting and setting of GeoServer composite vendor option data.
+ * Class to handle the getting and setting of GeoServer composite base vendor option data.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerFTSComposite extends StandardPanel
+public class VOGeoServerFTSCompositeBase extends StandardPanel
         implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
 
-    /** The Constant DEFAULT_COMPOSITE_OPACITY. */
-    private static final double DEFAULT_COMPOSITE_OPACITY = 1.0;
+    /** The Constant DEFAULT_COMPOSITE_BASE. */
+    private static final boolean DEFAULT_COMPOSITE_BASE = false;
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = "featuretypestyle/PanelConfig_Composite.xml";
+    private static final String PANEL_CONFIG = "featuretypestyle/PanelConfig_CompositeBase.xml";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -71,7 +69,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      *
      * @param panelId the panel id
      */
-    public VOGeoServerFTSComposite(Class<?> panelId) {
+    public VOGeoServerFTSCompositeBase(Class<?> panelId) {
         super(panelId);
 
         createUI();
@@ -174,34 +172,19 @@ public class VOGeoServerFTSComposite extends StandardPanel
     public void populate(FeatureTypeStyle featureTypeStyle) {
         Map<String, String> options = featureTypeStyle.getOptions();
 
-        String compositeString = options.get(FeatureTypeStyle.COMPOSITE);
+        String compositeBaseString = options.get(FeatureTypeStyle.COMPOSITE_BASE);
 
-        String name = null;
-        double opacity = DEFAULT_COMPOSITE_OPACITY;
-
-        if (compositeString != null) {
-            String[] components = compositeString.split(",");
-
-            FieldConfigEnum optionData = (FieldConfigEnum) fieldConfigVisitor
-                    .getFieldConfig(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
-            if (optionData.isValidOption(components[0])) {
-                name = components[0];
-            }
-
-            if (components.length == 2) {
-                try {
-                    opacity = Double.valueOf(components[1]);
-                } catch (Exception e) {
-                    // Do nothing and revert to default
-                }
-            }
+        boolean value = DEFAULT_COMPOSITE_BASE;
+        try {
+            value = Boolean.valueOf(compositeBaseString);
+        } catch (Exception e) {
+            // Do nothing and revert to default
         }
 
-        fieldConfigVisitor.populateComboBoxField(FieldIdEnum.VO_FTS_COMPOSITE_OPTION, name);
-        fieldConfigVisitor.populateDoubleField(FieldIdEnum.VO_FTS_COMPOSITE_OPACITY, opacity);
+        fieldConfigVisitor.populateBooleanField(FieldIdEnum.VO_FTS_COMPOSITE_BASE_BOOL, value);
 
-        GroupConfigInterface groupPanel = getGroup(GroupIdEnum.VO_FTS_COMPOSITE);
-        groupPanel.enable(compositeString != null);
+        GroupConfigInterface groupPanel = getGroup(GroupIdEnum.VO_FTS_COMPOSITE_BASE);
+        groupPanel.enable(compositeBaseString != null);
     }
 
     /**
@@ -259,22 +242,13 @@ public class VOGeoServerFTSComposite extends StandardPanel
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         Map<String, String> options = featureTypeStyle.getOptions();
 
-        GroupConfigInterface groupPanel = getGroup(GroupIdEnum.VO_FTS_COMPOSITE);
+        GroupConfigInterface groupPanel = getGroup(GroupIdEnum.VO_FTS_COMPOSITE_BASE);
         if (groupPanel.isPanelEnabled()) {
-            ValueComboBoxData name = fieldConfigVisitor
-                    .getComboBox(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
-            double opacity = fieldConfigVisitor.getDouble(FieldIdEnum.VO_FTS_COMPOSITE_OPACITY);
+            boolean value = fieldConfigVisitor.getBoolean(FieldIdEnum.VO_FTS_COMPOSITE_BASE_BOOL);
 
-            StringBuilder composite = new StringBuilder();
-            composite.append(name.getKey());
-            if (!(Math.abs(opacity - DEFAULT_COMPOSITE_OPACITY) < 0.0001)) {
-                // Don't add to string if the opacity is set to the default
-                composite.append(",");
-                composite.append(opacity);
-            }
-            options.put(FeatureTypeStyle.COMPOSITE, composite.toString());
+            options.put(FeatureTypeStyle.COMPOSITE_BASE, String.valueOf(value));
         } else {
-            options.remove(FeatureTypeStyle.COMPOSITE);
+            options.remove(FeatureTypeStyle.COMPOSITE_BASE);
         }
     }
 
@@ -388,10 +362,11 @@ public class VOGeoServerFTSComposite extends StandardPanel
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
             vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(VOGeoServerFTSComposite.class,
-                            "geoserver.composite.title"),
-                    this.getVendorOption(), Localisation.getString(VOGeoServerFTSComposite.class,
-                            "geoserver.composite.description"));
+                    Localisation.getString(VOGeoServerFTSCompositeBase.class,
+                            "geoserver.compositebase.title"),
+                    this.getVendorOption(),
+                    Localisation.getString(VOGeoServerFTSCompositeBase.class,
+                            "geoserver.compositebase.description"));
         }
         return vendorOptionInfo;
     }
@@ -409,7 +384,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
             FeatureTypeStyle fts = (FeatureTypeStyle) sldObj;
             Map<String, String> options = fts.getOptions();
 
-            if (options.containsKey(FeatureTypeStyle.COMPOSITE)) {
+            if (options.containsKey(FeatureTypeStyle.COMPOSITE_BASE)) {
                 VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                         getVendorOptionInfo());
 

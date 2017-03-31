@@ -23,5 +23,6 @@
     </Group>
     <Group id="VO_FTS" showLabel="false">
         <FieldConfigVendorOption id="VO_FTS_COMPOSITE" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSComposite"/>
+        <FieldConfigVendorOption id="VO_FTS_COMPOSITE_BASE" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase"/>
     </Group>
 </PanelConfig>
