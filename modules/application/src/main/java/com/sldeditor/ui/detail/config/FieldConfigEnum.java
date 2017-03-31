@@ -468,4 +468,14 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
             comboBox.setVisible(visible);
         }
     }
+
+    /**
+     * Checks if supplied value is valid option.
+     *
+     * @param optionToTest the option to test
+     * @return true, if is valid option
+     */
+    public boolean isValidOption(String optionToTest) {
+        return keyList.contains(optionToTest);
+    }
 }

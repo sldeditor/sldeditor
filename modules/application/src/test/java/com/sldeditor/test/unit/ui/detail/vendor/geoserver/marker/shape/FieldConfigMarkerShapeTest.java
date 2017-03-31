@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.symbol.marker.shape;
+package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.shape;
 
 import static org.junit.Assert.assertNotNull;
 

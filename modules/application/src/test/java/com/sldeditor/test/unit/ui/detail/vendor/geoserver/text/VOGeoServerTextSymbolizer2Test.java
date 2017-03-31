@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.symbol.text;
+package com.sldeditor.test.unit.ui.detail.vendor.geoserver.text;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

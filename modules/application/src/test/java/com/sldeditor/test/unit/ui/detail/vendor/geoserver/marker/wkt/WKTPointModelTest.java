@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.symbol.marker.wkt;
+package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.symbol.raster;
+package com.sldeditor.test.unit.ui.detail.vendor.geoserver.raster;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -46,29 +46,29 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed;
 
 /**
- * The unit test for VOGeoServerContrastEnhancementNormalizeGreen.
+ * The unit test for VOGeoServerContrastEnhancementNormalizeRed.
  * 
- * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen}
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed}
  *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerContrastEnhancementNormalizeGreenTest {
+public class VOGeoServerContrastEnhancementNormalizeRedTest {
 
     /**
      * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen#VOGeoServerContrastEnhancementNormalizeGreen(java.lang.Class, com.sldeditor.ui.detail.RasterSymbolizerDetails)}.
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed#VOGeoServerContrastEnhancementNormalizeRed(java.lang.Class, com.sldeditor.ui.detail.RasterSymbolizerDetails)}.
      * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGreen#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)}.
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)}.
      */
     @Test
-    public void testVOGeoServerContrastEnhancementNormalizeGreen() {
+    public void testVOGeoServerContrastEnhancementNormalizeRed() {
         RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
 
-        VOGeoServerContrastEnhancementNormalizeGreen testObj =
-                new VOGeoServerContrastEnhancementNormalizeGreen(
+        VOGeoServerContrastEnhancementNormalizeRed testObj =
+                new VOGeoServerContrastEnhancementNormalizeRed(
                 panel.getClass(), panel);
         RasterSymbolizer rasterSymbolizer = null;
         testObj.setParentPanel(panel);
@@ -80,7 +80,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreenTest {
         rasterSymbolizer = styleFactory.createRasterSymbolizer();
 
         GroupConfigInterface constrastMethodGroup = panel
-                .getGroup(GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD);
+                .getGroup(GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD);
         assertNotNull(constrastMethodGroup);
         MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
         Box box = Box.createVerticalBox();
@@ -90,6 +90,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreenTest {
         ChannelSelection channelSelection = createChannelSelection(styleFactory,
                 ContrastMethod.LOGARITHMIC);
         rasterSymbolizer.setChannelSelection(channelSelection);
+
         testObj.populate(rasterSymbolizer);
 
         SelectedSymbol.getInstance().setSymbolizer(rasterSymbolizer);

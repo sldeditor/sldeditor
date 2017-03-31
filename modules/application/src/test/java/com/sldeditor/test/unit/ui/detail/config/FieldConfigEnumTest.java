@@ -172,6 +172,12 @@ public class FieldConfigEnumTest {
         assertTrue(expectedValue1.compareTo(actualValueString) == 0);
         ValueComboBoxData actualValue = field.getEnumValue();
         assertTrue(expectedValue1.compareTo(actualValue.getKey()) == 0);
+
+        // Try valid/invalid option values
+        assertTrue(field.isValidOption("key1"));
+        assertTrue(field.isValidOption("key4"));
+        assertFalse(field.isValidOption("key24"));
+        assertFalse(field.isValidOption(null));
     }
 
     /**

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.symbol.marker.qgis;
+package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.qgis;
 
 import static org.junit.Assert.assertNotNull;
 

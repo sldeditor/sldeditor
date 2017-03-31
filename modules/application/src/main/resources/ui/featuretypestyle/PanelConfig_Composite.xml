@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
-    start="2.4.2"
+    start="2.7.0"
     localisation="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSComposite">
     <Group id="VO_FTS_COMPOSITE" label="geoserver.composite"
         showLabel="true" option="true">

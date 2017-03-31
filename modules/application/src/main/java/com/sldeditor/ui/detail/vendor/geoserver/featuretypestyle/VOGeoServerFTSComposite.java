@@ -36,6 +36,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
+import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
@@ -181,9 +182,18 @@ public class VOGeoServerFTSComposite extends StandardPanel
         if (compositeString != null) {
             String[] components = compositeString.split(",");
 
-            name = components[0];
+            FieldConfigEnum optionData = (FieldConfigEnum) fieldConfigVisitor
+                    .getFieldConfig(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
+            if (optionData.isValidOption(components[0])) {
+                name = components[0];
+            }
+
             if (components.length == 2) {
-                opacity = Double.valueOf(components[1]);
+                try {
+                    opacity = Double.valueOf(components[1]);
+                } catch (Exception e) {
+                    // Do nothing and revert to default
+                }
             }
         }
 
@@ -258,6 +268,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
             StringBuilder composite = new StringBuilder();
             composite.append(name.getKey());
             if (!(Math.abs(opacity - DEFAULT_COMPOSITE_OPACITY) < 0.0001)) {
+                // Don't add to string if the opacity is set to the default
                 composite.append(",");
                 composite.append(opacity);
             }
@@ -394,9 +405,9 @@ public class VOGeoServerFTSComposite extends StandardPanel
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        if (sldObj instanceof TextSymbolizer) {
-            TextSymbolizer textSymbolizer = (TextSymbolizer) sldObj;
-            Map<String, String> options = textSymbolizer.getOptions();
+        if (sldObj instanceof FeatureTypeStyle) {
+            FeatureTypeStyle fts = (FeatureTypeStyle) sldObj;
+            Map<String, String> options = fts.getOptions();
 
             if (options.containsKey(FeatureTypeStyle.COMPOSITE)) {
                 VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,

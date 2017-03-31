@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.ui.detail.vendor.symbol.raster;
+package com.sldeditor.test.unit.ui.detail.vendor.geoserver.raster;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -46,30 +46,27 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue;
 
 /**
- * The unit test for VOGeoServerContrastEnhancementNormalizeGrey.
+ * The unit test for VOGeoServerContrastEnhancementNormalizeBlue.
  * 
- * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey}
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue}
  *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerContrastEnhancementNormalizeGreyTest {
+public class VOGeoServerContrastEnhancementNormalizeBlueTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey#VOGeoServerContrastEnhancementNormalizeGrey(java.lang.Class, com.sldeditor.ui.detail.RasterSymbolizerDetails)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeGrey#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)}.
+     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue#VOGeoServerContrastEnhancementNormalizeBlue(java.lang.Class, com.sldeditor.ui.detail.RasterSymbolizerDetails)}.
+     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeBlue#getContrastEnhancement(com.sldeditor.common.xml.ui.GroupIdEnum, org.geotools.styling.ChannelSelection)}.
      */
     @Test
-    public void testVOGeoServerContrastEnhancementNormalizeGrey() {
+    public void testVOGeoServerContrastEnhancementNormalizeBlue() {
         RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
 
-        VOGeoServerContrastEnhancementNormalizeGrey testObj = 
-                new VOGeoServerContrastEnhancementNormalizeGrey(
-                panel.getClass(), panel);
+        VOGeoServerContrastEnhancementNormalizeBlue testObj = 
+                new VOGeoServerContrastEnhancementNormalizeBlue(panel.getClass(), panel);
         RasterSymbolizer rasterSymbolizer = null;
         testObj.setParentPanel(panel);
         testObj.populate(rasterSymbolizer);
@@ -79,16 +76,16 @@ public class VOGeoServerContrastEnhancementNormalizeGreyTest {
 
         rasterSymbolizer = styleFactory.createRasterSymbolizer();
 
-        GroupConfigInterface constrastMethodGroup = panel
-                .getGroup(GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD);
+        GroupConfigInterface constrastMethodGroup = 
+                panel.getGroup(GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD);
         assertNotNull(constrastMethodGroup);
         MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
         Box box = Box.createVerticalBox();
         constrastMethodGroup2.createUI(panel.getFieldDataManager(), box, panel, panel.getPanelId());
         constrastMethodGroup2.setOption(GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD_LOGARITHMIC);
 
-        ChannelSelection channelSelection = createChannelSelection(styleFactory,
-                ContrastMethod.LOGARITHMIC);
+        ChannelSelection channelSelection = 
+                createChannelSelection(styleFactory, ContrastMethod.LOGARITHMIC);
         rasterSymbolizer.setChannelSelection(channelSelection);
         testObj.populate(rasterSymbolizer);
 
@@ -123,11 +120,11 @@ public class VOGeoServerContrastEnhancementNormalizeGreyTest {
         testObj.updateSymbol(rasterSymbolizer);
 
         // Increase code coverage
-        testObj.populate((SelectedSymbol) null);
-        testObj.populate((TextSymbolizer) null);
-        testObj.populate((PolygonSymbolizer) null);
-        testObj.updateSymbol((TextSymbolizer) null);
-        testObj.updateSymbol((PolygonSymbolizer) null);
+        testObj.populate((SelectedSymbol)null);
+        testObj.populate((TextSymbolizer)null);
+        testObj.populate((PolygonSymbolizer)null);
+        testObj.updateSymbol((TextSymbolizer)null);
+        testObj.updateSymbol((PolygonSymbolizer)null);
         testObj.preLoadSymbol();
 
         assertTrue(testObj.isDataPresent());
@@ -144,8 +141,9 @@ public class VOGeoServerContrastEnhancementNormalizeGreyTest {
      */
     private ChannelSelection createChannelSelection(StyleFactoryImpl styleFactory,
             ContrastMethod contrastMethod) {
-        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory
-                .contrastEnhancement(null, contrastMethod.name());
+        ContrastEnhancement contrastEnhancement =
+                (ContrastEnhancement) styleFactory.contrastEnhancement(null, 
+                contrastMethod.name());
 
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
@@ -154,7 +152,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreyTest {
         options.put("minValue", ff.literal("1"));
         options.put("maxValue", ff.literal("5"));
 
-        SelectedChannelType channelType = styleFactory.createSelectedChannelType("channel name",
+        SelectedChannelType channelType = styleFactory.createSelectedChannelType("channel name", 
                 contrastEnhancement);
         SelectedChannelType[] channels = new SelectedChannelType[3];
         channels[0] = channelType;
@@ -173,8 +171,9 @@ public class VOGeoServerContrastEnhancementNormalizeGreyTest {
      */
     private ChannelSelection createChannelSelectionError(StyleFactoryImpl styleFactory,
             ContrastMethod contrastMethod) {
-        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory
-                .contrastEnhancement(null, contrastMethod.name());
+        ContrastEnhancement contrastEnhancement = 
+                (ContrastEnhancement) styleFactory.contrastEnhancement(null, 
+                contrastMethod.name());
 
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
