@@ -52,6 +52,9 @@ public class VendorOptionFTSFactory
     /** The vendor option geo server rule evaluation. */
     private VOGeoServerFTSRuleEvaluation vendorOptionGeoServerRuleEvaluation = null;
 
+    /** The vendor option geo server sort by. */
+    private VOGeoServerFTSSortBy vendorOptionGeoServerSortBy = null;
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -72,6 +75,9 @@ public class VendorOptionFTSFactory
 
         vendorOptionGeoServerRuleEvaluation = new VOGeoServerFTSRuleEvaluation(panelId);
         vendorOptionList.add(vendorOptionGeoServerRuleEvaluation);
+
+        vendorOptionGeoServerSortBy = new VOGeoServerFTSSortBy(panelId);
+        vendorOptionList.add(vendorOptionGeoServerSortBy);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);

@@ -145,6 +145,12 @@
             <xs:enumeration value="VO_FTS_COMPOSITE_BASE" />
 
             <xs:enumeration value="VO_FTS_RULE_EVALUATION" />
+
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION" />
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION" />
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY" />
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP" />
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

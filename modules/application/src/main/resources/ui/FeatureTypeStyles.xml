@@ -25,5 +25,6 @@
         <FieldConfigVendorOption id="VO_FTS_COMPOSITE" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSComposite"/>
         <FieldConfigVendorOption id="VO_FTS_COMPOSITE_BASE" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase"/>
         <FieldConfigVendorOption id="VO_FTS_RULE_EVALUATION" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSRuleEvaluation"/>
+        <FieldConfigVendorOption id="VO_FTS_SORTBY" class="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSSortBy"/>
     </Group>
 </PanelConfig>

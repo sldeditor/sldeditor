@@ -15,15 +15,15 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
- *                 Configuration for a font preview field
+ *                 Configuration for a vendor option feature type style sort by
  *             
  * 
- * <p>Java class for XMLFieldConfigFontPreview complex type.
+ * <p>Java class for XMLFieldConfigSortBy complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="XMLFieldConfigFontPreview"&gt;
+ * &lt;complexType name="XMLFieldConfigSortBy"&gt;
  *   &lt;complexContent&gt;
  *     &lt;extension base="{}XMLFieldConfigData"&gt;
  *     &lt;/extension&gt;
@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "XMLFieldConfigFontPreview")
-public class XMLFieldConfigFontPreview
+@XmlType(name = "XMLFieldConfigSortBy")
+public class XMLFieldConfigSortBy
     extends XMLFieldConfigData
 {
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.8.0"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSSortBy">
+    <MultiOptionGroup id="VO_FTS_SORTBY_MULTIOPTION" label="geoserver.sortby" showLabel="true" option="true">
+        <OptionGroup id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION" label="geoserver.sortby"
+            showLabel="true">
+            <Group id="VO_FTS_SORTBY_MULTIOPTION_SORTBY" label="geoserver.sortby"
+                showLabel="true">
+                <FieldConfigSortBy id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST" valueOnly="true"/>
+            </Group>
+        </OptionGroup>
+        <OptionGroup id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP" label="geoserver.sortbygroup"
+            showLabel="true">
+            <Group id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION" label="geoserver.sortbygroup"
+                showLabel="true">
+               <FieldConfigEnum id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES"
+                    label="geoserver.sortbygroup.property" valueOnly="true" default="none">
+                    <ValueList>
+                        <Value>
+                            <Item id="first" label="First" />
+                        </Value>
+                    </ValueList>
+                </FieldConfigEnum>
+            </Group>
+        </OptionGroup>
+    </MultiOptionGroup>
+</PanelConfig>
