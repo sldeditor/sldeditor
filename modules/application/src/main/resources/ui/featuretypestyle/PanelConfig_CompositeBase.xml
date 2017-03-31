@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.7.0"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase">
+    <Group id="VO_FTS_COMPOSITE_BASE" label="geoserver.compositebase"
+        showLabel="true" option="true">
+        <FieldConfigBoolean id="VO_FTS_COMPOSITE_BASE_BOOL"
+            label="geoserver.compositebase.label" valueOnly="true"
+            default="false" />
+    </Group>
+</PanelConfig>

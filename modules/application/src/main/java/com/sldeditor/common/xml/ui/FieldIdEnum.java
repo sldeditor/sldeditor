@@ -186,6 +186,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_FTS_COMPOSITE"/&gt;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_OPTION"/&gt;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_OPACITY"/&gt;
+ *     &lt;enumeration value="VO_FTS_COMPOSITE_BASE"/&gt;
+ *     &lt;enumeration value="VO_FTS_COMPOSITE_BASE_BOOL"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -360,7 +362,9 @@ public enum FieldIdEnum {
     VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT,
     VO_FTS_COMPOSITE,
     VO_FTS_COMPOSITE_OPTION,
-    VO_FTS_COMPOSITE_OPACITY;
+    VO_FTS_COMPOSITE_OPACITY,
+    VO_FTS_COMPOSITE_BASE,
+    VO_FTS_COMPOSITE_BASE_BOOL;
 
     public String value() {
         return name();
