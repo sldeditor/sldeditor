@@ -42,11 +42,16 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 
+import org.geotools.data.DataStore;
 import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.styling.FeatureTypeStyle;
 import org.opengis.filter.sort.SortBy;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.DataSourceUpdatedInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.BasePanel;
 
 /**
@@ -54,7 +59,7 @@ import com.sldeditor.ui.detail.BasePanel;
  *
  * @author Robert Ward (SCISYS)
  */
-public class SortByPanel extends JPanel {
+public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -100,6 +105,9 @@ public class SortByPanel extends JPanel {
         setLayout(new BorderLayout(0, 0));
 
         createUI(noOfRows);
+
+        DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+        dataSource.addListener(this);
     }
 
     /**
@@ -313,26 +321,20 @@ public class SortByPanel extends JPanel {
     }
 
     /**
-     * Populate field names.
-     *
-     * @param fieldNameList the field name list
-     */
-    public void populateFieldNames(List<String> fieldNameList) {
-        this.fieldNameList = fieldNameList;
-
-        updateLists();
-    }
-
-    /**
      * Update lists.
      */
     private void updateLists() {
         sourceModel.clear();
 
-        for (String item : fieldNameList) {
-            if (!destinationModel.containsProperty(item)) {
-                sourceModel.addElement(item);
+        if (fieldNameList != null) {
+            for (String item : fieldNameList) {
+                if (!destinationModel.containsProperty(item)) {
+                    sourceModel.addElement(item);
+                }
             }
+
+            // Check to see if selected fields exist in the data source
+            destinationModel.checkForFields(fieldNameList);
         }
     }
 
@@ -369,10 +371,13 @@ public class SortByPanel extends JPanel {
     public void setText(String value) {
         Map<String, String> options = new HashMap<String, String>();
 
-        options.put(FeatureTypeStyle.SORT_BY, value);
+        SortBy[] sortArray = null;
 
-        SortBy[] sortArray = SLDStyleFactory.getSortBy(options);
+        if (!value.isEmpty()) {
+            options.put(FeatureTypeStyle.SORT_BY, value);
 
+            sortArray = SLDStyleFactory.getSortBy(options);
+        }
         destinationModel.populate(sortArray);
         updateLists();
     }
@@ -409,4 +414,42 @@ public class SortByPanel extends JPanel {
         destinationModel.setValueAt(Boolean.valueOf(isAscending), index,
                 SortByTableModel.getSortOrderColumn());
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource
+     * .impl.GeometryTypeEnum, boolean)
+     */
+    @Override
+    public void dataSourceLoaded(GeometryTypeEnum geometryType,
+            boolean isConnectedToDataSourceFlag) {
+        DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+        populateFieldNames(dataSource.getAllAttributes(false));
+    }
+
+    /**
+     * Populate field names.
+     *
+     * @param fieldList the field list
+     */
+    public void populateFieldNames(List<String> fieldList) {
+        this.fieldNameList = fieldList;
+
+        updateLists();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
+     */
+    @Override
+    public void dataSourceAboutToUnloaded(DataStore dataStore) {
+        // Do nothing
+    }
+
 }

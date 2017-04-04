@@ -38,6 +38,7 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
 
@@ -358,6 +359,28 @@ public class DataSourceImpl implements DataSourceInterface {
         return attributeNameList;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.datasource.DataSourceInterface#getAllAttributes()
+     */
+    @Override
+    public List<String> getAllAttributes(boolean includeGeometry) {
+        List<String> attributeNameList = new ArrayList<String>();
+
+        Collection<PropertyDescriptor> descriptorList = getPropertyDescriptorList();
+
+        if (descriptorList != null) {
+            for (PropertyDescriptor property : descriptorList) {
+                boolean isGeometry = (property instanceof GeometryDescriptor);
+                if ((isGeometry && includeGeometry) || !isGeometry) {
+                    attributeNameList.add(property.getName().toString());
+                }
+            }
+        }
+        return attributeNameList;
+    }
+
     /**
      * Gets the geometry type.
      *
@@ -524,7 +547,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * Notify data source loaded.
      */
     private void notifyDataSourceLoaded() {
-        List<DataSourceUpdatedInterface> copyListenerList = 
+        List<DataSourceUpdatedInterface> copyListenerList =
                 new ArrayList<DataSourceUpdatedInterface>(
                 listenerList);
         GeometryTypeEnum geometryType = getGeometryType();
@@ -539,7 +562,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param dataStore the data store to be unloaded
      */
     private void notifyDataSourceAboutToUnloaded(DataStore dataStore) {
-        List<DataSourceUpdatedInterface> copyListenerList =
+        List<DataSourceUpdatedInterface> copyListenerList = 
                 new ArrayList<DataSourceUpdatedInterface>(
                 listenerList);
         for (DataSourceUpdatedInterface listener : copyListenerList) {
@@ -667,9 +690,9 @@ public class DataSourceImpl implements DataSourceInterface {
      * @see com.sldeditor.datasource.DataSourceInterface#getUserLayerFeatureSource()
      */
     @Override
-    //CHECKSTYLE:OFF
+    // CHECKSTYLE:OFF
     public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
         Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map =
                 new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
 

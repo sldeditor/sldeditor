@@ -21,6 +21,7 @@ package com.sldeditor.ui.detail.config.sortby;
 
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -32,8 +33,8 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigSortBy provides feature type style sort by functionality
- * and an optional value/attribute/expression drop down,
+ * The Class FieldConfigSortBy provides feature type style sort by functionality and an optional
+ * value/attribute/expression drop down,
  * 
  * <p>Supports undo/redo functionality.
  * 
@@ -41,7 +42,8 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigSortBy extends FieldConfigBase implements SortByUpdateInterface, UndoActionInterface {
+public class FieldConfigSortBy extends FieldConfigBase
+        implements SortByUpdateInterface, UndoActionInterface {
 
     /** The sortby panel. */
     private SortByPanel sortbyPanel;
@@ -82,8 +84,7 @@ public class FieldConfigSortBy extends FieldConfigBase implements SortByUpdateIn
 
             sortbyPanel = new SortByPanel(this, NO_OF_ROWS);
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, 
-                    BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
+            FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
                     getLabel());
             fieldPanel.add(sortbyPanel);
         }
@@ -97,7 +98,8 @@ public class FieldConfigSortBy extends FieldConfigBase implements SortByUpdateIn
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -320,13 +322,22 @@ public class FieldConfigSortBy extends FieldConfigBase implements SortByUpdateIn
         this.suppressUpdateOnSet = suppressUpdateOnSet;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface#sortByUpdated(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface#sortByUpdated(java.lang.String)
      */
     @Override
     public void sortByUpdated(String sortByString) {
-        // TODO Auto-generated method stub
-        
+        if (!Controller.getInstance().isPopulating()) {
+            UndoManager.getInstance().addUndoEvent(
+                    new UndoEvent(this, getFieldId(), oldValueObj, new String(sortByString)));
+
+            oldValueObj = new String(sortByString);
+
+            valueUpdated();
+        }
     }
 
 }

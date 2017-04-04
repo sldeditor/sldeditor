@@ -204,10 +204,11 @@ public class SortByTableModel extends DefaultTableModel {
      */
     public void populate(SortBy[] sortArray) {
         dataList.clear();
-        for (SortBy sortBy : sortArray) {
-            dataList.add(sortBy);
+        if (sortArray != null) {
+            for (SortBy sortBy : sortArray) {
+                dataList.add(sortBy);
+            }
         }
-
         this.fireTableDataChanged();
     }
 
@@ -274,5 +275,28 @@ public class SortByTableModel extends DefaultTableModel {
         dataList.add(index - 1, sortBy);
 
         this.fireTableDataChanged();
+    }
+
+    /**
+     * Check for fields.
+     *
+     * @param fieldNameList the field name list
+     */
+    public void checkForFields(List<String> fieldNameList) {
+        if (fieldNameList != null) {
+            List<SortBy> fieldsToRemoveList = new ArrayList<SortBy>();
+
+            for (SortBy sortBy : dataList) {
+                if (!fieldNameList.contains(sortBy.getPropertyName().getPropertyName())) {
+                    fieldsToRemoveList.add(sortBy);
+                }
+            }
+
+            for (SortBy sortBy : fieldsToRemoveList) {
+                dataList.remove(sortBy);
+            }
+
+            this.fireTableDataChanged();
+        }
     }
 }

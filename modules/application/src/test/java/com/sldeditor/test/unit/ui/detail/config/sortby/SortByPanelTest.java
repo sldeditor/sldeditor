@@ -142,6 +142,15 @@ public class SortByPanelTest {
             super.setSortOrder(index, isAscending);
         }
 
+        /**
+         * Populate field names.
+         *
+         * @param fieldList the field list
+         */
+        public void populateFieldNames(List<String> fieldList) {
+            super.populateFieldNames(fieldList);
+        }
+
     }
 
     class TestSortByUpdate implements SortByUpdateInterface {
@@ -207,7 +216,7 @@ public class SortByPanelTest {
 
         panel.moveSrcToDestination();
         assertEquals("Field2 D, Field4 A, Field3 A, Field5 A", output.text);
-        
+
         // Move destination to source
         selectedIndexes[0] = 0;
 
@@ -220,6 +229,11 @@ public class SortByPanelTest {
 
         panel.setSortOrder(1, true);
         assertEquals("Field4 A, Field3 A, Field5 A", output.text);
+
+        // Remove field from data source
+        fieldList = Arrays.asList("Field1", "Field2", "Field3", "Field4");
+        panel.populateFieldNames(fieldList);
+        assertEquals("Field4 A, Field3 A", output.text);
         // dialog.setVisible(true);
     }
 

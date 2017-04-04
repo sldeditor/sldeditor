@@ -246,7 +246,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
         if (groupPanel.isPanelEnabled()) {
             if (groupPanel.getSelectedOptionGroup()
-                    .getId() == GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY) {
+                    .getId() == GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION) {
                 String value = fieldConfigVisitor
                         .getText(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST);
                 options.put(FeatureTypeStyle.SORT_BY, value);

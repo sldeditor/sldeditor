@@ -96,6 +96,14 @@ public interface DataSourceInterface {
     List<String> getAttributes(Class<?> expectedDataType);
 
     /**
+     * Gets all attributes.
+     *
+     * @param includeGeometry the include geometry property
+     * @return the all attributes
+     */
+    List<String> getAllAttributes(boolean includeGeometry);
+
+    /**
      * Gets the geometry type.
      *
      * @return the geometry type
@@ -188,4 +196,5 @@ public interface DataSourceInterface {
      * @param dataType the data type
      */
     void updateFieldType(String fieldName, Class<?> dataType);
+
 }
