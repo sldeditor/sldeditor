@@ -35,6 +35,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -164,6 +165,16 @@ public class SortByPanel extends JPanel {
 
             @Override
             public void tableChanged(TableModelEvent e) {
+                if (e.getColumn() == SortByTableModel.getSortOrderColumn()) {
+                    ListSelectionModel model = destinationTable.getSelectionModel();
+                    model.clearSelection();
+
+                    btnMoveDown.setEnabled(false);
+                    btnMoveUp.setEnabled(false);
+                    btnSrcToDestButton.setEnabled(false);
+                    btnDestToSrcButton.setEnabled(false);
+                }
+
                 if (parentObj != null) {
                     parentObj.sortByUpdated(getText());
                 }
@@ -173,7 +184,10 @@ public class SortByPanel extends JPanel {
         destinationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getValueIsAdjusting() == false) {
-                    destinationSelected();
+                    ListSelectionModel model = destinationTable.getSelectionModel();
+                    if (!model.isSelectionEmpty()) {
+                        destinationSelected();
+                    }
                 }
             }
         });
@@ -219,8 +233,17 @@ public class SortByPanel extends JPanel {
             int index = indices[arrayIndex];
             if (index < destinationModel.getRowCount() - 1) {
                 destinationModel.moveRowDown(index);
+                updatedIndices[arrayIndex] = index + 1;
+            } else {
+                updatedIndices[arrayIndex] = index;
             }
-            updatedIndices[arrayIndex] = index + 1;
+        }
+
+        // Reselect the items after they have moved
+        ListSelectionModel model = destinationTable.getSelectionModel();
+        model.clearSelection();
+        for (int index : updatedIndices) {
+            model.addSelectionInterval(index, index);
         }
     }
 
@@ -235,9 +258,18 @@ public class SortByPanel extends JPanel {
         for (int index : indices) {
             if (index > 0) {
                 destinationModel.moveRowUp(index);
+                updatedIndices[arrayIndex] = index - 1;
+            } else {
+                updatedIndices[arrayIndex] = index;
             }
-            updatedIndices[arrayIndex] = index - 1;
             arrayIndex++;
+        }
+
+        // Reselect the items after they have moved
+        ListSelectionModel model = destinationTable.getSelectionModel();
+        model.clearSelection();
+        for (int index : updatedIndices) {
+            model.addSelectionInterval(index, index);
         }
     }
 
