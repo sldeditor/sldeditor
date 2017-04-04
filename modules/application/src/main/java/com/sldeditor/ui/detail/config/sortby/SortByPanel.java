@@ -235,6 +235,7 @@ public class SortByPanel extends JPanel {
                 destinationModel.moveRowDown(index);
                 updatedIndices[arrayIndex] = index + 1;
             } else {
+                // At the bottom of the list so make sure it is still highlighted
                 updatedIndices[arrayIndex] = index;
             }
         }
@@ -260,6 +261,7 @@ public class SortByPanel extends JPanel {
                 destinationModel.moveRowUp(index);
                 updatedIndices[arrayIndex] = index - 1;
             } else {
+                // At the top of the list so make sure it is still highlighted
                 updatedIndices[arrayIndex] = index;
             }
             arrayIndex++;
@@ -293,7 +295,7 @@ public class SortByPanel extends JPanel {
     }
 
     /**
-     * Move src to destination.
+     * Move source to destination.
      */
     protected void moveSrcToDestination() {
         List<String> selectedItemList = sourceList.getSelectedValuesList();
@@ -302,6 +304,9 @@ public class SortByPanel extends JPanel {
             destinationModel.addProperty(item);
             sourceModel.removeElement(item);
         }
+
+        ListSelectionModel model = destinationTable.getSelectionModel();
+        model.clearSelection();
 
         btnSrcToDestButton.setEnabled(false);
     }
@@ -369,5 +374,38 @@ public class SortByPanel extends JPanel {
 
         destinationModel.populate(sortArray);
         updateLists();
+    }
+
+    /**
+     * Select destination rows.
+     *
+     * @param selectedIndexes the selected indexes
+     */
+    protected void selectDestination(int[] selectedIndexes) {
+        ListSelectionModel model = destinationTable.getSelectionModel();
+        model.clearSelection();
+        for (int index : selectedIndexes) {
+            model.addSelectionInterval(index, index);
+        }
+    }
+
+    /**
+     * Select source rows.
+     *
+     * @param selectedIndexes the selected indexes
+     */
+    protected void selectSource(int[] selectedIndexes) {
+        sourceList.setSelectedIndices(selectedIndexes);
+    }
+
+    /**
+     * Sets the sort order.
+     *
+     * @param index the index
+     * @param isAscending the is ascending
+     */
+    protected void setSortOrder(int index, boolean isAscending) {
+        destinationModel.setValueAt(Boolean.valueOf(isAscending), index,
+                SortByTableModel.getSortOrderColumn());
     }
 }
