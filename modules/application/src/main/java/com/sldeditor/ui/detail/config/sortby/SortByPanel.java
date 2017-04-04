@@ -46,6 +46,7 @@ import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.styling.FeatureTypeStyle;
 import org.opengis.filter.sort.SortBy;
 
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.BasePanel;
 
 /**
@@ -203,7 +204,7 @@ public class SortByPanel extends JPanel {
         fl_buttonPanel.setAlignment(FlowLayout.RIGHT);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        btnMoveUp = new JButton("Up");
+        btnMoveUp = new JButton(Localisation.getString(SortByPanel.class, "sortby.up"));
         btnMoveUp.setEnabled(false);
         btnMoveUp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -212,7 +213,7 @@ public class SortByPanel extends JPanel {
         });
         buttonPanel.add(btnMoveUp);
 
-        btnMoveDown = new JButton("Down");
+        btnMoveDown = new JButton(Localisation.getString(SortByPanel.class, "sortby.down"));
         btnMoveDown.setEnabled(false);
         btnMoveDown.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

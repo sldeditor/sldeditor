@@ -31,6 +31,8 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.sort.SortBy;
 import org.opengis.filter.sort.SortOrder;
 
+import com.sldeditor.common.localisation.Localisation;
+
 /**
  * The Class SortByTableModel.
  *
@@ -57,8 +59,8 @@ public class SortByTableModel extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
 
     public SortByTableModel() {
-        columnNameList.add("Property");
-        columnNameList.add("Ascending");
+        columnNameList.add(Localisation.getString(SortByPanel.class, "sortby.property"));
+        columnNameList.add(Localisation.getString(SortByPanel.class, "sortby.ascending"));
     }
 
     /*
