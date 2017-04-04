@@ -214,6 +214,6 @@ public class FeatureTypeStyleDetails extends StandardPanel
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
-        // No vendor options
+        vendorOptionFTSFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

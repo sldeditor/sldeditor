@@ -234,6 +234,8 @@ public class SortByPanelTest {
         fieldList = Arrays.asList("Field1", "Field2", "Field3", "Field4");
         panel.populateFieldNames(fieldList);
         assertEquals("Field4 A, Field3 A", output.text);
+
+        // If the next is uncommented the unit test stops being unattended
         // dialog.setVisible(true);
     }
 

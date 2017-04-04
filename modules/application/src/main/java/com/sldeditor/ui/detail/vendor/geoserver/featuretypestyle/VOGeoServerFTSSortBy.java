@@ -175,11 +175,19 @@ public class VOGeoServerFTSSortBy extends StandardPanel
         MultiOptionGroup group = (MultiOptionGroup) getGroup(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION);
 
         if (sortByString != null) {
-            group.setOption(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY);
+            group.setOption(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION);
+
+            fieldConfigVisitor.populateTextField(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST,
+                    sortByString);
+
         } else {
             sortByGroupString = options.get(FeatureTypeStyle.SORT_BY_GROUP);
             if (sortByGroupString != null) {
-                group.setOption(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP);
+                group.setOption(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION);
+
+                fieldConfigVisitor.populateComboBoxField(
+                        FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES,
+                        sortByGroupString);
             }
         }
 
@@ -395,7 +403,8 @@ public class VOGeoServerFTSSortBy extends StandardPanel
             FeatureTypeStyle fts = (FeatureTypeStyle) sldObj;
             Map<String, String> options = fts.getOptions();
 
-            if (options.containsKey(FeatureTypeStyle.KEY_EVALUATION_MODE)) {
+            if (options.containsKey(FeatureTypeStyle.SORT_BY)
+                    || options.containsKey(FeatureTypeStyle.SORT_BY_GROUP)) {
                 VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                         getVendorOptionInfo());
 

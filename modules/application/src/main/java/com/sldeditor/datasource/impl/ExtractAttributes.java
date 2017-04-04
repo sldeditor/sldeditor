@@ -31,9 +31,13 @@ import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MultiCompareFilterImpl;
 import org.geotools.filter.NotImpl;
 import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.geotools.renderer.style.SLDStyleFactory;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.Rule;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.filter.Filter;
@@ -42,6 +46,7 @@ import org.opengis.filter.PropertyIsLike;
 import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.sort.SortBy;
 import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 import org.opengis.parameter.Parameter;
@@ -67,7 +72,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             new ArrayList<DataSourceAttributeData>();
 
     /** The field list. */
-    private Map<String, DataSourceAttributeData> fieldList =
+    private Map<String, DataSourceAttributeData> fieldList = 
             new HashMap<String, DataSourceAttributeData>();
 
     /** The geometry field list. */
@@ -89,7 +94,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
     /*
      * (non-Javadoc)
      * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.expression.Expression)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.expression.
+     * Expression)
      */
     protected Expression copy(Expression expression) {
         return copy(String.class, expression);
@@ -177,7 +183,9 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         return super.copy(filter);
     }
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
      */
     public void visit(PointSymbolizer ps) {
@@ -238,6 +246,61 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             throw new IllegalStateException(
                     "Was unable to duplicate provided PolygonSymbolizer:" + poly);
         }
+        pages.push(copy);
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
+     * FeatureTypeStyle)
+     */
+    public void visit(FeatureTypeStyle fts) {
+
+        FeatureTypeStyle copy = new FeatureTypeStyleImpl(fts);
+
+        Rule[] rules = fts.getRules();
+        int length = rules.length;
+        Rule[] rulesCopy = new Rule[length];
+        for (int i = 0; i < length; i++) {
+            if (rules[i] != null) {
+                rules[i].accept(this);
+                rulesCopy[i] = (Rule) pages.pop();
+            }
+        }
+
+        copy.setRules(rulesCopy);
+
+        if (fts.getTransformation() != null) {
+            copy.setTransformation(copy(fts.getTransformation()));
+        }
+        if (fts.getOnlineResource() != null) {
+            copy.setOnlineResource(fts.getOnlineResource());
+        }
+        copy.getOptions().clear();
+        copy.getOptions().putAll(fts.getOptions());
+
+        String sortbyGroup = fts.getOptions().get(FeatureTypeStyle.SORT_BY_GROUP);
+        if (sortbyGroup != null) {
+            List<String> foundList = new ArrayList<String>();
+            extractAttribute(String.class, ff.property(sortbyGroup), foundList);
+        }
+
+        String sortby = fts.getOptions().get(FeatureTypeStyle.SORT_BY);
+        if (sortby != null) {
+            SortBy[] sortByArray = SLDStyleFactory.getSortBy(fts.getOptions());
+            for (SortBy sortBy : sortByArray) {
+                List<String> foundList = new ArrayList<String>();
+                extractAttribute(String.class,
+                        ff.property(sortBy.getPropertyName().getPropertyName()), foundList);
+            }
+        }
+
+        if (STRICT && !copy.equals(fts)) {
+            throw new IllegalStateException(
+                    "Was unable to duplicate provided FeatureTypeStyle:" + fts);
+        }
+
         pages.push(copy);
     }
 
@@ -455,4 +518,5 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
     public List<String> getGeometryFields() {
         return geometryFieldList;
     }
+
 }
