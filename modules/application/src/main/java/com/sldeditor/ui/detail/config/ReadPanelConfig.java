@@ -392,7 +392,6 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
             groupConfig.addField(stringConfig);
         } else if (xmlFieldConfig instanceof XMLFieldConfigSortBy) {
-            XMLFieldConfigSortBy xmlSortByConfig = (XMLFieldConfigSortBy) xmlFieldConfig;
 
             FieldConfigSortBy sortByConfig = new FieldConfigSortBy(commonData);
 

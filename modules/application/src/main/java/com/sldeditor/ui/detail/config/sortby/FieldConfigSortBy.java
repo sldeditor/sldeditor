@@ -19,16 +19,6 @@
 
 package com.sldeditor.ui.detail.config.sortby;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
-
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -39,8 +29,6 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
-import com.sldeditor.ui.detail.config.TextFieldPropertyChange;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
@@ -53,10 +41,10 @@ import com.sldeditor.ui.widgets.FieldPanel;
  * 
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInterface {
+public class FieldConfigSortBy extends FieldConfigBase implements SortByUpdateInterface, UndoActionInterface {
 
-    /** The text field. */
-    private JTextField textField;
+    /** The sortby panel. */
+    private SortByPanel sortbyPanel;
 
     /** The default value. */
     private String defaultValue = "";
@@ -64,14 +52,11 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
     /** The old value obj. */
     private Object oldValueObj = null;
 
-    /** The button text. */
-    private String buttonText = null;
-
-    /** The button pressed listener list. */
-    private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
-
     /** The suppress update on set flag. */
     private boolean suppressUpdateOnSet = false;
+
+    /** The number of rows the sort by panel will have. */
+    private int NO_OF_ROWS = 6;
 
     /**
      * Instantiates a new field config string.
@@ -92,71 +77,15 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void createUI() {
-        if (textField == null) {
+        if (sortbyPanel == null) {
             final UndoActionInterface parentObj = this;
 
+            sortbyPanel = new SortByPanel(this, NO_OF_ROWS);
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
-
-            textField = new TextFieldPropertyChange();
-            textField.setBounds(
-                    xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly()
-                            ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
-                    BasePanel.WIDGET_HEIGHT);
-            fieldPanel.add(textField);
-
-            textField.addPropertyChangeListener(TextFieldPropertyChange.TEXT_PROPERTY,
-                    new PropertyChangeListener() {
-
-                        /*
-                         * (non-Javadoc)
-                         * 
-                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-                         */
-                        @Override
-                        public void propertyChange(PropertyChangeEvent evt) {
-                            String originalValue = (String) evt.getOldValue();
-                            String newValueObj = (String) evt.getNewValue();
-
-                            if ((originalValue.compareTo(newValueObj) != 0)) {
-                                if (!suppressUpdateOnSet) {
-                                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
-                                            getFieldId(), oldValueObj, newValueObj));
-
-                                    oldValueObj = originalValue;
-                                }
-
-                                valueUpdated();
-                            }
-                        }
-                    });
-
-            if (buttonText != null) {
-                final JButton buttonExternal = new JButton(buttonText);
-                buttonExternal.addActionListener(new ActionListener() {
-
-                    public void actionPerformed(ActionEvent e) {
-                        if (buttonPressedListenerList != null) {
-                            //CHECKSTYLE:OFF
-                            for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
-                                listener.buttonPressed(buttonExternal);
-                            }
-                            //CHECKSTYLE:ON
-                        }
-                    }
-                });
-
-                int buttonWidth = 26;
-                int padding = 3;
-                buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0,
-                        buttonWidth, BasePanel.WIDGET_HEIGHT);
-                fieldPanel.add(buttonExternal);
-            }
-
-            if (!isValueOnly()) {
-                setAttributeSelectionPanel(
-                        fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
-            }
+            FieldPanel fieldPanel = createFieldPanel(xPos, 
+                    BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
+                    getLabel());
+            fieldPanel.add(sortbyPanel);
         }
     }
 
@@ -187,8 +116,8 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void internal_setEnabled(boolean enabled) {
-        if (textField != null) {
-            textField.setEnabled(enabled);
+        if (sortbyPanel != null) {
+            sortbyPanel.setEnabled(enabled);
         }
     }
 
@@ -206,8 +135,8 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
     protected Expression generateExpression() {
         Expression expression = null;
 
-        if (this.textField != null) {
-            expression = getFilterFactory().literal(textField.getText());
+        if (this.sortbyPanel != null) {
+            expression = getFilterFactory().literal(sortbyPanel.getText());
         }
         return expression;
     }
@@ -227,8 +156,8 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
         if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
         } else {
-            if (textField != null) {
-                return textField.isEnabled();
+            if (sortbyPanel != null) {
+                return sortbyPanel.isEnabled();
             }
         }
         return false;
@@ -282,9 +211,9 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public String getStringValue() {
-        if (textField != null) {
+        if (sortbyPanel != null) {
             if (getPanel().isValueReadable()) {
-                return textField.getText();
+                return sortbyPanel.getText();
             }
         }
         return null;
@@ -297,11 +226,11 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        if (textField != null) {
+        if (sortbyPanel != null) {
             if (undoRedoObject != null) {
                 String oldValue = (String) undoRedoObject.getOldValue();
 
-                textField.setText(oldValue);
+                sortbyPanel.setText(oldValue);
             }
         }
     }
@@ -313,27 +242,13 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        if (textField != null) {
+        if (sortbyPanel != null) {
             if (undoRedoObject != null) {
                 String newValue = (String) undoRedoObject.getNewValue();
 
-                textField.setText(newValue);
+                sortbyPanel.setText(newValue);
             }
         }
-    }
-
-    /**
-     * Adds the button pressed listener.
-     *
-     * @param listener the listener
-     */
-    public void addButtonPressedListener(FieldConfigStringButtonInterface listener) {
-
-        if (buttonPressedListenerList == null) {
-            buttonPressedListenerList = new ArrayList<FieldConfigStringButtonInterface>();
-        }
-
-        buttonPressedListenerList.add(listener);
     }
 
     /**
@@ -354,8 +269,8 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void populateField(String value) {
-        if (textField != null) {
-            textField.setText(value);
+        if (sortbyPanel != null) {
+            sortbyPanel.setText(value);
 
             if (!suppressUpdateOnSet) {
                 UndoManager.getInstance()
@@ -391,8 +306,8 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void setVisible(boolean visible) {
-        if (textField != null) {
-            textField.setVisible(visible);
+        if (sortbyPanel != null) {
+            sortbyPanel.setVisible(visible);
         }
     }
 
@@ -404,4 +319,14 @@ public class FieldConfigSortBy extends FieldConfigBase implements UndoActionInte
     public void setSuppressUpdatesOnSet(boolean suppressUpdateOnSet) {
         this.suppressUpdateOnSet = suppressUpdateOnSet;
     }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface#sortByUpdated(java.lang.String)
+     */
+    @Override
+    public void sortByUpdated(String sortByString) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
