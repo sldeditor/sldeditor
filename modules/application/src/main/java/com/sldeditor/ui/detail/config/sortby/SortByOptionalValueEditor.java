@@ -31,11 +31,11 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 /**
- * Table model editor for sort by sort oder.
+ * Table model editor for sort by sort order.
  *
  * @author Robert Ward (SCISYS)
  */
-public class OptionalValueEditor extends AbstractCellEditor implements TableCellEditor {
+public class SortByOptionalValueEditor extends AbstractCellEditor implements TableCellEditor {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -57,7 +57,7 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
      *
      * @param tableModel the table model
      */
-    public OptionalValueEditor(SortByTableModel tableModel) {
+    public SortByOptionalValueEditor(SortByTableModel tableModel) {
         this.tableModel = tableModel;
 
         checkBox.setHorizontalAlignment(JLabel.CENTER);

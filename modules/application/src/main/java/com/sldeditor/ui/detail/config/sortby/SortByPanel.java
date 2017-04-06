@@ -41,6 +41,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.geotools.data.DataStore;
 import org.geotools.renderer.style.SLDStyleFactory;
@@ -59,7 +60,8 @@ import com.sldeditor.ui.detail.BasePanel;
  *
  * @author Robert Ward (SCISYS)
  */
-public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
+public class SortByPanel extends JPanel
+        implements DataSourceUpdatedInterface, SortOrderUpdateInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -68,7 +70,7 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
     private DefaultListModel<String> sourceModel = new DefaultListModel<String>();
 
     /** The destination table model. */
-    private SortByTableModel destinationModel = new SortByTableModel();
+    private SortByTableModel destinationModel = null;
 
     /** The field name list. */
     private List<String> fieldNameList = null;
@@ -102,6 +104,9 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
      */
     public SortByPanel(SortByUpdateInterface parentObj, int noOfRows) {
         this.parentObj = parentObj;
+
+        destinationModel = new SortByTableModel(this);
+
         setLayout(new BorderLayout(0, 0));
 
         createUI(noOfRows);
@@ -170,6 +175,26 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
         scrollPaneDest.setPreferredSize(new Dimension(200, 200));
         panel.add(scrollPaneDest);
 
+        destinationTable = new JTable();
+        destinationTable.setModel(destinationModel);
+
+        TableColumnModel columnModel = destinationTable.getColumnModel();
+        TableColumn col = columnModel.getColumn(SortByTableModel.getSortOrderColumn());
+        SortByCheckBoxRenderer checkBoxRenderer = new SortByCheckBoxRenderer();
+        col.setCellRenderer(checkBoxRenderer);
+        col.setCellEditor(new SortByOptionalValueEditor(destinationModel));
+
+        destinationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting() == false) {
+                    ListSelectionModel model = destinationTable.getSelectionModel();
+                    if (!model.isSelectionEmpty()) {
+                        destinationSelected();
+                    }
+                }
+            }
+        });
+
         destinationModel.addTableModelListener(new TableModelListener() {
 
             @Override
@@ -183,29 +208,9 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
                     btnSrcToDestButton.setEnabled(false);
                     btnDestToSrcButton.setEnabled(false);
                 }
-
-                if (parentObj != null) {
-                    parentObj.sortByUpdated(getText());
-                }
-            }
-        });
-        destinationTable = new JTable(destinationModel);
-        destinationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting() == false) {
-                    ListSelectionModel model = destinationTable.getSelectionModel();
-                    if (!model.isSelectionEmpty()) {
-                        destinationSelected();
-                    }
-                }
             }
         });
         scrollPaneDest.setViewportView(destinationTable);
-        CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer();
-        TableColumn col = destinationTable.getColumnModel()
-                .getColumn(SortByTableModel.getSortOrderColumn());
-        col.setCellRenderer(checkBoxRenderer);
-        col.setCellEditor(new OptionalValueEditor(destinationModel));
 
         JPanel buttonPanel = new JPanel();
         FlowLayout fl_buttonPanel = (FlowLayout) buttonPanel.getLayout();
@@ -297,10 +302,6 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
         btnMoveDown.setEnabled(false);
         btnMoveUp.setEnabled(false);
         btnDestToSrcButton.setEnabled(false);
-
-        if (parentObj != null) {
-            parentObj.sortByUpdated(getText());
-        }
     }
 
     /**
@@ -371,6 +372,9 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
     public void setText(String value) {
         Map<String, String> options = new HashMap<String, String>();
 
+        ListSelectionModel model = destinationTable.getSelectionModel();
+        model.clearSelection();
+
         SortBy[] sortArray = null;
 
         if (!value.isEmpty()) {
@@ -380,6 +384,11 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
         }
         destinationModel.populate(sortArray);
         updateLists();
+
+        btnMoveDown.setEnabled(false);
+        btnMoveUp.setEnabled(false);
+        btnDestToSrcButton.setEnabled(false);
+        btnSrcToDestButton.setEnabled(false);
     }
 
     /**
@@ -413,6 +422,8 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
     protected void setSortOrder(int index, boolean isAscending) {
         destinationModel.setValueAt(Boolean.valueOf(isAscending), index,
                 SortByTableModel.getSortOrderColumn());
+
+        destinationModel.fireTableDataChanged();
     }
 
     /*
@@ -450,6 +461,18 @@ public class SortByPanel extends JPanel implements DataSourceUpdatedInterface {
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.sldeditor.ui.detail.config.sortby.SortOrderUpdateInterface#sortOrderUpdated()
+     */
+    @Override
+    public void sortOrderUpdated() {
+        if (parentObj != null) {
+            parentObj.sortByUpdated(getText());
+        }
     }
 
 }

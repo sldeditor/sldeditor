@@ -48,14 +48,8 @@ public class FieldConfigSortBy extends FieldConfigBase
     /** The sortby panel. */
     private SortByPanel sortbyPanel;
 
-    /** The default value. */
-    private String defaultValue = "";
-
     /** The old value obj. */
     private Object oldValueObj = null;
-
-    /** The suppress update on set flag. */
-    private boolean suppressUpdateOnSet = false;
 
     /** The number of rows the sort by panel will have. */
     private int NO_OF_ROWS = 6;
@@ -175,7 +169,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     @Override
     public void revertToDefaultValue() {
-        populateField(defaultValue);
+        // Do nothing
     }
 
     /**
@@ -203,7 +197,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      * @param defaultValue the new default value
      */
     public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
+        // Do nothing
     }
 
     /**
@@ -232,7 +226,9 @@ public class FieldConfigSortBy extends FieldConfigBase
             if (undoRedoObject != null) {
                 String oldValue = (String) undoRedoObject.getOldValue();
 
+                Controller.getInstance().setPopulating(true);
                 sortbyPanel.setText(oldValue);
+                Controller.getInstance().setPopulating(false);
             }
         }
     }
@@ -248,7 +244,9 @@ public class FieldConfigSortBy extends FieldConfigBase
             if (undoRedoObject != null) {
                 String newValue = (String) undoRedoObject.getNewValue();
 
+                Controller.getInstance().setPopulating(true);
                 sortbyPanel.setText(newValue);
+                Controller.getInstance().setPopulating(false);
             }
         }
     }
@@ -274,14 +272,12 @@ public class FieldConfigSortBy extends FieldConfigBase
         if (sortbyPanel != null) {
             sortbyPanel.setText(value);
 
-            if (!suppressUpdateOnSet) {
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-                oldValueObj = value;
+            oldValueObj = value;
 
-                valueUpdated();
-            }
+            valueUpdated();
         }
     }
 
@@ -313,15 +309,6 @@ public class FieldConfigSortBy extends FieldConfigBase
         }
     }
 
-    /**
-     * Sets the suppress updates on set.
-     *
-     * @param suppressUpdateOnSet the new suppress updates on set
-     */
-    public void setSuppressUpdatesOnSet(boolean suppressUpdateOnSet) {
-        this.suppressUpdateOnSet = suppressUpdateOnSet;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -331,6 +318,7 @@ public class FieldConfigSortBy extends FieldConfigBase
     @Override
     public void sortByUpdated(String sortByString) {
         if (!Controller.getInstance().isPopulating()) {
+            System.out.println(sortByString);
             UndoManager.getInstance().addUndoEvent(
                     new UndoEvent(this, getFieldId(), oldValueObj, new String(sortByString)));
 

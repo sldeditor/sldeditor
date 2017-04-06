@@ -27,11 +27,11 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
- * A checkbox renderer used in a table.
+ * A checkbox renderer used in the SortBy table.
  *
  * @author Robert Ward (SCISYS)
  */
-public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+public class SortByCheckBoxRenderer extends JCheckBox implements TableCellRenderer {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
     /**
      * Instantiates a new check box renderer.
      */
-    CheckBoxRenderer() {
+    SortByCheckBoxRenderer() {
         setHorizontalAlignment(JLabel.CENTER);
     }
 
@@ -66,7 +66,7 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
                 setBackground(table.getBackground());
             }
 
-            setSelected((value != null && ((Boolean) value).booleanValue()));
+            setSelected((value != null) && ((Boolean) value).booleanValue());
         }
         return this;
     }

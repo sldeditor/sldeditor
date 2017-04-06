@@ -193,7 +193,7 @@ public class SortByPanelTest {
         panel.populateFieldNames(fieldList);
         panel.setText(selectedFieldList);
 
-        assertEquals(selectedFieldList, output.text);
+        assertEquals(selectedFieldList, panel.getText());
         int[] selectedIndexes = new int[1];
         selectedIndexes[0] = 1;
 

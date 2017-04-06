@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.SortByImpl;
@@ -38,7 +38,7 @@ import com.sldeditor.common.localisation.Localisation;
  *
  * @author Robert Ward (SCISYS)
  */
-public class SortByTableModel extends DefaultTableModel {
+public class SortByTableModel extends AbstractTableModel {
 
     /** The Constant COL_SORT_ORDER. */
     private static final int COL_SORT_ORDER = 1;
@@ -58,7 +58,17 @@ public class SortByTableModel extends DefaultTableModel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    public SortByTableModel() {
+    /** The parent obj. */
+    private SortOrderUpdateInterface parentObj = null;
+
+    /**
+     * Instantiates a new sort by table model.
+     *
+     * @param parentObj the parent obj
+     */
+    public SortByTableModel(SortOrderUpdateInterface parentObj) {
+        this.parentObj = parentObj;
+
         columnNameList.add(Localisation.getString(SortByPanel.class, "sortby.property"));
         columnNameList.add(Localisation.getString(SortByPanel.class, "sortby.ascending"));
     }
@@ -153,11 +163,33 @@ public class SortByTableModel extends DefaultTableModel {
 
             SortOrder sortOrder = b.booleanValue() ? SortOrder.ASCENDING : SortOrder.DESCENDING;
             ((SortByImpl) obj).setSortOrder(sortOrder);
-            this.fireTableCellUpdated(row, column);
+
+            fireTableCellUpdated(row, column);
+
+            if (parentObj != null) {
+                parentObj.sortOrderUpdated();
+            }
             break;
         }
         default:
             break;
+        }
+    }
+
+    /*
+     * Returns a class representing the datatype of the data stored in that column (non-Javadoc)
+     * 
+     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
+     */
+    @Override
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+        case 0:
+            return String.class;
+        case COL_SORT_ORDER:
+            return Boolean.class;
+        default:
+            return Object.class;
         }
     }
 
@@ -183,6 +215,10 @@ public class SortByTableModel extends DefaultTableModel {
 
         this.fireTableDataChanged();
 
+        if (parentObj != null) {
+            parentObj.sortOrderUpdated();
+        }
+
         return itemsRemovedList;
     }
 
@@ -195,6 +231,10 @@ public class SortByTableModel extends DefaultTableModel {
         dataList.add((SortByImpl) ff.sort(propertyName, DEFAULT_SORT_ORDER));
 
         this.fireTableDataChanged();
+
+        if (parentObj != null) {
+            parentObj.sortOrderUpdated();
+        }
     }
 
     /**
@@ -204,12 +244,16 @@ public class SortByTableModel extends DefaultTableModel {
      */
     public void populate(SortBy[] sortArray) {
         dataList.clear();
+
         if (sortArray != null) {
             for (SortBy sortBy : sortArray) {
                 dataList.add(sortBy);
             }
         }
-        this.fireTableDataChanged();
+
+        // Using fireTableStructureChanged rather than fireTableDataChanged so that the checkbox
+        // editors work with undo/redo
+        this.fireTableStructureChanged();
     }
 
     /**
@@ -263,6 +307,9 @@ public class SortByTableModel extends DefaultTableModel {
         dataList.add(index + 1, sortBy);
 
         this.fireTableDataChanged();
+        if (parentObj != null) {
+            parentObj.sortOrderUpdated();
+        }
     }
 
     /**
@@ -275,6 +322,9 @@ public class SortByTableModel extends DefaultTableModel {
         dataList.add(index - 1, sortBy);
 
         this.fireTableDataChanged();
+        if (parentObj != null) {
+            parentObj.sortOrderUpdated();
+        }
     }
 
     /**
@@ -292,11 +342,17 @@ public class SortByTableModel extends DefaultTableModel {
                 }
             }
 
-            for (SortBy sortBy : fieldsToRemoveList) {
-                dataList.remove(sortBy);
-            }
+            if (!fieldsToRemoveList.isEmpty()) {
+                for (SortBy sortBy : fieldsToRemoveList) {
+                    dataList.remove(sortBy);
+                }
 
-            this.fireTableDataChanged();
+                if (parentObj != null) {
+                    parentObj.sortOrderUpdated();
+                }
+
+                this.fireTableDataChanged();
+            }
         }
     }
 }
