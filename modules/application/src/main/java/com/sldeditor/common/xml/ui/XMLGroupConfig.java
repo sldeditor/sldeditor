@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="FieldConfigMapUnit" type="{}XMLFieldConfigMapUnit"/&gt;
  *         &lt;element name="FieldConfigVendorOption" type="{}XMLFieldConfigVendorOption"/&gt;
  *         &lt;element name="FieldConfigSortBy" type="{}XMLFieldConfigSortBy"/&gt;
+ *         &lt;element name="FieldConfigDSProperties" type="{}XMLFieldConfigDSProperties"/&gt;
  *         &lt;element name="Group" type="{}XMLGroupConfig"/&gt;
  *         &lt;element name="MultiOptionGroup" type="{}XMLMultiOptionGroup"/&gt;
  *       &lt;/choice&gt;
@@ -88,6 +89,7 @@ public class XMLGroupConfig
         @XmlElement(name = "FieldConfigMapUnit", type = XMLFieldConfigMapUnit.class),
         @XmlElement(name = "FieldConfigVendorOption", type = XMLFieldConfigVendorOption.class),
         @XmlElement(name = "FieldConfigSortBy", type = XMLFieldConfigSortBy.class),
+        @XmlElement(name = "FieldConfigDSProperties", type = XMLFieldConfigDSProperties.class),
         @XmlElement(name = "Group", type = XMLGroupConfig.class),
         @XmlElement(name = "MultiOptionGroup", type = XMLMultiOptionGroup.class)
     })
@@ -130,6 +132,7 @@ public class XMLGroupConfig
      * {@link XMLFieldConfigMapUnit }
      * {@link XMLFieldConfigVendorOption }
      * {@link XMLFieldConfigSortBy }
+     * {@link XMLFieldConfigDSProperties }
      * {@link XMLGroupConfig }
      * {@link XMLMultiOptionGroup }
      * 

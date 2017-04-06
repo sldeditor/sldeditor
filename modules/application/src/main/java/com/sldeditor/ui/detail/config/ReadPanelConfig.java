@@ -35,6 +35,7 @@ import com.sldeditor.common.xml.ui.PanelConfig;
 import com.sldeditor.common.xml.ui.XMLFieldConfigBoolean;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColour;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColourMap;
+import com.sldeditor.common.xml.ui.XMLFieldConfigDSProperties;
 import com.sldeditor.common.xml.ui.XMLFieldConfigData;
 import com.sldeditor.common.xml.ui.XMLFieldConfigDouble;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnum;
@@ -396,6 +397,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
             FieldConfigSortBy sortByConfig = new FieldConfigSortBy(commonData);
 
             groupConfig.addField(sortByConfig);
+        } else if (xmlFieldConfig instanceof XMLFieldConfigDSProperties) {
+
+            FieldConfigDSProperties dsPropertiesConfig = new FieldConfigDSProperties(commonData);
+
+            groupConfig.addField(dsPropertiesConfig);
         } else if (xmlFieldConfig instanceof XMLFieldConfigGeometryField) {
             FieldConfigGeometryField geometryFieldConfig = new FieldConfigGeometryField(commonData);
 

@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     XMLFieldConfigEnum.class,
     XMLFieldConfigSymbolType.class,
     XMLFieldConfigSortBy.class,
+    XMLFieldConfigDSProperties.class,
     XMLFieldConfigDouble.class,
     XMLFieldConfigColourMap.class,
     XMLFieldConfigTransformation.class,

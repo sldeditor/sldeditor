@@ -14,14 +14,8 @@
             showLabel="true">
             <Group id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION" label="geoserver.sortbygroup"
                 showLabel="true">
-               <FieldConfigEnum id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES"
-                    label="geoserver.sortbygroup.property" valueOnly="true" default="none">
-                    <ValueList>
-                        <Value>
-                            <Item id="first" label="First" />
-                        </Value>
-                    </ValueList>
-                </FieldConfigEnum>
+               <FieldConfigDSProperties id="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES"
+                    label="geoserver.sortbygroup.property" />
             </Group>
         </OptionGroup>
     </MultiOptionGroup>

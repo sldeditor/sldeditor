@@ -74,8 +74,6 @@ public class FieldConfigSortBy extends FieldConfigBase
     @Override
     public void createUI() {
         if (sortbyPanel == null) {
-            final UndoActionInterface parentObj = this;
-
             sortbyPanel = new SortByPanel(this, NO_OF_ROWS);
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,

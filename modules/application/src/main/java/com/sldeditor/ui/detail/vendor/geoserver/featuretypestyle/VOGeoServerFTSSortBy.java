@@ -40,7 +40,6 @@ import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * Class to handle the getting and setting of GeoServer rule evaluation vendor option data.
@@ -185,7 +184,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
             if (sortByGroupString != null) {
                 group.setOption(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION);
 
-                fieldConfigVisitor.populateComboBoxField(
+                fieldConfigVisitor.populateTextField(
                         FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES,
                         sortByGroupString);
             }
@@ -259,11 +258,13 @@ public class VOGeoServerFTSSortBy extends StandardPanel
                         .getText(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST);
                 options.put(FeatureTypeStyle.SORT_BY, value);
             } else {
-                ValueComboBoxData value = fieldConfigVisitor
-                        .getComboBox(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES);
+                String property = fieldConfigVisitor
+                        .getText(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES);
 
-                if (value != null) {
-                    options.put(FeatureTypeStyle.SORT_BY_GROUP, value.getKey());
+                if (property != null) {
+                    options.put(FeatureTypeStyle.SORT_BY_GROUP, property);
+                } else {
+                    options.remove(FeatureTypeStyle.SORT_BY_GROUP);
                 }
             }
         } else {

@@ -197,6 +197,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLFieldConfigDSProperties }
+     * 
+     */
+    public XMLFieldConfigDSProperties createXMLFieldConfigDSProperties() {
+        return new XMLFieldConfigDSProperties();
+    }
+
+    /**
      * Create an instance of {@link XMLFieldConfigDouble }
      * 
      */

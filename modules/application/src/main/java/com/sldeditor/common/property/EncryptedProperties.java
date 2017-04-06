@@ -50,11 +50,9 @@ public class EncryptedProperties extends Properties {
     private static final long serialVersionUID = 1L;
 
     /** The decoder. */
-    @SuppressWarnings("restriction")
     private static sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
 
     /** The encoder. */
-    @SuppressWarnings("restriction")
     private static sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
 
     /** The encrypter. */
@@ -161,7 +159,6 @@ public class EncryptedProperties extends Properties {
      * @param str the str
      * @return the string
      */
-    @SuppressWarnings("restriction")
     public synchronized String decrypt(String str) {
         byte[] dec;
         try {
@@ -185,7 +182,6 @@ public class EncryptedProperties extends Properties {
      * @param str the str
      * @return the string
      */
-    @SuppressWarnings("restriction")
     public synchronized String encrypt(String str) {
         byte[] utf8;
         try {
