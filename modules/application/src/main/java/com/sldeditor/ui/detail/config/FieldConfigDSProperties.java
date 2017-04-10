@@ -21,13 +21,13 @@ package com.sldeditor.ui.detail.config;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import org.geotools.data.DataStore;
+import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
@@ -44,8 +44,8 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
- * The Class FieldConfigDSProperties wraps a drop down GUI component and an optional
- * value/attribute/expression drop down,
+ * The Class FieldConfigDSProperties wraps a drop down GUI component containing data source property
+ * names and an optional value/attribute/expression drop down.
  * 
  * <p>Supports undo/redo functionality.
  * 
@@ -112,12 +112,12 @@ public class FieldConfigDSProperties extends FieldConfigBase
                 if (isAttributeComboBoxPopulated()) {
                     if (comboBox.getSelectedItem() != null) {
 
-                        Object newValueObj = comboBox.getSelectedItem();
+                        String newValueObj = new String((String)comboBox.getSelectedItem());
 
                         UndoManager.getInstance().addUndoEvent(
                                 new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
 
-                        oldValueObj = newValueObj;
+                        oldValueObj = new String(newValueObj);
 
                         valueUpdated();
                     }
@@ -237,6 +237,10 @@ public class FieldConfigDSProperties extends FieldConfigBase
 
                 populateField(sValue);
             } else if (objValue instanceof LiteralExpressionImpl) {
+                String sValue = objValue.toString();
+
+                populateField(sValue);
+            } else if (objValue instanceof AttributeExpressionImpl) {
                 String sValue = objValue.toString();
 
                 populateField(sValue);
@@ -361,11 +365,8 @@ public class FieldConfigDSProperties extends FieldConfigBase
         if (comboBox != null) {
 
             if (value != null) {
-                oldValueObj = value;
-
                 comboBox.setSelectedItem(value);
             } else {
-                oldValueObj = value;
                 comboBox.setSelectedIndex(-1);
             }
         }
