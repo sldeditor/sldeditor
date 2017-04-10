@@ -316,7 +316,7 @@ public class FieldConfigSortBy extends FieldConfigBase
     @Override
     public void sortByUpdated(String sortByString) {
         if (!Controller.getInstance().isPopulating()) {
-            System.out.println(sortByString);
+
             UndoManager.getInstance().addUndoEvent(
                     new UndoEvent(this, getFieldId(), oldValueObj, new String(sortByString)));
 
