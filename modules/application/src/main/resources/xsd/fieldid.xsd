@@ -226,6 +226,10 @@
 
             <xs:enumeration value="VO_FTS_RULE_EVALUATION" />
             <xs:enumeration value="VO_FTS_RULE_EVALUATION_OPTION" />
+
+            <xs:enumeration value="VO_FTS_SORTBY" />
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST" />
+            <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

@@ -35,6 +35,7 @@ import com.sldeditor.common.xml.ui.PanelConfig;
 import com.sldeditor.common.xml.ui.XMLFieldConfigBoolean;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColour;
 import com.sldeditor.common.xml.ui.XMLFieldConfigColourMap;
+import com.sldeditor.common.xml.ui.XMLFieldConfigDSProperties;
 import com.sldeditor.common.xml.ui.XMLFieldConfigData;
 import com.sldeditor.common.xml.ui.XMLFieldConfigDouble;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnum;
@@ -53,6 +54,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigInlineFeature;
 import com.sldeditor.common.xml.ui.XMLFieldConfigInteger;
 import com.sldeditor.common.xml.ui.XMLFieldConfigMapUnit;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSlider;
+import com.sldeditor.common.xml.ui.XMLFieldConfigSortBy;
 import com.sldeditor.common.xml.ui.XMLFieldConfigString;
 import com.sldeditor.common.xml.ui.XMLFieldConfigSymbolType;
 import com.sldeditor.common.xml.ui.XMLFieldConfigTransformation;
@@ -73,6 +75,7 @@ import com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTy
 import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
 import com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature;
+import com.sldeditor.ui.detail.config.sortby.FieldConfigSortBy;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.transform.FieldConfigTransformation;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
@@ -389,6 +392,16 @@ public class ReadPanelConfig implements PanelConfigInterface {
                     commonData);
 
             groupConfig.addField(stringConfig);
+        } else if (xmlFieldConfig instanceof XMLFieldConfigSortBy) {
+
+            FieldConfigSortBy sortByConfig = new FieldConfigSortBy(commonData);
+
+            groupConfig.addField(sortByConfig);
+        } else if (xmlFieldConfig instanceof XMLFieldConfigDSProperties) {
+
+            FieldConfigDSProperties dsPropertiesConfig = new FieldConfigDSProperties(commonData);
+
+            groupConfig.addField(dsPropertiesConfig);
         } else if (xmlFieldConfig instanceof XMLFieldConfigGeometryField) {
             FieldConfigGeometryField geometryFieldConfig = new FieldConfigGeometryField(commonData);
 

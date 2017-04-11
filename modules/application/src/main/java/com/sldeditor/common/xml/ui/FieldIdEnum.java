@@ -190,6 +190,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_BASE_BOOL"/&gt;
  *     &lt;enumeration value="VO_FTS_RULE_EVALUATION"/&gt;
  *     &lt;enumeration value="VO_FTS_RULE_EVALUATION_OPTION"/&gt;
+ *     &lt;enumeration value="VO_FTS_SORTBY"/&gt;
+ *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST"/&gt;
+ *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -368,7 +371,10 @@ public enum FieldIdEnum {
     VO_FTS_COMPOSITE_BASE,
     VO_FTS_COMPOSITE_BASE_BOOL,
     VO_FTS_RULE_EVALUATION,
-    VO_FTS_RULE_EVALUATION_OPTION;
+    VO_FTS_RULE_EVALUATION_OPTION,
+    VO_FTS_SORTBY,
+    VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST,
+    VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES;
 
     public String value() {
         return name();

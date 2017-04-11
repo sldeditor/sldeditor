@@ -110,6 +110,8 @@
                     <xs:element name="FieldConfigFeatureTypeConstraint" type="XMLFieldConfigFeatureTypeConstraint" />
                     <xs:element name="FieldConfigMapUnit"       type="XMLFieldConfigMapUnit" />
                     <xs:element name="FieldConfigVendorOption"  type="XMLFieldConfigVendorOption" />
+                    <xs:element name="FieldConfigSortBy"        type="XMLFieldConfigSortBy" />
+                    <xs:element name="FieldConfigDSProperties"  type="XMLFieldConfigDSProperties" />
                     <xs:element name="Group"                    type="XMLGroupConfig" />
                     <xs:element name="MultiOptionGroup"         type="XMLMultiOptionGroup" />
                 </xs:choice>
@@ -185,6 +187,28 @@
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigSortBy">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for a vendor option feature type style sort by
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XMLFieldConfigDSProperties">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration for data source properties combobox
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="XMLFieldConfigData"/>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="XMLFieldConfigDouble">

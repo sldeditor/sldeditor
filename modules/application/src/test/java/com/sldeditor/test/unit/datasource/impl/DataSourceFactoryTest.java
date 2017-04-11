@@ -169,6 +169,14 @@ public class DataSourceFactoryTest {
         public String getGeometryFieldName() {
             return null;
         }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.datasource.DataSourceInterface#getAllAttributes(boolean)
+         */
+        @Override
+        public List<String> getAllAttributes(boolean includeGeometry) {
+            return null;
+        }
     }
 
     /**
