@@ -20,6 +20,7 @@
 package com.sldeditor.common.vendoroption;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,8 +29,12 @@ import java.util.List;
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerVendorOption implements VendorOptionTypeInterface {
+
     /** The version list. */
     private List<VersionData> versionList = new ArrayList<VersionData>();
+
+    /** The list reversed. */
+    private boolean listReversed = false;
 
     /*
      * (non-Javadoc)
@@ -50,7 +55,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
     public List<String> getVersionStringList() {
         List<String> versionStringList = new ArrayList<String>();
 
-        for (VersionData versionData : versionList) {
+        for (VersionData versionData : getVersionList()) {
             versionStringList.add(versionData.getVersionString());
         }
 
@@ -60,7 +65,9 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#addVersion(com.sldeditor.vendoroption.VersionData)
+     * @see
+     * com.sldeditor.vendoroption.VendorOptionTypeInterface#addVersion(com.sldeditor.vendoroption.
+     * VersionData)
      */
     @Override
     public void addVersion(VersionData versionData) {
@@ -88,6 +95,11 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
      */
     @Override
     public List<VersionData> getVersionList() {
+        if (!listReversed) {
+            Collections.reverse(versionList);
+            listReversed = true;
+        }
+
         return versionList;
     }
 }
