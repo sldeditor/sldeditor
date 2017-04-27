@@ -97,6 +97,9 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
     public List<VersionData> getVersionList() {
         if (!listReversed) {
             Collections.reverse(versionList);
+            // Move the Not Set version is first in the list
+            VersionData notSet = versionList.remove(versionList.size() - 1);
+            versionList.add(0, notSet);
             listReversed = true;
         }
 
