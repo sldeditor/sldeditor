@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.property.EncryptedProperties;
+import com.sldeditor.common.property.EncryptedPropertiesFactory;
 
 /**
  * The Class GeoServerConnection encapsulates GeoServer connection details,
@@ -59,7 +59,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
     private String password;
 
     /** The use encryption flag. */
-    private static boolean useEncrpytion = true;
+    private static boolean useEncryption = true;
 
     /**
      * Default constructor.
@@ -139,8 +139,8 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
         if (password == null) {
             return "";
         } else {
-            if (useEncrpytion) {
-                return EncryptedProperties.getInstance().decrypt(password);
+            if (useEncryption) {
+                return EncryptedPropertiesFactory.getInstance().decrypt(password);
             }
             return password;
         }
@@ -152,8 +152,8 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      * @param password the new password
      */
     public void setPassword(String password) {
-        if (useEncrpytion) {
-            this.password = EncryptedProperties.getInstance().encrypt(password);
+        if (useEncryption) {
+            this.password = EncryptedPropertiesFactory.getInstance().encrypt(password);
         } else {
             this.password = password;
         }

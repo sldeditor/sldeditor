@@ -30,7 +30,7 @@ import java.util.Map;
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.jdbc.JDBCDataStoreFactory;
 
-import com.sldeditor.common.property.EncryptedProperties;
+import com.sldeditor.common.property.EncryptedPropertiesFactory;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 
@@ -221,7 +221,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
             return "";
         } else {
             if (useEncrpytion) {
-                return EncryptedProperties.getInstance().decrypt(password);
+                return EncryptedPropertiesFactory.getInstance().decrypt(password);
             }
             return password;
         }
@@ -234,7 +234,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      */
     public void setPassword(String password) {
         if (useEncrpytion) {
-            this.password = EncryptedProperties.getInstance().encrypt(password);
+            this.password = EncryptedPropertiesFactory.getInstance().encrypt(password);
         } else {
             this.password = password;
         }

@@ -21,8 +21,6 @@ package com.sldeditor.common.property;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -37,23 +35,17 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEParameterSpec;
 
-import com.sldeditor.common.console.ConsoleManager;
+import org.apache.commons.codec.binary.Base64;
 
 /**
- * Class that encrypts/decrypts strings.
+ * Class that encrypts/decrypts strings using org.apache.commons.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class EncryptedProperties extends Properties {
+public class EncryptedPropertiesApache extends Properties implements EncryptedPropertiesInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The decoder. */
-    private static sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
-
-    /** The encoder. */
-    private static sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
 
     /** The encrypter. */
     private Cipher encrypter = null;
@@ -64,72 +56,20 @@ public class EncryptedProperties extends Properties {
     /** The salt. */
     private static byte[] salt = { (byte) 0x03, 0x0F, 0x12, 0x0D, 0x03, 0x0F, 0x12, 0x0D };
 
-    /** The singleton instance. */
-    private static EncryptedProperties instance = null;
-
-    /**
-     * Gets the single instance of EncryptedProperties.
-     *
-     * @return single instance of EncryptedProperties
-     */
-    public static synchronized EncryptedProperties getInstance() {
-        if (instance == null) {
-            String password = generatePassword();
-
-            try {
-                instance = new EncryptedProperties(password);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return instance;
-    }
-
-    /**
-     * Generate password.
-     *
-     * @return the string
-     */
-    private static String generatePassword() {
-        String password = "sldEditor";
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getUniqueIdentifier());
-
-        sb.append(System.getProperty("user.name"));
-
-        password = sb.toString();
-
-        return password;
-    }
-
-    /**
-     * Gets a unique identifier using the machine name.
-     *
-     * @return the unique identifier
-     */
-    private static String getUniqueIdentifier() {
-        String hostname = "Unknown";
-
-        try {
-            InetAddress addr = InetAddress.getLocalHost();
-            hostname = addr.getHostName();
-        } catch (UnknownHostException ex) {
-            ConsoleManager.getInstance().error(EncryptedProperties.class,
-                    "Hostname can not be resolved");
-        }
-
-        return hostname;
-    }
-
     /**
      * Instantiates a new encrypted properties.
      *
      * @param password the password
      */
-    private EncryptedProperties(String password) {
+    public EncryptedPropertiesApache() {
+        
+    }
+    
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.property.EncryptedPropertiesInterface#initialise(java.lang.String)
+     */
+    @Override
+    public void initialise(String password) {
         PBEParameterSpec ps = new javax.crypto.spec.PBEParameterSpec(salt, 20);
         SecretKeyFactory kf;
         try {
@@ -153,16 +93,14 @@ public class EncryptedProperties extends Properties {
         }
     }
 
-    /**
-     * Decrypt a string.
-     *
-     * @param str the str
-     * @return the string
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.property.EncryptedPropertiesInterface#decrypt(java.lang.String)
      */
+    @Override
     public synchronized String decrypt(String str) {
         byte[] dec;
         try {
-            dec = decoder.decodeBuffer(str);
+            dec = new Base64().decode(str.getBytes());
             byte[] utf8 = decrypter.doFinal(dec);
             return new String(utf8, "UTF-8");
         } catch (IOException e) {
@@ -176,18 +114,16 @@ public class EncryptedProperties extends Properties {
         return str;
     }
 
-    /**
-     * Encrypt a string.
-     *
-     * @param str the str
-     * @return the string
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.property.EncryptedPropertiesInterface#encrypt(java.lang.String)
      */
+    @Override
     public synchronized String encrypt(String str) {
         byte[] utf8;
         try {
             utf8 = str.getBytes("UTF-8");
             byte[] enc = encrypter.doFinal(utf8);
-            return encoder.encode(enc);
+            return new Base64().encodeToString(enc);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
