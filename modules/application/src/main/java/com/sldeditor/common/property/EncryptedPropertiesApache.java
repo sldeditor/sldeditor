@@ -58,8 +58,6 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
 
     /**
      * Instantiates a new encrypted properties.
-     *
-     * @param password the password
      */
     public EncryptedPropertiesApache() {
         
