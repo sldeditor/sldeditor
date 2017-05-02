@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.vendoroption.selection;
 
 import java.awt.Component;
@@ -31,6 +30,10 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
+import com.sldeditor.ui.menucombobox.MenuComboBox;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
+import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
  * Table cell editor that allows the editing of vendor option data.
@@ -38,7 +41,7 @@ import com.sldeditor.common.vendoroption.VersionData;
  * @author Robert Ward (SCISYS)
  */
 public class VersionCellEditor extends AbstractCellEditor
-        implements TableCellEditor, ActionListener {
+        implements TableCellEditor, ActionListener, ValueComboBoxDataSelectedInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -77,7 +80,8 @@ public class VersionCellEditor extends AbstractCellEditor
     /*
      * (non-Javadoc)
      * 
-     * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
+     * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable,
+     * java.lang.Object, boolean, int, int)
      */
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
@@ -90,14 +94,20 @@ public class VersionCellEditor extends AbstractCellEditor
         }
 
         listVersionData = model.getVendorOption(row);
-        JComboBox<VersionData> comboVersionData = new JComboBox<VersionData>();
+        MenuComboBox comboVersionData = new MenuComboBox(this);
 
-        for (VersionData aVersionData : listVersionData) {
-            comboVersionData.addItem(aVersionData);
-        }
+        List<ValueComboBoxDataGroup> dataSelectionList = VendorOptionMenuUtils
+                .createMenu(listVersionData);
 
-        comboVersionData.setSelectedItem(versionData);
-        comboVersionData.addActionListener(this);
+        comboVersionData.vendorOptionsUpdated(listVersionData);
+        comboVersionData.initialiseMenu(dataSelectionList);
+
+        // for (VersionData aVersionData : listVersionData) {
+        // comboVersionData.addItem(aVersionData);
+        // }
+        //
+        // comboVersionData.setSelectedItem(versionData);
+        // comboVersionData.addActionListener(this);
 
         if (isSelected) {
             comboVersionData.setBackground(table.getSelectionBackground());
@@ -120,6 +130,19 @@ public class VersionCellEditor extends AbstractCellEditor
         this.versionData = (VersionData) comboVersionData.getSelectedItem();
 
         model.setSelectedVersion(this.versionData, selectedRowIndex);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor.ui.
+     * widgets.ValueComboBoxData)
+     */
+    @Override
+    public void optionSelected(ValueComboBoxData selectedData) {
+        // TODO Auto-generated method stub
+
     }
 
 }
