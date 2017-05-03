@@ -35,8 +35,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 /**
  * Unit test for VendorOptionMenuUtils.
  * 
- * <p>
- * {@link com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils}
+ * <p>{@link com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils}
  * 
  * @author Robert Ward (SCISYS)
  *

@@ -119,7 +119,7 @@ public class VersionCellEditor extends AbstractCellEditor
      */
     @Override
     public void optionSelected(ValueComboBoxData selectedData) {
-        model.setSelectedVersion(this.versionData, selectedRowIndex);
+        model.setSelectedVersion(selectedData.getVendorOption().getEarliest(), selectedRowIndex);
     }
 
 }

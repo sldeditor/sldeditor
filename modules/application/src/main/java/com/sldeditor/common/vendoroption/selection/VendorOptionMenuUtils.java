@@ -24,27 +24,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.menucombobox.MenuComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * The Class VendorOptionMenuUtils.  Provides methods to populate vendor option
- * versions in a menu combo box.  Versions are grouped according to major/minor
- * version numbers.
+ * The Class VendorOptionMenuUtils. Provides methods to populate vendor option versions in a menu
+ * combo box. Versions are grouped according to major/minor version numbers.
  *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionMenuUtils {
 
     /** The data selection list. */
-    private static List<ValueComboBoxDataGroup> dataSelectionList =
-            new ArrayList<ValueComboBoxDataGroup>();
+    private static List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<ValueComboBoxDataGroup>();
 
     /** The value map. */
-    private static Map<String, ValueComboBoxData> valueMap = 
-            new HashMap<String, ValueComboBoxData>();
+    private static Map<String, ValueComboBoxData> valueMap = new HashMap<String, ValueComboBoxData>();
 
     /**
      * Creates the menu.
@@ -55,8 +53,7 @@ public class VendorOptionMenuUtils {
     public static List<ValueComboBoxDataGroup> createMenu(List<VersionData> versionDataList) {
 
         if (dataSelectionList.isEmpty()) {
-            Map<String, List<ValueComboBoxData>> map = 
-                    new HashMap<String, List<ValueComboBoxData>>();
+            Map<String, List<ValueComboBoxData>> map = new HashMap<String, List<ValueComboBoxData>>();
             List<String> keyOrderList = new ArrayList<String>();
 
             if (versionDataList != null) {
@@ -71,8 +68,10 @@ public class VendorOptionMenuUtils {
                         keyOrderList.add(key);
                     }
 
+                    VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(
+                            versionData.getVendorOptionType(), versionData);
                     ValueComboBoxData value = new ValueComboBoxData(versionData.getVersionString(),
-                            versionData.getVersionString(), String.class);
+                            versionData.getVersionString(), vendorOptionVersion, String.class);
                     dataList.add(value);
                     valueMap.put(versionData.getVersionString(), value);
                 }
