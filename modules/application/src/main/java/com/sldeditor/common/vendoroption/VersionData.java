@@ -520,4 +520,22 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     public boolean isLatest() {
         return isLatest;
     }
+
+    /**
+     * Gets the major number.
+     *
+     * @return the majorNumber
+     */
+    public int getMajorNumber() {
+        return majorNumber;
+    }
+
+    /**
+     * Gets the minor number.
+     *
+     * @return the minorNumber
+     */
+    public int getMinorNumber() {
+        return minorNumber;
+    }
 }
