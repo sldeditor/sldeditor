@@ -102,6 +102,7 @@ public class VersionCellEditor extends AbstractCellEditor
         comboVersionData.vendorOptionsUpdated(listVersionData);
         comboVersionData.initialiseMenu(dataSelectionList);
 
+        VendorOptionMenuUtils.setSelected(comboVersionData, this.versionData);
         // for (VersionData aVersionData : listVersionData) {
         // comboVersionData.addItem(aVersionData);
         // }

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.ui.menucombobox.MenuComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
@@ -36,8 +37,13 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 public class VendorOptionMenuUtils {
 
     /** The data selection list. */
-    private static List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<ValueComboBoxDataGroup>();
+    private static List<ValueComboBoxDataGroup> dataSelectionList = 
+            new ArrayList<ValueComboBoxDataGroup>();
 
+    /** The value map. */
+    private static Map<String, ValueComboBoxData> valueMap = 
+            new HashMap<String, ValueComboBoxData>();
+    
     /**
      * Creates the menu.
      *
@@ -62,8 +68,10 @@ public class VendorOptionMenuUtils {
                     keyOrderList.add(key);
                 }
 
-                dataList.add(new ValueComboBoxData(aVersionData.getVersionString(),
-                        aVersionData.getVersionString(), String.class));
+                ValueComboBoxData value = new ValueComboBoxData(aVersionData.getVersionString(),
+                        aVersionData.getVersionString(), String.class);
+                dataList.add(value);
+                valueMap.put(aVersionData.getVersionString(),  value);
             }
 
             for (String key : keyOrderList) {
@@ -85,6 +93,18 @@ public class VendorOptionMenuUtils {
      */
     private static String getKey(VersionData aVersionData) {
         return String.format("%d.%d", aVersionData.getMajorNumber(), aVersionData.getMinorNumber());
+    }
+
+    /**
+     * Sets the selected item.
+     *
+     * @param comboVersionData the combo version data
+     * @param versionData the version data
+     */
+    public static void setSelected(MenuComboBox comboVersionData, VersionData versionData) {
+        ValueComboBoxData value = valueMap.get(versionData.getVersionString());
+
+        comboVersionData.setSelectedData(value);
     }
 
 }
