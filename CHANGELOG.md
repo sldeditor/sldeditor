@@ -1,10 +1,26 @@
 # Change Log
 
-## [0.7.4](https://github.com/robward-scisys/sldeditor/tree/0.7.4) (2017-03-28)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.3...0.7.4)
+## [0.7.5](https://github.com/robward-scisys/sldeditor/tree/0.7.5) (2017-05-03)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.4...0.7.5)
 
 **Implemented enhancements:**
 
+- Reverse order of GeoServer versions dropdown on Vendor Option Tab [\#331](https://github.com/robward-scisys/sldeditor/issues/331)
+- Implement FeatureTypeStyle vendor option : rule evaluation [\#327](https://github.com/robward-scisys/sldeditor/issues/327)
+- Implement FeatureTypeStyle vendor option : sort by [\#326](https://github.com/robward-scisys/sldeditor/issues/326)
+- Implement FeatureTypeStyle vendor option : composite-base [\#325](https://github.com/robward-scisys/sldeditor/issues/325)
+- Replace sun.misc.Base64Encoder with apache.commons [\#334](https://github.com/robward-scisys/sldeditor/pull/334) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Updated anchor point defaults according to SLD standard [\#322](https://github.com/robward-scisys/sldeditor/pull/322) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.4](https://github.com/robward-scisys/sldeditor/tree/v0.7.4) (2017-03-28)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.3...v0.7.4)
+
+**Implemented enhancements:**
+
+- Updated to use GeoTools 16.2/GeoServer 2.11 [\#317](https://github.com/robward-scisys/sldeditor/issues/317)
 - Check project with CheckStyle [\#315](https://github.com/robward-scisys/sldeditor/issues/315)
 - Updated to use GeoTools 16.2 and GeoServer 2.11 [\#318](https://github.com/robward-scisys/sldeditor/pull/318) ([robward-scisys](https://github.com/robward-scisys))
 
@@ -14,6 +30,7 @@
 
 **Merged pull requests:**
 
+- Updated version numbers and CHANGELOG.md [\#320](https://github.com/robward-scisys/sldeditor/pull/320) ([robward-scisys](https://github.com/robward-scisys))
 - Iss315 checkstyle [\#316](https://github.com/robward-scisys/sldeditor/pull/316) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.7.3](https://github.com/robward-scisys/sldeditor/tree/v0.7.3) (2017-03-21)
