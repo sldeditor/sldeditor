@@ -20,12 +20,9 @@
 package com.sldeditor.common.vendoroption.selection;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.AbstractCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
@@ -41,7 +38,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
  * @author Robert Ward (SCISYS)
  */
 public class VersionCellEditor extends AbstractCellEditor
-        implements TableCellEditor, ActionListener, ValueComboBoxDataSelectedInterface {
+        implements TableCellEditor, ValueComboBoxDataSelectedInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -103,12 +100,6 @@ public class VersionCellEditor extends AbstractCellEditor
         comboVersionData.initialiseMenu(dataSelectionList);
 
         VendorOptionMenuUtils.setSelected(comboVersionData, this.versionData);
-        // for (VersionData aVersionData : listVersionData) {
-        // comboVersionData.addItem(aVersionData);
-        // }
-        //
-        // comboVersionData.setSelectedItem(versionData);
-        // comboVersionData.addActionListener(this);
 
         if (isSelected) {
             comboVersionData.setBackground(table.getSelectionBackground());
@@ -122,28 +113,13 @@ public class VersionCellEditor extends AbstractCellEditor
     /*
      * (non-Javadoc)
      * 
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        @SuppressWarnings("unchecked")
-        JComboBox<VersionData> comboVersionData = (JComboBox<VersionData>) event.getSource();
-        this.versionData = (VersionData) comboVersionData.getSelectedItem();
-
-        model.setSelectedVersion(this.versionData, selectedRowIndex);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see
      * com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor.ui.
      * widgets.ValueComboBoxData)
      */
     @Override
     public void optionSelected(ValueComboBoxData selectedData) {
-        // TODO Auto-generated method stub
-
+        model.setSelectedVersion(this.versionData, selectedRowIndex);
     }
 
 }

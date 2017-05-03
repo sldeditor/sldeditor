@@ -30,56 +30,61 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 
 /**
- * The Class VendorOptionMenuUtils.
+ * The Class VendorOptionMenuUtils.  Provides methods to populate vendor option
+ * versions in a menu combo box.  Versions are grouped according to major/minor
+ * version numbers.
  *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionMenuUtils {
 
     /** The data selection list. */
-    private static List<ValueComboBoxDataGroup> dataSelectionList = 
+    private static List<ValueComboBoxDataGroup> dataSelectionList =
             new ArrayList<ValueComboBoxDataGroup>();
 
     /** The value map. */
     private static Map<String, ValueComboBoxData> valueMap = 
             new HashMap<String, ValueComboBoxData>();
-    
+
     /**
      * Creates the menu.
      *
-     * @param listVersionData the list version data
+     * @param versionDataList the list version data
      * @return the list
      */
-    public static List<ValueComboBoxDataGroup> createMenu(List<VersionData> listVersionData) {
+    public static List<ValueComboBoxDataGroup> createMenu(List<VersionData> versionDataList) {
 
         if (dataSelectionList.isEmpty()) {
             Map<String, List<ValueComboBoxData>> map = 
                     new HashMap<String, List<ValueComboBoxData>>();
             List<String> keyOrderList = new ArrayList<String>();
 
-            for (VersionData aVersionData : listVersionData) {
+            if (versionDataList != null) {
+                for (VersionData versionData : versionDataList) {
 
-                String key = getKey(aVersionData);
-                List<ValueComboBoxData> dataList = map.get(key);
+                    String key = getKey(versionData);
+                    List<ValueComboBoxData> dataList = map.get(key);
 
-                if (dataList == null) {
-                    dataList = new ArrayList<ValueComboBoxData>();
-                    map.put(key, dataList);
-                    keyOrderList.add(key);
+                    if (dataList == null) {
+                        dataList = new ArrayList<ValueComboBoxData>();
+                        map.put(key, dataList);
+                        keyOrderList.add(key);
+                    }
+
+                    ValueComboBoxData value = new ValueComboBoxData(versionData.getVersionString(),
+                            versionData.getVersionString(), String.class);
+                    dataList.add(value);
+                    valueMap.put(versionData.getVersionString(), value);
                 }
 
-                ValueComboBoxData value = new ValueComboBoxData(aVersionData.getVersionString(),
-                        aVersionData.getVersionString(), String.class);
-                dataList.add(value);
-                valueMap.put(aVersionData.getVersionString(),  value);
-            }
+                // Add groups to menu combo
+                for (String key : keyOrderList) {
+                    List<ValueComboBoxData> dataList = map.get(key);
+                    ValueComboBoxDataGroup group = new ValueComboBoxDataGroup(key + ".x", dataList,
+                            (dataList.size() > 1));
 
-            for (String key : keyOrderList) {
-                List<ValueComboBoxData> dataList = map.get(key);
-                ValueComboBoxDataGroup group = new ValueComboBoxDataGroup(key + ".x", dataList,
-                        (dataList.size() > 1));
-
-                dataSelectionList.add(group);
+                    dataSelectionList.add(group);
+                }
             }
         }
         return dataSelectionList;
@@ -92,7 +97,11 @@ public class VendorOptionMenuUtils {
      * @return the key
      */
     private static String getKey(VersionData aVersionData) {
-        return String.format("%d.%d", aVersionData.getMajorNumber(), aVersionData.getMinorNumber());
+        if (aVersionData != null) {
+            return String.format("%d.%d", aVersionData.getMajorNumber(),
+                    aVersionData.getMinorNumber());
+        }
+        return "unknown";
     }
 
     /**
@@ -102,9 +111,13 @@ public class VendorOptionMenuUtils {
      * @param versionData the version data
      */
     public static void setSelected(MenuComboBox comboVersionData, VersionData versionData) {
-        ValueComboBoxData value = valueMap.get(versionData.getVersionString());
+        if (versionData != null) {
+            ValueComboBoxData value = valueMap.get(versionData.getVersionString());
 
-        comboVersionData.setSelectedData(value);
+            if (comboVersionData != null) {
+                comboVersionData.setSelectedData(value);
+            }
+        }
     }
 
 }
