@@ -97,11 +97,11 @@
 
 								<configuration>
 									<deb>${sldeditor.dest.folder}/sldeditor_${project.version}.deb</deb>
-									<controlDir>../../build/debian/src/deb/control</controlDir>
+									<controlDir>${basedir}/../../build/debian/src/deb/control</controlDir>
 									<verbose>true</verbose>
 									<dataSet>
 										<data>
-											<src>../../build/debian/src/deb/copyright</src>
+											<src>${basedir}/../../build/debian/src/deb/copyright</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
@@ -109,7 +109,7 @@
 											</mapper>
 										</data>
 										<data>
-											<src>../../build/debian/src/deb/changelog.gz</src>
+											<src>${basedir}/../../build/debian/src/deb/changelog.gz</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
@@ -125,15 +125,24 @@
 											</mapper>
 										</data>
 										<data>
-											<src>../../build/debian/src/SLDEditor.desktop</src>
+											<src>${basedir}/../../build/debian/src/SLDEditor.desktop</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
-												<prefix>/usr/share/doc/applications</prefix>
+												<prefix>/usr/share/applications</prefix>
 											</mapper>
 										</data>
 										<data>
-											<src>../../build/debian/src/icon.ico</src>
+											<src>${basedir}/../../build/debian/src/run_sldeditor.sh</src>
+											<type>file</type>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/sldeditor</prefix>
+												<filemode>0755</filemode>
+											</mapper>
+										</data>
+										<data>
+											<src>${basedir}/../../build/debian/src/icon.png</src>
 											<type>file</type>
 											<mapper>
 												<type>perm</type>
