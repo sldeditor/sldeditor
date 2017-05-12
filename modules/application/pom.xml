@@ -84,6 +84,29 @@
 			<id>builddeb</id>
 			<build>
 				<plugins>
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-antrun-plugin</artifactId>
+				    <executions>
+				        <execution>
+				            <phase>generate-sources</phase>
+				            <configuration>
+				                <tasks>
+				                    <exec executable="${basedir}/../../build/debian/src/deb/create_changelog.sh">
+				                        <arg value="${basedir}/../../build/debian/src/deb"/>
+				                        <arg value="sldeditor"/>
+				                        <arg value="0.7.5"/>
+				                        <arg value="Robert Ward"/>
+				                        <arg value="sldeditor.group@gmail.com"/>
+				                    </exec>
+				                </tasks>
+				            </configuration>
+				            <goals>
+				                <goal>run</goal>
+				            </goals>
+				        </execution>
+				    </executions>
+				</plugin>
 					<plugin>
 						<groupId>org.vafer</groupId>
 						<artifactId>jdeb</artifactId>
@@ -96,7 +119,7 @@
 								</goals>
 
 								<configuration>
-									<deb>${sldeditor.dest.folder}/sldeditor_${project.version}.deb</deb>
+									<deb>${basedir}/../../bin/sldeditor_${project.version}.deb</deb>
 									<controlDir>${basedir}/../../build/debian/src/deb/control</controlDir>
 									<verbose>true</verbose>
 									<dataSet>
