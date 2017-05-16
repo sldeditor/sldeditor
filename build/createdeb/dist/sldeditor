@@ -1,9 +1,0 @@
-#!/bin/sh
-if [ -L "$0" ]; then
-    CMD="$(readlink -f "$0")"
-else
-    CMD="$0"
-fi
-
-DIR="$( cd "$( dirname "$CMD" )" ; pwd )"
-java -jar $DIR/sldeditor-0.7.5.jar "$@"

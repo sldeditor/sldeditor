@@ -1,0 +1,4 @@
+bin/SLDEditor.jar usr/share/sldeditor
+build/createdeb/SLDEditor.desktop usr/share/applications
+build/createdeb/run_sldeditor.sh usr/share/sldeditor
+build/createdeb/icon.png usr/share/sldeditor
