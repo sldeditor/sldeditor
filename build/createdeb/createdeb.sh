@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 version=$1
-
+dist=trusty
 dirRunningFrom=$(pwd)
 
 cd ../../../
@@ -39,9 +39,13 @@ cp $dirRunningFrom/control debian
 cp $dirRunningFrom/sldeditor.install debian
 cp $dirRunningFrom/copyright debian
 cp $dirRunningFrom/rules debian
-find debian/changelog -type f -exec sed -i 's/unstable/trusty/g' {} \;
+find debian/changelog -type f -exec sed -i 's/unstable/'$dist'/g' {} \;
 find debian/changelog -type f -exec sed -i 's/ (Closes: #nnnn)  <nnnn is the bug number of your ITP>//g' {} \;
 
 bzr add .
 bzr commit -m "Initial commit"
 bzr builddeb -- -us -uc
+sudo bzr builddeb -S
+cd ../build-area/
+pbuilder-dist $dist build sldeditor_$version-1.dsc
+
