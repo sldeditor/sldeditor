@@ -4,23 +4,24 @@ pwd=$(pwd)
 
 cd ../../../
 if [ ! -d pkgdeb ]; then
-mkdir pkgdeb
-cd pkgdeb
-git clone https://github.com/robward-scisys/sldeditor.git
-cd sldeditor
-rm -rf .git
-mvn clean install -DskipTests
-cd ..
-tar -zcvf sldeditor-0.7.5.tar.gz sldeditor
+	mkdir pkgdeb
+	cd pkgdeb
+	git clone https://github.com/robward-scisys/sldeditor.git
+	cd sldeditor
+	git checkout iss339-deb-package
+	rm -rf .git
+	mvn clean install -DskipTests
+	cd ..
+	tar -zcvf sldeditor-0.7.5.tar.gz sldeditor
+	rm -rf sldeditor
 else
-cd pkgdeb
-rm -rf sldeditor
+	cd pkgdeb
+	rm -rf sldeditor
 fi
 
 export DEBFULLNAME="Robert Ward"
 export DEBEMAIL="sldeditor.group@gmail.com"
 bzr whoami "$DEBFULLNAME '<'$DEBEMAIL'>'"
-#dh_make -i --copyright gpl3 -f ../sldeditor-0.7.5.tar.gz
 bzr dh-make sldeditor 0.7.5 sldeditor-0.7.5.tar.gz
 cd sldeditor
 cd debian
