@@ -1,6 +1,13 @@
 #!/bin/sh
 
-pwd=$(pwd)
+if [ -z "$1" ]; then
+	echo 'No version set'
+	echo 'createdeb.sh <version no>'
+	exit 1
+fi
+version=$1
+
+dirRunningFrom=$(pwd)
 
 cd ../../../
 if [ ! -d pkgdeb ]; then
@@ -10,9 +17,10 @@ if [ ! -d pkgdeb ]; then
 	cd sldeditor
 	git checkout iss339-deb-package
 	rm -rf .git
+        ./build/update_version/update_versions.sh $version
 	mvn clean install -DskipTests
 	cd ..
-	tar -zcvf sldeditor-0.7.5.tar.gz sldeditor
+	tar -zcvf sldeditor-$version.tar.gz sldeditor
 	rm -rf sldeditor
 else
 	cd pkgdeb
@@ -22,14 +30,16 @@ fi
 export DEBFULLNAME="Robert Ward"
 export DEBEMAIL="sldeditor.group@gmail.com"
 bzr whoami "$DEBFULLNAME '<'$DEBEMAIL'>'"
-bzr dh-make sldeditor 0.7.5 sldeditor-0.7.5.tar.gz
+bzr dh-make sldeditor $version sldeditor-$version.tar.gz
 cd sldeditor
 cd debian
 rm *ex *EX README.*
 cd ..
-cp $pwd/control debian
-cp $pwd/sldeditor.install debian
-cp $pwd/copyright debian
+cp $dirRunningFrom/control debian
+cp $dirRunningFrom/sldeditor.install debian
+cp $dirRunningFrom/copyright debian
+cp $dirRunningFrom/changelog debian
+cp $dirRunningFrom/rules debian
 
 bzr add .
 bzr commit -m "Initial commit"
