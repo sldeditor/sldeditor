@@ -1,3 +1,6 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: sldeditor
+
 Files: *
 Copyright: 2016 SCISYS UK Limited
 License: GPL-3+
@@ -13,3 +16,4 @@ License: GPL-3+
   . 
   On Debian systems, you can find the GPL license in:
   `/usr/share/common-licenses/GPL'.
+
