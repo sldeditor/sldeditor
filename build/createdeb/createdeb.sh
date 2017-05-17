@@ -38,8 +38,9 @@ cd ..
 cp $dirRunningFrom/control debian
 cp $dirRunningFrom/sldeditor.install debian
 cp $dirRunningFrom/copyright debian
-cp $dirRunningFrom/changelog debian
 cp $dirRunningFrom/rules debian
+find debian/changelog -type f -exec sed -i 's/unstable/trusty/g' {} \;
+find debian/changelog -type f -exec sed -i 's/ (Closes: #nnnn)  <nnnn is the bug number of your ITP>//g' {} \;
 
 bzr add .
 bzr commit -m "Initial commit"

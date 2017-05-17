@@ -14,11 +14,11 @@ export DH_VERBOSE = 1
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 override_dh_fixperms:
-        dh_fixperms
-        chmod +x debian/sldeditor/usr/share/sldeditor/run_sldeditor.sh
+	dh_fixperms
+	chmod +x debian/sldeditor/usr/share/sldeditor/run_sldeditor.sh
 
 %:
-        dh $@ 
+	dh $@ 
 
 
 # dh_make generated override targets
