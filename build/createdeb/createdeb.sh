@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 version=$1
-dist=trusty
+dist=xenial
 dirRunningFrom=$(pwd)
 
 cd ../../../
@@ -17,8 +17,11 @@ if [ ! -d pkgdeb ]; then
 	cd sldeditor
 	git checkout iss339-deb-package
 	rm -rf .git
-        ./build/update_version/update_versions.sh $version
-	mvn clean install -DskipTests
+        cd build/update_version
+        ./update_versions.sh $version
+        cd ../..
+#	mvn clean install -DskipTests
+	mvn clean
 	cd ..
 	tar -zcvf sldeditor-$version.tar.gz sldeditor
 	rm -rf sldeditor
@@ -39,13 +42,15 @@ cp $dirRunningFrom/control debian
 cp $dirRunningFrom/sldeditor.install debian
 cp $dirRunningFrom/copyright debian
 cp $dirRunningFrom/rules debian
+cp $dirRunningFrom/Makefile .
+
 find debian/changelog -type f -exec sed -i 's/unstable/'$dist'/g' {} \;
 find debian/changelog -type f -exec sed -i 's/ (Closes: #nnnn)  <nnnn is the bug number of your ITP>//g' {} \;
 
 bzr add .
 bzr commit -m "Initial commit"
 bzr builddeb -- -us -uc
-sudo bzr builddeb -S
-cd ../build-area/
-pbuilder-dist $dist build sldeditor_$version-1.dsc
+#sudo bzr builddeb -S
+#cd ../build-area/
+#pbuilder-dist $dist build sldeditor_$version-1.dsc
 
