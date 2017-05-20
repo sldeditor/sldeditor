@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=SLD Editor
+Comment=The SLD Editor is a Java desktop application developed by SCISYS that allows the creation and editing of OGC Styled Layer Descriptors interactively using a graphical user interface.
+Exec=/usr/share/sldeditor/run_sldeditor.sh
+Icon=/usr/share/sldeditor/icon.png
+Terminal=false
+Type=Application
+Categories=GNOME;Application
+StartupNotify=true

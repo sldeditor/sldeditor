@@ -1,0 +1,14 @@
+Source: sldeditor
+Section: java
+Priority: optional
+Maintainer: Robert Ward <sldeditor.group@gmail.com>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.7
+Homepage: https://github.com/robward-scisys/sldeditor
+Vcs-Git: https://github.com/robward-scisys/sldeditor.git
+
+Package: sldeditor
+Architecture: all
+Depends: ${misc:Depends}, default-jre
+Description: Editor of OGC Styled Layer Descriptors
+ Allows the creation and editing of OGC Styled Layer Descriptors interactively through a Java desktop application.
