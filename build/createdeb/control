@@ -9,6 +9,6 @@ Vcs-Git: https://github.com/robward-scisys/sldeditor.git
 
 Package: sldeditor
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, default-jre
 Description: Editor of OGC Styled Layer Descriptors
  Allows the creation and editing of OGC Styled Layer Descriptors interactively through a Java desktop application.
