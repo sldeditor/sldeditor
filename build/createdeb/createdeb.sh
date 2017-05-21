@@ -1,7 +1,7 @@
 #!/bin/sh
 # SLD Editor - The Open Source Java SLD Editor
 #
-# Copyright (C) 2016, SCISYS UK Limited
+# Copyright (C) 2017, SCISYS UK Limited
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

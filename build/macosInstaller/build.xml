@@ -1,0 +1,71 @@
+<project name="SLDEditor" default="create-bundle" basedir=".">
+  <!-- SLD Editor - The Open Source Java SLD Editor                          -->
+  <!--                                                                       -->
+  <!-- Copyright (C) 2017, SCISYS UK Limited                                 -->
+  <!--                                                                       -->
+  <!-- This program is free software: you can redistribute it and/or modify  -->
+  <!-- it under the terms of the GNU General Public License as published by  -->
+  <!-- the Free Software Foundation, either version 3 of the License, or     -->
+  <!-- (at your option) any later version.                                   -->
+  <!--                                                                       -->
+  <!-- This program is distributed in the hope that it will be useful,       -->
+  <!-- but WITHOUT ANY WARRANTY; without even the implied warranty of        -->
+  <!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         -->
+  <!-- GNU General Public License for more details.                          -->
+  <!--                                                                       -->
+  <!-- You should have received a copy of the GNU General Public License     -->
+  <!-- along with this program.  If not, see <http://www.gnu.org/licenses/>. -->
+
+  <!-- Script comand line : ant -Dversion=<version number>. -->
+
+  <taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask"/>
+  <property environment="env"/>
+
+  <condition property="versionSet" value="${version}"> 
+    <isset property="version" />
+  </condition>
+
+  <!-- input stuff -->
+  <property name="current.dir" value="." />
+
+  <!-- output stuff -->
+  <property name="release.dir" value="release" />
+
+  <!-- clean -->
+  <target name="clean" >
+    <echo message="clean task ..." />
+    <!-- just needed for the first-time run -->
+    <mkdir dir="${release.dir}"/>
+    <!-- remove the old version of the app -->
+    <delete dir="${release.dir}/SLDEditor.app" />
+  </target>
+
+  <!-- create mac osx 'bundle' -->
+  <target name="create-bundle" depends="clean">
+  <fail unless="versionSet" message="Version not set, call with ant -Dversion=&lt;version number&gt;"/>
+  <bundleapp outputdirectory="${release.dir}"
+        name="SLDEditor"
+        displayname="SLDEditor"
+        identifier="com.sldeditor.SLDEditor"
+        shortversion="${version}"
+        icon="sldeditor.icns"
+        copyright="SCISYS UK Limited"
+        applicationCategory="public.app-category.utilities"
+        mainclassname="com/sldeditor/SLDEditor">
+
+        <runtime dir="${env.JAVA_HOME}" />
+
+        <!-- the only jar file needed when using sbt-assembly -->
+        <classpath file="../../bin/SLDEditor.jar" />
+
+        <option value="-Xdock:icon=Contents/Resources/sldeditor.icns"/>
+        <option value="-Dapple.laf.useScreenMenuBar=true"/>
+        <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
+        <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
+        <option value="-Dapple.awt.application.name=SLDEditor"/>
+        <option value="-Dcom.apple.smallTabs=true"/>
+
+    </bundleapp>
+  </target>
+
+</project>
