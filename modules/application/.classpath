@@ -137,5 +137,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/robertward/Documents/projects/sld/external/sldeditor/build/external/gt-mbstyle-17-SNAPSHOT.jar" sourcepath="/Users/robertward/Documents/projects/sld/external/geotools17/geotools"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -58,6 +58,7 @@ import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler;
 import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
 import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
@@ -107,6 +108,7 @@ public class FileSystemInput implements FileSystemInterface {
         fileHandlerClassList.add(RasterFileHandler.class.getName());
         fileHandlerClassList.add(VectorFileHandler.class.getName());
         fileHandlerClassList.add(YSLDFileHandler.class.getName());
+        fileHandlerClassList.add(MapBoxFileHandler.class.getName());
 
         for (String fileHandlerClass : fileHandlerClassList) {
             try {

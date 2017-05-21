@@ -15,5 +15,6 @@ package com.sldeditor.common.output;
 public enum SLDOutputFormatEnum {
 
     SLD,
-    YSLD
+    YSLD,
+    MAPBOX
 }
