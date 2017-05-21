@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.apache.commons.io.IOUtils;
 import org.geotools.mbstyle.MapBoxStyle;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.json.simple.parser.ParseException;
@@ -169,21 +172,35 @@ public class MapBoxFileHandler implements FileHandlerInterface {
 
                 FileInputStream fis = new FileInputStream(f);
 
-                StyledLayerDescriptor sld = MapBoxStyle.parse(fis);
+                String fileContents = IOUtils.toString(fis, "utf-8");
+                Reader reader = new StringReader(fileContents);
 
-                // Convert MapBox to SLD string
-                if (sldWriter == null) {
-                    sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
+                List<Exception> problems = MapBoxStyle.validate(reader);
+
+                if (!problems.isEmpty()) {
+                    for (Exception e : problems) {
+                        ConsoleManager.getInstance().exception(this, e);
+                    }
+                } else {
+                    FileInputStream fis2 = new FileInputStream(f);
+
+                    StyledLayerDescriptor sld = MapBoxStyle.parse(fis2);
+
+                    // Convert MapBox to SLD string
+                    if (sldWriter == null) {
+                        sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
+                    }
+
+                    String sldContents = sldWriter.encodeSLD(null, sld);
+
+                    SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()),
+                            sldContents);
+                    sldData.setSLDFile(f);
+                    sldData.setReadOnly(false);
+                    sldData.setOriginalFormat(SLDOutputFormatEnum.MAPBOX);
+
+                    list.add(sldData);
                 }
-
-                String sldContents = sldWriter.encodeSLD(null, sld);
-
-                SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
-                sldData.setSLDFile(f);
-                sldData.setReadOnly(false);
-                sldData.setOriginalFormat(SLDOutputFormatEnum.MAPBOX);
-
-                list.add(sldData);
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
             } catch (ParseException e) {
@@ -233,7 +250,8 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     @Override
     public String getSLDName(SLDDataInterface sldData) {
         if (sldData != null) {
-            return sldData.getLayerNameWithOutSuffix() + "." + MapBoxFileHandler.MAPBOX_FILE_EXTENSION;
+            return sldData.getLayerNameWithOutSuffix() + "."
+                    + MapBoxFileHandler.MAPBOX_FILE_EXTENSION;
         }
 
         return "";

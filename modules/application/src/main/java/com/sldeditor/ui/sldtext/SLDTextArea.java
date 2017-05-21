@@ -111,7 +111,10 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
                 VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
         dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.YSLD.name(), "YSLD",
                 VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
-
+        /*
+         * No encoding yet dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.MAPBOX.name(), "MapBox",
+         * VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+         */
         // Options panel
         JPanel optionsPanel = new JPanel();
 

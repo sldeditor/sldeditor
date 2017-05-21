@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.output.impl;
 
 import com.sldeditor.common.output.SLDOutputFormatEnum;
@@ -57,6 +56,8 @@ public class SLDWriterFactory {
             }
             return ysldWriterImpl;
         }
+        case MAPBOX:
+            // Encoding not supported yet
         case SLD:
         default: {
             if (sldWriterImpl == null) {
