@@ -31,7 +31,7 @@ Main features include:
 * Ability to convert Esri MXD files to SLD files (requires separate licensed components not supplied as part of this project) [Build instructions here](https://github.com/robward-scisys/sldeditor/wiki/generatesld)
 
 ## Release
-A compiled single executable jar is available here :
+A compiled single executable jar is available here, runs on macOS, Windows and Linux:
 * [SLDEditor Release 0.7.5](https://github.com/robward-scisys/sldeditor/releases/download/v0.7.5/SLDEditor.jar) (MD5 : 799ad9e1703b32b6fb26557d1c1b2011) Released 03 May 2017
 
 ### Ubuntu
