@@ -35,6 +35,9 @@ public class SLDWriterFactory {
     /** The ysld writer impl. */
     private static YSLDWriterImpl ysldWriterImpl = null;
 
+    /** The map box writer impl. */
+    private static MapBoxWriterImpl mapBoxWriterImpl = null;
+
     /** The default writer. */
     private static SLDOutputFormatEnum defaultWriter = SLDOutputFormatEnum.SLD;
 
@@ -56,8 +59,12 @@ public class SLDWriterFactory {
             }
             return ysldWriterImpl;
         }
-        case MAPBOX:
-            // Encoding not supported yet
+        case MAPBOX: {
+            if (mapBoxWriterImpl == null) {
+                mapBoxWriterImpl = new MapBoxWriterImpl();
+            }
+            return mapBoxWriterImpl;
+        }
         case SLD:
         default: {
             if (sldWriterImpl == null) {
