@@ -52,6 +52,9 @@ public class ToolPanel extends JPanel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant TOOL_PANEL_HEIGHT. */
+    public static final int TOOL_PANEL_HEIGHT = 55;
+
     /** The tool map. */
     private Map<Class<?>, List<ToolInterface>> toolMap = 
             new HashMap<Class<?>, List<ToolInterface>>();

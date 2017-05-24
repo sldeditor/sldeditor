@@ -7,6 +7,7 @@
 
 package com.sldeditor.tool.stickDataSource;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.StickyDataSourceInterface;
 import com.sldeditor.tool.ToggleToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 
 /**
  * The Class StickyDataSourceTool.
@@ -29,6 +31,9 @@ import com.sldeditor.tool.ToolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 60;
 
     /** The sticky button. */
     private ToggleToolButton stickyButton;
@@ -69,6 +74,7 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
         });
 
         groupPanel.add(stickyButton);
+        groupPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /*

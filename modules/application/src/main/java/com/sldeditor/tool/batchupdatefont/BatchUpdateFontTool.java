@@ -41,6 +41,9 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
+
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 /**
@@ -50,11 +53,14 @@ import java.awt.FlowLayout;
  */
 public class BatchUpdateFontTool implements ToolInterface {
 
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 60;
+
     /** The Scale button. */
     private JButton scaleButton;
 
     /** The scale panel. */
-    private JPanel scaleGroupPanel = null;
+    private JPanel panel = null;
 
     /** The sld data list. */
     private List<SLDDataInterface> sldDataList = null;
@@ -82,17 +88,17 @@ public class BatchUpdateFontTool implements ToolInterface {
      * Creates the ui.
      */
     private void createUI() {
-        scaleGroupPanel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) scaleGroupPanel.getLayout();
+        panel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        scaleGroupPanel.setBorder(BorderFactory.createTitledBorder(
+        panel.setBorder(BorderFactory.createTitledBorder(
                 Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title")));
 
         scaleButton = new ToolButton(
                 Localisation.getString(BatchUpdateFontTool.class, "BatchUpdateFontTool.title"),
                 "tool/batchupdatefont.png");
-        scaleGroupPanel.add(scaleButton);
+        panel.add(scaleButton);
         scaleButton.setEnabled(false);
         scaleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -102,6 +108,7 @@ public class BatchUpdateFontTool implements ToolInterface {
                 scalePanel.setVisible(true);
             }
         });
+        panel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /**
@@ -111,7 +118,7 @@ public class BatchUpdateFontTool implements ToolInterface {
      */
     @Override
     public JPanel getPanel() {
-        return scaleGroupPanel;
+        return panel;
     }
 
     /**

@@ -47,6 +47,9 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
+
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 /**
@@ -55,6 +58,8 @@ import java.awt.FlowLayout;
  * @author Robert Ward (SCISYS)
  */
 public class YSLDTool implements ToolInterface {
+
+    private static final int PANEL_WIDTH = 90;
 
     /** The Constant YSLD_FILE_EXTENSION. */
     private static final String YSLD_FILE_EXTENSION = "ysld";
@@ -155,6 +160,7 @@ public class YSLDTool implements ToolInterface {
         });
 
         groupPanel.add(exportToSLDButton);
+        groupPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /**

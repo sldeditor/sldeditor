@@ -19,6 +19,7 @@
 
 package com.sldeditor.tool.raster;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +51,7 @@ import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 
 /**
  * The Class RasterTool.
@@ -57,6 +59,8 @@ import com.sldeditor.tool.ToolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class RasterTool implements ToolInterface {
+
+    private static final int PANEL_WIDTH = 90;
 
     /** The raster panel. */
     private JPanel rasterPanel = null;
@@ -203,6 +207,7 @@ public class RasterTool implements ToolInterface {
                 }
             }
         });
+        rasterPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /**
