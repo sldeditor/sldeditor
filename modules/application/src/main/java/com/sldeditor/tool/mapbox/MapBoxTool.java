@@ -48,6 +48,7 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
+import com.sldeditor.tool.GenerateFile;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
@@ -158,12 +159,12 @@ public class MapBoxTool implements ToolInterface {
             if (sld != null) {
                 String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
-                String sldFilename = layerName + ExternalFilenames
-                        .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
                 String destinationFolder = sldData.getSLDFile().getParent();
 
-                File fileToSave = new File(destinationFolder, sldFilename);
+                File fileToSave = GenerateFile.findUniqueName(destinationFolder, layerName,
+                        SLDEditorFile.getSLDFileExtension());
 
+                String sldFilename = fileToSave.getName();
                 if (fileToSave.exists()) {
                     ConsoleManager.getInstance()
                             .error(this,
