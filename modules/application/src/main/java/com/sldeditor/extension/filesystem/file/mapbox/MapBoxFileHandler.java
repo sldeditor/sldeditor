@@ -19,13 +19,11 @@
 
 package com.sldeditor.extension.filesystem.file.mapbox;
 
+
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,28 +33,22 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeModel;
 
-import org.apache.commons.io.IOUtils;
-import org.geotools.mbstyle.MapBoxStyle;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.json.simple.parser.ParseException;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.utils.ExternalFilenames;
-import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 
 /**
  * Class that handles reading/writing MapBox files to the file system.
+ * 
+ * <p>Class to used when gt-mbstyles becomes a supported module.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -69,6 +61,7 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     private static final String MAPBOX_FILE_EXTENSION = "json";
 
     /** The sld writer. */
+    @SuppressWarnings("unused")
     private SLDWriterInterface sldWriter = null;
 
     /** The ysld writer. */
@@ -167,6 +160,7 @@ public class MapBoxFileHandler implements FileHandlerInterface {
      * @param list the list
      */
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
+        /*
         if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
             try {
 
@@ -207,6 +201,7 @@ public class MapBoxFileHandler implements FileHandlerInterface {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
+        */
     }
 
     /*

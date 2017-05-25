@@ -111,9 +111,13 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
                 VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
         dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.YSLD.name(), "YSLD",
                 VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
-        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.MAPBOX.name(), "MapBox",
-                VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
 
+        /*
+         * Code to be uncommented to used when gt-mbstyles becomes a supported module.
+         * 
+         * dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.MAPBOX.name(), "MapBox",
+         * VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+         */
         // Options panel
         JPanel optionsPanel = new JPanel();
 
@@ -154,8 +158,8 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.SLDDataInterface,
-     * org.geotools.styling.StyledLayerDescriptor)
+     * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.
+     * SLDDataInterface, org.geotools.styling.StyledLayerDescriptor)
      */
     @Override
     public void updatedSLD(SLDDataInterface sldData, StyledLayerDescriptor sld) {
@@ -184,7 +188,9 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)
+     * @see
+     * com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.
+     * SLDDataInterface, boolean)
      */
     @Override
     public void sldDataUpdated(SLDDataInterface sldData, boolean dataEditedFlag) {
