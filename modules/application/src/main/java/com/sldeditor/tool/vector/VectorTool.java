@@ -65,7 +65,7 @@ import com.sldeditor.tool.ToolPanel;
  */
 public class VectorTool implements ToolInterface {
 
-    private static final int PANEL_WIDTH = 90;
+    private static final int PANEL_WIDTH = 110;
 
     /** The vector panel. */
     private JPanel vectorPanel = null;

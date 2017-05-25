@@ -50,7 +50,7 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 public class DatabaseConnectionTool implements ToolInterface {
 
     /** The Constant PANEL_WIDTH. */
-    private static final int PANEL_WIDTH = 90;
+    private static final int PANEL_WIDTH = 110;
 
     /** The connect button. */
     private JButton connectButton;

@@ -48,7 +48,7 @@ import java.awt.FlowLayout;
 public class GeoServerConnectionTool implements ToolInterface {
 
     /** The Constant PANEL_WIDTH. */
-    private static final int PANEL_WIDTH = 75;
+    private static final int PANEL_WIDTH = 110;
 
     /** The connect button. */
     private JButton connectButton;

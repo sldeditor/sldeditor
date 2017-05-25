@@ -60,7 +60,7 @@ import java.awt.FlowLayout;
  */
 public class YSLDTool implements ToolInterface {
 
-    private static final int PANEL_WIDTH = 90;
+    private static final int PANEL_WIDTH = 110;
 
     /** The Constant YSLD_FILE_EXTENSION. */
     private static final String YSLD_FILE_EXTENSION = "ysld";

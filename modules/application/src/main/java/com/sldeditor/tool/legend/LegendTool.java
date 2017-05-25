@@ -59,7 +59,7 @@ import java.awt.FlowLayout;
 public class LegendTool implements ToolInterface {
 
     /** The Constant PANEL_WIDTH. */
-    private static final int PANEL_WIDTH = 90;
+    private static final int PANEL_WIDTH = 110;
 
     /** The Constant INDEX_HTML. */
     private static final String INDEX_HTML = "index.html";
