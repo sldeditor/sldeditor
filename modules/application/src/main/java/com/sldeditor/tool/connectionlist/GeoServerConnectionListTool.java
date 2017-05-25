@@ -48,7 +48,7 @@ import com.sldeditor.tool.ToolPanel;
 public class GeoServerConnectionListTool implements ToolInterface {
 
     /** The Constant PANEL_WIDTH. */
-    private static final int PANEL_WIDTH = 225;
+    private static final int PANEL_WIDTH = 235;
 
     /** The btn new. */
     private JButton btnNew;
