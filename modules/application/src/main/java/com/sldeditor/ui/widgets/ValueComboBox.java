@@ -152,7 +152,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
         ValueComboBoxData obj = valueMap.get(key);
 
         if (obj == null) {
-            ConsoleManager.getInstance().error(this, "Failed to value for key : " + key);
+            ConsoleManager.getInstance().error(this, "Failed to find value for key : " + key);
         } else {
             this.setSelectedItem(obj);
         }

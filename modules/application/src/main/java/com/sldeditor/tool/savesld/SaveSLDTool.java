@@ -20,6 +20,7 @@
 package com.sldeditor.tool.savesld;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -70,6 +71,9 @@ import java.awt.FlowLayout;
  * @author Robert Ward (SCISYS)
  */
 public class SaveSLDTool implements ToolInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 60;
 
     /** The Constant BUFFER_SIZE. */
     private static final int BUFFER_SIZE = 4096;
@@ -161,6 +165,7 @@ public class SaveSLDTool implements ToolInterface {
         });
 
         groupPanel.add(saveAllSLD);
+        saveAllSLD.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /**

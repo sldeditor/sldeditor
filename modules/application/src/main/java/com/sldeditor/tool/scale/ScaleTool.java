@@ -40,6 +40,9 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
+
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 /**
@@ -48,6 +51,9 @@ import java.awt.FlowLayout;
  * @author Robert Ward (SCISYS)
  */
 public class ScaleTool implements ToolInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 60;
 
     /** The Scale button. */
     private JButton scaleButton;
@@ -100,6 +106,7 @@ public class ScaleTool implements ToolInterface {
                 scalePanel.setVisible(true);
             }
         });
+        scaleGroupPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /**

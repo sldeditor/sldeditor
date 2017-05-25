@@ -19,6 +19,7 @@
 
 package com.sldeditor.tool.databaseconnection;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,6 +39,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 
 /**
@@ -46,6 +48,9 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseConnectionTool implements ToolInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 110;
 
     /** The connect button. */
     private JButton connectButton;
@@ -115,6 +120,7 @@ public class DatabaseConnectionTool implements ToolInterface {
         });
 
         panel.add(disconnectButton);
+        panel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /*

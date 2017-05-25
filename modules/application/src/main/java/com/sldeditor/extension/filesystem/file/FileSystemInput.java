@@ -67,6 +67,7 @@ import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.batchupdatefont.BatchUpdateFontTool;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.legend.LegendTool;
+import com.sldeditor.tool.mapbox.MapBoxTool;
 import com.sldeditor.tool.raster.RasterTool;
 import com.sldeditor.tool.scale.ScaleTool;
 import com.sldeditor.tool.stickDataSource.StickyDataSourceTool;
@@ -108,6 +109,12 @@ public class FileSystemInput implements FileSystemInterface {
         fileHandlerClassList.add(VectorFileHandler.class.getName());
         fileHandlerClassList.add(YSLDFileHandler.class.getName());
 
+        /*
+         * Code to be uncommented to used when gt-mbstyles becomes a supported module.
+         * 
+         * fileHandlerClassList.add(MapBoxFileHandler.class.getName());
+         */
+
         for (String fileHandlerClass : fileHandlerClassList) {
             try {
                 FileHandlerInterface fileHandler = (FileHandlerInterface) Class
@@ -138,6 +145,7 @@ public class FileSystemInput implements FileSystemInterface {
             ToolManager.getInstance().registerTool(FileTreeNode.class,
                     new RasterTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
+            ToolManager.getInstance().registerTool(FileTreeNode.class, new MapBoxTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class, new StickyDataSourceTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class,
                     new BatchUpdateFontTool(toolMgr.getApplication()));
