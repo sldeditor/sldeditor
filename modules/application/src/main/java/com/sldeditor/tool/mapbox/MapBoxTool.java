@@ -76,7 +76,7 @@ public class MapBoxTool implements ToolInterface {
     private List<SLDDataInterface> sldDataList;
 
     /**
-     * Instantiates a new ysld tool.
+     * Instantiates a new mapbox tool.
      */
     public MapBoxTool() {
         createUI();
