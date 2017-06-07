@@ -69,7 +69,8 @@ public class MapBoxToolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#setSelectedItems(java.util.List, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.tool.mapbox.MapBoxTool#setSelectedItems(java.util.List, java.util.List)}.
      */
     @Test
     public void testSetSelectedItems() {
@@ -115,31 +116,25 @@ public class MapBoxToolTest {
         assertFalse(toSLD.isEnabled());
 
         /*
-        // Try with valid ysld file
-        sldDataList = new ArrayList<SLDDataInterface>();
-        SLDData sldData3 = getSLDDataFile("/point/mapbox/circleStyleTest.json");
-        sldDataList.add(sldData3);
-        tool.setSelectedItems(null, sldDataList);
-
-        // SLD should be enabled
-        assertTrue(toSLD.isEnabled());
-        toSLD.doClick();
-
-        // Try with valid sld and ysld files
-        sldDataList = new ArrayList<SLDDataInterface>();
-        sldDataList.add(sldData3);
-        tool.setSelectedItems(null, sldDataList);
-
-        // SLD and YSLD should be enabled
-        assertTrue(toSLD.isEnabled());
+         * // Try with valid mapbox file sldDataList = new ArrayList<SLDDataInterface>(); SLDData
+         * sldData3 = getSLDDataFile("/point/mapbox/circleStyleTest.json");
+         * sldDataList.add(sldData3); tool.setSelectedItems(null, sldDataList);
+         * 
+         * // SLD should be enabled assertTrue(toSLD.isEnabled()); toSLD.doClick();
+         * 
+         * // Try with valid sld files sldDataList = new ArrayList<SLDDataInterface>();
+         * sldDataList.add(sldData3); tool.setSelectedItems(null, sldDataList);
+         * 
+         * // SLD should be enabled assertTrue(toSLD.isEnabled());
+         */
 
         testFile1.delete();
         testFile3.delete();
 
-        tidyUpTempFiles(sldData3.getSLDFile());
-        */
+        // tidyUpTempFiles(sldData3.getSLDFile());
     }
 
+    @SuppressWarnings("unused")
     private void tidyUpTempFiles(File sldFile) {
         String filename = sldFile.getAbsolutePath();
         int index = filename.lastIndexOf('.');
@@ -147,8 +142,8 @@ public class MapBoxToolTest {
 
         File sld = new File(filename + ".sld");
         sld.delete();
-        File ysld = new File(filename + ".ysld");
-        ysld.delete();
+        File mapbox = new File(filename + ".json");
+        mapbox.delete();
     }
 
     /**
@@ -159,6 +154,7 @@ public class MapBoxToolTest {
      * @return the file
      * @throws IOException Signals that an I/O exception has occurred.
      */
+    @SuppressWarnings("unused")
     private static File stream2file(InputStream in, String suffix) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, suffix);
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -173,44 +169,35 @@ public class MapBoxToolTest {
      * @param testfile the testfile
      * @return the SLD data file
      */
+    @SuppressWarnings("unused")
     private static SLDData getSLDDataFile(String testfile) {
         SLDData sldData = null;
         /*
-
-        InputStream inputStream = MapBoxToolTest.class.getResourceAsStream(testfile);
-
-        if (inputStream == null) {
-            Assert.assertNotNull("Failed to find test file : " + testfile, inputStream);
-        } else {
-            File f = null;
-            try {
-                String fileExtension = ExternalFilenames.getFileExtension(testfile);
-                f = stream2file(inputStream,
-                        ExternalFilenames.addFileExtensionSeparator(fileExtension));
-                String sldContents = readFile(f.getAbsolutePath());
-
-                if (fileExtension.compareTo("json") == 0) {
-                    StyledLayerDescriptor sld = MapBoxStyle.parse(sldContents);
-
-                    // Convert mapbox to SLD string
-                    SLDWriterInterface sldWriter = SLDWriterFactory
-                            .createWriter(SLDOutputFormatEnum.SLD);
-
-                    sldContents = sldWriter.encodeSLD(null, sld);
-                }
-
-                sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
-                sldData.setSLDFile(f);
-
-                SelectedSymbol.getInstance().setSld(SLDUtils.createSLDFromString(sldData));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-        */
+         * 
+         * InputStream inputStream = MapBoxToolTest.class.getResourceAsStream(testfile);
+         * 
+         * if (inputStream == null) { Assert.assertNotNull("Failed to find test file : " + testfile,
+         * inputStream); } else { File f = null; try { String fileExtension =
+         * ExternalFilenames.getFileExtension(testfile); f = stream2file(inputStream,
+         * ExternalFilenames.addFileExtensionSeparator(fileExtension)); String sldContents =
+         * readFile(f.getAbsolutePath());
+         * 
+         * if (fileExtension.compareTo("json") == 0) { StyledLayerDescriptor sld =
+         * MapBoxStyle.parse(sldContents);
+         * 
+         * // Convert mapbox to SLD string SLDWriterInterface sldWriter = SLDWriterFactory
+         * .createWriter(SLDOutputFormatEnum.SLD);
+         * 
+         * sldContents = sldWriter.encodeSLD(null, sld); }
+         * 
+         * sldData = new SLDData(new StyleWrapper(f.getName()), sldContents); sldData.setSLDFile(f);
+         * 
+         * SelectedSymbol.getInstance().setSld(SLDUtils.createSLDFromString(sldData)); } catch
+         * (IOException e1) { e1.printStackTrace(); } }
+         */
         return sldData;
     }
- 
+
     /**
      * Read file.
      *
@@ -218,6 +205,7 @@ public class MapBoxToolTest {
      * @return the string
      * @throws IOException Signals that an I/O exception has occurred.
      */
+    @SuppressWarnings("unused")
     private static String readFile(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         try {
@@ -247,7 +235,8 @@ public class MapBoxToolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#supports(java.util.List, java.util.List, java.util.List)}.
+     * Test method for
+     * {@link com.sldeditor.tool.mapbox.MapBoxTool#supports(java.util.List, java.util.List, java.util.List)}.
      */
     @Test
     public void testSupports() {
