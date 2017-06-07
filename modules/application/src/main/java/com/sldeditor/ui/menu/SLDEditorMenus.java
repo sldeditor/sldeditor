@@ -53,6 +53,7 @@ import com.sldeditor.generated.Version;
 import com.sldeditor.help.Help;
 import com.sldeditor.ui.about.AboutDialog;
 import com.sldeditor.ui.preferences.PrefManagerUI;
+import com.sldeditor.ui.reportissue.ReportIssue;
 import com.sldeditor.update.CheckUpdatePanel;
 
 /**
@@ -279,7 +280,17 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                 ad.setVisible(true);
             }
         });
+
+        JMenuItem mntmReportIssue = new JMenuItem(
+                Localisation.getString(SLDEditorMenus.class, "help.menu.reportIssue"));
+        mntmReportIssue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ReportIssue.getInstance().display();
+            }
+        });
+
         mnHelp.add(mntmHelp);
+        mnHelp.add(mntmReportIssue);
         mnHelp.add(mntmAboutDlg);
     }
 
