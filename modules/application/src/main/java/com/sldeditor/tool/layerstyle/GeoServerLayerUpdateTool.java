@@ -19,6 +19,7 @@
 
 package com.sldeditor.tool.layerstyle;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLay
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 
 /**
  * Tool to allow the GeoServer layers to be updated.
@@ -48,6 +50,9 @@ import com.sldeditor.tool.ToolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerLayerUpdateTool implements ToolInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 60;
 
     /** The button. */
     private JButton button;
@@ -119,6 +124,7 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
         });
 
         panel.add(button);
+        panel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /*

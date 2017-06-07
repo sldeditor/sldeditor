@@ -35,6 +35,9 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
+
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 /**
@@ -43,6 +46,9 @@ import java.awt.FlowLayout;
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerConnectionTool implements ToolInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 110;
 
     /** The connect button. */
     private JButton connectButton;
@@ -126,6 +132,7 @@ public class GeoServerConnectionTool implements ToolInterface {
         });
 
         panel.add(disconnectButton);
+        panel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /*

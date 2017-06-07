@@ -86,7 +86,7 @@ public class FileSystemInput implements FileSystemInterface {
     private DefaultTreeModel treeModel = null;
 
     /** The file handler map. */
-    private Map<String, FileHandlerInterface> fileHandlerMap = 
+    private Map<String, FileHandlerInterface> fileHandlerMap =
             new LinkedHashMap<String, FileHandlerInterface>();
 
     /** The logger. */
@@ -107,6 +107,12 @@ public class FileSystemInput implements FileSystemInterface {
         fileHandlerClassList.add(RasterFileHandler.class.getName());
         fileHandlerClassList.add(VectorFileHandler.class.getName());
         fileHandlerClassList.add(YSLDFileHandler.class.getName());
+
+        /*
+         * Code to be uncommented to used when gt-mbstyles becomes a supported module.
+         * 
+         * fileHandlerClassList.add(MapBoxFileHandler.class.getName());
+         */
 
         for (String fileHandlerClass : fileHandlerClassList) {
             try {
@@ -138,6 +144,7 @@ public class FileSystemInput implements FileSystemInterface {
             ToolManager.getInstance().registerTool(FileTreeNode.class,
                     new RasterTool(toolMgr.getApplication()));
             ToolManager.getInstance().registerTool(FileTreeNode.class, new YSLDTool());
+            // ToolManager.getInstance().registerTool(FileTreeNode.class, new MapBoxTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class, new StickyDataSourceTool());
             ToolManager.getInstance().registerTool(FileTreeNode.class,
                     new BatchUpdateFontTool(toolMgr.getApplication()));
@@ -150,8 +157,9 @@ public class FileSystemInput implements FileSystemInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree,
-     * javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)
+     * @see com.sldeditor.common.filesystem.FileSystemInterface#populate(com.sldeditor.datasource.
+     * extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel,
+     * javax.swing.tree.DefaultMutableTreeNode)
      */
     @Override
     public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
@@ -204,7 +212,9 @@ public class FileSystemInput implements FileSystemInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.common.filesystem.FileSystemInterface#rightMouseButton(javax.swing.JPopupMenu, java.lang.Object, java.awt.event.MouseEvent)
+     * @see
+     * com.sldeditor.common.filesystem.FileSystemInterface#rightMouseButton(javax.swing.JPopupMenu,
+     * java.lang.Object, java.awt.event.MouseEvent)
      */
     @Override
     public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
@@ -304,7 +314,8 @@ public class FileSystemInput implements FileSystemInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.FileSystemInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
+     * @see com.sldeditor.extension.input.FileSystemInterface#save(com.sldeditor.ui.iface.
+     * SLDDataInterface)
      */
     @Override
     public boolean save(SLDDataInterface sldData) {
@@ -367,7 +378,8 @@ public class FileSystemInput implements FileSystemInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.FileSystemInterface#drop(com.sldeditor.extension.input.NodeInterface, java.util.Map)
+     * @see com.sldeditor.extension.input.FileSystemInterface#drop(com.sldeditor.extension.input.
+     * NodeInterface, java.util.Map)
      */
     @Override
     public boolean copyNodes(NodeInterface destinationTreeNode,
@@ -422,7 +434,9 @@ public class FileSystemInput implements FileSystemInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.FileSystemInterface#deleteNodes(com.sldeditor.extension.input.NodeInterface, java.util.List)
+     * @see
+     * com.sldeditor.extension.input.FileSystemInterface#deleteNodes(com.sldeditor.extension.input.
+     * NodeInterface, java.util.List)
      */
     @Override
     public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {
@@ -454,7 +468,9 @@ public class FileSystemInput implements FileSystemInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.extension.input.FileSystemInterface#getDestinationText(com.sldeditor.extension.input.NodeInterface)
+     * @see
+     * com.sldeditor.extension.input.FileSystemInterface#getDestinationText(com.sldeditor.extension.
+     * input.NodeInterface)
      */
     @Override
     public String getDestinationText(NodeInterface destinationTreeNode) {

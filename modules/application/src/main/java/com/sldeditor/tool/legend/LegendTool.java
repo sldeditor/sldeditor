@@ -20,6 +20,7 @@
 package com.sldeditor.tool.legend;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -45,6 +46,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 import com.sldeditor.tool.html.ExportHTML;
 import com.sldeditor.ui.legend.LegendManager;
 import java.awt.FlowLayout;
@@ -56,6 +58,10 @@ import java.awt.FlowLayout;
  */
 public class LegendTool implements ToolInterface {
 
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 110;
+
+    /** The Constant INDEX_HTML. */
     private static final String INDEX_HTML = "index.html";
 
     /** The save all legend button. */
@@ -114,7 +120,7 @@ public class LegendTool implements ToolInterface {
 
                 // Disable the "All files" option.
                 chooser.setAcceptAllFileFilterUsed(false);
-                //
+
                 if (chooser.showSaveDialog(saveAllLegend) == JFileChooser.APPROVE_OPTION) {
                     saveAllLegendToFolder(chooser.getSelectedFile());
                 }
@@ -144,6 +150,7 @@ public class LegendTool implements ToolInterface {
                 }
             }
         });
+        legendPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /**

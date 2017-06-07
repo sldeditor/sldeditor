@@ -19,6 +19,7 @@
 
 package com.sldeditor.tool.connectionlist;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,7 @@ import com.sldeditor.datasource.extension.filesystem.GeoServerConnectUpdateInter
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 
 /**
  * Tool that manages all the GeoServer connections.
@@ -44,6 +46,9 @@ import com.sldeditor.tool.ToolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerConnectionListTool implements ToolInterface {
+
+    /** The Constant PANEL_WIDTH. */
+    private static final int PANEL_WIDTH = 235;
 
     /** The btn new. */
     private JButton btnNew;
@@ -163,6 +168,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
         });
 
         panel.add(btnDelete);
+        panel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
     /*

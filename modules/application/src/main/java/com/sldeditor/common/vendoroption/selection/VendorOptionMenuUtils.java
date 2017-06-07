@@ -39,10 +39,12 @@ import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 public class VendorOptionMenuUtils {
 
     /** The data selection list. */
-    private static List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<ValueComboBoxDataGroup>();
+    private static List<ValueComboBoxDataGroup> dataSelectionList =
+            new ArrayList<ValueComboBoxDataGroup>();
 
     /** The value map. */
-    private static Map<String, ValueComboBoxData> valueMap = new HashMap<String, ValueComboBoxData>();
+    private static Map<String, ValueComboBoxData> valueMap =
+            new HashMap<String, ValueComboBoxData>();
 
     /**
      * Creates the menu.
@@ -53,7 +55,8 @@ public class VendorOptionMenuUtils {
     public static List<ValueComboBoxDataGroup> createMenu(List<VersionData> versionDataList) {
 
         if (dataSelectionList.isEmpty()) {
-            Map<String, List<ValueComboBoxData>> map = new HashMap<String, List<ValueComboBoxData>>();
+            Map<String, List<ValueComboBoxData>> map =
+                    new HashMap<String, List<ValueComboBoxData>>();
             List<String> keyOrderList = new ArrayList<String>();
 
             if (versionDataList != null) {
