@@ -22,4 +22,4 @@
  *
  */
 
-package point.mapbox;
+package com.sldeditor.test.unit.tool.mapbox;
