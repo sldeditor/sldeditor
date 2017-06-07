@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -51,6 +52,7 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizerImpl;
 import org.geotools.styling.UserLayerImpl;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
@@ -59,11 +61,12 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 
 /**
- * The Class SymbolizerDetailsPanel handles the display of the correct
- *  panel when the user clicks on the SLD tree structure.
- *  
- * <p>Implemented as panel with a card layout, all possible panels
- *  are added to the layout and displayed accordingly.
+ * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on
+ * the SLD tree structure.
+ * 
+ * <p>
+ * Implemented as panel with a card layout, all possible panels are added to the layout and
+ * displayed accordingly.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -76,8 +79,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     private static final long serialVersionUID = 1L;
 
     /** The panel map. */
-    private Map<String, List<PopulateDetailsInterface>> panelMap = 
-            new HashMap<String, List<PopulateDetailsInterface>>();
+    private Map<String, List<PopulateDetailsInterface>> panelMap = new ConcurrentHashMap<String, List<PopulateDetailsInterface>>();
 
     /** The details panel. */
     private JPanel detailsPanel = null;
@@ -96,21 +98,24 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     public SymbolizerDetailsPanel(List<RenderSymbolInterface> rendererList,
             SLDTreeUpdatedInterface sldTree) {
 
-        populateMap(EMPTY_PANEL_KEY, new EmptyPanel());
-        populateMap(PointSymbolizerImpl.class.toString(), new PointSymbolizerDetails());
-        populateMap(LineSymbolizerImpl.class.toString(), new LineSymbolizerDetails());
-        populateMap(TextSymbolizerImpl.class.toString(), new TextSymbolizerDetails());
-        populateMap(PolygonSymbolizerImpl.class.toString(), new PolygonSymbolizerDetails());
-        populateMap(RasterSymbolizerImpl.class.toString(), new RasterSymbolizerDetails());
-        populateMap(RuleImpl.class.toString(), new RuleDetails());
-        populateMap(FeatureTypeStyleImpl.class.toString(), new FeatureTypeStyleDetails());
-        populateMap(StyleImpl.class.toString(), new StyleDetails());
-        populateMap(NamedLayerImpl.class.toString(), new NamedLayerDetails());
-        populateMap(UserLayerImpl.class.toString(), new UserLayerDetails());
-        populateMap(StyledLayerDescriptorImpl.class.toString(), new EmptyPanel());
-        populateMap(StrokeImpl.class.toString(), new StrokeDetails());
-        populateMap(FillImpl.class.toString(), new PointFillDetails());
-        populateMap(FillImpl.class.toString(), new PolygonFillDetails());
+        Map<String, Class<?>> classMap = new ConcurrentHashMap<String, Class<?>>();
+        classMap.put(EMPTY_PANEL_KEY, EmptyPanel.class);
+        classMap.put(PointSymbolizerImpl.class.toString(), PointSymbolizerDetails.class);
+        classMap.put(LineSymbolizerImpl.class.toString(), LineSymbolizerDetails.class);
+        classMap.put(TextSymbolizerImpl.class.toString(), TextSymbolizerDetails.class);
+        classMap.put(PolygonSymbolizerImpl.class.toString(), PolygonSymbolizerDetails.class);
+        classMap.put(RasterSymbolizerImpl.class.toString(), RasterSymbolizerDetails.class);
+        classMap.put(RuleImpl.class.toString(), RuleDetails.class);
+        classMap.put(FeatureTypeStyleImpl.class.toString(), FeatureTypeStyleDetails.class);
+        classMap.put(StyleImpl.class.toString(), StyleDetails.class);
+        classMap.put(NamedLayerImpl.class.toString(), NamedLayerDetails.class);
+        classMap.put(UserLayerImpl.class.toString(), UserLayerDetails.class);
+        classMap.put(StyledLayerDescriptorImpl.class.toString(), EmptyPanel.class);
+        classMap.put(StrokeImpl.class.toString(), StrokeDetails.class);
+        classMap.put(FillImpl.class.toString(), PointFillDetails.class);
+        classMap.put(FillImpl.class.toString(), PolygonFillDetails.class);
+
+        populateMap(classMap);
 
         fillMap.put(PointSymbolizerImpl.class, PointFillDetails.class);
         fillMap.put(PolygonSymbolizerImpl.class, PolygonFillDetails.class);
@@ -150,6 +155,38 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     }
 
     /**
+     * Populate map.
+     *
+     * @param classMap the class map
+     */
+    private void populateMap(Map<String, Class<?>> classMap) {
+        Set<String> keySet = classMap.keySet();
+
+        keySet.parallelStream().forEach((key) -> {
+            List<PopulateDetailsInterface> panelList = panelMap.get(key);
+
+            if (panelList == null) {
+                panelList = new ArrayList<PopulateDetailsInterface>();
+                panelMap.put(key, panelList);
+            }
+
+            Class<?> clazz = classMap.get(key);
+            ;
+            PopulateDetailsInterface panelDetails = null;
+            try {
+                panelDetails = (PopulateDetailsInterface) clazz.newInstance();
+            } catch (InstantiationException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            } catch (IllegalAccessException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+
+            panelList.add(panelDetails);
+        });
+
+    }
+
+    /**
      * Encode panel key.
      *
      * @param key the key
@@ -158,22 +195,6 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      */
     private String encodePanelKey(String key, PopulateDetailsInterface panel) {
         return key + "/" + panel.getClass().getName();
-    }
-
-    /**
-     * Populate map.
-     *
-     * @param key the key
-     * @param panelDetails the panel details
-     */
-    private void populateMap(String key, PopulateDetailsInterface panelDetails) {
-        List<PopulateDetailsInterface> panelList = panelMap.get(key);
-
-        if (panelList == null) {
-            panelList = new ArrayList<PopulateDetailsInterface>();
-            panelMap.put(key, panelList);
-        }
-        panelList.add(panelDetails);
     }
 
     /**
@@ -372,7 +393,8 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class, java.lang.Class)
+     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class,
+     * java.lang.Class)
      */
     @Override
     public void refresh(Class<?> parentClass, Class<?> classSelected) {

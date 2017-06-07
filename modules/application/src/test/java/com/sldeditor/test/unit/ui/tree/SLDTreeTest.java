@@ -232,7 +232,7 @@ public class SLDTreeTest {
         selectedTreeData.setSymbolizerDetailIndex(0);
         assertTrue(tree1.selectTreeItem(selectedTreeData));
         panel = tree1.getSelectedSymbolPanel();
-        assertEquals(PointFillDetails.class, panel.getClass());
+        assertEquals(PolygonFillDetails.class, panel.getClass());
 
         // Select line symbolizer / stroke
         selectedTreeData.setSelectedPanel(StrokeDetails.class);
