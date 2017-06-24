@@ -5,7 +5,7 @@
 
     <groupId>com.sldeditor</groupId>
     <artifactId>se-import-esrimxd</artifactId>
-    <version>0.5.0</version>
+    <version>0.6.0</version>
     <name>ImportMXD</name>
 
     <!-- =========================================================== -->
@@ -33,7 +33,7 @@
         <app.main.class>com.sldeditor.importdata.esri.ImportMXD</app.main.class>
         <maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
-        <arcgis.version>10.3.1</arcgis.version>
+        <arcgis.version>10.5.0</arcgis.version>
         <importer.dest.folder>../bin</importer.dest.folder>
     </properties>
 
