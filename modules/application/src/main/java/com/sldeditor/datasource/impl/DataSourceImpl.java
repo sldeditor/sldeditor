@@ -142,9 +142,9 @@ public class DataSourceImpl implements DataSourceInterface {
         if (!listenerList.contains(listener)) {
             listenerList.add(listener);
 
-            if (getGeometryType() != GeometryTypeEnum.UNKNOWN) {
-                notifyDataSourceLoaded();
-            }
+//            if (getGeometryType() != GeometryTypeEnum.UNKNOWN) {
+//                notifyDataSourceLoaded();
+//            }
         }
     }
 

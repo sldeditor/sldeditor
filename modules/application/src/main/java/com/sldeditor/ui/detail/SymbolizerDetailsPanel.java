@@ -178,6 +178,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
             List<Class<?>> clazzList = classMap.get(key);
 
             for (Class<?> clazz : clazzList) {
+                System.out.println(clazz.getName());
                 PopulateDetailsInterface panelDetails = null;
                 try {
                     panelDetails = (PopulateDetailsInterface) clazz.newInstance();
@@ -190,7 +191,6 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
                 panelList.add(panelDetails);
             }
         });
-
     }
 
     /**
