@@ -133,7 +133,7 @@ public class ConfigDefaultFactory {
      * @param defaultValue the default value
      * @return the object
      */
-    private static DefaultBase getObject(String defaultValue) {
+    private static synchronized DefaultBase getObject(String defaultValue) {
         if (defaultList.isEmpty()) {
             defaultList.add(new DefaultInteger());
             defaultList.add(new DefaultDouble());

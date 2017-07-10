@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,12 +62,10 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 
 /**
- * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on
- * the SLD tree structure.
+ * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on the SLD tree structure.
  * 
  * <p>
- * Implemented as panel with a card layout, all possible panels are added to the layout and
- * displayed accordingly.
+ * Implemented as panel with a card layout, all possible panels are added to the layout and displayed accordingly.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -98,22 +97,28 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     public SymbolizerDetailsPanel(List<RenderSymbolInterface> rendererList,
             SLDTreeUpdatedInterface sldTree) {
 
-        Map<String, Class<?>> classMap = new ConcurrentHashMap<String, Class<?>>();
-        classMap.put(EMPTY_PANEL_KEY, EmptyPanel.class);
-        classMap.put(PointSymbolizerImpl.class.toString(), PointSymbolizerDetails.class);
-        classMap.put(LineSymbolizerImpl.class.toString(), LineSymbolizerDetails.class);
-        classMap.put(TextSymbolizerImpl.class.toString(), TextSymbolizerDetails.class);
-        classMap.put(PolygonSymbolizerImpl.class.toString(), PolygonSymbolizerDetails.class);
-        classMap.put(RasterSymbolizerImpl.class.toString(), RasterSymbolizerDetails.class);
-        classMap.put(RuleImpl.class.toString(), RuleDetails.class);
-        classMap.put(FeatureTypeStyleImpl.class.toString(), FeatureTypeStyleDetails.class);
-        classMap.put(StyleImpl.class.toString(), StyleDetails.class);
-        classMap.put(NamedLayerImpl.class.toString(), NamedLayerDetails.class);
-        classMap.put(UserLayerImpl.class.toString(), UserLayerDetails.class);
-        classMap.put(StyledLayerDescriptorImpl.class.toString(), EmptyPanel.class);
-        classMap.put(StrokeImpl.class.toString(), StrokeDetails.class);
-        classMap.put(FillImpl.class.toString(), PointFillDetails.class);
-        classMap.put(FillImpl.class.toString(), PolygonFillDetails.class);
+        Map<String, List<Class<?>>> classMap = new ConcurrentHashMap<String, List<Class<?>>>();
+        classMap.put(EMPTY_PANEL_KEY, Arrays.asList(EmptyPanel.class));
+        classMap.put(PointSymbolizerImpl.class.toString(),
+                Arrays.asList(PointSymbolizerDetails.class));
+        classMap.put(LineSymbolizerImpl.class.toString(),
+                Arrays.asList(LineSymbolizerDetails.class));
+        classMap.put(TextSymbolizerImpl.class.toString(),
+                Arrays.asList(TextSymbolizerDetails.class));
+        classMap.put(PolygonSymbolizerImpl.class.toString(),
+                Arrays.asList(PolygonSymbolizerDetails.class));
+        classMap.put(RasterSymbolizerImpl.class.toString(),
+                Arrays.asList(RasterSymbolizerDetails.class));
+        classMap.put(RuleImpl.class.toString(), Arrays.asList(RuleDetails.class));
+        classMap.put(FeatureTypeStyleImpl.class.toString(),
+                Arrays.asList(FeatureTypeStyleDetails.class));
+        classMap.put(StyleImpl.class.toString(), Arrays.asList(StyleDetails.class));
+        classMap.put(NamedLayerImpl.class.toString(), Arrays.asList(NamedLayerDetails.class));
+        classMap.put(UserLayerImpl.class.toString(), Arrays.asList(UserLayerDetails.class));
+        classMap.put(StyledLayerDescriptorImpl.class.toString(), Arrays.asList(EmptyPanel.class));
+        classMap.put(StrokeImpl.class.toString(), Arrays.asList(StrokeDetails.class));
+        classMap.put(FillImpl.class.toString(),
+                Arrays.asList(PointFillDetails.class, PolygonFillDetails.class));
 
         populateMap(classMap);
 
@@ -159,7 +164,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
      *
      * @param classMap the class map
      */
-    private void populateMap(Map<String, Class<?>> classMap) {
+    private void populateMap(Map<String, List<Class<?>>> classMap) {
         Set<String> keySet = classMap.keySet();
 
         keySet.parallelStream().forEach((key) -> {
@@ -170,20 +175,22 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
                 panelMap.put(key, panelList);
             }
 
-            Class<?> clazz = classMap.get(key);
-            ;
-            PopulateDetailsInterface panelDetails = null;
-            try {
-                panelDetails = (PopulateDetailsInterface) clazz.newInstance();
-            } catch (InstantiationException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            } catch (IllegalAccessException e) {
-                ConsoleManager.getInstance().exception(this, e);
+            List<Class<?>> clazzList = classMap.get(key);
+
+            for (Class<?> clazz : clazzList) {
+                System.out.println(clazz.getName());
+                PopulateDetailsInterface panelDetails = null;
+                try {
+                    panelDetails = (PopulateDetailsInterface) clazz.newInstance();
+                } catch (InstantiationException e) {
+                    ConsoleManager.getInstance().exception(this, e);
+                } catch (IllegalAccessException e) {
+                    ConsoleManager.getInstance().exception(this, e);
+                }
+
+                panelList.add(panelDetails);
             }
-
-            panelList.add(panelDetails);
         });
-
     }
 
     /**
@@ -393,8 +400,7 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class,
-     * java.lang.Class)
+     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class, java.lang.Class)
      */
     @Override
     public void refresh(Class<?> parentClass, Class<?> classSelected) {
