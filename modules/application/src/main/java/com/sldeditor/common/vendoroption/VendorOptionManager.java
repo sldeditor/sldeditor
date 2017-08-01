@@ -17,15 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.vendoroption;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -60,11 +59,11 @@ public class VendorOptionManager {
 
     /** The vendor option map. */
     private Map<String, VendorOptionTypeInterface> vendorOptionMap =
-            new HashMap<String, VendorOptionTypeInterface>();
+            new ConcurrentHashMap<String, VendorOptionTypeInterface>();
 
     /** The vendor option class map. */
-    private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap =
-            new HashMap<Class<?>, VendorOptionTypeInterface>();
+    private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap = 
+            new ConcurrentHashMap<Class<?>, VendorOptionTypeInterface>();
 
     /** The default vendor option version. */
     private VendorOptionVersion defaultVendorOptionVersion = null;
@@ -73,11 +72,12 @@ public class VendorOptionManager {
     private VendorOptionTypeInterface defaultVendorOption = null;
 
     /** The vendor option listener list. */
-    private List<VendorOptionUpdateInterface> vendorOptionListenerList =
-            new ArrayList<VendorOptionUpdateInterface>();
+    private List<VendorOptionUpdateInterface> vendorOptionListenerList = Collections
+            .synchronizedList(new ArrayList<VendorOptionUpdateInterface>());
 
     /** The selected vendor options. */
-    private List<VersionData> selectedVendorOptions = new ArrayList<VersionData>();
+    private List<VersionData> selectedVendorOptions = Collections
+            .synchronizedList(new ArrayList<VersionData>());
 
     /** The flag indicating whether vendor option overridden. */
     private boolean vendorOptionOverridden = false;
@@ -113,7 +113,8 @@ public class VendorOptionManager {
             Document doc = dBuilder.parse(fXmlFile);
 
             // optional, but recommended
-            // read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+            // read this -
+            // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getFirstChild().getChildNodes();
@@ -364,7 +365,7 @@ public class VendorOptionManager {
      *
      * @param listener the listener
      */
-    public void addVendorOptionListener(VendorOptionUpdateInterface listener) {
+    public synchronized void addVendorOptionListener(VendorOptionUpdateInterface listener) {
         if (!vendorOptionListenerList.contains(listener)) {
             vendorOptionListenerList.add(listener);
             notifyVendorOptionUpdated();
@@ -389,7 +390,7 @@ public class VendorOptionManager {
     /**
      * Notify vendor option updated.
      */
-    private void notifyVendorOptionUpdated() {
+    private synchronized void notifyVendorOptionUpdated() {
         for (VendorOptionUpdateInterface listener : vendorOptionListenerList) {
             listener.vendorOptionsUpdated(this.selectedVendorOptions);
         }
