@@ -7,7 +7,7 @@
     <!-- =========================================================== -->
     <groupId>com.sldeditor</groupId>
     <artifactId>convert</artifactId>
-    <version>0.7.6-SNAPSHOT</version>
+    <version>0.7.6</version>
     <name>ConvertToSLD</name>
     <packaging>pom</packaging>
 
