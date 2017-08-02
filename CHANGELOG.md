@@ -1,19 +1,51 @@
 # Change Log
 
-## [0.7.5](https://github.com/robward-scisys/sldeditor/tree/0.7.5) (2017-05-03)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.4...0.7.5)
+## [0.7.6](https://github.com/robward-scisys/sldeditor/tree/0.7.6) (2017-08-02)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.5...0.7.6)
 
 **Implemented enhancements:**
 
+- Use GeoTools 17.2 [\#350](https://github.com/robward-scisys/sldeditor/issues/350)
+- Speed up application start up times [\#347](https://github.com/robward-scisys/sldeditor/issues/347)
+- Report issue menu option [\#345](https://github.com/robward-scisys/sldeditor/issues/345)
+- Creaste MacOS installer [\#342](https://github.com/robward-scisys/sldeditor/issues/342)
+- Import / export map-box styles [\#341](https://github.com/robward-scisys/sldeditor/issues/341)
+- Create deb installation [\#339](https://github.com/robward-scisys/sldeditor/issues/339)
+- Vendor Option dropdown needs compacting [\#335](https://github.com/robward-scisys/sldeditor/issues/335)
+
+## [v0.7.5](https://github.com/robward-scisys/sldeditor/tree/v0.7.5) (2017-05-03)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.4...v0.7.5)
+
+**Implemented enhancements:**
+
+- Investigate replacing sun.misc.BASE64Encoder [\#333](https://github.com/robward-scisys/sldeditor/issues/333)
 - Reverse order of GeoServer versions dropdown on Vendor Option Tab [\#331](https://github.com/robward-scisys/sldeditor/issues/331)
 - Implement FeatureTypeStyle vendor option : rule evaluation [\#327](https://github.com/robward-scisys/sldeditor/issues/327)
 - Implement FeatureTypeStyle vendor option : sort by [\#326](https://github.com/robward-scisys/sldeditor/issues/326)
 - Implement FeatureTypeStyle vendor option : composite-base [\#325](https://github.com/robward-scisys/sldeditor/issues/325)
+- Implement FeatureTypeStyle composite vendor option [\#323](https://github.com/robward-scisys/sldeditor/issues/323)
+- Investigate gap and initial gap attributes [\#216](https://github.com/robward-scisys/sldeditor/issues/216)
+- Add support for remaining WKT shapes [\#177](https://github.com/robward-scisys/sldeditor/issues/177)
+- Iss335 group vendor option versions [\#336](https://github.com/robward-scisys/sldeditor/pull/336) ([robward-scisys](https://github.com/robward-scisys))
 - Replace sun.misc.Base64Encoder with apache.commons [\#334](https://github.com/robward-scisys/sldeditor/pull/334) ([robward-scisys](https://github.com/robward-scisys))
+- Added support for rule evaluation vendor option [\#329](https://github.com/robward-scisys/sldeditor/pull/329) ([robward-scisys](https://github.com/robward-scisys))
+- Added FeatureTypeStyle vendor option : composite-base [\#328](https://github.com/robward-scisys/sldeditor/pull/328) ([robward-scisys](https://github.com/robward-scisys))
+- Iss323 fts composite vendor option [\#324](https://github.com/robward-scisys/sldeditor/pull/324) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
+- Set anchor point defaults [\#321](https://github.com/robward-scisys/sldeditor/issues/321)
 - Updated anchor point defaults according to SLD standard [\#322](https://github.com/robward-scisys/sldeditor/pull/322) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Release 0.7.4 [\#319](https://github.com/robward-scisys/sldeditor/issues/319)
+
+**Merged pull requests:**
+
+- Release 0.7.5 [\#338](https://github.com/robward-scisys/sldeditor/pull/338) ([robward-scisys](https://github.com/robward-scisys))
+- Is331 geoserver version dropdown [\#332](https://github.com/robward-scisys/sldeditor/pull/332) ([robward-scisys](https://github.com/robward-scisys))
+- Iss326 fts sortby vendoroption [\#330](https://github.com/robward-scisys/sldeditor/pull/330) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.7.4](https://github.com/robward-scisys/sldeditor/tree/v0.7.4) (2017-03-28)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.3...v0.7.4)
