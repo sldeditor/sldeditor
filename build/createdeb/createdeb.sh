@@ -35,7 +35,7 @@ if [ ! -d pkgdeb ]; then
 	cd pkgdeb
 	git clone https://github.com/robward-scisys/sldeditor.git
 	cd sldeditor
-	git checkout iss339-deb-package
+	git checkout v0.7.6a
 	rm -rf .git
         cd build/update_version
         ./update_versions.sh $version
