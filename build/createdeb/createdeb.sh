@@ -48,9 +48,10 @@ if [ ! -d pkgdeb ]; then
         cd build/update_version
         ./update_versions.sh $version
         cd ../..
+	mv ./bin/SLDEditor.jar /tmp
 	mvn clean
+	mv /tmp/SLDEditor.jar ./bin
 	cp $dirRunningFrom/Makefile .
-	cp $dirRunningFrom/../../bin/*.jar ./bin
 	cd ..
 	tar -zcvf sldeditor-$version2.tar.gz sldeditor
 	rm -rf sldeditor
