@@ -22,10 +22,18 @@
 
 if [ -z "$1" ]; then
 	echo 'No version set'
-	echo 'createdeb.sh <version no>'
+	echo 'createdeb.sh <version no> <revision no>'
+	exit 1
+fi
+
+if [ -z "$2" ]; then
+	echo 'No revision set'
+	echo 'createdeb.sh <version no> <revision no>'
 	exit 1
 fi
 version=$1
+version2=$1ppa$2
+
 dist=xenial
 dirRunningFrom=$(pwd)
 
@@ -42,8 +50,9 @@ if [ ! -d pkgdeb ]; then
         cd ../..
 	mvn clean
 	cp $dirRunningFrom/Makefile .
+	cp $dirRunningFrom/../../bin/*.jar ./bin
 	cd ..
-	tar -zcvf sldeditor-$version.tar.gz sldeditor
+	tar -zcvf sldeditor-$version2.tar.gz sldeditor
 	rm -rf sldeditor
 else
 	cd pkgdeb
@@ -53,7 +62,7 @@ fi
 export DEBFULLNAME="Robert Ward"
 export DEBEMAIL="sldeditor.group@gmail.com"
 bzr whoami "$DEBFULLNAME '<'$DEBEMAIL'>'"
-bzr dh-make sldeditor $version sldeditor-$version.tar.gz
+bzr dh-make sldeditor $version2 sldeditor-$version2.tar.gz
 cd sldeditor
 cd debian
 rm *ex *EX README.*
