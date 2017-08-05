@@ -43,7 +43,7 @@ if [ ! -d pkgdeb ]; then
 	cd pkgdeb
 	git clone https://github.com/robward-scisys/sldeditor.git
 	cd sldeditor
-	git checkout v0.7.6a
+	git checkout v$version
 	rm -rf .git
         cd build/update_version
         ./update_versions.sh $version
