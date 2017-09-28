@@ -3,6 +3,7 @@
  * This code is licensed under the GPL 2.0 license, available at the root
  * application directory.
  */
+
 package org.geoserver.wms.legendgraphic;
 
 import java.awt.Color;
@@ -47,6 +48,7 @@ import org.geotools.renderer.lite.StyledShapePainter;
 import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.renderer.style.Style2D;
 import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Graphic;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
@@ -83,21 +85,26 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
- * Template {@linkPlain org.vfny.geoserver.responses.wms.GetLegendGraphicProducer} based on
- * <a href="http://svn.geotools.org/geotools/trunk/gt/module/main/src/org/geotools/renderer/lite/StyledShapePainter.java"> GeoTools
- * StyledShapePainter</a> that produces a BufferedImage with the appropriate legend graphic for a given GetLegendGraphic WMS request.
+ * Template {@linkPlain org.vfny.geoserver.responses.wms.GetLegendGraphicProducer} based on <a href=
+ * "http://svn.geotools.org/geotools/trunk/gt/module/main/src/org/geotools/renderer/lite/StyledShapePainter.java">
+ * GeoTools StyledShapePainter</a> that produces a BufferedImage with the appropriate legend graphic
+ * for a given GetLegendGraphic WMS request.
  * 
  * <p>
- * It should be enough for a subclass to implement {@linkPlain org.vfny.geoserver.responses.wms.GetLegendGraphicProducer#writeTo(OutputStream)} and
- * <code>getContentType()</code> in order to encode the BufferedImage produced by this class to the appropriate output format.
+ * It should be enough for a subclass to implement
+ * {@linkPlain org.vfny.geoserver.responses.wms.GetLegendGraphicProducer#writeTo(OutputStream)} and
+ * <code>getContentType()</code> in order to encode the BufferedImage produced by this class to the
+ * appropriate output format.
  * </p>
  * 
  * <p>
- * This class takes literally the fact that the arguments <code>WIDTH</code> and <code>HEIGHT</code> are just <i>hints</i> about the desired
- * dimensions of the produced graphic, and the need to produce a legend graphic representative enough of the SLD style for which it is being
- * generated. Thus, if no <code>RULE</code> parameter was passed and the style has more than one applicable Rule for the actual scale factor, there
- * will be generated a legend graphic of the specified width, but with as many stacked graphics as applicable rules were found, providing by this way
- * a representative enough legend.
+ * This class takes literally the fact that the arguments <code>WIDTH</code> and <code>HEIGHT</code>
+ * are just <i>hints</i> about the desired dimensions of the produced graphic, and the need to
+ * produce a legend graphic representative enough of the SLD style for which it is being generated.
+ * Thus, if no <code>RULE</code> parameter was passed and the style has more than one applicable
+ * Rule for the actual scale factor, there will be generated a legend graphic of the specified
+ * width, but with as many stacked graphics as applicable rules were found, providing by this way a
+ * representative enough legend.
  * </p>
  * 
  * @author Gabriel Roldan
@@ -111,7 +118,8 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     public static final double TOLERANCE = 1e-6;
 
     /**
-     * Singleton shape painter to serve all legend requests. We can use a single shape painter instance as long as it remains thread safe.
+     * Singleton shape painter to serve all legend requests. We can use a single shape painter
+     * instance as long as it remains thread safe.
      */
     private static final StyledShapePainter shapePainter = new StyledShapePainter();
 
@@ -136,27 +144,31 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     private LiteShape2 samplePoint;
 
     /**
-     * Default minimum size for symbols rendering. Can be overridden using LEGEND_OPTIONS (minSymbolSize).
+     * Default minimum size for symbols rendering. Can be overridden using LEGEND_OPTIONS
+     * (minSymbolSize).
      */
     private final double MINIMUM_SYMBOL_SIZE = 3.0;
 
     /**
-     * Default constructor. Subclasses may provide its own with a String parameter to establish its desired output format, if they support more than
-     * one (e.g. a JAI based one)
+     * Default constructor. Subclasses may provide its own with a String parameter to establish its
+     * desired output format, if they support more than one (e.g. a JAI based one)
      */
     public SLDEditorBufferedImageLegendGraphicBuilder() {
         super();
     }
 
     /**
-     * Takes a GetLegendGraphicRequest and produces a BufferedImage that then can be used by a subclass to encode it to the appropriate output format.
+     * Takes a GetLegendGraphicRequest and produces a BufferedImage that then can be used by a
+     * subclass to encode it to the appropriate output format.
      * 
-     * @param request the "parsed" request, where "parsed" means that it's values are already validated so this method must not take care of verifying
-     *        the requested layer exists and the like.
+     * @param request the "parsed" request, where "parsed" means that it's values are already
+     *        validated so this method must not take care of verifying the requested layer exists
+     *        and the like.
      *
      * 
-     * @throws ServiceException if there are problems creating a "sample" feature instance for the FeatureType <code>request</code> returns as the
-     *         required layer (which should not occur).
+     * @throws ServiceException if there are problems creating a "sample" feature instance for the
+     *         FeatureType <code>request</code> returns as the required layer (which should not
+     *         occur).
      */
     public BufferedImage buildLegendGraphic(GetLegendGraphicRequest request)
             throws ServiceException {
@@ -258,7 +270,8 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
                     if (outputs.isEmpty()) {
                         continue;
                     }
-                    Parameter<?> output = outputs.values().iterator().next(); // we assume there is only one output
+                    Parameter<?> output = outputs.values().iterator().next(); // we assume there is
+                                                                              // only one output
                     if (SimpleFeatureCollection.class.isAssignableFrom(output.getType())) {
                         hasVectorTransformation = true;
                         break;
@@ -331,8 +344,8 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
                 final int ruleCount = applicableRules.length;
 
                 /**
-                 * A legend graphic is produced for each applicable rule. They're being held here until the process is done and then painted on a
-                 * "stack" like legend.
+                 * A legend graphic is produced for each applicable rule. They're being held here
+                 * until the process is done and then painted on a "stack" like legend.
                  */
                 final List<RenderedImage> legendsStack = new ArrayList<RenderedImage>(ruleCount);
 
@@ -397,10 +410,11 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
                             } else {
                                 // rescale symbols if needed
                                 if (symbolScale > 1.0 && symbolizer instanceof PointSymbolizer) {
-                                    PointSymbolizer pointSymbolizer = cloneSymbolizer(symbolizer);
+                                    PointSymbolizer pointSymbolizer = (PointSymbolizer) cloneSymbolizer(
+                                            symbolizer);
                                     if (pointSymbolizer.getGraphic() != null) {
-                                        double size = getPointSymbolizerSize(sample,
-                                                pointSymbolizer, Math.min(w, h) - 4);
+                                        double size = getGraphicSize(sample,
+                                                pointSymbolizer.getGraphic(), Math.min(w, h) - 4);
 
                                         pointSymbolizer.getGraphic().setSize(
                                                 ff.literal(size / symbolScale + minimumSymbolSize));
@@ -411,27 +425,109 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
 
                                 if (!(Math.abs(imageSizeFactor - 1.0) < 0.0001)) {
                                     if (symbolizer instanceof PointSymbolizer) {
-                                        PointSymbolizer pointSymbolizer2 = cloneSymbolizer(
+                                        PointSymbolizer pointSymbolizer2 = (PointSymbolizer) cloneSymbolizer(
                                                 symbolizer);
                                         if (pointSymbolizer2.getGraphic() != null) {
-                                            double size = getPointSymbolizerSize(sample,
-                                                    pointSymbolizer2, Math.min(w, h) - 4);
+                                            double size = getGraphicSize(sample,
+                                                    pointSymbolizer2.getGraphic(),
+                                                    Math.min(w, h) - 4);
 
                                             pointSymbolizer2.getGraphic().setSize(ff.literal(
                                                     size * imageSizeFactor + minimumSymbolSize));
 
                                             symbolizer = pointSymbolizer2;
                                         }
+                                    } else if (symbolizer instanceof PolygonSymbolizer) {
+                                        PolygonSymbolizer polygonSymbolizer2 = (PolygonSymbolizer) cloneSymbolizer(
+                                                symbolizer);
+                                        if (polygonSymbolizer2.getFill() != null) {
+                                            // Fill
+                                            double size = 0.0;
+
+                                            if (polygonSymbolizer2.getFill()
+                                                    .getGraphicFill() != null) {
+                                                size = getGraphicSize(sample,
+                                                        polygonSymbolizer2.getFill()
+                                                                .getGraphicFill(),
+                                                        Math.min(w, h) - 4);
+
+                                                polygonSymbolizer2.getFill().getGraphicFill()
+                                                        .setSize(ff.literal(size * imageSizeFactor
+                                                                + minimumSymbolSize));
+                                            }
+                                        }
+                                        
+                                        if (polygonSymbolizer2.getStroke() != null) {
+                                            // Stroke
+                                            double size = getGraphicSize(sample,
+                                                    polygonSymbolizer2.getStroke().getGraphicFill(),
+                                                    Math.min(w, h) - 4);
+
+                                            polygonSymbolizer2.getStroke().getGraphicFill()
+                                                    .setSize(ff.literal(size * imageSizeFactor
+                                                            + minimumSymbolSize));
+
+                                            if (polygonSymbolizer2.getStroke()
+                                                    .getGraphicStroke() != null) {
+                                                size = getGraphicSize(sample,
+                                                        polygonSymbolizer2.getStroke()
+                                                                .getGraphicStroke(),
+                                                        Math.min(w, h) - 4);
+
+                                                polygonSymbolizer2.getStroke().getGraphicStroke()
+                                                        .setSize(ff.literal(size * imageSizeFactor
+                                                                + minimumSymbolSize));
+                                            }
+                                        }
+                                        symbolizer = polygonSymbolizer2;
+                                    } else if (symbolizer instanceof LineSymbolizer) {
+                                        LineSymbolizer lineSymbolizer2 = (LineSymbolizer) cloneSymbolizer(
+                                                symbolizer);
+                                        if (lineSymbolizer2.getStroke() != null) {
+                                            // Stroke
+                                            double size = 0.0;
+                                            if (lineSymbolizer2.getStroke()
+                                                    .getGraphicFill() != null) {
+                                                size = getGraphicSize(sample,
+                                                        lineSymbolizer2.getStroke()
+                                                                .getGraphicFill(),
+                                                        Math.min(w, h) - 4);
+
+                                                lineSymbolizer2.getStroke().getGraphicFill()
+                                                        .setSize(ff.literal(size * imageSizeFactor
+                                                                + minimumSymbolSize));
+                                            }
+
+                                            if (lineSymbolizer2.getStroke()
+                                                    .getGraphicStroke() != null) {
+                                                size = getGraphicSize(sample,
+                                                        lineSymbolizer2.getStroke()
+                                                                .getGraphicStroke(),
+                                                        Math.min(w, h) - 4);
+
+                                                lineSymbolizer2.getStroke().getGraphicStroke()
+                                                        .setSize(ff.literal(size * imageSizeFactor
+                                                                + minimumSymbolSize));
+                                            }
+
+                                            if (lineSymbolizer2.getStroke().getWidth() != null) {
+                                                size = getWidthSize(sample,
+                                                        lineSymbolizer2.getStroke().getWidth(), 1);
+                                                lineSymbolizer2.getStroke().setWidth(
+                                                        ff.literal(size * imageSizeFactor));
+                                            }
+                                        }
+                                        symbolizer = lineSymbolizer2;
                                     }
                                 }
+                            }
 
-                                Style2D style2d = styleFactory.createStyle(sample, symbolizer,
-                                        scaleRange);
-                                LiteShape2 shape = getSampleShape(symbolizer, w, h);
+                            Style2D style2d = styleFactory.createStyle(sample, symbolizer,
+                                    scaleRange);
+                            LiteShape2 shape = getSampleShape(symbolizer, w, h);
 
-                                if (style2d != null) {
-                                    shapePainter.paint(graphics, shape, style2d, scaleDenominator);
-                                }
+                            if (style2d != null) {
+                                shapePainter.paint(graphics, shape, style2d, scaleDenominator);
                             }
                         }
                     }
@@ -460,6 +556,7 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
             }
 
         }
+
         // all legend graphics are merged if we have a layer group
         BufferedImage finalLegend = mergeGroups(layersImages, null, request, forceLabelsOn,
                 forceLabelsOff);
@@ -478,23 +575,25 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
      * Clones the given (Point)Symbolizer.
      * 
      * @param symbolizer symbolizer to clone
-     * @return cloned PointSymbolizer
+     * @return cloned Symbolizer
      */
-    private PointSymbolizer cloneSymbolizer(Symbolizer symbolizer) {
+    private Symbolizer cloneSymbolizer(Symbolizer symbolizer) {
         DuplicatingStyleVisitor duplicator = new DuplicatingStyleVisitor();
         symbolizer.accept(duplicator);
-        PointSymbolizer pointSymbolizer = (PointSymbolizer) duplicator.getCopy();
-        return pointSymbolizer;
+
+        return (Symbolizer) duplicator.getCopy();
     }
 
     /**
-     * Calculates a global rescaling factor for all the symbols to be drawn in the given rules. This is to be sure all symbols are drawn inside the
-     * given w x h box.
+     * Calculates a global rescaling factor for all the symbols to be drawn in the given rules. This
+     * is to be sure all symbols are drawn inside the given w x h box.
      * 
      * @param width horizontal constraint
      * @param height vertical constraint
-     * @param featureType FeatureType to be used for size extraction in expressions (used to create a sample if feature is null)
-     * @param feature Feature to be used for size extraction in expressions (if null a sample Feature will be created from featureType)
+     * @param featureType FeatureType to be used for size extraction in expressions (used to create
+     *        a sample if feature is null)
+     * @param feature Feature to be used for size extraction in expressions (if null a sample
+     *        Feature will be created from featureType)
      * @param rules set of rules to scan for symbols
      * @param minimumSymbolSize lower constraint for the symbols size
      *
@@ -513,8 +612,8 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
             for (int sIdx = 0; sIdx < symbolizers.length; sIdx++) {
                 final Symbolizer symbolizer = symbolizers[sIdx];
                 if (symbolizer instanceof PointSymbolizer) {
-                    double size = getPointSymbolizerSize(sample, (PointSymbolizer) symbolizer,
-                            Math.min(width, height));
+                    double size = getGraphicSize(sample,
+                            ((PointSymbolizer) symbolizer).getGraphic(), Math.min(width, height));
                     if (size < minSize) {
                         minSize = size;
                     }
@@ -532,16 +631,15 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     }
 
     /**
-     * Gets a numeric value for the given PointSymbolizer
+     * Gets a numeric value for the given graphic
      * 
      * @param feature sample to be used for evals
      * @param pointSymbolizer symbolizer
-     * @param defaultSize size to use is none can be taken from the symbolizer
+     * @param defaultSize size to use is none can be taken from the graphic
      */
-    private double getPointSymbolizerSize(Feature feature, PointSymbolizer pointSymbolizer,
-            int defaultSize) {
-        if (pointSymbolizer.getGraphic() != null) {
-            Expression sizeExp = pointSymbolizer.getGraphic().getSize();
+    private double getGraphicSize(Feature feature, Graphic graphic, int defaultSize) {
+        if (graphic != null) {
+            Expression sizeExp = graphic.getSize();
             if (sizeExp instanceof Literal) {
                 Object size = sizeExp.evaluate(feature);
                 if (size != null) {
@@ -561,8 +659,36 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     }
 
     /**
-     * Returns a sample feature for the given rule, with the following criteria: - if a sample is given in input is returned in output - if a sample
-     * is not given in input, scan the rule symbolizers to find the one with the max dimensionality, and return a sample for that dimensionality.
+     * Gets a numeric value for the given graphic
+     * 
+     * @param feature sample to be used for evals
+     * @param pointSymbolizer symbolizer
+     * @param defaultSize size to use is none can be taken from the graphic
+     */
+    private double getWidthSize(Feature feature, Expression widthExp, int defaultSize) {
+        if (widthExp != null) {
+            if (widthExp instanceof Literal) {
+                Object size = widthExp.evaluate(feature);
+                if (size != null) {
+                    if (size instanceof Double) {
+                        return (Double) size;
+                    }
+                    try {
+                        return Double.parseDouble(size.toString());
+                    } catch (NumberFormatException e) {
+                        return defaultSize;
+                    }
+                }
+            }
+        }
+        return defaultSize;
+    }
+
+    /**
+     * Returns a sample feature for the given rule, with the following criteria: - if a sample is
+     * given in input is returned in output - if a sample is not given in input, scan the rule
+     * symbolizers to find the one with the max dimensionality, and return a sample for that
+     * dimensionality.
      * 
      * @param featureType featureType used to create a sample, if none is given as input
      * @param sample feature sample to be returned as is in output, if defined
@@ -665,11 +791,12 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     }
 
     /**
-     * Receives a list of <code>BufferedImages</code> and produces a new one which holds all the images in <code>imageStack</code> one above the
-     * other, handling labels.
+     * Receives a list of <code>BufferedImages</code> and produces a new one which holds all the
+     * images in <code>imageStack</code> one above the other, handling labels.
      * 
      * @param imageStack the list of BufferedImages, one for each applicable Rule
-     * @param rules The applicable rules, one for each image in the stack (if not null it's used to compute labels)
+     * @param rules The applicable rules, one for each image in the stack (if not null it's used to
+     *        compute labels)
      * @param request The request.
      * @param forceLabelsOn true for force labels on also with a single image.
      * @param forceLabelsOff true for force labels off also with more than one rule.
@@ -688,14 +815,15 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     }
 
     /**
-     * Returns a <code>java.awt.Shape</code> appropiate to render a legend graphic given the symbolizer type and the legend dimensions.
+     * Returns a <code>java.awt.Shape</code> appropiate to render a legend graphic given the
+     * symbolizer type and the legend dimensions.
      * 
      * @param symbolizer the Symbolizer for whose type a sample shape will be created
      * @param legendWidth the requested width, in output units, of the legend graphic
      * @param legendHeight the requested height, in output units, of the legend graphic
      * 
-     * @return an appropiate Line2D, Rectangle2D or LiteShape(Point) for the symbolizer, wether it is a LineSymbolizer, a PolygonSymbolizer, or a
-     *         Point ot Text Symbolizer
+     * @return an appropiate Line2D, Rectangle2D or LiteShape(Point) for the symbolizer, wether it
+     *         is a LineSymbolizer, a PolygonSymbolizer, or a Point ot Text Symbolizer
      * 
      * @throws IllegalArgumentException if an unknown symbolizer impl was passed in.
      */
@@ -762,11 +890,12 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     }
 
     /**
-     * Creates a sample Feature instance in the hope that it can be used in the rendering of the legend graphic, using the given dimensionality for
-     * the geometry attribute.
+     * Creates a sample Feature instance in the hope that it can be used in the rendering of the
+     * legend graphic, using the given dimensionality for the geometry attribute.
      * 
      * @param schema the schema for which to create a sample Feature instance
-     * @param dimensionality the geometry dimensionality required (ovverides the one defined in the schema) 1= points, 2= lines, 3= polygons
+     * @param dimensionality the geometry dimensionality required (ovverides the one defined in the
+     *        schema) 1= points, 2= lines, 3= polygons
      *
      * @throws ServiceException
      */
@@ -831,7 +960,8 @@ public class SLDEditorBufferedImageLegendGraphicBuilder {
     }
 
     /**
-     * Creates a sample Feature instance in the hope that it can be used in the rendering of the legend graphic.
+     * Creates a sample Feature instance in the hope that it can be used in the rendering of the
+     * legend graphic.
      * 
      * @param schema the schema for which to create a sample Feature instance
      * 
