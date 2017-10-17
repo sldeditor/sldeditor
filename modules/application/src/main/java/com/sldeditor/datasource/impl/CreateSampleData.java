@@ -20,6 +20,8 @@
 package com.sldeditor.datasource.impl;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -195,6 +197,12 @@ public class CreateSampleData {
             value = Float.valueOf(index);
         } else if (fieldType == Short.class) {
             value = Short.valueOf((short) index);
+        } else if (fieldType == Date.class) {
+            Calendar cal = Calendar.getInstance();
+            value = cal.getTime();
+        } else if (fieldType == java.sql.Timestamp.class) {
+            Calendar cal = Calendar.getInstance();
+            value = new java.sql.Timestamp(cal.getTime().getTime());
         }
         return value;
     }
