@@ -84,7 +84,7 @@ public class LegendOptionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The listener list. */
-    private List<LegendOptionDataUpdateInterface> listenerList =
+    private List<LegendOptionDataUpdateInterface> legendOpenPanelListenerList =
             new ArrayList<LegendOptionDataUpdateInterface>();
 
     /** The data. */
@@ -306,7 +306,7 @@ public class LegendOptionPanel extends JPanel {
         box.add(panelImageSize);
 
         imageSizeSpinner = new JSpinner();
-        imageSizeSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
+        imageSizeSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH_EXTENDED, PANEL_HEIGHT);
 
         panelImageSize.add(imageSizeSpinner);
         imageSizeSpinner.addChangeListener(new ChangeListener() {
@@ -605,7 +605,7 @@ public class LegendOptionPanel extends JPanel {
      * Notify listeners.
      */
     private void notifyListeners() {
-        for (LegendOptionDataUpdateInterface listener : listenerList) {
+        for (LegendOptionDataUpdateInterface listener : legendOpenPanelListenerList) {
             listener.updateLegendOptionData(data);
         }
     }
@@ -617,7 +617,7 @@ public class LegendOptionPanel extends JPanel {
      */
     public void addListener(LegendOptionDataUpdateInterface listener) {
         if (listener != null) {
-            listenerList.add(listener);
+            legendOpenPanelListenerList.add(listener);
         }
     }
 

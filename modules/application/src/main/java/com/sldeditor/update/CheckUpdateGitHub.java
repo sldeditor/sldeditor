@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -121,7 +122,13 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
         StringBuilder sb = new StringBuilder();
         if (url != null) {
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            int timeout = 5;
+            RequestConfig config = RequestConfig.custom()
+              .setConnectTimeout(timeout * 1000)
+              .setConnectionRequestTimeout(timeout * 1000)
+              .setSocketTimeout(timeout * 1000).build();
+            
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
 
                 HttpGet getRequest = new HttpGet(url);
                 getRequest.addHeader("accept", "application/json");

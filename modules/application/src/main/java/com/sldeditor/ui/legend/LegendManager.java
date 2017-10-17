@@ -42,7 +42,7 @@ import javax.imageio.stream.ImageOutputStream;
 
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
-import org.geoserver.wms.legendgraphic.BufferedImageLegendGraphicBuilder;
+import org.geoserver.wms.legendgraphic.SLDEditorBufferedImageLegendGraphicBuilder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Style;
@@ -68,8 +68,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private static LegendManager instance = null;
 
     /** The legend builder. */
-    private BufferedImageLegendGraphicBuilder legendBuilder =
-            new BufferedImageLegendGraphicBuilder();
+    private SLDEditorBufferedImageLegendGraphicBuilder legendBuilder = new SLDEditorBufferedImageLegendGraphicBuilder();
 
     /** The legend option data. */
     private LegendOptionData legendOptionData = new LegendOptionData();
@@ -176,7 +175,8 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
         legendOptions.put("border", getBooleanValueTrueFalse(legendOptionData.isBorder()));
         legendOptions.put("borderColor",
                 ColourUtils.fromColour(legendOptionData.getBorderColour()));
-        legendOptions.put("imageSize", String.valueOf(legendOptionData.getImageSize()));
+        legendOptions.put("imageSizeFactor",
+                String.valueOf(legendOptionData.getImageSize() / 100.0));
 
         request.setLegendOptions(legendOptions);
 
@@ -353,7 +353,9 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com.sldeditor.ui.legend.option.LegendOptionData)
+     * @see
+     * com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com.
+     * sldeditor.ui.legend.option.LegendOptionData)
      */
     @Override
     public void updateLegendOptionData(LegendOptionData data) {
@@ -428,10 +430,12 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      * @param fileToSave the file to save
      */
     public void saveLegendImage(BufferedImage image, String extension, File fileToSave) {
-        try {
-            saveGridImage(image, extension, fileToSave, legendOptionData.getDpi());
-        } catch (IOException e) {
-            ConsoleManager.getInstance().exception(this, e);
+        if (image != null) {
+            try {
+                saveGridImage(image, extension, fileToSave, legendOptionData.getDpi());
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
         }
     }
 
