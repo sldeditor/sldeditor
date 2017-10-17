@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.datasource.config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -208,4 +209,21 @@ public class DataSourceAttributeModelTest {
         assertEquals(2, model.getRowCount());
     }
 
+    /**
+     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#addNewField()}.
+     */
+    @Test
+    public void testTimestampField() {
+        DataSourceAttributeModel model = new DataSourceAttributeModel();
+        assertEquals(0, model.getRowCount());
+
+        model.addNewField();
+        assertEquals(1, model.getRowCount());
+
+        model.setValueAt("Timestamp", 0, 1);
+
+        Object actualResult = model.getValueAt(0, 1);
+        assertNotNull(actualResult);
+        
+    }
 }

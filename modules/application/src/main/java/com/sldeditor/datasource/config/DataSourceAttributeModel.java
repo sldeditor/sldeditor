@@ -52,12 +52,12 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     private static final String[] GEOMETRY_NAME = { "Geometry (Point)", "Geometry (Multi-Point)",
             "Geometry (Line)", "Geometry (Multi-Line)", "Geometry (Polygon)",
             "Geometry (Multi-Polygon)", "String", "Integer", "Long", "Double", "Float", "Short",
-            "DateTime" };
+            "DateTime", "Timestamp" };
 
     /** The class type array. */
     private static final  Class<?>[] CLASSTYPE = { Point.class, MultiPoint.class, LineString.class,
             MultiLineString.class, Polygon.class, MultiPolygon.class, String.class, Integer.class,
-            Long.class, Double.class, Float.class, Short.class, Date.class };
+            Long.class, Double.class, Float.class, Short.class, Date.class, java.sql.Timestamp.class };
     //CHECKSTYLE:ON
 
     /** The type map. */
@@ -271,10 +271,10 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         if (key == null) {
             if (fieldType == null) {
                 ConsoleManager.getInstance().error(DataSourceAttributeModel.class,
-                        "Unknown field type class");
+                        "Data Source : Unknown field type class");
             } else {
                 ConsoleManager.getInstance().error(DataSourceAttributeModel.class,
-                        "Unknown field type class : " + fieldType.getName());
+                        "Data Source : Unknown field type class : " + fieldType.getName());
             }
         }
 

@@ -20,8 +20,11 @@
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
 
 import org.geotools.data.DataStore;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
@@ -36,7 +39,8 @@ import com.vividsolutions.jts.geom.Polygon;
 /**
  * Unit test for CreateSampleData.
  * 
- * <p>{@link com.sldeditor.datasource.impl.CreateSampleData}
+ * <p>
+ * {@link com.sldeditor.datasource.impl.CreateSampleData}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -98,6 +102,10 @@ public class CreateSampleDataTest {
                 CreateSampleData.getFieldTypeValue(5, expectedFieldName, Double.class, null));
         assertNull(CreateSampleData.getFieldTypeValue(6, expectedFieldName, SimpleFeatureType.class,
                 null));
+        // It will return the current time
+        assertNotNull(CreateSampleData.getFieldTypeValue(7, expectedFieldName, Date.class, null));
+        assertNotNull(CreateSampleData.getFieldTypeValue(8, expectedFieldName,
+                java.sql.Timestamp.class, null));
 
         String expectedStringValue = "test";
         assertEquals(expectedStringValue, CreateSampleData.getFieldTypeValue(0, expectedFieldName,
