@@ -139,6 +139,8 @@
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_STROKE" />
             <xs:enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT" />
 
+            <xs:enumeration value="VO_TEXT_SPACING" />
+
             <xs:enumeration value="VO_FTS" />
             <xs:enumeration value="VO_FTS_COMPOSITE" />
 

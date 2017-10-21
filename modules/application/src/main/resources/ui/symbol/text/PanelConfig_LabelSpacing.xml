@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    start="2.12.0"
+    localisation="com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing">
+    <Group id="VO_TEXT_SPACING" label="geoserver.text.spacing" showLabel="true">
+        <FieldConfigDouble id="VO_TEXT_SPACING_WORD"
+            label="geoserver.text.spacing.word" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer.DEFAULT_WORD_SPACING" />
+        <FieldConfigDouble id="VO_TEXT_SPACING_CHAR"
+            label="geoserver.text.spacing.char" valueOnly="true"
+            default="org.geotools.styling.TextSymbolizer.DEFAULT_CHAR_SPACING" />
+    </Group>
+</PanelConfig>

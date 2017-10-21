@@ -116,6 +116,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_FILL"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_STROKE"/&gt;
  *     &lt;enumeration value="VO_TEXTSYMBOLIZER_2_OTHERTEXT"/&gt;
+ *     &lt;enumeration value="VO_TEXT_SPACING"/&gt;
  *     &lt;enumeration value="VO_FTS"/&gt;
  *     &lt;enumeration value="VO_FTS_COMPOSITE"/&gt;
  *     &lt;enumeration value="VO_FTS_COMPOSITE_BASE"/&gt;
@@ -228,6 +229,7 @@ public enum GroupIdEnum {
     VO_TEXTSYMBOLIZER_2_FILL,
     VO_TEXTSYMBOLIZER_2_STROKE,
     VO_TEXTSYMBOLIZER_2_OTHERTEXT,
+    VO_TEXT_SPACING,
     VO_FTS,
     VO_FTS_COMPOSITE,
     VO_FTS_COMPOSITE_BASE,
