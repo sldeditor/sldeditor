@@ -20,6 +20,8 @@
 package com.sldeditor.ui.detail.config.base.defaults;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.StyleFactoryImpl;
@@ -32,8 +34,9 @@ import org.geotools.styling.TextSymbolizer;
  */
 public class DefaultTextSymbols extends DefaultBase {
 
-    /** The Constant EXPECTED_PREFIX. */
-    private static final String EXPECTED_PREFIX = "org.geotools.styling.TextSymbolizer2";
+    /** The Constant EXPECTED_PREFIX_LIST. */
+    private static final List<String> EXPECTED_PREFIX_LIST = Arrays
+            .asList("org.geotools.styling.TextSymbolizer2", "org.geotools.styling.TextSymbolizer");
 
     /** The style factory. */
     private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
@@ -49,8 +52,10 @@ public class DefaultTextSymbols extends DefaultBase {
      */
     @Override
     public boolean accepts(String defaultValue) {
-        if (defaultValue.startsWith(EXPECTED_PREFIX)) {
-            return true;
+        for (String expectedPrefix : EXPECTED_PREFIX_LIST) {
+            if (defaultValue.startsWith(expectedPrefix)) {
+                return true;
+            }
         }
         return false;
     }
@@ -62,16 +67,18 @@ public class DefaultTextSymbols extends DefaultBase {
      */
     @Override
     public Object getValue(String defaultValue) {
-        if (defaultValue.startsWith(EXPECTED_PREFIX)) {
-            int index = defaultValue.lastIndexOf(".");
+        for (String expectedPrefix : EXPECTED_PREFIX_LIST) {
+            if (defaultValue.startsWith(expectedPrefix)) {
+                int index = defaultValue.lastIndexOf(".");
 
-            if ((index < 0) || (index >= defaultValue.length())) {
-                return null;
+                if ((index < 0) || (index >= defaultValue.length())) {
+                    return null;
+                }
+
+                String fieldName = defaultValue.substring(index + 1);
+
+                return getDefaultValue(fieldName);
             }
-
-            String fieldName = defaultValue.substring(index + 1);
-
-            return getDefaultValue(fieldName);
         }
         return null;
     }
@@ -89,9 +96,11 @@ public class DefaultTextSymbols extends DefaultBase {
             Class<?>[] interfaceArray = textObj.getClass().getInterfaces();
 
             for (Class<?> interfaceObj : interfaceArray) {
-                if (interfaceObj.getTypeName().compareTo(EXPECTED_PREFIX) == 0) {
-                    expectedInterface = interfaceObj;
-                    break;
+                for (String expectedPrefix : EXPECTED_PREFIX_LIST) {
+                    if (interfaceObj.getTypeName().compareTo(expectedPrefix) == 0) {
+                        expectedInterface = interfaceObj;
+                        break;
+                    }
                 }
             }
         }

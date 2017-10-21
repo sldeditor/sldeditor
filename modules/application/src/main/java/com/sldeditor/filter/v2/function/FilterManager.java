@@ -19,6 +19,7 @@
 
 package com.sldeditor.filter.v2.function;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -74,6 +75,7 @@ import com.sldeditor.filter.v2.function.temporal.TEquals;
 import com.sldeditor.filter.v2.function.temporal.TOverlaps;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
+import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigDouble;
@@ -374,6 +376,8 @@ public class FilterManager implements FilterNameInterface {
                     fieldConfig = new FieldConfigMapUnits(commonData);
                 } else if (type == Comparable.class) {
                     fieldConfig = new FieldConfigString(commonData, null);
+                } else if (type == Color.class) {
+                    fieldConfig = new FieldConfigColour(commonData);
                 } else {
                     ConsoleManager.getInstance().error(this,
                             Localisation.getField(ExpressionPanelv2.class, "FilterManager.error1")

@@ -52,6 +52,9 @@ public class VendorOptionTextFactory
     /** The vendor option geo server text symbolizer 2. */
     private VOGeoServerTextSymbolizer2 vendorOptionGeoServerTextSymbolizer2 = null;
 
+    /** The vendor option geo server label spacing. */
+    private VOGeoServerTextSpacing vendorOptionGeoServerLabelSpacing = null;
+    
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -72,6 +75,9 @@ public class VendorOptionTextFactory
 
         vendorOptionGeoServerTextSymbolizer2 = new VOGeoServerTextSymbolizer2(panelId);
         vendorOptionList.add(vendorOptionGeoServerTextSymbolizer2);
+
+        vendorOptionGeoServerLabelSpacing = new VOGeoServerTextSpacing(panelId);
+        vendorOptionList.add(vendorOptionGeoServerLabelSpacing);
 
         VendorOptionManager.getInstance().addVendorOptionListener(this);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(this);
