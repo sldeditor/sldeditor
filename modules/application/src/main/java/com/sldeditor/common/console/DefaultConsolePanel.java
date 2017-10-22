@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.console;
 
 import java.awt.BorderLayout;
@@ -27,6 +26,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.reportissue.ReportIssue;
+
+import javax.swing.JButton;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Default implementation of the console panel.
@@ -55,6 +62,21 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
 
         JScrollPane jp = new JScrollPane(textPane);
         add(jp, BorderLayout.CENTER);
+
+        JPanel panel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+        flowLayout.setAlignment(FlowLayout.RIGHT);
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(1);
+        add(panel, BorderLayout.SOUTH);
+
+        JButton btnFeedback = new JButton(Localisation.getString(DefaultConsolePanel.class, "DefaultConsolePanel.feedback"));
+        btnFeedback.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ReportIssue.getInstance().display();
+            }
+        });
+        panel.add(btnFeedback);
     }
 
     /**
