@@ -3,7 +3,7 @@ Section: java
 Priority: optional
 Maintainer: Robert Ward <sldeditor.group@gmail.com>
 Build-Depends: debhelper (>=9)
-Standards-Version: 3.9.7
+Standards-Version: 3.9.8
 Homepage: https://github.com/robward-scisys/sldeditor
 Vcs-Git: https://github.com/robward-scisys/sldeditor.git
 
