@@ -1,7 +1,20 @@
 # Change Log
 
-## [0.7.6](https://github.com/robward-scisys/sldeditor/tree/0.7.6) (2017-08-02)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.5...0.7.6)
+## [0.7.7](https://github.com/robward-scisys/sldeditor/tree/0.7.7) (2017-10-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.6...0.7.7)
+
+**Implemented enhancements:**
+
+- Added data source field type support for java.sql.Timestamps [\#360](https://github.com/robward-scisys/sldeditor/pull/360) ([robward-scisys](https://github.com/robward-scisys))
+- Added support for label/character spacing vendor option in GeoTools 18 [\#361](https://github.com/robward-scisys/sldeditor/pull/361) ([robward-scisys](https://github.com/robward-scisys))
+- Added Feedback button to console window [\#363](https://github.com/robward-scisys/sldeditor/pull/363) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Iss357 legend image size [\#359](https://github.com/robward-scisys/sldeditor/pull/359) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.6](https://github.com/robward-scisys/sldeditor/tree/v0.7.6) (2017-08-02)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.5...v0.7.6)
 
 **Implemented enhancements:**
 
@@ -12,6 +25,25 @@
 - Import / export map-box styles [\#341](https://github.com/robward-scisys/sldeditor/issues/341)
 - Create deb installation [\#339](https://github.com/robward-scisys/sldeditor/issues/339)
 - Vendor Option dropdown needs compacting [\#335](https://github.com/robward-scisys/sldeditor/issues/335)
+- Iss350 geotools 17 2 [\#351](https://github.com/robward-scisys/sldeditor/pull/351) ([robward-scisys](https://github.com/robward-scisys))
+- Iss347 speed up app start times [\#349](https://github.com/robward-scisys/sldeditor/pull/349) ([robward-scisys](https://github.com/robward-scisys))
+- Updated to use ArcGIS 10.5 [\#348](https://github.com/robward-scisys/sldeditor/pull/348) ([robward-scisys](https://github.com/robward-scisys))
+- Added Report issue menu option [\#346](https://github.com/robward-scisys/sldeditor/pull/346) ([robward-scisys](https://github.com/robward-scisys))
+- Iss341 mapbox styles [\#344](https://github.com/robward-scisys/sldeditor/pull/344) ([robward-scisys](https://github.com/robward-scisys))
+- Added script to create MacOS installer [\#343](https://github.com/robward-scisys/sldeditor/pull/343) ([robward-scisys](https://github.com/robward-scisys))
+
+**Fixed bugs:**
+
+- Updated to use ArcGIS 10.5 [\#348](https://github.com/robward-scisys/sldeditor/pull/348) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Create release 0.7.5 [\#337](https://github.com/robward-scisys/sldeditor/issues/337)
+
+**Merged pull requests:**
+
+- Updated for version 0.7.6 [\#353](https://github.com/robward-scisys/sldeditor/pull/353) ([robward-scisys](https://github.com/robward-scisys))
+- Iss339 deb package [\#340](https://github.com/robward-scisys/sldeditor/pull/340) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.7.5](https://github.com/robward-scisys/sldeditor/tree/v0.7.5) (2017-05-03)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.4...v0.7.5)
