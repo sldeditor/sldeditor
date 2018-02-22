@@ -153,10 +153,12 @@ public class FilterPanelv2 extends JDialog
 
         createUI();
 
+        Controller.getInstance().setPopulating(true);
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         if (dataSource != null) {
             dataSource.addListener(this);
         }
+        Controller.getInstance().setPopulating(false);
         this.pack();
 
         Controller.getInstance().centreDialog(this);
