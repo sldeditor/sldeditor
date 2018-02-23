@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.7.7](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...0.7.8)
+
+**Fixed bugs:**
+
+- Iss366 Expression and filter panbels not populated with datasource fields [\#366](https://github.com/robward-scisys/sldeditor/pull/366) ([robward-scisys](https://github.com/robward-scisys))
+
 ## [0.7.7](https://github.com/robward-scisys/sldeditor/tree/0.7.7) (2017-10-23)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.6...0.7.7)
 
