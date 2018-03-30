@@ -1,6 +1,6 @@
 <xs:schema attributeFormDefault="unqualified"
     elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1">
 
     <!-- 
          SLD Editor - The Open Source Java SLD Editor
@@ -226,14 +226,14 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
-                <xs:attribute type="xs:double" name="minValue" use="optional" default="-INF" >
+                <xs:attribute type="xs:double" name="minValue" use="optional" >
                     <xs:annotation>
                         <xs:documentation>
                             Minimum allowed value
                         </xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
-                <xs:attribute type="xs:double" name="maxValue" use="optional" default="INF" >
+                <xs:attribute type="xs:double" name="maxValue" use="optional" >
                     <xs:annotation>
                         <xs:documentation>
                             Maximum allowed value

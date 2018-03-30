@@ -1,0 +1,41 @@
+<project name="SLDEditor" default="create-zip" basedir=".">
+  <!-- SLD Editor - The Open Source Java SLD Editor                          -->
+  <!--                                                                       -->
+  <!-- Copyright (C) 2018, SCISYS UK Limited                                 -->
+  <!--                                                                       -->
+  <!-- This program is free software: you can redistribute it and/or modify  -->
+  <!-- it under the terms of the GNU General Public License as published by  -->
+  <!-- the Free Software Foundation, either version 3 of the License, or     -->
+  <!-- (at your option) any later version.                                   -->
+  <!--                                                                       -->
+  <!-- This program is distributed in the hope that it will be useful,       -->
+  <!-- but WITHOUT ANY WARRANTY; without even the implied warranty of        -->
+  <!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         -->
+  <!-- GNU General Public License for more details.                          -->
+  <!--                                                                       -->
+  <!-- You should have received a copy of the GNU General Public License     -->
+  <!-- along with this program.  If not, see <http://www.gnu.org/licenses/>. -->
+
+  <!-- create zip with jar -->
+  <target name="create-zip" >
+    <property name="destDir"  value="../../bin"/>
+    
+    <delete file="${destDir}/runSLDEditor.sh"/>
+    <delete file="${destDir}/runSLDEditor.bat"/>
+    <delete file="${destDir}/SLDEditor.zip"/>
+
+    <copy file="runSLDEditor.sh" todir="${destDir}" />
+    <copy file="runSLDEditor.bat" todir="${destDir}" />
+
+    <zip destfile="${destDir}/SLDEditor.zip">
+       <fileset file="${destDir}/runSLDEditor.sh"/>
+       <fileset file="${destDir}/runSLDEditor.bat"/>
+       <fileset file="${destDir}/SLDEditor.jar"/>
+    </zip>
+
+    <delete file="${destDir}/runSLDEditor.sh"/>
+    <delete file="${destDir}/runSLDEditor.bat"/>
+    <delete file="${destDir}/SLDEditor.zip"/>
+  </target>
+
+</project>

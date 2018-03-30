@@ -40,3 +40,4 @@ config.properties
 /modules/application/consolemanagertest.log
 /modules/import/bin/ExportSLD.jar
 /modules/import/bin/ImportMXD.jar
+/target/

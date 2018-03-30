@@ -374,7 +374,7 @@ public class SLDOutputTest {
         } else if (testValue instanceof XMLSetFieldLiteralBoolean) {
             XMLSetFieldLiteralBoolean booleanLiteral = (XMLSetFieldLiteralBoolean) testValue;
             if ((extractedString != null) && !extractedString.isEmpty()) {
-                passed = (Boolean.valueOf(extractedString) == booleanLiteral.isValue());
+                passed = (Boolean.valueOf(extractedString) == booleanLiteral.getValue());
             }
         }
 
