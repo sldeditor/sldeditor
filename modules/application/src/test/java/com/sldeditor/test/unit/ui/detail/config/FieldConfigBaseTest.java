@@ -449,9 +449,20 @@ public class FieldConfigBaseTest {
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
         DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
-        FunctionName functionName = functionFactory.getFunctionNames().get(0);
 
-        Expression testExpression = ff.function(functionName.getFunctionName(), (Expression) null);
+        FunctionName functionName = null;
+
+        for(FunctionName func : functionFactory.getFunctionNames())
+        {
+            if(func.getName() == "greaterThan")
+            {
+                functionName = func;
+                break;
+            }
+        }
+
+        assertNotNull(functionName);
+        Expression testExpression = ff.function(functionName.getFunctionName(), ff.literal(1), ff.literal(2) );
         field.functionUpdated(testExpression);
         assertTrue(listener.hasBeenCalled());
 
@@ -485,9 +496,20 @@ public class FieldConfigBaseTest {
 
         // Test function
         DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
-        FunctionName functionName = functionFactory.getFunctionNames().get(0);
+        FunctionName functionName = null;
 
-        Expression testExpression = ff.function(functionName.getFunctionName(), (Expression) null);
+        for(FunctionName func : functionFactory.getFunctionNames())
+        {
+            if(func.getName() == "greaterThan")
+            {
+                functionName = func;
+                break;
+            }
+        }
+
+        assertNotNull(functionName);
+
+        Expression testExpression = ff.function(functionName.getFunctionName(), ff.literal(1), ff.literal(2) );
         field.populate(testExpression);
         // Updated because the attribute pulldown changed
         assertTrue(listener.hasBeenCalled());

@@ -163,7 +163,7 @@ public class ReadMapUnits implements PanelConfigInterface {
         SymbolTypeConfig config = new SymbolTypeConfig(panelId);
 
         String groupName = valueObj.getGroupName();
-        boolean isSeparateGroup = valueObj.isSeparateGroup();
+        boolean isSeparateGroup = valueObj.getSeparateGroup();
 
         if (groupName != null) {
             config.setGroupName(groupName);
@@ -179,7 +179,7 @@ public class ReadMapUnits implements PanelConfigInterface {
 
         if (fieldList != null) {
             for (XMLFieldConfigEnumValueField field : fieldList.getField()) {
-                config.addField(field.getId(), field.isEnabled());
+                config.addField(field.getId(), field.getEnabled());
             }
         }
         return config;

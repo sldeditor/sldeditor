@@ -299,7 +299,7 @@ public class SLDTestRunner {
                 Assert.assertEquals(panelClassName, selectedItem.getExpectedPanel());
 
                 Assert.assertEquals("Check panel data present", panel.isDataPresent(),
-                        selectedItem.isEnabled());
+                        selectedItem.getEnabled());
 
                 Class<?> panelId = null;
                 try {
@@ -354,10 +354,10 @@ public class SLDTestRunner {
                                         Assert.assertNotNull(panelId.getName() + "/" + groupId
                                                 + " group should exist", groupConfig);
 
-                                        groupConfig.enable(testValue.isEnable());
+                                        groupConfig.enable(testValue.getEnable());
 
                                         Assert.assertTrue(groupId + " should be set", groupConfig
-                                                .isPanelEnabled() == testValue.isEnable());
+                                                .isPanelEnabled() == testValue.getEnable());
                                     } else {
                                         XMLFieldBase testValue = (XMLFieldBase) xmlTestValueObj;
                                         FieldIdEnum fieldId = testValue.getField();
@@ -382,8 +382,7 @@ public class SLDTestRunner {
                                                     (XMLSetFieldLiteralInterface) testValue;
                                             testInterface.accept(fieldConfig, fieldId);
 
-                                            if (!((XMLSetFieldLiteralBase) testValue)
-                                                    .isIgnoreCheck()) {
+                                            if (!((XMLSetFieldLiteralBase) testValue).getIgnoreCheck()) {
                                                 String sldContentString = sldEditor.getSLDString();
 
                                                 boolean actualResult = testOutput.testValue(
@@ -615,7 +614,7 @@ public class SLDTestRunner {
         } else if (testValue instanceof XMLFieldLiteralDouble) {
             return ((XMLFieldLiteralDouble) testValue).getValue();
         } else if (testValue instanceof XMLFieldLiteralBoolean) {
-            return ((XMLFieldLiteralBoolean) testValue).isValue();
+            return ((XMLFieldLiteralBoolean) testValue).getValue();
         }
 
         return null;

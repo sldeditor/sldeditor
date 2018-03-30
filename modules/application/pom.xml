@@ -238,18 +238,18 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.8.0</version>
+			<version>2.8.2</version>
 			<scope>compile</scope>
 		</dependency>
         <dependency>
           <groupId>com.googlecode.json-simple</groupId>
           <artifactId>json-simple</artifactId>
-          <version>1.1</version>
+          <version>1.1.1</version>
         </dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
+			<version>4.5.5</version>
 		</dependency>
 		<!-- Using the GeoServer legend generation code causes a CRS factory -->
 		<!-- to be loaded which results in no CRS codes when the user is asked -->
@@ -281,11 +281,11 @@
 			<artifactId>docking-frames-common</artifactId>
 			<version>1.1.2-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
-		</dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -406,46 +406,73 @@
 			<!-- =========================================================== -->
 			<!-- Generate JAXB classes from xsd -->
 			<!-- =========================================================== -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<id>ui xsd xjc</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/main/resources/xsd/paneldetails.xsd</source>
-								<source>src/main/resources/xsd/symboltype.xsd</source>
-								<source>src/main/resources/xsd/colourramp.xsd</source>
-								<source>src/main/resources/xsd/testvalue.xsd</source>
-								<source>src/main/resources/xsd/testoutput.xsd</source>
-								<source>src/main/resources/xsd/mapunits.xsd</source>
-							</sources>
-							<packageName>com.sldeditor.common.xml.ui</packageName>
-							<outputDirectory>src/main/java</outputDirectory>
-							<clearOutputDir>false</clearOutputDir>
-						</configuration>
-					</execution>
-					<execution>
-						<id>envvar xsd xjc</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/main/resources/xsd/envvar.xsd</source>
-							</sources>
-							<packageName>com.sldeditor.common.xml.envvar</packageName>
-							<outputDirectory>src/main/java</outputDirectory>
-							<clearOutputDir>false</clearOutputDir>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-xjc-plugin</artifactId>
+                <version>2.3.0</version>
+                <configuration>
+                    <extensions>
+                        <extension>org.apache.cxf.xjcplugins:cxf-xjc-boolean:2.3.0</extension>
+                    </extensions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>xsdtojava</goal>
+                        </goals>
+                        <configuration>
+                            <sourceRoot>${basedir}/src/main/java</sourceRoot>
+                            <xsdOptions>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/paneldetails.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.ui</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/symboltype.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.ui</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/colourramp.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.ui</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/testvalue.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.ui</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/testoutput.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.ui</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/mapunits.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.ui</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/xsd/envvar.xsd</xsd>
+                                    <packagename>com.sldeditor.common.xml.envvar</packagename>
+                                    <extension>true</extension>
+                                    <extensionArgs><arg>-Xbg</arg></extensionArgs>
+                                </xsdOption>
+                            </xsdOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 			<!-- =========================================================== -->
 			<!-- Replace date/time string in generate JAXB classes with -->
 			<!-- constant string, stops getting lots of git commits. -->
@@ -480,7 +507,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.3</version>
+				<version>3.1.0</version>
 				<configuration>
 					<finalName>${app.name}</finalName>
 					<outputDirectory>${sldeditor.dest.folder}</outputDirectory>

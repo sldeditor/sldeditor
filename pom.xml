@@ -30,10 +30,6 @@
     <name>SLDEditor</name>
     <packaging>pom</packaging>
 
-    <prerequisites>
-        <maven>3.0.5</maven>
-    </prerequisites>
-
     <!-- =========================================================== -->
     <!-- Developers and Contributors -->
     <!-- =========================================================== -->
@@ -56,10 +52,10 @@
     <!-- =========================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>18.0</geotools.version>
-        <geoserver.version>2.12.0</geoserver.version>
+        <geotools.version>19.0</geotools.version>
+        <geoserver.version>2.13.0</geoserver.version>
         <slf4j.version>1.5.11</slf4j.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>1.2.14</log4j.version>
         <junit.version>4.12</junit.version>
         <surefire.version>2.19.1</surefire.version>
         <jdatepicker.version>1.3.2</jdatepicker.version>
@@ -222,7 +218,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>  <!-- The -source argument for the Java compiler. -->
                     <target>1.8</target>  <!-- The -target argument for the Java compiler. -->
@@ -251,7 +247,7 @@
                           <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
                         </bannedPlugins>
                         <requireMavenVersion>
-                          <version>3.0.5</version>
+                          <version>3.5.2</version>
                         </requireMavenVersion>
                         <requireJavaVersion>
                           <version>1.8</version>
@@ -324,6 +320,8 @@
                                 <directory>bin</directory>
                                 <includes>
                                     <include>**/*.jar</include>
+                                    <include>**/*.zip</include>
+                                    <include>**/runSLDEditor.*</include>
                                 </includes>
                                 <followSymlinks>false</followSymlinks>
                             </fileset>
@@ -338,7 +336,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>7.6.1</version>
+                            <version>8.8</version>
                         </dependency>
                     </dependencies>
                 </plugin>

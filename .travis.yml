@@ -1,4 +1,5 @@
-jdk : oraclejdk8
+jdk :
+  - oraclejdk8
 language : java
 cache:
   directories:
@@ -6,6 +7,9 @@ cache:
 script : 
   - mvn clean test
   - mvn test -P IntegrationTests
+
+before_install:
+    - cp build/travis/travis-toolchains.xml ~/.m2/toolchains.xml
 
 before_script:
   - "export DISPLAY=:99.0"
