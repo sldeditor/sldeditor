@@ -33,9 +33,6 @@
        <fileset file="${destDir}/SLDEditor.jar"/>
     </zip>
 
-    <delete file="${destDir}/runSLDEditor.sh"/>
-    <delete file="${destDir}/runSLDEditor.bat"/>
-    <delete file="${destDir}/SLDEditor.zip"/>
   </target>
 
 </project>
