@@ -25,6 +25,8 @@
     <delete file="${destDir}/SLDEditor.zip"/>
 
     <copy file="runSLDEditor.sh" todir="${destDir}" />
+    <chmod file="${destDir}/runSLDEditor.sh" perm="+x"/>
+
     <copy file="runSLDEditor.bat" todir="${destDir}" />
 
     <zip destfile="${destDir}/SLDEditor.zip">
