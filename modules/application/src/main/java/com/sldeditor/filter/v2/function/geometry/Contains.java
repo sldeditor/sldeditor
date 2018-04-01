@@ -67,7 +67,7 @@ public class Contains implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Contains " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " contains " + getExpression2() + " ]";
         }
 
         /*

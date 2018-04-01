@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,10 @@ package com.sldeditor.filter.v2.function.geometry;
 
 import java.util.List;
 
-import org.geotools.filter.spatial.CrossesImpl;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.spatial.BeyondImpl;
 import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
@@ -33,41 +35,66 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * The Class Crosses.
+ * The Class Beyond.
  *
  * @author Robert Ward (SCISYS)
  */
-public class Crosses implements FilterConfigInterface {
+public class Beyond implements FilterConfigInterface {
+
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * The Class CrossesExtended.
+     * The Class BeyondExtended.
      */
-    public class CrossesExtended extends CrossesImpl implements FilterExtendedInterface {
+    public class BeyondExtended extends BeyondImpl implements FilterExtendedInterface {
 
         /**
-         * Instantiates a new crosses extended.
+         * Instantiates a new d within extended.
          */
-        public CrossesExtended() {
+        public BeyondExtended() {
             super(null, null);
         }
 
         /**
-         * Instantiates a new crosses extended.
+         * Instantiates a new d within extended.
          *
          * @param expression1 the expression 1
          * @param expression2 the expression 2
+         * @param distanceExp the distance exp
+         * @param unitsExp the units exp
          */
-        public CrossesExtended(Expression expression1, Expression expression2) {
+        public BeyondExtended(Expression expression1, Expression expression2,
+                Expression distanceExp, Expression unitsExp) {
             super(expression1, expression2);
+
+            double distance = Double.parseDouble(distanceExp.toString());
+            setDistance(distance);
+            setUnits(unitsExp.toString());
         }
 
         /*
          * (non-Javadoc)
          * 
-         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         * @see org.geotools.filter.CartesianDistanceFilter#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " crosses " + getExpression2() + " ]";
+            String operator = " beyond ";
+
+            String distStr = ", distance: " + getDistance();
+
+            org.opengis.filter.expression.Expression leftGeometry = getExpression1();
+            org.opengis.filter.expression.Expression rightGeometry = getExpression2();
+
+            if ((leftGeometry == null) && (rightGeometry == null)) {
+                return "[ " + "null" + operator + "null" + distStr + " ]";
+            } else if (leftGeometry == null) {
+                return "[ " + "null" + operator + rightGeometry.toString() + distStr + " ]";
+            } else if (rightGeometry == null) {
+                return "[ " + leftGeometry.toString() + operator + "null" + distStr + " ]";
+            }
+
+            return "[ " + leftGeometry.toString() + operator + rightGeometry.toString() + distStr
+                    + " ]";
         }
 
         /*
@@ -77,14 +104,14 @@ public class Crosses implements FilterConfigInterface {
          */
         @Override
         public Class<?> getOriginalFilter() {
-            return CrossesImpl.class;
+            return BeyondImpl.class;
         }
     }
 
     /**
      * Default constructor.
      */
-    public Crosses() {
+    public Beyond() {
     }
 
     /**
@@ -94,11 +121,15 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public FilterName getFilterConfiguration() {
-        FilterName filterName = new FilterName("Crosses", Boolean.class);
+        FilterName filterName = new FilterName("Beyond", Boolean.class);
         filterName.addParameter(
                 new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
         filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
                 Geometry.class));
+        filterName.addParameter(
+                new FilterNameParameter("distance", ExpressionTypeEnum.EXPRESSION, Double.class));
+        filterName.addParameter(
+                new FilterNameParameter("units", ExpressionTypeEnum.EXPRESSION, String.class));
 
         return filterName;
     }
@@ -110,7 +141,7 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public Class<?> getFilterClass() {
-        return CrossesImpl.class;
+        return BeyondImpl.class;
     }
 
     /**
@@ -120,7 +151,7 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter() {
-        return new CrossesExtended();
+        return new BeyondExtended();
     }
 
     /**
@@ -132,12 +163,19 @@ public class Crosses implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        CrossesImpl filter = null;
+        BeyondImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() != 2)) {
-            filter = new CrossesExtended();
+        if ((parameterList == null) || ((parameterList.size() != 2) && (parameterList.size() != 4))) {
+            filter = new BeyondExtended();
         } else {
-            filter = new CrossesExtended(parameterList.get(0), parameterList.get(1));
+            
+            if(parameterList.size() == 2)
+            {
+                parameterList.add(ff.literal(0.0));
+                parameterList.add(ff.literal(""));
+            }
+            filter = new BeyondExtended(parameterList.get(0), parameterList.get(1),
+                    parameterList.get(2), parameterList.get(3));
         }
 
         return filter;

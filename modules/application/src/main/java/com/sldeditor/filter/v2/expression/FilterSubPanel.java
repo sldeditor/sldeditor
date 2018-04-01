@@ -111,6 +111,11 @@ public class FilterSubPanel extends JPanel {
             public void updateSymbol() {
                 updateButtonState(true);
             }
+
+            @Override
+            public void parameterAdded() {
+                // Do nothing
+            }
         }, FilterManager.getInstance());
         panelFilter.add(filterPanel);
 

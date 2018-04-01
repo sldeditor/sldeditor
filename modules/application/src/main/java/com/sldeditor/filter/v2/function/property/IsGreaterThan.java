@@ -124,7 +124,7 @@ public class IsGreaterThan implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsGreaterThanImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() < 3)) {
+        if ((parameterList == null) || (parameterList.size() < 2) || (parameterList.size() > 3)) {
             filter = new IsGreaterThanExtended();
         } else {
             filter = new IsGreaterThanExtended(parameterList.get(0), parameterList.get(1));

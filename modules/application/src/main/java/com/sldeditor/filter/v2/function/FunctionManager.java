@@ -105,7 +105,7 @@ public class FunctionManager implements FunctionNameInterface {
                     classList.add(function.getArguments().get(index).getType());
                 }
                 logger.debug("\t" + function.getArgumentNames().get(index) + "\t"
-                        + function.getArguments().get(index).getType().getName() + "\t"
+                        + function.getArguments().get(index).getType().getName() + "\t\t"
                         + function.getArguments().get(index).getMinOccurs() + "\t"
                         + function.getArguments().get(index).getMaxOccurs());
             }

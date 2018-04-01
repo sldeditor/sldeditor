@@ -80,6 +80,11 @@ public class EnvironmentVariablePanel extends JPanel {
             public void updateSymbol() {
                 updateButtonState(true);
             }
+
+            @Override
+            public void parameterAdded() {
+                // Do nothing
+            }
         });
 
         add(dataSourceAttributePanel, BorderLayout.NORTH);

@@ -67,7 +67,7 @@ public class BBox implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " BBox " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " bbox " + getExpression2() + " ]";
         }
 
         /*

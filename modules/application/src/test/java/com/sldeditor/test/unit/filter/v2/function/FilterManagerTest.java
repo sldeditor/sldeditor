@@ -106,7 +106,7 @@ public class FilterManagerTest {
         List<FilterConfigInterface> filterConfigList = FilterManager.getInstance()
                 .getFilterConfigList();
 
-        assertEquals(29, filterConfigList.size());
+        assertEquals(37, filterConfigList.size());
     }
 
     /**

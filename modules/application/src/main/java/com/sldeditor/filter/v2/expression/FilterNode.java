@@ -25,6 +25,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.BinaryComparisonAbstract;
+import org.geotools.filter.CartesianDistanceFilter;
+import org.geotools.filter.FidFilterImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
@@ -33,6 +35,7 @@ import org.opengis.filter.PropertyIsBetween;
 import org.opengis.filter.PropertyIsLike;
 import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.identity.Identifier;
 import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 
@@ -209,10 +212,19 @@ public class FilterNode extends DefaultMutableTreeNode {
                 setExpressionParameter(ff.literal(((PropertyIsLike) filter).isMatchingCase()),
                         filterName.getParameter(5));
             } else if (filter instanceof BinarySpatialOperator) {
-                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression1(),
+                setExpressionParameter(((BinarySpatialOperator) filter).getExpression1(),
                         filterName.getParameter(0));
-                setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression2(),
+                setExpressionParameter(((BinarySpatialOperator) filter).getExpression2(),
                         filterName.getParameter(1));
+
+                if (filter instanceof CartesianDistanceFilter) {
+                    setExpressionParameter(
+                            ff.literal(((CartesianDistanceFilter) filter).getDistance()),
+                            filterName.getParameter(2));
+                    setExpressionParameter(
+                            ff.literal(((CartesianDistanceFilter) filter).getDistanceUnits()),
+                            filterName.getParameter(3));
+                }
             } else if (filter instanceof BinaryComparisonAbstract) {
                 setExpressionParameter(((BinaryComparisonAbstract) filter).getExpression1(),
                         filterName.getParameter(0));
@@ -225,6 +237,12 @@ public class FilterNode extends DefaultMutableTreeNode {
                     setExpressionParameter(
                             ff.literal(((BinaryComparisonAbstract) filter).isMatchingCase()),
                             filterName.getParameter(2));
+                }
+            } else if (filter instanceof FidFilterImpl) {
+                FidFilterImpl fidFilter = (FidFilterImpl) filter;
+
+                for (Identifier identifier : fidFilter.getIdentifiers()) {
+                    setExpressionParameter(ff.literal(identifier), filterName.getParameter(0));
                 }
             }
         }

@@ -67,7 +67,7 @@ public class Overlaps implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Overlaps " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " overlaps " + getExpression2() + " ]";
         }
 
         /*

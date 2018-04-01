@@ -129,7 +129,7 @@ public class IsLessThanEqualTo implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsLessThenOrEqualToImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() != 3)) {
+        if ((parameterList == null) || (parameterList.size() < 2) || (parameterList.size() > 3)) {
             filter = new IsLessThanOrEqualToExtended();
         } else {
             LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(2);

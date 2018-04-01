@@ -67,7 +67,7 @@ public class Touches implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Touches " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " touches " + getExpression2() + " ]";
         }
 
         /*

@@ -26,7 +26,7 @@
     <!-- =========================================================== -->
     <groupId>com.sldeditor</groupId>
     <artifactId>sldeditor</artifactId>
-    <version>0.7.8</version>
+    <version>0.7.9-SNAPSHOT</version>
     <name>SLDEditor</name>
     <packaging>pom</packaging>
 
@@ -247,7 +247,7 @@
                           <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
                         </bannedPlugins>
                         <requireMavenVersion>
-                          <version>3.5.2</version>
+                          <version>3.5.0</version>
                         </requireMavenVersion>
                         <requireJavaVersion>
                           <version>1.8</version>
@@ -321,7 +321,6 @@
                                 <includes>
                                     <include>**/*.jar</include>
                                     <include>**/*.zip</include>
-                                    <include>**/runSLDEditor.*</include>
                                 </includes>
                                 <followSymlinks>false</followSymlinks>
                             </fileset>

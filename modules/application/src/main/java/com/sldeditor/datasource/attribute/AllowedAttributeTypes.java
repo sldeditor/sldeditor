@@ -78,25 +78,25 @@ public class AllowedAttributeTypes {
      */
     private static void initialise() {
         List<Class<?>> doubleList = new ArrayList<Class<?>>(
-                Arrays.asList(Integer.class, Long.class, Double.class, Float.class));
+                Arrays.asList(Integer.class, Long.class, Double.class, Float.class, Object.class));
         List<Class<?>> integerList = new ArrayList<Class<?>>(
-                Arrays.asList(Integer.class, Long.class));
+                Arrays.asList(Integer.class, Long.class, Object.class));
         List<Class<?>> stringList = new ArrayList<Class<?>>(Arrays.asList(String.class));
         List<Class<?>> geometryList = new ArrayList<Class<?>>(
                 Arrays.asList(Point.class, LineString.class, Polygon.class, MultiPolygon.class,
-                        MultiPoint.class, MultiLineString.class, GridCoverage2D.class));
+                        MultiPoint.class, MultiLineString.class, GridCoverage2D.class, Object.class));
         List<Class<?>> lineStringList = new ArrayList<Class<?>>(
-                Arrays.asList(LineString.class, MultiLineString.class));
+                Arrays.asList(LineString.class, MultiLineString.class, Object.class));
         List<Class<?>> pointList = new ArrayList<Class<?>>(
-                Arrays.asList(Point.class, MultiPoint.class));
+                Arrays.asList(Point.class, MultiPoint.class, Object.class));
         List<Class<?>> linearRingList = new ArrayList<Class<?>>(Arrays.asList(LinearRing.class));
         List<Class<?>> rangedClassifierList = new ArrayList<Class<?>>(
-                Arrays.asList(RangedClassifier.class));
-        List<Class<?>> classifierList = new ArrayList<Class<?>>(Arrays.asList(Classifier.class));
+                Arrays.asList(RangedClassifier.class, Object.class));
+        List<Class<?>> classifierList = new ArrayList<Class<?>>(Arrays.asList(Classifier.class, Object.class));
         List<Class<?>> rasterGeometryList = new ArrayList<Class<?>>(
-                Arrays.asList(GridCoverage2D.class));
+                Arrays.asList(GridCoverage2D.class, Object.class));
         List<Class<?>> referencedEnvelopeList = new ArrayList<Class<?>>(
-                Arrays.asList(ReferencedEnvelope.class));
+                Arrays.asList(ReferencedEnvelope.class, Object.class));
 
         allowedClassTypeMap.put(String.class, stringList);
         allowedClassTypeMap.put(Double.class, doubleList);

@@ -73,7 +73,7 @@ public class IsLike implements FilterConfigInterface {
          * @see org.geotools.filter.LikeFilterImpl#toString()
          */
         public String toString() {
-            return "[ Like " + getExpression() + " ]";
+            return String.format("[ %s is like %s ]", getExpression().toString(), getLiteral() );
         }
 
         /*

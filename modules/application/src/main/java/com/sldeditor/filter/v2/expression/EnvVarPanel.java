@@ -82,6 +82,11 @@ public class EnvVarPanel extends JPanel {
             public void updateSymbol() {
                 updateButtonState(true);
             }
+
+            @Override
+            public void parameterAdded() {
+                // Do nothing
+            }
         }, EnvironmentVariableManager.getInstance());
 
         add(envVarField, BorderLayout.NORTH);

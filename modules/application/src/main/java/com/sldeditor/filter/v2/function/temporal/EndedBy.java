@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.filter.v2.function.geometry;
+package com.sldeditor.filter.v2.function.temporal;
 
+import java.util.Date;
 import java.util.List;
 
-import org.geotools.filter.spatial.CrossesImpl;
+import org.geotools.filter.temporal.EndedByImpl;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -30,44 +31,43 @@ import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * The Class Crosses.
+ * The Class Ends.
  *
  * @author Robert Ward (SCISYS)
  */
-public class Crosses implements FilterConfigInterface {
+public class EndedBy implements FilterConfigInterface {
 
     /**
-     * The Class CrossesExtended.
+     * The Class EndByExtended.
      */
-    public class CrossesExtended extends CrossesImpl implements FilterExtendedInterface {
+    public class EndByExtended extends EndedByImpl implements FilterExtendedInterface {
 
         /**
-         * Instantiates a new crosses extended.
+         * Instantiates a new after extended.
          */
-        public CrossesExtended() {
+        public EndByExtended() {
             super(null, null);
         }
 
         /**
-         * Instantiates a new crosses extended.
+         * Instantiates a new after extended.
          *
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public CrossesExtended(Expression expression1, Expression expression2) {
+        public EndByExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
         /*
          * (non-Javadoc)
          * 
-         * @see org.geotools.filter.GeometryFilterImpl#toString()
+         * @see java.lang.Object#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " crosses " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " EndedBy " + getExpression2() + " ]";
         }
 
         /*
@@ -77,14 +77,14 @@ public class Crosses implements FilterConfigInterface {
          */
         @Override
         public Class<?> getOriginalFilter() {
-            return CrossesImpl.class;
+            return EndedByImpl.class;
         }
     }
 
     /**
      * Default constructor.
      */
-    public Crosses() {
+    public EndedBy() {
     }
 
     /**
@@ -94,11 +94,11 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public FilterName getFilterConfiguration() {
-        FilterName filterName = new FilterName("Crosses", Boolean.class);
+        FilterName filterName = new FilterName("EndedBy", Boolean.class);
         filterName.addParameter(
-                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
-                Geometry.class));
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Date.class));
+        filterName.addParameter(
+                new FilterNameParameter("datetime", ExpressionTypeEnum.LITERAL, Date.class));
 
         return filterName;
     }
@@ -110,7 +110,7 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public Class<?> getFilterClass() {
-        return CrossesImpl.class;
+        return EndedByImpl.class;
     }
 
     /**
@@ -120,7 +120,7 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter() {
-        return new CrossesExtended();
+        return new EndByExtended();
     }
 
     /**
@@ -132,12 +132,12 @@ public class Crosses implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        CrossesImpl filter = null;
+        EndedByImpl filter = null;
 
         if ((parameterList == null) || (parameterList.size() != 2)) {
-            filter = new CrossesExtended();
+            filter = new EndByExtended();
         } else {
-            filter = new CrossesExtended(parameterList.get(0), parameterList.get(1));
+            filter = new EndByExtended(parameterList.get(0), parameterList.get(1));
         }
 
         return filter;

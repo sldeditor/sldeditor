@@ -41,3 +41,7 @@ config.properties
 /modules/import/bin/ExportSLD.jar
 /modules/import/bin/ImportMXD.jar
 /target/
+
+bin/runSLDEditor\.bat
+
+bin/runSLDEditor\.sh

@@ -52,12 +52,12 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     private static final String[] GEOMETRY_NAME = { "Geometry (Point)", "Geometry (Multi-Point)",
             "Geometry (Line)", "Geometry (Multi-Line)", "Geometry (Polygon)",
             "Geometry (Multi-Polygon)", "String", "Integer", "Long", "Double", "Float", "Short",
-            "DateTime", "Timestamp" };
+            "DateTime", "Timestamp", "Object" };
 
     /** The class type array. */
     private static final  Class<?>[] CLASSTYPE = { Point.class, MultiPoint.class, LineString.class,
             MultiLineString.class, Polygon.class, MultiPolygon.class, String.class, Integer.class,
-            Long.class, Double.class, Float.class, Short.class, Date.class, java.sql.Timestamp.class };
+            Long.class, Double.class, Float.class, Short.class, Date.class, java.sql.Timestamp.class, Object.class };
     //CHECKSTYLE:ON
 
     /** The type map. */

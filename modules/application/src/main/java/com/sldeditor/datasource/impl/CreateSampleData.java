@@ -91,8 +91,7 @@ public class CreateSampleData {
         }
 
         // Put fields into map for speed
-        Map<String, DataSourceAttributeData> fieldMap = 
-                new HashMap<String, DataSourceAttributeData>();
+        Map<String, DataSourceAttributeData> fieldMap = new HashMap<String, DataSourceAttributeData>();
         if (fieldList != null) {
             for (DataSourceAttributeData attributeData : fieldList) {
                 fieldMap.put(attributeData.getName(), attributeData);
@@ -158,8 +157,8 @@ public class CreateSampleData {
     }
 
     /**
-     * Gets the field type value. If value is set return it, 
-     * if it is null make up a suitable default
+     * Gets the field type value. If value is set return it, if it is null make up a suitable
+     * default
      *
      * @param index the index
      * @param fieldName the name
@@ -203,6 +202,9 @@ public class CreateSampleData {
         } else if (fieldType == java.sql.Timestamp.class) {
             Calendar cal = Calendar.getInstance();
             value = new java.sql.Timestamp(cal.getTime().getTime());
+        } else {
+            // This should be an Object, so hedge our bets and set the default value to be an integer in a string
+            value = String.valueOf(index);
         }
         return value;
     }

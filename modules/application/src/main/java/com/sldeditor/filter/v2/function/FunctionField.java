@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -36,6 +37,7 @@ import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.FunctionImpl;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
+import org.opengis.parameter.Parameter;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
@@ -43,9 +45,12 @@ import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.filter.v2.expression.ExpressionNode;
+import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
+import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 
 /**
@@ -73,6 +78,15 @@ public class FunctionField extends JPanel implements UndoActionInterface {
     /** The function name mgr. */
     private FunctionNameInterface functionNameMgr = null;
 
+    /**  Is edited symbol a raster flag. */
+    private boolean isRasterSymbol = false;
+
+    /** The current expression. */
+    private Expression currentExpression = null;
+
+    /** The current expression node. */
+    private ExpressionNode currentExpressionNode = null;
+
     /**
      * Gets the panel name.
      *
@@ -97,6 +111,22 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
         functionComboBox = new JComboBox<String>();
         add(functionComboBox, BorderLayout.CENTER);
+
+        JPanel panel = new JPanel();
+        add(panel, BorderLayout.SOUTH);
+
+        JButton btnAddParameter = new JButton(Localisation.getString(ExpressionPanelv2.class,
+                "FunctionField.addParameter"));
+        btnAddParameter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addParameter();
+                if (parentObj != null) {
+                    parentObj.parameterAdded();
+                }
+            }
+        });
+        panel.add(btnAddParameter);
+
         functionComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -104,6 +134,14 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
                 UndoManager.getInstance()
                         .addUndoEvent(new UndoEvent(thisObj, "Function", oldValueObj, newValueObj));
+
+                FunctionName functionName = functionNameMap.get(newValueObj);
+                boolean variableNoOfParameters = false;
+                if (functionName != null) {
+                    variableNoOfParameters = (functionName.getArgumentCount() < 0);
+                }
+
+                btnAddParameter.setVisible(variableNoOfParameters);
 
                 if (parentObj != null) {
                     parentObj.updateSymbol();
@@ -113,16 +151,39 @@ public class FunctionField extends JPanel implements UndoActionInterface {
     }
 
     /**
+     * Adds a variable parameter.
+     */
+    private void addParameter() {
+        FunctionExpression functionExpression = (FunctionExpression) currentExpression;
+        FunctionName functionName = functionExpression.getFunctionName();
+
+        int argCount = functionName.getArgumentCount();
+
+        if (functionName.getArgumentCount() < 0) {
+            argCount *= -1;
+
+            ExpressionNode childNode = new ExpressionNode();
+            Parameter<?> parameter = functionName.getArguments().get(argCount - 1);
+            childNode.setType(parameter.getType());
+            childNode.setName(parameter.getName());
+
+            Expression newExpression = functionExpression.getParameters().get(argCount - 1);
+            childNode.setExpression(newExpression);
+            functionExpression.getParameters().add(newExpression);
+            currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
+            currentExpressionNode.setDisplayString();
+        }
+    }
+
+    /**
      * Sets the field data types.
      *
      * @param fieldType the new data type
-     * @param isRasterSymbol the is raster symbol
      */
-    public void setDataType(Class<?> fieldType, boolean isRasterSymbol) {
+    public void setDataType(Class<?> fieldType) {
         functionNameMap.clear();
 
-        List<FunctionNameFilterInterface> functionNameFilterList =
-                new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
 
         if (isRasterSymbol) {
             functionNameFilterList.add(new FunctionNameFilterRaster());
@@ -184,8 +245,12 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      * Sets the function.
      *
      * @param expression the new attribute
+     * @param node the node
      */
-    public void setFunction(Expression expression) {
+    public void setFunction(Expression expression, ExpressionNode node) {
+
+        currentExpression = expression;
+        currentExpressionNode = node;
 
         if (expression == null) {
             functionComboBox.setSelectedIndex(-1);
@@ -199,7 +264,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
                 functionComboBox.setSelectedItem(functionName);
             } else {
-                ConsoleManager.getInstance().error(this, Localisation.getString(FunctionField.class,
+                ConsoleManager.getInstance().error(this, Localisation.getString(DataSourceAttributePanel.class,
                         "DataSourceAttributePanel.error1"));
             }
         }
@@ -293,5 +358,14 @@ public class FunctionField extends JPanel implements UndoActionInterface {
         String newValueObj = (String) undoRedoObject.getNewValue();
 
         functionComboBox.setSelectedItem(newValueObj);
+    }
+
+    /**
+     * Sets the is edited symbol a raster flag.
+     *
+     * @param isRasterSymbol the isRasterSymbol to set
+     */
+    public void setIsRasterSymbol(boolean isRasterSymbol) {
+        this.isRasterSymbol = isRasterSymbol;
     }
 }
