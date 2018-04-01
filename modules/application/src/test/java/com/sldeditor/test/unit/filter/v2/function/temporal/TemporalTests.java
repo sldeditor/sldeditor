@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.BinaryComparisonAbstract;
 import org.geotools.filter.temporal.BinaryTemporalOperatorImpl;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
@@ -35,7 +34,6 @@ import org.opengis.filter.expression.Expression;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.temporal.After;
 import com.sldeditor.filter.v2.function.temporal.Before;
-import com.sldeditor.filter.v2.function.temporal.Beyond;
 import com.sldeditor.filter.v2.function.temporal.During;
 import com.sldeditor.filter.v2.function.temporal.TContains;
 import com.sldeditor.filter.v2.function.temporal.TEquals;
@@ -74,37 +72,6 @@ public class TemporalTests {
     @Test
     public void testBefore() {
         testClass(new Before());
-    }
-
-    /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.temporal.Beyond}.
-     */
-    @Test
-    public void testBeyond() {
-        Beyond objUnderTest = new Beyond();
-
-        assertNotNull(objUnderTest.getFilterConfiguration());
-        assertNotNull(objUnderTest.createFilter());
-        assertNull(objUnderTest.createLogicFilter(null));
-
-        BinaryComparisonAbstract filter = (BinaryComparisonAbstract)objUnderTest.createFilter(null);
-        assertNull(filter.getExpression1());
-        assertNull(filter.getExpression2());
-
-        List<Expression> parameterList = new ArrayList<Expression>();
-        parameterList.add(ff.literal("expr1"));
-
-        filter = (BinaryComparisonAbstract) objUnderTest.createFilter(parameterList);
-        assertNull(filter.getExpression1());
-        assertNull(filter.getExpression2());
-
-        parameterList.add(ff.literal("expr2"));
-        filter = (BinaryComparisonAbstract) objUnderTest.createFilter(parameterList);
-        assertNotNull(filter.getExpression1());
-        assertNotNull(filter.getExpression2());
-
-        System.out.println(filter.toString());
     }
 
     /**

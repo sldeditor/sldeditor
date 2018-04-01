@@ -129,7 +129,7 @@ public class IsGreaterThanEqualTo implements FilterConfigInterface {
     public Filter createFilter(List<Expression> parameterList) {
         IsGreaterThanOrEqualToImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() != 3)) {
+        if ((parameterList == null) || (parameterList.size() < 2) || (parameterList.size() > 3)) {
             filter = new IsGreaterThanOrEqualToExtended();
         } else {
             LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(2);

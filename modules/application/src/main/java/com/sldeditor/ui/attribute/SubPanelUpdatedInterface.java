@@ -30,4 +30,9 @@ public interface SubPanelUpdatedInterface {
      * Update symbol.
      */
     void updateSymbol();
+    
+    /**
+     * Parameter added.
+     */
+    void parameterAdded();
 }

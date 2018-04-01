@@ -67,7 +67,7 @@ public class Intersects implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Intersects " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " intersects " + getExpression2() + " ]";
         }
 
         /*

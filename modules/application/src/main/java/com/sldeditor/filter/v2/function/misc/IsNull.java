@@ -65,7 +65,7 @@ public class IsNull implements FilterConfigInterface {
          * @see org.geotools.filter.CompareFilterImpl#toString()
          */
         public String toString() {
-            return "[ IsNull " + getExpression() + " ]";
+            return "[ " + getExpression() + " IS NULL ]";
         }
 
         /*

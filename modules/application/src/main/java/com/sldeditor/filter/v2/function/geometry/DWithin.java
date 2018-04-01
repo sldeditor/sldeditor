@@ -21,8 +21,10 @@ package com.sldeditor.filter.v2.function.geometry;
 
 import java.util.List;
 
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.spatial.DWithinImpl;
 import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
@@ -39,6 +41,8 @@ import com.vividsolutions.jts.geom.Geometry;
  */
 public class DWithin implements FilterConfigInterface {
 
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
     /**
      * The Class DWithinExtended.
      */
@@ -52,13 +56,20 @@ public class DWithin implements FilterConfigInterface {
         }
 
         /**
-         * Instantiates a new d within extended.
+         * Instantiates a new dwithin extended.
          *
          * @param expression1 the expression 1
          * @param expression2 the expression 2
+         * @param distanceExp the distance exp
+         * @param unitsExp the units exp
          */
-        public DWithinExtended(Expression expression1, Expression expression2) {
+        public DWithinExtended(Expression expression1, Expression expression2,
+                Expression distanceExp, Expression unitsExp) {
             super(expression1, expression2);
+
+            double distance = Double.parseDouble(distanceExp.toString());
+            setDistance(distance);
+            setUnits(unitsExp.toString());
         }
 
         /*
@@ -67,7 +78,23 @@ public class DWithin implements FilterConfigInterface {
          * @see org.geotools.filter.CartesianDistanceFilter#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " DWithin " + getExpression2() + " ]";
+            String operator = " dwithin ";
+
+            String distStr = ", distance: " + getDistance();
+
+            org.opengis.filter.expression.Expression leftGeometry = getExpression1();
+            org.opengis.filter.expression.Expression rightGeometry = getExpression2();
+
+            if ((leftGeometry == null) && (rightGeometry == null)) {
+                return "[ " + "null" + operator + "null" + distStr + " ]";
+            } else if (leftGeometry == null) {
+                return "[ " + "null" + operator + rightGeometry.toString() + distStr + " ]";
+            } else if (rightGeometry == null) {
+                return "[ " + leftGeometry.toString() + operator + "null" + distStr + " ]";
+            }
+
+            return "[ " + leftGeometry.toString() + operator + rightGeometry.toString() + distStr
+                    + " ]";
         }
 
         /*
@@ -99,6 +126,10 @@ public class DWithin implements FilterConfigInterface {
                 new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
         filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
                 Geometry.class));
+        filterName.addParameter(
+                new FilterNameParameter("distance", ExpressionTypeEnum.EXPRESSION, Double.class));
+        filterName.addParameter(
+                new FilterNameParameter("units", ExpressionTypeEnum.EXPRESSION, String.class));
 
         return filterName;
     }
@@ -134,10 +165,17 @@ public class DWithin implements FilterConfigInterface {
 
         DWithinImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() != 2)) {
+        if ((parameterList == null) || ((parameterList.size() != 2) && (parameterList.size() != 4))) {
             filter = new DWithinExtended();
         } else {
-            filter = new DWithinExtended(parameterList.get(0), parameterList.get(1));
+            
+            if(parameterList.size() == 2)
+            {
+                parameterList.add(ff.literal(0.0));
+                parameterList.add(ff.literal(""));
+            }
+            filter = new DWithinExtended(parameterList.get(0), parameterList.get(1),
+                    parameterList.get(2), parameterList.get(3));
         }
 
         return filter;

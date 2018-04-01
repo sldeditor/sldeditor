@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,10 @@
 
 package com.sldeditor.filter.v2.function.temporal;
 
+import java.util.Date;
 import java.util.List;
 
-import org.geotools.filter.spatial.BeyondImpl;
+import org.geotools.filter.temporal.EndsImpl;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -32,41 +33,41 @@ import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
 
 /**
- * The Class Beyond.
+ * The Class Ends.
  *
  * @author Robert Ward (SCISYS)
  */
-public class Beyond implements FilterConfigInterface {
+public class Ends implements FilterConfigInterface {
 
     /**
-     * The Class BeyondExtended.
+     * The Class EndExtended.
      */
-    public class BeyondExtended extends BeyondImpl implements FilterExtendedInterface {
+    public class EndExtended extends EndsImpl implements FilterExtendedInterface {
 
         /**
-         * Instantiates a new beyond extended.
+         * Instantiates a new after extended.
          */
-        public BeyondExtended() {
+        public EndExtended() {
             super(null, null);
         }
 
         /**
-         * Instantiates a new beyond extended.
+         * Instantiates a new after extended.
          *
          * @param expression1 the expression 1
          * @param expression2 the expression 2
          */
-        public BeyondExtended(Expression expression1, Expression expression2) {
+        public EndExtended(Expression expression1, Expression expression2) {
             super(expression1, expression2);
         }
 
         /*
          * (non-Javadoc)
          * 
-         * @see org.geotools.filter.CartesianDistanceFilter#toString()
+         * @see java.lang.Object#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Beyond " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " Ends " + getExpression2() + " ]";
         }
 
         /*
@@ -76,14 +77,14 @@ public class Beyond implements FilterConfigInterface {
          */
         @Override
         public Class<?> getOriginalFilter() {
-            return BeyondImpl.class;
+            return EndsImpl.class;
         }
     }
 
     /**
      * Default constructor.
      */
-    public Beyond() {
+    public Ends() {
     }
 
     /**
@@ -93,11 +94,11 @@ public class Beyond implements FilterConfigInterface {
      */
     @Override
     public FilterName getFilterConfiguration() {
-        FilterName filterName = new FilterName("Beyond", Boolean.class);
+        FilterName filterName = new FilterName("Ends", Boolean.class);
         filterName.addParameter(
-                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Number.class));
+                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Date.class));
         filterName.addParameter(
-                new FilterNameParameter("expression", ExpressionTypeEnum.LITERAL, Number.class));
+                new FilterNameParameter("datetime", ExpressionTypeEnum.LITERAL, Date.class));
 
         return filterName;
     }
@@ -109,7 +110,7 @@ public class Beyond implements FilterConfigInterface {
      */
     @Override
     public Class<?> getFilterClass() {
-        return BeyondImpl.class;
+        return EndsImpl.class;
     }
 
     /**
@@ -119,7 +120,7 @@ public class Beyond implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter() {
-        return new BeyondExtended();
+        return new EndExtended();
     }
 
     /**
@@ -131,12 +132,12 @@ public class Beyond implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        BeyondImpl filter = null;
+        EndsImpl filter = null;
 
         if ((parameterList == null) || (parameterList.size() != 2)) {
-            filter = new BeyondExtended();
+            filter = new EndExtended();
         } else {
-            filter = new BeyondExtended(parameterList.get(0), parameterList.get(1));
+            filter = new EndExtended(parameterList.get(0), parameterList.get(1));
         }
 
         return filter;

@@ -17,48 +17,50 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.filter.v2.function.geometry;
+package com.sldeditor.filter.v2.function.identifier;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.geotools.filter.spatial.CrossesImpl;
+import org.geotools.filter.FidFilterImpl;
+import org.geotools.filter.identity.FeatureIdImpl;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.identity.Identifier;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * The Class Crosses.
+ * The Class FidFilter.
  *
  * @author Robert Ward (SCISYS)
  */
-public class Crosses implements FilterConfigInterface {
+public class FidFilter implements FilterConfigInterface {
 
     /**
-     * The Class CrossesExtended.
+     * The Class FidFilterExtended.
      */
-    public class CrossesExtended extends CrossesImpl implements FilterExtendedInterface {
+    public class FidFilterExtended extends FidFilterImpl implements FilterExtendedInterface {
 
         /**
-         * Instantiates a new crosses extended.
+         * Instantiates a new fid filter extended.
          */
-        public CrossesExtended() {
-            super(null, null);
+        public FidFilterExtended() {
+            super(new HashSet<Identifier>());
         }
 
         /**
-         * Instantiates a new crosses extended.
+         * Instantiates a new within extended.
          *
-         * @param expression1 the expression 1
-         * @param expression2 the expression 2
+         * @param fids the fids
          */
-        public CrossesExtended(Expression expression1, Expression expression2) {
-            super(expression1, expression2);
+        public FidFilterExtended(Set<Identifier> fids) {
+            super(fids);
         }
 
         /*
@@ -67,7 +69,7 @@ public class Crosses implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " crosses " + getExpression2() + " ]";
+            return String.format("%s", getIDs().toString());
         }
 
         /*
@@ -77,14 +79,14 @@ public class Crosses implements FilterConfigInterface {
          */
         @Override
         public Class<?> getOriginalFilter() {
-            return CrossesImpl.class;
+            return FidFilterImpl.class;
         }
     }
 
     /**
      * Default constructor.
      */
-    public Crosses() {
+    public FidFilter() {
     }
 
     /**
@@ -94,11 +96,9 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public FilterName getFilterConfiguration() {
-        FilterName filterName = new FilterName("Crosses", Boolean.class);
+        FilterName filterName = new FilterName("FidFilter", String.class);
         filterName.addParameter(
-                new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
-                Geometry.class));
+                new FilterNameParameter("identifier", ExpressionTypeEnum.LITERAL, String.class));
 
         return filterName;
     }
@@ -110,7 +110,7 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public Class<?> getFilterClass() {
-        return CrossesImpl.class;
+        return FidFilterImpl.class;
     }
 
     /**
@@ -120,7 +120,7 @@ public class Crosses implements FilterConfigInterface {
      */
     @Override
     public Filter createFilter() {
-        return new CrossesExtended();
+        return new FidFilterExtended();
     }
 
     /**
@@ -132,12 +132,17 @@ public class Crosses implements FilterConfigInterface {
     @Override
     public Filter createFilter(List<Expression> parameterList) {
 
-        CrossesImpl filter = null;
+        FidFilterImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() != 2)) {
-            filter = new CrossesExtended();
+        if ((parameterList == null) || (parameterList.size() == 0)) {
+            filter = new FidFilterExtended();
         } else {
-            filter = new CrossesExtended(parameterList.get(0), parameterList.get(1));
+            Set<Identifier> fidList = new HashSet<Identifier>();
+
+            for (Expression exp : parameterList) {
+                fidList.add(new FeatureIdImpl(exp.toString()));
+            }
+            filter = new FidFilterExtended(fidList);
         }
 
         return filter;

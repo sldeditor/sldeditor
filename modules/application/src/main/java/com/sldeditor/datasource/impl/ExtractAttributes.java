@@ -410,20 +410,22 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
         if (expression instanceof AttributeExpressionImpl) {
             AttributeExpressionImpl attribute = (AttributeExpressionImpl) expression;
+            String attributeName = attribute.getPropertyName();
+
             // Determine if attribute is a geometry
             if ((GeometryTypeMapping.getGeometryType(attributeType) != GeometryTypeEnum.UNKNOWN)
                     || (attributeType == Geometry.class)) {
-                if (!geometryFieldList.contains(attribute.getPropertyName())) {
-                    geometryFieldList.add(attribute.getPropertyName());
+                if (!geometryFieldList.contains(attributeName)) {
+                    geometryFieldList.add(attributeName);
                 }
             } else {
-                if (!fieldList.containsKey(attribute.getPropertyName())
-                        && (attribute.getPropertyName() != null)) {
+                if (!fieldList.containsKey(attributeName)
+                        && (attributeName != null)) {
                     DataSourceAttributeData field = new DataSourceAttributeData(
-                            attribute.getPropertyName(), attributeType, null);
+                            attributeName, attributeType, null);
                     processedFieldList.add(field);
-                    fieldList.put(attribute.getPropertyName(), field);
-                    foundList.add(attribute.getPropertyName());
+                    fieldList.put(attributeName, field);
+                    foundList.add(attributeName);
                 }
             }
         } else if (expression instanceof FunctionExpression) {
@@ -435,7 +437,16 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             for (Expression parameterExpression : function.getParameters()) {
                 Parameter<?> parameter = argumentList.get(index);
                 extractAttribute(parameter.getType(), parameterExpression, foundList);
-                index++;
+
+                if(index < argumentList.size())
+                {
+                    index++;
+                }
+
+                if(index >= argumentList.size())
+                {
+                    index = argumentList.size() - 1;
+                }
             }
 
             returnType = functionName.getReturn().getType();

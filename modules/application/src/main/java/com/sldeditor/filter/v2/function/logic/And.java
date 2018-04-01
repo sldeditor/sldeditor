@@ -66,7 +66,15 @@ public class And implements FilterConfigInterface {
          * @see org.geotools.filter.LogicFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + this.getChildren() + " ]";
+            List<Filter> filterList = getChildren();
+            List<String> filterStringList = new ArrayList<String>();
+
+            for(Filter f : filterList)
+            {
+                filterStringList.add(f.toString());
+            }
+
+            return "[" + String.join(" AND ", filterStringList) + "]";
         }
 
         /*

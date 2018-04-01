@@ -8,9 +8,6 @@ script :
   - mvn clean test
   - mvn test -P IntegrationTests
 
-before_install:
-    - cp build/travis/travis-toolchains.xml ~/.m2/toolchains.xml
-
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"

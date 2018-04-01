@@ -27,7 +27,7 @@
         <FieldTests>
             <LiteralString value="SmallPop" field="NAME"/>
             <LiteralString value="Less Than 200,000" field="TITLE"/>
-            <Expression expression="pop &lt; '200000'" field="FILTER"/>
+            <Expression expression="[ pop &lt; 200000 ]" field="FILTER"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -69,7 +69,7 @@
         <FieldTests>
             <LiteralString value="MediumPop" field="NAME"/>
             <LiteralString value="200,000 to 500,000" field="TITLE"/>
-            <Expression expression="pop &gt;= '200000' AND pop &lt; '500000'" field="FILTER"/>
+            <Expression expression="[[ pop &gt;= 200000 ] AND [ pop &lt; 500000 ]]" field="FILTER"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>
@@ -111,7 +111,7 @@
         <FieldTests>
             <LiteralString value="LargePop" field="NAME"/>
             <LiteralString value="Greater Than 500,000" field="TITLE"/>
-            <Expression expression="pop &gt; '500000'" field="FILTER"/>
+            <Expression expression="[ pop &gt; 500000 ]" field="FILTER"/>
         </FieldTests>
     </PanelTests>
     <PanelTests>

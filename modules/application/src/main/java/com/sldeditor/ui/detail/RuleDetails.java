@@ -144,9 +144,9 @@ public class RuleDetails extends StandardPanel
                 String filterString = "";
                 if (originalFilter != null) {
                     try {
-                        filterString = CQL.toCQL(originalFilter);
+                        filterString = originalFilter.toString();
                     } catch (Exception e) {
-                        // Do nothing
+                        ConsoleManager.getInstance().error(this, Localisation.getField(RuleDetails.class, "RuleDetails.filterError") + e.getMessage());
                     }
                 }
                 fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);

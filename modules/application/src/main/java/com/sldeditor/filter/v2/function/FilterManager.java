@@ -45,6 +45,7 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.function.geometry.BBox;
+import com.sldeditor.filter.v2.function.geometry.Beyond;
 import com.sldeditor.filter.v2.function.geometry.Contains;
 import com.sldeditor.filter.v2.function.geometry.Crosses;
 import com.sldeditor.filter.v2.function.geometry.DWithin;
@@ -54,6 +55,7 @@ import com.sldeditor.filter.v2.function.geometry.Intersects;
 import com.sldeditor.filter.v2.function.geometry.Overlaps;
 import com.sldeditor.filter.v2.function.geometry.Touches;
 import com.sldeditor.filter.v2.function.geometry.Within;
+import com.sldeditor.filter.v2.function.identifier.FidFilter;
 import com.sldeditor.filter.v2.function.logic.And;
 import com.sldeditor.filter.v2.function.logic.Not;
 import com.sldeditor.filter.v2.function.logic.Or;
@@ -67,9 +69,15 @@ import com.sldeditor.filter.v2.function.property.IsLessThan;
 import com.sldeditor.filter.v2.function.property.IsLessThanEqualTo;
 import com.sldeditor.filter.v2.function.property.IsNotEqualTo;
 import com.sldeditor.filter.v2.function.temporal.After;
+import com.sldeditor.filter.v2.function.temporal.AnyInteracts;
 import com.sldeditor.filter.v2.function.temporal.Before;
-import com.sldeditor.filter.v2.function.temporal.Beyond;
+import com.sldeditor.filter.v2.function.temporal.BegunBy;
 import com.sldeditor.filter.v2.function.temporal.During;
+import com.sldeditor.filter.v2.function.temporal.EndedBy;
+import com.sldeditor.filter.v2.function.temporal.Ends;
+import com.sldeditor.filter.v2.function.temporal.Meets;
+import com.sldeditor.filter.v2.function.temporal.MetBy;
+import com.sldeditor.filter.v2.function.temporal.OverlappedBy;
 import com.sldeditor.filter.v2.function.temporal.TContains;
 import com.sldeditor.filter.v2.function.temporal.TEquals;
 import com.sldeditor.filter.v2.function.temporal.TOverlaps;
@@ -248,10 +256,17 @@ public class FilterManager implements FilterNameInterface {
         // Temporal
         filterConfigList.add(new After());
         filterConfigList.add(new Before());
+        filterConfigList.add(new BegunBy());
         filterConfigList.add(new During());
+        filterConfigList.add(new Ends());
+        filterConfigList.add(new Meets());
+        filterConfigList.add(new MetBy());
+        filterConfigList.add(new EndedBy());
+        filterConfigList.add(new OverlappedBy());
         filterConfigList.add(new TEquals());
         filterConfigList.add(new TOverlaps());
         filterConfigList.add(new TContains());
+        filterConfigList.add(new AnyInteracts());
 
         // Geometry
         filterConfigList.add(new BBox());
@@ -266,6 +281,9 @@ public class FilterManager implements FilterNameInterface {
         filterConfigList.add(new Touches());
         filterConfigList.add(new Within());
 
+        // Fid
+        filterConfigList.add(new FidFilter());
+        
         return filterConfigList;
     }
 

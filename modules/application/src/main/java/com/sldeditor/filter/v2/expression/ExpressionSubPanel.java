@@ -24,8 +24,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -33,8 +35,10 @@ import javax.swing.JRadioButton;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.geotools.filter.AttributeExpressionImpl;
+import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.function.EnvFunction;
+import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
@@ -126,6 +130,12 @@ public class ExpressionSubPanel extends JPanel {
     /** The environment variable panel. */
     private EnvironmentVariableField envVarField = null;
 
+    /** The panel containing the remove parameter button. */
+    private JPanel panelRemoveParameter;
+
+    /** The remove parameter button. */
+    private JButton btnRemoveParameter;
+
     /**
      * Instantiates a new expression panel.
      *
@@ -155,7 +165,8 @@ public class ExpressionSubPanel extends JPanel {
         panelAttribute.setVisible(!isRasterSymbol);
 
         if (functionPanel != null) {
-            functionPanel.setDataType(updatedFieldType, isRasterSymbol);
+            functionPanel.setIsRasterSymbol(isRasterSymbol);
+            functionPanel.setDataType(updatedFieldType);
         }
     }
 
@@ -165,6 +176,7 @@ public class ExpressionSubPanel extends JPanel {
     private void createUI() {
         setLayout(new BorderLayout());
         box = Box.createVerticalBox();
+        box.setBorder(null);
         add(box, BorderLayout.CENTER);
 
         //
@@ -187,6 +199,39 @@ public class ExpressionSubPanel extends JPanel {
         //
         setUpFunctionPanel();
 
+        panelRemoveParameter = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) panelRemoveParameter.getLayout();
+        flowLayout.setVgap(1);
+        flowLayout.setHgap(1);
+        panelRemoveParameter.setMinimumSize(new Dimension(150, 25));
+        panelRemoveParameter.setPreferredSize(new Dimension(150, 25));
+        box.add(panelRemoveParameter);
+
+        btnRemoveParameter = new JButton(Localisation.getString(ExpressionPanelv2.class,
+                "ExpressionSubPanel.removeParameter"));
+        btnRemoveParameter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+
+                int index = parentNode.getIndex(selectedNode);
+                parentNode.remove(index);
+
+                if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                    FunctionExpression functionExpression = (FunctionExpression) parentNode
+                            .getExpression();
+
+                    functionExpression.getParameters().remove(index);
+
+                    parentNode.setDisplayString();
+
+                    if (parent != null) {
+                        parent.dataApplied();
+                    }
+                }
+            }
+        });
+        panelRemoveParameter.add(btnRemoveParameter);
+
         box.add(createApplyRevertPanel());
     }
 
@@ -195,15 +240,17 @@ public class ExpressionSubPanel extends JPanel {
      */
     protected void setUpLiteralPanel() {
         panelLiteral = new JPanel();
-        FlowLayout fl_panelLiteral = (FlowLayout) panelLiteral.getLayout();
-        fl_panelLiteral.setAlignment(FlowLayout.LEFT);
+        panelLiteral.setBorder(null);
+        box.add(panelLiteral);
+        panelLiteral.setLayout(new BoxLayout(panelLiteral, BoxLayout.X_AXIS));
 
         rdbtnLiteral = new JRadioButton(
                 Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.literal"));
+        rdbtnLiteral.setMinimumSize(new Dimension(100, 20));
+        rdbtnLiteral.setPreferredSize(new Dimension(100, 20));
+        panelLiteral.add(rdbtnLiteral);
         rdbtnLiteral.setActionCommand(LITERAL);
         buttonGroup.add(rdbtnLiteral);
-        panelLiteral.add(rdbtnLiteral);
-        box.add(panelLiteral);
     }
 
     /**
@@ -211,20 +258,27 @@ public class ExpressionSubPanel extends JPanel {
      */
     protected void setUpPropertyPanel() {
         panelAttribute = new JPanel();
-        FlowLayout fl_panelAttribute = (FlowLayout) panelAttribute.getLayout();
-        fl_panelAttribute.setAlignment(FlowLayout.LEFT);
+        panelAttribute.setBorder(null);
+        panelAttribute.setLayout(new BoxLayout(panelAttribute, BoxLayout.X_AXIS));
 
         rdbtnAttribute = new JRadioButton(
                 Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"));
+        panelAttribute.add(rdbtnAttribute);
+        rdbtnAttribute.setMinimumSize(new Dimension(100, 20));
+        rdbtnAttribute.setPreferredSize(new Dimension(100, 20));
         rdbtnAttribute.setActionCommand(ATTRIBUTE);
         buttonGroup.add(rdbtnAttribute);
-        panelAttribute.add(rdbtnAttribute);
 
         dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
                 updateButtonState(true);
+            }
+
+            @Override
+            public void parameterAdded() {
+                // Do nothing
             }
         });
         panelAttribute.add(dataSourceAttributePanel);
@@ -238,19 +292,26 @@ public class ExpressionSubPanel extends JPanel {
         if (VendorOptionManager.getInstance().isAllowed(this.parent.getVendorOptionList(),
                 EnvironmentVariableField.getVendorOption())) {
             panelEnvVar = new JPanel();
-            FlowLayout fl_panelEnvVar = (FlowLayout) panelEnvVar.getLayout();
-            fl_panelEnvVar.setAlignment(FlowLayout.LEFT);
+            panelEnvVar.setBorder(null);
+            panelEnvVar.setLayout(new BoxLayout(panelEnvVar, BoxLayout.X_AXIS));
 
             rdbtnEnvVar = new JRadioButton(ENVVAR);
+            rdbtnEnvVar.setMinimumSize(new Dimension(100, 20));
+            rdbtnEnvVar.setPreferredSize(new Dimension(100, 20));
+            panelEnvVar.add(rdbtnEnvVar);
             rdbtnEnvVar.setActionCommand(ENVVAR);
             buttonGroup.add(rdbtnEnvVar);
-            panelEnvVar.add(rdbtnEnvVar);
 
             envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface() {
                 @Override
                 public void updateSymbol() {
                     buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
                     updateButtonState(true);
+                }
+
+                @Override
+                public void parameterAdded() {
+                    // Do nothing
                 }
             }, EnvironmentVariableManager.getInstance());
             panelEnvVar.add(envVarField);
@@ -263,20 +324,29 @@ public class ExpressionSubPanel extends JPanel {
      */
     protected void setUpFunctionPanel() {
         panelFunction = new JPanel();
-        FlowLayout fl_panelFunction = (FlowLayout) panelFunction.getLayout();
-        fl_panelFunction.setAlignment(FlowLayout.LEFT);
+        panelFunction.setBorder(null);
+        panelFunction.setLayout(new BoxLayout(panelFunction, BoxLayout.X_AXIS));
 
         rdbtnFunction = new JRadioButton(
                 Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.function"));
+        rdbtnFunction.setMinimumSize(new Dimension(100, 20));
+        rdbtnFunction.setPreferredSize(new Dimension(100, 20));
+        panelFunction.add(rdbtnFunction);
         rdbtnFunction.setActionCommand(FUNCTION);
         buttonGroup.add(rdbtnFunction);
-        panelFunction.add(rdbtnFunction);
 
         functionPanel = new FunctionField(new SubPanelUpdatedInterface() {
             @Override
             public void updateSymbol() {
                 buttonGroup.setSelected(rdbtnFunction.getModel(), true);
                 updateButtonState(true);
+            }
+
+            @Override
+            public void parameterAdded() {
+                if (parent != null) {
+                    parent.dataApplied();
+                }
             }
         }, FunctionManager.getInstance());
         panelFunction.add(functionPanel);
@@ -310,11 +380,12 @@ public class ExpressionSubPanel extends JPanel {
                     updateButtonState(true);
                 }
             });
-            panelLiteral.add(fieldConfig.getPanel());
+            panelLiteral.add(fieldConfig.getPanel(), BorderLayout.CENTER);
 
             // Reset the fields
             dataSourceAttributePanel.setAttribute(null);
-            functionPanel.setFunction(null);
+            functionPanel.setDataType(node.getType());
+            functionPanel.setFunction(null, null);
 
             dataSourceAttributePanel.setDataType(node.getType());
 
@@ -327,12 +398,35 @@ public class ExpressionSubPanel extends JPanel {
                 envVarField.setEnvironmentVariable(expression);
                 buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
             } else if (expression instanceof FunctionExpressionImpl) {
-                functionPanel.setFunction(expression);
+                functionPanel.setFunction(expression, node);
                 buttonGroup.setSelected(rdbtnFunction.getModel(), true);
             } else {
                 fieldConfig.populate(expression);
                 buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
             }
+
+            // Now work out whether the Remove Parameter button should be displayed
+            boolean displayRemoveParameter = false;
+
+            if (node.getParent() instanceof ExpressionNode) {
+                ExpressionNode parentNode = (ExpressionNode) node.getParent();
+                if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                    FunctionExpression functionExpression = (FunctionExpression) parentNode
+                            .getExpression();
+                    FunctionName functionName = functionExpression.getFunctionName();
+
+                    int argCount = functionName.getArgumentCount();
+
+                    if (functionName.getArgumentCount() < 0) {
+                        displayRemoveParameter = true;
+                        argCount *= -1;
+
+                        btnRemoveParameter
+                                .setEnabled(functionExpression.getParameters().size() > argCount);
+                    }
+                }
+            }
+            btnRemoveParameter.setVisible(displayRemoveParameter);
         }
         Dimension boxSize = box.getPreferredSize();
         setPreferredSize(boxSize);
@@ -366,6 +460,25 @@ public class ExpressionSubPanel extends JPanel {
 
                 if (expression != null) {
                     selectedNode.setExpression(expression);
+                }
+
+                // Update the display string for the parent function, needed for
+                // function expression nodes when function parameter has been changed
+                ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+                if (parentNode != null) {
+
+                    int index = parentNode.getIndex(selectedNode);
+
+                    if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                        FunctionExpression functionExpression = (FunctionExpression) parentNode
+                                .getExpression();
+
+                        List<Expression> parameterList = functionExpression.getParameters();
+                        parameterList.remove(index);
+                        parameterList.add(index, expression);
+                    }
+
+                    parentNode.setDisplayString();
                 }
 
                 if (parent != null) {

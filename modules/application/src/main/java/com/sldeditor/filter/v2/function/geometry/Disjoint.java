@@ -67,7 +67,7 @@ public class Disjoint implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Disjoint " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " disjoint " + getExpression2() + " ]";
         }
 
         /*

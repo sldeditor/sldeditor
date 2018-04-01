@@ -20,6 +20,7 @@
 package com.sldeditor.filter.v2.envvar;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -45,7 +46,10 @@ import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.envvar.dialog.EnvVarDlg;
+import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
+import com.sldeditor.ui.detail.BasePanel;
+import java.awt.FlowLayout;
 
 /**
  * Panel to be able to edit EnvironmentVariableField objects.
@@ -91,11 +95,14 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
             EnvironmentManagerInterface envVarMgr) {
         final UndoActionInterface thisObj = this;
         this.envVarMgr = envVarMgr;
-
-        setLayout(new BorderLayout(5, 0));
+        setPreferredSize(
+                new Dimension(300, BasePanel.WIDGET_HEIGHT));
+        setMinimumSize(
+                new Dimension(300, BasePanel.WIDGET_HEIGHT));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         envVarComboBox = new JComboBox<String>();
-        add(envVarComboBox, BorderLayout.CENTER);
+        add(envVarComboBox);
         envVarComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -109,9 +116,13 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
                 }
             }
         });
+        envVarComboBox.setPreferredSize(
+                new Dimension(BasePanel.WIDGET_EXTENDED_WIDTH, BasePanel.WIDGET_HEIGHT));
 
         JButton editButton = new JButton(
                 Localisation.getString(EnvVarDlg.class, "EnvironmentVariableField.edit"));
+        editButton.setPreferredSize(
+                new Dimension(BasePanel.WIDGET_BUTTON_WIDTH, BasePanel.WIDGET_HEIGHT));
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (envVarMgr.showDialog()) {
@@ -119,7 +130,7 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
                 }
             }
         });
-        add(editButton, BorderLayout.EAST);
+        add(editButton);
 
     }
 
@@ -178,7 +189,7 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
             envVarComboBox.setSelectedItem(literal.getValue());
         } else {
             ConsoleManager.getInstance().error(this, Localisation
-                    .getString(EnvironmentVariableField.class, "DataSourceAttributePanel.error1"));
+                    .getString(DataSourceAttributePanel.class, "DataSourceAttributePanel.error1"));
         }
     }
 

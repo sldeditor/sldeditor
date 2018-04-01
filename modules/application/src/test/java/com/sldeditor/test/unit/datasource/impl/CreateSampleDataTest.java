@@ -100,7 +100,8 @@ public class CreateSampleDataTest {
                 CreateSampleData.getFieldTypeValue(4, expectedFieldName, Float.class, null));
         assertEquals(Double.valueOf(5),
                 CreateSampleData.getFieldTypeValue(5, expectedFieldName, Double.class, null));
-        assertNull(CreateSampleData.getFieldTypeValue(6, expectedFieldName, SimpleFeatureType.class,
+        assertEquals(String.valueOf(6),
+                CreateSampleData.getFieldTypeValue(6, expectedFieldName, SimpleFeatureType.class,
                 null));
         // It will return the current time
         assertNotNull(CreateSampleData.getFieldTypeValue(7, expectedFieldName, Date.class, null));

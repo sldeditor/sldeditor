@@ -254,6 +254,11 @@ public class AttributeSelection extends JPanel
         }
     }
 
+    @Override
+    public void parameterAdded() {
+        // Do nothing
+    }
+
     /**
      * Populate.
      *

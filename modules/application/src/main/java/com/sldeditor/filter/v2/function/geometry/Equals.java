@@ -67,7 +67,7 @@ public class Equals implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Equals " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " equals " + getExpression2() + " ]";
         }
 
         /*

@@ -67,7 +67,7 @@ public class Within implements FilterConfigInterface {
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
-            return "[ " + getExpression1() + " Within " + getExpression2() + " ]";
+            return "[ " + getExpression1() + " within " + getExpression2() + " ]";
         }
 
         /*

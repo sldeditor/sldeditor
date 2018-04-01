@@ -35,10 +35,10 @@ public class Version {
     private static final String APP_COMPANY = "SCISYS";
 
     /** The Constant APP_COPYRIGHT_YEAR. */
-    private static final String APP_COPYRIGHT_YEAR = "2016";
+    private static final String APP_COPYRIGHT_YEAR = "2016-2018";
 
     /** The version taken from the maven pom. */
-    public static String pomVersionString = "0.7.8";
+    public static String pomVersionString = "0.7.9-SNAPSHOT";
 
     /**
      * Gets the version number.

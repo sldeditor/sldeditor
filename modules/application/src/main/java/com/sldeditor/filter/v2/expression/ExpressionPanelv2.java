@@ -49,7 +49,6 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.geotools.filter.function.string.ConcatenateFunction;
-import org.geotools.filter.text.cql2.CQL;
 import org.opengis.filter.Filter;
 import org.opengis.filter.Not;
 import org.opengis.filter.PropertyIsBetween;
@@ -355,7 +354,7 @@ public class ExpressionPanelv2 extends JDialog
             overallFilter = addFilter((FilterNode) rootNode);
 
             try {
-                result = CQL.toCQL(overallFilter);
+                result = overallFilter.toString();
             } catch (Exception e) {
                 // Do nothing
             }

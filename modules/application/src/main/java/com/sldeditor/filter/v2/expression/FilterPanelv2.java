@@ -48,7 +48,6 @@ import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
-import org.geotools.filter.text.cql2.CQL;
 import org.opengis.filter.Filter;
 import org.opengis.filter.Not;
 import org.opengis.filter.PropertyIsBetween;
@@ -102,6 +101,9 @@ public class FilterPanelv2 extends JDialog
 
     /** The selected node. */
     private DefaultMutableTreeNode selectedNode;
+
+    /** The selected parent node. */
+    private DefaultMutableTreeNode selectedParentNode;
 
     /** The text area. */
     private JTextArea textArea;
@@ -202,6 +204,10 @@ public class FilterPanelv2 extends JDialog
 
             public void valueChanged(TreeSelectionEvent e) {
                 selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+                selectedParentNode = null;
+                if (selectedNode != null) {
+                    selectedParentNode = (DefaultMutableTreeNode) selectedNode.getParent();
+                }
 
                 CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
 
@@ -211,8 +217,8 @@ public class FilterPanelv2 extends JDialog
                         cardLayout.show(dataPanel, literalPanel.getClass().getName());
                         literalPanel.setSelectedNode(selectedNode);
                     } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY) {
-                        cardLayout.show(dataPanel, propertyPanel.getClass().getName());
-                        propertyPanel.setSelectedNode(selectedNode);
+                        cardLayout.show(dataPanel, expressionPanel.getClass().getName());
+                        expressionPanel.setSelectedNode(selectedNode);
                     } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.ENVVAR) {
                         cardLayout.show(dataPanel, envVarPanel.getClass().getName());
                         envVarPanel.setSelectedNode(selectedNode);
@@ -289,6 +295,19 @@ public class FilterPanelv2 extends JDialog
      */
     private boolean showFilterDialog(Class<?> type, Filter filter) {
 
+        internalFilterDialog(type, filter);
+
+        setVisible(true);
+        return okButtonPressed;
+    }
+
+    /**
+     * Internal filter dialog.
+     *
+     * @param type the type
+     * @param filter the filter
+     */
+    protected void internalFilterDialog(Class<?> type, Filter filter) {
         btnOk.setEnabled(false);
         rootNode = new FilterNode();
         if (model != null) {
@@ -300,9 +319,6 @@ public class FilterPanelv2 extends JDialog
                 populateFilter((FilterNode) rootNode, filter);
             }
         }
-
-        setVisible(true);
-        return okButtonPressed;
     }
 
     /**
@@ -334,7 +350,11 @@ public class FilterPanelv2 extends JDialog
         if (selectedNode.isLeaf()) {
             node = (DefaultMutableTreeNode) selectedNode.getParent();
             if (node == null) {
-                node = selectedNode;
+                if (selectedParentNode != null) {
+                    node = selectedParentNode;
+                } else {
+                    node = selectedNode;
+                }
             }
         } else {
             node = selectedNode;
@@ -343,8 +363,9 @@ public class FilterPanelv2 extends JDialog
 
         model.reload(); // This notifies the listeners and changes the GUI
 
-        tree.expandPath(new TreePath(tmpNode));
-
+        TreePath path = new TreePath(tmpNode);
+        tree.expandPath(path);
+        tree.setSelectionPath(path);
         boolean valid = displayResult();
         btnOk.setEnabled(valid);
     }
@@ -363,7 +384,7 @@ public class FilterPanelv2 extends JDialog
                 result = "";
             } else {
                 try {
-                    result = CQL.toCQL(overallFilter);
+                    result = overallFilter.toString();
                 } catch (Exception e) {
                     // DO nothing
                 }
@@ -433,7 +454,7 @@ public class FilterPanelv2 extends JDialog
     private void createExpressionParameterList(FilterNode node, int noOfExpressions,
             List<Expression> parameterFilter) {
         if (noOfExpressions <= node.getChildCount()) {
-            for (int index = 0; index < noOfExpressions; index++) {
+            for (int index = 0; index < node.getChildCount(); index++) {
                 ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(index);
 
                 Expression expression = addExpression(expressionNode);
@@ -544,7 +565,7 @@ public class FilterPanelv2 extends JDialog
         String filterString = null;
         if (overallFilter != null) {
             try {
-                filterString = CQL.toCQL(overallFilter);
+                filterString = overallFilter.toString();
             } catch (Exception e) {
                 // Do nothing
             }
@@ -591,7 +612,9 @@ public class FilterPanelv2 extends JDialog
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {

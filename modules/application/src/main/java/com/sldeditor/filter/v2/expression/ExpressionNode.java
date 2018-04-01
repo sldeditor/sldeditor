@@ -96,7 +96,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     /**
      * Sets the display string.
      */
-    private void setDisplayString() {
+    public void setDisplayString() {
         StringBuilder sb = new StringBuilder();
 
         if (name != null) {
@@ -218,15 +218,17 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 argCount *= -1;
             }
 
-            for (int index = 0; index < argCount; index++) {
+            for (int index = 0; index < functionExpression.getParameters().size(); index++) {
                 ExpressionNode childNode = new ExpressionNode();
-                Parameter<?> parameter = functionName.getArguments().get(index);
+
+                // If function has a variable number of arguments pick the last one
+                int argumentIndex = Math.min(index, argCount - 1);
+
+                Parameter<?> parameter = functionName.getArguments().get(argumentIndex);
                 childNode.setType(parameter.getType());
                 childNode.setName(parameter.getName());
 
-                if (index < functionExpression.getParameters().size()) {
-                    childNode.setExpression(functionExpression.getParameters().get(index));
-                }
+                childNode.setExpression(functionExpression.getParameters().get(index));
                 this.insert(childNode, this.getChildCount());
             }
         } else if (this.expression instanceof FunctionImpl) {
