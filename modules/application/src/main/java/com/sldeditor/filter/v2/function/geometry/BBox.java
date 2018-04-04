@@ -27,6 +27,7 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.geometry.BoundingBox;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class BBox implements FilterConfigInterface {
+public class BBox extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class BBoxExtended.
@@ -84,7 +85,8 @@ public class BBox implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public BBox() {
+    public BBox(String category) {
+        super(category);
     }
 
     /**

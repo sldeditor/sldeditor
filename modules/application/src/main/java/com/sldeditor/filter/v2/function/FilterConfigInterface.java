@@ -67,4 +67,11 @@ public interface FilterConfigInterface {
      * @return the filter
      */
     Filter createLogicFilter(List<Filter> filterList);
+
+    /**
+     * Return filter category.
+     *
+     * @return the string
+     */
+    String category();
 }

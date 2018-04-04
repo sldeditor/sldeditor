@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.filter.v2.function.temporal;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,21 +34,19 @@ import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.temporal.After;
+import com.sldeditor.filter.v2.function.temporal.AnyInteracts;
 import com.sldeditor.filter.v2.function.temporal.Before;
+import com.sldeditor.filter.v2.function.temporal.BegunBy;
 import com.sldeditor.filter.v2.function.temporal.During;
+import com.sldeditor.filter.v2.function.temporal.EndedBy;
+import com.sldeditor.filter.v2.function.temporal.Meets;
+import com.sldeditor.filter.v2.function.temporal.MetBy;
 import com.sldeditor.filter.v2.function.temporal.TContains;
 import com.sldeditor.filter.v2.function.temporal.TEquals;
 import com.sldeditor.filter.v2.function.temporal.TOverlaps;
 
 /**
- * Unit test for the following classes:
- * {@link com.sldeditor.filter.v2.function.property.IsBetween}.
- * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
- * {@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
- * {@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
- * {@link com.sldeditor.filter.v2.function.property.IsLessThan}.
- * {@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
- * {@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
+ * Unit tests for the following temporal filter classes.
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -55,6 +54,7 @@ import com.sldeditor.filter.v2.function.temporal.TOverlaps;
 public class TemporalTests {
 
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+    private String category = "Test category";
 
     /**
      * Unit test for the following class:
@@ -62,7 +62,7 @@ public class TemporalTests {
      */
     @Test
     public void testAfter() {
-        testClass(new After());
+        testClass(new After(category));
     }
 
     /**
@@ -71,7 +71,7 @@ public class TemporalTests {
      */
     @Test
     public void testBefore() {
-        testClass(new Before());
+        testClass(new Before(category));
     }
 
     /**
@@ -80,7 +80,7 @@ public class TemporalTests {
      */
     @Test
     public void testDuring() {
-        testClass(new During());
+        testClass(new During(category));
     }
 
     /**
@@ -89,7 +89,7 @@ public class TemporalTests {
      */
     @Test
     public void testTContains() {
-        testClass(new TContains());
+        testClass(new TContains(category));
     }
 
     /**
@@ -98,7 +98,7 @@ public class TemporalTests {
      */
     @Test
     public void testTEquals() {
-        testClass(new TEquals());
+        testClass(new TEquals(category));
     }
 
     /**
@@ -107,7 +107,52 @@ public class TemporalTests {
      */
     @Test
     public void testTOverlaps() {
-        testClass(new TOverlaps());
+        testClass(new TOverlaps(category));
+    }
+
+    /**
+     * Unit test for the following class:
+     * {@link com.sldeditor.filter.v2.function.temporal.testBegunBy}.
+     */
+    @Test
+    public void testBegunBy() {
+        testClass(new BegunBy(category));
+    }
+
+    /**
+     * Unit test for the following class:
+     * {@link com.sldeditor.filter.v2.function.temporal.EndedBy}.
+     */
+    @Test
+    public void testEndedBy() {
+        testClass(new EndedBy(category));
+    }
+
+    /**
+     * Unit test for the following class:
+     * {@link com.sldeditor.filter.v2.function.temporal.AnyInteracts}.
+     */
+    @Test
+    public void testAnyInteracts() {
+        testClass(new AnyInteracts(category));
+    }
+
+    /**
+     * Unit test for the following class:
+     * {@link com.sldeditor.filter.v2.function.temporal.Meets}.
+     */
+    @Test
+    public void testMeets() {
+        testClass(new Meets(category));
+    }
+
+    /**
+     * Unit test for the following class:
+     * {@link com.sldeditor.filter.v2.function.temporal.MetBy}.
+     */
+    @Test
+    public void testMetBy() {
+        testClass(new MetBy(category));
     }
 
     /**
@@ -136,6 +181,7 @@ public class TemporalTests {
         filter = (BinaryTemporalOperatorImpl) objUnderTest.createFilter(parameterList);
         assertNotNull(filter.getExpression1());
         assertNotNull(filter.getExpression2());
+        assertTrue(objUnderTest.category().compareTo(category) == 0);
 
         System.out.println(filter.toString());
     }

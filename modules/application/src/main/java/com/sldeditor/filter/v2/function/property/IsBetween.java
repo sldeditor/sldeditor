@@ -26,6 +26,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -36,7 +37,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class IsBetween implements FilterConfigInterface {
+public class IsBetween extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class IsBetweenExtended.
@@ -75,7 +76,8 @@ public class IsBetween implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsBetween() {
+    public IsBetween(String category) {
+        super(category);
     }
 
     /**

@@ -380,7 +380,7 @@ public class ExpressionSubPanel extends JPanel {
                     updateButtonState(true);
                 }
             });
-            panelLiteral.add(fieldConfig.getPanel(), BorderLayout.CENTER);
+            panelLiteral.add(fieldConfig.getPanel());
 
             // Reset the fields
             dataSourceAttributePanel.setAttribute(null);
@@ -464,21 +464,23 @@ public class ExpressionSubPanel extends JPanel {
 
                 // Update the display string for the parent function, needed for
                 // function expression nodes when function parameter has been changed
-                ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
-                if (parentNode != null) {
+                if (selectedNode.getParent() instanceof ExpressionNode) {
+                    ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+                    if (parentNode != null) {
 
-                    int index = parentNode.getIndex(selectedNode);
+                        int index = parentNode.getIndex(selectedNode);
 
-                    if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
-                        FunctionExpression functionExpression = (FunctionExpression) parentNode
-                                .getExpression();
+                        if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                            FunctionExpression functionExpression = (FunctionExpression) parentNode
+                                    .getExpression();
 
-                        List<Expression> parameterList = functionExpression.getParameters();
-                        parameterList.remove(index);
-                        parameterList.add(index, expression);
+                            List<Expression> parameterList = functionExpression.getParameters();
+                            parameterList.remove(index);
+                            parameterList.add(index, expression);
+                        }
+
+                        parentNode.setDisplayString();
                     }
-
-                    parentNode.setDisplayString();
                 }
 
                 if (parent != null) {

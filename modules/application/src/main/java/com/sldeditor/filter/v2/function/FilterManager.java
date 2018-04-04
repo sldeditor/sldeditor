@@ -106,6 +106,16 @@ import com.vividsolutions.jts.geom.Point;
  */
 public class FilterManager implements FilterNameInterface {
 
+    private static final String CATEGORY_LOGIC = "Logic";
+
+    private static final String CATEGORY_COMPARISON = "Comparison";
+
+    private static final String CATEGORY_TEMPORAL = "Temporal";
+
+    private static final String CATEGORY_SPATIAL = "Spatial";
+
+    private static final String CATEGORY_IDENTIFIER = "Identifier";
+
     /** The singleton instance. */
     private static FilterNameInterface instance = null;
 
@@ -116,12 +126,10 @@ public class FilterManager implements FilterNameInterface {
     private Map<String, FilterName> functionNameMap = new HashMap<String, FilterName>();
 
     /** The filter map. */
-    private Map<String, FilterConfigInterface> filterMap =
-            new HashMap<String, FilterConfigInterface>();
+    private Map<String, FilterConfigInterface> filterMap = new HashMap<String, FilterConfigInterface>();
 
     /** The filter type map. */
-    private Map<Class<?>, FilterConfigInterface> filterTypeMap =
-            new HashMap<Class<?>, FilterConfigInterface>();
+    private Map<Class<?>, FilterConfigInterface> filterTypeMap = new HashMap<Class<?>, FilterConfigInterface>();
 
     /** The function factory. */
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
@@ -191,7 +199,7 @@ public class FilterManager implements FilterNameInterface {
             logger.debug(className.getName());
         }
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
                 Long.class };
         Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
@@ -211,7 +219,7 @@ public class FilterManager implements FilterNameInterface {
         Class<?>[] allowedUnitTypes = { Unit.class };
         Class<?>[] allowedComparableTypes = { Number.class, Double.class, Float.class,
                 Integer.class, Long.class, Date.class, String.class, Boolean.class };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
         populateAllowedTypes(Double.class, allowedDoubleTypes);
@@ -238,52 +246,52 @@ public class FilterManager implements FilterNameInterface {
         List<FilterConfigInterface> filterConfigList = new ArrayList<FilterConfigInterface>();
 
         // Logic filters
-        filterConfigList.add(new And());
-        filterConfigList.add(new Or());
-        filterConfigList.add(new Not());
+        filterConfigList.add(new And(CATEGORY_LOGIC));
+        filterConfigList.add(new Or(CATEGORY_LOGIC));
+        filterConfigList.add(new Not(CATEGORY_LOGIC));
 
-        filterConfigList.add(new IsEqualTo());
-        filterConfigList.add(new IsNotEqualTo());
-        filterConfigList.add(new IsLessThan());
-        filterConfigList.add(new IsLessThanEqualTo());
-        filterConfigList.add(new IsGreaterThan());
-        filterConfigList.add(new IsGreaterThanEqualTo());
+        filterConfigList.add(new IsEqualTo(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsNotEqualTo(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsLessThan(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsLessThanEqualTo(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsGreaterThan(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsGreaterThanEqualTo(CATEGORY_COMPARISON));
 
-        filterConfigList.add(new IsBetween());
-        filterConfigList.add(new IsNull());
-        filterConfigList.add(new IsLike());
+        filterConfigList.add(new IsBetween(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsNull(CATEGORY_COMPARISON));
+        filterConfigList.add(new IsLike(CATEGORY_COMPARISON));
 
         // Temporal
-        filterConfigList.add(new After());
-        filterConfigList.add(new Before());
-        filterConfigList.add(new BegunBy());
-        filterConfigList.add(new During());
-        filterConfigList.add(new Ends());
-        filterConfigList.add(new Meets());
-        filterConfigList.add(new MetBy());
-        filterConfigList.add(new EndedBy());
-        filterConfigList.add(new OverlappedBy());
-        filterConfigList.add(new TEquals());
-        filterConfigList.add(new TOverlaps());
-        filterConfigList.add(new TContains());
-        filterConfigList.add(new AnyInteracts());
+        filterConfigList.add(new After(CATEGORY_TEMPORAL));
+        filterConfigList.add(new Before(CATEGORY_TEMPORAL));
+        filterConfigList.add(new BegunBy(CATEGORY_TEMPORAL));
+        filterConfigList.add(new During(CATEGORY_TEMPORAL));
+        filterConfigList.add(new Ends(CATEGORY_TEMPORAL));
+        filterConfigList.add(new Meets(CATEGORY_TEMPORAL));
+        filterConfigList.add(new MetBy(CATEGORY_TEMPORAL));
+        filterConfigList.add(new EndedBy(CATEGORY_TEMPORAL));
+        filterConfigList.add(new OverlappedBy(CATEGORY_TEMPORAL));
+        filterConfigList.add(new TEquals(CATEGORY_TEMPORAL));
+        filterConfigList.add(new TOverlaps(CATEGORY_TEMPORAL));
+        filterConfigList.add(new TContains(CATEGORY_TEMPORAL));
+        filterConfigList.add(new AnyInteracts(CATEGORY_TEMPORAL));
 
         // Geometry
-        filterConfigList.add(new BBox());
-        filterConfigList.add(new Beyond());
-        filterConfigList.add(new Contains());
-        filterConfigList.add(new Crosses());
-        filterConfigList.add(new Disjoint());
-        filterConfigList.add(new DWithin());
-        filterConfigList.add(new Equals());
-        filterConfigList.add(new Intersects());
-        filterConfigList.add(new Overlaps());
-        filterConfigList.add(new Touches());
-        filterConfigList.add(new Within());
+        filterConfigList.add(new BBox(CATEGORY_SPATIAL));
+        filterConfigList.add(new Beyond(CATEGORY_SPATIAL));
+        filterConfigList.add(new Contains(CATEGORY_SPATIAL));
+        filterConfigList.add(new Crosses(CATEGORY_SPATIAL));
+        filterConfigList.add(new Disjoint(CATEGORY_SPATIAL));
+        filterConfigList.add(new DWithin(CATEGORY_SPATIAL));
+        filterConfigList.add(new Equals(CATEGORY_SPATIAL));
+        filterConfigList.add(new Intersects(CATEGORY_SPATIAL));
+        filterConfigList.add(new Overlaps(CATEGORY_SPATIAL));
+        filterConfigList.add(new Touches(CATEGORY_SPATIAL));
+        filterConfigList.add(new Within(CATEGORY_SPATIAL));
 
         // Fid
-        filterConfigList.add(new FidFilter());
-        
+        filterConfigList.add(new FidFilter(CATEGORY_IDENTIFIER));
+
         return filterConfigList;
     }
 

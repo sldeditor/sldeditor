@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,17 +20,30 @@
 package com.sldeditor.filter.v2.function;
 
 /**
- * The Interface FilterExtendedInterface.
+ * The Class FilterBase.
  *
  * @author Robert Ward (SCISYS)
  */
-public interface FilterExtendedInterface {
+public class FilterBase {
+
+    /** The category. */
+    private String category;
 
     /**
-     * Gets the original filter.
+     * Gets the category.
      *
-     * @return the original filter
+     * @return the category
      */
-    Class<?> getOriginalFilter();
+    public String category() {
+        return category;
+    }
 
+    /**
+     * Sets the category.
+     *
+     * @param category the category to set
+     */
+    protected FilterBase(String category) {
+        this.category = category;
+    }
 }

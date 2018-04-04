@@ -27,6 +27,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class Ends implements FilterConfigInterface {
+public class Ends extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class EndExtended.
@@ -84,7 +85,8 @@ public class Ends implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Ends() {
+    public Ends(String category) {
+        super(category);
     }
 
     /**
