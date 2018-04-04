@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.filter.v2.function.misc;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -50,13 +51,14 @@ import com.sldeditor.filter.v2.function.misc.IsNull;
 public class MiscTests {
 
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+    private String category = "Test category";
 
     /**
      * {@link com.sldeditor.filter.v2.function.misc.IsLike}.
      */
     @Test
     public void testIsLikeClass() {
-        FilterConfigInterface objUnderTest = new IsLike();
+        FilterConfigInterface objUnderTest = new IsLike(category);
         
         assertNotNull(objUnderTest.getFilterConfiguration());
         assertNotNull(objUnderTest.createFilter());
@@ -95,7 +97,7 @@ public class MiscTests {
      */
     @Test
     public void testIsNullClass() {
-        FilterConfigInterface objUnderTest = new IsNull();
+        FilterConfigInterface objUnderTest = new IsNull(category);
         
         assertNotNull(objUnderTest.getFilterConfiguration());
         assertNotNull(objUnderTest.createFilter());
@@ -112,6 +114,7 @@ public class MiscTests {
 
         filter = (CompareFilterImpl) objUnderTest.createFilter(parameterList);
         assertNotNull(filter.getExpression1());
+        assertTrue(objUnderTest.category().compareTo(category) == 0);
 
         System.out.println(filter.toString());
     }

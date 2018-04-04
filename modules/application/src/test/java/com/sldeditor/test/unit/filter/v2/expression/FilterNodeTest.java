@@ -88,6 +88,7 @@ public class FilterNodeTest {
      */
     @Test
     public void testSetFilter() {
+        String category = "Test category";
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
         FilterNode node = new FilterNode();
@@ -103,21 +104,23 @@ public class FilterNodeTest {
         assertTrue(actual.compareTo(expected) == 0);
         assertEquals(filter, node.getFilter());
 
-        FilterConfigInterface filterConfig = new IsGreaterThan();
+        FilterConfigInterface filterConfig = new IsGreaterThan(category);
         node.setFilter(filter, filterConfig);
 
         assertEquals(filterConfig, node.getFilterConfig());
         expected = "Filter : PropertyIsGreaterThan";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // PropertyIsLike
         filter = ff.like(ff.literal("abc def ghi"), "abc");
-        filterConfig = new IsLike();
+        filterConfig = new IsLike(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : Like";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // BinarySpatialOperator
         Hints hints = new Hints(Hints.CRS, DefaultGeographicCRS.WGS84);
@@ -137,44 +140,49 @@ public class FilterNodeTest {
             fail();
         }
         filter = ff.overlaps("property", geometry);
-        filterConfig = new Overlaps();
+        filterConfig = new Overlaps(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : Overlaps";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // Is Between
         filter = ff.between(ff.literal(25), ff.literal(5), ff.literal(50));
-        filterConfig = new IsBetween();
+        filterConfig = new IsBetween(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : PropertyIsBetween";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // Is Null
         filter = ff.isNull(ff.literal(12));
-        filterConfig = new IsNull();
+        filterConfig = new IsNull(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : IsNull";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // BinaryTemporalOperator
         filter = ff.after(ff.literal(12), ff.literal(312));
-        filterConfig = new After();
+        filterConfig = new After(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : After";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // Logic filter
         filter = ff.and(ff.after(ff.literal(12), ff.literal(312)),
                 ff.between(ff.literal(25), ff.literal(5), ff.literal(50)));
-        filterConfig = new And();
+        filterConfig = new And(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : And";
         actual = node.toString();
         assertTrue(actual.compareTo(expected) == 0);
+        assertTrue(filterConfig.category().compareTo(category) == 0);
 
         node.addFilter();
     }

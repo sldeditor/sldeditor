@@ -26,6 +26,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.vividsolutions.jts.geom.Geometry;
  *
  * @author Robert Ward (SCISYS)
  */
-public class Overlaps implements FilterConfigInterface {
+public class Overlaps extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class OverlapsExtended.
@@ -84,7 +85,8 @@ public class Overlaps implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Overlaps() {
+    public Overlaps(String category) {
+        super(category);
     }
 
     /**

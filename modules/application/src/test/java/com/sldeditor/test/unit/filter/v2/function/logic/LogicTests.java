@@ -22,6 +22,7 @@ package com.sldeditor.test.unit.filter.v2.function.logic;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -48,12 +49,14 @@ import com.sldeditor.filter.v2.function.logic.Or;
  */
 public class LogicTests {
 
+    private String category = "Test category";
+    
     /**
      * {@link com.sldeditor.filter.v2.function.logic.And}.
      */
     @Test
     public void testAnd() {
-        testClass(new And(), 2);
+        testClass(new And(category), 2);
     }
 
     /**
@@ -61,7 +64,7 @@ public class LogicTests {
      */
     @Test
     public void testOr() {
-        testClass(new Or(), 2);
+        testClass(new Or(category), 2);
     }
 
     /**
@@ -69,7 +72,7 @@ public class LogicTests {
      */
     @Test
     public void testNot() {
-        testClass(new Not(), 1);
+        testClass(new Not(category), 1);
     }
 
     /**
@@ -107,6 +110,7 @@ public class LogicTests {
             filter = (LogicFilterImpl) objUnderTest.createLogicFilter(filterList);
         }
         assertEquals(noOFExpectedFilters, filter.getChildren().size());
+        assertTrue(objUnderTest.category().compareTo(category) == 0);
 
         System.out.println(filter.toString());
     }

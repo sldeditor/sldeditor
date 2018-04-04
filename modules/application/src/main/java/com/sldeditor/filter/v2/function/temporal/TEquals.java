@@ -27,6 +27,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class TEquals implements FilterConfigInterface {
+public class TEquals extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class TEqualsExtended.
@@ -84,7 +85,8 @@ public class TEquals implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public TEquals() {
+    public TEquals(String category) {
+        super(category);
     }
 
     /**

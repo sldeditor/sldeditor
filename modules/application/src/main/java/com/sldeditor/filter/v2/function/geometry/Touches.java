@@ -26,6 +26,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.vividsolutions.jts.geom.Geometry;
  *
  * @author Robert Ward (SCISYS)
  */
-public class Touches implements FilterConfigInterface {
+public class Touches extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class TouchesExtended.
@@ -84,7 +85,8 @@ public class Touches implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Touches() {
+    public Touches(String category) {
+        super(category);
     }
 
     /**

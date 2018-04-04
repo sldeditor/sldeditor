@@ -28,6 +28,7 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -39,7 +40,7 @@ import com.vividsolutions.jts.geom.Geometry;
  *
  * @author Robert Ward (SCISYS)
  */
-public class Beyond implements FilterConfigInterface {
+public class Beyond extends FilterBase implements FilterConfigInterface {
 
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
@@ -111,7 +112,8 @@ public class Beyond implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Beyond() {
+    public Beyond(String category) {
+        super(category);
     }
 
     /**

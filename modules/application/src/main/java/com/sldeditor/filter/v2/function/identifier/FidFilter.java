@@ -30,6 +30,7 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.filter.identity.Identifier;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -40,7 +41,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FidFilter implements FilterConfigInterface {
+public class FidFilter extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class FidFilterExtended.
@@ -86,7 +87,8 @@ public class FidFilter implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public FidFilter() {
+    public FidFilter(String category) {
+        super(category);
     }
 
     /**

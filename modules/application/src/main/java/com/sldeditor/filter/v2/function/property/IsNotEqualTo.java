@@ -27,6 +27,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class IsNotEqualTo implements FilterConfigInterface {
+public class IsNotEqualTo extends FilterBase implements FilterConfigInterface {
 
     public class IsNotEqualToExtended extends IsNotEqualToImpl implements FilterExtendedInterface {
         public IsNotEqualToExtended() {
@@ -58,7 +59,8 @@ public class IsNotEqualTo implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public IsNotEqualTo() {
+    public IsNotEqualTo(String category) {
+        super(category);
     }
 
     /**

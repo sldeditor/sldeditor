@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.filter.v2.function.property;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ import com.sldeditor.filter.v2.function.property.IsNotEqualTo;
  */
 public class PropertyTests {
 
+    private String category = "Test category";
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
@@ -63,7 +65,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsEqualTo() {
-        testClass(new IsEqualTo());
+        testClass(new IsEqualTo(category));
     }
 
     /**
@@ -72,7 +74,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsGreaterThan() {
-        testClass(new IsGreaterThan());
+        testClass(new IsGreaterThan(category));
     }
 
     /**
@@ -81,7 +83,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsGreaterThanEqualTo() {
-        testClass(new IsGreaterThanEqualTo());
+        testClass(new IsGreaterThanEqualTo(category));
     }
 
     /**
@@ -90,7 +92,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsLessThan() {
-        testClass(new IsLessThan());
+        testClass(new IsLessThan(category));
     }
 
     /**
@@ -99,7 +101,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsLessThanEqualTo() {
-        testClass(new IsLessThanEqualTo());
+        testClass(new IsLessThanEqualTo(category));
     }
 
     /**
@@ -108,7 +110,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsNotEqualTo() {
-        testClass(new IsNotEqualTo());
+        testClass(new IsNotEqualTo(category));
     }
 
     /**
@@ -117,7 +119,7 @@ public class PropertyTests {
      */
     @Test
     public void testIsBetween() {
-        testClass(new IsBetween());
+        testClass(new IsBetween(category));
     }
 
     /**
@@ -146,6 +148,7 @@ public class PropertyTests {
         filter = (BinaryComparisonAbstract) objUnderTest.createFilter(parameterList);
         assertNotNull(filter.getExpression1());
         assertNotNull(filter.getExpression2());
+        assertTrue(objUnderTest.category().compareTo(category) == 0);
 
         System.out.println(filter.toString());
     }

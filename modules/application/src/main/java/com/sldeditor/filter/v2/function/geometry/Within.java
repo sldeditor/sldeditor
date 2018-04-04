@@ -26,6 +26,7 @@ import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
@@ -37,7 +38,7 @@ import com.vividsolutions.jts.geom.Geometry;
  *
  * @author Robert Ward (SCISYS)
  */
-public class Within implements FilterConfigInterface {
+public class Within extends FilterBase implements FilterConfigInterface {
 
     /**
      * The Class WithinExtended.
@@ -84,7 +85,8 @@ public class Within implements FilterConfigInterface {
     /**
      * Default constructor.
      */
-    public Within() {
+    public Within(String category) {
+        super(category);
     }
 
     /**
