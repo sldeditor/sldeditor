@@ -51,11 +51,11 @@ Main features include:
 
 A compiled single executable jar is available here, runs on macOS, Windows and Linux:
 
-* [SLDEditor Release 0.7.8](https://github.com/robward-scisys/sldeditor/releases/download/v0.7.8/SLDEditor.jar) (MD5 : 52a4c935743fb7f0e5aae5a1ed04ae94) Released 24 Feb 2018
+* [SLDEditor Release 0.7.8](https://github.com/robward-scisys/sldeditor/releases/download/0.7.8/SLDEditor.jar) (MD5 : 52a4c935743fb7f0e5aae5a1ed04ae94) Released 24 Feb 2018
 
 ### MacOS
 
-An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.7.8/SLDEditor-Installer.dmg)
+An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.7.8/SLDEditor-Installer.dmg)
 
 ### Ubuntu
 
