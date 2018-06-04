@@ -38,8 +38,11 @@ import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.function.EnvFunction;
+import org.geotools.filter.function.string.ConcatenateFunction;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
+import org.opengis.parameter.Parameter;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -51,8 +54,10 @@ import com.sldeditor.filter.v2.function.FunctionField;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
+import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.widgets.FieldPanel;
 
 /**
  * The Class ExpressionSubPanel.
@@ -60,6 +65,9 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
  * @author Robert Ward (SCISYS)
  */
 public class ExpressionSubPanel extends JPanel {
+
+    /** The Constant VERTICAL_STRUCT_SIZE. */
+    private static final int VERTICAL_STRUCT_SIZE = 30;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -79,22 +87,22 @@ public class ExpressionSubPanel extends JPanel {
     /** The box. */
     private Box box;
 
-    /** The field config. */
+    /** The field allowing the configuration change. */
     private FieldConfigBase fieldConfig = null;
 
     /** The button group. */
     private ButtonGroup buttonGroup = new ButtonGroup();
 
-    /** The rdbtn literal. */
+    /** The radio button literal. */
     private JRadioButton rdbtnLiteral;
 
-    /** The rdbtn attribute. */
+    /** The radio button attribute. */
     private JRadioButton rdbtnAttribute;
 
-    /** The rdbtn function. */
+    /** The radio button function. */
     private JRadioButton rdbtnFunction;
 
-    /** The rdbtn environment variable. */
+    /** The radio button environment variable. */
     private JRadioButton rdbtnEnvVar;
 
     /** The panel literal. */
@@ -183,21 +191,25 @@ public class ExpressionSubPanel extends JPanel {
         // Literal panel
         //
         setUpLiteralPanel();
-
+        box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
+        
         //
         // Property / attribute
         //
         setUpPropertyPanel();
+        box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
 
         //
         // Environment variable
         //
         setUpEnvVarPanel();
+        box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
 
         //
         // Function panel
         //
         setUpFunctionPanel();
+        box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
 
         panelRemoveParameter = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panelRemoveParameter.getLayout();
@@ -221,12 +233,18 @@ public class ExpressionSubPanel extends JPanel {
                             .getExpression();
 
                     functionExpression.getParameters().remove(index);
+                } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
+                    ConcatenateFunction concatenateFunction = (ConcatenateFunction) parentNode
+                            .getExpression();
 
-                    parentNode.setDisplayString();
+                    List<Expression> parameters = concatenateFunction.getParameters();
+                    parameters.remove(index);
+                    concatenateFunction.setParameters(parameters);
+                }
+                parentNode.setDisplayString();
 
-                    if (parent != null) {
-                        parent.dataApplied();
-                    }
+                if (parent != null) {
+                    parent.dataApplied();
                 }
             }
         });
@@ -260,7 +278,6 @@ public class ExpressionSubPanel extends JPanel {
         panelAttribute = new JPanel();
         panelAttribute.setBorder(null);
         panelAttribute.setLayout(new BoxLayout(panelAttribute, BoxLayout.X_AXIS));
-
         rdbtnAttribute = new JRadioButton(
                 Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"));
         panelAttribute.add(rdbtnAttribute);
@@ -281,6 +298,7 @@ public class ExpressionSubPanel extends JPanel {
                 // Do nothing
             }
         });
+
         panelAttribute.add(dataSourceAttributePanel);
         box.add(panelAttribute);
     }
@@ -314,6 +332,7 @@ public class ExpressionSubPanel extends JPanel {
                     // Do nothing
                 }
             }, EnvironmentVariableManager.getInstance());
+
             panelEnvVar.add(envVarField);
             box.add(panelEnvVar);
         }
@@ -349,6 +368,7 @@ public class ExpressionSubPanel extends JPanel {
                 }
             }
         }, FunctionManager.getInstance());
+
         panelFunction.add(functionPanel);
         box.add(panelFunction);
     }
@@ -358,6 +378,7 @@ public class ExpressionSubPanel extends JPanel {
      *
      * @param node the node
      */
+    @SuppressWarnings("unchecked")
     private void displayExpression(ExpressionNode node) {
 
         if (panelLiteral.getComponentCount() == 2) {
@@ -368,8 +389,18 @@ public class ExpressionSubPanel extends JPanel {
             return;
         }
 
+        List<String> enumList = null;
+        Parameter<?> param = node.getParameter();
+        if (param instanceof org.geotools.data.Parameter<?>) {
+            org.geotools.data.Parameter<?> paramData = (org.geotools.data.Parameter<?>) param;
+            Object obj = paramData.metadata.get(org.geotools.data.Parameter.OPTIONS);
+            if (obj instanceof List<?>) {
+                enumList = (List<String>) obj;
+            }
+        }
+
         fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value",
-                node.getType());
+                node.getType(), enumList);
 
         if (fieldConfig != null) {
             fieldConfig.createUI();
@@ -380,7 +411,23 @@ public class ExpressionSubPanel extends JPanel {
                     updateButtonState(true);
                 }
             });
-            panelLiteral.add(fieldConfig.getPanel());
+
+            // Set the size of the panels so they all align
+            FieldPanel panel = fieldConfig.getPanel();
+            Dimension dimension = panel.getPreferredSize();
+            panel.setMaximumSize(dimension);
+
+            dataSourceAttributePanel
+                    .setMaximumSize(new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT));
+
+            if (envVarField != null) {
+                envVarField.setMaximumSize(new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT));
+            }
+
+            functionPanel
+                    .setMaximumSize(new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT * 3));
+
+            panelLiteral.add(panel);
 
             // Reset the fields
             dataSourceAttributePanel.setAttribute(null);
@@ -397,7 +444,9 @@ public class ExpressionSubPanel extends JPanel {
             } else if (expression instanceof EnvFunction) {
                 envVarField.setEnvironmentVariable(expression);
                 buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
-            } else if (expression instanceof FunctionExpressionImpl) {
+            } else if ((expression instanceof FunctionExpressionImpl)
+                    || (expression instanceof ConcatenateFunction)
+                    || (expression instanceof Function)) {
                 functionPanel.setFunction(expression, node);
                 buttonGroup.setSelected(rdbtnFunction.getModel(), true);
             } else {
@@ -423,6 +472,20 @@ public class ExpressionSubPanel extends JPanel {
 
                         btnRemoveParameter
                                 .setEnabled(functionExpression.getParameters().size() > argCount);
+                    }
+                } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
+                    ConcatenateFunction concatenateFunction = (ConcatenateFunction) parentNode
+                            .getExpression();
+                    FunctionName functionName = concatenateFunction.getFunctionName();
+
+                    int argCount = functionName.getArgumentCount();
+
+                    if (functionName.getArgumentCount() < 0) {
+                        displayRemoveParameter = true;
+                        argCount *= -1;
+
+                        btnRemoveParameter
+                                .setEnabled(concatenateFunction.getParameters().size() > argCount);
                     }
                 }
             }
@@ -477,6 +540,9 @@ public class ExpressionSubPanel extends JPanel {
                             List<Expression> parameterList = functionExpression.getParameters();
                             parameterList.remove(index);
                             parameterList.add(index, expression);
+                        } else {
+                            FunctionInterfaceUtils.handleFunctionInterface(parentNode, index,
+                                    expression);
                         }
 
                         parentNode.setDisplayString();

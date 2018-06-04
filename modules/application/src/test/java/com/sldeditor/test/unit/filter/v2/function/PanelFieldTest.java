@@ -77,7 +77,7 @@ public class PanelFieldTest {
 
         for (Class<?> nodeType : expectedValueMap.keySet()) {
             FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation,
-                    nodeType);
+                    nodeType, null);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -87,28 +87,28 @@ public class PanelFieldTest {
         // Special case
         // Number.class
         FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation,
-                Number.class);
+                Number.class, null);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Float.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
+        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(Number.class.getName() + "/" + Float.class.getName(), expected, actual);
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Double.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
+        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(Number.class.getName() + "/" + Double.class.getName(), expected, actual);
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(String.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class);
+        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         expected = FieldConfigInteger.class;
         actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);

@@ -101,6 +101,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
      * @see com.sldeditor.rendertransformation.types.BaseValue#populateSymbolType(com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig)
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
+        symbolTypeConfig.addOption(" ", "");
         for (String enumValue : enumValueList) {
             symbolTypeConfig.addOption(enumValue, enumValue);
         }

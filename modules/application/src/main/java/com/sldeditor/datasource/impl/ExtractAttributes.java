@@ -259,17 +259,16 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
         FeatureTypeStyle copy = new FeatureTypeStyleImpl(fts);
 
-        Rule[] rules = fts.getRules();
-        int length = rules.length;
-        Rule[] rulesCopy = new Rule[length];
-        for (int i = 0; i < length; i++) {
-            if (rules[i] != null) {
-                rules[i].accept(this);
-                rulesCopy[i] = (Rule) pages.pop();
+        List<Rule> rules = fts.rules();
+        List<Rule> rulesCopy = new ArrayList<Rule>();
+        for (Rule rule : rules) {
+            if (rule != null) {
+                rule.accept(this);
+                rulesCopy.add( (Rule) pages.pop());
             }
         }
 
-        copy.setRules(rulesCopy);
+        copy.rules().addAll(rulesCopy);
 
         if (fts.getTransformation() != null) {
             copy.setTransformation(copy(fts.getTransformation()));

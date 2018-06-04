@@ -45,3 +45,7 @@ config.properties
 bin/runSLDEditor\.bat
 
 bin/runSLDEditor\.sh
+
+bin/SLDEditor\.exe
+
+bin/launch4j\.log

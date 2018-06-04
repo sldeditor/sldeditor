@@ -19,8 +19,8 @@
 
 package com.sldeditor.filter.v2.envvar;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -49,7 +49,6 @@ import com.sldeditor.filter.v2.envvar.dialog.EnvVarDlg;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 import com.sldeditor.ui.detail.BasePanel;
-import java.awt.FlowLayout;
 
 /**
  * Panel to be able to edit EnvironmentVariableField objects.

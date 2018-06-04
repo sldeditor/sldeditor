@@ -37,6 +37,7 @@ import org.geotools.filter.expression.SubtractImpl;
 import org.geotools.filter.function.EnvFunction;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 import org.opengis.parameter.Parameter;
 
 import com.sldeditor.common.localisation.Localisation;
@@ -70,10 +71,19 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     /** The expression type. */
     private ExpressionTypeEnum expressionType = ExpressionTypeEnum.EXPRESSION;
 
+    /** The optional parameter. */
+    private boolean optionalParam = false;
+
+    /** The optional parameter used. */
+    private boolean optionalParamUsed = false;
+
+    /** The expression node parameter. */
+    private Parameter<?> expressionNodeParameter = null;
+
     /** The math expression map. */
     private static Map<Class<?>, String> mathExpressionMap = new HashMap<Class<?>, String>();
 
-    /** The env mgr. */
+    /** The environment manager. */
     private static EnvironmentManagerInterface envMgr = null;
 
     /**
@@ -112,8 +122,14 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 sb.append(Localisation.getString(ExpressionPanelv2.class,
                         "ExpressionPanelv2.propertyNotSet"));
             } else {
-                sb.append(Localisation.getString(ExpressionPanelv2.class,
-                        "ExpressionPanelv2.expressionNotSet"));
+                if (optionalParam) {
+                    sb.append(Localisation.getString(ExpressionPanelv2.class,
+                            "ExpressionPanelv2.optional"));
+
+                } else {
+                    sb.append(Localisation.getString(ExpressionPanelv2.class,
+                            "ExpressionPanelv2.expressionNotSet"));
+                }
             }
         }
 
@@ -126,9 +142,11 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                     Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"),
                     expression.toString()));
         } else if (expression instanceof FunctionExpressionImpl) {
-            sb.append(expression.toString());
+            sb.append(FunctionExpressionUtils.toString(expression));
         } else if (expression instanceof FunctionImpl) {
             sb.append(expression.toString());
+        } else if (expression instanceof Function) {
+            sb.append(FunctionInterfaceUtils.toString(expression));
         } else if (expression instanceof MathExpressionImpl) {
             if (mathExpressionMap.isEmpty()) {
                 mathExpressionMap.put(AddImpl.class, "+");
@@ -218,17 +236,21 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 argCount *= -1;
             }
 
-            for (int index = 0; index < functionExpression.getParameters().size(); index++) {
+            for (int index = 0; index < Math.max(functionExpression.getParameters().size(),
+                    argCount); index++) {
                 ExpressionNode childNode = new ExpressionNode();
 
                 // If function has a variable number of arguments pick the last one
                 int argumentIndex = Math.min(index, argCount - 1);
 
                 Parameter<?> parameter = functionName.getArguments().get(argumentIndex);
-                childNode.setType(parameter.getType());
-                childNode.setName(parameter.getName());
+                childNode.setParameter(parameter);
 
-                childNode.setExpression(functionExpression.getParameters().get(index));
+                if (index < functionExpression.getParameters().size()) {
+                    childNode.setExpression(functionExpression.getParameters().get(index));
+                } else {
+                    childNode.setExpression(null);
+                }
                 this.insert(childNode, this.getChildCount());
             }
         } else if (this.expression instanceof FunctionImpl) {
@@ -249,6 +271,47 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                     childNode.setExpression(functionExpression.getParameters().get(index));
                 }
                 this.insert(childNode, this.getChildCount());
+            }
+        } else if (this.expression instanceof Function) {
+            Function functionExpression = (Function) this.expression;
+            FunctionName functionName = functionExpression.getFunctionName();
+
+            TypeManager.getInstance().setDataType(functionName.getReturn().getType());
+
+            int overallIndex = 0;
+            for (Parameter<?> param : functionName.getArguments()) {
+                if (param.getMinOccurs() == 0) {
+                    ExpressionNode childNode = new ExpressionNode();
+                    childNode.setParameter(param);
+                    childNode.setOptional();
+
+                    if (overallIndex < functionExpression.getParameters().size()) {
+                        childNode.setExpression(
+                                functionExpression.getParameters().get(overallIndex));
+                        childNode.setOptionalParamUsed(true);
+                    } else {
+                        childNode.setExpression(null);
+                    }
+                    overallIndex++;
+                    this.insert(childNode, this.getChildCount());
+                } else {
+                    for (int index = 0; index < param.getMinOccurs(); index++) {
+                        ExpressionNode childNode = new ExpressionNode();
+                        childNode.setParameter(param);
+
+                        if (index < functionExpression.getParameters().size()) {
+                            if (overallIndex < functionExpression.getParameters().size()) {
+                                childNode.setExpression(
+                                        functionExpression.getParameters().get(overallIndex));
+                            } else {
+                                childNode.setExpression(null);
+                            }
+                        }
+
+                        overallIndex++;
+                        this.insert(childNode, this.getChildCount());
+                    }
+                }
             }
         } else if (expression instanceof MathExpressionImpl) {
             MathExpressionImpl mathsExpression = (MathExpressionImpl) expression;
@@ -277,6 +340,35 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 TypeManager.getInstance().setDataType(literal.getValue().getClass());
             }
         }
+    }
+
+    /**
+     * Marks the parameter as optional.
+     */
+    private void setOptional() {
+        optionalParam = true;
+    }
+
+    /**
+     * Sets the data from a parameter.
+     *
+     * @param parameter the new parameter
+     */
+    public void setParameter(Parameter<?> parameter) {
+        expressionNodeParameter = parameter;
+        if (parameter != null) {
+            setType(parameter.getType());
+            setName(parameter.getName());
+        }
+    }
+
+    /**
+     * Gets the parameter.
+     *
+     * @return the parameter
+     */
+    public Parameter<?> getParameter() {
+        return expressionNodeParameter;
     }
 
     /**
@@ -335,4 +427,28 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     public static void setEnvMgr(EnvironmentManagerInterface envMgr) {
         ExpressionNode.envMgr = envMgr;
     }
+
+    /**
+     * Checks if is optional param.
+     *
+     * @return the optionalParam
+     */
+    public boolean isOptionalParam() {
+        return optionalParam;
+    }
+
+    /**
+     * @return the optionalParamUsed
+     */
+    public boolean isOptionalParamUsed() {
+        return optionalParamUsed;
+    }
+
+    /**
+     * @param optionalParamUsed the optionalParamUsed to set
+     */
+    public void setOptionalParamUsed(boolean optionalParamUsed) {
+        this.optionalParamUsed = optionalParamUsed;
+    }
+
 }

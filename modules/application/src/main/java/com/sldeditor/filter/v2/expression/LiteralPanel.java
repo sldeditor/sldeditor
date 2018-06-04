@@ -95,7 +95,7 @@ public class LiteralPanel extends JPanel {
         }
 
         fieldConfig = PanelField.getField(ExpressionPanelv2.class, "LiteralPanel.value",
-                node.getType());
+                node.getType(), null);
 
         if (fieldConfig != null) {
             fieldConfig.createUI();

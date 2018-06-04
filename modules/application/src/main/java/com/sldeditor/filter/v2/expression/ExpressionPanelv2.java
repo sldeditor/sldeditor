@@ -484,10 +484,11 @@ public class ExpressionPanelv2 extends JDialog
         } else if (expression instanceof ConcatenateFunction) {
             ConcatenateFunction concatenateExpression = (ConcatenateFunction) expression;
             List<Expression> parameters = new ArrayList<Expression>();
-            ExpressionNode leftChildNode = (ExpressionNode) node.getChildAt(0);
-            parameters.add(addExpression(leftChildNode));
-            ExpressionNode rightChildNode = (ExpressionNode) node.getChildAt(1);
-            parameters.add(addExpression(rightChildNode));
+            for(int index = 0; index < node.getChildCount(); index ++)
+            {
+                ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(0);
+                parameters.add(addExpression(expressionNode));
+            }
             concatenateExpression.setParameters(parameters);
 
             return concatenateExpression;
