@@ -27,7 +27,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import org.geotools.data.DataUtilities;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.DefaultResourceLocator;
 import org.geotools.styling.FeatureTypeStyle;
@@ -40,6 +39,7 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayerImpl;
+import org.geotools.util.URLs;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -103,7 +103,7 @@ public class SLDUtils {
 
         if (geoServer != null) {
             try {
-                resourceLocator = DataUtilities.extendURL(geoServer.getUrl(), STYLES_PATH);
+                resourceLocator = URLs.extendUrl(geoServer.getUrl(), STYLES_PATH);
             } catch (MalformedURLException e) {
                 ConsoleManager.getInstance().exception(SLDUtils.class, e);
             }

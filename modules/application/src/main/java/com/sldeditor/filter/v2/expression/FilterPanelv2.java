@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,6 +42,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.geotools.data.DataStore;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.BinaryComparisonAbstract;
 import org.geotools.filter.FidFilterImpl;
@@ -48,13 +50,18 @@ import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
+import org.geotools.filter.function.Collection_AverageFunction;
+import org.geotools.filter.function.Collection_BoundsFunction;
+import org.geotools.filter.function.Collection_SumFunction;
 import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.Not;
 import org.opengis.filter.PropertyIsBetween;
 import org.opengis.filter.PropertyIsGreaterThan;
 import org.opengis.filter.PropertyIsLike;
 import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 
@@ -138,7 +145,13 @@ public class FilterPanelv2 extends JDialog
     /** The vendor option list. */
     private List<VersionData> vendorOptionList = null;
 
+    /** The Ok button. */
     private JButton btnOk;
+
+    /** The filter factory. */
+    private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+    private JCheckBox optionalCheckBox;
 
     /**
      * Instantiates a new expression panel.
@@ -211,21 +224,14 @@ public class FilterPanelv2 extends JDialog
 
                 CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
 
+                optionalCheckBox.setVisible(false);
                 if (selectedNode instanceof ExpressionNode) {
                     ExpressionNode expressionNode = (ExpressionNode) selectedNode;
-                    if (expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL) {
-                        cardLayout.show(dataPanel, literalPanel.getClass().getName());
-                        literalPanel.setSelectedNode(selectedNode);
-                    } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY) {
-                        cardLayout.show(dataPanel, expressionPanel.getClass().getName());
-                        expressionPanel.setSelectedNode(selectedNode);
-                    } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.ENVVAR) {
-                        cardLayout.show(dataPanel, envVarPanel.getClass().getName());
-                        envVarPanel.setSelectedNode(selectedNode);
-                    } else {
-                        cardLayout.show(dataPanel, expressionPanel.getClass().getName());
-                        expressionPanel.setSelectedNode(selectedNode);
-                    }
+
+                    optionalCheckBox.setVisible(expressionNode.isOptionalParam());
+                    optionalCheckBox.setSelected(expressionNode.isOptionalParamUsed());
+
+                    showDataPanel(cardLayout, expressionNode);
                 } else if (selectedNode instanceof FilterNode) {
                     cardLayout.show(dataPanel, filterPanel.getClass().getName());
                     filterPanel.setSelectedNode(selectedNode);
@@ -235,6 +241,41 @@ public class FilterPanelv2 extends JDialog
             }
         });
         scrollPane.setViewportView(tree);
+
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        JPanel optionPanel = new JPanel(new BorderLayout());
+        rightPanel.add(optionPanel, BorderLayout.NORTH);
+
+        optionalCheckBox = new JCheckBox("Optional");
+        optionalCheckBox.setVisible(false);
+        optionalCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (selectedNode instanceof ExpressionNode) {
+                    ExpressionNode expressionNode = (ExpressionNode) selectedNode;
+                    expressionNode.setOptionalParamUsed(optionalCheckBox.isSelected());
+
+                    CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
+
+                    showDataPanel(cardLayout, expressionNode);
+
+                    if (!optionalCheckBox.isSelected()) {
+                        if (selectedNode.getParent() instanceof ExpressionNode) {
+                            ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+                            if (parentNode != null) {
+
+                                int index = parentNode.getIndex(selectedNode);
+                                
+                                FunctionInterfaceUtils.handleFunctionInterface(parentNode, index);
+
+                                parentNode.setDisplayString();
+                                displayResult();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        optionPanel.add(optionalCheckBox, BorderLayout.NORTH);
 
         dataPanel = new JPanel(new CardLayout());
         dataPanel.add(emptyPanel, EMPTY_PANEL);
@@ -249,7 +290,8 @@ public class FilterPanelv2 extends JDialog
         envVarPanel = new EnvVarPanel(this);
         dataPanel.add(envVarPanel, EnvVarPanel.class.getName());
 
-        getContentPane().add(dataPanel, BorderLayout.CENTER);
+        rightPanel.add(dataPanel, BorderLayout.CENTER);
+        getContentPane().add(rightPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) buttonPanel.getLayout();
@@ -500,7 +542,15 @@ public class FilterPanelv2 extends JDialog
             for (int childIndex = 0; childIndex < node.getChildCount(); childIndex++) {
                 ExpressionNode childNode = (ExpressionNode) node.getChildAt(childIndex);
 
-                parameterlist.add(addExpression(childNode));
+                Expression addExpression = addExpression(childNode);
+
+                if ((addExpression == null) && ((expression instanceof Collection_AverageFunction)
+                        || (expression instanceof Collection_BoundsFunction)
+                        || (expression instanceof Collection_SumFunction))) {
+                    parameterlist.add(ff.literal(0));
+                } else {
+                    parameterlist.add(addExpression);
+                }
             }
 
             functionExpression.setParameters(parameterlist);
@@ -514,6 +564,19 @@ public class FilterPanelv2 extends JDialog
             mathExpression.setExpression2(addExpression(rightChildNode));
 
             return mathExpression;
+        } else if (expression instanceof Function) {
+            Function function = (Function) expression;
+            List<Expression> expList = new ArrayList<Expression>();
+            for (Expression exp : function.getParameters()) {
+                expList.add(exp);
+            }
+
+            for (int index = 0; index < node.getChildCount(); index++) {
+                ExpressionNode childNode = (ExpressionNode) node.getChildAt(index);
+                expList.add(addExpression(childNode));
+            }
+
+            return function;
         }
         return null;
     }
@@ -612,12 +675,36 @@ public class FilterPanelv2 extends JDialog
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
-     * data.DataStore)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools. data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Does nothing
+    }
+
+    /**
+     * Show data panel.
+     *
+     * @param cardLayout the card layout
+     * @param expressionNode the expression node
+     */
+    private void showDataPanel(CardLayout cardLayout, ExpressionNode expressionNode) {
+        if (expressionNode.isOptionalParam() && !expressionNode.isOptionalParamUsed()) {
+            cardLayout.show(dataPanel, EMPTY_PANEL);
+        } else {
+            if (expressionNode.getExpressionType() == ExpressionTypeEnum.LITERAL) {
+                cardLayout.show(dataPanel, literalPanel.getClass().getName());
+                literalPanel.setSelectedNode(selectedNode);
+            } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.PROPERTY) {
+                cardLayout.show(dataPanel, expressionPanel.getClass().getName());
+                expressionPanel.setSelectedNode(selectedNode);
+            } else if (expressionNode.getExpressionType() == ExpressionTypeEnum.ENVVAR) {
+                cardLayout.show(dataPanel, envVarPanel.getClass().getName());
+                envVarPanel.setSelectedNode(selectedNode);
+            } else {
+                cardLayout.show(dataPanel, expressionPanel.getClass().getName());
+                expressionPanel.setSelectedNode(selectedNode);
+            }
+        }
     }
 }

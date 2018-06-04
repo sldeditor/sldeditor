@@ -34,9 +34,10 @@ import javax.swing.JPanel;
 
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionExpressionImpl;
-import org.geotools.filter.FunctionImpl;
+import org.geotools.filter.function.string.ConcatenateFunction;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 import org.opengis.parameter.Parameter;
 
 import com.sldeditor.common.console.ConsoleManager;
@@ -47,6 +48,7 @@ import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
+import com.sldeditor.filter.v2.expression.FunctionInterfaceUtils;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
@@ -78,7 +80,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
     /** The function name mgr. */
     private FunctionNameInterface functionNameMgr = null;
 
-    /**  Is edited symbol a raster flag. */
+    /** Is edited symbol a raster flag. */
     private boolean isRasterSymbol = false;
 
     /** The current expression. */
@@ -86,6 +88,12 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
     /** The current expression node. */
     private ExpressionNode currentExpressionNode = null;
+
+    /** The add parameter button. */
+    private JButton btnAddParameter;
+
+    /** The pre selected function. */
+    private boolean preSelectedFunction = false;
 
     /**
      * Gets the panel name.
@@ -115,8 +123,8 @@ public class FunctionField extends JPanel implements UndoActionInterface {
         JPanel panel = new JPanel();
         add(panel, BorderLayout.SOUTH);
 
-        JButton btnAddParameter = new JButton(Localisation.getString(ExpressionPanelv2.class,
-                "FunctionField.addParameter"));
+        btnAddParameter = new JButton(
+                Localisation.getString(ExpressionPanelv2.class, "FunctionField.addParameter"));
         btnAddParameter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addParameter();
@@ -141,7 +149,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                     variableNoOfParameters = (functionName.getArgumentCount() < 0);
                 }
 
-                btnAddParameter.setVisible(variableNoOfParameters);
+                btnAddParameter.setVisible(preSelectedFunction && variableNoOfParameters);
 
                 if (parentObj != null) {
                     parentObj.updateSymbol();
@@ -154,22 +162,45 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      * Adds a variable parameter.
      */
     private void addParameter() {
-        FunctionExpression functionExpression = (FunctionExpression) currentExpression;
-        FunctionName functionName = functionExpression.getFunctionName();
+        if (currentExpression instanceof FunctionExpression) {
+            FunctionExpression functionExpression = (FunctionExpression) currentExpression;
+            FunctionName functionName = functionExpression.getFunctionName();
 
-        int argCount = functionName.getArgumentCount();
+            int argCount = functionName.getArgumentCount();
 
-        if (functionName.getArgumentCount() < 0) {
-            argCount *= -1;
+            if (functionName.getArgumentCount() < 0) {
+                argCount *= -1;
 
+                ExpressionNode childNode = new ExpressionNode();
+                Parameter<?> parameter = functionName.getArguments().get(argCount - 1);
+                childNode.setParameter(parameter);
+
+                Expression newExpression = functionExpression.getParameters().get(argCount - 1);
+                childNode.setExpression(newExpression);
+                functionExpression.getParameters().add(newExpression);
+                currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
+                currentExpressionNode.setDisplayString();
+            }
+        } else if (currentExpression instanceof ConcatenateFunction) {
+            ConcatenateFunction functionExpression = (ConcatenateFunction) currentExpression;
+            FunctionName functionName = functionExpression.getFunctionName();
+
+            int argCount = functionName.getArgumentCount();
+
+            if (functionName.getArgumentCount() < 0) {
+                argCount *= -1;
+            }
             ExpressionNode childNode = new ExpressionNode();
-            Parameter<?> parameter = functionName.getArguments().get(argCount - 1);
+            Parameter<?> parameter = functionName.getArguments()
+                    .get(Math.min(functionName.getArguments().size() - 1, argCount - 1));
             childNode.setType(parameter.getType());
             childNode.setName(parameter.getName());
 
-            Expression newExpression = functionExpression.getParameters().get(argCount - 1);
+            Expression newExpression = null;
             childNode.setExpression(newExpression);
-            functionExpression.getParameters().add(newExpression);
+            List<Expression> parameters = functionExpression.getParameters();
+            parameters.add(newExpression);
+            functionExpression.setParameters(parameters);
             currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
             currentExpressionNode.setDisplayString();
         }
@@ -251,6 +282,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
         currentExpression = expression;
         currentExpressionNode = node;
+        preSelectedFunction = true;
 
         if (expression == null) {
             functionComboBox.setSelectedIndex(-1);
@@ -263,11 +295,29 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                 oldValueObj = functionName;
 
                 functionComboBox.setSelectedItem(functionName);
+            } else if (expression instanceof ConcatenateFunction) {
+                ConcatenateFunction concatenateExpression = (ConcatenateFunction) expression;
+                FunctionName function = concatenateExpression.getFunctionName();
+
+                String functionName = function.getName();
+                oldValueObj = functionName;
+
+                functionComboBox.setSelectedItem(functionName);
+            } else if (expression instanceof Function) {
+                Function functionExpression = (Function) expression;
+                FunctionName function = functionExpression.getFunctionName();
+
+                String functionName = function.getName();
+                oldValueObj = functionName;
+
+                functionComboBox.setSelectedItem(functionName);
             } else {
-                ConsoleManager.getInstance().error(this, Localisation.getString(DataSourceAttributePanel.class,
-                        "DataSourceAttributePanel.error1"));
+                ConsoleManager.getInstance().error(this, Localisation.getString(
+                        DataSourceAttributePanel.class, "DataSourceAttributePanel.error1"));
             }
         }
+
+        preSelectedFunction = false;
     }
 
     /**
@@ -281,45 +331,55 @@ public class FunctionField extends JPanel implements UndoActionInterface {
         FunctionName functionName = functionNameMap.get(functionNameString);
         Expression newExpression = functionNameMgr.createExpression(functionName);
 
+        int argCount = functionName.getArgumentCount();
+        if (argCount < 0) {
+            argCount *= -1;
+        }
         if (newExpression instanceof FunctionExpression) {
             FunctionExpression expression = (FunctionExpression) newExpression;
 
             if (expression != null) {
                 List<Expression> params = new ArrayList<Expression>();
 
-                boolean validSymbolFlag = (params.size() == functionName.getArgumentCount());
+                boolean validSymbolFlag = (params.size() == argCount);
                 if (validSymbolFlag) {
                     expression.setParameters(params);
                 }
             }
-        } else if (newExpression instanceof FunctionImpl) {
-            FunctionImpl expression = (FunctionImpl) newExpression;
+        } else if (newExpression instanceof ConcatenateFunction) {
+            ConcatenateFunction expression = (ConcatenateFunction) newExpression;
 
             if (expression != null) {
-                // List<Expression> params = new ArrayList<Expression>();
-                // List<FieldConfigBase> functionFields = field.getFunctionFields();
-                // if(functionFields != null)
-                // {
-                // for(FieldConfigBase functionField : functionFields)
-                // {
-                // Expression functionFieldExpression = functionField.getExpression();
-                //
-                // if(functionFieldExpression != null)
-                // {
-                // params.add(functionFieldExpression);
-                // }
-                // }
-                // }
-                //
-                // boolean validSymbolFlag = (params.size() == functionName.getArgumentCount());
-                // if(validSymbolFlag)
-                // {
-                // expression.setParameters(params);
-                // }
-                //
-                // String key = String.format("%s@%s", field.getClass().getName(),
-                // Integer.toHexString(field.hashCode()));
-                // SelectedSymbol.getInstance().setValidSymbol(key, validSymbolFlag);
+                List<Expression> params = new ArrayList<Expression>();
+
+                for (int i = 0; i < argCount; i++) {
+                    params.add(null);
+                }
+                boolean validSymbolFlag = (params.size() == argCount);
+                if (validSymbolFlag) {
+                    expression.setParameters(params);
+                }
+            }
+        } else if (newExpression instanceof Function) {
+            Function function = (Function) newExpression;
+
+            List<Expression> params = new ArrayList<Expression>();
+
+            for (Parameter<?> param : functionName.getArguments()) {
+                for (int index = 0; index < param.getMinOccurs(); index++) {
+                    params.add(null);
+                }
+            }
+            boolean validSymbolFlag = (params.size() == argCount);
+            if (validSymbolFlag) {
+                Expression retValue = FunctionInterfaceUtils.createNewFunction(newExpression,
+                        params);
+
+                if (retValue != null) {
+                    return retValue;
+                } else {
+                    ((FunctionExpression) function).setParameters(params);
+                }
             }
         }
 

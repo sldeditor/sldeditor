@@ -21,6 +21,7 @@ package com.sldeditor.tool.savesld;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -44,8 +45,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.geotools.data.DataUtilities;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.util.URLs;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.NodeInterface;
@@ -63,7 +64,6 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
-import java.awt.FlowLayout;
 
 /**
  * Tool which given a list of SLD objects saves them to SLD files.
@@ -261,8 +261,7 @@ public class SaveSLDTool implements ToolInterface {
 
                             if (writeOutputFile) {
                                 try {
-                                    URL input = DataUtilities
-                                            .extendURL(sldData.getResourceLocator(), externalImage);
+                                    URL input = URLs.extendUrl(sldData.getResourceLocator(), externalImage);
                                     URLConnection connection = input.openConnection();
 
                                     InputStream inputStream = connection.getInputStream();

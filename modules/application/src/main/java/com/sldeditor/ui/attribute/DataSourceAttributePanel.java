@@ -101,6 +101,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         add(lblDataType, BorderLayout.WEST);
 
         add(attributeComboBox, BorderLayout.CENTER);
+
         populateAttributeComboBox();
         attributeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -121,7 +121,7 @@ public class FunctionManager implements FunctionNameInterface {
             logger.debug(className.getName());
         }
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
                 Long.class, Object.class };
         Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
@@ -144,7 +144,7 @@ public class FunctionManager implements FunctionNameInterface {
                 Long.class, Boolean.class, String.class, Date.class, Geometry.class,
                 LineString.class, Point.class, MultiPoint.class, LinearRing.class,
                 RangedClassifier.class, Classifier.class, ReferencedEnvelope.class, Object.class };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
         populateAllowedTypes(Double.class, allowedDoubleTypes);
@@ -171,8 +171,7 @@ public class FunctionManager implements FunctionNameInterface {
     }
 
     /**
-     * Gets the function name list for the given parameter type A
-     * expectedType of null returns all functions.
+     * Gets the function name list for the given parameter type A expectedType of null returns all functions.
      *
      * @param expectedType the expected type, restrict functions with this return type
      * @param functionNameFilterList the function name filter list
@@ -235,8 +234,11 @@ public class FunctionManager implements FunctionNameInterface {
             return null;
         }
 
-        List<Expression> parameters = null;
+        List<Expression> parameters = new ArrayList<Expression>();
         Literal fallback = null;
+
+        FunctionExpressionInterface.createNewFunction(functionName, parameters);
+
         Function function = functionFactory.function(functionName.getFunctionName(), parameters,
                 fallback);
 

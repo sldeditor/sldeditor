@@ -24,17 +24,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.function.DefaultFunctionFactory;
 import org.junit.Test;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
+import com.sldeditor.filter.v2.expression.FunctionInterfaceUtils;
 import com.sldeditor.filter.v2.function.FunctionManager;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
@@ -43,7 +44,8 @@ import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
 /**
  * Unit test for FunctionManager class.
  * 
- * <p>s{@link com.sldeditor.filter.v2.function.FunctionManager}
+ * <p>
+ * s{@link com.sldeditor.filter.v2.function.FunctionManager}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -59,10 +61,10 @@ public class FunctionManagerTest {
         DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
         List<FunctionName> functionNameList = functionFactory.getFunctionNames();
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
                 Long.class, Object.class };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
         List<Class<?>> allowedNumberTypesList = Arrays.asList(allowedNumberTypes);
 
         int count = 0;
@@ -72,8 +74,7 @@ public class FunctionManagerTest {
                 count++;
             }
         }
-        List<FunctionNameFilterInterface> functionNameFilterList = 
-                new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
         functionNameFilterList.add(new FunctionNameFilterAll());
 
         List<FunctionName> actualList = FunctionManager.getInstance()
@@ -103,11 +104,64 @@ public class FunctionManagerTest {
         Expression expression = FunctionManager.getInstance().createExpression(functionName);
         assertNull(expression);
 
-        functionName = functionNameList.get(0);
-        expression = FunctionManager.getInstance().createExpression(functionName);
-        assertNotNull(expression);
-        FunctionExpression funcExpression = (FunctionExpression) expression;
-        assertTrue(functionName.getName().compareTo(funcExpression.getName()) == 0);
+        boolean fail = false;
+
+        for (FunctionName functionName2 : functionNameList) {
+            System.out.print(functionName2.getName() + "\t\t");
+            try {
+                expression = FunctionManager.getInstance().createExpression(functionName2);
+                if (expression != null) {
+                    System.out.println("OK");
+                } else {
+                    fail = true;
+                    System.err.println("FAIL");
+                }
+            } catch (Exception e) {
+                fail = true;
+                System.err.println("FAIL");
+            }
+        }
+
+        if (fail) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testCreateExpressionToString() {
+        DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
+        List<FunctionName> functionNameList = functionFactory.getFunctionNames();
+        FunctionName functionName = null;
+        Expression expression = FunctionManager.getInstance().createExpression(functionName);
+        assertNull(expression);
+
+        boolean fail = false;
+
+        for (FunctionName functionName2 : functionNameList) {
+            System.out.print(functionName2.getName() + "\t\t");
+            try {
+                expression = FunctionManager.getInstance().createExpression(functionName2);
+                if (expression != null) {
+                    String result = FunctionInterfaceUtils.toString(expression);
+
+                    if (result.contains("@")) {
+                        System.err.println("TOSTRING FAIL");
+                    } else {
+                        System.out.println("OK");
+                    }
+                } else {
+                    fail = true;
+                    System.err.println("FAIL");
+                }
+            } catch (Exception e) {
+                fail = true;
+                System.err.println("FAIL");
+            }
+        }
+
+        if (fail) {
+            fail();
+        }
     }
 
     /**
@@ -119,8 +173,7 @@ public class FunctionManagerTest {
         Class<?> returnType = FunctionManager.getInstance().getFunctionType(null);
         assertNull(returnType);
 
-        List<FunctionNameFilterInterface> functionNameFilterList =
-                new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
         FunctionNameFilterAll allFilter = new FunctionNameFilterAll();
         allFilter.accept(null);
         functionNameFilterList.add(allFilter);
@@ -167,8 +220,7 @@ public class FunctionManagerTest {
         assertNotNull(ceilFunction);
         assertNotNull(idFunction);
 
-        List<FunctionNameFilterInterface> functionNameFilterList = 
-                new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
         FunctionNameFilterRaster rasterFilter = new FunctionNameFilterRaster();
         rasterFilter.accept(null);
         functionNameFilterList.add(rasterFilter);
