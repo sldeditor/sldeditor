@@ -20,6 +20,8 @@
 package com.sldeditor.test.unit.filter.v2.expression;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,6 +40,7 @@ import org.junit.Test;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
 import org.opengis.filter.identity.Version;
@@ -45,6 +48,7 @@ import org.opengis.temporal.Instant;
 
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.expression.FilterPanelv2;
+import com.sldeditor.filter.v2.function.FunctionManager;
 
 /**
  * Unit test for FilterPanelv2 class.
@@ -58,6 +62,7 @@ import com.sldeditor.filter.v2.expression.FilterPanelv2;
 public class TestFilterPanelv2 {
 
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
     private FilterFactory2 ff2 = CommonFactoryFinder.getFilterFactory2();
 
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
@@ -217,7 +222,7 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        Filter filter = ff2.id( ff.resourceId("CITY.98734597823459687235","A457", new Version()) );
+        Filter filter = ff2.id(ff.resourceId("CITY.98734597823459687235", "A457", new Version()));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
 
@@ -231,7 +236,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.bbox(ff.property("the_geom"), bbox);
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -246,7 +252,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.contains(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -261,7 +268,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.intersects(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -276,7 +284,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.crosses(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -291,7 +300,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.disjoint(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -306,7 +316,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.dwithin(ff.property("the_geom"), ff.literal(bbox), 10.0, "km");
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -321,7 +332,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.beyond(ff.property("the_geom"), ff.literal(bbox), 10.0, "km");
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -330,13 +342,14 @@ public class TestFilterPanelv2 {
 
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void testEquals() {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.equals(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -351,7 +364,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.overlaps(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -366,7 +380,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.touches(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -381,7 +396,8 @@ public class TestFilterPanelv2 {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
         testPanel.configure("test", String.class, false);
 
-        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0,1.0,-1.9,1.0, DefaultGeographicCRS.WGS84 );
+        ReferencedEnvelope bbox = new ReferencedEnvelope(-1.0, 1.0, -1.9, 1.0,
+                DefaultGeographicCRS.WGS84);
         Filter filter = ff2.within(ff.property("the_geom"), ff.literal(bbox));
         String expected = filter.toString();
         testPanel.filterDialog(String.class, filter);
@@ -390,7 +406,7 @@ public class TestFilterPanelv2 {
 
         assertEquals(expected, actual);
     }
-    
+
     // Temporal
     @Test
     public void testAfter() {
@@ -518,7 +534,6 @@ public class TestFilterPanelv2 {
         assertEquals(expected, actual);
     }
 
-
     @Test
     public void testAnyInteracts() {
         TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
@@ -531,5 +546,49 @@ public class TestFilterPanelv2 {
         String actual = testPanel.getFilterString();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAllFunctions() {
+        TestFilterPanelv2Dialog testPanel = new TestFilterPanelv2Dialog(null);
+        testPanel.configure("test", String.class, false);
+
+        DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
+        List<FunctionName> functionNameList = functionFactory.getFunctionNames();
+        FunctionName functionName = null;
+        Expression expression = FunctionManager.getInstance().createExpression(functionName);
+        assertNull(expression);
+
+        boolean fail = false;
+
+        for (FunctionName functionName2 : functionNameList) {
+            System.out.print(functionName2.getName() + "\t\t");
+            if (functionName2.getName().compareTo("Collection_Count") != 0) {
+                try {
+                    expression = FunctionManager.getInstance().createExpression(functionName2);
+
+                    if (expression != null) {
+                        Filter filter = ff.equal(expression, ff.literal(true), true);
+                        String expected = filter.toString();
+                        testPanel.filterDialog(String.class, filter);
+
+                        String actual = testPanel.getFilterString();
+
+                        assertEquals(expected, actual);
+                        System.err.println();
+                    } else {
+                        fail = true;
+                        System.err.println("FAIL");
+                    }
+                } catch (Exception e) {
+                    fail = true;
+                    System.err.println("FAIL");
+                }
+            }
+        }
+
+        if (fail) {
+            fail();
+        }
     }
 }

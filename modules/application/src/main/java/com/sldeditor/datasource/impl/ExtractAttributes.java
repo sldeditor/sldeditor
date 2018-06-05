@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpression;
+import org.geotools.filter.FunctionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MultiCompareFilterImpl;
@@ -46,6 +47,7 @@ import org.opengis.filter.PropertyIsLike;
 import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 import org.opengis.filter.sort.SortBy;
 import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
@@ -68,12 +70,10 @@ import com.vividsolutions.jts.io.WKTReader;
 public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /** The processed field list. */
-    private List<DataSourceAttributeData> processedFieldList =
-            new ArrayList<DataSourceAttributeData>();
+    private List<DataSourceAttributeData> processedFieldList = new ArrayList<DataSourceAttributeData>();
 
     /** The field list. */
-    private Map<String, DataSourceAttributeData> fieldList = 
-            new HashMap<String, DataSourceAttributeData>();
+    private Map<String, DataSourceAttributeData> fieldList = new HashMap<String, DataSourceAttributeData>();
 
     /** The geometry field list. */
     private List<String> geometryFieldList = new ArrayList<String>();
@@ -253,7 +253,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * (non-Javadoc)
      * 
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
-     * FeatureTypeStyle)
+     *      FeatureTypeStyle)
      */
     public void visit(FeatureTypeStyle fts) {
 
@@ -264,7 +264,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         for (Rule rule : rules) {
             if (rule != null) {
                 rule.accept(this);
-                rulesCopy.add( (Rule) pages.pop());
+                rulesCopy.add((Rule) pages.pop());
             }
         }
 
@@ -418,15 +418,34 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
                     geometryFieldList.add(attributeName);
                 }
             } else {
-                if (!fieldList.containsKey(attributeName)
-                        && (attributeName != null)) {
-                    DataSourceAttributeData field = new DataSourceAttributeData(
-                            attributeName, attributeType, null);
+                if (!fieldList.containsKey(attributeName) && (attributeName != null)) {
+                    DataSourceAttributeData field = new DataSourceAttributeData(attributeName,
+                            attributeType, null);
                     processedFieldList.add(field);
                     fieldList.put(attributeName, field);
                     foundList.add(attributeName);
                 }
             }
+        } else if (expression instanceof Function) {
+            Function function = (Function) expression;
+            FunctionName functionName = function.getFunctionName();
+            List<Parameter<?>> argumentList = functionName.getArguments();
+            int index = 0;
+
+            for (Expression parameterExpression : function.getParameters()) {
+                Parameter<?> parameter = argumentList.get(index);
+                extractAttribute(parameter.getType(), parameterExpression, foundList);
+
+                if (index < argumentList.size()) {
+                    index++;
+                }
+
+                if (index >= argumentList.size()) {
+                    index = argumentList.size() - 1;
+                }
+            }
+
+            returnType = functionName.getReturn().getType();
         } else if (expression instanceof FunctionExpression) {
             FunctionExpression function = (FunctionExpression) expression;
             FunctionName functionName = function.getFunctionName();
@@ -437,13 +456,31 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
                 Parameter<?> parameter = argumentList.get(index);
                 extractAttribute(parameter.getType(), parameterExpression, foundList);
 
-                if(index < argumentList.size())
-                {
+                if (index < argumentList.size()) {
                     index++;
                 }
 
-                if(index >= argumentList.size())
-                {
+                if (index >= argumentList.size()) {
+                    index = argumentList.size() - 1;
+                }
+            }
+
+            returnType = functionName.getReturn().getType();
+        } else if (expression instanceof FunctionImpl) {
+            FunctionImpl function = (FunctionImpl) expression;
+            FunctionName functionName = function.getFunctionName();
+            List<Parameter<?>> argumentList = functionName.getArguments();
+            int index = 0;
+
+            for (Expression parameterExpression : function.getParameters()) {
+                Parameter<?> parameter = argumentList.get(index);
+                extractAttribute(parameter.getType(), parameterExpression, foundList);
+
+                if (index < argumentList.size()) {
+                    index++;
+                }
+
+                if (index >= argumentList.size()) {
                     index = argumentList.size() - 1;
                 }
             }
@@ -494,8 +531,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             visit(sld);
 
             // Check to see if any geometry fields have been added to processedFieldList
-            List<DataSourceAttributeData> fieldsToMoveToGeometryList =
-                    new ArrayList<DataSourceAttributeData>();
+            List<DataSourceAttributeData> fieldsToMoveToGeometryList = new ArrayList<DataSourceAttributeData>();
 
             for (DataSourceAttributeData dsAttribute : processedFieldList) {
                 if (dsAttribute.getType() == Geometry.class) {

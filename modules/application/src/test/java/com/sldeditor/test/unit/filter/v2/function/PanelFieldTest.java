@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Test;

@@ -35,8 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.measure.unit.NonSI;
-import javax.measure.unit.Unit;
+import si.uom.NonSI;
+import javax.measure.Unit;
 import javax.swing.JPanel;
 
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
