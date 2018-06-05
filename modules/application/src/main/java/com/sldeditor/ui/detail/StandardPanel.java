@@ -19,14 +19,12 @@
 
 package com.sldeditor.ui.detail;
 
-import javax.measure.quantity.Length;
-import javax.measure.unit.Unit;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.Description;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
 import org.geotools.styling.Symbolizer;
+import org.geotools.styling.UomOgcMapping;
 import org.geotools.text.Text;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.Rule;
@@ -39,8 +37,8 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
- * The Class StandardPanel responsible for populating/extracting
- * standard data - name, description, unit of measure.
+ * The Class StandardPanel responsible for populating/extracting standard data - name, description,
+ * unit of measure.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -60,7 +58,7 @@ public class StandardPanel extends BasePanel {
         public Description description = null;
 
         /** The unit. */
-        public Unit<Length> unit = null;
+        public UomOgcMapping unit = null;
     }
 
     /**
@@ -156,9 +154,13 @@ public class StandardPanel extends BasePanel {
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);
         if (uomFieldConfig != null) {
             uomFieldConfig.updateAttributeSelection(SelectedSymbol.getInstance().isRasterSymbol());
-            String uomString = UnitsOfMeasure.getInstance().convert(standardData.unit);
-            fieldConfigVisitor.populateField(FieldIdEnum.UOM,
-                    getFilterFactory().literal(uomString));
+
+            String uomString = "";
+            if (standardData.unit != null) {
+                uomString = standardData.unit.getSEString();
+                fieldConfigVisitor.populateField(FieldIdEnum.UOM,
+                        getFilterFactory().literal(uomString));
+            }
         }
     }
 
@@ -173,7 +175,9 @@ public class StandardPanel extends BasePanel {
         if (symbolizer != null) {
             standardData.name = symbolizer.getName();
             standardData.description = symbolizer.getDescription();
-            standardData.unit = symbolizer.getUnitOfMeasure();
+            if (symbolizer.getUnitOfMeasure() != null) {
+                standardData.unit = UomOgcMapping.get(symbolizer.getUnitOfMeasure());
+            }
         }
 
         populateStandardData(standardData);
@@ -217,7 +221,11 @@ public class StandardPanel extends BasePanel {
                                     + uomExpression.getClass().getName());
                 }
             }
-            standardData.unit = UnitsOfMeasure.getInstance().convert(uomString);
+
+            standardData.unit = null;
+            if (!uomString.equals("") && !uomString.equals("Map Units")) {
+                standardData.unit = UomOgcMapping.get(uomString);
+            }
         }
 
         return standardData;

@@ -93,7 +93,7 @@ public class PointSymbolizerDetails extends StandardPanel
             if (pointSymbolizer != null) {
                 pointSymbolizer.setName(standardData.name);
                 pointSymbolizer.setDescription(standardData.description);
-                pointSymbolizer.setUnitOfMeasure(standardData.unit);
+                pointSymbolizer.setUnitOfMeasure((standardData.unit != null) ? standardData.unit.getUnit() : null);
                 pointSymbolizer.setGeometry(geometryField);
 
                 this.fireUpdateSymbol();

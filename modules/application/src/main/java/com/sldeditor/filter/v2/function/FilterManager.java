@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.apache.log4j.Logger;
 import org.geotools.filter.function.Classifier;

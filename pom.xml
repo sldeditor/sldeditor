@@ -52,7 +52,7 @@
     <!-- =========================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>19.0</geotools.version>
+        <geotools.version>20-SNAPSHOT</geotools.version>
         <geoserver.version>2.13.0</geoserver.version>
         <slf4j.version>1.5.11</slf4j.version>
         <log4j.version>1.2.14</log4j.version>

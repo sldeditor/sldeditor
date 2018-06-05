@@ -241,7 +241,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 ExpressionNode childNode = new ExpressionNode();
 
                 // If function has a variable number of arguments pick the last one
-                int argumentIndex = Math.min(index, argCount - 1);
+                int argumentIndex = Math.min(index, Math.max(0, argCount - 1));
 
                 Parameter<?> parameter = functionName.getArguments().get(argumentIndex);
                 childNode.setParameter(parameter);

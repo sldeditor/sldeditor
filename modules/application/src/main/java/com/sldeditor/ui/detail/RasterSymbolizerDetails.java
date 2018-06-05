@@ -410,7 +410,7 @@ public class RasterSymbolizerDetails extends StandardPanel
         Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
         RasterSymbolizer rasterSymbolizer = (RasterSymbolizer) getStyleFactory().rasterSymbolizer(
-                standardData.name, geometryField, standardData.description, standardData.unit,
+                standardData.name, geometryField, standardData.description, (standardData.unit != null) ? standardData.unit.getUnit() : null,
                 opacityExpression, channelSelection, overlapBehavior, colorMap, contrastEnhancement,
                 shadedRelief, symbolizer);
 

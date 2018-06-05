@@ -99,7 +99,7 @@ public class LineSymbolizerDetails extends StandardPanel
             if (lineSymbolizer != null) {
                 lineSymbolizer.setName(standardData.name);
                 lineSymbolizer.setDescription(standardData.description);
-                lineSymbolizer.setUnitOfMeasure(standardData.unit);
+                lineSymbolizer.setUnitOfMeasure((standardData.unit != null) ? standardData.unit.getUnit() : null);
 
                 lineSymbolizer.setGeometry(geometryField);
 

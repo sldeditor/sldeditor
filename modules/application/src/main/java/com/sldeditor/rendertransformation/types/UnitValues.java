@@ -22,7 +22,7 @@ package com.sldeditor.rendertransformation.types;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;

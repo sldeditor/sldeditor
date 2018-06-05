@@ -23,7 +23,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.function.CategorizeFunction;

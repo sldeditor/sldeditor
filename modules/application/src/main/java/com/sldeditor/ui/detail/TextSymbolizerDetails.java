@@ -365,7 +365,7 @@ public class TextSymbolizerDetails extends StandardPanel
 
             TextSymbolizer textSymbolizer = (TextSymbolizer) getStyleFactory().textSymbolizer(
                     standardData.name, defaultGeometryField, standardData.description,
-                    standardData.unit, label, font, labelPlacement, halo, fill);
+                    (standardData.unit != null) ? standardData.unit.getUnit() : null, label, font, labelPlacement, halo, fill);
 
             if ((geometryField != null) && !geometryField.toString().isEmpty()) {
                 textSymbolizer.setGeometry(geometryField);

@@ -22,8 +22,7 @@ package com.sldeditor.common.defaultsymbol;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.measure.quantity.Length;
-import javax.measure.unit.Unit;
+import javax.measure.Unit;
 
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.function.FilterFunction_endAngle;
@@ -169,7 +168,7 @@ public class DefaultSymbols {
         Font font = (Font) styleFactory.font(fontFamilyList, fontStyle, fontWeight, fontSize);
 
         Description description = null;
-        Unit<Length> unit = null;
+        Unit<?> unit = null;
 
         TextSymbolizer newTextSymbolizer = (TextSymbolizer) styleFactory.textSymbolizer(name,
                 geometryField, description, unit, label, font, pointPlacement, halo, fill);
