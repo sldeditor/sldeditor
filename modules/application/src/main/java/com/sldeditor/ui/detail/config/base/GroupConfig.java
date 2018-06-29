@@ -47,12 +47,15 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 /**
  * The Class GroupConfig represents the configuration for a group of fields.
  * 
- * <p>An optional check box can be configured to enable/disable all the fields in the group.
+ * <p>
+ * An optional check box can be configured to enable/disable all the fields in the group.
  * 
  * @author Robert Ward (SCISYS)
  */
-public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
+public class GroupConfig
+        implements GroupConfigInterface, UndoActionInterface {
 
+    /** The Constant FULL_WIDTH. */
     public static final int FULL_WIDTH = BasePanel.FIELD_PANEL_WIDTH;
 
     /** The id. */
@@ -87,6 +90,13 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
 
     /** The group title. */
     private JLabel groupTitle = null;
+
+    /**
+     * Instantiates a new group config.
+     */
+    public GroupConfig()
+    {
+    }
 
     /**
      * Gets the id.
@@ -453,10 +463,5 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
             fieldState.setGroupSelected(isSelected);
             field.setFieldState(fieldState);
         }
-
-        // for(GroupConfigInterface subGroup : subGroupList)
-        // {
-        // subGroup.setValueGroupState();
-        // }
     }
 }

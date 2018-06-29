@@ -53,8 +53,9 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
  * displayed below it when a item is selected. The panels are different for each drop down list
  * option.
  * 
- * <p>The group of fields to be displayed and the drop down label used to display it
- * are configured as an {@link OptionGroup}
+ * <p>
+ * The group of fields to be displayed and the drop down label used to display it are configured as
+ * an {@link OptionGroup}
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -456,6 +457,10 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         }
 
         ValueComboBoxData selectedItem = comboBox.getSelectedValue();
+        if (selectedItem == null) {
+            return null;
+        }
+
         String key = selectedItem.getKey();
 
         return optionMap.get(key);

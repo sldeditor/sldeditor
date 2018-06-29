@@ -58,7 +58,8 @@ import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 /**
  * Unit test for VendorOptionManager.
  * 
- * <p>{@link com.sldeditor.common.vendoroption.VendorOptionManager}
+ * <p>
+ * {@link com.sldeditor.common.vendoroption.VendorOptionManager}
  * 
  * @author Robert Ward (SCISYS)
  *
@@ -76,7 +77,9 @@ public class VendorOptionManagerTest {
         /*
          * (non-Javadoc)
          * 
-         * @see com.sldeditor.common.vendoroption.VendorOptionUpdateInterface#vendorOptionsUpdated(java.util.List)
+         * @see
+         * com.sldeditor.common.vendoroption.VendorOptionUpdateInterface#vendorOptionsUpdated(java.
+         * util.List)
          */
         @Override
         public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
@@ -89,7 +92,8 @@ public class VendorOptionManagerTest {
     private DummyVendorOptionUpdate obj = new DummyVendorOptionUpdate();
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getClass(java.lang.Class)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getClass(java.lang.Class)}.
      */
     @Test
     public void testGetClassClassOfQ() {
@@ -122,7 +126,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOption()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOption()}.
      */
     @Test
     public void testGetDefaultVendorOption() {
@@ -132,7 +137,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersion()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersion()}.
      */
     @Test
     public void testGetDefaultVendorOptionVersion() {
@@ -142,7 +148,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion(java.lang.Class)}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion(java.lang.Class)}.
      */
     @Test
     public void testGetVendorOptionVersionClassOfQ() {
@@ -181,7 +188,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersionData()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersionData()}.
      */
     @Test
     public void testGetDefaultVendorOptionVersionData() {
@@ -231,7 +239,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion()}.
+     * Test method for
+     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion()}.
      */
     @Test
     public void testLoadSLDFile() {

@@ -34,6 +34,7 @@ import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
+import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.StyleBuilder;
 import org.junit.Test;
 import org.opengis.filter.expression.Expression;
@@ -642,16 +643,16 @@ public class FieldConfigMarkerTest {
                 FieldIdEnum.STROKE_FILL_WIDTH);
 
         FieldConfigMarker field2 = new FieldConfigMarker(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                new FieldConfigCommonData(PointSymbolizer.class, FieldIdEnum.NAME, "test label", valueOnly),
                 fillConfig, strokeConfig, null);
 
         field2.setValue(null, null, null, null, null);
         field2.setValue(null, fieldConfigManager, null, null, null);
 
         StyleBuilder styleBuilder = new StyleBuilder();
-        Mark marker = styleBuilder.createMark("star");
+        Mark marker = styleBuilder.createMark("shape://plus");
         field2.setValue(null, null, null, null, marker);
-        field2.setValue(null, fieldConfigManager, null, null, marker);
+        field2.setValue(PointSymbolizer.class, fieldConfigManager, null, null, marker);
     }
 
     /**
@@ -737,13 +738,24 @@ public class FieldConfigMarkerTest {
         assertNull(actualSymbol.getFill());
         assertNull(actualSymbol.getStroke());
 
+        // Try with symbol type of GeoServer
+        actualMarkerSymbol = "shape://plus";
+        symbolType = styleBuilder.literalExpression(actualMarkerSymbol);
+        actualValue = field2.getValue(fieldConfigManager, symbolType, false, false);
+        assertNotNull(actualValue);
+        assertEquals(1, actualValue.size());
+        actualSymbol = (Mark) actualValue.get(0);
+        assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
+        assertNull(actualSymbol.getFill());
+        assertNotNull(actualSymbol.getStroke());
+
         // Enable stroke and fill flags
         actualValue = field2.getValue(fieldConfigManager, symbolType, true, true);
         assertNotNull(actualValue);
         assertEquals(1, actualValue.size());
         actualSymbol = (Mark) actualValue.get(0);
         assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
-        assertNotNull(actualSymbol.getFill());
+        assertNull(actualSymbol.getFill());
         assertNotNull(actualSymbol.getStroke());
     }
 }

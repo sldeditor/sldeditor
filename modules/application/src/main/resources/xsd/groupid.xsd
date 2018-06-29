@@ -153,6 +153,15 @@
             <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY" />
             <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP" />
             <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION" />
+
+            <xs:enumeration value="VO_RASTER_RED_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RED_NAME_STRING" />
+            <xs:enumeration value="VO_RASTER_GREEN_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_GREEN_NAME_STRING" />
+            <xs:enumeration value="VO_RASTER_BLUE_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_BLUE_NAME_STRING" />
+            <xs:enumeration value="VO_RASTER_GREY_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_GREY_NAME_STRING" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

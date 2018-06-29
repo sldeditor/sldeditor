@@ -62,10 +62,12 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.SymbolizerSelectedInterface;
 
 /**
- * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on the SLD tree structure.
+ * The Class SymbolizerDetailsPanel handles the display of the correct panel when the user clicks on
+ * the SLD tree structure.
  * 
  * <p>
- * Implemented as panel with a card layout, all possible panels are added to the layout and displayed accordingly.
+ * Implemented as panel with a card layout, all possible panels are added to the layout and
+ * displayed accordingly.
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -167,28 +169,34 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     private void populateMap(Map<String, List<Class<?>>> classMap) {
         Set<String> keySet = classMap.keySet();
 
-        keySet.parallelStream().forEach((key) -> {
+        for (String key : keySet) {
             List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
             if (panelList == null) {
                 panelList = new ArrayList<PopulateDetailsInterface>();
                 panelMap.put(key, panelList);
             }
+        }
 
-            List<Class<?>> clazzList = classMap.get(key);
+        keySet.parallelStream().forEach((key) -> {
+            List<PopulateDetailsInterface> panelList = panelMap.get(key);
 
-            for (Class<?> clazz : clazzList) {
-                System.out.println(clazz.getName());
-                PopulateDetailsInterface panelDetails = null;
-                try {
-                    panelDetails = (PopulateDetailsInterface) clazz.newInstance();
-                } catch (InstantiationException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                } catch (IllegalAccessException e) {
-                    ConsoleManager.getInstance().exception(this, e);
+            if (panelList != null) {
+                List<Class<?>> clazzList = classMap.get(key);
+
+                for (Class<?> clazz : clazzList) {
+                    System.out.println(clazz.getName());
+                    PopulateDetailsInterface panelDetails = null;
+                    try {
+                        panelDetails = (PopulateDetailsInterface) clazz.newInstance();
+                    } catch (InstantiationException e) {
+                        ConsoleManager.getInstance().exception(this, e);
+                    } catch (IllegalAccessException e) {
+                        ConsoleManager.getInstance().exception(this, e);
+                    }
+
+                    panelList.add(panelDetails);
                 }
-
-                panelList.add(panelDetails);
             }
         });
     }
@@ -400,7 +408,8 @@ public class SymbolizerDetailsPanel extends JPanel implements SymbolizerSelected
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class, java.lang.Class)
+     * @see com.sldeditor.ui.iface.SymbolizerSelectedInterface#refresh(java.lang.Class,
+     * java.lang.Class)
      */
     @Override
     public void refresh(Class<?> parentClass, Class<?> classSelected) {

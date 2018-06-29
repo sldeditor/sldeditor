@@ -119,8 +119,7 @@ public class SymbolTypeFactory {
         symbolTypeFieldList.add(externalImageField);
         symbolTypeFieldList.add(ttfField);
 
-        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory =
-                new VendorOptionMarkerSymbolFactory();
+        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory = new VendorOptionMarkerSymbolFactory();
         List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory
                 .getVendorOptionMarkerSymbols(panelId, fillFieldConfig, strokeFieldConfig,
                         symbolSelectionField);
@@ -208,22 +207,24 @@ public class SymbolTypeFactory {
 
         FieldConfigBase field = fieldConfigManager.get(selectionField);
         this.symbolTypeField = (FieldConfigSymbolType) field;
-        symbolTypeField.populate(multiOptionSelected, combinedSymbolList);
+        if (this.symbolTypeField != null) {
+            symbolTypeField.populate(multiOptionSelected, combinedSymbolList);
 
-        for (FieldState panel : symbolTypeFieldList) {
-            panel.setUpdateSymbolListener(updateSymbol);
+            for (FieldState panel : symbolTypeFieldList) {
+                panel.setUpdateSymbolListener(updateSymbol);
 
-            classMap.put(panel.getClass(), panel);
+                classMap.put(panel.getClass(), panel);
 
-            this.symbolTypeField.addField(panel);
+                this.symbolTypeField.addField(panel);
 
-            basePanel.updateFieldConfig(panel.getBasePanel());
+                basePanel.updateFieldConfig(panel.getBasePanel());
 
-            // Transfer all the fields in the child panels into this panel
-            Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
-            if (map != null) {
-                for (FieldIdEnum panelField : map.keySet()) {
-                    fieldConfigManager.add(panelField, map.get(panelField));
+                // Transfer all the fields in the child panels into this panel
+                Map<FieldIdEnum, FieldConfigBase> map = panel.getFieldList(fieldConfigManager);
+                if (map != null) {
+                    for (FieldIdEnum panelField : map.keySet()) {
+                        fieldConfigManager.add(panelField, map.get(panelField));
+                    }
                 }
             }
         }
@@ -314,31 +315,6 @@ public class SymbolTypeFactory {
     }
 
     /**
-     * Gets the fill colour.
-     *
-     * @return the fill colour
-     */
-    public Expression getFillColour() {
-        if (markerField != null) {
-            return markerField.getColourExpression();
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the fill colour opacity.
-     *
-     * @return the fill colour opacity
-     */
-    public Expression getFillColourOpacity() {
-        if (markerField != null) {
-            return markerField.getFillColourOpacity();
-        }
-        return null;
-    }
-
-    /**
      * Gets the field overrides.
      *
      * @param panelDetails the panel details the configuration is for
@@ -372,15 +348,6 @@ public class SymbolTypeFactory {
      */
     public boolean isNone(String selectedItem) {
         return (selectedItem.compareTo(NO_FILL_VALUE) == 0);
-    }
-
-    /**
-     * Gets the panel list.
-     *
-     * @return the panel list
-     */
-    public List<FieldState> getPanelList() {
-        return symbolTypeFieldList;
     }
 
     /**

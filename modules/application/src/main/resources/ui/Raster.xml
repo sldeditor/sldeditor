@@ -33,12 +33,11 @@
     <MultiOptionGroup id="RASTER_CHANNELSELECTION" label="raster.channelselection" showLabel="true" option="true">
         <OptionGroup id="RASTER_RGB_CHANNEL_OPTION" label="raster.rgb.channel.option"
             showLabel="true">
-            <Group id="RASTER_RGB_CHANNEL_RED" label="raster.rgb.channel.red"
-                showLabel="true">
-                <FieldConfigString id="RASTER_RGB_RED_NAME"
-                    label="raster.rgb.channel.name" valueOnly="true"/>
-                <Group id="RASTER_RGB_CHANNEL_RED_CONTRAST" label="raster.rgb.channel.contrast"
-                    showLabel="true">
+            <Group id="RASTER_RGB_CHANNEL_RED" label="raster.rgb.channel.red" showLabel="true">
+                <FieldConfigVendorOption id="VO_RASTER_RGB_RED_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_RED_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+
+                <Group id="RASTER_RGB_CHANNEL_RED_CONTRAST" label="raster.rgb.channel.contrast" showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
 
                     <MultiOptionGroup id="RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD" label="raster.channel.contrast.method" showLabel="true">
@@ -56,8 +55,9 @@
             </Group>
             <Group id="RASTER_RGB_CHANNEL_GREEN" label="raster.rgb.channel.green"
                 showLabel="true">
-                <FieldConfigString id="RASTER_RGB_GREEN_NAME"
-                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREEN_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREEN_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+
                 <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
@@ -76,8 +76,9 @@
             </Group>
             <Group id="RASTER_RGB_CHANNEL_BLUE" label="raster.rgb.channel.blue"
                 showLabel="true">
-                <FieldConfigString id="RASTER_RGB_BLUE_NAME"
-                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_BLUE_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_BLUE_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+
                 <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
@@ -99,8 +100,9 @@
             showLabel="true">
             <Group id="RASTER_GREY_CHANNEL" label="raster.rgb.channel.grey"
                 showLabel="true">
-                <FieldConfigString id="RASTER_RGB_GREY_NAME"
-                    label="raster.rgb.channel.name" valueOnly="true"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREY_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREY_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+
                 <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>

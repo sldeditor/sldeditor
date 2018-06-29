@@ -47,8 +47,7 @@ public class FieldConfigPopulation {
     private GraphicPanelFieldManager fieldConfigManager = null;
 
     /** The map to hold the original values of a text field. */
-    private Map<FieldConfigValuePopulateInterface, String> valueMap =
-            new HashMap<FieldConfigValuePopulateInterface, String>();
+    private Map<FieldConfigValuePopulateInterface, String> valueMap = new HashMap<FieldConfigValuePopulateInterface, String>();
 
     /** The tree data updated flag. */
     private boolean treeDataUpdated = false;
@@ -75,10 +74,12 @@ public class FieldConfigPopulation {
 
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if (value != null) {
-            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
-        } else {
-            fieldConfig.revertToDefaultValue();
+        if (fieldConfig != null) {
+            if (value != null) {
+                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+            } else {
+                fieldConfig.revertToDefaultValue();
+            }
         }
     }
 
@@ -221,10 +222,12 @@ public class FieldConfigPopulation {
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if (value != null) {
-            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
-        } else {
-            fieldConfig.revertToDefaultValue();
+        if (fieldConfig != null) {
+            if (value != null) {
+                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+            } else {
+                fieldConfig.revertToDefaultValue();
+            }
         }
     }
 
@@ -240,10 +243,12 @@ public class FieldConfigPopulation {
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
 
-        if (value != null) {
-            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
-        } else {
-            fieldConfig.revertToDefaultValue();
+        if (fieldConfig != null) {
+            if (value != null) {
+                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+            } else {
+                fieldConfig.revertToDefaultValue();
+            }
         }
     }
 

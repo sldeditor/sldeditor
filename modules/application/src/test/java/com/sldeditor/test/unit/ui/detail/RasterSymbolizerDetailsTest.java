@@ -30,11 +30,13 @@ import org.geotools.styling.NamedLayer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.ShadedRelief;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
+import org.opengis.style.OverlapBehavior;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
@@ -169,6 +171,10 @@ public class RasterSymbolizerDetailsTest {
         symbolizer.setChannelSelection(styleFactory.createChannelSelection(channels));
         String expectedNameValue = "symbolizer test value";
         symbolizer.setName(expectedNameValue);
+        OverlapBehavior overlapBehavior = OverlapBehavior.EARLIEST_ON_TOP;
+        symbolizer.setOverlapBehavior(overlapBehavior);
+        ShadedRelief shadedRelief = styleFactory.createShadedRelief(ff.literal(0.75));
+        symbolizer.setShadedRelief(shadedRelief);
         rule.symbolizers().add(symbolizer);
         fts.rules().add(rule);
         sld.layers().add(namedLayer);

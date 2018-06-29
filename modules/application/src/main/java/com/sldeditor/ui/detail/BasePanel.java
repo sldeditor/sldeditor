@@ -62,13 +62,17 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 /**
  * The Class BasePanel.
  * 
- * <p>Notifies the rest of the application if symbol needs redrawing.
+ * <p>
+ * Notifies the rest of the application if symbol needs redrawing.
  * 
- * <p>Contains list of field configuration for the panel.
+ * <p>
+ * Contains list of field configuration for the panel.
  * 
- * <p>Defines size, position and spacing of field ui components.
+ * <p>
+ * Defines size, position and spacing of field ui components.
  * 
- * <p>Reads panel configuration file and configures ui.</li>
+ * <p>
+ * Reads panel configuration file and configures ui.</li>
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -201,7 +205,9 @@ public class BasePanel extends JPanel {
                 // Notify the SLD tree if any of the data has
                 // changed so the text needs to be updated
                 for (SLDTreeUpdatedInterface sldTree : treeUpdateList) {
-                    sldTree.textUpdated();
+                    if (sldTree != null) {
+                        sldTree.textUpdated();
+                    }
                 }
                 fieldConfigVisitor.resetTreeDataUpdated();
             }
@@ -238,8 +244,8 @@ public class BasePanel extends JPanel {
     }
 
     /**
-     * Set up listener to this class is aware when user changes the
-     * expression so the symbol can be redrawn.
+     * Set up listener to this class is aware when user changes the expression so the symbol can be
+     * redrawn.
      *
      * @param fieldList the field list
      * @param obj object to receive the callbacks

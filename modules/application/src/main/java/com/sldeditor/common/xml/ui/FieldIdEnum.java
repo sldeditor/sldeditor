@@ -120,13 +120,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RASTER_SHADEDRELIEF_FACTOR"/>
  *     &lt;enumeration value="RASTER_COLOURMAP_TYPE"/>
  *     &lt;enumeration value="RASTER_COLOURMAP"/>
- *     &lt;enumeration value="RASTER_RGB_RED_NAME"/>
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA"/>
- *     &lt;enumeration value="RASTER_RGB_GREEN_NAME"/>
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA"/>
- *     &lt;enumeration value="RASTER_RGB_BLUE_NAME"/>
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA"/>
- *     &lt;enumeration value="RASTER_RGB_GREY_NAME"/>
  *     &lt;enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA"/>
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_LABEL"/>
  *     &lt;enumeration value="RASTER_COLOURMAP_ENTRY_COLOUR"/>
@@ -196,6 +192,22 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_FTS_SORTBY"/>
  *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST"/>
  *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_RED_NAME_NO_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_GREEN_NAME_NO_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_BLUE_NAME_NO_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_GREY_NAME_NO_EXPRESSION"/>
+ *     &lt;enumeration value="RASTER_RGB_RED_NAME_STRING"/>
+ *     &lt;enumeration value="RASTER_RGB_GREEN_NAME_STRING"/>
+ *     &lt;enumeration value="RASTER_RGB_BLUE_NAME_STRING"/>
+ *     &lt;enumeration value="RASTER_RGB_GREY_NAME_STRING"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_RED_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_GREEN_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_BLUE_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RGB_GREY_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="RASTER_RGB_RED_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="RASTER_RGB_GREEN_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="RASTER_RGB_BLUE_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="RASTER_RGB_GREY_NAME_EXPRESSION"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -305,13 +317,9 @@ public enum FieldIdEnum {
     RASTER_SHADEDRELIEF_FACTOR,
     RASTER_COLOURMAP_TYPE,
     RASTER_COLOURMAP,
-    RASTER_RGB_RED_NAME,
     RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
-    RASTER_RGB_GREEN_NAME,
     RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
-    RASTER_RGB_BLUE_NAME,
     RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
-    RASTER_RGB_GREY_NAME,
     RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
     RASTER_COLOURMAP_ENTRY_LABEL,
     RASTER_COLOURMAP_ENTRY_COLOUR,
@@ -380,7 +388,23 @@ public enum FieldIdEnum {
     VO_FTS_RULE_EVALUATION_OPTION,
     VO_FTS_SORTBY,
     VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST,
-    VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES;
+    VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES,
+    VO_RASTER_RGB_RED_NAME_NO_EXPRESSION,
+    VO_RASTER_RGB_GREEN_NAME_NO_EXPRESSION,
+    VO_RASTER_RGB_BLUE_NAME_NO_EXPRESSION,
+    VO_RASTER_RGB_GREY_NAME_NO_EXPRESSION,
+    RASTER_RGB_RED_NAME_STRING,
+    RASTER_RGB_GREEN_NAME_STRING,
+    RASTER_RGB_BLUE_NAME_STRING,
+    RASTER_RGB_GREY_NAME_STRING,
+    VO_RASTER_RGB_RED_NAME_EXPRESSION,
+    VO_RASTER_RGB_GREEN_NAME_EXPRESSION,
+    VO_RASTER_RGB_BLUE_NAME_EXPRESSION,
+    VO_RASTER_RGB_GREY_NAME_EXPRESSION,
+    RASTER_RGB_RED_NAME_EXPRESSION,
+    RASTER_RGB_GREEN_NAME_EXPRESSION,
+    RASTER_RGB_BLUE_NAME_EXPRESSION,
+    RASTER_RGB_GREY_NAME_EXPRESSION;
 
     public String value() {
         return name();
