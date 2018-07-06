@@ -49,3 +49,5 @@ bin/runSLDEditor\.sh
 bin/SLDEditor\.exe
 
 bin/launch4j\.log
+
+modules/application/v8\.6\.0\.0/

@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -31,7 +32,6 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for ExtractGeometryField.

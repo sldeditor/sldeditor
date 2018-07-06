@@ -95,7 +95,9 @@ public class FieldConfigVendorOption extends FieldConfigBase
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     * @see
+     * com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(
+     * java.util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
@@ -122,7 +124,12 @@ public class FieldConfigVendorOption extends FieldConfigBase
                 if (extensionPanel != null) {
                     BasePanel parentPanel = (BasePanel) vendorOption.getParentPanel();
                     if (parentPanel != null) {
-                        parentPanel.removePanel(extensionPanel);
+                        if (this.optionBox != null) {
+                            // Vendor option is part of an option box
+                            this.optionBox.remove(extensionPanel);
+                        } else {
+                            parentPanel.removePanel(extensionPanel);
+                        }
 
                         if (displayVendorOption) {
                             parentPanel.insertPanel(this, extensionPanel, this.optionBox);
@@ -136,7 +143,8 @@ public class FieldConfigVendorOption extends FieldConfigBase
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -216,7 +224,9 @@ public class FieldConfigVendorOption extends FieldConfigBase
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.config.FieldConfigBase#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)
+     * @see
+     * com.sldeditor.ui.detail.config.FieldConfigBase#createCopy(com.sldeditor.ui.detail.config.
+     * FieldConfigBase)
      */
     @Override
     public FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {

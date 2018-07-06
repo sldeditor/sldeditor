@@ -19,7 +19,7 @@
 
 package com.sldeditor.datasource.example;
 
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Point;
 
 /**
  * The Interface ExamplePointInterface.

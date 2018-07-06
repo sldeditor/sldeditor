@@ -94,7 +94,7 @@ public class PointFillDetails extends StandardPanel
         createUI(PointFillDetails.class, configFile);
     }
 
-    /**
+   /**
      * Creates the ui.
      *
      * @param panelDetails the panel details the configuration is for
@@ -144,7 +144,8 @@ public class PointFillDetails extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -289,7 +290,7 @@ public class PointFillDetails extends StandardPanel
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
                     fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
-            // Ignore the displacement if it is the same as the default so 
+            // Ignore the displacement if it is the same as the default so
             // it doesn't appear in the SLD
             if (DetailsUtilities.isSame(Displacement.DEFAULT, displacement)) {
                 displacement = null;
@@ -433,7 +434,8 @@ public class PointFillDetails extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

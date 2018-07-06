@@ -38,11 +38,11 @@ import org.opengis.filter.expression.Literal;
 
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.Point;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.Point;
 
 /**
  * The Class FunctionManager.

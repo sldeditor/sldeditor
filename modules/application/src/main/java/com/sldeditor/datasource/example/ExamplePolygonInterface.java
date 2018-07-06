@@ -19,7 +19,7 @@
 
 package com.sldeditor.datasource.example;
 
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Polygon;
 
 /**
  * The Interface ExamplePolygonInterface.

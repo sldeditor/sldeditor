@@ -85,7 +85,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
  * The Class ReadPanelConfig reads a XML configuration of field configuration structures and
  * instantiates and populates the relevant objects.
  * 
- * <p>Configuration files exist at src/main/resources/ui/*
+ * <p>
+ * Configuration files exist at src/main/resources/ui/*
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -424,8 +425,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
             groupConfig.addField(fontPreviewConfig);
         } else if (xmlFieldConfig instanceof XMLFieldConfigTransformation) {
-            XMLFieldConfigTransformation xmlTransformationFieldConfig =
-                    (XMLFieldConfigTransformation) xmlFieldConfig;
+            XMLFieldConfigTransformation xmlTransformationFieldConfig = (XMLFieldConfigTransformation) xmlFieldConfig;
 
             FieldConfigTransformation transformationConfig = new FieldConfigTransformation(
                     commonData,
@@ -465,8 +465,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
 
             XMLFieldConfigDouble xmlDouble = (XMLFieldConfigDouble) xmlFieldConfig;
             doubleConfig.setDefaultValue(xmlDouble.getDefaultValue());
-            doubleConfig.setConfig((xmlDouble.getMinValue() == null) ? Double.NEGATIVE_INFINITY : xmlDouble.getMinValue().doubleValue(),
-                    (xmlDouble.getMaxValue() == null) ? Double.POSITIVE_INFINITY : xmlDouble.getMaxValue().doubleValue(),
+            doubleConfig.setConfig(
+                    (xmlDouble.getMinValue() == null) ? Double.NEGATIVE_INFINITY
+                            : xmlDouble.getMinValue().doubleValue(),
+                    (xmlDouble.getMaxValue() == null) ? Double.POSITIVE_INFINITY
+                            : xmlDouble.getMaxValue().doubleValue(),
                     xmlDouble.getStepSize(), xmlDouble.getNoOfDecimalPlaces());
 
             groupConfig.addField(doubleConfig);

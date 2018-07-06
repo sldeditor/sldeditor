@@ -49,7 +49,7 @@ import org.xml.sax.SAXException;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.datasource.impl.GeometryTypeMapping;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Utility methods to read/write inline features as GML.

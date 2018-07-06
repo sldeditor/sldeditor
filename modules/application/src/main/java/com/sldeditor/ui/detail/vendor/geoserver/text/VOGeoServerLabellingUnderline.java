@@ -26,6 +26,7 @@ import java.util.Map;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
 import org.geotools.styling.TextSymbolizer2;
@@ -115,7 +116,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldId)
+     * @see
+     * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
+     * FieldId)
      */
     @Override
     public void dataChanged(FieldIdEnum changedField) {
@@ -132,7 +135,8 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -147,7 +151,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.TextSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * TextSymbolizer)
      */
     @Override
     public void populate(TextSymbolizer textSymbolizer) {
@@ -161,15 +167,21 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * RasterSymbolizer)
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * FeatureTypeStyle)
      */
     @Override
     public void populate(FeatureTypeStyle featureTypeStyle) {
@@ -184,7 +196,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * PolygonSymbolizer)
      */
     @Override
     public void populate(PolygonSymbolizer polygonSymbolizer) {
@@ -216,17 +230,19 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     private void internalPopulate(Map<String, String> options, FieldIdEnum field, String key) {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
-        if (fieldConfig instanceof FieldConfigBoolean) {
-            internal_populateBooleanField(options, field, key);
-        } else if (fieldConfig instanceof FieldConfigInteger) {
-            internal_populateIntegerField(options, field, key);
-        } else if (fieldConfig instanceof FieldConfigDouble) {
-            internal_populateDoubleField(options, field, key);
-        } else if (fieldConfig instanceof FieldConfigEnum) {
-            internal_populateEnumField(options, field, key);
-        } else {
-            ConsoleManager.getInstance().error(this,
-                    "Unsupported field type : " + field + " " + fieldConfig.getClass().getName());
+        if (fieldConfig != null) {
+            if (fieldConfig instanceof FieldConfigBoolean) {
+                internal_populateBooleanField(options, field, key);
+            } else if (fieldConfig instanceof FieldConfigInteger) {
+                internal_populateIntegerField(options, field, key);
+            } else if (fieldConfig instanceof FieldConfigDouble) {
+                internal_populateDoubleField(options, field, key);
+            } else if (fieldConfig instanceof FieldConfigEnum) {
+                internal_populateEnumField(options, field, key);
+            } else {
+                ConsoleManager.getInstance().error(this, "Unsupported field type : " + field + " "
+                        + fieldConfig.getClass().getName());
+            }
         }
     }
 
@@ -304,7 +320,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.RasterSymbolizer)
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
@@ -319,7 +337,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.PolygonSymbolizer)
      */
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
@@ -334,7 +354,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.TextSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.TextSymbolizer)
      */
     @Override
     public void updateSymbol(TextSymbolizer textSymbolizer) {
@@ -345,8 +367,12 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.FeatureTypeStyle)
      */
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
@@ -488,7 +514,9 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.ui.iface.UpdateSymbolInterface)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
+     * ui.iface.UpdateSymbolInterface)
      */
     @Override
     public void setParentPanel(UpdateSymbolInterface parent) {
@@ -551,7 +579,8 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,
@@ -567,9 +596,35 @@ public class VOGeoServerLabellingUnderline extends StandardPanel
                     VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
                             getVendorOptionInfo());
 
-                    vendorOptionsPresentList.add(voPresent);
+                    if (vendorOptionsPresentList != null) {
+                        vendorOptionsPresentList.add(voPresent);
+                    }
                 }
             }
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * SelectedChannelType)
+     */
+    @Override
+    public void populate(SelectedChannelType channelType) {
+        // Do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.SelectedChannelType)
+     */
+    @Override
+    public void updateSymbol(SelectedChannelType channelType) {
+        // Do nothing
     }
 }

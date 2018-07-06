@@ -32,6 +32,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.ConstantExpression;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Test;
+import org.locationtech.jts.geom.Envelope;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
@@ -40,7 +41,6 @@ import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
-import com.vividsolutions.jts.geom.Envelope;
 
 /**
  * Unit test for EnvironmentVariableManager class.

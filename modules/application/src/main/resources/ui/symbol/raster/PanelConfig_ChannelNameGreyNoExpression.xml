@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PanelConfig vendorOption="com.sldeditor.common.vendoroption.GeoServerVendorOption"
+    end="2.13.99"
+    localisation="com.sldeditor.ui.detail.RasterSymbolizerDetails" >
+    <Group id="VO_RASTER_GREY_NAME_STRING" showLabel="false">
+        <FieldConfigString id="RASTER_RGB_GREY_NAME_STRING" label="raster.rgb.channel.name" valueOnly="true" />
+    </Group>
+</PanelConfig>

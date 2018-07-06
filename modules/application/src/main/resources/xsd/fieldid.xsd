@@ -141,13 +141,9 @@
             <xs:enumeration value="RASTER_COLOURMAP_TYPE" />
             <xs:enumeration value="RASTER_COLOURMAP" />
 
-            <xs:enumeration value="RASTER_RGB_RED_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_GREEN_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_BLUE_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA" />
-            <xs:enumeration value="RASTER_RGB_GREY_NAME" />
             <xs:enumeration value="RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA" />
 
             <xs:enumeration value="RASTER_COLOURMAP_ENTRY_LABEL" />
@@ -234,6 +230,26 @@
             <xs:enumeration value="VO_FTS_SORTBY" />
             <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST" />
             <xs:enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES" />
+
+            <xs:enumeration value="VO_RASTER_RGB_RED_NAME_NO_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RGB_GREEN_NAME_NO_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RGB_BLUE_NAME_NO_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RGB_GREY_NAME_NO_EXPRESSION" />
+
+            <xs:enumeration value="RASTER_RGB_RED_NAME_STRING" />
+            <xs:enumeration value="RASTER_RGB_GREEN_NAME_STRING" />
+            <xs:enumeration value="RASTER_RGB_BLUE_NAME_STRING" />
+            <xs:enumeration value="RASTER_RGB_GREY_NAME_STRING" />
+
+            <xs:enumeration value="VO_RASTER_RGB_RED_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RGB_GREEN_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RGB_BLUE_NAME_EXPRESSION" />
+            <xs:enumeration value="VO_RASTER_RGB_GREY_NAME_EXPRESSION" />
+
+            <xs:enumeration value="RASTER_RGB_RED_NAME_EXPRESSION" />
+            <xs:enumeration value="RASTER_RGB_GREEN_NAME_EXPRESSION" />
+            <xs:enumeration value="RASTER_RGB_BLUE_NAME_EXPRESSION" />
+            <xs:enumeration value="RASTER_RGB_GREY_NAME_EXPRESSION" />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

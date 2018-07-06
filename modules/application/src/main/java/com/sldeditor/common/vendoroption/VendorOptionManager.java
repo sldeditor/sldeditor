@@ -58,12 +58,10 @@ public class VendorOptionManager {
     private static VendorOptionManager instance = null;
 
     /** The vendor option map. */
-    private Map<String, VendorOptionTypeInterface> vendorOptionMap =
-            new ConcurrentHashMap<String, VendorOptionTypeInterface>();
+    private Map<String, VendorOptionTypeInterface> vendorOptionMap = new ConcurrentHashMap<String, VendorOptionTypeInterface>();
 
     /** The vendor option class map. */
-    private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap = 
-            new ConcurrentHashMap<Class<?>, VendorOptionTypeInterface>();
+    private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap = new ConcurrentHashMap<Class<?>, VendorOptionTypeInterface>();
 
     /** The default vendor option version. */
     private VendorOptionVersion defaultVendorOptionVersion = null;
@@ -368,7 +366,8 @@ public class VendorOptionManager {
     public synchronized void addVendorOptionListener(VendorOptionUpdateInterface listener) {
         if (!vendorOptionListenerList.contains(listener)) {
             vendorOptionListenerList.add(listener);
-            notifyVendorOptionUpdated();
+
+            listener.vendorOptionsUpdated(this.selectedVendorOptions);
         }
     }
 

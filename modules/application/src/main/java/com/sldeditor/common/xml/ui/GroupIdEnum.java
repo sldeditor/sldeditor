@@ -126,6 +126,14 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY"/>
  *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP"/>
  *     &lt;enumeration value="VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION"/>
+ *     &lt;enumeration value="VO_RASTER_RED_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_RED_NAME_STRING"/>
+ *     &lt;enumeration value="VO_RASTER_GREEN_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_GREEN_NAME_STRING"/>
+ *     &lt;enumeration value="VO_RASTER_BLUE_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_BLUE_NAME_STRING"/>
+ *     &lt;enumeration value="VO_RASTER_GREY_NAME_EXPRESSION"/>
+ *     &lt;enumeration value="VO_RASTER_GREY_NAME_STRING"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -238,7 +246,15 @@ public enum GroupIdEnum {
     VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION,
     VO_FTS_SORTBY_MULTIOPTION_SORTBY,
     VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP,
-    VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION;
+    VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_OPTION,
+    VO_RASTER_RED_NAME_EXPRESSION,
+    VO_RASTER_RED_NAME_STRING,
+    VO_RASTER_GREEN_NAME_EXPRESSION,
+    VO_RASTER_GREEN_NAME_STRING,
+    VO_RASTER_BLUE_NAME_EXPRESSION,
+    VO_RASTER_BLUE_NAME_STRING,
+    VO_RASTER_GREY_NAME_EXPRESSION,
+    VO_RASTER_GREY_NAME_STRING;
 
     public String value() {
         return name();

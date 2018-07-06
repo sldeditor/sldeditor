@@ -267,7 +267,7 @@ public class InLineFeatureModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InLineFeatureModel#updateGeometry(int, com.vividsolutions.jts.geom.Geometry)}.
+     * Test method for {@link com.sldeditor.ui.detail.config.inlinefeature.InLineFeatureModel#updateGeometry(int, org.locationtech.jts.geom.Geometry)}.
      */
     @Test
     public void testUpdateGeometry() {

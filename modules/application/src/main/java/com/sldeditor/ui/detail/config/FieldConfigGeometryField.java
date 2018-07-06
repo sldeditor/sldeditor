@@ -44,7 +44,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.attribute.AttributeUtils;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The Class FieldConfigGeometryField wraps a drop down GUI

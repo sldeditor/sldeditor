@@ -27,6 +27,7 @@ import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.ContrastMethod;
@@ -481,5 +482,22 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     public void getMinimumVersion(Object parentObj, Object sldObj,
             List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.SelectedChannelType)
+     */
+    @Override
+    public void populate(SelectedChannelType channelType) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.SelectedChannelType)
+     */
+    @Override
+    public void updateSymbol(SelectedChannelType channelType) {
+        // Do nothing
     }
 }

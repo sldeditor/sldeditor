@@ -36,6 +36,9 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     /** The Constant LATEST. */
     private static final String LATEST = "Latest";
 
+    /** The Constant NOTSET. */
+    private static final String NOTSET = "NotSet";
+
     /** The Constant ALL_VERSIONS. */
     private static final int ALL_VERSIONS = Integer.MAX_VALUE;
 
@@ -258,8 +261,8 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     }
 
     /**
-     * Checks to see if this object is in the version range.
-     * Returns false if either supplied version is null.
+     * Checks to see if this object is in the version range. Returns false if either supplied
+     * version is null.
      *
      * @param minimumVersion the minimum version
      * @param maximumVersion the maximum version
@@ -269,6 +272,10 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
         if ((minimumVersion == null) || (maximumVersion == null)) {
             return false;
         }
+
+        // if (minimumVersion.isNotSet()) {
+        // return true;
+        // }
 
         boolean inRange = minimumVersion.greaterThan(this) && this.lessThan(maximumVersion);
 
@@ -282,7 +289,9 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
      * @return true, if successful
      */
     private boolean lessThan(VersionData maximumVersion) {
-        if (this.majorNumber < maximumVersion.majorNumber) {
+        if (this.isNotSet()) {
+            return true;
+        } else if (this.majorNumber < maximumVersion.majorNumber) {
             return true;
         } else if (this.majorNumber == maximumVersion.majorNumber) {
             if (this.minorNumber < maximumVersion.minorNumber) {
@@ -307,6 +316,8 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     private boolean greaterThan(VersionData versionData) {
         if (versionData.isNotSet != this.isNotSet) {
             return this.isNotSet;
+        } else if (this.isNotSet) {
+            return true;
         } else if (versionData.majorNumber > this.majorNumber) {
             return true;
         } else if (versionData.majorNumber == this.majorNumber) {
@@ -440,7 +451,9 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
         isNotSet = false;
         this.versionString = versionString;
 
-        if (versionString.compareToIgnoreCase(EARLIEST) == 0) {
+        if (versionString.compareToIgnoreCase(NOTSET) == 0) {
+            this.isNotSet = true;
+        } else if (versionString.compareToIgnoreCase(EARLIEST) == 0) {
             this.majorNumber = Integer.MIN_VALUE;
             this.minorNumber = Integer.MIN_VALUE;
             this.pointNumber = Integer.MIN_VALUE;

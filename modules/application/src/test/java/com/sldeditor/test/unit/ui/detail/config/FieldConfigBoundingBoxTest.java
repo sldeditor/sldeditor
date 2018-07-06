@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.expression.Expression;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -38,7 +39,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigBoundingBox.

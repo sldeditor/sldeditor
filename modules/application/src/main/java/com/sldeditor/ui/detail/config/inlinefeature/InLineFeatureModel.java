@@ -47,7 +47,7 @@ import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The Class InLineFeatureModel.

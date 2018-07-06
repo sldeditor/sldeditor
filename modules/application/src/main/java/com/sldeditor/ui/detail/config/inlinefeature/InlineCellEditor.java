@@ -30,7 +30,7 @@ import javax.swing.table.TableCellEditor;
 
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The Class InlineCellEditor.

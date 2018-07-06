@@ -104,7 +104,8 @@ public class RasterSymbolizerDetails extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -156,7 +157,6 @@ public class RasterSymbolizerDetails extends StandardPanel
                             channelSelectionGroup.setOption(GroupIdEnum.RASTER_GREY_CHANNEL_OPTION);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_GREY_CHANNEL,
-                                    FieldIdEnum.RASTER_RGB_GREY_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
@@ -167,21 +167,18 @@ public class RasterSymbolizerDetails extends StandardPanel
                             channelSelectionGroup.setOption(GroupIdEnum.RASTER_RGB_CHANNEL_OPTION);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_RED,
-                                    FieldIdEnum.RASTER_RGB_RED_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
                                     rgbChannels[0]);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_GREEN,
-                                    FieldIdEnum.RASTER_RGB_GREEN_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
                                     rgbChannels[1]);
 
                             populateContrastEnhancementGroup(GroupIdEnum.RASTER_RGB_CHANNEL_BLUE,
-                                    FieldIdEnum.RASTER_RGB_BLUE_NAME,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST,
                                     FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
                                     GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
@@ -236,21 +233,16 @@ public class RasterSymbolizerDetails extends StandardPanel
      * Populate contrast enhancement group.
      *
      * @param channelGroup the channel group
-     * @param nameField the name field
      * @param contrastGroup the contrast group
      * @param gammaField the gamma field
      * @param methodField the method field
      * @param channelType the channel type
      */
-    private void populateContrastEnhancementGroup(GroupIdEnum channelGroup, FieldIdEnum nameField,
+    private void populateContrastEnhancementGroup(GroupIdEnum channelGroup,
             GroupIdEnum contrastGroup, FieldIdEnum gammaField, GroupIdEnum methodField,
             SelectedChannelType channelType) {
-        String name = "";
 
-        if (channelType != null) {
-            name = channelType.getChannelName();
-        }
-        fieldConfigVisitor.populateTextField(nameField, name);
+        this.vendorOptionRasterFactory.setChannelName(channelGroup, channelType);
 
         GroupConfigInterface contrastGrp = getGroup(contrastGroup);
 
@@ -342,7 +334,7 @@ public class RasterSymbolizerDetails extends StandardPanel
                 if (selectedOption.getId() == GroupIdEnum.RASTER_GREY_CHANNEL_OPTION) {
                     // Grey option group
                     SelectedChannelType greyChannel = extractContrastEnhancementGroup(
-                            GroupIdEnum.RASTER_GREY_CHANNEL, FieldIdEnum.RASTER_RGB_GREY_NAME,
+                            GroupIdEnum.RASTER_GREY_CHANNEL,
                             GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
                             GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD);
@@ -350,19 +342,19 @@ public class RasterSymbolizerDetails extends StandardPanel
                     channelSelection = getStyleFactory().channelSelection(greyChannel);
                 } else {
                     SelectedChannelType redChannel = extractContrastEnhancementGroup(
-                            GroupIdEnum.RASTER_RGB_CHANNEL_RED, FieldIdEnum.RASTER_RGB_RED_NAME,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_RED,
                             GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
                             GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD);
 
                     SelectedChannelType greenChannel = extractContrastEnhancementGroup(
-                            GroupIdEnum.RASTER_RGB_CHANNEL_GREEN, FieldIdEnum.RASTER_RGB_GREEN_NAME,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREEN,
                             GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
                             GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD);
 
                     SelectedChannelType blueChannel = extractContrastEnhancementGroup(
-                            GroupIdEnum.RASTER_RGB_CHANNEL_BLUE, FieldIdEnum.RASTER_RGB_BLUE_NAME,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_BLUE,
                             GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST,
                             FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
                             GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD);
@@ -410,9 +402,10 @@ public class RasterSymbolizerDetails extends StandardPanel
         Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
         RasterSymbolizer rasterSymbolizer = (RasterSymbolizer) getStyleFactory().rasterSymbolizer(
-                standardData.name, geometryField, standardData.description, (standardData.unit != null) ? standardData.unit.getUnit() : null,
-                opacityExpression, channelSelection, overlapBehavior, colorMap, contrastEnhancement,
-                shadedRelief, symbolizer);
+                standardData.name, geometryField, standardData.description,
+                (standardData.unit != null) ? standardData.unit.getUnit() : null, opacityExpression,
+                channelSelection, overlapBehavior, colorMap, contrastEnhancement, shadedRelief,
+                symbolizer);
 
         if (vendorOptionRasterFactory != null) {
             vendorOptionRasterFactory.updateSymbol(rasterSymbolizer);
@@ -427,14 +420,13 @@ public class RasterSymbolizerDetails extends StandardPanel
      * Extract contrast enhancement group.
      *
      * @param channelGroup the channel group
-     * @param nameField the name field
      * @param contrastGroup the contrast group
      * @param gammaField the gamma field
      * @param contrastMethod the contrast method
      * @return the selected channel type
      */
     private SelectedChannelType extractContrastEnhancementGroup(GroupIdEnum channelGroup,
-            FieldIdEnum nameField, GroupIdEnum contrastGroup, FieldIdEnum gammaField,
+            GroupIdEnum contrastGroup, FieldIdEnum gammaField,
             GroupIdEnum contrastMethod) {
 
         SelectedChannelType channelType = null;
@@ -442,7 +434,7 @@ public class RasterSymbolizerDetails extends StandardPanel
         GroupConfigInterface group = getGroup(channelGroup);
 
         if (group.isPanelEnabled()) {
-            String channelName = fieldConfigVisitor.getText(nameField);
+            Expression channelName = this.vendorOptionRasterFactory.getChannelName(channelGroup);
 
             GroupConfigInterface contrastGrp = getGroup(contrastGroup);
 
@@ -453,8 +445,7 @@ public class RasterSymbolizerDetails extends StandardPanel
                 GroupConfigInterface constrastMethodGroup = getGroup(contrastMethod);
                 if (constrastMethodGroup != null) {
                     String method = null;
-                    MultiOptionGroup constrastMethodGroup2 =
-                            (MultiOptionGroup) constrastMethodGroup;
+                    MultiOptionGroup constrastMethodGroup2 = (MultiOptionGroup) constrastMethodGroup;
                     OptionGroup selectedOption = constrastMethodGroup2.getSelectedOptionGroup();
                     if (selectedOption != null) {
                         method = selectedOption.getLabel();
@@ -528,7 +519,8 @@ public class RasterSymbolizerDetails extends StandardPanel
     /*
      * (non-Javadoc)
      * 
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(Object parentObj, Object sldObj,

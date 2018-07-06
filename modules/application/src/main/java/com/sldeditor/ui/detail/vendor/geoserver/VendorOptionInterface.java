@@ -24,6 +24,7 @@ import java.util.List;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.TextSymbolizer;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -68,6 +69,13 @@ public interface VendorOptionInterface {
     public void populate(RasterSymbolizer rasterSymbolizer);
 
     /**
+     * Populate for a raster channel type.
+     *
+     * @param channelType the channel type
+     */
+    public void populate(SelectedChannelType channelType);
+
+    /**
      * Populate.
      *
      * @param featureTypeStyle the feature type style
@@ -101,6 +109,13 @@ public interface VendorOptionInterface {
      * @param featureTypeStyle the feature type style
      */
     public void updateSymbol(FeatureTypeStyle featureTypeStyle);
+
+    /**
+     * Update raster channel type.
+     *
+     * @param channelType the channel type
+     */
+    public void updateSymbol(SelectedChannelType channelType);
 
     /**
      * Gets the panel.

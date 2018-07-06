@@ -26,6 +26,7 @@ import java.util.Map;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
 
@@ -156,7 +157,9 @@ public class VOGeoServerRandomFill extends StandardPanel
         // Do nothing
     }
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
+     * 
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
      */
     @Override
@@ -209,17 +212,19 @@ public class VOGeoServerRandomFill extends StandardPanel
     protected void internalPopulate(Map<String, String> options, FieldIdEnum field, String key) {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
-        if (fieldConfig instanceof FieldConfigBoolean) {
-            internal_populateBooleanField(options, field, key);
-        } else if (fieldConfig instanceof FieldConfigInteger) {
-            internal_populateIntegerField(options, field, key);
-        } else if (fieldConfig instanceof FieldConfigDouble) {
-            internal_populateDoubleField(options, field, key);
-        } else if (fieldConfig instanceof FieldConfigEnum) {
-            internal_populateEnumField(options, field, key);
-        } else {
-            ConsoleManager.getInstance().error(this,
-                    "Unsupported field type : " + field + " " + fieldConfig.getClass().getName());
+        if (fieldConfig != null) {
+            if (fieldConfig instanceof FieldConfigBoolean) {
+                internal_populateBooleanField(options, field, key);
+            } else if (fieldConfig instanceof FieldConfigInteger) {
+                internal_populateIntegerField(options, field, key);
+            } else if (fieldConfig instanceof FieldConfigDouble) {
+                internal_populateDoubleField(options, field, key);
+            } else if (fieldConfig instanceof FieldConfigEnum) {
+                internal_populateEnumField(options, field, key);
+            } else {
+                ConsoleManager.getInstance().error(this, "Unsupported field type : " + field + " "
+                        + fieldConfig.getClass().getName());
+            }
         }
     }
 
@@ -480,7 +485,10 @@ public class VOGeoServerRandomFill extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+     * 
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.FeatureTypeStyle)
      */
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
@@ -547,5 +555,21 @@ public class VOGeoServerRandomFill extends StandardPanel
                 }
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.SelectedChannelType)
+     */
+    @Override
+    public void populate(SelectedChannelType channelType) {
+        // Do nothing
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.SelectedChannelType)
+     */
+    @Override
+    public void updateSymbol(SelectedChannelType channelType) {
+        // Do nothing
     }
 }
