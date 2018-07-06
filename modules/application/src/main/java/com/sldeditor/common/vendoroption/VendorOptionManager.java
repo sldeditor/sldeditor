@@ -366,7 +366,8 @@ public class VendorOptionManager {
     public synchronized void addVendorOptionListener(VendorOptionUpdateInterface listener) {
         if (!vendorOptionListenerList.contains(listener)) {
             vendorOptionListenerList.add(listener);
-            notifyVendorOptionUpdated();
+
+            listener.vendorOptionsUpdated(this.selectedVendorOptions);
         }
     }
 

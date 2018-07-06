@@ -231,23 +231,24 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
                     optionGroup.getLabel(), panelId));
         }
 
-        comboBox = new ValueComboBox();
-        comboBox.initialiseSingle(valueComboDataMap);
-        comboBox.setBounds(BasePanel.WIDGET_X_START, BasePanel.WIDGET_HEIGHT,
-                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
-        fieldPanel.add(comboBox);
-        comboBox.addActionListener(new ActionListener() {
+        if (comboBox == null) {
+            comboBox = new ValueComboBox();
+            comboBox.initialiseSingle(valueComboDataMap);
+            comboBox.setBounds(BasePanel.WIDGET_X_START, BasePanel.WIDGET_HEIGHT,
+                    BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(comboBox);
+            comboBox.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
-                optionSelected(parentBox, fieldConfigManager, fieldPanel, parentObj);
-                if (parent != null) {
-                    if (!Controller.getInstance().isPopulating()) {
-                        parent.dataChanged(FieldIdEnum.UNKNOWN);
+                public void actionPerformed(ActionEvent e) {
+                    optionSelected(parentBox, fieldConfigManager, fieldPanel, parentObj);
+                    if (parent != null) {
+                        if (!Controller.getInstance().isPopulating()) {
+                            parent.dataChanged(FieldIdEnum.UNKNOWN);
+                        }
                     }
                 }
-            }
-        });
-
+            });
+        }
         box.add(fieldPanel);
     }
 
@@ -261,6 +262,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      */
     private void optionSelected(Box box, GraphicPanelFieldManager fieldConfigManager,
             FieldPanel panel, UndoActionInterface parentObj) {
+
         if ((comboBox != null) && (comboBox.getSelectedItem() != null)) {
 
             ValueComboBoxData value = comboBox.getSelectedValue();
