@@ -90,7 +90,7 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
 import com.sldeditor.ui.render.RuleRenderOptions;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * Panel to displayed the rendered data source using the current style.

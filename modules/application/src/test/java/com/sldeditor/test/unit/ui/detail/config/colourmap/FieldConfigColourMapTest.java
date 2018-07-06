@@ -18,6 +18,7 @@ import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntryImpl;
 import org.geotools.styling.ColorMapImpl;
 import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.FilterFactory;
 
 import com.sldeditor.common.undo.UndoEvent;
@@ -28,7 +29,6 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigColourMap.

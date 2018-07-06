@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Geometry;
 
 import com.sldeditor.rendertransformation.types.EnumValues;
 import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
-import com.vividsolutions.jts.geom.Geometry;
 
 import net.opengis.wps10.InputDescriptionType;
 import net.opengis.wps10.LiteralInputType;

@@ -45,6 +45,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link XMLEnvVar }
+     * 
+     */
+    public XMLEnvVar createXMLEnvVar() {
+        return new XMLEnvVar();
+    }
+
+    /**
      * Create an instance of {@link XMLBuiltInEnvVarList }
      * 
      */
@@ -58,14 +66,6 @@ public class ObjectFactory {
      */
     public XMLEnvVarType createXMLEnvVarType() {
         return new XMLEnvVarType();
-    }
-
-    /**
-     * Create an instance of {@link XMLEnvVar }
-     * 
-     */
-    public XMLEnvVar createXMLEnvVar() {
-        return new XMLEnvVar();
     }
 
     /**

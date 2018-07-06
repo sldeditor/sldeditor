@@ -20,11 +20,12 @@
 package com.sldeditor.datasource.example.impl;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 
 import com.sldeditor.datasource.example.ExamplePointInterface;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
+
 
 /**
  * Example point geometry to be displayed when rendering point symbols.

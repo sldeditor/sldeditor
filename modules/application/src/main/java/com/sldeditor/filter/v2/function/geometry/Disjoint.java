@@ -22,6 +22,7 @@ package com.sldeditor.filter.v2.function.geometry;
 import java.util.List;
 
 import org.geotools.filter.spatial.DisjointImpl;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 
@@ -31,7 +32,6 @@ import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class Disjoint.

@@ -54,7 +54,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
 import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigPopulation.

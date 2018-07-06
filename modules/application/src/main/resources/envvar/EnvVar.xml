@@ -8,7 +8,7 @@
         <EnvVarType name="java.lang.Float" />
         <EnvVarType name="java.lang.Boolean" />
         <EnvVarType name="org.geotools.geometry.jts.ReferencedEnvelope" />
-        <EnvVarType name="com.vividsolutions.jts.geom.Geometry" />
+        <EnvVarType name="org.locationtech.jts.geom.Geometry" />
     </EnvVarTypeList>
     <BuiltInEnvVarList>
         <EnvVar name="wms_bbox"
@@ -19,6 +19,6 @@
         <EnvVar name="wms_width" type="java.lang.Integer" />
         <EnvVar name="wms_height" type="java.lang.Integer" />
         <EnvVar name="wms_scale_denominator" type="java.lang.Integer" />
-        <EnvVar name="kmlOutputMode" type="com.vividsolutions.jts.geom.Geometry" />
+        <EnvVar name="kmlOutputMode" type="org.locationtech.jts.geom.Geometry" />
     </BuiltInEnvVarList>
 </EnvironmentVariables>

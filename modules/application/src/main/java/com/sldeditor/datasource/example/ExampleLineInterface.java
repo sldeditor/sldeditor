@@ -19,7 +19,7 @@
 
 package com.sldeditor.datasource.example;
 
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.LineString;
 
 /**
  * The Interface ExampleLineInterface.

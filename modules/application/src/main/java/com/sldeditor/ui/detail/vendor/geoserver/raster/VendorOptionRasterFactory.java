@@ -103,8 +103,7 @@ public class VendorOptionRasterFactory
                 panelId, parentPanel);
 
         ChannelName redChannel = new ChannelName(panelId, ChannelName.RED,
-                FieldIdEnum.RASTER_RGB_RED_NAME_STRING,
-                FieldIdEnum.RASTER_RGB_RED_NAME_EXPRESSION);
+                FieldIdEnum.RASTER_RGB_RED_NAME_STRING, FieldIdEnum.RASTER_RGB_RED_NAME_EXPRESSION);
         ChannelName greenChannel = new ChannelName(panelId, ChannelName.GREEN,
                 FieldIdEnum.RASTER_RGB_GREEN_NAME_STRING,
                 FieldIdEnum.RASTER_RGB_GREEN_NAME_EXPRESSION);
@@ -229,7 +228,16 @@ public class VendorOptionRasterFactory
         for (VendorOptionInterface vendorOption : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();
             if (vendorOptionInfo != null) {
-                vendorOptionInfoList.add(vendorOptionInfo);
+                // Ensure no duplicates
+                boolean found = false;
+                for (VendorOptionInfo info : vendorOptionInfoList) {
+                    if (info.compareTo(vendorOptionInfo) == 0) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    vendorOptionInfoList.add(vendorOptionInfo);
+                }
             }
         }
         return vendorOptionInfoList;

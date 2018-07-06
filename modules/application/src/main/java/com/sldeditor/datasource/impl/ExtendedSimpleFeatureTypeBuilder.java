@@ -10,12 +10,11 @@ package com.sldeditor.datasource.impl;
 import java.util.logging.Logger;
 
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.AttributeType;
 import org.opengis.feature.type.FeatureTypeFactory;
 import org.opengis.feature.type.GeometryType;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * The Class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder so

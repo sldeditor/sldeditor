@@ -34,8 +34,8 @@
         <OptionGroup id="RASTER_RGB_CHANNEL_OPTION" label="raster.rgb.channel.option"
             showLabel="true">
             <Group id="RASTER_RGB_CHANNEL_RED" label="raster.rgb.channel.red" showLabel="true">
-                <FieldConfigVendorOption id="VO_RASTER_RGB_RED_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
-                <FieldConfigVendorOption id="VO_RASTER_RGB_RED_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_RED_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_RED_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedExpression"/>
 
                 <Group id="RASTER_RGB_CHANNEL_RED_CONTRAST" label="raster.rgb.channel.contrast" showLabel="true">
                     <FieldConfigSlider id="RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA" label="raster.contrast.gammavalue" defaultValue="1.0"/>
@@ -55,8 +55,8 @@
             </Group>
             <Group id="RASTER_RGB_CHANNEL_GREEN" label="raster.rgb.channel.green"
                 showLabel="true">
-                <FieldConfigVendorOption id="VO_RASTER_RGB_GREEN_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
-                <FieldConfigVendorOption id="VO_RASTER_RGB_GREEN_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREEN_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameGreenNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREEN_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameGreenExpression"/>
 
                 <Group id="RASTER_RGB_CHANNEL_GREEN_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
@@ -76,8 +76,8 @@
             </Group>
             <Group id="RASTER_RGB_CHANNEL_BLUE" label="raster.rgb.channel.blue"
                 showLabel="true">
-                <FieldConfigVendorOption id="VO_RASTER_RGB_BLUE_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
-                <FieldConfigVendorOption id="VO_RASTER_RGB_BLUE_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_BLUE_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameBlueNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_BLUE_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameBlueExpression"/>
 
                 <Group id="RASTER_RGB_CHANNEL_BLUE_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">
@@ -100,8 +100,8 @@
             showLabel="true">
             <Group id="RASTER_GREY_CHANNEL" label="raster.rgb.channel.grey"
                 showLabel="true">
-                <FieldConfigVendorOption id="VO_RASTER_RGB_GREY_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression"/>
-                <FieldConfigVendorOption id="VO_RASTER_RGB_GREY_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREY_NAME_NO_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameGreyNoExpression"/>
+                <FieldConfigVendorOption id="VO_RASTER_RGB_GREY_NAME_EXPRESSION" class="com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameGreyExpression"/>
 
                 <Group id="RASTER_RGB_CHANNEL_GREY_CONTRAST" label="raster.rgb.channel.contrast"
                     showLabel="true">

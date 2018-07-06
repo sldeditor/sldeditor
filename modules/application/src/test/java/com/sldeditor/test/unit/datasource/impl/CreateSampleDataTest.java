@@ -29,11 +29,11 @@ import org.geotools.data.DataStore;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
+import org.locationtech.jts.geom.Polygon;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.sldeditor.datasource.impl.CreateSampleData;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * Unit test for CreateSampleData.

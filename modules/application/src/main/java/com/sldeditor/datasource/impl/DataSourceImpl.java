@@ -36,6 +36,7 @@ import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.styling.UserLayer;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.GeometryDescriptor;
@@ -54,7 +55,6 @@ import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeList;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.sldeditor.datasource.checks.CheckAttributeInterface;
-import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * Class that represents data sources for an SLD symbol. Provides functionality to read and update its schema. Handles the following:

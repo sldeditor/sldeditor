@@ -32,7 +32,7 @@ import org.junit.Test;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The unit test for WKTConversion.

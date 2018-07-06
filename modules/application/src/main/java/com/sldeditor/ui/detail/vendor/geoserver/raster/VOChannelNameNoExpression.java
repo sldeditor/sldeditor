@@ -65,6 +65,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      *
      * @param panelId the panel id
      * @param panelConfig the panel config
+     * @param fieldId the field id
      */
     public VOChannelNameNoExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
         super(panelId);

@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.datasource.example;
+package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
-import org.locationtech.jts.geom.Polygon;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
- * The Interface ExamplePolygonInterface.
+ * Class to handle the getting and setting of red raster channel names using expressions
  * 
  * @author Robert Ward (SCISYS)
  */
-public interface ExamplePolygonInterface {
+public class VOChannelNameRedExpression extends VOChannelNameExpression {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 1L;
 
     /**
-     * Gets the polygon.
+     * Constructor.
      *
-     * @return the polygon
+     * @param panelId the panel id
+     * @param panelConfig the panel config
+     * @param fieldId the field id
      */
-    public abstract Polygon getPolygon();
+    public VOChannelNameRedExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
+        super(panelId, panelConfig, fieldId);
+    }
 
 }
