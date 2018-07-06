@@ -25,7 +25,6 @@ import org.geotools.styling.SelectedChannelType;
 
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 
 /**
@@ -46,27 +45,27 @@ class ChannelName {
     /** The panel config no expression. */
     private String panelConfigNoExpression = "symbol/raster/PanelConfig_ChannelName%sNoExpression.xml";
 
-    /**
-     * Instantiates a new channel name.
-     *
-     * @param panelId the panel id
-     * @param colourName the colour name
-     * @param noExpressionFieldId the no expression field id
-     * @param expressionFieldId the expression field id
-     */
-    public ChannelName(Class<?> panelId, String colourName, FieldIdEnum noExpressionFieldId, FieldIdEnum expressionFieldId) {
-        rasterChannelNameString = new VOChannelNameNoExpression(panelId,
-                String.format(panelConfigNoExpression, colourName), noExpressionFieldId);
-        rasterChannelNameExpression = new VOChannelNameExpression(panelId,
-                String.format(panelConfigExpression, colourName),
-                expressionFieldId);
-    }
-
     /** The raster channel name string. */
     private VOChannelNameNoExpression rasterChannelNameString = null;
 
     /** The raster channel name expression. */
     private VOChannelNameExpression rasterChannelNameExpression = null;
+
+    /**
+     * Instantiates a new channel name.
+     *
+     * @param expression the expression
+     * @param noExpression the no expression
+     * @param colourName the colour name
+     */
+    public ChannelName(VOChannelNameExpression expression, VOChannelNameNoExpression noExpression,
+            String colourName) {
+        rasterChannelNameExpression = expression;
+        rasterChannelNameString = noExpression;
+
+        rasterChannelNameString.setUp(String.format(panelConfigNoExpression, colourName));
+        rasterChannelNameExpression.setUp(String.format(panelConfigExpression, colourName));
+    }
 
     /**
      * Adds the to list.

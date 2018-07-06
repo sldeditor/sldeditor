@@ -56,8 +56,8 @@ import javax.xml.bind.annotation.XmlType;
 public class PanelConfig {
 
     @XmlElements({
-        @XmlElement(name = "Group", type = XMLGroupConfig.class),
-        @XmlElement(name = "MultiOptionGroup", type = XMLMultiOptionGroup.class)
+        @XmlElement(name = "MultiOptionGroup", type = XMLMultiOptionGroup.class),
+        @XmlElement(name = "Group", type = XMLGroupConfig.class)
     })
     protected List<Object> groupOrMultiOptionGroup;
     @XmlAttribute
@@ -89,8 +89,8 @@ public class PanelConfig {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link XMLGroupConfig }
      * {@link XMLMultiOptionGroup }
+     * {@link XMLGroupConfig }
      * 
      * 
      */

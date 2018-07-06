@@ -89,7 +89,7 @@ public class SLDWriterImpl implements SLDWriterInterface {
                         String xmlHeader = xml.substring(0, pos);
                         String sldBody = xml.substring(pos);
 
-                        xml = xmlHeader + getHeader() + sldBody;
+                        xml = xmlHeader + sldBody;
                     }
                 }
             } catch (TransformerException e) {

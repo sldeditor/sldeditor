@@ -35,11 +35,10 @@ public class VOChannelNameRedExpression extends VOChannelNameExpression {
      * Constructor.
      *
      * @param panelId the panel id
-     * @param panelConfig the panel config
      * @param fieldId the field id
      */
-    public VOChannelNameRedExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
-        super(panelId, panelConfig, fieldId);
+    public VOChannelNameRedExpression(Class<?> panelId, FieldIdEnum fieldId) {
+        super(panelId, fieldId);
     }
 
 }

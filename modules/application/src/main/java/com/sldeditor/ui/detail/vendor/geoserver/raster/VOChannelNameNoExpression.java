@@ -41,8 +41,8 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
- * Class to handle the getting and setting of raster channel names using strings
- * 
+ * Class to handle the getting and setting of raster channel names using strings.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOChannelNameNoExpression extends StandardPanel
@@ -64,19 +64,27 @@ public class VOChannelNameNoExpression extends StandardPanel
      * Constructor.
      *
      * @param panelId the panel id
-     * @param panelConfig the panel config
-     * @param fieldId the field id
      */
-    public VOChannelNameNoExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
+    public VOChannelNameNoExpression(Class<?> panelId, FieldIdEnum fieldId) {
         super(panelId);
 
         this.fieldId = fieldId;
+    }
 
+    /**
+     * Configures the class.
+     *
+     * @param panelConfig the panel config
+     * @param fieldId the field id
+     */
+    public void setUp(String panelConfig) {
         createUI(panelConfig);
     }
 
     /**
      * Creates the ui.
+     *
+     * @param panelConfig the panel config
      */
     private void createUI(String panelConfig) {
         readConfigFileNoScrollPane(null, getPanelId(), this, panelConfig);
@@ -337,8 +345,7 @@ public class VOChannelNameNoExpression extends StandardPanel
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
             vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(ChannelName.class,
-                            "channelname.no.expression.title"),
+                    Localisation.getString(ChannelName.class, "channelname.no.expression.title"),
                     this.getVendorOption(), Localisation.getString(ChannelName.class,
                             "channelname.no.expression.description"));
         }

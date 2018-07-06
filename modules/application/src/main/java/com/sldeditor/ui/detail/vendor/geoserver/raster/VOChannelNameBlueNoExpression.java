@@ -35,10 +35,9 @@ public class VOChannelNameBlueNoExpression extends VOChannelNameNoExpression {
      * Constructor.
      *
      * @param panelId the panel id
-     * @param panelConfig the panel config
      * @param fieldId the field id
      */
-    public VOChannelNameBlueNoExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
-        super(panelId, panelConfig, fieldId);
+    public VOChannelNameBlueNoExpression(Class<?> panelId, FieldIdEnum fieldId) {
+        super(panelId, fieldId);
     }
 }

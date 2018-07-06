@@ -102,17 +102,21 @@ public class VendorOptionRasterFactory
         vendorOptionGeoServerContrastEnhancementNormalizeOverall = new VOGeoServerContrastEnhancementNormalizeOverall(
                 panelId, parentPanel);
 
-        ChannelName redChannel = new ChannelName(panelId, ChannelName.RED,
-                FieldIdEnum.RASTER_RGB_RED_NAME_STRING, FieldIdEnum.RASTER_RGB_RED_NAME_EXPRESSION);
-        ChannelName greenChannel = new ChannelName(panelId, ChannelName.GREEN,
-                FieldIdEnum.RASTER_RGB_GREEN_NAME_STRING,
-                FieldIdEnum.RASTER_RGB_GREEN_NAME_EXPRESSION);
-        ChannelName blueChannel = new ChannelName(panelId, ChannelName.BLUE,
-                FieldIdEnum.RASTER_RGB_BLUE_NAME_STRING,
-                FieldIdEnum.RASTER_RGB_BLUE_NAME_EXPRESSION);
-        ChannelName greyChannel = new ChannelName(panelId, ChannelName.GREY,
-                FieldIdEnum.RASTER_RGB_GREY_NAME_STRING,
-                FieldIdEnum.RASTER_RGB_GREY_NAME_EXPRESSION);
+        ChannelName redChannel = new ChannelName(new VOChannelNameRedExpression(panelId, FieldIdEnum.RASTER_RGB_RED_NAME_EXPRESSION),
+                new VOChannelNameRedNoExpression(panelId, FieldIdEnum.RASTER_RGB_RED_NAME_STRING),
+                ChannelName.RED);
+        
+        ChannelName greenChannel = new ChannelName(new VOChannelNameGreenExpression(panelId, FieldIdEnum.RASTER_RGB_GREEN_NAME_EXPRESSION),
+                new VOChannelNameGreenNoExpression(panelId, FieldIdEnum.RASTER_RGB_GREEN_NAME_STRING),
+                ChannelName.GREEN);
+
+        ChannelName blueChannel = new ChannelName(new VOChannelNameBlueExpression(panelId, FieldIdEnum.RASTER_RGB_BLUE_NAME_EXPRESSION),
+                new VOChannelNameBlueNoExpression(panelId, FieldIdEnum.RASTER_RGB_BLUE_NAME_STRING),
+                ChannelName.BLUE);
+
+        ChannelName greyChannel = new ChannelName(new VOChannelNameGreyExpression(panelId, FieldIdEnum.RASTER_RGB_GREY_NAME_EXPRESSION),
+                new VOChannelNameGreyNoExpression(panelId, FieldIdEnum.RASTER_RGB_GREY_NAME_STRING),
+                ChannelName.GREY);
         // CHECKSTYLE:ON
 
         vendorOptionList.add(vendorOptionGeoServerContrastEnhancementNormalizeRed);

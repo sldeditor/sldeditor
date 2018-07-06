@@ -64,14 +64,21 @@ public class VOChannelNameExpression extends StandardPanel
      * Constructor.
      *
      * @param panelId the panel id
-     * @param panelConfig the panel config
      * @param fieldId the field id
      */
-    public VOChannelNameExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
+    public VOChannelNameExpression(Class<?> panelId, FieldIdEnum fieldId) {
         super(panelId);
 
         this.fieldId = fieldId;
+    }
 
+    /**
+     * Configures the class.
+     *
+     * @param panelConfig the panel config
+     * @param fieldId the field id
+     */
+    public void setUp(String panelConfig) {
         createUI(panelConfig);
     }
 

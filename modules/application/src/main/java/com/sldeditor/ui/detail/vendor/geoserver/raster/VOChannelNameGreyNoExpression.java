@@ -22,7 +22,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.raster;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
- * Class to handle the getting and setting of blue raster channel names using strings
+ * Class to handle the getting and setting of grey raster channel names using strings
  * 
  * @author Robert Ward (SCISYS)
  */
@@ -35,10 +35,9 @@ public class VOChannelNameGreyNoExpression extends VOChannelNameNoExpression {
      * Constructor.
      *
      * @param panelId the panel id
-     * @param panelConfig the panel config
      * @param fieldId the field id
      */
-    public VOChannelNameGreyNoExpression(Class<?> panelId, String panelConfig, FieldIdEnum fieldId) {
-        super(panelId, panelConfig, fieldId);
+    public VOChannelNameGreyNoExpression(Class<?> panelId, FieldIdEnum fieldId) {
+        super(panelId, fieldId);
     }
 }

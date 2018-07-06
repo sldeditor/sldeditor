@@ -44,8 +44,8 @@ import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameExpression;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameNoExpression;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedExpression;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedNoExpression;
 import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
 
 /**
@@ -118,8 +118,8 @@ public class VOChannelNameTest {
     public void increaseCoverage() {
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
-        VOChannelNameNoExpression noExpression = new VOChannelNameNoExpression(getClass(), "symbol/raster/PanelConfig_ChannelNameRedExpression.xml",
-                FieldIdEnum.VO_RASTER_RGB_RED_NAME_NO_EXPRESSION);
+        VOChannelNameRedNoExpression noExpression = new VOChannelNameRedNoExpression(getClass(), FieldIdEnum.VO_RASTER_RGB_RED_NAME_NO_EXPRESSION);
+        noExpression.setUp("symbol/raster/PanelConfig_ChannelNameRedNoExpression.xml");
         noExpression.preLoadSymbol();
         noExpression.populate((FeatureTypeStyle) null);
         noExpression.populate((PolygonSymbolizer) null);
@@ -142,8 +142,9 @@ public class VOChannelNameTest {
                 .createSelectedChannelType(expectedNameExpression, (ContrastEnhancement) null);
         noExpression.getMinimumVersion(null, channelTypeExpression, vendorOptionsPresentList);
 
-        VOChannelNameExpression expression = new VOChannelNameExpression(getClass(), "Red",
+        VOChannelNameRedExpression expression = new VOChannelNameRedExpression(getClass(),
                 FieldIdEnum.VO_RASTER_RGB_RED_NAME_EXPRESSION);
+        noExpression.setUp("symbol/raster/PanelConfig_ChannelNameRedExpression.xml");
         expression.preLoadSymbol();
         expression.populate((FeatureTypeStyle) null);
         expression.populate((PolygonSymbolizer) null);
